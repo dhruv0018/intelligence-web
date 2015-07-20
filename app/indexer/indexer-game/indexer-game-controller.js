@@ -16,8 +16,48 @@ var Game = angular.module('indexer-game');
  * @type {Controller}
  */
 Game.controller('indexer-game.Controller', [
-    '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'SessionService', 'AlertsService', 'RawFilm.Modal', 'Indexer.Game.Data', 'BasicModals', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory', 'UsersFactory', 'EMAIL_REQUEST_TYPES',
-    function controller($scope, $state, $stateParams, $modal, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, session, alerts, RawFilmModal, data, basicModal, sports, leagues, schools, teams, games, users, EMAIL_REQUEST_TYPES) {
+    '$scope',
+    '$state',
+    '$stateParams',
+    '$modal',
+    'GAME_STATUSES',
+    'GAME_STATUS_IDS',
+    'GAME_TYPES',
+    'GAME_NOTE_TYPES',
+    'SessionService',
+    'AlertsService',
+    'RawFilm.Modal',
+    'Indexer.Game.Data',
+    'BasicModals',
+    'SportsFactory',
+    'LeaguesFactory',
+    'SchoolsFactory',
+    'TeamsFactory',
+    'GamesFactory',
+    'UsersFactory',
+    'EMAIL_REQUEST_TYPES',
+    function controller(
+        $scope,
+        $state,
+        $stateParams,
+        $modal,
+        GAME_STATUSES,
+        GAME_STATUS_IDS,
+        GAME_TYPES,
+        GAME_NOTE_TYPES,
+        session,
+        alerts,
+        RawFilmModal,
+        data,
+        basicModal,
+        sports,
+        leagues,
+        schools,
+        teams,
+        games,
+        users,
+        EMAIL_REQUEST_TYPES
+    ) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
