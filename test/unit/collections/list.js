@@ -173,6 +173,30 @@ describe('List', () => {
         expect(sampleList.get(13)).to.equal(4);
     });
 
+    it('should have an "add" method that accepts an array of items to be appended to the array', () => {
+
+        expect(sampleList.length).to.equal(13);
+
+        sampleList.add([1000, 2000, '3000']);
+
+        expect(sampleList.length).to.equal(16);
+        expect(sampleList.get(13)).to.equal(1000);
+        expect(sampleList.get(14)).to.equal(2000);
+        expect(sampleList.get(15)).to.equal('3000');
+    });
+
+    it('should have an "add" method that accepts an array of items to be prepended to the array', () => {
+
+        expect(sampleList.length).to.equal(13);
+
+        sampleList.add([1000, 2000, '3000'], false);
+
+        expect(sampleList.length).to.equal(16);
+        expect(sampleList.get(0)).to.equal(1000);
+        expect(sampleList.get(1)).to.equal(2000);
+        expect(sampleList.get(2)).to.equal('3000');
+    });
+
     it('should throw an error if you attempt to add an element without providing a value', () => {
 
         expect(() => sampleList.add()).to.throw(Error);
