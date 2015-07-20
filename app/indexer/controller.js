@@ -66,6 +66,9 @@ function IndexerGamesController(
     $scope.games = games.getList({ assignedUserId: $scope.userId });
     $scope.currentUser = session.getCurrentUser();
 
+    const indexerQuality = $scope.currentUser.currentRole.indexerQuality;
+    $scope.indexerQuality = (indexerQuality) ? indexerQuality : null;
+
     $scope.games.forEach(game => game.timeRemaining = game.assignmentTimeRemaining());
 
     $scope.getSportName = function(teamId) {
@@ -79,18 +82,35 @@ function IndexerGamesController(
     };
 
     $scope.pickUpGame = function(gameId) {
-        let alert;
-    alert = $mdDialog.alert()
-        .title('Attention, ' + $scope.userName)
-        .content('This is an example of how easy dialogs can be!')
-        .ok('Close');
+        let game = games.get(gameId);
+        console.log('game', game.hasQaAssignment());
+        console.log('time remaining', game.currentAssignment());
+        let qaReady;
+        let content;
+        let title;
+        if (game.hasQaAssignment() && !game.deadlinePassed){
+            qaReady = false;
+            content = 'This game has already been picked up.Click' +
+                        'Refresh to see an updated list of available games.';
+        } else {
+            qaReady = true;
+            title='Confirm Pick Up Game to QA';
+            content = 'Game 0125: Cavs vs Warriors, basketball 2:00 Left to QA';
 
-    $mdDialog
-        .show( alert )
-        .finally(function() {
-        alert = undefined;
-        });
-    };
+        }
+
+        let alert;
+        alert = $mdDialog.alert()
+            .title(title)
+            .content(content)
+            .ok('Close');
+
+        $mdDialog
+            .show( alert )
+            .finally(function() {
+            alert = undefined;
+            });
+        };
 
     let refreshGames = function() {
 

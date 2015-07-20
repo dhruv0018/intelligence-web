@@ -22,32 +22,17 @@ export default `
 
         <main class="content" data-ui-view="content">
 
-        <a class="lookup" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank">
-            <div class="lookup-container">
-                <div class="right-container">
-                    <i class="icon icon-chevron-right"></i>
-                </div>
-                <div class="left-container">
-                    <i class="icon icon-bar-chart-o"></i>
-                </div>
-                <div class="middle-container">
-                    <h3>Looking for a game?</h3>
-                    <p>Click here to sign up to index or QA a game.</p>
-                </div>
-            </div>
-        </a>
-
         <div class="box-body">
-            <h3>Your Game Queue</h3>
-            <table class="table table-bordered">
+            <h3>Games History</h3>
+            <table class="table-striped table-hover indexer-list">
                 <thead>
                 <tr>
-                    <th>Date Assigned</th>
-                    <th>Game ID</th>
-                    <th>Game</th>
-                    <th>Sport</th>
-                    <th>Status</th>
-                    <th>Date Completed</th>
+                    <td>Date Assigned</td>
+                    <td>Game ID</td>
+                    <td>Game</td>
+                    <td>Sport</td>
+                    <td>Status</td>
+                    <td>Date Completed</td>
                 </tr>
                 </thead>
                 <tbody>

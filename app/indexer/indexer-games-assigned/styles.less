@@ -1,5 +1,9 @@
 @import (reference) "main.less";
 
+@queue-list-font-size: 14px;
+@queue-list-padding: 6px;
+
+
 .indexer-games-assigned, .indexer-games-available, .indexer-history {
 
     letter-spacing: normal;
@@ -48,9 +52,8 @@
         text-decoration: none;
 
         .lookup-container {
-
             width: 100%;
-            height: 150px;
+            height: 75px;
             margin: 0;
             padding-left: 40px;
             border: thin solid @gray-border;
@@ -107,22 +110,79 @@
         }
     }
 
-    .box-body {
-        font-weight: 400;
+    .indexer-list {
 
-        h3 {
-            color: @brand-blue;
-        }
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
 
-        table {
+        td {
 
-            td {
-                background-color: white;
-                border-right: none;
-                border-left: none;
-                line-height: normal;
-                vertical-align: middle;
+            border: none;
+            color: black;
+            vertical-align: middle;
+            font-size: @queue-list-font-size;
+            line-height: 16px;
+            padding: @queue-list-padding;
+            font-weight: 500;
+
+            &:first-child {
+
+                padding-left: 15px;
             }
         }
+
+        ul {
+
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+
+            list-style: none;
+        }
+
+        // Base class for buttons used within the queue table
+        .index-button {
+
+            padding: 4px 11px;
+            line-height: 1;
+        }
+
+    }
+
+    .flex-container {
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+        -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        -webkit-align-content: stretch;
+        -ms-flex-line-pack: stretch;
+        align-content: stretch;
+        -webkit-align-items: flex-start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+    }
+
+    .flex-item {
+        -webkit-order: 0;
+        -ms-flex-order: 0;
+        order: 0;
+        -webkit-flex: 0 1 auto;
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        -webkit-align-self: auto;
+        -ms-flex-item-align: auto;
+        align-self: auto;
     }
 }

@@ -22,24 +22,33 @@ export default `
 
     <main class="content" data-ui-view="content">
 
-        <a class="lookup" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank">
-            <div class="lookup-container">
-                <div class="middle-container">
-                    <h3>Request to Index a Game</h3>
+        <div class="flex-container">
+            <a class="lookup" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank">
+                <div class="lookup-container flex-item">
+                    <div class="right-container">
+                        <i class="icon icon-chevron-right"></i>
+                    </div>
+                    <div class="left-container">
+                        <i class="icon icon-bar-chart-o"></i>
+                    </div>
+                    <div class="middle-container">
+                        <h3>Request to Index a Game</h3>
+                        <p>Click here to sign up to index or QA a game.</p>
+                    </div>
                 </div>
-            </div>
-        </a>
-        <a class="lookup" id="games-available-cta" ui-sref="IndexerGamesAvailable">
-            <div class="lookup-container">
-                <div class="middle-container">
-                    <h3>See Games Available to QA</h3>
+            </a>
+            <a ng-if="indexerQuality" class="lookup container" id="games-available-cta" ui-sref="IndexerGamesAvailable">
+                <div class="lookup-container flex-item">
+                    <div>
+                        <h3>See Games Available to QA</h3>
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
 
         <div class="box-body">
             <h3>Your Game Queue</h3>
-            <table class="table table-bordered">
+            <table class="table-striped table-hover indexer-list">
                 <thead>
                     <tr>
                         <th>Game ID</th>

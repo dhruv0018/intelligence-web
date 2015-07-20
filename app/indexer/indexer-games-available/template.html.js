@@ -22,24 +22,9 @@ export default `
 
     <main class="content" data-ui-view="content">
 
-        <a class="lookup" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank">
-            <div class="lookup-container">
-                <div class="right-container">
-                    <i class="icon icon-chevron-right"></i>
-                </div>
-                <div class="left-container">
-                    <i class="icon icon-bar-chart-o"></i>
-                </div>
-                <div class="middle-container">
-                    <h3>Looking for a game?</h3>
-                    <p>Click here to sign up to index or QA a game.</p>
-                </div>
-            </div>
-        </a>
-
         <div class="box-body">
             <h3>Available Games to be QA\'d</h3>
-            <table class="table table-bordered">
+            <table class="table-striped table-hover indexer-list">
                 <thead>
                     <tr>
                         <th>Game ID</th>
@@ -61,7 +46,7 @@ export default `
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                         <td>{{ game.timeRemaining | millisecondsAsHours | hoursAsClock }}</td>
                         <td>
-                            <button id="pick-up-qa-cta" class="btn btn-default" ng-click="pickUpGame(game.id)">
+                            <button id="pick-up-qa-cta" class="btn btn-default index-button" ng-click="pickUpGame(game.id)">
                                 <span>Pick Up to QA </span>
                             </button>
                         </td>
