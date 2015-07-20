@@ -3,85 +3,75 @@
 
         <profile-picture user="athlete"></profile-picture>
 
-        <h2 hide-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
+        <h2 hide-gt-sm>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-        <a ng-if="auth.isLoggedIn && session.getCurrentUserId() === athlete.profile.userId" ui-sref="Athlete.Profile.EditProfile.BasicInfo">
+        <a ng-if="auth.isLoggedIn && session.getCurrentUserId() === athlete.profile.userId"
+           ui-sref="Athlete.Profile.EditProfile.BasicInfo"
+           hide
+           show-gt-md>
             <md-button class="md-raised edit-profile-button">Edit Profile</md-button>
         </a>
 
-        <ng-md-icon
-            icon="{{toggle.icons.current}}"
-            style="fill: white"
-            size="30"
-            class="secondary-info-toggle"
-            hide-gt-sm
-            ng-click="toggle.visibility()"
-        ></ng-md-icon>
+        <dropdown-toggle-button toggled-element="secondaryInfoElem" hide-gt-sm></dropdown-toggle-button>
     </section>
 
     <section class="athlete-secondary-info animated fadeOut collapsed">
 
-        <h2 hide show-gt-md>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
+        <h2 hide show-gt-sm>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-        <p ng-if="athlete.profile.about">{{athlete.profile.about}}</p>
-        <p ng-if="!athlete.profile.about">
+        <p hide show-gt-sm ng-if="athlete.profile.about">{{athlete.profile.about}}</p>
+        <p hide show-gt-sm ng-if="!athlete.profile.about && isCurrentUser">
             <a
              class="empty-attribute"
              ui-sref="Athlete.Profile.EditProfile.BasicInfo"
-            >Add about me</a></p>
+            ><i class="icon icon-plus"></i> Add About Me</a></p>
 
         <ul class="athlete-attributes"
             layout="column"
             layout-gt-sm="row"
         >
-            <li class="athlete-attribute">
-                <label>Height/Weight</label>
-                <span ng-if="athlete.profile.height && athlete.profile.weight">
-                    {{ athlete.profile.height | height }}
-                    &nbsp;&#47;&nbsp;
-                    {{ athlete.profile.weight | weight }}
+            <li class="athlete-attribute" ng-if="athlete.profile.primarySportId || isCurrentUser">
+                <span ng-if="athlete.profile.primarySportId">
+                    {{sports[athlete.profile.primarySportId].name}}
                 </span>
-                <span ng-if="!athlete.profile.height || !athlete.profile.weight">
-                    <a
-                     class="empty-attribute"
-                     ui-sref="Athlete.Profile.EditProfile.Physical"
-                    >Add height/weight</a>
-                </span>
-            </li>
-            <li class="athlete-attribute">
-                <label>Position</label>
-                <span ng-if="athlete.profile.teams.length !== 0">
-                    Quarterback (QB)
-                </span>
-                <span ng-if="athlete.profile.teams.length === 0">
+                <span ng-if="!athlete.profile.primarySportId">
                     <a
                      class="empty-attribute"
                      ui-sref="Athlete.Profile.EditProfile.BasicInfo"
-                    >Add position</a>
+                    ><i class="icon icon-plus"></i> Add Sport</a>
                 </span>
             </li>
-            <li class="athlete-attribute">
-                <label>School</label>
-                <span ng-if="athlete.profile.school">
-                    {{athlete.profile.school}}
+            <li class="athlete-attribute" ng-if="athlete.profile.primaryPosition || isCurrentUser">
+                <span ng-if="athlete.profile.primaryPosition">
+                    {{athlete.profile.primaryPosition}}
                 </span>
-                <span ng-if="!athlete.profile.school">
+                <span ng-if="!athlete.profile.primaryPosition">
+                    <a
+                     class="empty-attribute"
+                     ui-sref="Athlete.Profile.EditProfile.BasicInfo"
+                    ><i class="icon icon-plus"></i> Add Position</a>
+                </span>
+            </li>
+            <li class="athlete-attribute" ng-if="athlete.profile.hometown || isCurrentUser">
+                <span ng-if="athlete.profile.hometown">
+                    From {{athlete.profile.hometown}}
+                </span>
+                <span ng-if="!athlete.profile.hometown">
+                    <a
+                     class="empty-attribute"
+                     ui-sref="Athlete.Profile.EditProfile.BasicInfo"
+                    ><i class="icon icon-plus"></i> Add Hometown</a>
+                </span>
+            </li>
+            <li class="athlete-attribute" ng-if="athlete.profile.highSchoolGraduationYear || isCurrentUser">
+                <span ng-if="athlete.profile.highSchoolGraduationYear">
+                    HS Class of {{athlete.profile.highSchoolGraduationYear}}
+                </span>
+                <span ng-if="!athlete.profile.highSchoolGraduationYear">
                     <a
                      class="empty-attribute"
                      ui-sref="Athlete.Profile.EditProfile.Academics"
-                    >Add school</a>
-                </span>
-            </li>
-            <li class="athlete-attribute">
-                <label>Graduation</label>
-                <span ng-if="athlete.profile.graduationYear">
-                    Class of {{athlete.profile.graduationYear}}
-                </span>
-                <span ng-if="!athlete.profile.graduationYear">
-                    <a
-                     class="empty-attribute"
-                     ui-sref="Athlete.Profile.EditProfile.Academics"
-                    >Add year</a>
+                    ><i class="icon icon-plus"></i> Add Class Year</a>
                 </span>
             </li>
 
