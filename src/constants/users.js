@@ -163,3 +163,28 @@ IntelligenceWebClient.factory('ANONYMOUS_USER', [
         return ANONYMOUS_USER;
     }
 ]);
+
+var ATHLETE_DOMINANT_HAND_TYPES_ID = {
+    1: 'RIGHT_HAND',
+    2: 'LEFT_HAND',
+    3: 'AMBIDEXTROUS'
+};
+
+IntelligenceWebClient.constant('ATHLETE_DOMINANT_HAND_TYPES_ID', ATHLETE_DOMINANT_HAND_TYPES_ID);
+
+var ATHLETE_DOMINANT_HAND_TYPES = {
+    RIGHT_HAND: {
+        id: 1,
+        description: 'Right Hand'
+    },
+    LEFT_HAND: {
+        id: 2,
+        description: 'Left Hand'
+    },
+    AMBIDEXTROUS: {
+        id: 3,
+        description: 'Ambidextrous'
+    }
+};
+
+IntelligenceWebClient.constant('ATHLETE_DOMINANT_HAND_TYPES', ATHLETE_DOMINANT_HAND_TYPES);

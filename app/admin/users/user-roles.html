@@ -22,15 +22,41 @@
 
 <ul class="list-group">
 
-    <li class="role list-group-item" data-ng-repeat="role in user.roles | filter:{tenureEnd:null}">
+    <li
+        class="role role-details list-group-item"
+        ng-repeat="role in user.roles | filter:{tenureEnd:null}"
+    >
+        <x-krossover-role
+            user="user"
+            role="role"
+        ></x-krossover-role>
 
-        <span data-ng-show="currentUser.hasAccess(role)">
+        <div
+            class="role-options"
+            ng-show="currentUser.hasAccess(role)"
+        >
+            <!-- TODO: Remove Angular Material -->
+            <md-button
+                class="remove-role"
+                ng-click="users.removeRole(user, role)"
+            >Remove</md-button>
 
-            <a class="btn pull-right" href data-ng-click="users.removeRole(user, role)">Remove</a>
+            <div
+                class="qa-status-toggle"
+                ng-show="role.type.id === ROLES.INDEXER.type.id"
+            >
 
-        </span>
+                <label>QA Privileges</label>
 
-        <x-krossover-role user="user" role="role"></x-krossover-role>
+                <!-- TODO: Remove Angular Material -->
+                <md-switch
+                    ng-model="role.indexerQuality"
+                    ng-true-value="1"
+                    ng-false-value="0"
+                    class="md-switch-green"
+                ></md-switch>
+            </div>
+        </div>
 
     </li>
 
