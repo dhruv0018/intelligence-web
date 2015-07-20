@@ -1,10 +1,17 @@
+/**
+ * Creates a List
+ * @class List
+ * @classdesc Takes an array as a data source and adds convenience methods
+ * including a linked list-like capabilities.
+ * @file src/collections/list.js
+ */
 class List {
 
     /**
-     * Constructor:
      * Instantaties List as a new array
      *
-     * @param: {Array} (opt) Array to copy
+     * @constructs List
+     * @param {Array} [array] - Array to use as backing data store
      */
     constructor (array = []) {
 
@@ -13,20 +20,63 @@ class List {
             throw new Error('List data must be an Array!');
         }
 
-        this.data = array;
+        this.data  = array;
+        this.index = 0;
     }
 
     /**
-     * Method: includes
+     * Returns the next element in the array based on the index.
+     *
+     * @method next
+     * @returns {Object} - The array element at the new index.
+     */
+    next () {
+
+        this.index++;
+
+        if (this.index >= this.data.length) {
+
+            this.index = 0;
+        }
+
+        return this.get(index);
+    }
+
+    /**
+     * Returns the previous element in the array based on the index.
+     *
+     * @method previous
+     * @returns {Object} - The array element at the new index.
+     */
+    previous () {
+
+        this.index--;
+
+        if (this.index < 0) {
+
+            this.index = this.data.length;
+        }
+
+        return this.get(index);
+    }
+
+    /**
      * Simulates the ES7 includes method
      *
-     * @return: {Boolean}
+     * @method includes
+     * @param {Object} searchElement - The element to search for
+     * @param {Integer} fromIndex    - The array index to begin searching from
+     * @returns {Boolean}            - Whether the element exists in the array
      */
     includes (searchElement, fromIndex) {
 
         return !!~this.data.indexOf(searchElement, fromIndex);
     }
 
+    /**
+     * Getter/Setter for the length of the data store
+     * @type {Integer}
+     */
     get length () {
 
         return this.data.length;
@@ -43,10 +93,10 @@ class List {
     }
 
     /**
-     * Method: identity
      * Returns a copy of the array, and only the array
      *
-     * @return: {Array}
+     * @method identity
+     * @returns {Array} - A copy of the data backing store.
      */
     identity () {
 
@@ -54,10 +104,10 @@ class List {
     }
 
     /**
-     * Method: toJSON
      * Returns a copy of the array, and only the array
      *
-     * @return: {Array}
+     * @method toJSON
+     * @returns {Array}
      */
     toJSON () {
 
@@ -66,10 +116,10 @@ class List {
     /* NEW */
 
     /**
-     * Method:clear
      * Removes all entries in the list
      *
-     * @return: {List} Empty list
+     * @method clear
+     * @returns {List} - The array that was cleared
      */
     clear() {
 
@@ -77,11 +127,11 @@ class List {
     }
 
     /**
-     * Method:get
-     * Return entry at index
+     * Return the element at the specified index
      *
-     * @param: {Integer} (req) Index of entry
-     * @return: {Object} Entry at index
+     * @method get
+     * @param {Integer} index - Index of array element
+     * @returns {Object}      - Entry at index
      */
     get (index) {
 
@@ -96,10 +146,10 @@ class List {
     }
 
     /**
-     * Method:first
-     * Return first entry
+     * Return first element
      *
-     * @return: {Object} First entry, OR undefined
+     * @method first
+     * @returns {Object} - First element, OR undefined
      */
     first () {
 
@@ -107,10 +157,10 @@ class List {
     }
 
     /**
-     * Method:last
-     * Return lst entry
+     * Return last element
      *
-     * @return: {Object} Last entry, OR undefined
+     * @method last
+     * @returns {Object} - Last element, OR undefined
      */
     last () {
 
@@ -118,17 +168,14 @@ class List {
     }
 
     /**
-     * Method:add
      * Adds a new entry to the list
      *
-     * @param: {Object} (req) Item(s) to add,
-     *         (arrays accepted)
-     * @param: {Boolean} (opt) Add to FIRST
-     *         [false] or LAST [true] of
-     *         List, default is [true]
-     * @return: {Integer} Length
+     * @method add
+     * @param {Object|Array} item    - Item(s) to add
+     * @param {Boolean} [toEnd=true] - Add to end (false), or begging (true)
+     * @returns {Integer}            - Length
      */
-    add (item, toLast = true) {
+    add (item, toEnd = true) {
 
         switch (arguments.length) {
 
@@ -137,16 +184,33 @@ class List {
                 throw new Error('Invoked List.add without passing an Object to add');
         }
 
-        return toLast ? this.data.push(item) : this.data.unshift(item);
+        if (Array.isArray(item)) {
+
+            // Add new array to either beginning or end of exisitng array
+            if (toEnd) {
+
+                this.data.push(item);
+            } else {
+
+                this.data.unshift(item);
+            }
+
+            // Flatten array
+            this.data.reduce((a, b) => a.concat(b));
+
+            return this.length;
+        } else {
+
+            return toEnd ? this.data.push(item) : this.data.unshift(item);
+        }
     }
 
     /**
-     * Method:remove
      * Removes an entry from the list
      *
-     * @param: {Object} (req) Item to
-     *         remove (arrays not accepted)
-     * @return: {Integer} Length, OR undefined
+     * @method remove
+     * @param {Object} item - Item to remove
+     * @returns {Integer}   - Length, OR undefined
      */
     remove (item) {
 
@@ -165,10 +229,10 @@ class List {
     }
 
     /**
-     * Method:isEmpty
      * Returns empty List status
      *
-     * @return: {Boolean} [true] if empty, else [false]
+     * @method isEmpty
+     * @returns {Boolean} - true if empty, else false
      */
     isEmpty () {
 
