@@ -20,44 +20,7 @@ class List {
             throw new Error('List data must be an Array!');
         }
 
-        this.data  = array;
-        this.index = 0;
-    }
-
-    /**
-     * Returns the next element in the array based on the index.
-     *
-     * @method next
-     * @returns {Object} - The array element at the new index.
-     */
-    next () {
-
-        this.index++;
-
-        if (this.index >= this.data.length) {
-
-            this.index = 0;
-        }
-
-        return this.get(index);
-    }
-
-    /**
-     * Returns the previous element in the array based on the index.
-     *
-     * @method previous
-     * @returns {Object} - The array element at the new index.
-     */
-    previous () {
-
-        this.index--;
-
-        if (this.index < 0) {
-
-            this.index = this.data.length;
-        }
-
-        return this.get(index);
+        this.data = array;
     }
 
     /**
