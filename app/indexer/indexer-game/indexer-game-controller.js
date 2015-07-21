@@ -103,7 +103,8 @@ Game.controller('indexer-game.Controller', [
         };
 
         $scope.setAside = function() {
-            const roleId = session.getCurrentRole().type.id;
+
+            const roleId = session.getCurrentRoleId();
             const userId = session.getCurrentUserId();
             const modalInstance = basicModal.openForConfirm({
                 title: 'Set aside this Game?',
