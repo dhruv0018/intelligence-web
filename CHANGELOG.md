@@ -1,3 +1,8 @@
+#v2.8.0#
+##Features##
+- New users need to agree to Terms & Conditions
+- Old users need to agree to Terms & Conditions
+
 #v2.7.0#
 ##Features##
 - Athlete profiles
