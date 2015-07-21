@@ -18,7 +18,8 @@ ExperienceController.$inject = [
     'PositionsetsFactory',
     'UsersFactory',
     'SessionService',
-    'AddProfileTeam.Modal'
+    'AddProfileTeam.Modal',
+    'BasicModals'
 ];
 
 /**
@@ -35,7 +36,8 @@ function ExperienceController (
     positionsets,
     users,
     session,
-    addProfileTeamModal
+    addProfileTeamModal,
+    basicModals
 ) {
     $scope.athlete = session.getCurrentUser();
     $scope.teams = teams.getMap();
@@ -74,6 +76,19 @@ function ExperienceController (
 
         modal.result.then( () => {
 
+        });
+    };
+
+    $scope.removeTeam = function(team) {
+        let removeTeamModal = basicModals.openForConfirm({
+            title: 'Remove Team',
+            bodyText: 'Are you sure you want to remove this team from your profile?',
+            buttonText: 'Yes'
+        });
+
+        removeTeamModal.result.then(function removeTeamModalCallback() {
+            $scope.athlete.removeTeamFromProfile(team.teamId);
+            $scope.athlete.save();
         });
     };
 }
