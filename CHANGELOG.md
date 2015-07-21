@@ -1,3 +1,8 @@
+#v2.8.0#
+##Bug Fixes / Improvements##
+- Show game length for uploaded game film to Admin in Queue
+- Design improvements to the queue so there is less scrolling
+
 #v2.7.0#
 ##Features##
 - Athlete profiles
