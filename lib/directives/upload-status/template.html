@@ -3,7 +3,7 @@
         <h1 data-ng-if="game.isRegular() && (game.status === null || !isDefined(game.status))">You’re uploading a regular game…</h1>
         <h1 data-ng-if="game.isNonRegular() && (game.status === null || !isDefined(game.status))">You’re uploading a scouting/scrimmage game…</h1>
         <h2 data-ng-hide="game.rosters && game.rosters[game.teamId].id" data-ng-if="game.status === null || !isDefined(game.status)">Complete the rest of the game information.</h2>
-        <h2 data-ng-if="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">This game will be submitted for breakdown once the upload is complete.</h2>
+        <h2 data-ng-if="game.status === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game will be submitted for breakdown once the upload is complete.</h2>
         <h2 data-ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game will be available for sharing once the upload is complete.</h2>
     </div>
 
@@ -18,7 +18,7 @@
             <span data-ng-show="game.isProcessing()">Your video is still processing.</span>
             <span data-ng-show="game.isUploading()">Your video is still uploading.</span>
             Please complete the rest of the game information.</h2>
-        <h2 data-ng-if="game.status === GAME_STATUSES['READY_FOR_INDEXING'].id">This game has been submitted for breakdown.</h2>
+        <h2 data-ng-if="game.status === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game has been submitted for breakdown.</h2>
         <h2 data-ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game is available for sharing.</h2>
     </div>
 </div>
