@@ -76,14 +76,12 @@ export default `
                         <td>{{game.userAssignment().isQa ? 'QA' : 'Indexed'}}</td>
                         <td>
                             <button id="enter-indexing-cta" class="btn btn-default" data-ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
-                                <span data-ng-hide="game.isAssignmentStarted()">Start </span>
-                                <span data-ng-show="game.isAssignmentStarted()">Resume </span>
+                                <span data-ng-hide="game.isAssignmentStarted()">Ready to Index </span>
                                 <span data-ng-show="game.isAssignedToIndexer()">Indexing</span>
                             </button>
                             <button id="enter-qa-cta" class="btn btn-default" data-ng-show="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
-                                <span data-ng-hide="game.isAssignmentStarted()">Start </span>
-                                <span data-ng-show="game.isAssignmentStarted()">Resume </span>
-                                <span>QA</span>
+                                <span data-ng-hide="game.isAssignmentStarted()">Start QAing </span>
+                                <span data-ng-show="game.isAssignmentStarted()">Resume QAing</span>
                             </button>
                         </td>
                         </tr>

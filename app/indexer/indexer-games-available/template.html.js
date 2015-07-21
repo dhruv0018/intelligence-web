@@ -37,7 +37,8 @@ export default `
                 <tbody>
                     <tr data-ng-repeat="game in games
                         | gameIsDeleted: false
-                        | gameIsInQa: true
+                        | gameIsReadyForQa
+                        | gameNotIndexedByMe
                         | orderBy: 'timeRemaining'
                         | limitTo: 100"
                     >

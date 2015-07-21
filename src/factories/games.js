@@ -1055,18 +1055,18 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             },
             findLastIndexerAssignment: function() {
-                var self = this;
+                let self = this;
 
                 if (!self.indexerAssignments) {
                     throw new Error('no indexer assignments');
                 }
 
-                var index = self.indexerAssignments.length - 1;
+                let index = self.indexerAssignments.length;
 
-                //iterate backwards through the assignments looking for the first indexer assignment
-                for (index; index >= 0; index--) {
-                    if (!self.indexerAssignments[index].isQa) {
-                        return self.indexerAssignments[index];
+                //iterate through the assignments looking for the first indexer assignment
+                for (let i=0; i < index; i++) {
+                    if (!self.indexerAssignments[i].isQa) {
+                        return self.indexerAssignments[i];
                     }
                 }
 
