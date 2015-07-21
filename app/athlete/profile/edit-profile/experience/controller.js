@@ -51,11 +51,19 @@ function ExperienceController (
         return positionset;
     };
 
-    $scope.getTeamSportName = function getTeamSportName(teamId) {
+    $scope.getPositionsForProfileTeam = function(teamId) {
+        let team = teams.get(teamId);
+        let league = leagues.get(team.leagueId);
+        let positionset = positionsets.get(league.positionSetId);
+        let positions = positionset.positions;
+        return positions;
+    };
+
+    $scope.getTeamSport = function(teamId) {
         let team = teams.get(teamId);
         let league = leagues.get(team.leagueId);
         let sport = sports.get(league.sportId);
-        return sport.name;
+        return sport;
     };
 
     $scope.openTeamModal = function(profileTeam) {
