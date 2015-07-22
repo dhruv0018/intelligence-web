@@ -33,7 +33,7 @@ describe('Player Tag Field', () => {
         let value = tagField.currentValue;
 
         expect(value.playerId).to.be.undefined;
-        expect(value.name).to.equal('Select');
+        expect(value.name).to.equal('');
     });
 
     it('Should be initialized correctly if not required', () => {
