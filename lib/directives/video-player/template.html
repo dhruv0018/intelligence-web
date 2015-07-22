@@ -15,7 +15,7 @@
             <vg-media
              vg-loop="videoPlayer.config.loop"
              vg-preload="videoPlayer.config.preload"
-             vg-src="videoPlayer.config.sources"
+             vg-src="videoPlayer.sources"
             >
             </vg-media>
 
@@ -63,7 +63,7 @@
 
                 <div class="controls-right">
 
-                    <a class="download" ng-href="{{videoPlayer.config.sources[0].src}}" tooltip="Download" download>
+                    <a class="download" ng-href="{{videoPlayer.sources[0].src}}" tooltip="Download" download>
                         <i class="icon icon-download"></i>
                     </a>
 
