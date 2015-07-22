@@ -1,6 +1,6 @@
 {
   "name": "intelligence-web-client",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "Krossover Intelligence Web Client",
   "author": "Jason Morganson <jason@krossover.com>",
   "private": true,
@@ -109,6 +109,7 @@
     "grunt-ver": "0.5.1",
     "hide-stack-frames-from": "^1.0.0",
     "karma": "0.12.31",
+    "karma-browserify": "4.2.1",
     "karma-chai": "0.1.0",
     "karma-chai-plugins": "0.2.4",
     "karma-chrome-launcher": "0.1.7",
@@ -127,7 +128,8 @@
     "sequelize": "^2.0.0-rc8",
     "svg.js": "2.0.0",
     "time-grunt": "1.1.0",
-    "traceur": "0.0.86"
+    "traceur": "0.0.86",
+    "tv4": "1.1.12"
   },
   "main": "./src/main.js",
   "scripts": {
