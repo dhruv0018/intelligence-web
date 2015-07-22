@@ -19,9 +19,11 @@ class PlayerField extends Field {
 
         Object.defineProperty(this.value, 'name', {
             get: () => {
-                let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+                let calculatedName = '';
+                //!this.isRequired ? 'Optional' : 'Select';
                 let value = this.currentValue;
                 let playerId = value.playerId;
+                //console.log('the playerId is ', playerId);
                 if (playerId) {
                     let injector = angular.element(document).injector();
                     let players = injector.get('PlayersFactory');
@@ -50,12 +52,13 @@ class PlayerField extends Field {
                 let teamPlayersValues = Object.keys(game.rosters[team.id].playerInfo).map( (playerId) => {
                     let rosterEntry = game.rosters[team.id].playerInfo[playerId];
                     let player = players.get(playerId);
+                    let jerseyNumber = player.isUnknown ? 'U' : angular.copy(rosterEntry.jerseyNumber);
 
                     let value = {
-                        playerId: player.id,
-                        jerseyColor: game.primaryJerseyColor,
-                        jerseyNumber: rosterEntry.jerseyNumber,
-                        name: player.firstName + ' ' + player.lastName
+                        playerId: angular.copy(player.id),
+                        jerseyColor: angular.copy(game.primaryJerseyColor),
+                        jerseyNumber,
+                        name: angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
                     };
                     return value;
                 });
@@ -63,16 +66,22 @@ class PlayerField extends Field {
                 let opposingTeamPlayersValues = Object.keys(game.rosters[opposingTeam.id].playerInfo).map( (playerId) => {
                     let rosterEntry = game.rosters[opposingTeam.id].playerInfo[playerId];
                     let player = players.get(playerId);
-
+                    let jerseyNumber = player.isUnknown ? 'U' : angular.copy(rosterEntry.jerseyNumber);
                     let value = {
-                        playerId: player.id,
-                        jerseyColor: game.opposingPrimaryJerseyColor,
-                        jerseyNumber: rosterEntry.jerseyNumber,
-                        name: player.firstName + ' ' + player.lastName
+                        playerId: angular.copy(player.id),
+                        jerseyColor: angular.copy(game.opposingPrimaryJerseyColor),
+                        jerseyNumber,
+                        name: angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
                     };
                     return value;
                 });
-                return teamPlayersValues.concat(opposingTeamPlayersValues);
+                let values =  teamPlayersValues.concat(opposingTeamPlayersValues);
+
+                if (!this.isRequired) {
+                    values.push({playerId: null, jerseyColor: null, jerseyNumber: 'NONE', name: 'Optional'});
+                }
+
+                return values;
             }
         });
     }
@@ -83,9 +92,12 @@ class PlayerField extends Field {
 
     set currentValue(playerOption) {
         let value = {
-            playerId: (playerOption.playerId) ? Number(playerOption.playerId) : playerOption.playerId
+            playerId: (playerOption.playerId) ? Number(playerOption.playerId) : playerOption.playerId,
+            name: playerOption.name || ''
         };
         this.value = value;
+        //console.log(this.value);
+        //Object.assign(this.value, value);
     }
 
     /**
@@ -121,7 +133,14 @@ class PlayerField extends Field {
         `;
     }
 
-    toJSON(){
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
         let variableValue = {};
         let value = (!this.isRequired && this.value.playerId === null) ? null : String(this.value.playerId);
 

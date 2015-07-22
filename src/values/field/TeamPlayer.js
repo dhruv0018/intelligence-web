@@ -76,7 +76,7 @@ class TeamPlayerField extends Field {
                     let value = {
                         playerId: player.id,
                         jerseyColor: game.primaryJerseyColor,
-                        jerseyNumber: rosterEntry.jerseyNumber,
+                        jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
                         name: player.firstName + ' ' + player.lastName
                     };
                     return value;
@@ -89,7 +89,7 @@ class TeamPlayerField extends Field {
                     let value = {
                         playerId: player.id,
                         jerseyColor: game.opposingPrimaryJerseyColor,
-                        jerseyNumber: rosterEntry.jerseyNumber,
+                        jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
                         name: player.firstName + ' ' + player.lastName
                     };
                     return value;
@@ -115,7 +115,8 @@ class TeamPlayerField extends Field {
     set currentValue(teamPlayerOption) {
         let value = {
             playerId: teamPlayerOption.playerId,
-            teamId: teamPlayerOption.teamId
+            teamId: teamPlayerOption.teamId,
+            name: teamPlayerOption.name
         };
         this.type = (typeof value.playerId !== 'undefined') ? 'Player' : 'Team';
         this.value = value;
@@ -150,7 +151,14 @@ class TeamPlayerField extends Field {
         }
     }
 
-    toJSON() {
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
         let variableValue = {
             type: this.type
         };

@@ -45,7 +45,14 @@ class DropdownField extends Field {
         return `<span class="value dropdown-field">${this.currentValue.content}</span>`;
     }
 
-    toJSON() {
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
         let variableValue = {};
         variableValue = {
             type: null,

@@ -45,13 +45,13 @@ class FormationField extends Field {
     }
 
     get currentValue() {
-
         return this.value;
     }
 
     set currentValue(formation) {
-
-        this.value = formation;
+        let value = {};
+        value = formation;
+        this.value = value;
     }
 
     /**
@@ -65,7 +65,14 @@ class FormationField extends Field {
         return `<span class="value formation-field">${this.currentValue.name}</span>`;
     }
 
-    toJSON() {
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
         let variableValue = {};
         let value = this.value.formationId === null ? null : String(this.value.formationId);
         variableValue = {
@@ -74,7 +81,6 @@ class FormationField extends Field {
         };
 
         return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
-
     }
 }
 

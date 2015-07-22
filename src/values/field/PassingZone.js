@@ -59,7 +59,13 @@ class PassingZoneField extends Field {
         return `<span class="value passing-zone-field">${this.currentValue.name}</span>`;
     }
 
-    toJSON(){
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON (){
         let variableValue = {};
         let value = this.value.zoneId === null ? null : String(this.value.zoneId);
         variableValue = {

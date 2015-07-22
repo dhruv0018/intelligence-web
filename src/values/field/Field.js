@@ -52,7 +52,13 @@ class Field extends Value {
         return `<h1>TEMPORARY!!!! toString method not defined for this field!</h1>`;
     }
 
-    toJSON() {
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
         throw Error('Trying to stringify abstract class - Field');
     }
 }
