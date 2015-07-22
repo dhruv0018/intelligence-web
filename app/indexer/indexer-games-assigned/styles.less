@@ -49,11 +49,14 @@
 
     .lookup {
 
+        width: 100%;
         text-decoration: none;
+        clear: both;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
 
         .lookup-container {
-            width: 100%;
-            height: 75px;
             margin: 0;
             padding-left: 40px;
             border: thin solid @gray-border;
@@ -65,15 +68,15 @@
                 padding-right: 20px;
                 padding-left: 20px;
                 padding-top: 10px;
-                line-height: 150px;
+                line-height: 70px;
 
                 i {
-                    font-size: 40px;
+                    font-size: 20px;
 
                     &::before {
 
-                        width: 90px;
-                        line-height: 90px;
+                        width: 50px;
+                        line-height: 50px;
                         text-align: center;
                         border: 3px solid @gray-darker;
                         border-radius: 50%;
@@ -94,7 +97,7 @@
             .right-container {
 
                 .pull-right;
-                line-height: 150px;
+                line-height: 100px;
 
                 i.icon-chevron-right {
                     font-size: 30px;
@@ -105,17 +108,22 @@
             div {
                 display: table-cell;
                 vertical-align: middle;
-                height: 150px;
+                height: 70px;
             }
+        }
+    }
+
+    .game-indexer-content {
+        width: 100%;
+
+        h3 {
+            padding-left: 15px;
         }
     }
 
     .indexer-list {
 
         width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
 
         td {
 
@@ -125,12 +133,17 @@
             font-size: @queue-list-font-size;
             line-height: 16px;
             padding: @queue-list-padding;
+            padding-left: 15px;
             font-weight: 500;
 
             &:first-child {
 
                 padding-left: 15px;
             }
+        }
+
+        th {
+            padding-left: 15px;
         }
 
         ul {
@@ -154,35 +167,13 @@
     }
 
     .flex-container {
-        display: -ms-flexbox;
-        display: -webkit-flex;
         display: flex;
-        -webkit-flex-direction: row;
-        -ms-flex-direction: row;
         flex-direction: row;
-        -webkit-flex-wrap: nowrap;
-        -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
-        -webkit-justify-content: flex-start;
-        -ms-flex-pack: start;
-        justify-content: flex-start;
-        -webkit-align-content: stretch;
-        -ms-flex-line-pack: stretch;
-        align-content: stretch;
-        -webkit-align-items: flex-start;
-        -ms-flex-align: start;
-        align-items: flex-start;
+        align-items: stretch;
     }
 
     .flex-item {
-        -webkit-order: 0;
-        -ms-flex-order: 0;
-        order: 0;
-        -webkit-flex: 0 1 auto;
-        -ms-flex: 0 1 auto;
-        flex: 0 1 auto;
-        -webkit-align-self: auto;
-        -ms-flex-item-align: auto;
-        align-self: auto;
+
     }
+
 }

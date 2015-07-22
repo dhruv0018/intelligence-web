@@ -20,19 +20,18 @@ export default `
 
         </aside>
 
-        <main class="content" data-ui-view="content">
+        <div class="game-indexer-content">
 
-        <div class="box-body">
             <h3>Games History</h3>
             <table class="table-striped table-hover indexer-list">
                 <thead>
                 <tr>
-                    <td>Date Assigned</td>
-                    <td>Game ID</td>
-                    <td>Game</td>
-                    <td>Sport</td>
-                    <td>Status</td>
-                    <td>Date Completed</td>
+                    <th>Date Assigned</th>
+                    <th>Game ID</th>
+                    <th>Game</th>
+                    <th>Sport</th>
+                    <th>Status</th>
+                    <th>Date Completed</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -55,9 +54,8 @@ export default `
                 </tr>
                 </tbody>
 
-        </table>
+            </table>
         </div>
-        </main>
 
     </section>
 `;
