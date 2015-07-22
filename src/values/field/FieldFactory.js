@@ -36,7 +36,7 @@ class FieldFactory {
 
         let field;
 
-        switch (rawField.inputType) {
+        switch (rawField.type) {
 
         case 'PLAYER_DROPDOWN':
             field = new PlayerField(rawField);
