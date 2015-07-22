@@ -172,7 +172,7 @@ class KrossoverEvent extends Entity {
         delete copy.buffer;
         delete copy.name;
 
-        copy.variableVales = {};
+        copy.variableValues = {};
 
         Object.keys(copy.fields).forEach(order => {
 
