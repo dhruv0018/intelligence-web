@@ -18,6 +18,8 @@ require('../build/build');
 
 import Reel from '../app/reel/index.js';
 import FieldComponent from '../lib/directives/field/index';
+import IndexingBlock from '../lib/directives/indexing-block/index';
+import DynamicTables from '../lib/directives/dynamic-tables/index';
 
 /* App dependencies */
 require('./config');
@@ -79,6 +81,8 @@ require('./constants/device');
 require('./constants/states');
 require('./constants/video-player');
 require('./constants/views');
+require('./constants/schemas');
+require('./constants/subscriptions');
 require('./constants/playlist');
 require('./constants/keyboard');
 require('./constants/telestrations');

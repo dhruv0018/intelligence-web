@@ -46,6 +46,8 @@
             <li id="mobile-menu-athlete-film-home-cta" data-ui-sref-active="active"><a data-ui-sref="Athlete.FilmHome">Film Home</a></li>
             <li
                 data-ng-if="config.athleteProfile.isEnabled"
+                ng-show="currentUserIsAthleteRecruit"
+                class="ng-hide"
                 data-ui-sref-active="active"
             ><a id="mobile-menu-athlete-profile-cta" data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
         </menu>
@@ -92,7 +94,23 @@
     <menu class="nav navbar-nav" data-ng-if="currentUser.is(COACH)">
 
         <li data-ui-sref-active="active"><a id="menu-coach-film-home-cta" data-ui-sref="Coach.FilmHome">Film Home</a></li>
-        <li data-ng-if="league.sportId === SPORTS.FOOTBALL.id" data-ui-sref-active="active"><a id="menu-coach-analytics-cta" data-ui-sref="Coach.Analytics">Analytics</a></li>
+        <li ng-if="league.sportId === SPORTS.FOOTBALL.id || league.sportId === SPORTS.VOLLEYBALL.id" id="menu-coach-analytics-cta" class="header-dropdown" ng-class="{active: $state.includes('Coach.Analytics')}">
+            <a class="dropdown-toggle" dropdown-toggle>Analytics</a>
+            <ul class="dropdown-menu">
+                <li feature="TeamAnalytics">
+                    <a
+                        id="menu-coach-analytics-team-cta"
+                        ui-sref="Coach.Analytics.Team"
+                    >Team Analytics</a>
+                </li>
+                <li feature="PlayerAnalytics">
+                    <a
+                        id="menu-coach-analytics-player-cta"
+                        ui-sref="Coach.Analytics.Player"
+                    >Player Analytics</a>
+                </li>
+            </ul>
+        </li>
         <li id="menu-coach-team-cta" class="header-dropdown" data-ng-class="{active: $state.includes('Coach.Team')}">
             <a class="dropdown-toggle" dropdown-toggle>Team</a>
             <ul class="dropdown-menu">
@@ -111,6 +129,8 @@
         <li data-ui-sref-active="active"><a id="menu-athlete-film-home-cta" data-ui-sref="Athlete.FilmHome">Film Home</a></li>
         <li
             data-ng-if="config.athleteProfile.isEnabled"
+            ng-show="currentUserIsAthleteRecruit"
+            class="ng-hide"
             data-ui-sref-active="active"
         ><a id="menu-athlete-profile-cta" data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
     </menu>
