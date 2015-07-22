@@ -1,13 +1,18 @@
-import Tag from './tag';
+import Entity from './entity';
+import FieldFactory from '../values/field/FieldFactory';
 
-class Event extends Tag {
+/**
+ * KrossoverEvent Entity Model
+ * @class KrossoverEvent
+ */
+class KrossoverEvent extends Entity {
 
     /**
-     * @constructs KrossoverPlay
-     * @param event {Object}
-     * @param tag {Object}
-     * @param time {Number}
-     * @param gameId {Number}
+     * @constructs KrossoverEvent
+     * @param {Object} event     - Event JSON
+     * @param {KrossoverTag} tag - An instantiated KrossoverTag tag
+     * @param {Number} time      - The time
+     * @param {Number} gameId    - The game ID
      */
     constructor (event, tag, time, gameId) {
 
@@ -17,125 +22,134 @@ class Event extends Tag {
 
             time  = tag;
             tag   = event;
-            event = null;
+            event = {};
         }
 
-        /* Build out tag instance via super */
         super(tag);
-        this.tagId = this.id;
 
-        /* Add event data */
-        event                         = event || {};
-        this.variableValues           = event.variableValues || {};
+        this.tagId = tag.id;
+
+        /* TODO: Get rid of this property when indexing service is refactored */
         this.activeEventVariableIndex = event.activeEventVariableIndex || 1;
-        this.id                       = event.id;
-        this.playId                   = event.playId;
-        this.time                     = time;
 
-        this.fields = {};
+        this.id     = event.id;
+        this.playId = event.playId;
+        this.time   = time;
 
-        Object.keys(this.tagVariables).forEach((positionId, index) => {
+        /* Transform variables */
+        Object.keys(this.fields).forEach((order, index) => {
 
-            index = index + 1;
-            let variableValue = angular.copy(this.tagVariables[positionId]) || {};
-            //this.variableValues[tagVariableId];
-            let tagVariable = this.tagVariables[index];
-            variableValue.gameId = gameId;
-            variableValue.inputType = tagVariable.type;
-            variableValue.options = tagVariable.options;
-            variableValue.formations = tagVariable.formations;
-            variableValue.id = tagVariable.id;
-            variableValue.order = index;
-            variableValue.isRequired = tagVariable.isRequired;
-            delete variableValue.type;
-            let temporaryVariable = this.variableValues[variableValue.id] || {};
-            variableValue.value = temporaryVariable.value;
-            if (temporaryVariable.type) {
+            let variableValue = event.variableValues[this.fields[order].id];
 
-                variableValue.type = temporaryVariable.type;
+            this.fields[order].gameId    = gameId;
+            this.fields[order].inputType = this.fields[order].type;
+            this.fields[order].order     = index + 1;
+
+            switch (this.fields[order].inputType) {
+
+            case 'PLAYER_DROPDOWN':
+                this.fields[order].currentValue = {
+
+                    playerId: variableValue.value
+                };
+                break;
+            case 'TEAM_DROPDOWN':
+                this.fields[order].currentValue = {
+
+                    teamId: variableValue.value
+                };
+                break;
+            case 'PLAYER_TEAM_DROPDOWN':
+                this.fields[order].currentValue = {
+
+                    teamId: variableValue.type === 'Team' ? variableValue.value : undefined,
+                    playerId: variableValue.type === 'Player' ? variableValue.value : undefined
+                };
+                break;
+            case 'YARD':
+                this.fields[order].currentValue = {
+
+                    name: variableValue.value,
+                    content: variableValue.value
+                };
+                break;
+            default:
+                this.fields[order].currentValue = variableValue.value;
             }
-            this.variableValues[tagVariable.id] = variableValue;
-        });
 
-        this.indexFields(this.variableValues, 'variableValues');
+            if (variableValue.type) {
+
+                this.fields[order].type = variableValue.type;
+            } else {
+
+                delete this.fields[order].type;
+            }
+        });
     }
+
     /**
-     * Getter for event.shortcutKey
-     * @method Event.shortcutKey
+     * Getter for this.shortcutKey
+     *
      * @readonly
-     * @returns {String} shortcutKey
+     * @type {String}
      */
     get keyboardShortcut () {
 
         return this.shortcutKey;
     }
 
-    /**
-     * Checks whether the event has variables.
-     * @returns - true if the event has variables; false otherwise.
-     */
-    get hasVariables () {
+    set keyboardShortcut (value) {
 
-        /* Check if the event has tag variables. */
-        return this.tagVariables && !!Object.keys(this.tagVariables).length;
+        return;
     }
 
     /**
      * Checks if all the variables have values.
-     * @returns {Boolean} true, if all of the variables have a value;
-     * false otherwise.
+     *
+     * @method isValid
+     * @returns {Boolean} - true, if all fields are valid; false otherwise.
      */
-    get isValid () {
+    isValid () {
 
-        const self = this;
+        Object.keys(this.fields).forEach(order => {
 
-        function variableFromKey (tagVariableId) {
+            if (!this.fields[order].isValid()) {
 
-            /* Lookup the tag variable. */
-            return self.variableValues[tagVariableId];
-        }
+                return false;
+            }
+        });
 
-        function variableIsValid (variable) {
-
-            /* If the variable is not required, it doesn't need a value. */
-            if (!variable.isRequired) return true;
-
-            /* Check if the variable has a value. */
-            return !!variable.value;
-        }
-
-        /* Ensure that every required variable has a value. */
-        return Object.keys(this.variableValues)
-        .map(variableFromKey)
-        .every(variableIsValid);
+        return true;
     }
 
     /**
      * Checks whether the event is a floating event.
-     * @returns - true if the event is floating event; false otherwise.
+     *
+     * @method isFloat
+     * @returns {Boolean} - true if the event is floating event; false otherwise.
      */
-    get isFloat () {
+    isFloat () {
 
         return this.isStart === false && this.isEnd === false && this.children && this.children.length === 0;
     }
 
     /**
-     * Checks whether the event is an end-and-start event.
-     * @returns - true if the event is an end-and-start event; false otherwise.
+     * Checks whether the event is an end-and-start event: is an end tag and
+     * only has one child.
+     *
+     * @method isEndAndStart
+     * @returns {Boolean} - true if the event is an end-and-start event; false otherwise.
      */
-    get isEndAndStart () {
+    isEndAndStart () {
 
-        /* Check if the given event is an end tag and only has one child. */
         return this.isEnd && this.children && this.children.length === 1;
     }
 
-    // TODO: Should this just return an object instead of JSON?
-
     /**
-     * Method: toJSON
      * Reverts the class instance to JSON suitable for the server.
      *
-     * @return: {String} Stringified version of the object.
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
      */
     toJSON () {
 
@@ -150,7 +164,6 @@ class Event extends Tag {
         delete copy.isEnd;
         delete copy.tagSetId;
         delete copy.children;
-        delete copy.tagVariables;
         delete copy.pointsAssigned;
         delete copy.assignThisTeam;
         delete copy.isPeriodTag;
@@ -161,13 +174,13 @@ class Event extends Tag {
 
         copy.variableVales = {};
 
-        Object.keys(copy.fields).forEach((order) => {
+        Object.keys(copy.fields).forEach(order => {
 
             copy.variableValues[copy.fields[order].id] = copy.fields[order].toJSON();
         });
 
-        return JSON.stringify(copy);
+        return copy;
     }
 }
 
-export default Event;
+export default KrossoverEvent;
