@@ -27,7 +27,7 @@
     <krossover-item-yard data-ng-if="item.type === 'YARD'"></krossover-item-yard>
 
     <!-- Static item -->
-    <krossover-item-static data-ng-if="isString(item)"></krossover-item-static>
+    <krossover-item-static data-ng-if="isString(item) || item.type === 'STATIC'"></krossover-item-static>
 
     <!-- Dropdown variable -->
     <krossover-item-dropdown data-ng-if="item.type === 'DROPDOWN'"></krossover-item-dropdown>
