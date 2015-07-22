@@ -8,13 +8,14 @@ const IntelligenceWebClient = angular.module(pkg.name);
 const GAME_STATUS_IDS = {
 
     0: 'NOT_INDEXED',
-    1: 'READY_FOR_INDEXING',
+    1: 'SUBMITTED_FOR_INDEXING',
     2: 'INDEXING',
     3: 'READY_FOR_QA',
     4: 'QAING',
     5: 'SET_ASIDE',
     6: 'INDEXED',
-    7: 'FINALIZED'
+    7: 'FINALIZED',
+    8: 'READY_FOR_INDEXING'
 };
 
 IntelligenceWebClient.constant('GAME_STATUS_IDS', GAME_STATUS_IDS);
@@ -27,10 +28,10 @@ const GAME_STATUSES = {
         name: 'Not Indexed'
     },
 
-    READY_FOR_INDEXING: {
+    SUBMITTED_FOR_INDEXING: {
         id: 1,
         type: 'success',
-        name: 'Indexing, not started'
+        name: 'Indexing, submitted'
     },
 
     INDEXING: {
@@ -67,6 +68,12 @@ const GAME_STATUSES = {
         id: 7,
         type: 'success',
         name: 'Game Delivered'
+    },
+
+    READY_FOR_INDEXING: {
+        id: 8,
+        type: 'success',
+        name: 'Indexing, not started'
     }
 };
 
