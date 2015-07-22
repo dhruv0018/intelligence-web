@@ -112,7 +112,26 @@ class Video extends Entity {
         // Instantiate transcodeProfile entities
         if (this.isComplete() && this.videoTranscodeProfiles) {
 
-            this.videoTranscodeProfiles = this.videoTranscodeProfiles.map(transcodeProfile => new TranscodeProfile(transcodeProfile));
+            // NOTE: Adding videoTranscodeProfilesByBitrate FIXES A BACKEND BUG
+            // WHERE DUPLICATE TRANSCODE PROFILES ARE PRESENT AND REMOVES THEM
+            // ON THE FRONTEND.
+            // TODO: REMOVE videoTranscodeProfilesByBitrate WHEN BACKEND NO LONGER
+            // PRODUCES DUPLICATE VIDEO PROFILES AND A MIGRATION IS COMPLETE.
+            let videoTranscodeProfilesByBitrate = {};
+
+            this.videoTranscodeProfiles.forEach(videoTranscodeProfile => {
+
+                let targetBitrate = videoTranscodeProfile.transcodeProfile.targetBitrate;
+                if (videoTranscodeProfilesByBitrate[targetBitrate]) return;
+                else videoTranscodeProfilesByBitrate[targetBitrate] = videoTranscodeProfile;
+            });
+
+            this.videoTranscodeProfiles = Object.keys(videoTranscodeProfilesByBitrate).map(bitrate => {
+
+                let transcodeProfile = videoTranscodeProfilesByBitrate[bitrate];
+                return new TranscodeProfile(transcodeProfile);
+            });
+
             this.videoTranscodeProfiles.sort((a, b) => b.targetBitrate - a.targetBitrate);
         }
     }
@@ -161,6 +180,7 @@ class Video extends Entity {
      */
     get transcodeProfiles() {
 
+        console.log('this.videoTranscodeProfiles', this.videoTranscodeProfiles);
         return this.videoTranscodeProfiles;
     }
 
