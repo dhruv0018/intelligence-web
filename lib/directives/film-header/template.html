@@ -11,21 +11,29 @@
 
     <span class="film-options">
         <publish-user-profile-reel
-            ng-if="isReel && config.athleteProfile.isEnabled && userCanPublishReel"
+            ng-if="isReel && config.athleteProfile.isEnabled && userCanPublishReel && currentUserIsAthleteRecruit"
             user="user"
             reel="film"
         ></publish-user-profile-reel>
 
-        <a class="share-game"
-            data-ng-click="ShareFilmModal.open(film)"
-            data-ng-if="(isUploader || isCoachOnUploaderTeam) && validVideo">
+        <a
+         id="reels-share-cta"
+         class="share-game"
+         data-ng-click="ShareFilmModal.open(film)"
+         data-ng-if="(isUploader || isCoachOnUploaderTeam) && validVideo">
+
             <i class="icon icon-share"></i>Share
+
         </a>
 
-        <span class="delete-reel"
-            data-ng-if="userIsLoggedIn && isReel && isUploader"
-            data-ng-click="deleteReel()">
+        <span
+         id="reels-delete-cta"
+         class="delete-reel"
+         data-ng-if="userIsLoggedIn && isReel && isUploader"
+         data-ng-click="deleteReel()">
+
             <i class="icon icon-remove"></i>Delete Reel
+
         </span>
     </span>
 </div>

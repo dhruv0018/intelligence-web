@@ -1,0 +1,12 @@
+{
+    "name": "telestration-clear-all-button",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

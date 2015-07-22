@@ -6,13 +6,17 @@ require('physical');
 require('contact');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/edit-profile/template.html';
+
+const template = require('./template.html');
 
 /**
  * Edit Profile page module.
  * @module Edit Profile
  */
-var EditProfile = angular.module('Athlete.Profile.EditProfile', [
+const EditProfile = angular.module('Athlete.Profile.EditProfile', [
     'Athlete.Profile.EditProfile.BasicInfo',
     'Athlete.Profile.EditProfile.Academics',
     'Athlete.Profile.EditProfile.Experience',
@@ -29,7 +33,7 @@ EditProfile.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('athlete/edit-profile/template.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 
@@ -42,23 +46,19 @@ EditProfile.service('Athlete.Profile.EditProfile.Data.Dependencies', [
     '$q', 'SportsFactory', 'TeamsFactory', 'PositionsetsFactory', 'UsersFactory', 'SessionService',
     function($q, sports, teams, positionsets, users, session) {
 
-        //TODO: getTeamsByProfileId?
-        let profileTeams = [];
+        let Data = {
 
-        if (session.currentUser.profile.teams) {
+            sports: sports.load(),
+            positionsets: positionsets.load()
+        };
+
+        if (session.currentUser.profile.teams.length) {
             let teamIds = session.currentUser.profile.teams.map(function(team) {
                 return team.teamId;
             });
 
-            profileTeams = teams.load(teamIds);
+            Data.teams = teams.load(teamIds);
         }
-
-        let Data = {
-
-            sports: sports.load(),
-            teams: profileTeams,
-            positionsets: positionsets.load()
-        };
 
         return Data;
 

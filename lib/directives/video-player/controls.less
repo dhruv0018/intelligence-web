@@ -14,6 +14,10 @@
 @scrubber-buffered-color: #bfbfbf;
 @scrubber-elapsed-color: @brand-primary;
 
+@scrub-bar-height: 10px;
+@controls-bottom-height: 50px;
+@controls-height: @scrub-bar-height + @controls-bottom-height;
+
 videogular button {
     cursor: pointer;
 }
@@ -64,10 +68,7 @@ videogular vg-play-pause-button .icon {
 
 videogular vg-controls {
     display: block;
-    position: absolute;
-    z-index: 3;
-    left: 0;
-    bottom: 0;
+    flex: 0 0 @controls-height;
     width: 100%;
 
     .controls-container {
@@ -78,13 +79,17 @@ videogular vg-controls {
 
         .controls-bottom {
             display: flex;
-            height: 50px;
+            height: @controls-bottom-height;
             width: 100%;
             position: relative;
             justify-content: space-between;
             align-content: center;
             background-color: @control-bar-bg;
             color: @control-bar-color;
+
+            > div {
+                width: percentage(1/3);
+            }
         }
 
         .controls-left,
@@ -92,15 +97,29 @@ videogular vg-controls {
         .controls-right {
             display: flex;
             height: 100%;
-            line-height: 50px;
             opacity: 1;
+        }
+
+        .controls-left {
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .controls-center {
+            justify-content: center;
+            align-items: baseline;
+        }
+
+        .controls-right {
+            align-items: center;
+            justify-content: flex-end;
         }
     }
 }
 
 videogular vg-scrub-bar {
     display: block;
-    height: 10px;
+    height: @scrub-bar-height;
     width: 100%;
     cursor: pointer;
     background-color: @scrubber-bg;

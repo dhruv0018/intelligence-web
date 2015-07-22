@@ -10,7 +10,7 @@
 
                     <h3 class="box-title">Choose one of the following options</h3>
 
-                    <x-button-continue data-ng-disabled="savingBreakdown || isBreakdownChoiceMade || statusBuffer < 0 || formInstructions.$invalid">{{(savingBreakdown)? 'Finalizing...' : 'Save and Submit'}}</x-button-continue>
+                    <x-button-continue id="save-and-submit-cta" data-ng-disabled="savingBreakdown || isBreakdownChoiceMade || statusBuffer < 0 || formInstructions.$invalid">{{(savingBreakdown)? 'Finalizing...' : 'Save and Submit'}}</x-button-continue>
 
                 </header>
                 <div class="box-body col-md-12">
@@ -23,7 +23,8 @@
 
                                 <div class="select-boxes col-md-12">
 
-                                    <button data-ng-show="hasRoster || game.isNonRegular()" type="button" class="btn-radio breakdown-choice breakdown-game" data-ng-disabled="remainingBreakdowns.planGamesRemaining <= 0 && remainingBreakdowns.packageGamesRemaining <= 0" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.READY_FOR_INDEXING.id">
+                                    <button id="non-regular-breakdown-cta" data-ng-show="hasRoster || game.isNonRegular()" type="button" class="btn-radio breakdown-choice breakdown-game" data-ng-disabled="remainingBreakdowns.planGamesRemaining <= 0 && remainingBreakdowns.packageGamesRemaining <= 0" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.SUBMITTED_FOR_INDEXING.id">
+
 
                                         <i class="icon icon-bar-chart-o"></i>
                                         <div>
@@ -33,12 +34,13 @@
 
                                     </button>
 
-                                    <button data-ng-show="game.isRegular() && !hasRoster" type="button" class="btn-radio breakdown-game breakdown-choice no-roster" data-ng-disabled="true" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.READY_FOR_INDEXING.id }}">
+                                    <button id="regular-breakdown-cta" data-ng-show="game.isRegular() && !hasRoster" type="button" class="btn-radio breakdown-game breakdown-choice no-roster" data-ng-disabled="true" data-ng-model="statusBuffer" data-btn-radio="{{ GAME_STATUSES.SUBMITTED_FOR_INDEXING.id }}">
+
 
                                         <i class="icon icon-bar-chart-o"></i>
                                         <div>
                                             <h1>Break this game down.</h1>
-                                            <p>Games cannot be submitted to be broken down without a roster. <br/> To add players to your roster, <a data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team.Roster">click here</a>.</p>
+                                            <p>Games cannot be submitted to be broken down without a roster. <br/> To add players to your roster, <a id="go-to-team-roster-cta" data-ng-click="returnToGameAlert()" data-ui-sref="Coach.Team.Roster">click here</a>.</p>
                                         </div>
                                         <i class="icon icon-check-empty"></i>
 
@@ -52,7 +54,7 @@
 
                                 <div class="select-boxes col-md-12">
 
-                                    <button type="button" class="btn-radio breakdown-choice" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.NOT_INDEXED.id">
+                                    <button id="save-for-sharing-cta" type="button" class="btn-radio breakdown-choice" data-ng-model="statusBuffer" data-btn-radio="GAME_STATUSES.NOT_INDEXED.id">
 
                                         <i class="icon icon-share-square-o"></i>
                                         <div>
@@ -95,15 +97,15 @@
                                             <div class="confirmation-text">
 
                                                 <i data-ng-show="statusBuffer === GAME_STATUSES['NOT_INDEXED'].id" class="icon icon-share-square-o"></i>
-                                                <i data-ng-show="statusBuffer === GAME_STATUSES['READY_FOR_INDEXING'].id" class="icon icon-bar-chart-o"></i>
+                                                <i data-ng-show="statusBuffer === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id" class="icon icon-bar-chart-o"></i>
 
                                                 <div class="breakdown-information">
 
-                                                    <h3 data-ng-show="statusBuffer === GAME_STATUSES['READY_FOR_INDEXING'].id">This game will be broken down</h3>
+                                                    <h3 data-ng-show="statusBuffer === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game will be broken down</h3>
                                                     <h3 data-ng-show="statusBuffer === GAME_STATUSES['NOT_INDEXED'].id">This game will NOT be broken down, but it can be shared.</h3>
 
                                                     <p>
-                                                        <i data-ng-show="statusBuffer === GAME_STATUSES['READY_FOR_INDEXING'].id">This game will be submitted for breakdown once it has uploaded and processed.</i>
+                                                        <i data-ng-show="statusBuffer === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game will be submitted for breakdown once it has uploaded and processed.</i>
                                                         <i data-ng-show="statusBuffer === GAME_STATUSES['NOT_INDEXED'].id"> This game will NOT be submitted for breakdown once it has uploaded and processed. </i>
                                                     </p>
 
@@ -111,11 +113,12 @@
                                                         <div class="remaining-breakdowns">{{remainingBreakdowns.planGamesRemaining||0}}</div> Breakdowns left this week. {{remainingBreakdowns.packageGamesRemaining||0}} extra breakdowns.
                                                     </div>
 
-                                                    <button data-ng-disabled="statusBuffer > GAME_STATUSES['READY_FOR_INDEXING'].id || (data.remainingBreakdowns.planGamesRemaining <= 0 && data.remainingBreakdowns.packageGamesRemaining <= 0) || game.isSaving" class="switch-choice" data-ng-click="switchChoice()">
+                                                    <button id="change-breakdown-choice-cta" data-ng-disabled="statusBuffer > GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id || (data.remainingBreakdowns.planGamesRemaining <= 0 && data.remainingBreakdowns.packageGamesRemaining <= 0) || game.isSaving" class="switch-choice" data-ng-click="switchChoice()">
+
                                                         <i class="icon icon-arrow-left"></i>
-                                                        <span data-ng-show="statusBuffer === GAME_STATUSES['READY_FOR_INDEXING'].id">Change to sharing only</span>
+                                                        <span data-ng-show="statusBuffer === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">Change to sharing only</span>
                                                         <span data-ng-show="statusBuffer === GAME_STATUSES['NOT_INDEXED'].id">Break this game down</span>
-                                                        <span data-ng-show="statusBuffer > GAME_STATUSES['READY_FOR_INDEXING'].id">Game has already been broken down</span>
+                                                        <span data-ng-show="statusBuffer > GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">Game has already been broken down</span>
                                                     </button>
                                                 </div>
                                             </div>

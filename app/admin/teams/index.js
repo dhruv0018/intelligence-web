@@ -110,8 +110,16 @@ Teams.config([
                 },
                 resolve: {
                     'Teams.Data': [
-                        '$q', 'Teams.Data.Dependencies',
-                        function($q, data) {
+                        '$stateParams', '$q', 'Teams.Data.Dependencies', 'TeamsFactory',
+                        function($stateParams, $q, data, teams) {
+                            let teamId = $stateParams.id;
+                            if (teamId) {
+                                data.breakdownStats = teams.getRemainingBreakdowns(teamId)
+                                    .then(function(breakdownData) {
+                                        return breakdownData;
+                                    });
+                            }
+
                             return $q.all(data);
                         }
                     ]
@@ -188,21 +196,24 @@ Teams.filter('visiblePlanOrPackage', [
  * @type {Controller}
  */
 Teams.controller('TeamPlansController', [
-    '$scope', '$filter', '$modal', 'TeamsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'BasicModals',
-    function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup, basicModals) {
-
+    '$scope', '$filter', '$modal', 'TeamsFactory', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'BasicModals', 'Teams.Data',
+    function controller($scope, $filter, $modal, teams, minTurnaroundTimeLookup, basicModals, data) {
+        //todo do we need to add a factory for remaining breakdowns so we dont need to inject data?
+        $scope.breakdownStats = data.breakdownStats ? data.breakdownStats : {};
+        $scope.isSavingPlan = false;
+        $scope.isSavingPackage = false;
         $scope.minTurnaroundTimeLookup = minTurnaroundTimeLookup;
 
         $scope.team.teamPackages = $scope.team.teamPackages || [];
         $scope.team.teamPlans = $scope.team.teamPlans || [];
 
-        function applyFilter() {
+        $scope.applyFilter = function() {
             $scope.filteredPackages = $filter('visiblePlanOrPackage')($scope.team.teamPackages);
             $scope.filteredPlans = $filter('visiblePlanOrPackage')($scope.team.teamPlans);
-        }
+        };
 
-        $scope.$watch(function() { return $scope.team.teamPlans; }, applyFilter, true);
-        $scope.$watch(function() { return $scope.team.teamPackages; }, applyFilter, true);
+        $scope.$watch(function() { return $scope.team.teamPlans; }, $scope.applyFilter, true);
+        $scope.$watch(function() { return $scope.team.teamPackages; }, $scope.applyFilter, true);
 
         var openPackageModal = function(editTeamPackageObjIndex) {
             var modalInstance = $modal.open({
@@ -217,6 +228,7 @@ Teams.controller('TeamPlansController', [
             });
 
             modalInstance.result.then(function(teamWithPackagesToSave) {
+                $scope.isSavingPackage = true;
                 $scope.save(teamWithPackagesToSave);
             });
         };
@@ -232,6 +244,7 @@ Teams.controller('TeamPlansController', [
             });
 
             modalInstance.result.then(function(teamWithPlansToSave) {
+                $scope.isSavingPlan = true;
                 $scope.save(teamWithPlansToSave);
             });
         };
@@ -264,6 +277,7 @@ Teams.controller('TeamPlansController', [
             modalInstance.result.then(function confirm() {
                 //delete the package
                 $scope.team.teamPackages.splice(packageIdToRemove, 1);
+                $scope.isSavingPackage = true;
                 $scope.save($scope.team);
             });
         };
@@ -280,12 +294,21 @@ Teams.controller('TeamPlansController', [
             modalInstance.result.then(function confirm() {
                 //delete the plan
                 $scope.team.teamPlans.splice(planIdToRemove, 1);
+                $scope.isSavingPlan = true;
                 $scope.save($scope.team);
             });
         };
 
+        //todo I really dislike this code
         $scope.save = function(team) {
-            teams.save(team).then(function() {});
+            teams.save(team).then(function() {
+                teams.getRemainingBreakdowns(team.id)
+                    .then(function(breakdownData) {
+                        $scope.isSavingPlan = false;
+                        $scope.isSavingPackage = false;
+                        $scope.breakdownStats = breakdownData;
+                    });
+            });
         };
     }
 ]);
@@ -360,7 +383,7 @@ Teams.controller('TeamController', [
         });
 
         $scope.findSchoolsByName = function() {
-            return schoolsFactory.query({name: $scope.schoolName, count: 10}).then(function(schools) {
+            return schoolsFactory.query({name: $scope.schoolName}).then(function(schools) {
                 return $filter('orderBy')(schools, 'name');
             });
         };
