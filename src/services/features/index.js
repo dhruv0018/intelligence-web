@@ -14,21 +14,21 @@ class Features {
         let disable = angular.fromJson($location.search().disable);
 
         /* Bind functions to the thisObject */
-        this.enableFeature = this.enableFeature.bind(this);
-        this.disableFeature = this.disableFeature.bind(this);
+        this.enable = this.enable.bind(this);
+        this.disable = this.disable.bind(this);
         this.isEnabled = this.isEnabled.bind(this);
 
         /* If either of the query string parameters are arrays,
          * treat each array item as a feature config. */
-        if (Array.isArray(enable)) enable.forEach(this.enableFeature);
-        if (Array.isArray(disable)) disable.forEach(this.disableFeature);
+        if (Array.isArray(enable)) enable.forEach(this.enable);
+        if (Array.isArray(disable)) disable.forEach(this.disable);
     }
 
     /**
      * Enables the given feature.
      * @param {string} featureName - name of the feature to enable.
      */
-    enableFeature (featureName) {
+    enable (featureName) {
 
         this.features[featureName] = {};
         this.features[featureName][WILDCARD] = true;
@@ -38,7 +38,7 @@ class Features {
      * Disables the given feature.
      * @param featureName - name of the feature to disable.
      */
-    disableFeature (featureName) {
+    disable (featureName) {
 
         delete this.features[featureName];
     }
