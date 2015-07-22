@@ -25,10 +25,10 @@ class StaticField extends Field {
     }
 
     /**
-     * Method: toString
      * Generates an HTML string of the field.
      *
-     * @return: {String} HTML of the field
+     * @method toString
+     * @returns {String} - HTML of the field
      */
     toString () {
 
