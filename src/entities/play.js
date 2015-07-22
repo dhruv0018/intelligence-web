@@ -41,7 +41,7 @@ class KrossoverPlay extends Entity {
 
         this.events = this.events.map(event => {
 
-            let tag = tagsets.getTagJSON(event.tagId);
+            let tag = tagsets.getTag(event.tagId);
 
             return new KrossoverEvent(event, tag, event.time, this.gameId);
         });
@@ -98,13 +98,11 @@ class KrossoverPlay extends Entity {
         });
     }
 
-    // TODO: Should this just return an object instead of JSON?
-
     /**
-     * Method: toJSON
      * Reverts the class instance to JSON suitable for the server.
      *
-     * @return: {String} Stringified version of the object.
+     * @method toJSON
+     * @returns {String} - Stringified version of the object.
      */
     toJSON () {
 
@@ -117,12 +115,12 @@ class KrossoverPlay extends Entity {
         delete copy.hasVisibleEvents;
         delete copy.isFiltered;
 
-        copy.events = copy.events.map((event) => {
+        copy.events = copy.events.map(event => {
 
-            return JSON.parse(event.toJSON());
+            return event.toJSON();
         });
 
-        return JSON.stringify(copy);
+        return copy;
     }
 }
 
