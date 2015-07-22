@@ -60,8 +60,8 @@ describe('Yard Event Field', () => {
         localEventVariable.isRequired = true;
         let eventField = new YardField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":null,"value":"1"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":"1"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -71,8 +71,7 @@ describe('Yard Event Field', () => {
 
         let eventField = new YardField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":null,"value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":null}');
     });
 });

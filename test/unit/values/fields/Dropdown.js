@@ -73,8 +73,8 @@ describe('Dropdown Event Field', () => {
         localEventVariable.isRequired = true;
         let eventField = new DropdownField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":null,"value":"Normal"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":"Normal"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -84,9 +84,8 @@ describe('Dropdown Event Field', () => {
 
         let eventField = new DropdownField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":null,"value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":null}');
     });
 
     it('Should be able to switch back to an optional value from a set value', () => {

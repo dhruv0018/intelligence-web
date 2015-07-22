@@ -75,8 +75,8 @@ describe('Team Event Field', () => {
         localEventVariable.isRequired = true;
         let eventField = new TeamField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":"Team","value":"1"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":"Team","value":"1"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -86,9 +86,8 @@ describe('Team Event Field', () => {
 
         let eventField = new TeamField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":"Team","value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":"Team","value":null}');
     });
     //
     // it('Should be able to switch back to an optional value from a set value', () => {
