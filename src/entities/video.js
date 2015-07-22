@@ -180,7 +180,6 @@ class Video extends Entity {
      */
     get transcodeProfiles() {
 
-        console.log('this.videoTranscodeProfiles', this.videoTranscodeProfiles);
         return this.videoTranscodeProfiles;
     }
 
