@@ -1,6 +1,8 @@
 import Entity from './entity';
 import FieldFactory from '../values/field/FieldFactory';
 
+const schema = require('../../schemas/event.json');
+
 /**
  * KrossoverEvent Entity Model
  * @class KrossoverEvent
@@ -16,75 +18,35 @@ class KrossoverEvent extends Entity {
      */
     constructor (event, tag, time, gameId) {
 
-        /* If only two parameters are passed, we don't have an event, so
-         * reassign values. */
-        if (arguments.length === 2) {
+        /* Validate event JSON */
+        let validation = this.validate(event, schema);
 
-            time  = tag;
-            tag   = event;
-            event = {};
+        if (validation.errors.length) {
+
+            console.warn(validation.errors.shift());
         }
 
         super(tag);
 
-        this.tagId = tag.id;
-
         /* TODO: Get rid of this property when indexing service is refactored */
         this.activeEventVariableIndex = event.activeEventVariableIndex || 1;
 
+        this.tagId  = tag.id;
         this.id     = event.id;
         this.playId = event.playId;
         this.time   = time;
 
-        /* Transform variables */
-        Object.keys(this.fields).forEach((order, index) => {
+        if (event.variableValues) {
 
-            let variableValue = event.variableValues[this.fields[order].id];
+            /* Transform variables */
+            Object.keys(this.fields).forEach((order, index) => {
 
-            this.fields[order].gameId    = gameId;
-            this.fields[order].inputType = this.fields[order].type;
-            this.fields[order].order     = index + 1;
+                let variableValue = event.variableValues[this.fields[order].id];
 
-            switch (this.fields[order].inputType) {
-
-            case 'PLAYER_DROPDOWN':
-                this.fields[order].currentValue = {
-
-                    playerId: variableValue.value
-                };
-                break;
-            case 'TEAM_DROPDOWN':
-                this.fields[order].currentValue = {
-
-                    teamId: variableValue.value
-                };
-                break;
-            case 'PLAYER_TEAM_DROPDOWN':
-                this.fields[order].currentValue = {
-
-                    teamId: variableValue.type === 'Team' ? variableValue.value : undefined,
-                    playerId: variableValue.type === 'Player' ? variableValue.value : undefined
-                };
-                break;
-            case 'YARD':
-                this.fields[order].currentValue = {
-
-                    name: variableValue.value,
-                    content: variableValue.value
-                };
-                break;
-            default:
-                this.fields[order].currentValue = variableValue.value;
-            }
-
-            if (variableValue.type) {
-
-                this.fields[order].type = variableValue.type;
-            } else {
-
-                delete this.fields[order].type;
-            }
-        });
+                this.fields[order].gameId = gameId;
+                this.fields[order].value  = variableValue.value;
+            });
+        }
     }
 
     /**
@@ -176,6 +138,7 @@ class KrossoverEvent extends Entity {
 
         Object.keys(copy.fields).forEach(order => {
 
+            console.log('copy.fields[order]', copy.fields[order]);
             copy.variableValues[copy.fields[order].id] = copy.fields[order].toJSON();
         });
 
