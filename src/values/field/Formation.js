@@ -44,16 +44,6 @@ class FormationField extends Field {
 
     }
 
-    get currentValue() {
-        return this.value;
-    }
-
-    set currentValue(formation) {
-        let value = {};
-        value = formation;
-        this.value = value;
-    }
-
     /**
      * Generates an HTML string of the field.
      *

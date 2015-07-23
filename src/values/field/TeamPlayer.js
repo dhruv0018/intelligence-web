@@ -9,27 +9,7 @@ class TeamPlayerField extends Field {
         if (!field) return;
         super(field);
 
-        let teamPlayerOption = {
-            teamId: (!field.isRequired && field.type === 'Team') ? null : undefined,
-            playerId: (!field.isRequired && field.type === 'Player') ? null : undefined
-        };
-
-        if (field.value) {
-            switch(field.type) {
-                case 'Player':
-                    let playerId = Number(field.value) ? Number(field.value) : null;
-                    teamPlayerOption.playerId = playerId;
-                    teamPlayerOption.teamId = undefined;
-                    break;
-                case 'Team':
-                    let teamId = Number(field.value) ? Number(field.value) : null;
-                    teamPlayerOption.teamId = teamId;
-                    teamPlayerOption.playerId = undefined;
-                    break;
-            }
-        }
-
-        this.currentValue = teamPlayerOption;
+        this.initialize();
 
         Object.defineProperty(this.value, 'name', {
             get: () => {
@@ -108,7 +88,49 @@ class TeamPlayerField extends Field {
         });
     }
 
-    get currentValue() {
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {integer} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        let teamPlayerOption = {
+
+            teamId  : (!this.isRequired && this.type === 'Team') ? null   : undefined,
+            playerId: (!this.isRequired && this.type === 'Player') ? null : undefined
+        };
+
+        if (value) {
+
+            switch(this.type) {
+
+            case 'Player':
+
+                let playerId              = Number(value) ? Number(value) : null;
+                teamPlayerOption.playerId = playerId;
+                teamPlayerOption.teamId   = undefined;
+
+                break;
+
+            case 'Team':
+
+                let teamId                = Number(value) ? Number(value) : null;
+                teamPlayerOption.teamId   = teamId;
+                teamPlayerOption.playerId = undefined;
+
+                break;
+            }
+        }
+
+        this.currentValue = teamPlayerOption;
+    }
+
+    get currentValue () {
+
         return this.value;
     }
 

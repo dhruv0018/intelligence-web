@@ -40,14 +40,6 @@ class PassingZoneField extends Field {
         this.currentValue = zone;
     }
 
-    get currentValue() {
-        return this.value;
-    }
-
-    set currentValue(zone) {
-        this.value = zone;
-    }
-
     /**
      * Generates an HTML string of the field.
      *

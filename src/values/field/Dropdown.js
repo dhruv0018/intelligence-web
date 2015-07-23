@@ -26,14 +26,6 @@ class DropdownField extends Field {
         this.currentValue = dropdownOption;
     }
 
-    get currentValue(){
-        return this.value;
-    }
-
-    set currentValue(dropdownOption) {
-        this.value = dropdownOption;
-    }
-
     /**
      * Generates an HTML string of the field.
      *

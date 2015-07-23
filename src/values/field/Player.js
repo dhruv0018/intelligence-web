@@ -10,12 +10,7 @@ class PlayerField extends Field {
         if (!field) return;
         super(field);
 
-        //initialization
-        let playerOption = {
-            playerId: (!field.isRequired && field.type === 'Player') ? null : undefined
-        };
-        if (field.value) playerOption.playerId = field.value;
-        this.currentValue = playerOption;
+        this.initialize();
 
         Object.defineProperty(this.value, 'name', {
             get: () => {
@@ -86,7 +81,31 @@ class PlayerField extends Field {
         });
     }
 
-    get currentValue() {
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {integer} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        let playerOption = {
+
+            playerId: (!this.isRequired && this.type === 'Player') ? null : undefined
+        };
+
+        if (value) {
+
+            playerOption.playerId = value;
+        }
+
+        this.currentValue = playerOption;
+    }
+
+    get currentValue () {
+
         return this.value;
     }
 

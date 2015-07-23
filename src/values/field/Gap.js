@@ -39,14 +39,6 @@ class GapField extends Field {
         this.currentValue = gap;
     }
 
-    get currentValue() {
-        return this.value;
-    }
-
-    set currentValue(gap) {
-        this.value = gap;
-    }
-
     /**
      * Generates an HTML string of the field.
      *

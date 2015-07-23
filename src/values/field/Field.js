@@ -25,6 +25,33 @@ class Field extends Value {
         }
     }
 
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {object} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        this.currentValue = value;
+    }
+
+    /**
+     * Getter/Setter for the value of the Field
+     * @type {object}
+     */
+    get currentValue () {
+
+        return this.value;
+    }
+
+    set currentValue (value) {
+
+        this.value = value;
+    }
+
     //validates data sent to the server
     isValid(variableValue) {
         let isValid = false;

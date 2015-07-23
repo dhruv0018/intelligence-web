@@ -7,18 +7,8 @@ class ArenaField extends Field {
         if (!field) return;
         super(field);
 
-        //todo look into initialization of arena value
-        let arena = {
-            regionId: !field.isRequired ? null : undefined,
-            coordinates: !field.isRequired ? {} : {}
-        };
+        this.initialize();
 
-        if (field.value && field.value.region && field.value.region.id) {
-            arena.coordinates = field.value.coordinates;
-            arena.regionId = field.value.region.id;
-        }
-
-        this.currentValue = arena;
         Object.defineProperty(this.value, 'name', {
             get: () => {
                 let calculatedName = !this.isRequired ? 'Optional' : 'Select';
@@ -33,7 +23,38 @@ class ArenaField extends Field {
         this.availableValues = null;
     }
 
-    get currentValue() {
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {integer} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        //todo look into initialization of arena value
+        let arena = {
+
+            regionId   : !this.isRequired ? null : undefined,
+            coordinates: !this.isRequired ? {}   : {}
+        };
+
+        if (
+            value &&
+            value.region &&
+            value.region.id
+        ) {
+
+            arena.coordinates = value.coordinates;
+            arena.regionId    = value.region.id;
+        }
+
+        this.currentValue = arena;
+    }
+
+    get currentValue () {
+
         return this.value;
     }
 
