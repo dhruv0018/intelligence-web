@@ -55,9 +55,9 @@ class KrossoverEvent extends Entity {
 
                     let variableValue = event.variableValues[this.fields[order].id];
 
-                    this.fields[order].gameId = gameId;
-                    this.fields[order].order  = index + 1;
-                    this.fields[order].value  = variableValue.value;
+                    this.fields[order].gameId       = gameId;
+                    this.fields[order].order        = index + 1;
+                    this.fields[order].initialize(variableValue.value);
                 });
             }
         }
