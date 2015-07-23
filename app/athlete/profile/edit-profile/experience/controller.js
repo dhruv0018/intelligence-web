@@ -46,19 +46,17 @@ function ExperienceController (
         scope: $scope
     };
 
-    $scope.getPositionSet = function getPositionSet(teamId) {
+    $scope.getPositionSet = function(teamId) {
         let team = teams.get(teamId);
         let league = leagues.get(team.leagueId);
         let positionset = positionsets.get(league.positionSetId);
         return positionset;
     };
 
-    $scope.getPositionsForProfileTeam = function(teamId) {
-        let team = teams.get(teamId);
-        let league = leagues.get(team.leagueId);
-        let positionset = positionsets.get(league.positionSetId);
-        let positions = positionset.positions;
-        return positions;
+    $scope.getPosition = function(teamId, positionId) {
+        let positionset = $scope.getPositionSet(teamId);
+        let position = positionset.getPositionById(positionId);
+        return position;
     };
 
     $scope.getTeamSport = function(teamId) {

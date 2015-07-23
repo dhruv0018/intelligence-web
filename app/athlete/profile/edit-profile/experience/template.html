@@ -4,13 +4,17 @@
             <h4>My Teams
                 <a href class="add-team" ng-click="openTeamModal()"><i class="icon icon-plus"></i> Add Team</a>
             </h4>
+            <div class="no-teams" ng-hide="athlete.profile.teams.length">
+                <h4>You currently have no teams on your profile.</h4>
+                <p>Adding schools and club teams helps to highlight your level of playing experience.</p>
+            </div>
             <div class="team-row" ng-show="athlete.profile.teams.length" ng-repeat="team in athlete.profile.teams">
                 <sport-placeholder sport="getTeamSport(team.teamId)"></sport-placeholder>
                 <div class="team-info">
                     <h4>
                         {{teams[team.teamId].name}} - {{getTeamSport(team.teamId).name}} -
                         <span class="position-list" ng-repeat="positionId in team.positionIds">
-                            {{getPositionsForProfileTeam(team.teamId)[positionId].name}}<span class="comma">,</span>
+                            {{getPosition(team.teamId, positionId).name}}<span class="comma">,</span>
                         </span>
                     </h4>
                     <p>
@@ -22,10 +26,6 @@
                 </div>
                 <button class="btn btn-primary">Edit</button>
                 <button class="btn btn-default" ng-click="removeTeam(team)"><i class="icon icon-remove"></i> Remove</button>
-            </div>
-            <div class="no-teams">
-                <h4>You currently have no teams on your profile.</h4>
-                <p>Adding schools and club teams helps to highlight your level of playing experience.</p>
             </div>
         </div>
         <div class="button-row">
