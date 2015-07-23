@@ -69,10 +69,6 @@ function ExperienceController (
                 profileTeam: function() { return profileTeam; }
             }
         });
-
-        modal.result.then( () => {
-
-        });
     };
 
     $scope.removeTeam = function(team) {
