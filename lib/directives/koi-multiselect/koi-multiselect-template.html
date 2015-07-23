@@ -2,12 +2,13 @@
 
     <button class="btn btn-md btn-default dropdown-toggle" ng-click="toggleSelect()" ng-disabled="disabled" ng-class="{'error': !valid()}">
         <span ng-if="::type">
-            <span ng-show="selectedIds.length > 1" class="label">{{selectedIds.length}} {{::type}}s</span>
-            <span ng-show="selectedIds.length === 1" class="label">{{ header }}</span>
-            <span ng-show="!selectedIds.length">Select {{::type}}(s)</span>
+            <span ng-show="selectedIds.length > 1" class="koi-multiselect__label">{{selectedIds.length}} {{::type}}s</span>
+            <span ng-show="selectedIds.length === 1" class="koi-multiselect__label">{{ header }}</span>
+            <span ng-show="!defaultLabel && !selectedIds.length">Select {{::type}}(s)</span>
+            <span ng-show="defaultLabel && !selectedIds.length">{{ defaultLabel }}</span>
         </span>
         <span ng-if="::!type">
-            <span class="label">{{ header }}</span>
+            <span class="koi-multiselect__label">{{ header }}</span>
         </span>
         <i class="icon icon-chevron-down"></i>
     </button>

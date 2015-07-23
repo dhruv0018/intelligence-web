@@ -15,7 +15,13 @@
 
             <div class="filter-group__item--options">
 
-                <koi-multiselect ng-model="filterModel.teamPlayersIds" items="::teamPlayerList" type="Player" multiple="true"></koi-multiselect>
+                <koi-multiselect
+                    ng-model="filterModel.teamPlayersIds"
+                    items="::teamPlayerList"
+                    type="Player"
+                    multiple="true"
+                    default-label="All Players">
+                </koi-multiselect>
 
             </div>
 
@@ -104,7 +110,13 @@
 
             <div class="filter-group__item--options">
 
-                <koi-multiselect ng-model="filterModel.opposingTeamPlayersIds" items="::opposingTeamPlayerList" type="Player" multiple="true"></koi-multiselect>
+                <koi-multiselect
+                    ng-model="filterModel.opposingTeamPlayersIds"
+                    items="::opposingTeamPlayerList"
+                    type="Player"
+                    multiple="true"
+                    default-label="All Players">
+                </koi-multiselect>
 
             </div>
 
