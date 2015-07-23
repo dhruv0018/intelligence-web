@@ -47,6 +47,8 @@
 
             <positions-dropdown is-active="teamLeague.positionSetId" ng-model="profileTeam.positionIds" player="athlete" positionset="positionset"></positions-dropdown>
 
+            <pre>{{profileTeam.positionIds}}</pre>
+
             <div class="button-row">
                 <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
                 <button class="btn btn-primary" ng-click="saveProfileTeam()" ng-disabled="formIncomplete()">Done</button>
