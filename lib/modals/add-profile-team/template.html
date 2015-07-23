@@ -1,7 +1,8 @@
 <div class="manage-profile-reels">
 
     <header class="modal-header">
-        <h3 class="modal-title">Add a team your Profile</h3>
+        <h3 class="modal-title" ng-hide="editingExistingTeam">Add a team to your Profile</h3>
+        <h3 class="modal-title" ng-show="editingExistingTeam">Edit a team on your Profile</h3>
         <i class="icon icon-remove" ng-click="$dismiss()"></i>
 
     </header>
@@ -46,8 +47,6 @@
             </select>
 
             <positions-dropdown is-active="teamLeague.positionSetId" ng-model="profileTeam.positionIds" player="athlete" positionset="positionset"></positions-dropdown>
-
-            <pre>{{profileTeam.positionIds}}</pre>
 
             <div class="button-row">
                 <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>

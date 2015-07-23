@@ -42,9 +42,6 @@ function ExperienceController (
     $scope.athlete = session.getCurrentUser();
     $scope.teams = teams.getMap();
     $scope.addingTeam = false;
-    $scope.options = {
-        scope: $scope
-    };
 
     $scope.getPositionSet = function(teamId) {
         let team = teams.get(teamId);
@@ -67,9 +64,10 @@ function ExperienceController (
     };
 
     $scope.openTeamModal = function(profileTeam) {
-        $scope.profileTeam = profileTeam;
         let modal = addProfileTeamModal.open({
-            options: $scope.options
+            resolve: {
+                profileTeam: function() { return profileTeam; }
+            }
         });
 
         modal.result.then( () => {
