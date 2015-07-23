@@ -1,6 +1,6 @@
 <md-dialog
     flex="50"
-    class="arena-dialog-{{arenaOrientation}}"
+    class="arena-dialog-{{arena.orientation}}"
     ng-blur="onBlur()"
 >
     <md-dialog-content>
@@ -8,7 +8,7 @@
         <xy-coordinates ng-model="selectedValue.coordinates">
 
             <krossover-arena
-                type="arenaType"
+                type="arena.type"
                 ng-model="selectedValue.region"
             ></krossover-arena>
 
