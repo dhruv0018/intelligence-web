@@ -88,7 +88,13 @@
 
             <div class="filter-group__item--options">
 
-                <custom-tags-multiselect ng-model="filterModel.customTagIds" custom-tags="::customTags"></custom-tags-multiselect>
+                <koi-multiselect
+                    ng-model="filterModel.customTagIds"
+                    items="::customTags"
+                    type="Tag"
+                    multiple="true"
+                    default-label="Select Tags">
+                </koi-multiselect>
 
             </div>
 
