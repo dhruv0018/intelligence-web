@@ -9,11 +9,15 @@
 
                 <color-shape color="::game.primaryJerseyColor"></color-shape>
 
-                <span class="home-team-name">{{::team.name}}</span>
+                <div class="team-label__name">{{::team.name}}</div>
 
             </div>
 
-            <koi-multiselect ng-model="filterModel.teamPlayersIds" items="::teamPlayerList" type="Player" multiple="true"></koi-multiselect>
+            <div class="filter-group__item--options">
+
+                <koi-multiselect ng-model="filterModel.teamPlayersIds" items="::teamPlayerList" type="Player" multiple="true"></koi-multiselect>
+
+            </div>
 
         </div>
 
@@ -25,7 +29,7 @@
 
             <label> Shots </label>
 
-            <div class="btn-group">
+            <div class="filter-group__item--options">
 
                 <koi-checkbox ng-model="filterModel.shots.made" filled="true">
                     <div class="shot-icon icon-diamond"></div>Made
@@ -43,37 +47,44 @@
 
             <label> Period </label>
 
-            <koi-checkbox ng-model="filterModel.allPeriods" children-models="filterModel.period" children-listen="false">
-                All
-            </koi-checkbox>
+            <div class="filter-group__item--options">
 
-            <koi-checkbox ng-model="filterModel.period.one">
-                Q1
-            </koi-checkbox>
+                <koi-checkbox ng-model="filterModel.allPeriods" children-models="filterModel.period" children-listen="false">
+                    All
+                </koi-checkbox>
 
-            <koi-checkbox ng-model="filterModel.period.two">
-                Q2
-            </koi-checkbox>
+                <koi-checkbox ng-model="filterModel.period.one">
+                    Q1
+                </koi-checkbox>
 
-            <koi-checkbox ng-model="filterModel.period.three">
-                Q3
-            </koi-checkbox>
+                <koi-checkbox ng-model="filterModel.period.two">
+                    Q2
+                </koi-checkbox>
 
-            <koi-checkbox ng-model="filterModel.period.four">
-                Q4
-            </koi-checkbox>
+                <koi-checkbox ng-model="filterModel.period.three">
+                    Q3
+                </koi-checkbox>
 
-            <koi-checkbox ng-model="filterModel.period.overtime">
-                OT
-            </koi-checkbox>
+                <koi-checkbox ng-model="filterModel.period.four">
+                    Q4
+                </koi-checkbox>
 
+                <koi-checkbox ng-model="filterModel.period.overtime">
+                    OT
+                </koi-checkbox>
+
+            </div>
         </div>
 
         <div class="custom-tags filter-group__item">
 
-            <label> Custom Tags </label>
+            <label> Tags </label>
 
-            <custom-tags-multiselect ng-model="filterModel.customTagIds" custom-tags="::customTags"></custom-tags-multiselect>
+            <div class="filter-group__item--options">
+
+                <custom-tags-multiselect ng-model="filterModel.customTagIds" custom-tags="::customTags"></custom-tags-multiselect>
+
+            </div>
 
         </div>
 
@@ -85,13 +96,17 @@
 
             <div class="team-label">
 
-                <span class="opposing-team-name">{{::opposingTeam.name}}</span>
+                <div class="team-label__name">{{::opposingTeam.name}}</div>
 
                 <color-shape color="::game.opposingPrimaryJerseyColor"></color-shape>
 
             </div>
 
-            <koi-multiselect ng-model="filterModel.opposingTeamPlayersIds" items="::opposingTeamPlayerList" type="Player" multiple="true"></koi-multiselect>
+            <div class="filter-group__item--options">
+
+                <koi-multiselect ng-model="filterModel.opposingTeamPlayersIds" items="::opposingTeamPlayerList" type="Player" multiple="true"></koi-multiselect>
+
+            </div>
 
         </div>
 

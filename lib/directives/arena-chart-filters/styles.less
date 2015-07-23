@@ -11,12 +11,14 @@ arena-chart-filters {
     text-align: center;
     color: #000;
     border: thin solid @gray-border;
-    padding: 10px;
     border-radius: 2px;
     background-color: @content-bg;
 
+    @team-name-width: 120px;
+
     &-left {
         justify-content: flex-start;
+        border-right: thin solid @gray-light;
 
         &:first-child {
             text-align: left;
@@ -29,6 +31,7 @@ arena-chart-filters {
 
     &-right {
         justify-content: flex-end;
+        border-left: thin solid @gray-light;
 
         &:last-child {
             text-align: right;
@@ -37,9 +40,13 @@ arena-chart-filters {
 
     .filter-group {
         display: flex;
+        padding: 10px 15px;
 
         &__item {
-            margin: 0 5px;
+            margin: 0 15px;
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
 
             &:first-child {
                 margin-left: 0px;
@@ -49,10 +56,17 @@ arena-chart-filters {
                 margin-right: 0px;
             }
         }
+
+        &:first-child, &:last-child {
+            .filter-group__item {
+                align-items: center;
+            }
+        }
     }
 
     label {
         display: block;
+        font-size: @font-size-large;
         font-weight: 400;
     }
 
@@ -78,6 +92,15 @@ arena-chart-filters {
         font-weight: 500;
         font-size: @font-size-large;
         padding-bottom: 10px;
+
+        &__name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
+            width: @team-name-width;
+            vertical-align: middle;
+        }
     }
 
     .shot-icon {
