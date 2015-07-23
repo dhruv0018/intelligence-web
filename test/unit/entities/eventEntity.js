@@ -47,7 +47,7 @@ describe('Event Entity', () => {
         expect(sampleEvent.keyboardShortcut).to.equal('K');
     });
 
-    xit('should have a "isValid" method that works.', () => {
+    it('should have a "isValid" method that works.', () => {
 
         expect(sampleEvent.isValid()).to.be.a('boolean');
         expect(sampleEvent.isValid()).to.be.true;
@@ -109,7 +109,7 @@ describe('Event Entity', () => {
 
     xit('should restore the original JSON on JSON.stringify calls', () => {
 
-        sampleEvent = JSON.parse(sampleEvent.toJSON());
+        sampleEvent = sampleEvent.toJSON();
 
         expect(sampleEvent.id).to.equal(srcEvent.id);
         expect(sampleEvent.time).to.equal(srcEvent.time);
@@ -118,7 +118,8 @@ describe('Event Entity', () => {
 
         Object.keys(sampleEvent.variableValues).forEach((tagId) => {
 
-            expect(JSON.parse(sampleEvent.variableValues[tagId])).to.deep.equal(srcEvent.variableValues[tagId]);
+            console.log('sampleEvent.variableValues[tagId]', sampleEvent.variableValues[tagId]);
+            expect(sampleEvent.variableValues[tagId]).to.deep.equal(srcEvent.variableValues[tagId]);
         });
     });
 });
