@@ -20,10 +20,18 @@
     }
 
     .dropdown-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: start;
         padding: 6px 8px;
         font-size: @font-size-base;
         background-color: white;
         min-width: 120px;
+
+        :first-child {
+            flex: 1;
+        }
     }
 
     .dropdown-menu {
