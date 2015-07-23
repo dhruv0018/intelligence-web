@@ -57,7 +57,6 @@ require('./services/indexing');
 require('./services/date');
 require('./services/detectDevice');
 require('./services/analytics');
-require('./services/features');
 import './services/performance-timer/angular-index';
 import './services/performance-timer/index';
 
