@@ -20,6 +20,7 @@ import Reel from '../app/reel/index.js';
 import FieldComponent from '../lib/directives/field/index';
 import IndexingBlock from '../lib/directives/indexing-block/index';
 import DynamicTables from '../lib/directives/dynamic-tables/index';
+import { IndexerScript } from '../lib/directives/indexer-script/index';
 
 /* App dependencies */
 require('./config');
