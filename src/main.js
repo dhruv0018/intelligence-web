@@ -17,6 +17,7 @@ require('./extensions');
 require('../build/build');
 
 import Reel from '../app/reel/index.js';
+import Styleguide from '../app/styleguide/index.js';
 import IndexingBlock from '../lib/directives/indexing-block/index';
 import DynamicTables from '../lib/directives/dynamic-tables/index';
 

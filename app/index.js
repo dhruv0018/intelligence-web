@@ -10,7 +10,6 @@ require('indexer');
 require('indexing');
 require('games');
 require('clips');
-require('stylesheet');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -33,5 +32,5 @@ var App = angular.module('App', [
     'Games',
     'Clips',
     'Reel',
-    'stylesheet'
+    'Styleguide'
 ]);

@@ -542,7 +542,15 @@
         "*": true
     },
 
-    "stylesheet": {
+    "Styleguide": {
+        "*": true
+    },
+
+    "Styleguide.Colors": {
+        "*": true
+    },
+
+    "Styleguide.Typography": {
         "*": true
     }
 }
