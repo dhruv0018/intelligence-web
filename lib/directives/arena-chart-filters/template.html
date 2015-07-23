@@ -39,51 +39,41 @@
 
         </div>
 
+        <div class="periods filter-group__item">
+
+            <label> Period </label>
+
+            <koi-checkbox ng-model="filterModel.allPeriods" children-models="filterModel.period" children-listen="false">
+                All
+            </koi-checkbox>
+
+            <koi-checkbox ng-model="filterModel.period.one">
+                Q1
+            </koi-checkbox>
+
+            <koi-checkbox ng-model="filterModel.period.two">
+                Q2
+            </koi-checkbox>
+
+            <koi-checkbox ng-model="filterModel.period.three">
+                Q3
+            </koi-checkbox>
+
+            <koi-checkbox ng-model="filterModel.period.four">
+                Q4
+            </koi-checkbox>
+
+            <koi-checkbox ng-model="filterModel.period.overtime">
+                OT
+            </koi-checkbox>
+
+        </div>
+
         <div class="custom-tags filter-group__item">
 
             <label> Custom Tags </label>
 
             <custom-tags-multiselect ng-model="filterModel.customTagIds" custom-tags="::customTags"></custom-tags-multiselect>
-
-        </div>
-
-        <div class="periods filter-group__item">
-
-            <label> Period </label>
-
-            <div class="btn-group">
-
-                <button
-                    class="btn btn-md btn-default"
-                    ng-model="filterModel.period.one"
-                    btn-checkbox
-                >1</button>
-
-                <button
-                    class="btn btn-md btn-default"
-                    ng-model="filterModel.period.two"
-                    btn-checkbox
-                >2</button>
-
-                <button
-                    class="btn btn-md btn-default"
-                    ng-model="filterModel.period.three"
-                    btn-checkbox
-                >3</button>
-
-                <button
-                    class="btn btn-md btn-default"
-                    ng-model="filterModel.period.four"
-                    btn-checkbox
-                >4</button>
-
-                <button
-                    class="btn btn-md btn-default"
-                    ng-model="filterModel.period.overtime"
-                    btn-checkbox
-                >OT</button>
-
-            </div>
 
         </div>
 
