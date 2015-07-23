@@ -110,7 +110,8 @@ class KrossoverEvent extends Entity {
 
         Object.keys(this.fields).forEach(order => {
 
-            if (!this.fields[order].isValid()) {
+            let field = this.fields[order];
+            if (!field.isValid(field)) {
 
                 return false;
             }
