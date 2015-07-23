@@ -18,34 +18,48 @@ class KrossoverEvent extends Entity {
      */
     constructor (event, tag, time, gameId) {
 
-        /* Validate event JSON */
-        let validation = this.validate(event, schema);
+        if (!arguments.length) {
 
-        if (validation.errors.length) {
-
-            console.warn(validation.errors.shift());
+            throw new Error('KrossoverEvent cannot be instantiated with no parameters!');
         }
 
+        /* Use tag to setup event */
         super(tag);
 
-        /* TODO: Get rid of this property when indexing service is refactored */
-        this.activeEventVariableIndex = event.activeEventVariableIndex || 1;
-
         this.tagId  = tag.id;
-        this.id     = event.id;
-        this.playId = event.playId;
         this.time   = time;
 
-        if (event.variableValues) {
+        /* If we have an event, fill in the details */
+        if (event) {
 
-            /* Transform variables */
-            Object.keys(this.fields).forEach((order, index) => {
+            /* Validate event JSON */
+            /* TODO: Re-enable this at some point. Right now, far too many
+             * events are failing validtion and polluting the console. */
+            // let validation = this.validate(event, schema);
+            //
+            // if (validation.errors.length) {
+            //
+            //     console.warn(validation.errors.shift());
+            // }
 
-                let variableValue = event.variableValues[this.fields[order].id];
+            this.id     = event.id;
+            this.playId = event.playId;
 
-                this.fields[order].gameId = gameId;
-                this.fields[order].value  = variableValue.value;
-            });
+            /* TODO: Get rid of this property when indexing service is refactored */
+            this.activeEventVariableIndex = event.activeEventVariableIndex || 1;
+
+            if (event.variableValues) {
+
+                /* Transform variables into fields */
+                Object.keys(this.fields).forEach((order, index) => {
+
+                    let variableValue = event.variableValues[this.fields[order].id];
+
+                    this.fields[order].gameId = gameId;
+                    this.fields[order].order  = index + 1;
+                    this.fields[order].value  = variableValue.value;
+                });
+            }
         }
     }
 
@@ -63,6 +77,27 @@ class KrossoverEvent extends Entity {
     set keyboardShortcut (value) {
 
         return;
+    }
+
+    /**
+     * Getter for this.fields
+     *
+     * @readonly
+     * @type {Object}
+     */
+
+    /* FIXME: variableValues is deprecated but many areas of the code still
+     * reference it. Ultimately, all code should access fields directly. */
+    get variableValues () {
+
+        let variableValues = {};
+
+        Object.keys(this.fields).forEach(order => {
+
+            variableValues[this.fields[order].id] = this.fields[order];
+        });
+
+        return variableValues;
     }
 
     /**
@@ -138,7 +173,6 @@ class KrossoverEvent extends Entity {
 
         Object.keys(copy.fields).forEach(order => {
 
-            console.log('copy.fields[order]', copy.fields[order]);
             copy.variableValues[copy.fields[order].id] = copy.fields[order].toJSON();
         });
 
