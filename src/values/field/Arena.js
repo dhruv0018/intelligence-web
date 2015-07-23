@@ -10,7 +10,10 @@ class ArenaField extends Field {
         //todo look into initialization of arena value
         let arena = {
             region: !field.isRequired ? null : undefined,
-            coordinates: !field.isRequired ? {} : {}
+            coordinates: {
+                x: !field.isRequired ? null: undefined,
+                y: !field.isRequired ? null: undefined
+            }
         };
 
         if (field.value) {
