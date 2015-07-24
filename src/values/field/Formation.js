@@ -1,10 +1,19 @@
-import Field from './Field.js';
+import Field from './Field';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * FormationField Field Model
+ * @class FormationField
+ */
 class FormationField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs FormationField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
         super(field);
@@ -14,8 +23,8 @@ class FormationField extends Field {
             numberOfPlayers: 0,
             name: !field.isRequired ? 'Optional' : 'Select'
         };
-        let keyedFormations = {};
-        this.formations.forEach(formation => keyedFormations[formation.id] = formation);
+        this.keyedFormations = {};
+        this.formations.forEach(formation => this.keyedFormations[formation.id] = formation);
 
         this.availableValues = [];
         this.availableValues = this.formations.map(formation => {
@@ -28,20 +37,34 @@ class FormationField extends Field {
         });
         this.availableValues.unshift(initialFormation);
 
+        this.initialize();
+    }
+
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {object} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
         let formation = angular.copy(this.availableValues[0]);
 
-        if (field.value) {
-            let currentFormation = angular.copy(keyedFormations[field.value]);
-            let value = {
-                formationId: currentFormation.id,
+        if (value) {
+
+            let currentFormation = angular.copy(this.keyedFormations[value]);
+
+            formation = {
+
+                formationId    : currentFormation.id,
                 numberOfPlayers: currentFormation.numberPlayers,
-                name: currentFormation.name
+                name           : currentFormation.name
             };
-            formation = value;
         }
 
         this.currentValue = formation;
-
     }
 
     /**
