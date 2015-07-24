@@ -1,5 +1,5 @@
 import Entity from './entity';
-import KrossoverEvent from '../entities/event.js';
+import KrossoverEvent from '../entities/event';
 import eventTemplate from './eventTemplate';
 
 /**
@@ -10,8 +10,8 @@ class KrossoverPlay extends Entity {
 
     /**
      * @constructs KrossoverPlay
-     * @param play {Object} - Play JSON from server
-     * @param tagsets {Service} - Tagsets factory
+     * @param {Object} play - Play JSON from server
+     * @param {Service} tagsets - Tagsets factory
      */
     constructor (play, tagsets) {
 
