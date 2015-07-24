@@ -1,3 +1,9 @@
+# v2.9.0 #
+
+## Features ##
+- As an indexer, my History tab, should show assigned games that I previously completed
+- As an indexer, my Games tab should only show assigned games I am currently working on
+
 # v2.8.0 #
 
 ## Features ##
