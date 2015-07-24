@@ -36,7 +36,7 @@ describe('Team Tag Field', () => {
         //expect(value.name).to.equal('Select');
     });
 
-    it('Should be allow for initialization via the initialize method', () => {
+    it('Should allow for initialization via the initialize method', () => {
         let localTagVariable = angular.copy(tagVariable);
         localTagVariable.isRequired = true;
         let tagField = new TeamField(localTagVariable);

@@ -1,10 +1,19 @@
-import Field from './Field.js';
+import Field from './Field';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * TeamField Field Model
+ * @class TeamField
+ */
 class TeamField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs TeamField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
         super(field);
@@ -83,7 +92,7 @@ class TeamField extends Field {
         return this.value;
     }
 
-    set currentValue(teamOption) {
+    set currentValue (teamOption) {
         let value = {
             teamId: (teamOption.teamId) ? Number(teamOption.teamId) : teamOption.teamId,
             name: teamOption.name || ''
@@ -99,7 +108,9 @@ class TeamField extends Field {
      */
     toString () {
 
-        return `<span class="value team-field">${this.currentValue.name}</span>`;
+        let team = this.availableValues.find(value => value.teamId === this.currentValue.teamId);
+
+        return `<span class="value team-field">${team.name}</span>`;
     }
 
     /**
