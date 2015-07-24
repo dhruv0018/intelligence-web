@@ -47,7 +47,7 @@ describe('Event Entity', () => {
         expect(sampleEvent.keyboardShortcut).to.equal('K');
     });
 
-    xit('should have a "isValid" method that works.', () => {
+    it('should have a "isValid" method that works.', () => {
 
         expect(sampleEvent.isValid()).to.be.a('boolean');
         expect(sampleEvent.isValid()).to.be.true;

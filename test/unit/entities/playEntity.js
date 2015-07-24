@@ -96,9 +96,9 @@ describe('Play Entity', () => {
         assert(play.toJSON.should.have.been.called);
     }));
 
-    xit('should restore the original JSON on JSON.stringify calls', inject(TagsetsFactory => {
+    it('should restore the original JSON on JSON.stringify calls', inject(TagsetsFactory => {
 
-        play = JSON.parse(play.toJSON());
+        play = play.toJSON();
 
         expect(play.id).to.equal(srcJSON.id);
         expect(play.startTime).to.equal(srcJSON.startTime);
