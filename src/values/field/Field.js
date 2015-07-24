@@ -1,4 +1,4 @@
-import Value from '../value.js';
+import Value from '../value';
 
 /**
  * KrossoverField Field Model
@@ -6,7 +6,12 @@ import Value from '../value.js';
  */
 class Field extends Value {
 
+    /**
+     * @constructs Field
+     * @param {Object} field - Field JSON from server
+     */
     constructor (field) {
+
         if (!field) return;
 
         super(field);
@@ -86,6 +91,7 @@ class Field extends Value {
      * @returns {String} - JSON ready version of the object.
      */
     toJSON () {
+
         throw Error('Trying to stringify abstract class - Field');
     }
 }

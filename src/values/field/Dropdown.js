@@ -1,10 +1,19 @@
-import Field from './Field.js';
+import Field from './Field';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * DropdownField Field Model
+ * @class DropdownField
+ */
 class DropdownField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs DropdownField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
         super(field);

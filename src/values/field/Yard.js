@@ -1,11 +1,22 @@
-import Field from './Field.js';
+import Field from './Field';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * YardField Field Model
+ * @class YardField
+ */
 class YardField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs YardField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
+
         if (!field) return;
+
         super(field);
 
         this.initialize();
@@ -13,6 +24,7 @@ class YardField extends Field {
         this.availableValues = [];
 
         this.availableValues = Array.from(new Array(99), (item, yardLength) => {
+
             return {content: yardLength + 1, name: yardLength + 1};
         });
 

@@ -1,12 +1,22 @@
-import Field from './Field.js';
+import Field from './Field';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * TeamPlayerField Field Model
+ * @class TeamPlayerField
+ */
 class TeamPlayerField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs TeamPlayerField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
+
         super(field);
 
         this.initialize();
@@ -129,18 +139,25 @@ class TeamPlayerField extends Field {
         this.currentValue = teamPlayerOption;
     }
 
+    /**
+     * Getter/Setter for the value of the Field
+     * @type {object}
+     */
     get currentValue () {
 
         return this.value;
     }
 
-    set currentValue(teamPlayerOption) {
+    set currentValue (teamPlayerOption) {
+
         let value = {
+
             playerId: teamPlayerOption.playerId,
-            teamId: teamPlayerOption.teamId,
-            name: teamPlayerOption.name
+            teamId  : teamPlayerOption.teamId,
+            name    : teamPlayerOption.name
         };
-        this.type = (typeof value.playerId !== 'undefined') ? 'Player' : 'Team';
+
+        this.type  = (typeof value.playerId !== 'undefined') ? 'Player' : 'Team';
         this.value = value;
     }
 

@@ -1,11 +1,19 @@
-import Field from './Field.js';
+import Field from './Field';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * PlayerField Field Model
+ * @class PlayerField
+ */
 class PlayerField extends Field {
-    //constructor(players, field) {
-    constructor(field) {
+
+    /**
+     * @constructs PlayerField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
         super(field);
@@ -143,7 +151,7 @@ class PlayerField extends Field {
         <span class="value">
 
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-                <rect fill="${player.jerseyColor}" x="0" y="0" width="16px" height="16px" />
+                <rect fill="${player.jerseyColor}" stroke="black" stroke-width="${player.jerseyColor === '#ffffff' ? 1 : 0}" x="0" y="0" width="16px" height="16px" />
             </svg>
 
             <span class="player-name">${player.jerseyNumber} ${player.name}</span>

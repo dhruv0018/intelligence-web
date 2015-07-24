@@ -1,9 +1,19 @@
-import Field from './Field.js';
+import Field from './Field';
+
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * ArenaField Field Model
+ * @class ArenaField
+ */
 class ArenaField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs ArenaField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
         if (!field) return;
         super(field);
 
