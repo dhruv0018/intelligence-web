@@ -43,6 +43,18 @@ describe('Dropdown Tag Field', () => {
         expect(value.content).to.be.null;
     });
 
+    it('Should be allow for initialization via the initialize method', () => {
+
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = false;
+        let tagField = new DropdownField(localTagVariable);
+
+        tagField.initialize('Normal')
+        let value = tagField.currentValue;
+
+        expect(value.name).to.equal('Normal');
+        expect(value.content).to.equal('Normal');
+    });
 });
 
 describe('Dropdown Event Field', () => {
