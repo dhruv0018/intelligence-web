@@ -11,7 +11,7 @@
 
     <span class="film-options">
         <publish-user-profile-reel
-            ng-if="isReel && config.athleteProfile.isEnabled && userCanPublishReel"
+            ng-if="isReel && config.athleteProfile.isEnabled && userCanPublishReel && currentUserIsAthleteRecruit"
             user="user"
             reel="film"
         ></publish-user-profile-reel>

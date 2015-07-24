@@ -1,11 +1,11 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Athlete page module.
  * @module Athlete
  */
-var Athlete = angular.module('Athlete');
+const Athlete = angular.module('Athlete');
 
 /**
  * Athlete state router.
