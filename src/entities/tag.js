@@ -113,7 +113,7 @@ class KrossoverTag extends Entity {
                             string += item.toString();
                         } else {
 
-                            let field = this.fields[item.index];
+                            let field = this.fields[item.order];
                             if (field) {
 
                                 string += field.toString();
