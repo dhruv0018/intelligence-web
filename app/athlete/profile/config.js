@@ -64,8 +64,8 @@ Profile.config([
                             users: relatedUser,
                             reels: reels.load({relatedUserId: userId}),
                             plays: relatedUser.then(() => {
-                                let user = users.get(userId);
-                                if (user.profile.reelIds[0]) return plays.load({reelId: user.profile.reelIds[0]});
+                                let reelIds = users.get(userId).profile.reelIds;
+                                if (reelIds[0]) return plays.load({reelId: reelIds[0]});
                             }),
                             teams: relatedUser.then(() => {
                                 let user = users.get(userId);
