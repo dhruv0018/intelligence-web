@@ -1,4 +1,4 @@
-import KrossoverTag from '../entities/tag.js';
+import KrossoverTag from '../entities/tag';
 
 const pkg = require('../../package.json');
 
@@ -21,7 +21,7 @@ function TagsetsFactory (
 
     let indexedTags = {};
 
-    let factory = {
+    const factory = {
 
         description: 'tagsets',
 
@@ -38,7 +38,7 @@ function TagsetsFactory (
             tagset.tags.forEach(tag => {
 
                 tags[tag.id] = tag;
-                indexedTags[tag.id] = tag;
+                indexedTags[tag.id] = new KrossoverTag(tag);
             });
 
             tagset.tags = tags;
@@ -65,13 +65,6 @@ function TagsetsFactory (
         },
 
         getTag: function (tagId) {
-
-            let tag = this.getTagJSON(tagId);
-
-            return new KrossoverTag(tag);
-        },
-
-        getTagJSON: function (tagId) {
 
             let tag = indexedTags[tagId];
 

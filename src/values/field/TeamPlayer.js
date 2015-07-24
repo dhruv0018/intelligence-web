@@ -1,35 +1,25 @@
-import Field from './Field.js';
+import Field from './Field';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * TeamPlayerField Field Model
+ * @class TeamPlayerField
+ */
 class TeamPlayerField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs TeamPlayerField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
+
         super(field);
 
-        let teamPlayerOption = {
-            teamId: (!field.isRequired && field.type === 'Team') ? null : undefined,
-            playerId: (!field.isRequired && field.type === 'Player') ? null : undefined
-        };
-
-        if (field.value) {
-            switch(field.type) {
-                case 'Player':
-                    let playerId = Number(field.value) ? Number(field.value) : null;
-                    teamPlayerOption.playerId = playerId;
-                    teamPlayerOption.teamId = undefined;
-                    break;
-                case 'Team':
-                    let teamId = Number(field.value) ? Number(field.value) : null;
-                    teamPlayerOption.teamId = teamId;
-                    teamPlayerOption.playerId = undefined;
-                    break;
-            }
-        }
-
-        this.currentValue = teamPlayerOption;
+        this.initialize();
 
         Object.defineProperty(this.value, 'name', {
             get: () => {
@@ -76,7 +66,7 @@ class TeamPlayerField extends Field {
                     let value = {
                         playerId: player.id,
                         jerseyColor: game.primaryJerseyColor,
-                        jerseyNumber: rosterEntry.jerseyNumber,
+                        jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
                         name: player.firstName + ' ' + player.lastName
                     };
                     return value;
@@ -89,7 +79,7 @@ class TeamPlayerField extends Field {
                     let value = {
                         playerId: player.id,
                         jerseyColor: game.opposingPrimaryJerseyColor,
-                        jerseyNumber: rosterEntry.jerseyNumber,
+                        jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
                         name: player.firstName + ' ' + player.lastName
                     };
                     return value;
@@ -108,24 +98,74 @@ class TeamPlayerField extends Field {
         });
     }
 
-    get currentValue() {
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {integer} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        let teamPlayerOption = {
+
+            teamId  : (!this.isRequired && this.type === 'Team') ? null   : undefined,
+            playerId: (!this.isRequired && this.type === 'Player') ? null : undefined
+        };
+
+        if (value) {
+
+            switch(this.type) {
+
+            case 'Player':
+
+                let playerId              = Number(value) ? Number(value) : null;
+                teamPlayerOption.playerId = playerId;
+                teamPlayerOption.teamId   = undefined;
+
+                break;
+
+            case 'Team':
+
+                let teamId                = Number(value) ? Number(value) : null;
+                teamPlayerOption.teamId   = teamId;
+                teamPlayerOption.playerId = undefined;
+
+                break;
+            }
+        }
+
+        this.currentValue = teamPlayerOption;
+    }
+
+    /**
+     * Getter/Setter for the value of the Field
+     * @type {object}
+     */
+    get currentValue () {
+
         return this.value;
     }
 
-    set currentValue(teamPlayerOption) {
+    set currentValue (teamPlayerOption) {
+
         let value = {
+
             playerId: teamPlayerOption.playerId,
-            teamId: teamPlayerOption.teamId
+            teamId  : teamPlayerOption.teamId,
+            name    : teamPlayerOption.name
         };
-        this.type = (typeof value.playerId !== 'undefined') ? 'Player' : 'Team';
+
+        this.type  = (typeof value.playerId !== 'undefined') ? 'Player' : 'Team';
         this.value = value;
     }
 
     /**
-     * Method: toString
      * Generates an HTML string of the field.
      *
-     * @return: {String} HTML of the field
+     * @method toString
+     * @returns {String} - HTML of the field
      */
     toString () {
 
@@ -150,7 +190,14 @@ class TeamPlayerField extends Field {
         }
     }
 
-    toJSON() {
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
         let variableValue = {
             type: this.type
         };
@@ -164,7 +211,7 @@ class TeamPlayerField extends Field {
                 break;
         }
 
-        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
     }
 }
 

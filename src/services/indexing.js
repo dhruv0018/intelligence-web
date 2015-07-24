@@ -24,7 +24,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 game.indexedScore = 0;
                 game.opposingIndexedScore = 0;
 
-                eventManager.current = new KrossoverEvent();
+                eventManager.current = null;
                 playsManager.reset(plays);
                 tagsManager.reset(tagset);
                 playManager.reset(tagset, game.id);
@@ -64,13 +64,13 @@ IntelligenceWebClient.factory('IndexingService', [
                 var time = videoPlayer.currentTime;
 
                 /* Get tag. */
-                let tag = tagsets.getTagJSON(tagId);
+                let tag = tagsets.getTag(tagId);
 
                 /* get browser safe time */
                 time = utils.toFixedFloat(time);
 
                 /* Create new event. */
-                eventManager.current = new KrossoverEvent(tag, time);
+                eventManager.current = new KrossoverEvent(null, tag, time);
 
                 /* Add event to the current play. */
                 playManager.addEvent(eventManager.current);
@@ -120,7 +120,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.current.save();
                 playManager.clear();
                 tagsManager.reset();
-                eventManager.current = new KrossoverEvent();
+                eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
                 if (event.isEndAndStart) {
@@ -165,7 +165,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 if (!this.isIndexing || this.showTags) return false;
 
                 /* If there are variables in the current event. */
-                else if (eventManager.current.hasVariables) {
+                else if (eventManager.current && eventManager.current.hasVariables) {
 
                     /* Make sure all of the variables have values. */
                     return eventManager.current.isValid;
@@ -187,7 +187,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 /* If the event is a floating event. */
-                if (eventManager.current.isFloat) {
+                if (eventManager.current && eventManager.current.isFloat) {
 
                     let currentEvent = eventManager.current;
 
@@ -248,7 +248,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
 
                 /* If the event doesn't have variables of If the first variable is empty. */
-                else if (!eventManager.current.hasVariables ||
+                else if (eventManager.current &&
+                        !eventManager.current.hasVariables ||
                         (eventManager.current.activeEventVariableIndex === 1 &&
                         !eventManager.activeEventVariableValue())) {
 

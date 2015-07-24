@@ -1,11 +1,11 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * EditProfile.Academics page module.
  * @module EditProfile.Academics
  */
-var Academics = angular.module('Athlete.Profile.EditProfile.Academics');
+const Academics = angular.module('Athlete.Profile.EditProfile.Academics');
 
 /*
 * EditProfile.Academics dependencies

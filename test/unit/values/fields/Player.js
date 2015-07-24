@@ -33,7 +33,7 @@ describe('Player Tag Field', () => {
         let value = tagField.currentValue;
 
         expect(value.playerId).to.be.undefined;
-        expect(value.name).to.equal('Select');
+        expect(value.name).to.equal('');
     });
 
     it('Should be initialized correctly if not required', () => {
@@ -45,6 +45,18 @@ describe('Player Tag Field', () => {
         expect(value.playerId).to.be.null;
     });
 
+    it('Should be allow for initialization via the initialize method', () => {
+
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = false;
+        let tagField = new PlayerField(localTagVariable);
+
+        tagField.initialize('1');
+        let value = tagField.currentValue;
+
+        expect(value.playerId).to.equal(1);
+        expect(value.name).to.equal('');
+    });
 });
 
 describe('Player Event Field', () => {
@@ -75,8 +87,8 @@ describe('Player Event Field', () => {
         localEventVariable.isRequired = true;
         let eventField = new PlayerField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":"Player","value":"1"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":"Player","value":"1"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -86,9 +98,8 @@ describe('Player Event Field', () => {
 
         let eventField = new PlayerField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":"Player","value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":"Player","value":null}');
     });
     //
     // it('Should be able to switch back to an optional value from a set value', () => {

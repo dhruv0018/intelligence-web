@@ -1,11 +1,15 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/edit-profile/academics/template.html';
+
+const template = require('./template.html');
 
 /**
  * Academics page module.
  * @module Academics
  */
-var Academics = angular.module('Athlete.Profile.EditProfile.Academics', [
+const Academics = angular.module('Athlete.Profile.EditProfile.Academics', [
     'ui.router',
     'ui.bootstrap',
     'ngMaterial',
@@ -17,7 +21,7 @@ Academics.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('athlete/edit-profile/academics/template.html', require('./template.html'));
+        $templateCache.put(templateUrl, template);
     }
 ]);
 

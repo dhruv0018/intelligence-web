@@ -1,49 +1,70 @@
-import Field from './Field.js';
+import Field from './Field';
+
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * ArenaField Field Model
+ * @class ArenaField
+ */
 class ArenaField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs ArenaField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
         if (!field) return;
         super(field);
 
-        //todo look into initialization of arena value
-        let arena = {
-            regionId: !field.isRequired ? null : undefined,
-            coordinates: !field.isRequired ? {} : {}
-        };
+        this.initialize();
 
-        if (field.value && field.value.region && field.value.region.id) {
-            arena.coordinates = field.value.coordinates;
-            arena.regionId = field.value.region.id;
-        }
-
-        let injector = angular.element(document).injector();
-        this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
-
-        this.currentValue = arena;
         Object.defineProperty(this.value, 'name', {
             get: () => {
                 let calculatedName = !this.isRequired ? 'Optional' : 'Select';
-                if (this.currentValue.regionId) {
-                    calculatedName = angular.copy(this.regionMap[this.currentValue.regionId].name);
+                if (this.regionId) {
+                    let injector = angular.element(document).injector();
+                    this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
+                    calculatedName = angular.copy(this.regionMap[this.regionId].name);
                 }
                 return calculatedName;
-            }
-        });
-        Object.defineProperty(this.value, 'description', {
-            get: () => {
-                let calculatedDescription = !this.isRequired ? 'Optional' : 'Select';
-                if (this.currentValue.regionId) {
-                    calculatedDescription = angular.copy(this.regionMap[this.currentValue.regionId].description);
-                }
-                return calculatedDescription;
             }
         });
         this.availableValues = null;
     }
 
-    get currentValue() {
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {integer} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        //todo look into initialization of arena value
+        let arena = {
+
+            regionId   : !this.isRequired ? null : undefined,
+            coordinates: !this.isRequired ? {}   : {}
+        };
+
+        if (
+            value &&
+            value.region &&
+            value.region.id
+        ) {
+
+            arena.coordinates = value.coordinates;
+            arena.regionId    = value.region.id;
+        }
+
+        this.currentValue = arena;
+    }
+
+    get currentValue () {
+
         return this.value;
     }
 
@@ -55,17 +76,24 @@ class ArenaField extends Field {
     }
 
     /**
-     * Method: toString
      * Generates an HTML string of the field.
      *
-     * @return: {String} HTML of the field
+     * @method toString
+     * @returns {String} - HTML of the field
      */
     toString () {
 
         return `<span class="value gap-field">${this.currentValue.description}</span>`;
     }
 
-    toJSON() {
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
         let variableValue = {};
         variableValue = {
             type: null,
@@ -76,7 +104,8 @@ class ArenaField extends Field {
                 }
             }
         };
-        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
+
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
     }
 }
 

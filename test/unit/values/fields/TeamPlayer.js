@@ -66,6 +66,28 @@ describe('TeamPlayer Tag Field', () => {
         expect(teamValue.teamId).to.be.null;
     });
 
+    it('Should be allow for initialization via the initialize method', () => {
+        let localPlayerTagVariable = angular.copy(playerTagVariable);
+        let localTeamTagVariable = angular.copy(teamTagVariable);
+
+        localPlayerTagVariable.isRequired = false;
+        localTeamTagVariable.isRequired = false;
+
+        let playerTagField = new TeamPlayerField(localPlayerTagVariable);
+        let teamTagField = new TeamPlayerField(localTeamTagVariable);
+
+        playerTagField.initialize('1');
+        teamTagField.initialize('1');
+
+        expect(playerTagField.currentValue.playerId).to.equal(1);
+        expect(playerTagField.currentValue.teamId).to.be.undefined;
+        expect(playerTagField.currentValue.name).to.be.undefined;
+
+        expect(teamTagField.currentValue.playerId).to.be.undefined;
+        expect(teamTagField.currentValue.teamId).to.equal(1);
+        expect(teamTagField.currentValue.name).to.be.undefined;
+    });
+
 });
 
 describe('TeamPlayer Event Field', () => {
@@ -107,11 +129,8 @@ describe('TeamPlayer Event Field', () => {
         let playerEventField = new TeamPlayerField(localPlayerTagVariable);
         let teamEventField = new TeamPlayerField(localTeamTagVariable);
 
-        let serializedPlayerField = playerEventField.toJSON();
-        let serializedTeamField = teamEventField.toJSON();
-
-        expect(serializedPlayerField).to.equal('{"type":"Player","value":"1"}');
-        expect(serializedTeamField).to.equal('{"type":"Team","value":"1"}');
+        expect(JSON.stringify(playerEventField)).to.equal('{"type":"Player","value":"1"}');
+        expect(JSON.stringify(teamEventField)).to.equal('{"type":"Team","value":"1"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -126,11 +145,8 @@ describe('TeamPlayer Event Field', () => {
         let playerTagField = new TeamPlayerField(localPlayerTagVariable);
         let teamTagField = new TeamPlayerField(localTeamTagVariable);
 
-        let serializedPlayerField = playerTagField.toJSON();
-        let serializedTeamField = teamTagField.toJSON();
-
-        expect(serializedPlayerField).to.equal('{"type":"Player","value":null}');
-        expect(serializedTeamField).to.equal('{"type":"Team","value":null}');
+        expect(JSON.stringify(playerTagField)).to.equal('{"type":"Player","value":null}');
+        expect(JSON.stringify(teamTagField)).to.equal('{"type":"Team","value":null}');
     });
     //
     // it('Should be able to switch back to an optional value from a set value', () => {

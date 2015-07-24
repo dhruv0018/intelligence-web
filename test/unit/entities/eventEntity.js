@@ -24,7 +24,7 @@ describe('Event Entity', () => {
 
         srcEvent    = angular.copy(srcJSON.events[0]);
         let gameId  = srcJSON.gameId;
-        let tag     = angular.copy(srcTag);
+        let tag     = new KrossoverTag(angular.copy(srcTag));
         sampleEvent = new KrossoverEvent(angular.copy(srcEvent), tag, srcEvent.time, gameId);
     });
 
@@ -33,39 +33,48 @@ describe('Event Entity', () => {
         expect(KrossoverEvent).to.exist;
     });
 
+    it('should have public API', () => {
+
+        expect(KrossoverEvent).to.respondTo('toJSON');
+        expect(KrossoverEvent).to.respondTo('isValid');
+        expect(KrossoverEvent).to.respondTo('isFloat');
+        expect(KrossoverEvent).to.respondTo('isEndAndStart');
+    });
+
     it('should have a "keyboardShortcut" getter that works.', () => {
 
         expect(sampleEvent.keyboardShortcut).to.be.a('string');
         expect(sampleEvent.keyboardShortcut).to.equal('K');
     });
 
-    it('should have a "hasVariables" getter that works.', () => {
+    it('shouldn\'t allow writing to the shortcutKey property.', () => {
 
-        expect(sampleEvent.hasVariables).to.be.a('boolean');
-        expect(sampleEvent.hasVariables).to.be.true;
+        expect(sampleEvent.keyboardShortcut).to.be.a('string');
+        expect(sampleEvent.keyboardShortcut).to.equal('K');
+
+        expect(() => sampleEvent.shortcutKey = 'T').to.throw(TypeError);
+        expect(() => sampleEvent.keyboardShortcut = 'T').to.throw(TypeError);
+
+        expect(sampleEvent.keyboardShortcut).to.be.a('string');
+        expect(sampleEvent.keyboardShortcut).to.equal('K');
     });
 
-    it('should have a "isValid" getter that works.', () => {
+    it('should have a "isValid" method that works.', () => {
 
-        expect(sampleEvent.isValid).to.be.a('boolean');
-        expect(sampleEvent.isValid).to.be.true;
+        expect(sampleEvent.isValid()).to.be.a('boolean');
+        expect(sampleEvent.isValid()).to.be.true;
     });
 
-    it('should have a "isFloat" getter that works.', () => {
+    it('should have a "isFloat" method that works.', () => {
 
-        expect(sampleEvent.isFloat).to.be.a('boolean');
-        expect(sampleEvent.isFloat).to.be.false;
+        expect(sampleEvent.isFloat()).to.be.a('boolean');
+        expect(sampleEvent.isFloat()).to.be.false;
     });
 
-    it('should have a "isEndAndStart" getter that works.', () => {
+    it('should have a "isEndAndStart" method that works.', () => {
 
-        expect(sampleEvent.isEndAndStart).to.be.a('boolean');
-        expect(sampleEvent.isEndAndStart).to.be.false;
-    });
-
-    it('should have public API', () => {
-
-        expect(KrossoverEvent).to.respondTo('toJSON');
+        expect(sampleEvent.isEndAndStart()).to.be.a('boolean');
+        expect(sampleEvent.isEndAndStart()).to.be.false;
     });
 
     it('should have certain properties when instantiated.', () => {
@@ -80,7 +89,6 @@ describe('Event Entity', () => {
             'isEnd',
             'tagSetId',
             'children',
-            'tagVariables',
             'pointsAssigned',
             'assignThisTeam',
             'isPeriodTag',
@@ -89,21 +97,16 @@ describe('Event Entity', () => {
             'buffer',
             'fields',
             'tagId',
-            'variableValues',
             'activeEventVariableIndex',
             'time'
         ]);
-        assert.isDefined(sampleEvent.hasVariables, '"hasVariables" has been defined.');
-        assert.isDefined(sampleEvent.isValid, '"isValid" has been defined.');
-        assert.isDefined(sampleEvent.isFloat, '"isFloat" has been defined.');
-        assert.isDefined(sampleEvent.isEndAndStart, '"isEndAndStart" has been defined.');
     });
 
     it('should have the proper game ID on each variable value', () => {
 
-        Object.keys(sampleEvent.variableValues).forEach(key => {
+        Object.keys(sampleEvent.fields).forEach(order => {
 
-            expect(sampleEvent.variableValues[key].gameId).to.equal(srcJSON.gameId);
+            expect(sampleEvent.fields[order].gameId).to.equal(srcJSON.gameId);
         });
     });
 
@@ -127,7 +130,7 @@ describe('Event Entity', () => {
 
         Object.keys(sampleEvent.variableValues).forEach((tagId) => {
 
-            expect(JSON.parse(sampleEvent.variableValues[tagId])).to.deep.equal(srcEvent.variableValues[tagId]);
+            expect(sampleEvent.variableValues[tagId]).to.deep.equal(srcEvent.variableValues[tagId]);
         });
     });
 });

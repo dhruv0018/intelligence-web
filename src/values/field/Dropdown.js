@@ -1,10 +1,19 @@
-import Field from './Field.js';
+import Field from './Field';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * DropdownField Field Model
+ * @class DropdownField
+ */
 class DropdownField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs DropdownField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
         super(field);
@@ -16,42 +25,57 @@ class DropdownField extends Field {
             name: !field.isRequired ? 'Optional' : 'Select'
         };
         this.availableValues.unshift(initialOption);
+
+        this.initialize();
+    }
+
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {string} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
         let dropdownOption = angular.copy(this.availableValues[0]);
 
-        if (field.value) {
-            dropdownOption.content = field.value;
-            dropdownOption.name = field.value;
+        if (value) {
+
+            dropdownOption.content = value;
+            dropdownOption.name = value;
         }
 
         this.currentValue = dropdownOption;
     }
 
-    get currentValue(){
-        return this.value;
-    }
-
-    set currentValue(dropdownOption) {
-        this.value = dropdownOption;
-    }
-
     /**
-     * Method: toString
      * Generates an HTML string of the field.
      *
-     * @return: {String} HTML of the field
+     * @method toString
+     * @returns {String} - HTML of the field
      */
     toString () {
 
         return `<span class="value dropdown-field">${this.currentValue.content}</span>`;
     }
 
-    toJSON() {
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
         let variableValue = {};
         variableValue = {
             type: null,
             value: this.value.content
         };
-        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
+
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
     }
 }
 

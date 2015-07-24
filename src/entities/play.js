@@ -1,5 +1,5 @@
 import Entity from './entity';
-import KrossoverEvent from '../entities/event.js';
+import KrossoverEvent from '../entities/event';
 import eventTemplate from './eventTemplate';
 
 /**
@@ -10,8 +10,8 @@ class KrossoverPlay extends Entity {
 
     /**
      * @constructs KrossoverPlay
-     * @param play {Object} - Play JSON from server
-     * @param tagsets {Service} - Tagsets factory
+     * @param {Object} play - Play JSON from server
+     * @param {Service} tagsets - Tagsets factory
      */
     constructor (play, tagsets) {
 
@@ -41,7 +41,7 @@ class KrossoverPlay extends Entity {
 
         this.events = this.events.map(event => {
 
-            let tag = tagsets.getTagJSON(event.tagId);
+            let tag = tagsets.getTag(event.tagId);
 
             return new KrossoverEvent(event, tag, event.time, this.gameId);
         });
@@ -98,13 +98,11 @@ class KrossoverPlay extends Entity {
         });
     }
 
-    // TODO: Should this just return an object instead of JSON?
-
     /**
-     * Method: toJSON
      * Reverts the class instance to JSON suitable for the server.
      *
-     * @return: {String} Stringified version of the object.
+     * @method toJSON
+     * @returns {String} - Stringified version of the object.
      */
     toJSON () {
 
@@ -117,9 +115,9 @@ class KrossoverPlay extends Entity {
         delete copy.hasVisibleEvents;
         delete copy.isFiltered;
 
-        copy.events = copy.events.map((event) => {
+        copy.events = copy.events.map(event => {
 
-            return JSON.parse(event.toJSON());
+            return event.toJSON();
         });
 
         return JSON.stringify(copy);

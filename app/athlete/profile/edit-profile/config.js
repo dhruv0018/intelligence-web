@@ -1,11 +1,13 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+const templateUrl = 'athlete/edit-profile/template.html';
 
 /**
  * Edit Profile page module.
  * @module Profile
  */
-var EditProfile = angular.module('Athlete.Profile.EditProfile');
+const EditProfile = angular.module('Athlete.Profile.EditProfile');
 
 /**
  * Edit Profile page state router.
@@ -23,7 +25,7 @@ EditProfile.config([
             abstract: true,
             views: {
                 'main@root': {
-                    templateUrl: 'athlete/edit-profile/template.html',
+                    templateUrl: templateUrl,
                     controller: 'Athlete.Profile.EditProfile.controller'
                 }
             },

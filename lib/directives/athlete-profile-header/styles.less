@@ -4,6 +4,7 @@
     background-color: @brand-blue;
     color: white;
     position: relative;
+    min-height: 128px;
 
     .athlete-primary-info {
         text-align: center;
@@ -30,16 +31,18 @@
         padding: 0;
     }
 
-    .secondary-info-toggle {
+    .dropdown-toggle-button {
         position: absolute;
         right: 20px;
         bottom: 15px;
         width: 30px;
+        fill: white;
     }
 
     .athlete-secondary-info {
         margin: 0 20px;
         border-top: thin solid white;
+        overflow: hidden;
         transition-property: all;
         transition-duration: 1s;
         transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
@@ -49,7 +52,7 @@
         }
 
         &.expanded {
-            max-height: 273px;
+            max-height: 295px;
         }
     }
 
@@ -61,11 +64,16 @@
 
         .athlete-attribute {
             margin: 10px 0;
+            text-transform: capitalize;
 
             label {
                 display: block;
                 font-size: @profile-attribute-header-font-size;
                 text-transform: uppercase;
+            }
+
+            .icon-plus {
+                font-size: 14px;
             }
         }
     }
@@ -88,32 +96,36 @@
 
         .athlete-primary-info {
             align-items: center;
+            position: static;
         }
 
         .profile-picture {
-            margin: 20px 30px;
+            position: absolute;
+            top: 0;
+            margin: 20px 20px;
 
-            img {
-                height: 120px;
-                width: 120px;
+            img, .placeholder-picture {
+                height: 100px;
+                width: 100px;
+                padding: 0;
                 border-radius: 60px;
                 border-width: 2px;
             }
         }
 
-        h2 {
+        h2, p {
             margin-bottom: 0;
         }
 
         .athlete-secondary-info {
             margin: 0; // Override
             border-top: none; // Overrride
+            margin: 20px 0 10px 170px;
         }
 
         .athlete-attributes {
             align-items: center;
-            margin: 20px 30px;
-            margin-top: 0;
+            margin: 0;
             text-align: left; // Override
 
             .athlete-attribute {
@@ -137,16 +149,12 @@
     @media only screen
     and (min-width: @md-screen-md) {
 
-        .athlete-primary-info {
-            position: static;
-        }
-
         .profile-picture {
             position: absolute;
             top: 0;
             margin: 20px 40px;
 
-            img {
+            img, placeholder-picture {
                 height: 160px;
                 width: 160px;
                 border-radius: 80px;
@@ -154,16 +162,8 @@
             }
         }
 
-        h2 {
-            margin-bottom: 20px;
-        }
-
         .athlete-secondary-info {
             margin: 20px 0 20px 240px;
-        }
-
-        .athlete-attributes {
-            margin: 0;
         }
     }
 }

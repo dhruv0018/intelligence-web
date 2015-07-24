@@ -257,6 +257,7 @@ module.exports = function(grunt) {
                         'lib/directives/play/play-header/styles.less',
                         'lib/directives/play/play-footer/styles.less',
                         'lib/directives/play/styles.less',
+                        'lib/directives/indexing-block/styles.less',
                         'lib/directives/dynamic-tables/styles.less',
                         'app/reel/styles.less'
                     ]

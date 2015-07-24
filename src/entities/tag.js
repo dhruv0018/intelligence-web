@@ -1,38 +1,47 @@
 import Entity from './entity';
+import FieldFactory from '../values/field/FieldFactory';
 import StaticField from '../values/field/Static';
-import TeamPlayerField from '../values/field/TeamPlayer';
-import GapField from '../values/field/Gap';
-import PassingZoneField from '../values/field/PassingZone';
-import FormationField from '../values/field/Formation';
-import DropdownField from '../values/field/Dropdown';
-import TextField from '../values/field/Text';
-import YardField from '../values/field/Yard';
-import ArenaField from '../values/field/Arena';
-import PlayerField from '../values/field/Player';
-import TeamField from '../values/field/Team';
 
+/**
+ * KrossoverTag Entity Model
+ * @class KrossoverTag
+ */
 class KrossoverTag extends Entity {
 
     /**
-     * Constructor:
-     * Instantaties KrossoverTag
-     *
-     * @param: {Object} Tag JSON
+     * @constructs KrossoverTag
+     * @param {Object} tag - Tag JSON
      */
     constructor (tag) {
 
         super(tag);
 
+        Object.defineProperty(this, 'shortcutKey', {
+
+            writable: false,
+        });
+
+        /* Transform tagVariables into Fields */
         this.fields = {};
-        this.indexFields(this.tagVariables, 'tagVariables');
+        this.tagVariables = this.tagVariables || [];
+
+        this.tagVariables.forEach((tagVariable, index) => {
+
+            this.fields[index + 1] = FieldFactory.createField(tagVariable);
+        });
+
+        /* TODO: eventually delete this.tagVariables when Event Manager no
+         * longer needs it. */
+
         this.mapScriptTypes();
     }
 
     /**
      * Getter for tag.shortcutKey
-     * @method KrossoverTag.keyboardShortcut
+     *
+     * @method keyboardShortcut
      * @readonly
-     * @returns {String} shortcutKey
+     * @returns {String} - this.shortcutKey
      */
     get keyboardShortcut () {
 
@@ -40,61 +49,10 @@ class KrossoverTag extends Entity {
     }
 
     /**
-     * Setter for tag.shortcutKey
-     * @method KrossoverTag.keyboardShortcut
-     * @readonly
-     * @param {Object}
-     * @returns {undefined}
-     */
-    set keyboardShortcut (value) {
-
-        return;
-    }
-
-    /**
-     * Method: indexFields
-     * Takes the tag variables array and converts it into an Object keyed by
-     * index ID.
-     *
-     * @return: {undefined}
-     */
-    indexFields (variables, propertyName = 'tagVariables') {
-
-        //actual fields
-        let indexedFields = {};
-
-        //todo refactor because map script types needs this for now
-        let indexedVariables = {};
-        switch(propertyName) {
-            case 'tagVariables':
-                if (!variables) variables = [];
-                variables.forEach((variable, index) => {
-                    index = index + 1;
-                    indexedFields[index] = this.createField(variable);
-                    indexedVariables[index] = variable;
-                });
-                break;
-            case 'variableValues':
-                if (!variables) variables = {};
-                Object.keys(variables).forEach((tagVariableId, index) => {
-                    let variableValue = variables[tagVariableId];
-                    index = index + 1;
-                    let field = this.createField(variableValue);
-                    indexedFields[index] = field;
-                    indexedVariables[variableValue.id] = variableValue;
-                });
-                break;
-        }
-
-        this.fields = indexedFields;
-        this[propertyName] = indexedVariables;
-    }
-
-    /**
-     * Method: mapScriptTypes
      * Maps script type strings from string to array.
      *
-     * @return: {undefined}
+     * @method mapScriptTypes
+     * @returns {undefined}
      */
     mapScriptTypes () {
 
@@ -127,19 +85,18 @@ class KrossoverTag extends Entity {
                         /* Find the index of the variable in the script. */
                         let index = Number(VARIABLE_INDEX_PATTERN.exec(item).pop());
 
-                        /* Find the tag variable by script index. */
-                        let tagVariable = this.tagVariables[index];
-
-                        /* Store the index position of the tag variable. */
-                        tagVariable.index = index;
-
-                        return tagVariable;
+                        return this.fields[index];
                     }
 
                     /* If the item is not a variable, return it as STATIC. */
                     else {
 
-                        let rawField = {value: item, type: 'STATIC'};
+                        let rawField = {
+
+                            value: item,
+                            type: 'STATIC'
+                        };
+
                         return new StaticField(rawField);
                     }
                 });
@@ -156,7 +113,7 @@ class KrossoverTag extends Entity {
                             string += item.toString();
                         } else {
 
-                            let field = this.fields[item.index];
+                            let field = this.fields[item.order];
                             if (field) {
 
                                 string += field.toString();
@@ -171,114 +128,17 @@ class KrossoverTag extends Entity {
     }
 
     /**
-     * Method: createField
-     * Instantiates and returns a Field based on input type.
-     * @returns {Field} - Depending on input type.
-     */
-    createField (rawField) {
-
-        let field;
-        switch (rawField.inputType) {
-
-        case 'PLAYER_DROPDOWN':
-            field = new PlayerField(rawField);
-            break;
-        case 'TEAM_DROPDOWN':
-            field = new TeamField(rawField);
-            break;
-        case 'PLAYER_TEAM_DROPDOWN':
-            field = new TeamPlayerField(rawField);
-            break;
-        case 'GAP':
-            field = new GapField(rawField);
-            break;
-        case 'PASSING_ZONE':
-            field = new PassingZoneField(rawField);
-            break;
-        case 'FORMATION':
-            field = new FormationField(rawField);
-            break;
-        case 'DROPDOWN':
-            field = new DropdownField(rawField);
-            break;
-        case 'TEXT':
-            field = new TextField(rawField);
-            break;
-        case 'YARD':
-            field = new YardField(rawField);
-            break;
-        case 'ARENA':
-            field = new ArenaField(rawField);
-            break;
-        default:
-            field = rawField;
-        }
-        return field;
-    }
-
-    /**
-     * Method: toJSON
      * Transforms the data back into the format excpected by the server:
      * convert tag variables back to array; change scripts back to string.
      *
-     * @return: {Object} The JSON
+     * @method toJSON
+     * @returns {undefined}
      */
     toJSON () {
 
-        let copy = Object.assign({}, this);
+        // TODO: Implement this one day when the server is updated
 
-        ['userScript', 'indexerScript', 'summaryScript'].forEach(scriptType => {
-
-            let script = copy[scriptType];
-
-            if (script) {
-
-                copy[scriptType] = script
-                .map(item => {
-
-                    if (item.type === 'STATIC') {
-
-                        return item.toJSON();
-                    } else {
-
-                        return `__${item.index}__`;
-                    }
-                })
-                .join('');
-            }
-        });
-
-        if (copy.tagVariables) {
-
-            let tagVariables = [];
-
-            Object.keys(copy.tagVariables).forEach(tagVariableKey => {
-
-                var tagVariable = copy.tagVariables[tagVariableKey];
-
-                if (tagVariable.formations) {
-
-                    let formations = [];
-
-                    Object.keys(tagVariable.formations).forEach(tagVariableFormationsKey => {
-
-                        let formation = tagVariable.formations[tagVariableFormationsKey];
-
-                        formations.push(formation);
-                    });
-
-                    tagVariable.formations = formations;
-                }
-
-                tagVariables[--tagVariableKey] = tagVariable;
-            });
-
-            copy.tagVariables = tagVariables;
-        }
-
-        delete copy.fields;
-
-        return copy;
+        return;
     }
 }
 

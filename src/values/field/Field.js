@@ -1,4 +1,4 @@
-import Value from '../value.js';
+import Value from '../value';
 
 /**
  * KrossoverField Field Model
@@ -6,7 +6,12 @@ import Value from '../value.js';
  */
 class Field extends Value {
 
+    /**
+     * @constructs Field
+     * @param {Object} field - Field JSON from server
+     */
     constructor (field) {
+
         if (!field) return;
 
         super(field);
@@ -23,6 +28,33 @@ class Field extends Value {
         } else if (field.value === null && field.isRequired) {
             throw Error('Corrupted data - null value in required field');
         }
+    }
+
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {object} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        this.currentValue = value;
+    }
+
+    /**
+     * Getter/Setter for the value of the Field
+     * @type {object}
+     */
+    get currentValue () {
+
+        return this.value;
+    }
+
+    set currentValue (value) {
+
+        this.value = value;
     }
 
     //validates data sent to the server
@@ -52,7 +84,14 @@ class Field extends Value {
         return `<h1>TEMPORARY!!!! toString method not defined for this field!</h1>`;
     }
 
-    toJSON() {
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
         throw Error('Trying to stringify abstract class - Field');
     }
 }

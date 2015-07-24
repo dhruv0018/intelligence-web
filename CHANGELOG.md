@@ -1,3 +1,21 @@
+#v2.7.1#
+##Bug Fixes / Improvements##
+- Fix an issue with an external library
+
+#v2.7.0#
+##Features##
+- Athlete profiles
+- Full screen indexing
+- As a coach, when I am looking at a reel, I should have the same tags/reels functionality as for breakdowns (checkboxes, multiple select, etc)
+- As an Admin, on the team info page, in the plans and package section, I should be able to see the number of breakdowns submitted and left for a package and the plan
+- As an Admin, I should be able to toggle QA status on a user with an indexer role in the user info page
+- Coach or Athlete on Web will see video pause when opening the toolbar
+- As a user, I should be able to see a link to my profile below my resumé
+##Bug Fixes / Improvements##
+- Center video player controls
+- Profile design enhancements
+- As a basic athlete, I should not be able to add a reel to my profile
+
 #v2.6.0#
 ##Features##
 - Stats
@@ -25,6 +43,10 @@
 - Clips Pages Not Loading
 
 #v2.3.0#
+##Known Issues##
+- Clips pages not loading
+- As an indexer, while watching the video I should be able to see the video duration
+- On down and distance and formation report, the playlist play button is not starting the video
 ##Features##
 - Design improvements to the queue dashboard/status
 - Admin can toggle dashboard up and down on queue
@@ -47,13 +69,8 @@
 ##Known Issues##
 - I should not see buttons "glowing"
 - As an indexer, if I delete an event, the playlist script removes the last event of the play. It should remove the event which was deleted.
-- As a admin, I should have ability to filter by 'QA, In Progress'
-- As a Super Admin, when I edit league information and press 'Cancel', I expect edited info to not save
 - As a coach, when selecting an event in the breakdown the play for the event should be selected.
 - As a coach, when uploading a Football (and all sports) game and entering my team's roster, I should see a header that says DNP. On volleyball games, the header is there.
-- As a user, when I am changing my password, a message that says "Your passwords do not match" appears before I have even entered my password in the second box.
-- As a new user with only one role, when I first login to my account, I have to a select a role, but I only have one role, so there is nothing to select.
-- As a user, when creating a password and the two passwords don't match, the "Passwords Don't Match" message styling goes across the entire screen.##Bug Fixes / Improvements##
 ##Features##
 - Maintenance Functionality v0.1
 - Update API to force maintenance mode via server config (503) disabling access to all data for read or write
