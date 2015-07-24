@@ -45,6 +45,7 @@ describe('Team Tag Field', () => {
         let value = tagField.currentValue;
 
         expect(value.teamId).to.equal(1);
+        expect(value.name).to.equal('');
     });
 
     it('Should be initialized correctly if not required', () => {
