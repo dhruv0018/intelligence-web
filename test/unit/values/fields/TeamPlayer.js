@@ -66,6 +66,28 @@ describe('TeamPlayer Tag Field', () => {
         expect(teamValue.teamId).to.be.null;
     });
 
+    it('Should be allow for initialization via the initialize method', () => {
+        let localPlayerTagVariable = angular.copy(playerTagVariable);
+        let localTeamTagVariable = angular.copy(teamTagVariable);
+
+        localPlayerTagVariable.isRequired = false;
+        localTeamTagVariable.isRequired = false;
+
+        let playerTagField = new TeamPlayerField(localPlayerTagVariable);
+        let teamTagField = new TeamPlayerField(localTeamTagVariable);
+
+        playerTagField.initialize('1');
+        teamTagField.initialize('1');
+
+        expect(playerTagField.currentValue.playerId).to.equal(1);
+        expect(playerTagField.currentValue.teamId).to.be.undefined;
+        expect(playerTagField.currentValue.name).to.be.undefined;
+
+        expect(teamTagField.currentValue.playerId).to.be.undefined;
+        expect(teamTagField.currentValue.teamId).to.equal(1);
+        expect(teamTagField.currentValue.name).to.be.undefined;
+    });
+
 });
 
 describe('TeamPlayer Event Field', () => {
