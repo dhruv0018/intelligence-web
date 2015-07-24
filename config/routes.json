@@ -552,5 +552,13 @@
 
     "Styleguide.Typography": {
         "*": true
+    },
+
+    "Styleguide.Buttons": {
+        "*": true
+    },
+
+    "Styleguide.Forms": {
+        "*": true
     }
 }
