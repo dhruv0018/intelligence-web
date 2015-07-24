@@ -33,5 +33,7 @@ Users.controller('Users.User.Roles.Controller', [
                 $scope.newRoles.unshift(angular.copy(newRole));
             }
         };
+
+        $scope.ROLES = ROLES;
     }
 ]);

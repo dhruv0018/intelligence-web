@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/krossover/subscription",
     "title": "Subscription Schema",
-    "type": "Object",
+    "type": "object",
     "properties": {
         "id": {
             "type": "integer"

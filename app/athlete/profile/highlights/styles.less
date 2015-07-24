@@ -2,6 +2,97 @@
 
 .highlights {
 
+    .featured-reel-container {
+        display: block;
+
+        @media only screen
+        and (min-width: @md-screen-sm) {
+            display: inline-block;
+        }
+
+        .featured-reel-video {
+            border: none;
+            width: 100%;
+            margin: auto;
+
+            @media only screen
+            and (min-width: @md-screen-sm) {
+                border: thin solid @gray-border;
+            }
+
+            .featured-reel-header {
+                height: 60px;
+                background-color: white;
+                text-align: center;
+
+                h3 {
+                    margin: 0;
+                    line-height: 60px;
+                    font-weight: 400;
+                    color: @gray-darker;
+                }
+            }
+        }
+
+        .clips-navigation {
+            height: 60px;
+            width: 100%;
+            border: thin solid @gray-border;
+            margin: auto;
+            margin-top: 0;
+            background-color: white;
+            color: @gray-darker;
+
+            @media only screen
+            and (min-width: @md-screen-sm) {
+                margin-top: 10px;
+            }
+
+            .clip-previous {
+                display: inline-block;
+                padding: 0 15px;
+                border-right: thin solid @gray-border;
+                line-height: 60px;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+
+            .clip-info {
+                padding: 0 5px;
+                line-height: 60px;
+                display: inline-block;
+            }
+
+            .krossover-playlist-control {
+                .pull-right;
+                display: inline-block;
+                border: none;
+                margin-top: 14px;
+            }
+
+            .clip-next {
+                .pull-right;
+                display: inline-block;
+                padding: 0 15px;
+                border-left: thin solid @gray-border;
+                line-height: 60px;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+
+            .disabled {
+                color: @gray-light;
+                pointer-events: none;
+            }
+        }
+    }
+
+    .athlete-resume {
+        display: inline-block;
+        margin-right: 30px;
+        vertical-align: top;
+    }
+
     .reels {
         margin: 0;
         padding: 0;
@@ -20,6 +111,18 @@
             and (min-width: @md-screen-sm) {
                 min-width: 335px;
             }
+        }
+    }
+
+    .no-profile-results {
+        display: block;
+        padding-top: 20px;
+
+        @media only screen
+        and (min-width: @md-screen-md) {
+            display: inline-block;
+            margin-left: 20%;
+            padding-top: 0;
         }
     }
 }

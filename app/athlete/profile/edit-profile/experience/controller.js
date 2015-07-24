@@ -1,11 +1,11 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * EditProfile.Experience page module.
  * @module EditProfile.Experience
  */
-var Experience = angular.module('Athlete.Profile.EditProfile.Experience');
+const Experience = angular.module('Athlete.Profile.EditProfile.Experience');
 
 /*
 * EditProfile.Experience dependencies
