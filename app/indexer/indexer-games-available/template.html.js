@@ -33,7 +33,7 @@ export default `
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-repeat="game in games
+                <tr data-ng-repeat="game in gamesAvailable
                     | gameIsDeleted: false
                     | gameIsReadyForQa
                     | gameNotIndexedByMe

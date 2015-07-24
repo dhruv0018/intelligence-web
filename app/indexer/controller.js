@@ -64,6 +64,7 @@ function IndexerGamesController(
     }
 
     $scope.games = games.getList({ assignedUserId: $scope.userId });
+    $scope.gamesAvailable = games.getList();
     $scope.currentUser = session.getCurrentUser();
 
     const indexerQuality = $scope.currentUser.currentRole.indexerQuality;
@@ -119,6 +120,11 @@ function IndexerGamesController(
             if (game.timeRemaining) {
 
                 game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
+            }
+
+            if (game.remainingTime) {
+
+                game.remainingTime = moment.duration(game.remainingTime).subtract(1, 'minute').asMilliseconds();
             }
         });
     };
