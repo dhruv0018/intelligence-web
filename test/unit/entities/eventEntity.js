@@ -107,7 +107,7 @@ describe('Event Entity', () => {
         assert(sampleEvent.toJSON.should.have.been.called);
     });
 
-    xit('should restore the original JSON on JSON.stringify calls', () => {
+    it('should restore the original JSON on JSON.stringify calls', () => {
 
         sampleEvent = sampleEvent.toJSON();
 
@@ -118,7 +118,6 @@ describe('Event Entity', () => {
 
         Object.keys(sampleEvent.variableValues).forEach((tagId) => {
 
-            console.log('sampleEvent.variableValues[tagId]', sampleEvent.variableValues[tagId]);
             expect(sampleEvent.variableValues[tagId]).to.deep.equal(srcEvent.variableValues[tagId]);
         });
     });
