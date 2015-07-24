@@ -77,7 +77,7 @@ class TeamPlayerField extends Field {
                         playerId: player.id,
                         jerseyColor: game.primaryJerseyColor,
                         jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
-                        name: player.firstName + ' ' + player.lastName
+                        name: jerseyNumber + ' - ' + player.firstName + ' ' + player.lastName
                     };
                     return value;
                 });
@@ -90,7 +90,7 @@ class TeamPlayerField extends Field {
                         playerId: player.id,
                         jerseyColor: game.opposingPrimaryJerseyColor,
                         jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
-                        name: player.firstName + ' ' + player.lastName
+                        name: jerseyNumber + ' - ' + player.firstName + ' ' + player.lastName
                     };
                     return value;
                 });
