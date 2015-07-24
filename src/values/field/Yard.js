@@ -43,18 +43,6 @@ class YardField extends Field {
         this.currentValue = yard;
     }
 
-    get currentValue () {
-
-        return this.value;
-    }
-
-    set currentValue(yard) {
-        let value = {};
-        value.name = yard.name;
-        value.content = yard.content;
-        this.value = value;
-    }
-
     /**
      * Generates an HTML string of the field.
      *
