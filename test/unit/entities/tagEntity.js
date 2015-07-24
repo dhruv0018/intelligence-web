@@ -62,6 +62,18 @@ describe('Tag Entity', () => {
         expect(tag.keyboardShortcut).to.equal('K');
     });
 
+    it('shouldn\'t allow writing to the shortcutKey property.', () => {
+
+        expect(tag.keyboardShortcut).to.be.a('string');
+        expect(tag.keyboardShortcut).to.equal('K');
+
+        expect(() => tag.shortcutKey = 'T').to.throw(TypeError);
+        expect(() => tag.keyboardShortcut = 'T').to.throw(TypeError);
+
+        expect(tag.keyboardShortcut).to.be.a('string');
+        expect(tag.keyboardShortcut).to.equal('K');
+    });
+
     it('should have called toJSON on a JSON.stringify call', () => {
 
         tag.toJSON = sinon.spy();

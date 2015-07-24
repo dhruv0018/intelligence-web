@@ -16,10 +16,15 @@ class KrossoverTag extends Entity {
 
         super(tag);
 
+        Object.defineProperty(this, 'shortcutKey', {
+
+            writable: false,
+        });
+
+        /* Transform tagVariables into Fields */
         this.fields = {};
         this.tagVariables = this.tagVariables || [];
 
-        /* Transform tagVariables into Fields */
         this.tagVariables.forEach((tagVariable, index) => {
 
             this.fields[index + 1] = FieldFactory.createField(tagVariable);
@@ -27,6 +32,7 @@ class KrossoverTag extends Entity {
 
         /* TODO: eventually delete this.tagVariables when Event Manager no
          * longer needs it. */
+
         this.mapScriptTypes();
     }
 
@@ -40,11 +46,6 @@ class KrossoverTag extends Entity {
     get keyboardShortcut () {
 
         return this.shortcutKey;
-    }
-
-    set keyboardShortcut (value) {
-
-        return;
     }
 
     /**
