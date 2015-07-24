@@ -24,14 +24,6 @@ class TextField extends Field {
         this.availableValues = null;
     }
 
-    get currentValue() {
-        return this.value;
-    }
-
-    set currentValue(text) {
-        this.value = text;
-    }
-
     /**
      * Generates an HTML string of the field.
      *
