@@ -55,6 +55,18 @@ describe('Yard Event Field', () => {
         expect(value.name).to.equal('1');
     });
 
+    it('Should have a "initialize" method that property sets the value', () => {
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = false;
+        let tagField = new YardField(localTagVariable);
+
+        tagField.initialize('1');
+        let value = tagField.currentValue;
+
+        expect(value.content).to.equal(1);
+        expect(value.name).to.equal('1');
+    });
+
     it('toJSON should serialize to the right format if the field has a value', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = true;
