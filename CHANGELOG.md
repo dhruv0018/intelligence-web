@@ -3,6 +3,10 @@
 - New users need to agree to Terms & Conditions
 - Old users need to agree to Terms & Conditions
 
+#v2.7.1#
+##Bug Fixes / Improvements##
+- Fix an issue with an external library
+
 #v2.7.0#
 ##Features##
 - Athlete profiles
