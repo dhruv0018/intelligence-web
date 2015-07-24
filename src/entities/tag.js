@@ -173,10 +173,12 @@ class KrossoverTag extends Entity {
         case 'DROPDOWN':
             field = new DropdownField(rawField);
             break;
-        case 'TEXT':
-            field = new TextField(rawField);
-            break;
+        //Todo tech debt incurred - this should be a backend migration
+        // case 'TEXT':
+        //     field = new TextField(rawField);
+        //     break;
         case 'YARD':
+        case 'TEXT':
             field = new YardField(rawField);
             break;
         case 'ARENA':
