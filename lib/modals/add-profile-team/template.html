@@ -20,17 +20,17 @@
 
             <div class="team-dates-row">
                 <div>
-                    Presently on team?
+                    <span>Presently on team?</span>
                     <check-box checked="hideEndYear" ng-click="checkPresentlyOnTeam()"></check-box>
                 </div>
                 <div>
-                    Starting:
+                    <span>Starting:</span>
                     <select class="form-control" name="startYear" ng-model="profileTeam.startYear" ng-options="date as date for date in dates" required>
                         <option value="">Pick Year</option>
                     </select>
                 </div>
                 <div>
-                    Ending:
+                    <span>Ending:</span>
                     <span class="invalid-date-warning" ng-show="!hideEndYear && profileTeam.endYear < profileTeam.startYear">End date must follow start date</span>
                     <select class="form-control" name="endYear" ng-disabled="hideEndYear" ng-model="profileTeam.endYear" ng-options="date as date for date in dates" ng-required="!hideEndYear" ng-class="{'ng-invalid': !hideEndYear && profileTeam.endYear < profileTeam.startYear}">
                         <option value="">Pick Year</option>
