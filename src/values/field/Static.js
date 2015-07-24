@@ -14,16 +14,6 @@ class StaticField extends Field {
         this.currentValue = field.value;
     }
 
-    get currentValue () {
-
-        return this.value;
-    }
-
-    set currentValue (text) {
-
-        this.value = text;
-    }
-
     /**
      * Generates an HTML string of the field.
      *
