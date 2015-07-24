@@ -1,5 +1,5 @@
-import KrossoverPlay from '../entities/play.js';
-import KrossoverPlayDataDependencies from '../entities/playDataDependencies.js';
+import KrossoverPlay from '../entities/play';
+import KrossoverPlayDataDependencies from '../entities/playDataDependencies';
 
 const pkg = require('../../package.json');
 
