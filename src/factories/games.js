@@ -803,7 +803,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var now = moment.utc();
                 var deadline = moment.utc(assignment.deadline);
-                var timeRemaining = moment.duration(deadline.subtract(now));
+                var timeRemaining = moment.duration(deadline.diff(now));
 
                 return timeRemaining.asMilliseconds();
             },

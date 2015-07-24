@@ -21,8 +21,8 @@ export default `
     </aside>
 
     <div class="game-indexer-content">
-        <div class="flex-container">
-            <a class="lookup flex-item" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank">
+        <div class="indexer-links-container">
+            <a class="lookup" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank">
                 <div class="lookup-container">
                     <div class="right-container">
                         <i class="icon icon-chevron-right"></i>
@@ -35,7 +35,7 @@ export default `
                     </div>
                 </div>
             </a>
-            <a ng-if="indexerQuality" class="lookup flex-item" id="games-available-cta" ui-sref="IndexerGamesAvailable">
+            <a ng-if="indexerQuality" class="lookup" id="games-available-cta" ui-sref="IndexerGamesAvailable">
                 <div class="lookup-container">
                     <div class="right-container">
                         <i class="icon icon-chevron-right"></i>
@@ -75,16 +75,24 @@ export default `
                     <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
                     <td>{{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].firstName}} {{users[teams[game.uploaderTeamId].getHeadCoachRole().userId].lastName}}</td>
                     <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
-                    <td>{{ game.timeRemaining | millisecondsAsHours | hoursAsClock }}</td>
-                    <td>{{game.userAssignment().isQa ? 'QA' : 'Indexed'}}</td>
+                    <td>{{ game.timeRemaining | millisecondsAsDaysHoursMinutes }}</td>
                     <td>
-                        <button id="enter-indexing-cta" class="btn btn-default" data-ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
+                        <span ng-if="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)">
                             <span data-ng-hide="game.isAssignmentStarted()">Ready to Index </span>
                             <span data-ng-show="game.isAssignmentStarted()">Indexing</span>
+                        </span>
+                        <span ng-if="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)">
+                            <span data-ng-hide="game.isAssignmentStarted()">Ready to QA </span>
+                            <span data-ng-show="game.isAssignmentStarted()">QAing</span>
+                        </span>
+                    <td>
+                        <button id="enter-indexing-cta" class="btn btn-default" data-ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
+                            <span data-ng-hide="game.isAssignmentStarted()">Start Indexing</span>
+                            <span data-ng-show="game.isAssignmentStarted()">Resume Indexing</span>
                         </button>
                         <button id="enter-qa-cta" class="btn btn-default" data-ng-show="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)" data-ui-sref="indexing({ id: game.id })">
-                            <span data-ng-hide="game.isAssignmentStarted()">Start QAing </span>
-                            <span data-ng-show="game.isAssignmentStarted()">Resume QAing</span>
+                            <span data-ng-hide="game.isAssignmentStarted()">Start QA</span>
+                            <span data-ng-show="game.isAssignmentStarted()">Resume QA</span>
                         </button>
                     </td>
                     </tr>

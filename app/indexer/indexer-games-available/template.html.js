@@ -37,13 +37,13 @@ export default `
                     | gameIsDeleted: false
                     | gameIsReadyForQa
                     | gameNotIndexedByMe
-                    | orderBy: 'timeRemaining'
+                    | orderBy: 'remainingTime'
                     | limitTo: 100"
                 >
                     <td>{{game.id}}</td>
                     <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
                     <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
-                    <td>{{ game.timeRemaining | millisecondsAsHours | hoursAsClock }}</td>
+                    <td>{{ game.remainingTime | millisecondsAsDaysHoursMinutes }}</td>
                     <td>
                         <button id="pick-up-qa-cta" class="btn btn-default index-button" ng-click="pickUpGame(game.id)">
                             <span>Pick Up to QA </span>
