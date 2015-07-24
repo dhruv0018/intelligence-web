@@ -47,6 +47,18 @@ describe('Event Entity', () => {
         expect(sampleEvent.keyboardShortcut).to.equal('K');
     });
 
+    it('shouldn\'t allow writing to the shortcutKey property.', () => {
+
+        expect(sampleEvent.keyboardShortcut).to.be.a('string');
+        expect(sampleEvent.keyboardShortcut).to.equal('K');
+
+        expect(() => sampleEvent.shortcutKey = 'T').to.throw(TypeError);
+        expect(() => sampleEvent.keyboardShortcut = 'T').to.throw(TypeError);
+
+        expect(sampleEvent.keyboardShortcut).to.be.a('string');
+        expect(sampleEvent.keyboardShortcut).to.equal('K');
+    });
+
     it('should have a "isValid" method that works.', () => {
 
         expect(sampleEvent.isValid()).to.be.a('boolean');
