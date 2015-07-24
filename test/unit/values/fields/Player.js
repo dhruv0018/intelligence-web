@@ -45,6 +45,18 @@ describe('Player Tag Field', () => {
         expect(value.playerId).to.be.null;
     });
 
+    it('Should be allow for initialization via the initialize method', () => {
+
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = false;
+        let tagField = new PlayerField(localTagVariable);
+
+        tagField.initialize('1');
+        let value = tagField.currentValue;
+
+        expect(value.playerId).to.equal(1);
+        expect(value.name).to.equal('');
+    });
 });
 
 describe('Player Event Field', () => {
