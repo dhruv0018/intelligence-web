@@ -11,31 +11,32 @@
         </div>
     </div>
 
-    <div class="featured-reel-container" ng-show="featuredReel">
+    <div class="profile-reels-container">
+        <div class="featured-reel-container" ng-show="featuredReel">
 
-        <div class="featured-reel-video">
-            <div class="featured-reel-header">
-                <a ui-sref="Reel({id:featuredReel.id})" target="_blank">{{featuredReel.name}}</a>
+            <div class="featured-reel-video">
+                <div class="featured-reel-header">
+                    <a ui-sref="Reel({id:featuredReel.id})" target="_blank">{{featuredReel.name}}</a>
+                </div>
+                <video-player sources="sources"></video-player>
             </div>
-            <video-player sources="sources"></video-player>
+
+            <clips-navigation
+                sources="sources"
+                current-play="currentPlay"
+                previous-play="previousPlay"
+                next-play="nextPlay"
+                clip-index="clipIndex"
+                clip-total="clipTotal"
+            ></clips-navigation>
+
         </div>
 
-        <clips-navigation
-            sources="sources"
-            current-play="currentPlay"
-            previous-play="previousPlay"
-            next-play="nextPlay"
-            clip-index="clipIndex"
-            clip-total="clipTotal"
-        ></clips-navigation>
+        <div class="reels" ng-show="profileReels.length">
+            <krossover-film ng-repeat="reel in profileReels" ng-if="!$first" film="reel"></krossover-film>
+        </div>
     </div>
 
-    <no-profile-reels ng-hide="highlightReels.length || featuredReel"></no-profile-reels>
-
-    <div>
-        <ul class="reels" ng-show="highlightReels.length">
-            <krossover-film ng-repeat="reel in highlightReels" film="reel"></krossover-film>
-        </ul>
-    </div>
+    <no-profile-reels ng-hide="profileReels.length || featuredReel"></no-profile-reels>
 
 </div>
