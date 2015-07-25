@@ -465,6 +465,10 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return teamId === this.uploaderTeamId;
             },
             publishToProfile: function(user) {
+                // Publishes this reel to a user's profile
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
 
                 if (!this.isSharedWithPublic()) {
                     this.togglePublicSharing();
@@ -475,6 +479,10 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
             },
             unpublishFromProfile: function(user) {
+                // Unpublishes this reel from a user's profile
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
 
                 if (this.isSharedWithPublic()) {
                     this.togglePublicSharing();
@@ -489,6 +497,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
             },
             isPublishedToProfile: function(user) {
+                // Determines if this reel is on a user's profile
                 user = user || session.getCurrentUser();
 
                 if (!user) throw new Error('No user');
@@ -519,18 +528,31 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (!user) throw new Error('No user');
 
-                let profileReels = this.getList(user.profile.reelIds);
-
                 /* Sort profile reels objects by order on profile */
-                let sortedProfileReels = [];
-                user.profile.reelIds.forEach( (reelId, index) => {
-                    profileReels.forEach(reel => {
-                        if (reel.id === reelId) {
-                            sortedProfileReels[index] = reel;
-                        }
-                    });
-                });
+                let sortedProfileReels = user.profile.reelIds.map(reelId => this.get(reelId));
+
                 return sortedProfileReels;
+            },
+            getUserReels: function(userId, teamId) {
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                let userReels = [];
+
+                if (session.currentUser.is(ROLES.COACH)) {
+
+                    userReels = this.getByUploaderRole(userId, teamId);
+                    userReels = userReels.concat(this.getByUploaderTeamId(teamId));
+                }
+
+                else if (session.currentUser.is(ROLES.ATHLETE)) {
+
+                    userReels = this.getByUploaderUserId(userId);
+                    userReels = userReels.filter(reel => !reel.uploaderTeamId);
+                }
+
+                return userReels;
             }
         };
 
