@@ -54,6 +54,14 @@ class FormationField extends Field {
         this.value = value;
     }
 
+    get valid () {
+
+        return this.isRequired ?
+            (Number.isInteger(this.value.formationId) &&
+            Number.isInteger(this.value.numberOfPlayers)) :
+            true;
+    }
+
     toJSON() {
         let variableValue = {};
         let value = this.value.formationId === null ? null : String(this.value.formationId);

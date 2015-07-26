@@ -122,6 +122,23 @@ class TeamPlayerField extends Field {
         this.value = value;
     }
 
+    get valid () {
+
+        if (!this.isRequired) {
+
+            return true;
+        }
+
+        switch (this.type) {
+
+            case 'Player': return Number.isInteger(this.value.playerId);
+
+            case 'Team': return Number.isInteger(this.value.teamId);
+
+            default: throw new Error('TeamPlayerField.type must be Player or Team');
+        }
+    }
+
     toJSON() {
         let variableValue = {
             type: this.type

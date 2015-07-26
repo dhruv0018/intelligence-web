@@ -48,6 +48,13 @@ class PassingZoneField extends Field {
         this.value = zone;
     }
 
+    get valid () {
+
+        return this.isRequired ?
+            Number.isInteger(this.value.zoneId) :
+            true;
+    }
+
     toJSON(){
         let variableValue = {};
         let value = this.value.zoneId === null ? null : String(this.value.zoneId);

@@ -47,6 +47,15 @@ class ArenaField extends Field {
         this.value = value;
     }
 
+    get valid () {
+
+        return this.isRequired ?
+            (Number.isInteger(this.value.region) &&
+            isNan(this.value.coordinates.x) &&
+            isNan(this.value.coordinates.y)) :
+            true;
+    }
+
     toJSON() {
         let variableValue = {};
         variableValue = {

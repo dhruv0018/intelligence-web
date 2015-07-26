@@ -100,6 +100,13 @@ class PlayerField extends Field {
         //Object.assign(this.value, value);
     }
 
+    get valid () {
+
+        return this.isRequired ?
+            Number.isInteger(this.value.playerId) :
+            true;
+    }
+
     toJSON(){
         let variableValue = {};
         let value = (!this.isRequired && this.value.playerId === null) ? null : String(this.value.playerId);

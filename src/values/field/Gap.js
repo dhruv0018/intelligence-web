@@ -47,6 +47,13 @@ class GapField extends Field {
         this.value = gap;
     }
 
+    get valid () {
+
+        return this.isRequired ?
+            Number.isInteger(this.value.gapId) :
+            true;
+    }
+
     toJSON(){
         let variableValue = {};
         let value = this.value.gapId === null ? null : String(this.value.gapId);

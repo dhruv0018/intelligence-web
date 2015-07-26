@@ -39,6 +39,13 @@ class YardField extends Field {
         this.value = value;
     }
 
+    get valid () {
+
+        return this.isRequired ?
+            Number.isInteger(this.value.content) :
+            true;
+    }
+
     toJSON() {
         let variableValue = {};
         let value = (!this.isRequired && this.value.content === null) ? null : String(this.value.content);

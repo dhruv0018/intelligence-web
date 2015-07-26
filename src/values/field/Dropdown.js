@@ -34,6 +34,13 @@ class DropdownField extends Field {
         this.value = dropdownOption;
     }
 
+    get valid () {
+
+        return this.isRequired ?
+            typeof this.value.content === 'string' :
+            true;
+    }
+
     toJSON() {
         let variableValue = {};
         variableValue = {
