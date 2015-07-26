@@ -129,10 +129,10 @@ class TeamPlayerField extends Field {
 
         switch(variableValue.type) {
             case 'Player':
-                variableValue.value = (!this.isRequired && this.value.playerId === null) ? null : String(this.value.playerId);
+                variableValue.value = (!this.isRequired && this.value.playerId === null) ? null : Number(this.value.playerId);
                 break;
             case 'Team':
-                variableValue.value = (!this.isRequired && this.value.teamId === null) ? null : String(this.value.teamId);
+                variableValue.value = (!this.isRequired && this.value.teamId === null) ? null : Number(this.value.teamId);
                 break;
         }
 
