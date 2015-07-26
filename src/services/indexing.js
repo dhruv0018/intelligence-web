@@ -166,16 +166,16 @@ IntelligenceWebClient.factory('IndexingService', [
             nextable: function() {
 
                 /* If not this or the tags are showing. */
-                if (!this.isIndexing || this.showTags) return false;
+                if (!this.isIndexing || this.showTags) {
 
+                    return false;
+                }
                 /* If there are variables in the current event. */
-                else if (eventManager.current.hasVariables) {
+                else {
 
-                    /* Make sure all of the variables have values. */
-                    return eventManager.current.isValid;
+                    return eventManager.current.valid;
                 }
 
-                else return true;
             },
 
             /**
