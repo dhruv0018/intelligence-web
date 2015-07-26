@@ -82,7 +82,7 @@ class TeamField extends Field {
 
     toJSON() {
         let variableValue = {};
-        let value = (!this.isRequired && this.value.teamId === null) ? null : String(this.value.teamId);
+        let value = (!this.isRequired && this.value.teamId === null) ? null : Number(this.value.teamId);
         variableValue = {
             type: 'Team',
             value
