@@ -98,6 +98,13 @@ class Event extends Tag {
         .every(variableIsValid);
     }
 
+    get valid () {
+
+        return Object.keys(this.fields)
+        .map(fieldIndex => this.fields[fieldIndex])
+        .every(field => field.valid);
+    }
+
     /**
      * Checks whether the event is a floating event.
      * @returns - true if the event is floating event; false otherwise.
