@@ -43,6 +43,36 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
                 });
 
                 return indexedPositions;
+            },
+
+            getPosition: function(positionId) {
+
+                let position = this.positions.filter(position => {
+
+                    return position.id === positionId;
+                });
+
+                return position.length ? position[0] : [];
+            },
+
+            getPositions: function(positionIds) {
+
+                if (!positionIds) throw new Error(`getPositions requires parameter 'positionIds'`);
+
+                return positionIds.map(positionId => {
+
+                    return this.getPosition(positionId);
+                });
+            },
+
+            getPositionNames: function(positionIds) {
+
+                if (!positionIds) throw new Error(`getPositionNames requires parameter 'positionIds'`);
+
+                return this.getPositions(positionIds).map(position => {
+
+                    return position.name;
+                });
             }
         };
 

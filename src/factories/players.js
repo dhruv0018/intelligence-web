@@ -58,25 +58,6 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 }
             },
 
-            getPositions: function(roster, positionset) {
-
-                if (!roster) throw new Error(`getPositions() required 'roster' parameter'.`);
-                if (!positionset) throw new Error(`getPositions() required 'positionset' parameter'.`);
-
-                try {
-
-                    return roster.playerInfo[this.id].positionIds.map((positionId) => {
-
-                        return positionset.positions[positionId];
-                    });
-
-                } catch (error) {
-
-                    return [];
-                }
-
-            },
-
             resendEmail: function(userId, teamId) {
                 var self = this;
 
