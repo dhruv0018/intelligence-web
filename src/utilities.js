@@ -91,9 +91,9 @@ IntelligenceWebClient.service('Utilities', [
             return parseFloat(time.toFixed(precision));
         };
 
-        this.getSortedByIds = function(objToSort, orderedIds) {
+        this.getSortedArrayByIds = function(objectToSort, orderedIds) {
             // Takes an object type and an array of ids and gets objects of that type in the same order
-            return orderedIds.map(id => objToSort.get(id));
+            return orderedIds.map(id => objectToSort.get(id));
         };
     }
 ]);
