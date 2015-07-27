@@ -465,6 +465,10 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return teamId === this.uploaderTeamId;
             },
             publishToProfile: function(user) {
+                // Publishes this reel to a user's profile
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
 
                 if (!this.isSharedWithPublic()) {
                     this.togglePublicSharing();
@@ -475,6 +479,10 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
             },
             unpublishFromProfile: function(user) {
+                // Unpublishes this reel from a user's profile
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
 
                 if (this.isSharedWithPublic()) {
                     this.togglePublicSharing();
@@ -489,6 +497,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
             },
             isPublishedToProfile: function(user) {
+                // Determines if this reel is on a user's profile
                 user = user || session.getCurrentUser();
 
                 if (!user) throw new Error('No user');
