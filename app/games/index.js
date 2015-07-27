@@ -120,7 +120,8 @@ Games.config([
                             let game = games.get(gameId);
 
                             let Data = {
-                                leagues: leagues.load()
+                                leagues: leagues.load(),
+                                arenaEvents: game.retrieveArenaEvents()
                             };
 
                             //Load custom tags
@@ -206,7 +207,7 @@ function GamesController(
     let isCoach = currentUser.is(ROLES.COACH);
     let isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
     let isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
-
+    let arenaEvents = game.getArenaEvents();
 
     /* Scope */
 
@@ -262,7 +263,7 @@ function GamesController(
             // sport specific states
             switch (sport.id) {
                 case SPORTS.BASKETBALL.id:
-                    if (features.isEnabled('ArenaChart')) {
+                    if (features.isEnabled('ArenaChart') && arenaEvents.length) {
                         $scope.gameStates.push({name: 'Games.ArenaChart'});
                     }
                     break;

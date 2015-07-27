@@ -999,10 +999,17 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!game.id) throw new Error('Game must be saved before getting arena events');
 
-                return model.retrieveArenaEvents({ id: game.id}).$promise.then((arenaEvents) => {
-                    game.arenaEvents = arenaEvents;
-                    storage.set(game);
-                });
+                return model.retrieveArenaEvents({ id: game.id}).$promise.then(
+                    (arenaEvents) => {
+                        game.arenaEvents = arenaEvents;
+                        storage.set(game);
+                    },
+                    (reason) => {
+                        // No arena events at this time
+                        game.arenaEvents = [];
+                        storage.set(game);
+                    }
+                );
             },
 
             getArenaEvents: function(game = this) {
