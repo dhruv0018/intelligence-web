@@ -522,17 +522,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return featuredReelId ? this.get(featuredReelId) : undefined;
             },
-            getSortedProfileReels: function(user) {
-
-                user = user || session.getCurrentUser();
-
-                if (!user) throw new Error('No user');
-
-                /* Sort profile reels objects by order on profile */
-                let sortedProfileReels = user.profile.reelIds.map(reelId => this.get(reelId));
-
-                return sortedProfileReels;
-            },
             getUserReels: function(userId, teamId) {
 
                 userId = userId || session.getCurrentUserId();

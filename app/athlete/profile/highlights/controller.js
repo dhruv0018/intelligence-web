@@ -20,6 +20,7 @@ HighlightsController.$inject = [
     'PlaysManager',
     'PlayManager',
     'SessionService',
+    'Utilities',
     'ManageProfileReels.Modal',
     'VideoPlayer',
     'VideoPlayerEventEmitter',
@@ -42,13 +43,14 @@ function HighlightsController (
     playsManager,
     playManager,
     session,
+    utils,
     manageProfileReelsModal,
     videoPlayer,
     VideoPlayerEventEmitter,
     VIDEO_PLAYER_EVENTS
 )   {
         $scope.athlete = users.get($stateParams.id);
-        $scope.profileReels = reels.getSortedProfileReels($scope.athlete);
+        $scope.profileReels = utils.getSortedByIds(reels, $scope.athlete.profile.reelIds);
         $scope.featuredReel = $scope.profileReels[0];
         $scope.config = config;
         $scope.options = {scope: $scope};
@@ -111,7 +113,7 @@ function HighlightsController (
 
             modal.result.then( () => {
                 $scope.athlete = users.get($stateParams.id);
-                $scope.profileReels = reels.getSortedProfileReels($scope.athlete);
+                $scope.profileReels = utils.getSortedByIds(reels, $scope.athlete.profile.reelIds);
                 $scope.featuredReel = $scope.profileReels[0];
                 if ($scope.featuredReel) {
                     plays.query({reelId: $scope.featuredReel.id}).then(featuredPlays => {
