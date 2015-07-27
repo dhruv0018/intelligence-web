@@ -15,7 +15,7 @@ class YardField extends Field {
 
         if (field.value) {
             yard.content = Number(field.value);
-            yard.name = field.value;
+            yard.name = String(field.value);
         }
 
         this.currentValue = yard;
@@ -23,7 +23,7 @@ class YardField extends Field {
         this.availableValues = [];
 
         this.availableValues = Array.from(new Array(99), (item, yardLength) => {
-            return {content: yardLength + 1, name: yardLength + 1};
+            return {content: yardLength + 1, name: String(yardLength + 1)};
         });
 
     }
@@ -34,7 +34,7 @@ class YardField extends Field {
 
     set currentValue(yard) {
         let value = {};
-        value.name = yard.name;
+        value.name = String(yard.name);
         value.content = yard.content;
         this.value = value;
     }
