@@ -22,7 +22,7 @@ class KrossoverTag extends Entity {
         });
 
         /* Transform tagVariables into Fields */
-        this.fields = {};
+        this.fields       = {};
         this.tagVariables = this.tagVariables || [];
 
         this.tagVariables.forEach((tagVariable, index) => {
