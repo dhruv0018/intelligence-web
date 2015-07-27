@@ -43,8 +43,8 @@ class DropdownField extends Field {
 
         if (value) {
 
-            dropdownOption.content = value;
-            dropdownOption.name = value;
+            dropdownOption.content = value.content;
+            dropdownOption.name = value.name;
         }
 
         this.currentValue = dropdownOption;
