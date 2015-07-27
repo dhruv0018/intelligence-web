@@ -94,6 +94,7 @@ Games.config([
                 'Games.Data': [
                     '$q',
                     '$stateParams',
+                    'PositionsetsFactory',
                     'GamesFactory',
                     'TeamsFactory',
                     'UsersFactory',
@@ -104,6 +105,7 @@ Games.config([
                     function(
                         $q,
                         $stateParams,
+                        positionsets,
                         games,
                         teams,
                         users,
@@ -121,6 +123,7 @@ Games.config([
 
                             let Data = {
                                 leagues: leagues.load(),
+                                positionsets: positionsets.load(),
                                 arenaEvents: game.retrieveArenaEvents()
                             };
 
