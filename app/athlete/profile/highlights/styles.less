@@ -115,18 +115,23 @@
         padding: 0;
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-between;
 
         .krossover-film {
             width: auto;
-            min-width: 280px;
+            margin: 20px 0px;
+            min-width: 350px;
             max-width: 430px;
-            flex: 1;
             box-shadow: 0px 1px 7px 0px rgb(225, 225, 225);
 
-            @media only screen
-            and (min-width: @md-screen-sm) {
-                min-width: 335px;
+            .film-info-footer {
+                .user-info {
+                    display: none;
+                }
+
+                .share-game {
+                    margin-left: auto;
+                }
             }
         }
     }
