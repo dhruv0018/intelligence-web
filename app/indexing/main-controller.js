@@ -75,6 +75,7 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.tagset = tagsets.get($scope.league.tagSetId);
         $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
+        $scope.isString = angular.isString;
 
         //Watch for fullscreen change
         $scope.$watch(videoPlayerFullScreenWatch.bind(this));

@@ -84,8 +84,7 @@ class FormationField extends Field {
      * @method toJSON
      * @returns {String} - JSON ready version of the object.
      */
-    toJSON () {
-
+    toJSON() {
         let variableValue = {};
         let value = this.value.formationId === null ? null : String(this.value.formationId);
         variableValue = {
@@ -95,6 +94,15 @@ class FormationField extends Field {
 
         return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
     }
+
+    get valid () {
+
+        return this.isRequired ?
+            (Number.isInteger(this.value.formationId) &&
+            Number.isInteger(this.value.numberOfPlayers)) :
+            true;
+    }
+
 }
 
 export default FormationField;

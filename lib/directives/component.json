@@ -81,6 +81,7 @@
         "custom-tags-dropdown",
         "custom-tags-multiselect",
         "custom-tag-pills",
+        "feature",
         "telestrations"
     ],
     "scripts": [

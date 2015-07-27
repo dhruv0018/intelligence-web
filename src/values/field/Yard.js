@@ -24,8 +24,7 @@ class YardField extends Field {
         this.availableValues = [];
 
         this.availableValues = Array.from(new Array(99), (item, yardLength) => {
-
-            return {content: yardLength + 1, name: yardLength + 1};
+            return {content: yardLength + 1, name: String(yardLength + 1)};
         });
 
     }
@@ -47,9 +46,8 @@ class YardField extends Field {
         };
 
         if (value) {
-
-            yard.content = Number(value);
-            yard.name    = value;
+            yard.content = Number(field.value);
+            yard.name = String(field.value);
         }
 
         this.currentValue = yard;
@@ -66,14 +64,31 @@ class YardField extends Field {
         return `<span class="value">${this.currentValue.content}</span>`;
     }
 
+    get currentValue(){
+        return this.value;
+    }
+
+    set currentValue(yard) {
+        let value = {};
+        value.name = String(yard.name);
+        value.content = yard.content;
+        this.value = value;
+    }
+
+    get valid () {
+
+        return this.isRequired ?
+            Number.isInteger(this.value.content) :
+            true;
+    }
+
     /**
      * Reverts the class instance to JSON suitable for the server.
      *
      * @method toJSON
      * @returns {String} - JSON ready version of the object.
      */
-    toJSON () {
-
+    toJSON() {
         let variableValue = {};
         let value = (!this.isRequired && this.value.content === null) ? null : String(this.value.content);
 

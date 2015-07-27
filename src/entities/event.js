@@ -120,6 +120,13 @@ class KrossoverEvent extends Entity {
         return true;
     }
 
+    get valid () {
+
+        return Object.keys(this.fields)
+        .map(fieldIndex => this.fields[fieldIndex])
+        .every(field => field.valid);
+    }
+
     /**
      * Checks whether the event is a floating event.
      *

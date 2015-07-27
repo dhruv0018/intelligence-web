@@ -67,7 +67,7 @@ class TeamPlayerField extends Field {
                         playerId: player.id,
                         jerseyColor: game.primaryJerseyColor,
                         jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
-                        name: player.firstName + ' ' + player.lastName
+                        name: jerseyNumber + ' - ' + player.firstName + ' ' + player.lastName
                     };
                     return value;
                 });
@@ -80,7 +80,7 @@ class TeamPlayerField extends Field {
                         playerId: player.id,
                         jerseyColor: game.opposingPrimaryJerseyColor,
                         jerseyNumber: player.isUnknown ? 'U' : rosterEntry.jerseyNumber,
-                        name: player.firstName + ' ' + player.lastName
+                        name: jerseyNumber + ' - ' + player.firstName + ' ' + player.lastName
                     };
                     return value;
                 });
@@ -190,24 +190,40 @@ class TeamPlayerField extends Field {
         }
     }
 
+    get valid () {
+
+        if (!this.isRequired) {
+
+            return true;
+        }
+
+        switch (this.type) {
+
+            case 'Player': return Number.isInteger(this.value.playerId);
+
+            case 'Team': return Number.isInteger(this.value.teamId);
+
+            default: throw new Error('TeamPlayerField.type must be Player or Team');
+        }
+    }
+
     /**
      * Reverts the class instance to JSON suitable for the server.
      *
      * @method toJSON
      * @returns {String} - JSON ready version of the object.
      */
-    toJSON () {
-
+    toJSON() {
         let variableValue = {
             type: this.type
         };
 
         switch(variableValue.type) {
             case 'Player':
-                variableValue.value = (!this.isRequired && this.value.playerId === null) ? null : String(this.value.playerId);
+                variableValue.value = (!this.isRequired && this.value.playerId === null) ? null : Number(this.value.playerId);
                 break;
             case 'Team':
-                variableValue.value = (!this.isRequired && this.value.teamId === null) ? null : String(this.value.teamId);
+                variableValue.value = (!this.isRequired && this.value.teamId === null) ? null : Number(this.value.teamId);
                 break;
         }
 

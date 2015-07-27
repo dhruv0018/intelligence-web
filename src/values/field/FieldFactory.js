@@ -59,10 +59,12 @@ class FieldFactory {
         case 'DROPDOWN':
             field = new DropdownField(rawField);
             break;
-        case 'TEXT':
-            field = new TextField(rawField);
-            break;
+        // case 'TEXT':
+        //     field = new TextField(rawField);
+        //     break;
+        //todo tech debt
         case 'YARD':
+        case 'TEXT':
             field = new YardField(rawField);
             break;
         case 'ARENA':

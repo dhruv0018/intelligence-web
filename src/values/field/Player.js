@@ -61,7 +61,7 @@ class PlayerField extends Field {
                         playerId: angular.copy(player.id),
                         jerseyColor: angular.copy(game.primaryJerseyColor),
                         jerseyNumber,
-                        name: angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
+                        name: jerseyNumber + ' - ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
                     };
                     return value;
                 });
@@ -74,7 +74,7 @@ class PlayerField extends Field {
                         playerId: angular.copy(player.id),
                         jerseyColor: angular.copy(game.opposingPrimaryJerseyColor),
                         jerseyNumber,
-                        name: angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
+                        name: jerseyNumber + ' - ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
                     };
                     return value;
                 });
@@ -127,6 +127,13 @@ class PlayerField extends Field {
         //Object.assign(this.value, value);
     }
 
+    get valid () {
+
+        return this.isRequired ?
+            Number.isInteger(this.value.playerId) :
+            true;
+    }
+
     /**
      * Generates an HTML string of the field.
      *
@@ -169,7 +176,7 @@ class PlayerField extends Field {
     toJSON () {
 
         let variableValue = {};
-        let value = (!this.isRequired && this.value.playerId === null) ? null : String(this.value.playerId);
+        let value = (!this.isRequired && this.value.playerId === null) ? null : Number(this.value.playerId);
 
         variableValue = {
             type: 'Player',

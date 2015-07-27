@@ -17,6 +17,7 @@ class ArenaField extends Field {
         if (!field) return;
         super(field);
 
+
         this.initialize();
 
         Object.defineProperty(this.value, 'name', {
@@ -25,7 +26,7 @@ class ArenaField extends Field {
                 if (this.regionId) {
                     let injector = angular.element(document).injector();
                     this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
-                    calculatedName = angular.copy(this.regionMap[this.regionId].name);
+                    calculatedName = angular.copy(this.regionMap[this.region].name);
                 }
                 return calculatedName;
             }
@@ -45,19 +46,16 @@ class ArenaField extends Field {
 
         //todo look into initialization of arena value
         let arena = {
-
-            regionId   : !this.isRequired ? null : undefined,
-            coordinates: !this.isRequired ? {}   : {}
+            region: !this.isRequired ? null : undefined,
+            coordinates: {
+                x: !this.isRequired ? null: undefined,
+                y: !this.isRequired ? null: undefined
+            }
         };
 
-        if (
-            value &&
-            value.region &&
-            value.region.id
-        ) {
-
+        if (value) {
             arena.coordinates = value.coordinates;
-            arena.regionId    = value.region.id;
+            arena.region = value.region;
         }
 
         this.currentValue = arena;
@@ -71,9 +69,10 @@ class ArenaField extends Field {
     set currentValue(arena) {
         let value = {};
         value.coordinates = arena.coordinates;
-        value.regionId = arena.regionId;
+        value.region = arena.region && arena.region.id ? arena.region.id : arena.region;
         this.value = value;
     }
+
 
     /**
      * Generates an HTML string of the field.
@@ -92,20 +91,27 @@ class ArenaField extends Field {
      * @method toJSON
      * @returns {String} - JSON ready version of the object.
      */
-    toJSON () {
 
+    toJSON() {
         let variableValue = {};
         variableValue = {
             type: null,
             value: {
                 coordinates: this.value.coordinates,
-                region: {
-                    id: this.value.regionId
-                }
+                region: this.value.region
             }
         };
 
         return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
+    }
+
+    get valid () {
+
+        return this.isRequired ?
+            (Number.isInteger(this.value.region) &&
+            isNan(this.value.coordinates.x) &&
+            isNan(this.value.coordinates.y)) :
+            true;
     }
 }
 

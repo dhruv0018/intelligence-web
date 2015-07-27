@@ -58,7 +58,7 @@ IntelligenceWebClient.factory('IndexingService', [
             * Selects a tag.
             * @param {Number} tagId - the ID of the tag selected.
             */
-            selectTag: function(tagId) {
+            selectTag: function(tagId, game = null) {
 
                 /* Get current time from the video. */
                 var time = videoPlayer.currentTime;
@@ -70,7 +70,12 @@ IntelligenceWebClient.factory('IndexingService', [
                 time = utils.toFixedFloat(time);
 
                 /* Create new event. */
-                eventManager.current = new KrossoverEvent(null, tag, time);
+
+                if (game) {
+                    eventManager.current = new KrossoverEvent(null, tag, time, game.id);
+                } else {
+                    eventManager.current = new KrossoverEvent(null, tag, time);
+                }
 
                 /* Add event to the current play. */
                 playManager.addEvent(eventManager.current);
@@ -162,16 +167,15 @@ IntelligenceWebClient.factory('IndexingService', [
             nextable: function() {
 
                 /* If not this or the tags are showing. */
-                if (!this.isIndexing || this.showTags) return false;
+                if (!this.isIndexing || this.showTags) {
 
+                    return false;
+                }
                 /* If there are variables in the current event. */
-                else if (eventManager.current && eventManager.current.hasVariables) {
-
-                    /* Make sure all of the variables have values. */
-                    return eventManager.current.isValid;
+                else {
+                    return eventManager.current.valid;
                 }
 
-                else return true;
             },
 
             /**

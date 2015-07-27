@@ -91,6 +91,13 @@ class GapField extends Field {
 
         return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
     }
+
+    get valid () {
+
+        return this.isRequired ?
+            Number.isInteger(this.value.gapId) :
+            true;
+    }
 }
 
 export default GapField;

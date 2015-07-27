@@ -68,7 +68,6 @@ class DropdownField extends Field {
      * @returns {String} - JSON ready version of the object.
      */
     toJSON () {
-
         let variableValue = {};
         variableValue = {
             type: null,
@@ -76,6 +75,13 @@ class DropdownField extends Field {
         };
 
         return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
+    }
+
+    get valid () {
+
+        return this.isRequired ?
+            typeof this.value.content === 'string' :
+            true;
     }
 }
 

@@ -1,15 +1,15 @@
 <md-dialog
     flex="50"
-    class="arena-dialog-{{arenaOrientation}}"
-    ng-blur="onArenaBlur()"
+    class="arena-dialog-{{arena.orientation}}"
+    ng-blur="onBlur()"
 >
     <md-dialog-content>
 
-        <xy-coordinates ng-model="eventManager.current.variableValues[item.id].value.coordinates">
+        <xy-coordinates ng-model="selectedValue.coordinates">
 
             <krossover-arena
-                type="arenaType"
-                ng-model="eventManager.current.variableValues[item.id].value.region"
+                type="arena.type"
+                ng-model="selectedValue.region"
             ></krossover-arena>
 
         </xy-coordinates>

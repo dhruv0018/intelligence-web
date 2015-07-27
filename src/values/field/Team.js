@@ -113,15 +113,22 @@ class TeamField extends Field {
         return `<span class="value team-field">${team.name}</span>`;
     }
 
+    get valid () {
+
+        return this.isRequired ?
+            Number.isInteger(this.value.teamId) :
+            true;
+    }
+
     /**
      * Reverts the class instance to JSON suitable for the server.
      *
      * @method toJSON
      * @returns {String} - JSON ready version of the object.
      */
-    toJSON () {
+    toJSON() {
         let variableValue = {};
-        let value = (!this.isRequired && this.value.teamId === null) ? null : String(this.value.teamId);
+        let value = (!this.isRequired && this.value.teamId === null) ? null : Number(this.value.teamId);
         variableValue = {
             type: 'Team',
             value
