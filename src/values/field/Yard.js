@@ -46,8 +46,9 @@ class YardField extends Field {
         };
 
         if (value) {
-            yard.content = Number(field.value);
-            yard.name = String(field.value);
+
+            yard.content = Number(value);
+            yard.name    = String(value);
         }
 
         this.currentValue = yard;
@@ -64,14 +65,23 @@ class YardField extends Field {
         return `<span class="value">${this.currentValue.content}</span>`;
     }
 
-    get currentValue(){
+    /**
+     * Getter/Setter for the value of the Field
+     * @type {object}
+     */
+    get currentValue () {
+
         return this.value;
     }
 
-    set currentValue(yard) {
-        let value = {};
-        value.name = String(yard.name);
-        value.content = yard.content;
+    set currentValue (yard) {
+
+        let value = {
+
+            name   : String(yard.name),
+            content: yard.content
+        };
+
         this.value = value;
     }
 
@@ -88,7 +98,8 @@ class YardField extends Field {
      * @method toJSON
      * @returns {String} - JSON ready version of the object.
      */
-    toJSON() {
+    toJSON () {
+
         let variableValue = {};
         let value = (!this.isRequired && this.value.content === null) ? null : String(this.value.content);
 
