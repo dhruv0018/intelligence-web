@@ -1,0 +1,70 @@
+@import (reference) "main.less";
+
+.add-reel {
+
+    letter-spacing: normal;
+
+    .modal-header {
+
+        .modal-title {
+            text-align: left;
+
+            .icon {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .success-header {
+        border: none;
+
+        .modal-title {
+            span {
+                display: none;
+            }
+        }
+    }
+
+    .modal-body {
+        text-align: center;
+
+        .btn-create-reel {
+            background-color: @gray-lighter;
+            color: @brand-primary;
+            outline: none;
+
+            &:hover {
+                background-color: @brand-primary;
+                color: white;
+            }
+        }
+
+        .select-reel-container {
+            margin-bottom: 10px;
+
+            select {
+                padding-right: 25px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                width: 100%;
+                text-overflow: ellipsis;
+            }
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+
+        .successfully-added {
+            color: @brand-success;
+            font-size: 20px;
+
+            .icon {
+                font-size: 35px;
+                border: 3px solid @brand-success;
+                border-radius: 50%;
+                padding: 5px;
+            }
+        }
+    }
+}

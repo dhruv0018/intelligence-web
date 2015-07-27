@@ -8,6 +8,7 @@ IndexerGamesController.$inject = [
     '$interval',
     'config',
     '$mdDialog',
+    '$modal',
     'GAME_TYPES',
     'TeamsFactory',
     'LeaguesFactory',
@@ -26,6 +27,7 @@ function IndexerGamesController(
     $interval,
     config,
     $mdDialog,
+    $modal,
     GAME_TYPES,
     teams,
     leagues,
@@ -49,6 +51,7 @@ function IndexerGamesController(
     $scope.userId = session.getCurrentUserId();
     $scope.footballFAQ = config.links.indexerFAQ.football.uri;
     $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
+    $scope.options = {scope: $scope};
 
     switch (userLocation) {
         case INDEXER_GROUPS.US_MARKETPLACE:

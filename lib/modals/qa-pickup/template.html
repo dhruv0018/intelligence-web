@@ -1,0 +1,43 @@
+<div class="add-reel">
+
+    <header class="modal-header" ng-class="{'success-header': addSuccess}">
+
+        <h3 class="modal-title">
+            <span>Confirm Pick Up Game to QA</span>
+
+            <a class="pull-right" ng-click="$dismiss()">
+                <i class="icon icon-remove"></i>
+            </a>
+        </h3>
+
+    </header>
+
+    <div class="modal-body">
+        <button ng-show="!hasReels && !isNaming && !addSuccess" ng-click="isNaming = true" class="btn btn-create-reel">
+            <i class="icon icon-plus"></i>
+            Create a reel to add clip(s) to
+        </button>
+
+        <div class="select-reel-container" ng-show="hasReels && !isNaming && !addSuccess">
+            <form>
+                <select ng-model="reel" ng-options="reel as reel.name for reel in userReels | filter: {isDeleted: false}"></select>
+                <button class="btn btn-primary" ng-click="addToReel(reel)">Add</button>
+            </form>
+        </div>
+        <button ng-show="hasReels && !isNaming && !addSuccess" ng-click="isNaming = true" class="btn btn-create-reel">
+            <i class="icon icon-plus"></i>
+            Create a new reel
+        </button>
+        <form ng-show="isNaming && !addSuccess">
+            <input type="text" name="newReelName" ng-model="newReelName" placeholder="Name for your reel" class="form-control">
+            <button ng-click="createReel(newReelName)" class="btn btn-primary">Create reel and add clip(s)</button>
+        </form>
+
+        <div ng-show="addSuccess" class="successfully-added">
+            <i class="icon icon-ok"></i>
+            <br/>
+            Clip(s) added to reel successfully.
+        </div>
+    </div>
+
+</div>

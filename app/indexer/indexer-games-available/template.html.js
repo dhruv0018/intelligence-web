@@ -45,7 +45,7 @@ export default `
                     <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                     <td>{{ game.remainingTime | millisecondsAsDaysHoursMinutes }}</td>
                     <td>
-                        <button id="pick-up-qa-cta" class="btn btn-default index-button" ng-click="pickUpGame(game.id)">
+                        <button id="pick-up-qa-cta" class="btn btn-default index-button" open-modal="QaPickup.Modal" modal-options="game.id">
                             <span>Pick Up to QA </span>
                         </button>
                     </td>

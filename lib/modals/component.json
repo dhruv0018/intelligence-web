@@ -16,7 +16,8 @@
         "info",
         "change-password",
         "admin-management",
-        "kvs-uploader-interface"
+        "kvs-uploader-interface",
+        "qa-pickup"
     ],
     "scripts": [
         "index.js"
