@@ -191,7 +191,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 /* If the event is a floating event. */
-                if (eventManager.current && eventManager.current.isFloat) {
+                if (eventManager.current && eventManager.current.isFloat()) {
 
                     let currentEvent = eventManager.current;
 
@@ -199,7 +199,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     let previousEvent = playManager.previousEvent(currentEvent);
 
                     /* While the previous event is a float. */
-                    while (previousEvent.isFloat) {
+                    while (previousEvent.isFloat()) {
 
                         /* Get the previous event. */
                         previousEvent = playManager.previousEvent(previousEvent);
