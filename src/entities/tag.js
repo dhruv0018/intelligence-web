@@ -28,6 +28,9 @@ class KrossoverTag extends Entity {
         this.tagVariables.forEach((tagVariable, index) => {
 
             this.fields[index + 1] = FieldFactory.createField(tagVariable);
+
+            //todo temporary
+            this.fields[index + 1].inputType = tagVariable.type;
         });
 
         /* TODO: eventually delete this.tagVariables when Event Manager no
