@@ -31,8 +31,8 @@ class KrossoverEvent extends Entity {
             writable: false,
         });
 
-        this.tagId  = tag.id;
-        this.time   = time;
+        this.tagId = tag.id;
+        this.time  = time;
 
         /* If we have an event, fill in the details */
         if (event) {
@@ -52,28 +52,20 @@ class KrossoverEvent extends Entity {
 
             /* TODO: Get rid of this property when indexing service is refactored */
             this.activeEventVariableIndex = event.activeEventVariableIndex || 1;
-
-            if (event.variableValues) {
-
-                /* Transform variables into fields */
-                Object.keys(this.fields).forEach((order, index) => {
-
-                    let variableValue = event.variableValues[this.fields[order].id];
-
-                    this.fields[order].gameId       = gameId;
-                    this.fields[order].order        = index + 1;
-                    this.fields[order].initialize(variableValue.value);
-                });
-            }
-        } else {
-            //todo dave look into this
-            Object.keys(this.fields).forEach((order, index) => {
-                //let variableValue = event.variableValues[this.fields[order].id];
-                this.fields[order].gameId       = gameId;
-                this.fields[order].order        = index + 1;
-                this.fields[order].initialize();
-            });
         }
+
+        /* Transform variables into fields */
+        Object.keys(this.fields).forEach((order, index) => {
+
+            this.fields[order].gameId = gameId;
+            this.fields[order].index  = index + 1;
+
+            if (event && event.variableValues) {
+
+                let variableValue = event.variableValues[this.fields[order].id];
+                this.fields[order].initialize(variableValue.value);
+            }
+        });
     }
 
     /**
