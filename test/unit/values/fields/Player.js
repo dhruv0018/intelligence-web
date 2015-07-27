@@ -88,7 +88,7 @@ describe('Player Event Field', () => {
         let eventField = new PlayerField(localEventVariable);
         let value = eventField.currentValue;
 
-        expect(JSON.stringify(eventField)).to.equal('{"type":"Player","value":"1"}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":"Player","value":1}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
