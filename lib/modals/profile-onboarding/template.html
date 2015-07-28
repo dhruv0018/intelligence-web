@@ -1,0 +1,33 @@
+<div class="manage-profile-reels">
+
+    <header class="modal-header">
+        <h3 class="modal-title">Welcome!</h3>
+        <i class="icon icon-remove" ng-click="$dismiss()"></i>
+    </header>
+
+    <div class="modal-body">
+
+        <div class="intro-message">
+            <p>You're about to set up a new player profile on Krossover. Your Krossover profile puts all your highlight reels, stats, and career achievements in one place.</p>
+            <p>Just about things to get your started...</p>
+        </div>
+
+        <p class="onboarding-item-label">1. Check the box if you want to add your Krossover team to your public profile.</p>
+
+        <div class="krossover-team" ng-repeat="team in teams">
+            {{team.name}}
+        </div>
+
+        <p class="onboarding-item-label">2. What's your high school graduation year?</p>
+
+        <p class="onboarding-item-label">3. What's your hometown?</p>
+
+        <p class="onboarding-item-label">4. Finally, tell the world a little about yourself.</p>
+
+        <div class="button-row">
+            <button class="btn btn-default">Skip</button>
+            <button class="btn btn-primary">Create Profile</button>
+        </div>
+    </div>
+
+</div>
