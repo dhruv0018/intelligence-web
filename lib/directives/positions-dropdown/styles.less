@@ -10,13 +10,19 @@
     .open {
         position: relative;
 
-        .dropdown-toggle {
+        .positions-dropdown-button {
             background-color: white !important;
             box-shadow: none !important;
 
             .icon-chevron-down {
                 font-size: 12px;
             }
+        }
+
+        .positions-dropdown-button[disabled] {
+            cursor: not-allowed;
+            opacity: .5;
+            background-color: @gray-lighter !important;
         }
     }
 
