@@ -41,7 +41,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                     if (this.savable()) this.save();
                     else if (this.nextable()) this.next();
-                    else this.step();
                 }
 
                 else if (videoPlayer.isReady) {
@@ -243,7 +242,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* If the tags are showing. */
                 else if (this.showTags) {
-
                     /* Drop back into not this state. */
                     this.showTags = false;
                     this.showScript = false;
