@@ -46,15 +46,7 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
             },
             getPositionById: function(positionId) {
 
-                let myPosition;
-
-                this.positions.forEach(function(position) {
-                    if (position.id === positionId) {
-                        myPosition = position;
-                    }
-                });
-
-                return myPosition;
+                return this.positions.find(position => positionId === position.id);
             }
         };
 
