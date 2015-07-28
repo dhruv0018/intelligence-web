@@ -14,12 +14,6 @@ describe('General Yard Field', () => {
     it('The Yard Class should Exist', () => {
         expect(YardField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('YARD');
-    });
-
 });
 
 describe('Yard Tag Field', () => {

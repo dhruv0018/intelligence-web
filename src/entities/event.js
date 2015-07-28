@@ -64,7 +64,6 @@ class KrossoverEvent extends Entity {
             let field = FieldFactory.createField(tagVariable);
 
             // TODO: Get rid of `inputType` eventually
-            field.inputType = tagVariable.type;
             field.gameId    = gameId;
             field.index     = index + 1;
 

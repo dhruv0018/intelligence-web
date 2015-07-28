@@ -40,7 +40,6 @@ describe('Tag Entity', () => {
             'userScript',
             'shortcutKey',
             'description',
-            'fields',
             'isStart',
             'isEnd',
             'tagSetId',

@@ -67,7 +67,7 @@ class Field extends Value {
         //todo do something with the validation
         if (!isValid) {
             console.log('This field does not validate properly and cannot save to the server');
-            console.log(this.inputType, variableValue);
+            console.log(this.type, variableValue);
         }
         return isValid;
     }

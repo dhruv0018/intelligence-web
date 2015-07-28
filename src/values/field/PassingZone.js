@@ -101,7 +101,7 @@ class PassingZoneField extends Field {
             value
         };
 
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

@@ -21,14 +21,6 @@ describe('General TeamPlayer Field', () => {
     it('The TeamPlayer Class should Exist', () => {
         expect(TeamPlayerField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(playerTagField.inputType).to.exist;
-        expect(playerTagField.inputType).to.equal('PLAYER_TEAM_DROPDOWN');
-        expect(teamTagField.inputType).to.exist;
-        expect(teamTagField.inputType).to.equal('PLAYER_TEAM_DROPDOWN');
-    });
-
 });
 
 describe('TeamPlayer Tag Field', () => {

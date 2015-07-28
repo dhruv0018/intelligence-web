@@ -74,7 +74,7 @@ class DropdownField extends Field {
             value: this.value.content
         };
 
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 
     get valid () {
