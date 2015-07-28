@@ -134,13 +134,15 @@ function GamesArenaChartController(
 
     teamPlayerList.forEach((player) => {
         let playerCopy = angular.copy(player);
-        playerCopy.name = player.shortName;
+        let jerseyNumber = player.getJerseyNumber(game.rosters[team.id]);
+        playerCopy.name = jerseyNumber ? `${jerseyNumber} ${player.shortName}` : player.shortName;
         pills.push(playerCopy);
     });
 
     opposingTeamPlayerList.forEach((player) => {
         let playerCopy = angular.copy(player);
-        playerCopy.name = player.shortName;
+        let jerseyNumber = player.getJerseyNumber(game.rosters[opposingTeam.id]);
+        playerCopy.name = jerseyNumber ? `${jerseyNumber} ${player.shortName}` : player.shortName;
         pills.push(playerCopy);
     });
 
