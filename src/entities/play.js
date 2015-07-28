@@ -59,7 +59,7 @@ class KrossoverPlay extends Entity {
 
             if (event.indexerScript) {
 
-                let indexerScriptHTMLString = event.indexerScript.toString();
+                let indexerScriptHTMLString = event.indexerFields.toString();
                 return eventTemplate(event, indexerScriptHTMLString);
             }
         });
@@ -77,7 +77,7 @@ class KrossoverPlay extends Entity {
 
             if (event.summaryScript) {
 
-                return event.summaryScript.toString();
+                return event.summaryFields.toString();
             }
         })
         .filter(Boolean);
@@ -93,7 +93,7 @@ class KrossoverPlay extends Entity {
 
         return this.events.map((event, index) => {
 
-            let userScriptHTMLString = event.userScript.toString();
+            let userScriptHTMLString = event.userFields.toString();
             return eventTemplate(event, userScriptHTMLString);
         });
     }
