@@ -204,27 +204,6 @@ Indexing.config([
                             }, 0);
                         };
 
-                        Mousetrap.bind('enter', function() {
-
-                            $timeout(() => indexing.index());
-
-                            return false;
-                        });
-
-                        Mousetrap.bind('tab', function() {
-
-                            $timeout(() => indexing.step());
-
-                            return false;
-                        });
-
-                        Mousetrap.bind('esc', function() {
-
-                            $timeout(() => indexing.back());
-
-                            return false;
-                        });
-
                         //Used primarily to go back when indexing in fullscreen
                         Mousetrap.bind('shift+backspace', function() {
 
@@ -232,7 +211,7 @@ Indexing.config([
 
                             return false;
                         });
-                    }
+                }
                 ],
 
                 onExit: [
@@ -240,9 +219,6 @@ Indexing.config([
 
                         Mousetrap.unbind('left');
                         Mousetrap.unbind('right');
-                        Mousetrap.unbind('enter');
-                        Mousetrap.unbind('tab');
-                        Mousetrap.unbind('esc');
                         Mousetrap.unbind('shift+backspace');
                     }
                 ]
