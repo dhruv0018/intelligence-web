@@ -89,7 +89,7 @@ class GapField extends Field {
             value: value
         };
 
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 
     get valid () {

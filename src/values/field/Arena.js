@@ -102,7 +102,7 @@ class ArenaField extends Field {
             }
         };
 
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.inputType;
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 
     get valid () {
