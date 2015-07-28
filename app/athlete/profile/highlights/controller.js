@@ -62,7 +62,7 @@ function HighlightsController (
         if ($scope.featuredReel) {
 
             // Populate the array with play objects from playIds
-            playsArray = $scope.featuredReel.plays.map(function(playId) {
+            playsArray = $scope.featuredReel.plays.map(playId => {
                 return plays.get(playId);
             });
 
