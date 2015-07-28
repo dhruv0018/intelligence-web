@@ -571,6 +571,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments = self.indexerAssignments || [];
 
                     deadline = new Date(deadline).toISOString();
+
                     var timeAssigned = new Date().toISOString();
 
                     var assignment = {
@@ -1025,6 +1026,22 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 return timeRemaining.asMilliseconds();
+            },
+            getDeadline: function(uploaderTeam) {
+
+                let self = this;
+
+                console.log(uploaderTeam);
+
+                if (!self.submittedAt) return 0;
+
+                let submittedAt = moment.utc(self.submittedAt);
+
+                if (!submittedAt.isValid()) return 0;
+
+                let turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
+
+                return submittedAt.add(turnaroundTime).format();
             },
             setAside: function() {
                 var self = this;

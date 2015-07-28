@@ -1,6 +1,6 @@
 @import (reference) "main.less";
 
-.add-reel {
+.qa-pickup {
 
     letter-spacing: normal;
 
@@ -9,62 +9,53 @@
         .modal-title {
             text-align: left;
 
-            .icon {
-                cursor: pointer;
-            }
         }
+
+        .icon {
+            cursor: pointer;
+            padding: 5px;
+            margin-botton: 10px;
+        }
+
     }
 
-    .success-header {
-        border: none;
+    .modal-footer {
+        border-top: 1px solid #ebebeb;
 
-        .modal-title {
-            span {
-                display: none;
-            }
+        button {
+            float:left;
+            text-align:center;
+            width:32%;
+            margin: 0 auto;
         }
     }
 
     .modal-body {
         text-align: center;
+        color: #0b425b;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        text-align: center;
+        text-transform: uppercase;
 
-        .btn-create-reel {
-            background-color: @gray-lighter;
-            color: @brand-primary;
-            outline: none;
-
-            &:hover {
-                background-color: @brand-primary;
-                color: white;
-            }
+        .icon {
+            font-size: 55px;
+            padding: 5px;
         }
 
-        .select-reel-container {
-            margin-bottom: 10px;
-
-            select {
-                padding-right: 25px;
-                margin-right: 10px;
-                margin-bottom: 10px;
-                width: 100%;
-                text-overflow: ellipsis;
-            }
+        .success-icon {
+            margin-botton: 10px;
         }
 
-        input {
-            margin-bottom: 10px;
-        }
+    }
 
-        .successfully-added {
-            color: @brand-success;
-            font-size: 20px;
+    .no-border {
+        border-style: none;
+    }
 
-            .icon {
-                font-size: 35px;
-                border: 3px solid @brand-success;
-                border-radius: 50%;
-                padding: 5px;
-            }
-        }
+    .pickup-success {
+        padding: 0;
+        margin-bottom: 15px;
     }
 }

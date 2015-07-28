@@ -1,43 +1,56 @@
-<div class="add-reel">
+<div class="qa-pickup">
+    <div ng-hide="successfulPickup">
+        <header class="modal-header">
 
-    <header class="modal-header" ng-class="{'success-header': addSuccess}">
+            <h3 class="modal-title">
+                <span>Confirm Pick Up Game to QA</span>
+            </h3>
 
-        <h3 class="modal-title">
-            <span>Confirm Pick Up Game to QA</span>
+        </header>
 
+        <div class="modal-body">
+            <div>Game {{game.id}}: {{ team.name }} vs {{ opposingTeam.name }}, {{ sport.name | capitalizeFirstLetter}}</div>
+            <div>{{ game.remainingTime | millisecondsAsDaysHoursMinutes }} Left to QA</div>
+        </div>
+
+        <footer class="modal-footer">
+
+            <div class="buttons">
+
+                <button class="btn btn-sm btn-default" data-ng-click="$dismiss()">Cancel</button>
+                <button class="btn btn-sm btn-default" type="submit" data-ng-click="pickUpGame(true)">Pick up and go to game</button>
+                <button class="btn btn-sm btn-default" type="submit" data-ng-click="pickUpGame(false)">Pick up to QA</button>
+
+            </div>
+
+        </footer>
+    </div>
+
+    <div ng-show="successfulPickup" class="pickup-success">
+        <header class="modal-header no-border">
             <a class="pull-right" ng-click="$dismiss()">
                 <i class="icon icon-remove"></i>
             </a>
-        </h3>
-
-    </header>
-
-    <div class="modal-body">
-        <button ng-show="!hasReels && !isNaming && !addSuccess" ng-click="isNaming = true" class="btn btn-create-reel">
-            <i class="icon icon-plus"></i>
-            Create a reel to add clip(s) to
-        </button>
-
-        <div class="select-reel-container" ng-show="hasReels && !isNaming && !addSuccess">
-            <form>
-                <select ng-model="reel" ng-options="reel as reel.name for reel in userReels | filter: {isDeleted: false}"></select>
-                <button class="btn btn-primary" ng-click="addToReel(reel)">Add</button>
-            </form>
-        </div>
-        <button ng-show="hasReels && !isNaming && !addSuccess" ng-click="isNaming = true" class="btn btn-create-reel">
-            <i class="icon icon-plus"></i>
-            Create a new reel
-        </button>
-        <form ng-show="isNaming && !addSuccess">
-            <input type="text" name="newReelName" ng-model="newReelName" placeholder="Name for your reel" class="form-control">
-            <button ng-click="createReel(newReelName)" class="btn btn-primary">Create reel and add clip(s)</button>
-        </form>
-
-        <div ng-show="addSuccess" class="successfully-added">
-            <i class="icon icon-ok"></i>
-            <br/>
-            Clip(s) added to reel successfully.
+        </header>
+        <div class="modal-body">
+            <div class="success-icon">
+                <i class="icon icon-check-circle"></i>
+            </div>
+            <p>Game successfully picked up</p>
         </div>
     </div>
 
+    <div ng-show="gameAlreadyTaken">
+
+        <div class="modal-body">
+            <p>
+                This game has already been picked up. basketball 1:00 Pick Up to QA
+            </p>
+            <p>
+                Click Refresh to see an updated list of available games.
+            </p>
+            <button class="btn btn-sm btn-default" data-ng-click="refreshPage()">Refresh</button>
+        </div>
+
+    </div>
 </div>
