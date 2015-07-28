@@ -22,16 +22,17 @@ class KrossoverTag extends Entity {
         });
 
         /* Transform tagVariables into Fields */
-        this.fields       = {};
-        this.tagVariables = this.tagVariables || [];
-
-        this.tagVariables.forEach((tagVariable, index) => {
-
-            this.fields[index + 1] = FieldFactory.createField(tagVariable);
-
-            //todo temporary
-            this.fields[index + 1].inputType = tagVariable.type;
-        });
+        // TODO: Do we still need this commented out block?
+        // this.fields       = {};
+        // this.tagVariables = this.tagVariables || [];
+        //
+        // this.tagVariables.forEach((tagVariable, index) => {
+        //
+        //     this.fields[index + 1] = FieldFactory.createField(tagVariable);
+        //
+        //     // TODO: temporary
+        //     this.fields[index + 1].inputType = tagVariable.type;
+        // });
 
         /* TODO: eventually delete this.tagVariables when Event Manager no
          * longer needs it. */
@@ -82,17 +83,7 @@ class KrossoverTag extends Entity {
                 /* Map script items. */
                 .map(item => {
 
-                    /* If the item is a variable. */
-                    if (VARIABLE_PATTERN.test(item)) {
-
-                        /* Find the index of the variable in the script. */
-                        let index = Number(VARIABLE_INDEX_PATTERN.exec(item).pop());
-
-                        return this.fields[index];
-                    }
-
-                    /* If the item is not a variable, return it as STATIC. */
-                    else {
+                    if (!VARIABLE_PATTERN.test(item)) {
 
                         let rawField = {
 
@@ -100,32 +91,13 @@ class KrossoverTag extends Entity {
                             type: 'STATIC'
                         };
 
+                        // TODO: Add this to FieldFactory
                         return new StaticField(rawField);
+                    } else {
+
+                        return item;
                     }
                 });
-
-                this[scriptType].toString = () => {
-
-                    let script = this[scriptType];
-                    let string = ``;
-
-                    script.forEach(item => {
-
-                        if (item.type === 'STATIC') {
-
-                            string += item.toString();
-                        } else {
-
-                            let field = this.fields[item.order];
-                            if (field) {
-
-                                string += field.toString();
-                            }
-                        }
-                    });
-
-                    return string;
-                };
             }
         });
     }
