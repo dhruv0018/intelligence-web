@@ -1031,8 +1031,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 let self = this;
 
-                console.log(uploaderTeam);
-
                 if (!self.submittedAt) return 0;
 
                 let submittedAt = moment.utc(self.submittedAt);
