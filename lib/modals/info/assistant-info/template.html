@@ -2,33 +2,16 @@
 
     <header class="modal-header">
 
-        <h3 class="modal-title">
+        <h3 class="modal-title" ng-if="!assistant.firstName">Add a new assistant coach</h3>
 
-            <div data-ng-if="!assistant.firstName">
-                <p class="pull-left">Add a new assistant coach</p>
-                <a class="pull-right" data-ng-click="$dismiss()">
-                    <i class="icon icon-remove"></i>
-                </a>
-            </div>
-
-            <div data-ng-if="assistant.firstName">
-                <p class="pull-left">
-                    <span>
-                        {{assistant.firstName}}
-                        {{assistant.lastName[0]}}.
-                    </span>
-                </p>
-                <div class="pull-right">
-                    <span data-ng-if="assistant.lastAccessed">{{assistant.getLastAccessed(assistant) | date: 'mediumDate'}}</span>
-
-                    <a data-ng-click="cancel()">
-                        <i class="icon icon-remove"></i>
-                    </a>
-                </div>
-
-            </div>
-
+        <h3 class="modal-title" ng-if="assistant.firstName">
+            <span>
+                {{assistant.firstName}}
+                {{assistant.lastName[0]}}.
+            </span>
         </h3>
+        <h3 class="modal-title last-accessed" ng-if="assistant.firstName && assistant.lastAccessed">{{assistant.getLastAccessed(assistant) | date: 'mediumDate'}}</h3>
+        <i class="icon icon-remove" ng-click="$dismiss()"></i>
 
     </header>
 
