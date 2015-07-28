@@ -1,3 +1,8 @@
+const pkg = require('../../package.json');
+const angular = window.angular;
+const IntelligenceWebClient = angular.module(pkg.name);
+const EventEmitter = require('events').EventEmitter;
+
 import EVENT from '../constants/event';
 
 const ENTER_KEY_CODE = 13;
@@ -28,3 +33,9 @@ class UIEventEmitter extends EventEmitter {
         }
     }
 }
+
+const uiEventEmitter = new UIEventEmitter();
+
+IntelligenceWebClient.factory('UIEventEmitter', () => uiEventEmitter);
+
+export default uiEventEmitter;
