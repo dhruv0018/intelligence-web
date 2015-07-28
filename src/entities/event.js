@@ -283,7 +283,7 @@ class KrossoverEvent extends Entity {
             copy.variableValues[copy.fields[order].id] = copy.fields[order].toJSON();
         });
 
-        return copy;
+        return JSON.stringify(copy);
     }
 }
 

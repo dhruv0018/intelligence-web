@@ -121,7 +121,7 @@ describe('Event Entity', () => {
 
     it('should restore the original JSON on JSON.stringify calls', () => {
 
-        sampleEvent = sampleEvent.toJSON();
+        sampleEvent = JSON.parse(sampleEvent.toJSON());
 
         expect(sampleEvent.id).to.equal(srcEvent.id);
         expect(sampleEvent.time).to.equal(srcEvent.time);

@@ -120,7 +120,7 @@ class KrossoverPlay extends Entity {
             return event.toJSON();
         });
 
-        return copy;
+        return JSON.stringify(copy);
     }
 }
 
