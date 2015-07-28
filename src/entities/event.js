@@ -34,6 +34,8 @@ class KrossoverEvent extends Entity {
         this.tagId = tag.id;
         this.time  = time;
 
+        delete this.id;
+
         /* If we have an event, fill in the details */
         if (event) {
 
@@ -54,18 +56,115 @@ class KrossoverEvent extends Entity {
             this.activeEventVariableIndex = event.activeEventVariableIndex || 1;
         }
 
-        /* Transform variables into fields */
-        Object.keys(this.fields).forEach((order, index) => {
+        this.fields = {};
 
-            this.fields[order].gameId = gameId;
-            this.fields[order].index  = index + 1;
+        /* Transform variables into fields */
+        this.tagVariables.forEach((tagVariable, index) => {
+
+            let field = FieldFactory.createField(tagVariable);
+
+            // TODO: Get rid of `inputType` eventually
+            field.inputType = tagVariable.type;
+            field.gameId    = gameId;
+            field.index     = index + 1;
 
             if (event && event.variableValues) {
 
-                let variableValue = event.variableValues[this.fields[order].id];
-                this.fields[order].initialize(variableValue.value);
+                let variableValue = event.variableValues[tagVariable.id];
+                field.initialize(variableValue.value);
+            }
+
+            this.fields[index + 1] = field;
+        });
+    }
+
+    /**
+     * Getter for Indexer Fields
+     *
+     * @type {Array}
+     */
+    get indexerFields () {
+
+        return this.mapScript(this.indexerScript);
+    }
+
+    /**
+     * Getter for Summary Fields
+     *
+     * @type {Array}
+     */
+    get summaryFields () {
+
+        if (this.summaryScript) {
+
+            return this.mapScript(this.summaryScript);
+        } else {
+
+            return null;
+        }
+    }
+
+    /**
+     * Getter for User Fields
+     *
+     * @type {Array}
+     */
+    get userFields () {
+
+        return this.mapScript(this.userScript);
+    }
+
+    /**
+     * Checks if all the variables have values.
+     *
+     * @method mapScript
+     * @param {Array} script - A script array created by a KrossoverTag
+     * @returns {Array}      - Script array with instantiated fields
+     */
+    mapScript (script) {
+
+        let scriptFields = [];
+
+        script.forEach(item => {
+
+            let VARIABLE_INDEX_PATTERN = /\d/;
+
+            /* If the item is a variable. */
+            if (item.type !== 'STATIC') {
+
+                /* Find the index of the variable in the script. */
+                let index = Number(VARIABLE_INDEX_PATTERN.exec(item).pop());
+
+                scriptFields.push(this.fields[index]);
+            } else {
+
+                scriptFields.push(item);
             }
         });
+
+        scriptFields.toString = () => {
+
+            let string = ``;
+
+            scriptFields.forEach(item => {
+
+                if (item.type === 'STATIC') {
+
+                    string += item.toString();
+                } else {
+
+                    let field = this.fields[item.index];
+                    if (field) {
+
+                        string += field.toString();
+                    }
+                }
+            });
+
+            return string;
+        };
+
+        return scriptFields;
     }
 
     /**
