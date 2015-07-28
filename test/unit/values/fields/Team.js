@@ -17,12 +17,6 @@ describe('General Team Field', () => {
     it('The Team Class should Exist', () => {
         expect(TeamField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('TEAM_DROPDOWN');
-    });
-
 });
 
 describe('Team Tag Field', () => {

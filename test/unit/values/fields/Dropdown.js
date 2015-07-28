@@ -14,12 +14,6 @@ describe('General Dropdown Field', () => {
     it('The DropdownField Class should Exist', () => {
         expect(DropdownField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('DROPDOWN');
-    });
-
 });
 
 describe('Dropdown Tag Field', () => {

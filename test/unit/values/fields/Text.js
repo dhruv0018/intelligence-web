@@ -14,12 +14,6 @@ describe('General Text Field', () => {
     it('The Text Class should Exist', () => {
         expect(TextField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('TEXT');
-    });
-
 });
 
 describe('Text Tag Field', () => {

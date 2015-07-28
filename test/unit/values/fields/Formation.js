@@ -14,12 +14,6 @@ describe('General Formation Field', () => {
     it('The Formation Class should Exist', () => {
         expect(FormationField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('FORMATION');
-    });
-
 });
 
 describe('Formation Tag Field', () => {

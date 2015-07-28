@@ -4,7 +4,7 @@ TeamFieldData.Tag = {
     formations: [],
     id: 1,
     index: 1,
-    inputType: 'TEAM_DROPDOWN',
+    type: 'TEAM_DROPDOWN',
     isRequired: true,
     options: [],
     type: 'Team'
@@ -14,7 +14,7 @@ TeamFieldData.Event = {
     formations: [],
     id: 1,
     index: 1,
-    inputType: 'TEAM_DROPDOWN',
+    type: 'TEAM_DROPDOWN',
     isRequired: true,
     options: [],
     type: 'Team',

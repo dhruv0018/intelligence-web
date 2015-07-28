@@ -14,12 +14,6 @@ describe('General Gap Field', () => {
     it('The Gap Class should Exist', () => {
         expect(GapField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('GAP');
-    });
-
 });
 
 describe('Gap Tag Field', () => {

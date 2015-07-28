@@ -14,12 +14,6 @@ describe('General PassingZone Field', () => {
     it('The PassingZone Class should Exist', () => {
         expect(PassingZoneField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('PASSING_ZONE');
-    });
-
 });
 
 describe('Passing Zone Tag Field', () => {

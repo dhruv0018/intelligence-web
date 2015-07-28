@@ -15,10 +15,4 @@ describe('General Arena Field', () => {
     it('The ArenaField Class should Exist', () => {
         expect(ArenaField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('ARENA');
-    });
-
 });
