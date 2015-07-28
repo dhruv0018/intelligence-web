@@ -142,6 +142,7 @@ require('./emitters/playlist');
 require('./emitters/video-player');
 require('./emitters/telestrations');
 require('./emitters/cue-point-event-emitter');
+require('./emitters/ui-event');
 
 require('./brokers/telestrationsVideoPlayerBroker');
 
