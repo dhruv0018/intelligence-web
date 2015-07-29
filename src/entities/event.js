@@ -63,14 +63,13 @@ class KrossoverEvent extends Entity {
 
             let field = FieldFactory.createField(tagVariable);
 
-            // TODO: Get rid of `inputType` eventually
-            field.gameId    = gameId;
-            field.index     = index + 1;
+            field.gameId = gameId;
+            field.index  = index + 1;
 
             if (event && event.variableValues) {
 
                 let variableValue = event.variableValues[tagVariable.id];
-                field.initialize(variableValue.value);
+                field.initialize(variableValue.value, variableValue.type);
             }
 
             this.fields[index + 1] = field;
@@ -121,6 +120,11 @@ class KrossoverEvent extends Entity {
      * @returns {Array}      - Script array with instantiated fields
      */
     mapScript (script) {
+
+        if (!script) {
+
+            return null;
+        }
 
         let scriptFields = [];
 
@@ -282,7 +286,7 @@ class KrossoverEvent extends Entity {
             copy.variableValues[copy.fields[order].id] = copy.fields[order].toJSON();
         });
 
-        return JSON.stringify(copy);
+        return copy;
     }
 }
 
