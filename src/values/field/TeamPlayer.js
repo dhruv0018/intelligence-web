@@ -71,7 +71,7 @@ class TeamPlayerField extends Field {
                         playerId   : player.id,
                         jerseyColor: game.primaryJerseyColor,
                         jerseyNumber,
-                        name       : jerseyNumber + ' - ' + player.firstName + ' ' + player.lastName,
+                        name       : '(' + jerseyNumber + ')  ' + player.firstName + ' ' + player.lastName,
                         type       : 'Player'
                     };
 
@@ -89,7 +89,7 @@ class TeamPlayerField extends Field {
                         playerId   : player.id,
                         jerseyColor: game.opposingPrimaryJerseyColor,
                         jerseyNumber,
-                        name       : jerseyNumber + ' - ' + player.firstName + ' ' + player.lastName,
+                        name       : '(' + jerseyNumber + ')  '  + player.firstName + ' ' + player.lastName,
                         type       : 'Player'
                     };
 
@@ -203,7 +203,7 @@ class TeamPlayerField extends Field {
                     <rect fill="${player.jerseyColor}" x="0" y="0" width="16px" height="16px" />
                 </svg>
 
-                <span class="player-name">${player.jerseyNumber} ${player.name}</span>
+                <span class="player-name">${player.name}</span>
 
             </span>
             `;
