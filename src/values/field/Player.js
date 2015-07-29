@@ -61,7 +61,7 @@ class PlayerField extends Field {
                         playerId: angular.copy(player.id),
                         jerseyColor: angular.copy(game.primaryJerseyColor),
                         jerseyNumber,
-                        name: jerseyNumber + ' - ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
+                        name: '(' + jerseyNumber + ')  ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
                     };
                     return value;
                 });
@@ -74,7 +74,7 @@ class PlayerField extends Field {
                         playerId: angular.copy(player.id),
                         jerseyColor: angular.copy(game.opposingPrimaryJerseyColor),
                         jerseyNumber,
-                        name: jerseyNumber + ' - ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
+                        name: '(' + jerseyNumber + ')  ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
                     };
                     return value;
                 });
@@ -161,7 +161,7 @@ class PlayerField extends Field {
                 <rect fill="${player.jerseyColor}" stroke="black" stroke-width="${player.jerseyColor === '#ffffff' ? 1 : 0}" x="0" y="0" width="16px" height="16px" />
             </svg>
 
-            <span class="player-name">${player.jerseyNumber} ${player.name}</span>
+            <span class="player-name">${player.name}</span>
 
         </span>
         `;
