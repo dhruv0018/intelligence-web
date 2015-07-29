@@ -36,7 +36,6 @@ describe('Event Entity', () => {
     it('should have public API', () => {
 
         expect(KrossoverEvent).to.respondTo('toJSON');
-        expect(KrossoverEvent).to.respondTo('isValid');
         expect(KrossoverEvent).to.respondTo('isFloat');
         expect(KrossoverEvent).to.respondTo('isEndAndStart');
     });
