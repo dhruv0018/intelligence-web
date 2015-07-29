@@ -22,7 +22,7 @@ class ArenaField extends Field {
 
         Object.defineProperty(this.value, 'name', {
             get: () => {
-                let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+                let calculatedName = !this.isRequired ? 'Optional' : this.name;
                 if (this.region) {
                     let injector = angular.element(document).injector();
                     this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
@@ -34,10 +34,9 @@ class ArenaField extends Field {
         this.availableValues = null;
     }
 
-    //todo temporary a NEED
+    //TODO temporary a NEED
     arenaName(region = this.value.region){
-        console.log(region);
-        let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+        let calculatedName = !this.isRequired ? 'Optional' : this.name;
         if (region) {
             let injector = angular.element(document).injector();
             this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
