@@ -59,12 +59,6 @@ describe('Event Entity', () => {
         expect(sampleEvent.keyboardShortcut).to.equal('K');
     });
 
-    it('should have a "isValid" method that works.', () => {
-
-        expect(sampleEvent.isValid()).to.be.a('boolean');
-        expect(sampleEvent.isValid()).to.be.true;
-    });
-
     it('should have a "isFloat" method that works.', () => {
 
         expect(sampleEvent.isFloat()).to.be.a('boolean');
