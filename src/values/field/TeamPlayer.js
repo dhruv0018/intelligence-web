@@ -143,7 +143,6 @@ class TeamPlayerField extends Field {
                 teamPlayerOption.playerId = playerId;
                 teamPlayerOption.teamId   = undefined;
                 teamPlayerOption.type     = 'Player';
-
                 break;
 
             case 'Team':

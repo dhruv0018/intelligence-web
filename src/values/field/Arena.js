@@ -22,8 +22,8 @@ class ArenaField extends Field {
 
         Object.defineProperty(this.value, 'name', {
             get: () => {
-                let calculatedName = !this.isRequired ? 'Optional' : 'Select';
-                if (this.regionId) {
+                let calculatedName = !this.isRequired ? 'Optional' : this.name;
+                if (this.region) {
                     let injector = angular.element(document).injector();
                     this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
                     calculatedName = angular.copy(this.regionMap[this.region].name);
@@ -34,6 +34,16 @@ class ArenaField extends Field {
         this.availableValues = null;
     }
 
+    //TODO temporary a NEED
+    arenaName(region = this.value.region){
+        let calculatedName = !this.isRequired ? 'Optional' : this.name;
+        if (region) {
+            let injector = angular.element(document).injector();
+            this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
+            calculatedName = angular.copy(this.regionMap[region].name);
+        }
+        return calculatedName;
+    }
     /**
      * Sets the value property by creating an 'available value'. If called from
      * the constructor, it uses default value if none are passed in.
@@ -50,12 +60,14 @@ class ArenaField extends Field {
             coordinates: {
                 x: !this.isRequired ? null: undefined,
                 y: !this.isRequired ? null: undefined
-            }
+            },
+            name: this.name
         };
 
-        if (value) {
+        if (value && value.coordinates) {
             arena.coordinates = value.coordinates;
             arena.region = value.region;
+            arena.name = this.arenaName(arena.region) || this.name;
         }
 
         this.currentValue = arena;
@@ -81,8 +93,8 @@ class ArenaField extends Field {
      * @returns {String} - HTML of the field
      */
     toString () {
-
-        return `<span class="value gap-field">${this.currentValue.description}</span>`;
+        let name = this.arenaName();
+        return `<span class="value gap-field">${name}</span>`;
     }
 
     /**
@@ -109,8 +121,8 @@ class ArenaField extends Field {
 
         return this.isRequired ?
             (Number.isInteger(this.value.region) &&
-            isNan(this.value.coordinates.x) &&
-            isNan(this.value.coordinates.y)) :
+            isNaN(this.value.coordinates.x) &&
+            isNaN(this.value.coordinates.y)) :
             true;
     }
 }
