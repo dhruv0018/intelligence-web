@@ -78,6 +78,10 @@ class PassingZoneField extends Field {
         return `<span class="value passing-zone-field">${this.currentValue.name}</span>`;
     }
 
+    /**
+     * Getter for the validity of the Field
+     * @type {Boolean}
+     */
     get valid () {
 
         return this.isRequired ?
@@ -91,9 +95,10 @@ class PassingZoneField extends Field {
      * @method toJSON
      * @returns {String} - JSON ready version of the object.
      */
-    toJSON(){
+    toJSON () {
+
         let variableValue = {};
-        let value = this.value.zoneId === null ? null : String(this.value.zoneId);
+        let value         = this.value.zoneId === null ? null : String(this.value.zoneId);
 
         variableValue = {
 
@@ -101,7 +106,7 @@ class PassingZoneField extends Field {
             value
         };
 
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
+        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

@@ -210,6 +210,10 @@ class TeamPlayerField extends Field {
         }
     }
 
+    /**
+     * Getter for the validity of the Field
+     * @type {Boolean}
+     */
     get valid () {
 
         if (!this.isRequired) {
@@ -253,7 +257,7 @@ class TeamPlayerField extends Field {
                 break;
         }
 
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
+        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

@@ -127,6 +127,10 @@ class PlayerField extends Field {
         //Object.assign(this.value, value);
     }
 
+    /**
+     * Getter for the validity of the Field
+     * @type {Boolean}
+     */
     get valid () {
 
         return this.isRequired ?
@@ -144,6 +148,7 @@ class PlayerField extends Field {
 
         let player = this.availableValues.find(value => value.playerId === this.currentValue.playerId);
 
+        // TODO: Fix this
         if (!player) {
 
             player = {
@@ -176,14 +181,15 @@ class PlayerField extends Field {
     toJSON () {
 
         let variableValue = {};
-        let value = (!this.isRequired && this.value.playerId === null) ? null : Number(this.value.playerId);
+        let value         = (!this.isRequired && this.value.playerId === null) ? null : Number(this.value.playerId);
 
         variableValue = {
+
             type: 'Player',
             value
         };
 
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
+        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

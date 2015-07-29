@@ -57,18 +57,40 @@ class Field extends Value {
         this.value = value;
     }
 
-    //validates data sent to the server
-    isValid(variableValue) {
+    /**
+     * Checks the validity of the variableValue (returned by toJSON)
+     *
+     * @method isVariableValueValid
+     * @param {object} variableValue - the value to check
+     * @returns {Boolean}
+     */
+    isVariableValueValid (variableValue) {
+
         let isValid = false;
-        if (this.isRequired && variableValue.value !== undefined && variableValue.value !== null)
+
+        if (
+            this.isRequired &&
+            variableValue.value !== undefined &&
+            variableValue.value !== null
+        ) {
+
             isValid = true;
-        else if (!this.isRequired && (variableValue.value || variableValue.value === null))
+        } else if (
+
+            !this.isRequired &&
+            (variableValue.value || variableValue.value === null)
+        ) {
+
             isValid = true;
-        //todo do something with the validation
-        if (!isValid) {
-            console.log('This field does not validate properly and cannot save to the server');
-            console.log(this.type, variableValue);
         }
+
+        // TODO: do something with the validation
+        if (!isValid) {
+
+            console.error('This field does not validate properly and cannot save to the server');
+            console.error(this.type, variableValue);
+        }
+
         return isValid;
     }
 

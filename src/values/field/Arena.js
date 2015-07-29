@@ -98,25 +98,9 @@ class ArenaField extends Field {
     }
 
     /**
-     * Reverts the class instance to JSON suitable for the server.
-     *
-     * @method toJSON
-     * @returns {String} - JSON ready version of the object.
+     * Getter for the validity of the Field
+     * @type {Boolean}
      */
-
-    toJSON() {
-        let variableValue = {};
-        variableValue = {
-            type: null,
-            value: {
-                coordinates: this.value.coordinates,
-                region: this.value.region
-            }
-        };
-
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
-    }
-
     get valid () {
 
         return this.isRequired ?
@@ -124,6 +108,29 @@ class ArenaField extends Field {
             isNaN(this.value.coordinates.x) &&
             isNaN(this.value.coordinates.y)) :
             true;
+    }
+
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+
+    toJSON () {
+
+        let variableValue = {};
+
+        variableValue = {
+
+            type: null,
+            value: {
+                coordinates: this.value.coordinates,
+                region: this.value.region
+            }
+        };
+
+        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

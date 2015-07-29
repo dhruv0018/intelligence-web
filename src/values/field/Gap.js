@@ -76,27 +76,34 @@ class GapField extends Field {
     }
 
     /**
-     * Reverts the class instance to JSON suitable for the server.
-     *
-     * @method toJSON
-     * @returns {String} - JSON ready version of the object.
+     * Getter for the validity of the Field
+     * @type {Boolean}
      */
-    toJSON (){
-        let variableValue = {};
-        let value = this.value.gapId === null ? null : String(this.value.gapId);
-        variableValue = {
-            type: null,
-            value: value
-        };
-
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
-    }
-
     get valid () {
 
         return this.isRequired ?
             Number.isInteger(this.value.gapId) :
             true;
+    }
+
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
+        let variableValue = {};
+        let value         = this.value.gapId === null ? null : String(this.value.gapId);
+
+        variableValue = {
+
+            type: null,
+            value: value
+        };
+
+        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

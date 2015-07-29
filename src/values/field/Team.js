@@ -113,6 +113,10 @@ class TeamField extends Field {
         return `<span class="value team-field">${team.name}</span>`;
     }
 
+    /**
+     * Getter for the validity of the Field
+     * @type {Boolean}
+     */
     get valid () {
 
         return this.isRequired ?
@@ -126,15 +130,18 @@ class TeamField extends Field {
      * @method toJSON
      * @returns {String} - JSON ready version of the object.
      */
-    toJSON() {
+    toJSON () {
+
         let variableValue = {};
-        let value = (!this.isRequired && this.value.teamId === null) ? null : Number(this.value.teamId);
+        let value         = (!this.isRequired && this.value.teamId === null) ? null : Number(this.value.teamId);
+
         variableValue = {
+
             type: 'Team',
             value
         };
 
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
+        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

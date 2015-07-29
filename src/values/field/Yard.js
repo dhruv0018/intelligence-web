@@ -85,6 +85,10 @@ class YardField extends Field {
         this.value = value;
     }
 
+    /**
+     * Getter for the validity of the Field
+     * @type {Boolean}
+     */
     get valid () {
 
         return this.isRequired ?
@@ -101,7 +105,7 @@ class YardField extends Field {
     toJSON () {
 
         let variableValue = {};
-        let value = (!this.isRequired && this.value.content === null) ? null : String(this.value.content);
+        let value         = (!this.isRequired && this.value.content === null) ? null : String(this.value.content);
 
         variableValue = {
 
@@ -109,7 +113,7 @@ class YardField extends Field {
             value
         };
 
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
+        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

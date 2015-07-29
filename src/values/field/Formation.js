@@ -79,22 +79,9 @@ class FormationField extends Field {
     }
 
     /**
-     * Reverts the class instance to JSON suitable for the server.
-     *
-     * @method toJSON
-     * @returns {String} - JSON ready version of the object.
+     * Getter for the validity of the Field
+     * @type {Boolean}
      */
-    toJSON() {
-        let variableValue = {};
-        let value = this.value.formationId === null ? null : String(this.value.formationId);
-        variableValue = {
-            type: null,
-            value
-        };
-
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
-    }
-
     get valid () {
 
         return this.isRequired ?
@@ -103,6 +90,25 @@ class FormationField extends Field {
             true;
     }
 
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
+        let variableValue = {};
+        let value         = this.value.formationId === null ? null : String(this.value.formationId);
+
+        variableValue = {
+
+            type: null,
+            value
+        };
+
+        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
+    }
 }
 
 export default FormationField;

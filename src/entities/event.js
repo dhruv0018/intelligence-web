@@ -203,25 +203,9 @@ class KrossoverEvent extends Entity {
     }
 
     /**
-     * Checks if all the variables have values.
-     *
-     * @method isValid
-     * @returns {Boolean} - true, if all fields are valid; false otherwise.
+     * Getter for the validity of the Field
+     * @type {Boolean}
      */
-    isValid () {
-
-        Object.keys(this.fields).forEach(order => {
-
-            let field = this.fields[order];
-            if (!field.isValid(field)) {
-
-                return false;
-            }
-        });
-
-        return true;
-    }
-
     get valid () {
 
         return Object.keys(this.fields)

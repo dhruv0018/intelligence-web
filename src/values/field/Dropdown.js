@@ -62,26 +62,33 @@ class DropdownField extends Field {
     }
 
     /**
+     * Getter for the validity of the Field
+     * @type {Boolean}
+     */
+    get valid () {
+
+        return this.isRequired ?
+            typeof this.value.content === 'string' :
+            true;
+    }
+
+    /**
      * Reverts the class instance to JSON suitable for the server.
      *
      * @method toJSON
      * @returns {String} - JSON ready version of the object.
      */
     toJSON () {
+
         let variableValue = {};
+
         variableValue = {
+
             type: null,
             value: this.value.content
         };
 
-        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
-    }
-
-    get valid () {
-
-        return this.isRequired ?
-            typeof this.value.content === 'string' :
-            true;
+        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 
