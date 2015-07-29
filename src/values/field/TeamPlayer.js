@@ -111,7 +111,8 @@ class TeamPlayerField extends Field {
         let teamPlayerOption = {
 
             teamId  : (!this.isRequired && this.type === 'Team') ? null   : undefined,
-            playerId: (!this.isRequired && this.type === 'Player') ? null : undefined
+            playerId: (!this.isRequired && this.type === 'Player') ? null : undefined,
+            name: (!this.isRequired) ? 'Optional' : 'Select'
         };
 
         if (value) {
@@ -123,7 +124,6 @@ class TeamPlayerField extends Field {
                 let playerId              = Number(value) ? Number(value) : null;
                 teamPlayerOption.playerId = playerId;
                 teamPlayerOption.teamId   = undefined;
-
                 break;
 
             case 'Team':
