@@ -31,7 +31,7 @@ const play = {
                 },
                 "24": {
                     "type": null,
-                    "value": "82"
+                    "value": 82
                 }
             }
         }

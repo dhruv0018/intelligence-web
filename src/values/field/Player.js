@@ -1,21 +1,24 @@
-import Field from './Field.js';
+import Field from './Field';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * PlayerField Field Model
+ * @class PlayerField
+ */
 class PlayerField extends Field {
-    //constructor(players, field) {
-    constructor(field) {
+
+    /**
+     * @constructs PlayerField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
         super(field);
 
-        //initialization
-        let playerOption = {
-            playerId: (!field.isRequired && field.type === 'Player') ? null : undefined
-        };
-        if (field.value) playerOption.playerId = field.value;
-        this.currentValue = playerOption;
+        this.initialize();
 
         Object.defineProperty(this.value, 'name', {
             get: () => {
@@ -86,7 +89,31 @@ class PlayerField extends Field {
         });
     }
 
-    get currentValue() {
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {integer} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        let playerOption = {
+
+            playerId: (!this.isRequired && this.type === 'Player') ? null : undefined
+        };
+
+        if (value) {
+
+            playerOption.playerId = value;
+        }
+
+        this.currentValue = playerOption;
+    }
+
+    get currentValue () {
+
         return this.value;
     }
 
@@ -107,16 +134,56 @@ class PlayerField extends Field {
             true;
     }
 
-    toJSON(){
+    /**
+     * Generates an HTML string of the field.
+     *
+     * @method toString
+     * @returns {String} - HTML of the field
+     */
+    toString () {
+
+        let player = this.availableValues.find(value => value.playerId === this.currentValue.playerId);
+
+        if (!player) {
+
+            player = {
+
+                name: 'Optional',
+                jerseyColor: '#000000',
+                jerseyNumber: ''
+            };
+        }
+
+        return `
+        <span class="value">
+
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+                <rect fill="${player.jerseyColor}" stroke="black" stroke-width="${player.jerseyColor === '#ffffff' ? 1 : 0}" x="0" y="0" width="16px" height="16px" />
+            </svg>
+
+            <span class="player-name">${player.jerseyNumber} ${player.name}</span>
+
+        </span>
+        `;
+    }
+
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
         let variableValue = {};
-        let value = (!this.isRequired && this.value.playerId === null) ? null : String(this.value.playerId);
+        let value = (!this.isRequired && this.value.playerId === null) ? null : Number(this.value.playerId);
 
         variableValue = {
             type: 'Player',
             value
         };
 
-        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

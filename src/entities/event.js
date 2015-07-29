@@ -1,57 +1,180 @@
-import Tag from './tag';
+import Entity from './entity';
+import FieldFactory from '../values/field/FieldFactory';
 
-class Event extends Tag {
+const schema = require('../../schemas/event.json');
 
+/**
+ * KrossoverEvent Entity Model
+ * @class KrossoverEvent
+ */
+class KrossoverEvent extends Entity {
+
+    /**
+     * @constructs KrossoverEvent
+     * @param {Object} event     - Event JSON
+     * @param {KrossoverTag} tag - An instantiated KrossoverTag tag
+     * @param {Number} time      - The time
+     * @param {Number} gameId    - The game ID
+     */
     constructor (event, tag, time, gameId) {
 
-        /* If only two parameters are passed, we don't have an event, so
-         * reassign values. */
-        if (arguments.length === 2) {
+        if (!arguments.length) {
 
-            time  = tag;
-            tag   = event;
-            event = null;
+            throw new Error('KrossoverEvent cannot be instantiated with no parameters!');
         }
 
-        /* Build out tag instance via super */
+        /* Use tag to setup event */
         super(tag);
-        this.tagId = this.id;
 
-        /* Add event data */
-        event                         = event || {};
-        this.variableValues           = event.variableValues || {};
-        this.activeEventVariableIndex = event.activeEventVariableIndex || 1;
-        this.id                       = event.id;
-        this.playId                   = event.playId;
-        this.time                     = time;
+        Object.defineProperty(this, 'shortcutKey', {
+
+            writable: false,
+        });
+
+        this.tagId = tag.id;
+        this.time  = time;
+
+        delete this.id;
+
+        /* If we have an event, fill in the details */
+        if (event) {
+
+            /* Validate event JSON */
+            /* TODO: Re-enable this at some point. Right now, far too many
+             * events are failing validtion and polluting the console. */
+            // let validation = this.validate(event, schema);
+            //
+            // if (validation.errors.length) {
+            //
+            //     console.warn(validation.errors.shift());
+            // }
+
+            this.id     = event.id;
+            this.playId = event.playId;
+
+            /* TODO: Get rid of this property when indexing service is refactored */
+            this.activeEventVariableIndex = event.activeEventVariableIndex || 1;
+        }
 
         this.fields = {};
 
-        //todo refactor this later
-        Object.keys(this.tagVariables).forEach( (positionId, index) => {
-            index = index + 1;
-            let variableValue = angular.copy(this.tagVariables[positionId]) || {};
-            let tagVariable = this.tagVariables[index];
-            variableValue.gameId = gameId;
-            variableValue.inputType = tagVariable.type;
-            variableValue.options = tagVariable.options;
-            variableValue.formations = tagVariable.formations;
-            variableValue.id = tagVariable.id;
-            variableValue.order = index;
-            variableValue.isRequired = tagVariable.isRequired;
-            delete variableValue.type;
-            let temporaryVariable = this.variableValues[variableValue.id] || {};
-            variableValue.value = temporaryVariable.value;
-            this.variableValues[tagVariable.id] = variableValue;
-        });
-        this.indexFields(this.variableValues, 'variableValues');
+        /* Transform variables into fields */
+        this.tagVariables.forEach((tagVariable, index) => {
 
+            let field = FieldFactory.createField(tagVariable);
+
+            field.gameId = gameId;
+            field.index  = index + 1;
+
+            if (event && event.variableValues) {
+
+                let variableValue = event.variableValues[tagVariable.id];
+                field.initialize(variableValue.value, variableValue.type);
+            }
+
+            this.fields[index + 1] = field;
+        });
     }
+
     /**
-     * Getter for event.shortcutKey
-     * @method Event.shortcutKey
+     * Getter for Indexer Fields
+     *
+     * @type {Array}
+     */
+    get indexerFields () {
+
+        return this.mapScript(this.indexerScript);
+    }
+
+    /**
+     * Getter for Summary Fields
+     *
+     * @type {Array}
+     */
+    get summaryFields () {
+
+        if (this.summaryScript) {
+
+            return this.mapScript(this.summaryScript);
+        } else {
+
+            return null;
+        }
+    }
+
+    /**
+     * Getter for User Fields
+     *
+     * @type {Array}
+     */
+    get userFields () {
+
+        return this.mapScript(this.userScript);
+    }
+
+    /**
+     * Checks if all the variables have values.
+     *
+     * @method mapScript
+     * @param {Array} script - A script array created by a KrossoverTag
+     * @returns {Array}      - Script array with instantiated fields
+     */
+    mapScript (script) {
+
+        if (!script) {
+
+            return null;
+        }
+
+        let scriptFields = [];
+
+        script.forEach(item => {
+
+            let VARIABLE_INDEX_PATTERN = /\d/;
+
+            /* If the item is a variable. */
+            if (item.type !== 'STATIC') {
+
+                /* Find the index of the variable in the script. */
+                let index = Number(VARIABLE_INDEX_PATTERN.exec(item).pop());
+
+                scriptFields.push(this.fields[index]);
+            } else {
+
+                scriptFields.push(item);
+            }
+        });
+
+        scriptFields.toString = () => {
+
+            let string = ``;
+
+            scriptFields.forEach(item => {
+
+                if (item.type === 'STATIC') {
+
+                    string += item.toString();
+                } else {
+
+                    let field = this.fields[item.index];
+                    if (field) {
+
+                        string += field.toString();
+                    }
+                }
+            });
+
+            return string;
+        };
+
+        return scriptFields;
+    }
+
+    /**
+     * Getter for this.shortcutKey
+     *
      * @readonly
-     * @returns {String} shortcutKey
+     * @type {String}
      */
     get keyboardShortcut () {
 
@@ -59,43 +182,44 @@ class Event extends Tag {
     }
 
     /**
-     * Checks whether the event has variables.
-     * @returns - true if the event has variables; false otherwise.
+     * Getter for this.fields
+     *
+     * @readonly
+     * @type {Object}
      */
-    get hasVariables () {
 
-        /* Check if the event has tag variables. */
-        return this.tagVariables && !!Object.keys(this.tagVariables).length;
+    /* FIXME: variableValues is deprecated but many areas of the code still
+     * reference it. Ultimately, all code should access fields directly. */
+    get variableValues () {
+
+        let variableValues = {};
+
+        Object.keys(this.fields).forEach(order => {
+
+            variableValues[this.fields[order].id] = this.fields[order];
+        });
+
+        return variableValues;
     }
 
     /**
      * Checks if all the variables have values.
-     * @returns {Boolean} true, if all of the variables have a value;
-     * false otherwise.
+     *
+     * @method isValid
+     * @returns {Boolean} - true, if all fields are valid; false otherwise.
      */
-    get isValid () {
+    isValid () {
 
-        const self = this;
+        Object.keys(this.fields).forEach(order => {
 
-        function variableFromKey (tagVariableId) {
+            let field = this.fields[order];
+            if (!field.isValid(field)) {
 
-            /* Lookup the tag variable. */
-            return self.variableValues[tagVariableId];
-        }
+                return false;
+            }
+        });
 
-        function variableIsValid (variable) {
-
-            /* If the variable is not required, it doesn't need a value. */
-            if (!variable.isRequired) return true;
-
-            /* Check if the variable has a value. */
-            return !!variable.value;
-        }
-
-        /* Ensure that every required variable has a value. */
-        return Object.keys(this.variableValues)
-        .map(variableFromKey)
-        .every(variableIsValid);
+        return true;
     }
 
     get valid () {
@@ -107,26 +231,36 @@ class Event extends Tag {
 
     /**
      * Checks whether the event is a floating event.
-     * @returns - true if the event is floating event; false otherwise.
+     *
+     * @method isFloat
+     * @returns {Boolean} - true if the event is floating event; false otherwise.
      */
-    get isFloat () {
+    isFloat () {
 
         return this.isStart === false && this.isEnd === false && this.children && this.children.length === 0;
     }
 
     /**
-     * Checks whether the event is an end-and-start event.
-     * @returns - true if the event is an end-and-start event; false otherwise.
+     * Checks whether the event is an end-and-start event: is an end tag and
+     * only has one child.
+     *
+     * @method isEndAndStart
+     * @returns {Boolean} - true if the event is an end-and-start event; false otherwise.
      */
-    get isEndAndStart () {
+    isEndAndStart () {
 
-        /* Check if the given event is an end tag and only has one child. */
         return this.isEnd && this.children && this.children.length === 1;
     }
 
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
     toJSON () {
 
-        let copy = super.toJSON(this);
+        let copy = Object.assign({}, this);
 
         delete copy.activeEventVariableIndex;
         delete copy.indexerScript;
@@ -137,7 +271,6 @@ class Event extends Tag {
         delete copy.isEnd;
         delete copy.tagSetId;
         delete copy.children;
-        delete copy.tagVariables;
         delete copy.pointsAssigned;
         delete copy.assignThisTeam;
         delete copy.isPeriodTag;
@@ -146,18 +279,15 @@ class Event extends Tag {
         delete copy.buffer;
         delete copy.name;
 
-        Object.keys(copy.variableValues).forEach(key => {
+        copy.variableValues = {};
 
-            let variableValue = copy.variableValues[key];
+        Object.keys(copy.fields).forEach(order => {
 
-            copy.variableValues[key] = {
-                type: variableValue.type,
-                value: variableValue.value
-            };
+            copy.variableValues[copy.fields[order].id] = copy.fields[order].toJSON();
         });
 
         return copy;
     }
 }
 
-export default Event;
+export default KrossoverEvent;

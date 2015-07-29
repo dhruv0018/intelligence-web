@@ -14,12 +14,6 @@ describe('General Formation Field', () => {
     it('The Formation Class should Exist', () => {
         expect(FormationField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('FORMATION');
-    });
-
 });
 
 describe('Formation Tag Field', () => {
@@ -72,8 +66,8 @@ describe('Formation Event Field', () => {
         localEventVariable.isRequired = true;
         let eventField = new FormationField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":null,"value":"1"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":"1"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -83,16 +77,15 @@ describe('Formation Event Field', () => {
 
         let eventField = new FormationField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":null,"value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":null}');
     });
 
     it('Should be able to switch back to an optional value from a set value', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = false;
         let eventField = new FormationField(localEventVariable);
-        let value = eventField.currentValue;        
+        let value = eventField.currentValue;
         expect(value.formationId).to.not.be.null;
         eventField.currentValue = eventField.availableValues[0];
         value = eventField.currentValue;

@@ -1,4 +1,4 @@
-import Value from '../value.js';
+import Value from '../value';
 
 /**
  * KrossoverField Field Model
@@ -6,7 +6,12 @@ import Value from '../value.js';
  */
 class Field extends Value {
 
+    /**
+     * @constructs Field
+     * @param {Object} field - Field JSON from server
+     */
     constructor (field) {
+
         if (!field) return;
 
         super(field);
@@ -25,6 +30,33 @@ class Field extends Value {
         }
     }
 
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {object} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        this.currentValue = value;
+    }
+
+    /**
+     * Getter/Setter for the value of the Field
+     * @type {object}
+     */
+    get currentValue () {
+
+        return this.value;
+    }
+
+    set currentValue (value) {
+
+        this.value = value;
+    }
+
     //validates data sent to the server
     isValid(variableValue) {
         let isValid = false;
@@ -35,12 +67,31 @@ class Field extends Value {
         //todo do something with the validation
         if (!isValid) {
             console.log('This field does not validate properly and cannot save to the server');
-            console.log(this.inputType, variableValue);
+            console.log(this.type, variableValue);
         }
         return isValid;
     }
 
-    toJSON() {
+    /**
+     * Generates an HTML string of the field.
+     *
+     * @method toString
+     * @returns {String} HTML of the field
+     */
+    toString () {
+
+        // TODO: Removed this method or change to a sensible default.
+        return `<h1>TEMPORARY!!!! toString method not defined for this field!</h1>`;
+    }
+
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON () {
+
         throw Error('Trying to stringify abstract class - Field');
     }
 

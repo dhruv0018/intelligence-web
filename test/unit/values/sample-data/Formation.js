@@ -4,7 +4,7 @@ FormationFieldData.Tag = {
     formations: [],
     id: 1,
     index: 1,
-    inputType: 'FORMATION',
+    type: 'FORMATION',
     isRequired: true,
     options: [],
     type: null
@@ -27,7 +27,7 @@ FormationFieldData.Event = {
     ],
     id: 1,
     index: 1,
-    inputType: 'FORMATION',
+    type: 'FORMATION',
     isRequired: true,
     options: [],
     type: null,

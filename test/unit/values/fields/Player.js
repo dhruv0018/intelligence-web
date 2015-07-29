@@ -17,35 +17,31 @@ describe('General Player Field', () => {
     it('The Player Class should Exist', () => {
         expect(PlayerField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('PLAYER_DROPDOWN');
-    });
-
 });
 
-describe('Player Tag Field', () => {
-    it('Should be initialized correctly if required', () => {
-        let localTagVariable = angular.copy(tagVariable);
-        localTagVariable.isRequired = true;
-        let tagField = new PlayerField(localTagVariable);
-        let value = tagField.currentValue;
-
-        expect(value.playerId).to.be.undefined;
-        expect(value.name).to.equal('Select');
-    });
-
-    it('Should be initialized correctly if not required', () => {
-        let localTagVariable = angular.copy(tagVariable);
-        localTagVariable.isRequired = false;
-        let tagField = new PlayerField(localTagVariable);
-        let value = tagField.currentValue;
-
-        expect(value.playerId).to.be.null;
-    });
-
-});
+/* TODO: This is not really necessary as we will not be instantiating Fields
+ * from tag data alone. */
+// describe('Player Tag Field', () => {
+//     it('Should be initialized correctly if required', () => {
+//         let localTagVariable = angular.copy(tagVariable);
+//         localTagVariable.isRequired = true;
+//         let tagField = new PlayerField(localTagVariable);
+//         let value = tagField.currentValue;
+//
+//         expect(value.playerId).to.be.undefined;
+//         expect(value.name).to.equal('');
+//     });
+//
+//     it('Should be initialized correctly if not required', () => {
+//         let localTagVariable = angular.copy(tagVariable);
+//         localTagVariable.isRequired = false;
+//         let tagField = new PlayerField(localTagVariable);
+//         let value = tagField.currentValue;
+//
+//         expect(value.playerId).to.be.null;
+//     });
+//
+// });
 
 describe('Player Event Field', () => {
 
@@ -75,8 +71,8 @@ describe('Player Event Field', () => {
         localEventVariable.isRequired = true;
         let eventField = new PlayerField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":"Player","value":"1"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":"Player","value":1}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -86,9 +82,8 @@ describe('Player Event Field', () => {
 
         let eventField = new PlayerField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":"Player","value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":"Player","value":null}');
     });
     //
     // it('Should be able to switch back to an optional value from a set value', () => {
@@ -101,4 +96,17 @@ describe('Player Event Field', () => {
     //     value = eventField.currentValue;
     //     expect(value.playerId).to.be.null;
     // });
+
+    it('Should be allow for initialization via the initialize method', () => {
+
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = false;
+        let tagField = new PlayerField(localTagVariable);
+
+        tagField.initialize('1');
+        let value = tagField.currentValue;
+
+        expect(value.playerId).to.equal(1);
+        expect(value.name).to.equal('');
+    });
 });

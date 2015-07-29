@@ -17,12 +17,6 @@ describe('General Team Field', () => {
     it('The Team Class should Exist', () => {
         expect(TeamField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('TEAM_DROPDOWN');
-    });
-
 });
 
 describe('Team Tag Field', () => {
@@ -34,6 +28,18 @@ describe('Team Tag Field', () => {
 
         expect(value.teamId).to.be.undefined;
         //expect(value.name).to.equal('Select');
+    });
+
+    it('Should allow for initialization via the initialize method', () => {
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = true;
+        let tagField = new TeamField(localTagVariable);
+
+        tagField.initialize('1')
+        let value = tagField.currentValue;
+
+        expect(value.teamId).to.equal(1);
+        expect(value.name).to.equal('');
     });
 
     it('Should be initialized correctly if not required', () => {
@@ -75,8 +81,8 @@ describe('Team Event Field', () => {
         localEventVariable.isRequired = true;
         let eventField = new TeamField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":"Team","value":"1"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":"Team","value":1}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -86,9 +92,8 @@ describe('Team Event Field', () => {
 
         let eventField = new TeamField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":"Team","value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":"Team","value":null}');
     });
     //
     // it('Should be able to switch back to an optional value from a set value', () => {

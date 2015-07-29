@@ -4,7 +4,7 @@ TextFieldData.Tag = {
     formations: [],
     id: 1,
     index: 1,
-    inputType: 'TEXT',
+    type: 'TEXT',
     isRequired: true,
     options: [],
     type: null
@@ -14,7 +14,7 @@ TextFieldData.Event = {
     formations: [],
     id: 1,
     index: 1,
-    inputType: 'TEXT',
+    type: 'TEXT',
     isRequired: true,
     options: [],
     type: null,

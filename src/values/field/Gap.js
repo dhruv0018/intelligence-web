@@ -1,13 +1,22 @@
-import Field from './Field.js';
-import GapConstants from '../../constants/football/gaps.js';
+import Field from './Field';
+import GapConstants from '../../constants/football/gaps';
 
+/**
+ * GapField Field Model
+ * @class GapField
+ */
 class GapField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs GapField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
         super(field);
 
-        this.GAPS =  GapConstants.GAPS;
+        this.GAPS = GapConstants.GAPS;
         this.GAP_IDS = GapConstants.GAP_IDS;
         this.availableValues = Object.keys(this.GAPS).map(key => {
             let currentGap = angular.copy(this.GAPS[key]);
@@ -25,13 +34,29 @@ class GapField extends Field {
         };
         this.availableValues.unshift(initialGap);
 
+        this.initialize();
+    }
+
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {object} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
         let gap = angular.copy(this.availableValues[0]);
 
-        if (field.value) {
-            let currentGap = angular.copy(this.GAPS[this.GAP_IDS[field.value]]);
+        if (value) {
+
+            let currentGap = angular.copy(this.GAPS[this.GAP_IDS[value]]);
+
             gap = {
-                gapId: Number(currentGap.value),
-                name: currentGap.name,
+
+                gapId           : Number(currentGap.value),
+                name            : currentGap.name,
                 keyboardShortcut: currentGap.shortcut
             };
         }
@@ -39,12 +64,32 @@ class GapField extends Field {
         this.currentValue = gap;
     }
 
-    get currentValue() {
-        return this.value;
+    /**
+     * Generates an HTML string of the field.
+     *
+     * @method toString
+     * @returns {String} - HTML of the field
+     */
+    toString () {
+
+        return `<span class="value gap-field">${this.currentValue.name}</span>`;
     }
 
-    set currentValue(gap) {
-        this.value = gap;
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
+    toJSON (){
+        let variableValue = {};
+        let value = this.value.gapId === null ? null : String(this.value.gapId);
+        variableValue = {
+            type: null,
+            value: value
+        };
+
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 
     get valid () {
@@ -52,16 +97,6 @@ class GapField extends Field {
         return this.isRequired ?
             Number.isInteger(this.value.gapId) :
             true;
-    }
-
-    toJSON(){
-        let variableValue = {};
-        let value = this.value.gapId === null ? null : String(this.value.gapId);
-        variableValue = {
-            type: null,
-            value: value
-        };
-        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
     }
 }
 

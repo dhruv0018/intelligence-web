@@ -2,7 +2,7 @@
 
 'use strict';
 
-var less = require("component-builder-less");
+var less = require('component-builder-less');
 var es6ify = require('es6ify').configure(/^(?!.*node_modules)+.+\.js$/);
 
 module.exports = function(grunt) {
@@ -255,6 +255,9 @@ module.exports = function(grunt) {
                 files: {
                     'build/components.css': [
                         'lib/directives/indexer-script/styles.less',
+                        'lib/directives/play/play-header/styles.less',
+                        'lib/directives/play/play-footer/styles.less',
+                        'lib/directives/play/styles.less',
                         'lib/directives/indexing-block/styles.less',
                         'lib/directives/dynamic-tables/styles.less',
                         'app/reel/styles.less'

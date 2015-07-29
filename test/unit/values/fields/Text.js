@@ -14,12 +14,6 @@ describe('General Text Field', () => {
     it('The Text Class should Exist', () => {
         expect(TextField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('TEXT');
-    });
-
 });
 
 describe('Text Tag Field', () => {
@@ -60,8 +54,8 @@ describe('Text Event Field', () => {
         localEventVariable.isRequired = true;
         let eventField = new TextField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":null,"value":"abc"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":"abc"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -71,8 +65,7 @@ describe('Text Event Field', () => {
 
         let eventField = new TextField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":null,"value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":null}');
     });
 });

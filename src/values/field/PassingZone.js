@@ -1,18 +1,28 @@
-import Field from './Field.js';
-import PassingZoneConstants from '../../constants/football/zones.js';
+import Field from './Field';
+import PassingZoneConstants from '../../constants/football/zones';
+
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * PassingZoneField Field Model
+ * @class PassingZoneField
+ */
 class PassingZoneField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs PassingZoneField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
         super(field);
 
-        const ZONES = PassingZoneConstants.ZONES;
-        const ZONE_IDS = PassingZoneConstants.ZONE_IDS;
-        this.availableValues = Object.keys(ZONES).map(key => {
-            let currentZone = angular.copy(ZONES[key]);
+        this.ZONES = PassingZoneConstants.ZONES;
+        this.ZONE_IDS = PassingZoneConstants.ZONE_IDS;
+        this.availableValues = Object.keys(this.ZONES).map(key => {
+            let currentZone = angular.copy(this.ZONES[key]);
             let value = {
                 gapId: Number(currentZone.value),
                 name: currentZone.name,
@@ -27,12 +37,29 @@ class PassingZoneField extends Field {
         };
         this.availableValues.unshift(initialZone);
 
+        this.initialize();
+    }
+
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {object} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
         let zone = angular.copy(this.availableValues[0]);
-        if (field.value) {
-            let currentZone = angular.copy(ZONES[ZONE_IDS[field.value]]);
+
+        if (value) {
+
+            let currentZone = angular.copy(this.ZONES[this.ZONE_IDS[value]]);
+
             zone = {
-                zoneId: Number(currentZone.value),
-                name: currentZone.name,
+
+                zoneId          : Number(currentZone.value),
+                name            : currentZone.name,
                 keyboardShortcut: currentZone.shortcut
             };
         }
@@ -40,12 +67,15 @@ class PassingZoneField extends Field {
         this.currentValue = zone;
     }
 
-    get currentValue() {
-        return this.value;
-    }
+    /**
+     * Generates an HTML string of the field.
+     *
+     * @method toString
+     * @returns {String} - HTML of the field
+     */
+    toString () {
 
-    set currentValue(zone) {
-        this.value = zone;
+        return `<span class="value passing-zone-field">${this.currentValue.name}</span>`;
     }
 
     get valid () {
@@ -55,14 +85,23 @@ class PassingZoneField extends Field {
             true;
     }
 
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
     toJSON(){
         let variableValue = {};
         let value = this.value.zoneId === null ? null : String(this.value.zoneId);
+
         variableValue = {
+
             type: null,
             value
         };
-        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
+
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

@@ -119,7 +119,7 @@ IntelligenceWebClient.service('PlaysManager', [
 
                 playManager.clear();
                 tagsManager.reset();
-                eventManager.current = new KrossoverEvent();
+                eventManager.current = null;
             }
 
             this.calculatePlays();
@@ -169,28 +169,28 @@ IntelligenceWebClient.service('PlaysManager', [
             /* Look at the first position script field. */
             /* TODO: Clear up once fields are indexed by position and not the
              * tag variable ID. */
-            let fields = event.fields;
-            if (!fields) return;
-            let fieldValues = event.fields;
+            if (!event.fields) return;
 
-            let firstField = fields[1];
+            let firstField = event.fields[1];
             if (!firstField) return;
             let firstFieldId = firstField.order;
-            let field = fieldValues[firstFieldId];
+            let field = event.fields[firstFieldId];
             /* If the field value is defined. */
-            if (angular.isDefined(field.value)) {
+            if (angular.isDefined(field) && angular.isDefined(field.value)) {
 
                 /* If its a team field. */
-                if (field.type === FIELD_TYPE.TEAM) {
-
-                    /* The field value is a teamId. */
-                    teamId = field.value;
-                }
+                teamId = field.currentValue.teamId;
 
                 /* If its a player field. */
-                else if (field.type === FIELD_TYPE.PLAYER) {
+                if (!teamId) {
 
-                    teamId = game.isPlayerOnTeam(field.value) ? game.teamId : game.opposingTeamId;
+                    let playerId = field.currentValue.playerId;
+                    teamId = playerId && game.isPlayerOnTeam(playerId) ? game.teamId : game.opposingTeamId;
+
+                    if (!teamId) {
+
+                        console.warn('WARNING: Missing `teamId` in Field!', field);
+                    }
                 }
 
                 /* Consider the first team to take possession in a play to have

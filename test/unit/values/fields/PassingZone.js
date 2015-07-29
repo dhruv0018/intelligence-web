@@ -14,12 +14,6 @@ describe('General PassingZone Field', () => {
     it('The PassingZone Class should Exist', () => {
         expect(PassingZoneField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('PASSING_ZONE');
-    });
-
 });
 
 describe('Passing Zone Tag Field', () => {
@@ -77,8 +71,8 @@ describe('Passing Zone Event Field', () => {
         localEventVariable.isRequired = true;
         let eventField = new PassingZoneField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":null,"value":"1"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":"1"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -88,9 +82,8 @@ describe('Passing Zone Event Field', () => {
 
         let eventField = new PassingZoneField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":null,"value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":null}');
     });
 
     it('Should be able to switch back to an optional value from a set value', () => {

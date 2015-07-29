@@ -4,7 +4,7 @@ DropdownFieldData.Tag = {
     formations: [],
     id: 1,
     index: 1,
-    inputType: 'DROPDOWN',
+    type: 'DROPDOWN',
     isRequired: true,
     options: '[\"Normal\", \"Onside\"]',
     type: null
@@ -14,7 +14,7 @@ DropdownFieldData.Event = {
     formations: [],
     id: 1,
     index: 1,
-    inputType: 'DROPDOWN',
+    type: 'DROPDOWN',
     isRequired: true,
     options: '[\"Normal\", \"Onside\"]',
     type: null,

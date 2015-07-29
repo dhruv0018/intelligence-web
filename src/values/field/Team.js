@@ -1,21 +1,24 @@
-import Field from './Field.js';
+import Field from './Field';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * TeamField Field Model
+ * @class TeamField
+ */
 class TeamField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs TeamField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
 
         if (!field) return;
         super(field);
 
-        let teamOption = {
-            teamId: (!field.isRequired && field.type === 'Team') ? null : undefined
-        };
-
-        if (field.value) teamOption.teamId = field.value;
-
-        this.currentValue = teamOption;
+        this.initialize();
 
         Object.defineProperty(this.value, 'name', {
             get: () => {
@@ -61,16 +64,53 @@ class TeamField extends Field {
         });
     }
 
-    get currentValue() {
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {integer} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        let teamOption = {
+
+            teamId: (!this.isRequired && this.type === 'Team') ? null : undefined
+        };
+
+        if (value) {
+
+            teamOption.teamId = value;
+        }
+
+        this.currentValue = teamOption;
+    }
+
+    get currentValue () {
+
         return this.value;
     }
 
-    set currentValue(teamOption) {
+    set currentValue (teamOption) {
         let value = {
             teamId: (teamOption.teamId) ? Number(teamOption.teamId) : teamOption.teamId,
             name: teamOption.name || ''
         };
         this.value = value;
+    }
+
+    /**
+     * Generates an HTML string of the field.
+     *
+     * @method toString
+     * @returns {String} HTML of the field
+     */
+    toString () {
+
+        let team = this.availableValues.find(value => value.teamId === this.currentValue.teamId);
+
+        return `<span class="value team-field">${team.name}</span>`;
     }
 
     get valid () {
@@ -80,14 +120,21 @@ class TeamField extends Field {
             true;
     }
 
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
     toJSON() {
         let variableValue = {};
-        let value = (!this.isRequired && this.value.teamId === null) ? null : String(this.value.teamId);
+        let value = (!this.isRequired && this.value.teamId === null) ? null : Number(this.value.teamId);
         variableValue = {
             type: 'Team',
             value
         };
-        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
+
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
 }
 

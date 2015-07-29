@@ -24,7 +24,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 game.indexedScore = 0;
                 game.opposingIndexedScore = 0;
 
-                eventManager.current = new KrossoverEvent();
+                eventManager.current = null;
                 playsManager.reset(plays);
                 tagsManager.reset(tagset);
                 playManager.reset(tagset, game.id);
@@ -63,16 +63,17 @@ IntelligenceWebClient.factory('IndexingService', [
                 var time = videoPlayer.currentTime;
 
                 /* Get tag. */
-                let tag = tagsets.getTagJSON(tagId);
+                let tag = tagsets.getTag(tagId);
 
                 /* get browser safe time */
                 time = utils.toFixedFloat(time);
 
                 /* Create new event. */
+
                 if (game) {
-                    eventManager.current = new KrossoverEvent({}, tag, time, game.id);
+                    eventManager.current = new KrossoverEvent(null, tag, time, game.id);
                 } else {
-                    eventManager.current = new KrossoverEvent(tag, time);
+                    eventManager.current = new KrossoverEvent(null, tag, time);
                 }
 
                 /* Add event to the current play. */
@@ -123,7 +124,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 playManager.current.save();
                 playManager.clear();
                 tagsManager.reset();
-                eventManager.current = new KrossoverEvent();
+                eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
                 if (event.isEndAndStart) {
@@ -171,7 +172,6 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
                 /* If there are variables in the current event. */
                 else {
-
                     return eventManager.current.valid;
                 }
 
@@ -190,7 +190,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 /* If the event is a floating event. */
-                if (eventManager.current.isFloat) {
+                if (eventManager.current && eventManager.current.isFloat()) {
 
                     let currentEvent = eventManager.current;
 
@@ -198,7 +198,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     let previousEvent = playManager.previousEvent(currentEvent);
 
                     /* While the previous event is a float. */
-                    while (previousEvent.isFloat) {
+                    while (previousEvent.isFloat()) {
 
                         /* Get the previous event. */
                         previousEvent = playManager.previousEvent(previousEvent);
@@ -250,7 +250,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
 
                 /* If the event doesn't have variables of If the first variable is empty. */
-                else if (!eventManager.current.hasVariables ||
+                else if (eventManager.current &&
+                        !eventManager.current.hasVariables ||
                         (eventManager.current.activeEventVariableIndex === 1 &&
                         !eventManager.activeEventVariableValue())) {
 

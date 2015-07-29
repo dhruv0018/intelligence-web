@@ -1,31 +1,29 @@
-import Field from './Field.js';
+import Field from './Field';
+
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/**
+ * ArenaField Field Model
+ * @class ArenaField
+ */
 class ArenaField extends Field {
-    constructor(field) {
+
+    /**
+     * @constructs ArenaField
+     * @param {Object} field - Field JSON from server
+     */
+    constructor (field) {
         if (!field) return;
         super(field);
 
-        //todo look into initialization of arena value
-        let arena = {
-            region: !field.isRequired ? null : undefined,
-            coordinates: {
-                x: !field.isRequired ? null: undefined,
-                y: !field.isRequired ? null: undefined
-            }
-        };
 
-        if (field.value) {
-            arena.coordinates = field.value.coordinates;
-            arena.region = field.value.region;
-        }
+        this.initialize();
 
-        this.currentValue = arena;
         Object.defineProperty(this.value, 'name', {
             get: () => {
-                let calculatedName = !this.isRequired ? 'Optional' : 'Select';
-                if (this.regionId) {
+                let calculatedName = !this.isRequired ? 'Optional' : this.name;
+                if (this.region) {
                     let injector = angular.element(document).injector();
                     this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
                     calculatedName = angular.copy(this.regionMap[this.region].name);
@@ -36,7 +34,47 @@ class ArenaField extends Field {
         this.availableValues = null;
     }
 
-    get currentValue() {
+    //TODO temporary a NEED
+    arenaName(region = this.value.region){
+        let calculatedName = !this.isRequired ? 'Optional' : this.name;
+        if (region) {
+            let injector = angular.element(document).injector();
+            this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
+            calculatedName = angular.copy(this.regionMap[region].name);
+        }
+        return calculatedName;
+    }
+    /**
+     * Sets the value property by creating an 'available value'. If called from
+     * the constructor, it uses default value if none are passed in.
+     *
+     * @method initialize
+     * @param {integer} [value] - the value to be set
+     * @returns {undefined}
+     */
+    initialize (value = this.value) {
+
+        //todo look into initialization of arena value
+        let arena = {
+            region: !this.isRequired ? null : undefined,
+            coordinates: {
+                x: !this.isRequired ? null: undefined,
+                y: !this.isRequired ? null: undefined
+            },
+            name: this.name
+        };
+
+        if (value && value.coordinates) {
+            arena.coordinates = value.coordinates;
+            arena.region = value.region;
+            arena.name = this.arenaName(arena.region) || this.name;
+        }
+
+        this.currentValue = arena;
+    }
+
+    get currentValue () {
+
         return this.value;
     }
 
@@ -47,14 +85,24 @@ class ArenaField extends Field {
         this.value = value;
     }
 
-    get valid () {
 
-        return this.isRequired ?
-            (Number.isInteger(this.value.region) &&
-            isNan(this.value.coordinates.x) &&
-            isNan(this.value.coordinates.y)) :
-            true;
+    /**
+     * Generates an HTML string of the field.
+     *
+     * @method toString
+     * @returns {String} - HTML of the field
+     */
+    toString () {
+        let name = this.arenaName();
+        return `<span class="value gap-field">${name}</span>`;
     }
+
+    /**
+     * Reverts the class instance to JSON suitable for the server.
+     *
+     * @method toJSON
+     * @returns {String} - JSON ready version of the object.
+     */
 
     toJSON() {
         let variableValue = {};
@@ -65,7 +113,17 @@ class ArenaField extends Field {
                 region: this.value.region
             }
         };
-        return this.isValid(variableValue) ? JSON.stringify(variableValue) : 'Corrupted ' + this.inputType;
+
+        return this.isValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
+    }
+
+    get valid () {
+
+        return this.isRequired ?
+            (Number.isInteger(this.value.region) &&
+            isNaN(this.value.coordinates.x) &&
+            isNaN(this.value.coordinates.y)) :
+            true;
     }
 }
 

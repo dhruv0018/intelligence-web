@@ -14,12 +14,6 @@ describe('General Dropdown Field', () => {
     it('The DropdownField Class should Exist', () => {
         expect(DropdownField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('DROPDOWN');
-    });
-
 });
 
 describe('Dropdown Tag Field', () => {
@@ -43,6 +37,18 @@ describe('Dropdown Tag Field', () => {
         expect(value.content).to.be.null;
     });
 
+    it('Should be allow for initialization via the initialize method', () => {
+
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = false;
+        let tagField = new DropdownField(localTagVariable);
+
+        tagField.initialize('Normal')
+        let value = tagField.currentValue;
+
+        expect(value.name).to.equal('Normal');
+        expect(value.content).to.equal('Normal');
+    });
 });
 
 describe('Dropdown Event Field', () => {
@@ -73,8 +79,8 @@ describe('Dropdown Event Field', () => {
         localEventVariable.isRequired = true;
         let eventField = new DropdownField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":null,"value":"Normal"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":"Normal"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -84,9 +90,8 @@ describe('Dropdown Event Field', () => {
 
         let eventField = new DropdownField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":null,"value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":null}');
     });
 
     it('Should be able to switch back to an optional value from a set value', () => {

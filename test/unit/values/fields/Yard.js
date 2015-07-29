@@ -14,12 +14,6 @@ describe('General Yard Field', () => {
     it('The Yard Class should Exist', () => {
         expect(YardField).to.exist;
     });
-
-    it('Should have correct input type', () => {
-        expect(tagField.inputType).to.exist;
-        expect(tagField.inputType).to.equal('YARD');
-    });
-
 });
 
 describe('Yard Tag Field', () => {
@@ -55,13 +49,25 @@ describe('Yard Event Field', () => {
         expect(value.name).to.equal('1');
     });
 
+    it('Should have a "initialize" method that property sets the value', () => {
+        let localTagVariable = angular.copy(tagVariable);
+        localTagVariable.isRequired = false;
+        let tagField = new YardField(localTagVariable);
+
+        tagField.initialize('1');
+        let value = tagField.currentValue;
+
+        expect(value.content).to.equal(1);
+        expect(value.name).to.equal('1');
+    });
+
     it('toJSON should serialize to the right format if the field has a value', () => {
         let localEventVariable = angular.copy(eventVariable);
         localEventVariable.isRequired = true;
         let eventField = new YardField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
-        expect(serializedField).to.equal('{"type":null,"value":"1"}');
+
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":"1"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
@@ -71,8 +77,7 @@ describe('Yard Event Field', () => {
 
         let eventField = new YardField(localEventVariable);
         let value = eventField.currentValue;
-        let serializedField = eventField.toJSON();
 
-        expect(serializedField).to.equal('{"type":null,"value":null}');
+        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":null}');
     });
 });
