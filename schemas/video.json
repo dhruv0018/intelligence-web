@@ -10,7 +10,7 @@
             "type": "string"
         },
         "status": {
-            "type": "integer"
+            "type": ["null", "integer"]
         },
         "videoTranscodeProfiles": {
             "type": "array",
