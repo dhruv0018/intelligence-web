@@ -19,7 +19,13 @@ class StaticField extends Field {
 
         super(field);
 
-        this.currentValue = field.value;
+        let value = {
+
+            content: field.value,
+            name   : field.value
+        };
+
+        this.currentValue = value;
     }
 
     /**
@@ -30,7 +36,7 @@ class StaticField extends Field {
      */
     toString () {
 
-        return `<span class="static static-field">${this.currentValue}</span>`;
+        return `<span class="static static-field">${this.currentValue.name}</span>`;
     }
 
     /**
@@ -41,7 +47,7 @@ class StaticField extends Field {
      */
     toJSON () {
 
-        return this.currentValue;
+        throw Error('Static class cannot be stringified!');
     }
 }
 

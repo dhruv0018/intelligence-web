@@ -80,9 +80,7 @@ class DropdownField extends Field {
      */
     toJSON () {
 
-        let variableValue = {};
-
-        variableValue = {
+        let variableValue = {
 
             type: null,
             value: this.value.content
