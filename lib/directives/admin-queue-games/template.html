@@ -85,7 +85,7 @@
 
             </td>
 
-            <td>{{ game.video.duration | millisecondsAsHoursMinutesSeconds }}</td>
+            <td class="game-duration">{{ game.video.duration | secondsAsHoursMinutesSeconds }}</td>
 
             <td class="time-left">
                 <span class="late" ng-if="game.remainingTime < 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
