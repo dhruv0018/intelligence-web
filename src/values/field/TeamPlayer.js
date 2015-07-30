@@ -19,168 +19,132 @@ class TeamPlayerField extends Field {
 
         super(field);
 
-        this.initialize(this.value, variableValueType);
+        let id = field.value;
 
-        Object.defineProperty(this.value, 'name', {
-            get: () => {
-                let calculatedName = !this.isRequired ? 'Optional' : 'Select';
-                let value = this.currentValue;
-                let playerId = value.playerId;
-                let teamId = value.teamId;
-                let injector = angular.element(document).injector();
-
-                if (playerId) {
-                    let players = injector.get('PlayersFactory');
-                    let player = players.get(playerId);
-                    calculatedName = player.firstName + ' ' + player.lastName;
-                }
-
-                if (teamId) {
-                    let teams = injector.get('TeamsFactory');
-                    let team = teams.get(teamId);
-                    calculatedName = angular.copy(team.name);
-                }
-                return calculatedName;
-            }
-        });
-
-        Object.defineProperty(this, 'availableValues', {
-
-            get: () => {
-
-                if (!this.gameId) return [];
-
-                let injector     = angular.element(document).injector();
-
-                let games        = injector.get('GamesFactory');
-                let teams        = injector.get('TeamsFactory');
-                let players      = injector.get('PlayersFactory');
-
-                let game         = games.get(this.gameId);
-                let team         = game.teamId ? teams.get(game.teamId) : null;
-                let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
-
-                let teamPlayersValues = Object.keys(game.rosters[team.id].playerInfo).map( (playerId) => {
-
-                    let rosterEntry  = game.rosters[team.id].playerInfo[playerId];
-                    let player       = players.get(playerId);
-                    let jerseyNumber = player.isUnknown ? 'U' : rosterEntry.jerseyNumber;
-
-                    let value = {
-
-                        playerId   : player.id,
-                        jerseyColor: game.primaryJerseyColor,
-                        jerseyNumber,
-                        name       : '(' + jerseyNumber + ')  ' + player.firstName + ' ' + player.lastName,
-                        variableValueType       : 'Player'
-                    };
-
-                    return value;
-                });
-
-                let opposingTeamPlayersValues = Object.keys(game.rosters[opposingTeam.id].playerInfo).map( (playerId) => {
-
-                    let rosterEntry  = game.rosters[opposingTeam.id].playerInfo[playerId];
-                    let player       = players.get(playerId);
-                    let jerseyNumber = player.isUnknown ? 'U' : rosterEntry.jerseyNumber;
-
-                    let value = {
-
-                        playerId   : player.id,
-                        jerseyColor: game.opposingPrimaryJerseyColor,
-                        jerseyNumber,
-                        name       : '(' + jerseyNumber + ')  '  + player.firstName + ' ' + player.lastName,
-                        variableValueType       : 'Player'
-                    };
-
-                    return value;
-                });
-
-                let teamValues = [team, opposingTeam].map((localTeam) => {
-
-                    return {
-
-                        teamId: localTeam.id,
-                        name  : localTeam.name,
-                        color : (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor,
-                        variableValueType  : 'Team'
-                    };
-                });
-
-                let playerValues = teamPlayersValues.concat(opposingTeamPlayersValues);
-
-                return teamValues.concat(playerValues);
-            }
-        });
-    }
-
-    /**
-     * Sets the value property by creating an 'available value'. If called from
-     * the constructor, it uses default value if none are passed in.
-     *
-     * @method initialize
-     * @param {integer} [value] - the value to be set
-     * @returns {undefined}
-     */
-    initialize (value, variableValueType) {
-
-        /* TODO: Talk to Jason; set default type to 'Team'. */
-        let teamPlayerOption = {
-
-            teamId  : (!this.isRequired && type === 'Team') ? null   : undefined,
-            playerId: (!this.isRequired && type === 'Player') ? null : undefined,
-            name    : !this.isRequired ? 'Optional' : this.name,
-            variableValueType    : 'Team'
-        };
-
-        if (variableValueType) {
-
-            switch (variableValueType) {
-
-            case 'Player':
-
-                let playerId              = Number(value) ? Number(value) : null;
-                teamPlayerOption.playerId = playerId;
-                teamPlayerOption.teamId   = undefined;
-                teamPlayerOption.variableValueType    = 'Player';
-                teamPlayerOption.name = this.value.name(teamPlayerOption.playerId);
-                break;
-
-            case 'Team':
-
-                let teamId                = Number(value) ? Number(value) : null;
-                teamPlayerOption.teamId   = teamId;
-                teamPlayerOption.playerId = undefined;
-                teamPlayerOption.variableValueType    = 'Team';
-                teamPlayerOption.name = this.value.name(teamPlayerOption.teamId);
-                break;
-            }
+        if (id) {
+            id = Number(id);
+        } else if (!id && !this.isRequired) {
+            id = null;
         }
 
-        this.currentValue = teamPlayerOption;
-    }
-
-    /**
-     * Getter/Setter for the value of the Field
-     * @type {object}
-     */
-    get currentValue () {
-
-        return this.value;
-    }
-
-    set currentValue (teamPlayerOption) {
-
         let value = {
-
-            playerId: teamPlayerOption.playerId,
-            teamId  : teamPlayerOption.teamId,
-            name    : teamPlayerOption.name,
-            variableValueType    : teamPlayerOption.type
+            teamId  : !this.isRequired ? null : undefined,
+            playerId: !this.isRequired ? null : undefined
         };
 
-        this.value = value;
+        switch (variableValueType) {
+            case 'Player':
+                let playerId  = id;
+                value.playerId = playerId;
+                value.teamId   = undefined;
+                value.variableValueType    = 'Player';
+                Object.defineProperty(value, 'name', {
+                    get: () => {
+                        let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+                        if (playerId && window && window.angular && document) {
+                            let injector = angular.element(document).injector();
+                            let players = injector.get('PlayersFactory');
+                            let player = players.get(playerId);
+                            calculatedName = player.firstName + ' ' + player.lastName;
+                        }
+                        return calculatedName;
+                    }
+                });
+                break;
+            case 'Team':
+                let teamId = id;
+                value.teamId = teamId;
+                value.playerId = undefined;
+                value.variableValueType = 'Team';
+                Object.defineProperty(value, 'name', {
+                    get: () => {
+                        let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+                        if (teamId && window && window.angular && document) {
+                            let injector = angular.element(document).injector();
+                            let teams = injector.get('TeamsFactory');
+                            let team = teams.get(teamId);
+                            calculatedName = angular.copy(team.name);
+                        }
+                        return calculatedName;
+                    }
+                });
+                break;
+            default:
+                //TODO had to initialize it to something, meh
+                value.variableValueType = 'Team';
+                value.name = !this.isRequired ? 'Optional' : this.name;
+                break;
+        }
+
+        this.currentValue = value;
+
     }
+
+    get availableValues () {
+            if (!this.gameId) return [];
+
+            let injector     = angular.element(document).injector();
+
+            let games        = injector.get('GamesFactory');
+            let teams        = injector.get('TeamsFactory');
+            let players      = injector.get('PlayersFactory');
+
+            let game         = games.get(this.gameId);
+            let team         = game.teamId ? teams.get(game.teamId) : null;
+            let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
+
+            let teamPlayersValues = Object.keys(game.rosters[team.id].playerInfo).map( (playerId) => {
+
+                let rosterEntry  = game.rosters[team.id].playerInfo[playerId];
+                let player       = players.get(playerId);
+                let jerseyNumber = player.isUnknown ? 'U' : rosterEntry.jerseyNumber;
+
+                let value = {
+
+                    playerId   : player.id,
+                    jerseyColor: game.primaryJerseyColor,
+                    jerseyNumber,
+                    name       : '(' + jerseyNumber + ')  ' + player.firstName + ' ' + player.lastName,
+                    variableValueType       : 'Player'
+                };
+
+                return value;
+            });
+
+            let opposingTeamPlayersValues = Object.keys(game.rosters[opposingTeam.id].playerInfo).map( (playerId) => {
+
+                let rosterEntry  = game.rosters[opposingTeam.id].playerInfo[playerId];
+                let player       = players.get(playerId);
+                let jerseyNumber = player.isUnknown ? 'U' : rosterEntry.jerseyNumber;
+
+                let value = {
+
+                    playerId   : player.id,
+                    jerseyColor: game.opposingPrimaryJerseyColor,
+                    jerseyNumber,
+                    name       : '(' + jerseyNumber + ')  '  + player.firstName + ' ' + player.lastName,
+                    variableValueType       : 'Player'
+                };
+
+                return value;
+            });
+
+            let teamValues = [team, opposingTeam].map((localTeam) => {
+
+                return {
+
+                    teamId: localTeam.id,
+                    name  : localTeam.name,
+                    color : (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor,
+                    variableValueType  : 'Team'
+                };
+            });
+
+            let playerValues = teamPlayersValues.concat(opposingTeamPlayersValues);
+
+            return teamValues.concat(playerValues);
+    }
+
 
     /**
      * Generates an HTML string of the field.
@@ -189,9 +153,7 @@ class TeamPlayerField extends Field {
      * @returns {String} - HTML of the field
      */
     toString () {
-
-        if (this.currentValue.type === 'Team') {
-
+        if (this.currentValue.variableValueType === 'Team') {
             return `<span class="value">${this.currentValue.name}</span>`;
         } else {
 
@@ -241,7 +203,7 @@ class TeamPlayerField extends Field {
      * @returns {String} - JSON ready version of the object.
      */
     toJSON () {
-
+        let value = this.currentValue;
         let variableValue = {
 
             type: this.currentValue.variableValueType
