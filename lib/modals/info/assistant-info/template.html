@@ -4,13 +4,8 @@
 
         <h3 class="modal-title" ng-if="!assistant.firstName">Add a new assistant coach</h3>
 
-        <h3 class="modal-title" ng-if="assistant.firstName">
-            <span>
-                {{assistant.firstName}}
-                {{assistant.lastName[0]}}.
-            </span>
-        </h3>
-        <h3 class="modal-title last-accessed" ng-if="assistant.firstName && assistant.lastAccessed">{{assistant.getLastAccessed(assistant) | date: 'mediumDate'}}</h3>
+        <h3 class="modal-title" ng-if="assistant.firstName">{{assistant.firstName}} {{assistant.lastName}}</h3>
+        <h3 class="modal-title last-accessed" ng-if="assistant.firstName && assistant.lastAccessed">{{assistant.lastAccessed | date: 'mediumDate'}}</h3>
         <i class="icon icon-remove" ng-click="$dismiss()"></i>
 
     </header>

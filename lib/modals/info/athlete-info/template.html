@@ -2,18 +2,16 @@
 
     <header class="modal-header">
 
-        <h3 class="modal-title" ng-if="!athlete.firstName">>Add a new player to your roster</h3>
+        <h3 class="modal-title" ng-if="!athlete.firstName">Add a new player to your roster</h3>
 
         <h3 class="modal-title" ng-if="athlete.firstName">
-            <span>
-                <span class="jerseyNumber">{{athlete.jerseyNumbers[rosterId]}}</span>
-                {{athlete.firstName}}
-                {{athlete.lastName[0]}}.
-            </span>
+            <span class="jerseyNumber">{{athlete.jerseyNumbers[rosterId]}}</span>
+            {{athlete.firstName}}
+            {{athlete.lastName}}
             <!-- Temporarily hide view stats
             <a href> (View Stats) </a>-->
         </h3>
-        <h3 class="modal-title last-accessed" ng-if="athlete.firstName && users[athlete.userId].lastAccessed">{{usersFactory.getLastAccessed(users[athlete.userId]) | date: 'mediumDate'}}</h3>
+        <h3 class="modal-title last-accessed" ng-if="athlete.firstName && users[athlete.userId].lastAccessed">{{users[athlete.userId].lastAccessed | date: 'mediumDate'}}</h3>
 
         <i class="icon icon-remove" ng-click="$dismiss()"></i>
 
