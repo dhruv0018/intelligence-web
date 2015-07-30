@@ -64,6 +64,7 @@ class KrossoverEvent extends Entity {
             rawField.gameId = gameId;
             rawField.index  = index + 1;
             let variableValue = event && event.variableValues ? event.variableValues[tagVariable.id] : {value: undefined};
+            rawField.value = variableValue.value;
             this.fields[index + 1] = FieldFactory.createField(rawField, variableValue.type);
         });
     }
