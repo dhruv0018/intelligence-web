@@ -1,8 +1,11 @@
 # v2.8.0 #
 
+## Features ##
+- Initial UI/UX styleguide
+
 # v2.7.1 #
 
-## Bug Fixes / Improvementsi ##
+## Bug Fixes / Improvements ##
 - Fix an issue with an external library
 
 # v2.7.0 #
@@ -16,7 +19,7 @@
 - Coach or Athlete on Web will see video pause when opening the toolbar
 - As a user, I should be able to see a link to my profile below my resumé
 
-##Bug Fixes / Improvements##
+## Bug Fixes / Improvements ##
 - Center video player controls
 - Profile design enhancements
 - As a basic athlete, I should not be able to add a reel to my profile
