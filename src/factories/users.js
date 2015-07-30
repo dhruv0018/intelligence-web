@@ -540,6 +540,11 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return false;
             },
 
+            // TODO: This method should be removed
+            getLastAccessed: function(user) {
+                return new Date(user.lastAccessed);
+            },
+
             /**
              * @class User
              * @method getTermsAcceptedDate
