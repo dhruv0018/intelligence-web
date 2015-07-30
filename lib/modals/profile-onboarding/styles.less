@@ -8,5 +8,44 @@
 
     .modal-body {
 
+        .krossover-team {
+            padding: 10px;
+            border: thin solid @gray-border;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .placeholder-sport {
+                width: 60px;
+                height: 60px;
+                font-size: 40px;
+            }
+
+            .team-info {
+                display: flex;
+                flex-direction: column;
+                margin-right: auto;
+
+                .position-list {
+
+                    .team-position {
+                        &:last-child {
+                            .comma {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .check-box {
+                font-size: 24px;
+            }
+        }
+
+        select {
+            text-transform: capitalize;
+        }
     }
 }
