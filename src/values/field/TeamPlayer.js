@@ -13,13 +13,13 @@ class TeamPlayerField extends Field {
      * @constructs TeamPlayerField
      * @param {Object} field - Field JSON from server
      */
-    constructor (field) {
+    constructor (field, variableValueType) {
 
         if (!field) return;
 
         super(field);
 
-        this.initialize();
+        this.initialize(this.value, variableValueType);
 
         Object.defineProperty(this.value, 'name', {
             get: () => {
@@ -72,7 +72,7 @@ class TeamPlayerField extends Field {
                         jerseyColor: game.primaryJerseyColor,
                         jerseyNumber,
                         name       : '(' + jerseyNumber + ')  ' + player.firstName + ' ' + player.lastName,
-                        type       : 'Player'
+                        variableValueType       : 'Player'
                     };
 
                     return value;
@@ -90,7 +90,7 @@ class TeamPlayerField extends Field {
                         jerseyColor: game.opposingPrimaryJerseyColor,
                         jerseyNumber,
                         name       : '(' + jerseyNumber + ')  '  + player.firstName + ' ' + player.lastName,
-                        type       : 'Player'
+                        variableValueType       : 'Player'
                     };
 
                     return value;
@@ -103,7 +103,7 @@ class TeamPlayerField extends Field {
                         teamId: localTeam.id,
                         name  : localTeam.name,
                         color : (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor,
-                        type  : 'Team'
+                        variableValueType  : 'Team'
                     };
                 });
 
@@ -122,7 +122,7 @@ class TeamPlayerField extends Field {
      * @param {integer} [value] - the value to be set
      * @returns {undefined}
      */
-    initialize (value = this.value, type = this.type) {
+    initialize (value, variableValueType) {
 
         /* TODO: Talk to Jason; set default type to 'Team'. */
         let teamPlayerOption = {
@@ -130,19 +130,20 @@ class TeamPlayerField extends Field {
             teamId  : (!this.isRequired && type === 'Team') ? null   : undefined,
             playerId: (!this.isRequired && type === 'Player') ? null : undefined,
             name    : !this.isRequired ? 'Optional' : this.name,
-            type    : 'Team'
+            variableValueType    : 'Team'
         };
 
-        if (value) {
+        if (variableValueType) {
 
-            switch (type) {
+            switch (variableValueType) {
 
             case 'Player':
 
                 let playerId              = Number(value) ? Number(value) : null;
                 teamPlayerOption.playerId = playerId;
                 teamPlayerOption.teamId   = undefined;
-                teamPlayerOption.type     = 'Player';
+                teamPlayerOption.variableValueType    = 'Player';
+                teamPlayerOption.name = this.value.name(teamPlayerOption.playerId);
                 break;
 
             case 'Team':
@@ -150,8 +151,8 @@ class TeamPlayerField extends Field {
                 let teamId                = Number(value) ? Number(value) : null;
                 teamPlayerOption.teamId   = teamId;
                 teamPlayerOption.playerId = undefined;
-                teamPlayerOption.type     = 'Team';
-
+                teamPlayerOption.variableValueType    = 'Team';
+                teamPlayerOption.name = this.value.name(teamPlayerOption.teamId);
                 break;
             }
         }
@@ -175,7 +176,7 @@ class TeamPlayerField extends Field {
             playerId: teamPlayerOption.playerId,
             teamId  : teamPlayerOption.teamId,
             name    : teamPlayerOption.name,
-            type    : teamPlayerOption.type
+            variableValueType    : teamPlayerOption.type
         };
 
         this.value = value;
@@ -243,7 +244,7 @@ class TeamPlayerField extends Field {
 
         let variableValue = {
 
-            type: this.currentValue.type
+            type: this.currentValue.variableValueType
         };
 
         switch (variableValue.type) {
