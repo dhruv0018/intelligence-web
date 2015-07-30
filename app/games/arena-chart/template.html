@@ -1,6 +1,6 @@
 <div class="arena-chart">
 
-    <header class="container">
+    <header>
 
         <div class="header-content">
 
@@ -14,7 +14,8 @@
 
             <a
                 name="reset-filters"
-                ng-click="gamesArenaChart.resetFilters()">
+                ng-click="gamesArenaChart.resetFilters()"
+                id="arena-chart-reset-filters-cta">
 
                 <i class="icon icon-refresh"></i> Reset Filters
             </a>
@@ -24,11 +25,11 @@
     </header>
 
 
-    <div class="primary-content">
+    <main class="content-full">
 
         <arena-chart-filters filter-model="gamesArenaChart.filters" class="container"></arena-chart-filters>
 
-        <div class="arena-chart-arena">
+        <div class="arena-chart-container">
 
             <krossover-arena type="gamesArenaChart.arenaType" fit-element>
 
@@ -38,6 +39,6 @@
 
         </div>
 
-    </div>
+    </main>
 
 </div>

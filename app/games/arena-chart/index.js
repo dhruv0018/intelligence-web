@@ -1,7 +1,11 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var GamesArenaChart = angular.module('Games.ArenaChart', []);
+import ArenaChartDataDependencies from './data.js';
+
+const GamesArenaChart = angular.module('Games.ArenaChart', []);
+
+GamesArenaChart.factory('ArenaChartDataDependencies', ArenaChartDataDependencies);
 
 GamesArenaChart.run([
     '$templateCache',
@@ -14,7 +18,7 @@ GamesArenaChart.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var arenaChart = {
+        const arenaChart = {
             name: 'Games.ArenaChart',
             url: '/arena-chart',
             parent: 'Games',
@@ -26,7 +30,16 @@ GamesArenaChart.config([
                 }
             },
             resolve: {
-                'Games.ArenaChart.Data': GamesArenaChartData
+                'Games.ArenaChart.Data': [
+                    '$q', '$stateParams', 'ArenaChartDataDependencies',
+                    function resolveGamesArenaChartState($q, $stateParams, ArenaChartData) {
+
+                        let gameId = Number($stateParams.id);
+                        let data = new ArenaChartData(gameId);
+
+                        return $q.all(data);
+                    }
+                ]
             }
         };
 
@@ -34,50 +47,6 @@ GamesArenaChart.config([
 
     }
 ]);
-
-/* ArenaChart Data Resolve */
-
-GamesArenaChartData.$inject = [
-    'CustomtagsFactory',
-    'SessionService',
-    'PlayersFactory',
-    'GamesFactory',
-    '$stateParams',
-    '$q'
-];
-
-function GamesArenaChartData (
-    customtags,
-    session,
-    players,
-    games,
-    $stateParams,
-    $q
-) {
-
-    let gameId = Number($stateParams.id);
-
-    return games.load(gameId).then(function() {
-
-        let game = games.get(gameId);
-        let teamId = session.getCurrentTeamId();
-
-        let Data = {
-            playersByRosters: players.load({
-                'rosterId[]': [
-                    game.getRoster(game.teamId).id,
-                    game.getRoster(game.opposingTeamId).id
-                ]
-            }),
-            playersByGame: players.load({gameId}),
-            arenaEvents: game.retrieveArenaEvents(),
-            customtags: customtags.load({teamId})
-        };
-
-        return $q.all(Data);
-    });
-}
-
 
 /* ArenaChart Controller */
 
@@ -111,18 +80,18 @@ function GamesArenaChartController(
     $scope
 ) {
 
-    let game = games.get($stateParams.id);
-    let team = teams.get(game.teamId);
-    let opposingTeam = teams.get(game.opposingTeamId);
-    let league = leagues.get(team.leagueId);
-    let arenaEvents = game.getArenaEvents();
-    let customTags = customtags.getList({teamId: team.id});
+    const game = games.get($stateParams.id);
+    const team = teams.get(game.teamId);
+    const opposingTeam = teams.get(game.opposingTeamId);
+    const league = leagues.get(team.leagueId);
+    const arenaEvents = game.getArenaEvents();
+    const customTags = customtags.getList({teamId: team.id});
 
-    let teamPlayersFilter = {rosterId: game.getRoster(game.teamId).id};
-    let teamPlayerList = players.getList(teamPlayersFilter);
+    const gameTeamRoster = game.getRoster(game.teamId);
+    const teamPlayerList = players.getList({rosterId: gameTeamRoster.id});
 
-    let opposingTeamPlayersFilter = { rosterId: game.getRoster(game.opposingTeamId).id };
-    let opposingTeamPlayerList = players.getList(opposingTeamPlayersFilter);
+    const gameOpposingTeamRoster = game.getRoster(game.opposingTeamId);
+    const opposingTeamPlayerList = players.getList({rosterId: gameOpposingTeamRoster.id});
 
     // Determine arena type
     this.arenaType = ARENA_TYPES[league.arenaId].type;
@@ -133,15 +102,15 @@ function GamesArenaChartController(
     const pills = [];
 
     teamPlayerList.forEach((player) => {
-        let playerCopy = angular.copy(player);
-        let jerseyNumber = player.getJerseyNumber(game.rosters[team.id]);
+        const playerCopy = angular.copy(player);
+        const jerseyNumber = player.getJerseyNumber(game.rosters[team.id]);
         playerCopy.name = jerseyNumber ? `${jerseyNumber} ${player.shortName}` : player.shortName;
         pills.push(playerCopy);
     });
 
     opposingTeamPlayerList.forEach((player) => {
-        let playerCopy = angular.copy(player);
-        let jerseyNumber = player.getJerseyNumber(game.rosters[opposingTeam.id]);
+        const playerCopy = angular.copy(player);
+        const jerseyNumber = player.getJerseyNumber(game.rosters[opposingTeam.id]);
         playerCopy.name = jerseyNumber ? `${jerseyNumber} ${player.shortName}` : player.shortName;
         pills.push(playerCopy);
     });
@@ -159,9 +128,11 @@ function GamesArenaChartController(
 
         if (!pill) return;
 
+        let index;
+
         if (pill.model === 'PlayersResource') {
 
-            let index = this.filters.teamPlayersIds.indexOf(pill.id);
+            index = this.filters.teamPlayersIds.indexOf(pill.id);
             if (index != -1) this.filters.teamPlayersIds.splice(index, 1);
 
             index = this.filters.opposingTeamPlayersIds.indexOf(pill.id);
