@@ -19,13 +19,17 @@ class TeamField extends Field {
         super(field);
 
         let teamId = field.value;
-        if (!teamId && !this.isRequired) teamId = null;
+        if (teamId) {
+            teamId = Number(teamId);
+        } else if (!teamId && !this.isRequired) {
+            teamId = null;
+        }
 
         let value = {
             teamId,
             get name () {
                 let calculatedName = !this.isRequired ? 'Optional' : 'Select';
-                if (teamId) {
+                if (teamId && window && window.angular && document) {
                     let injector = angular.element(document).injector();
                     let teams = injector.get('TeamsFactory');
                     let team = teams.get(teamId);
@@ -34,7 +38,7 @@ class TeamField extends Field {
                 return calculatedName;
             }
         };
-        this._value = value;
+        this.currentValue = value;
     }
 
     get currentValue () {
@@ -100,12 +104,10 @@ class TeamField extends Field {
     toJSON () {
 
         let variableValue = {};
-        let value         = (!this.isRequired && this._value.teamId === null) ? null : Number(this._value.teamId);
-
+        let teamId = this._value.teamId ? this._value.teamId : null;
         variableValue = {
-
             type: 'Team',
-            value
+            value: teamId
         };
 
         return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
