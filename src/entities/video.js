@@ -99,12 +99,12 @@ class Video extends Entity {
         }
 
         // TODO: Validate video to schema. Fails when methods/properties are added to video in this class that need to be removed or be allowed.
-        // let validation = this.validate(video);
-        //
-        // if (validation.errors.length) {
-        //
-        //     throw new Error(validation.errors.shift());
-        // }
+        let validation = this.validate(video);
+
+        if (validation.errors.length) {
+
+            console.error(validation.errors.shift());
+        }
 
         super(video);
 
