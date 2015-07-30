@@ -127,7 +127,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
-                if (event.isEndAndStart) {
+                if (event.isEndAndStart()) {
 
                     /* Get the tagId of the event. */
                     var tagId = event.tagId;
