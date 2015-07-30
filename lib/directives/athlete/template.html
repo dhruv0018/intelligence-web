@@ -7,6 +7,11 @@
             <div>{{team.roster.playerInfo[athlete.id].jerseyNumber}}</div>
             <div>{{athlete.firstName[0] + '.'}} {{athlete.lastName}}</div>
         </a>
+        <div class="last-access" ng-if="athlete.userId">
+           	<span>Last logged in:</span>
+           	<span ng-if="!users[athlete.userId].lastAccessed"> NA </span>
+           	<span ng-if="users[athlete.userId].lastAccessed"> {{ UsersFactory.getLastAccessed(users[athlete.userId]) | date: 'mediumDate' }} </span>
+	    </div>
     </div>
     <form name="athleteForm" ng-if="editable && !athlete.isUnknown">
         <table ng-class="{'deselected': !rosterEntry.playerInfo.isActive,
