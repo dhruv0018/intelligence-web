@@ -105,8 +105,8 @@ class ArenaField extends Field {
 
         return this.isRequired ?
             (Number.isInteger(this.value.region) &&
-            isNaN(this.value.coordinates.x) &&
-            isNaN(this.value.coordinates.y)) :
+            !isNaN(this.value.coordinates.x) &&
+            !isNaN(this.value.coordinates.y)) :
             true;
     }
 
