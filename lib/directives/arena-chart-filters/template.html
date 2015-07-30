@@ -17,7 +17,7 @@
 
                 <koi-multiselect
                     ng-model="filterModel.teamPlayersIds"
-                    items="::teamPlayerList"
+                    items="::teamPlayerLabels"
                     type="Player"
                     multiple="true"
                     default-label="All Players">
@@ -90,7 +90,7 @@
 
                 <koi-multiselect
                     ng-model="filterModel.customTagIds"
-                    items="::customTags"
+                    items="::customTagLabels"
                     type="Tag"
                     multiple="true"
                     default-label="Select Tags">
@@ -118,7 +118,7 @@
 
                 <koi-multiselect
                     ng-model="filterModel.opposingTeamPlayersIds"
-                    items="::opposingTeamPlayerList"
+                    items="::opposingTeamPlayerLabels"
                     type="Player"
                     multiple="true"
                     default-label="All Players">
