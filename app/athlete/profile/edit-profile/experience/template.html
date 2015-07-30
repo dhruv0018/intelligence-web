@@ -9,10 +9,10 @@
                 <p>Adding schools and club teams helps to highlight your level of playing experience.</p>
             </div>
             <div class="team-row" ng-show="athlete.profile.teams.length" ng-repeat="team in athlete.profile.teams">
-                <sport-placeholder sport="getTeamSport(team.teamId)"></sport-placeholder>
+                <sport-placeholder sport="getProfileTeamSport(team.teamId)"></sport-placeholder>
                 <div class="team-info">
                     <h4>
-                        {{teams[team.teamId].name}} - {{getTeamSport(team.teamId).name}} -
+                        {{teams[team.teamId].name}} - {{getProfileTeamSport(team.teamId).name}} -
                         <span class="position-list" ng-repeat="positionId in team.positionIds">
                             {{getPosition(team.teamId, positionId).name}}<span class="comma">,</span>
                         </span>
