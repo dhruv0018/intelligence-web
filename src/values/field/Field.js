@@ -65,7 +65,6 @@ class Field extends Value {
      * @returns {Boolean}
      */
     isVariableValueValid (variableValue) {
-
         let isValid = false;
 
         if (
@@ -76,9 +75,7 @@ class Field extends Value {
 
             isValid = true;
         } else if (
-
-            !this.isRequired &&
-            (variableValue.value || variableValue.value === null)
+            !this.isRequired && variableValue.value !== undefined
         ) {
 
             isValid = true;
