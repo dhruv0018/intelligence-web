@@ -18,13 +18,13 @@ class TeamField extends Field {
         if (!field) return;
         super(field);
 
-        this.initialize();
+        let teamId = field.value;
+        if (!teamId && !this.isRequired) teamId = null;
 
-        Object.defineProperty(this.value, 'name', {
-            get: () => {
+        let value = {
+            teamId,
+            get name () {
                 let calculatedName = !this.isRequired ? 'Optional' : 'Select';
-                let value = this.currentValue;
-                let teamId = value.teamId;
                 if (teamId) {
                     let injector = angular.element(document).injector();
                     let teams = injector.get('TeamsFactory');
@@ -33,73 +33,43 @@ class TeamField extends Field {
                 }
                 return calculatedName;
             }
-        });
-
-        Object.defineProperty(this, 'availableValues', {
-            get: () => {
-
-                if (!this.gameId) return [];
-
-                let injector = angular.element(document).injector();
-
-                let games = injector.get('GamesFactory');
-                let teams = injector.get('TeamsFactory');
-
-                let game = games.get(this.gameId);
-                let team = game.teamId ? teams.get(game.teamId) : null;
-                let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
-                let values = [team, opposingTeam].map((localTeam) => {
-                    return {
-                        teamId: localTeam.id,
-                        name: localTeam.name,
-                        color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
-                    };
-                });
-
-                if (!this.isRequired) {
-                    values.push({teamId: null, name: 'Optional', color: null});
-                }
-                return values;
-            }
-        });
-    }
-
-    /**
-     * Sets the value property by creating an 'available value'. If called from
-     * the constructor, it uses default value if none are passed in.
-     *
-     * @method initialize
-     * @param {integer} [value] - the value to be set
-     * @returns {undefined}
-     */
-    initialize (value = this.value) {
-
-        let teamOption = {
-
-            teamId: (!this.isRequired && this.type === 'Team') ? null : undefined
         };
-
-        if (value) {
-
-            teamOption.teamId = value;
-        }
-
-        this.currentValue = teamOption;
+        this._value = value;
     }
 
     get currentValue () {
 
-        return this.value;
+        return this._value;
     }
 
     set currentValue (teamOption) {
-        let value = {
-            teamId: (teamOption.teamId) ? Number(teamOption.teamId) : teamOption.teamId,
-            name: teamOption.name || ''
-        };
-        this.value = value;
+        this._value = teamOption;
     }
 
+    get availableValues () {
+            if (!this.gameId) return [];
+
+            let injector = angular.element(document).injector();
+
+            let games = injector.get('GamesFactory');
+            let teams = injector.get('TeamsFactory');
+
+            let game = games.get(this.gameId);
+            let team = game.teamId ? teams.get(game.teamId) : null;
+            let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
+            let values = [team, opposingTeam].map((localTeam) => {
+                return {
+                    teamId: localTeam.id,
+                    name: localTeam.name,
+                    color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
+                };
+            });
+
+            if (!this.isRequired) {
+                values.push({teamId: null, name: 'Optional', color: null});
+            }
+            return values;
+        }
     /**
      * Generates an HTML string of the field.
      *
@@ -107,10 +77,7 @@ class TeamField extends Field {
      * @returns {String} HTML of the field
      */
     toString () {
-
-        let team = this.availableValues.find(value => value.teamId === this.currentValue.teamId);
-
-        return `<span class="value team-field">${team.name}</span>`;
+        return `<span class="value team-field">${this.currentValue.name}</span>`;
     }
 
     /**
@@ -118,9 +85,9 @@ class TeamField extends Field {
      * @type {Boolean}
      */
     get valid () {
-
+        let value = this.currentValue;
         return this.isRequired ?
-            Number.isInteger(this.value.teamId) :
+            Number.isInteger(value.teamId) :
             true;
     }
 
@@ -133,7 +100,7 @@ class TeamField extends Field {
     toJSON () {
 
         let variableValue = {};
-        let value         = (!this.isRequired && this.value.teamId === null) ? null : Number(this.value.teamId);
+        let value         = (!this.isRequired && this._value.teamId === null) ? null : Number(this._value.teamId);
 
         variableValue = {
 
