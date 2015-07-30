@@ -12,54 +12,57 @@
             <p>Just a few things to get your started...</p>
         </div>
 
-        <p class="onboarding-item-label">1. Check the box if you want to add your Krossover team to your public profile.</p>
+        <form name="onboardingForm" ng-submit="createProfile()">
+            <p class="onboarding-item-label">1. Check the box if you want to add your Krossover team to your public profile.</p>
 
-        <div class="krossover-team" ng-repeat="team in teams">
-            <sport-placeholder sport="team.getTeamSport()"></sport-placeholder>
-            <div class="team-info">
-                <span>Head Coach {{getTeamCoachName(team)}}</span>
-                <span>{{team.name}}</span>
-                <span class="position-list">
-                    <span class="team-position" ng-repeat="position in getPositionsOnTeam(team)">{{position.name}}<span class="comma">, </span></span>
-                </span>
+            <div class="krossover-team" ng-repeat="team in teams">
+                <sport-placeholder sport="team.getTeamSport()"></sport-placeholder>
+                <div class="team-info">
+                    <span>Head Coach {{getTeamCoachName(team)}}</span>
+                    <span>{{team.name}}</span>
+                    <span class="position-list">
+                        <span class="team-position" ng-repeat="position in getPositionsOnTeam(team)">{{position.name}}<span class="comma">, </span></span>
+                    </span>
+                </div>
+                <check-box checked="team.isSelected" ng-click="team.isSelected = !team.isSelected"></check-box>
             </div>
-            <check-box checked="team.isSelected" ng-click="team.isSelected = !team.isSelected"></check-box>
-        </div>
 
-        <p class="onboarding-item-label">2. What's your primary sport?</p>
+            <p class="onboarding-item-label">2. What's your primary sport?</p>
 
-        <select class="form-control" ng-model="currentUser.profile.primarySportId" ng-options="sport.id as sport.name for sport in sports">
-            <option value="">Select a Sport</option>
-        </select>
+            <select class="form-control" name="sportId" ng-model="currentUser.profile.primarySportId" ng-options="sport.id as sport.name for sport in sports" required>
+                <option value="">Select a Sport</option>
+            </select>
 
-        <p class="onboarding-item-label">3. What's your primary position?</p>
+            <p class="onboarding-item-label">3. What's your primary position?</p>
 
-        <input type="text" class="form-control" ng-model="currentUser.profile.primaryPosition" placeholder="Enter your position">
+            <input type="text" class="form-control" name="position" ng-model="currentUser.profile.primaryPosition" placeholder="Enter your position">
 
-        <p class="onboarding-item-label">4. What's your high school graduation year?</p>
+            <p class="onboarding-item-label">4. What's your high school graduation year?</p>
 
-        <input type="number" min="1" class="form-control" ng-model="currentUser.profile.highSchoolGraduationYear" placeholder="yyyy">
+            <input type="number" min="1" class="form-control" name="graduationYear" ng-model="currentUser.profile.highSchoolGraduationYear" placeholder="yyyy">
 
-        <p class="onboarding-item-label">5. What's your hometown?</p>
+            <p class="onboarding-item-label">5. What's your hometown?</p>
 
-        <input type="text" ng-model="currentUser.profile.hometown" class="form-control" placeholder="e.g. Gotham City">
+            <input type="text" ng-model="currentUser.profile.hometown" class="form-control" name="hometown" placeholder="e.g. Gotham City">
 
-        <p class="onboarding-item-label">6. Finally, tell the world a little about yourself.</p>
+            <p class="onboarding-item-label">6. Finally, tell the world a little about yourself.</p>
 
-        <textarea
-            class="form-control"
-            rows="5"
-            maxlength="{{maxAboutMeLength}}"
-            placeholder="Talk about your club team experience, stats, achievements, anything."
-            ng-model="currentUser.profile.about"
-            ng-trim="false"
-        ></textarea>
-        <p>{{maxAboutMeLength - currentUser.profile.about.length}} characters left.</p>
+            <textarea
+                class="form-control"
+                rows="5"
+                maxlength="{{maxAboutMeLength}}"
+                placeholder="Talk about your club team experience, stats, achievements, anything."
+                ng-model="currentUser.profile.about"
+                ng-trim="false"
+                name="about"
+            ></textarea>
+            <p>{{maxAboutMeLength - currentUser.profile.about.length}} characters left.</p>
 
-        <div class="button-row">
-            <button class="btn btn-default">Skip</button>
-            <button class="btn btn-primary">Create Profile</button>
-        </div>
+            <div class="button-row">
+                <button class="btn btn-default">Skip</button>
+                <input class="btn btn-primary" type="submit" name="submitForm" value="Create Profile">
+            </div>
+        </form>
     </div>
 
 </div>
