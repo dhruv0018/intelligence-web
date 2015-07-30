@@ -32,7 +32,7 @@ class FieldFactory {
      * @param {Object}  - Raw field value from server
      * @returns {Field} - Depending on input type.
      */
-    static createField (rawField) {
+    static createField (rawField, variableValueType) {
 
         let field;
 
