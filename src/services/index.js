@@ -21,3 +21,4 @@ var IntelligenceWebClient = angular.module(pkg.name);
 IntelligenceWebClient.service('GlyphFactory', require('./glyph-factory'));
 
 // TODO: Define and require all other services below
+require('./features/angular-index');
