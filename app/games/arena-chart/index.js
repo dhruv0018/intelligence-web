@@ -60,6 +60,7 @@ GamesArenaChartController.$inject = [
     'GamesFactory',
     'TeamsFactory',
     'LeaguesFactory',
+    'SessionService',
     '$stateParams',
     '$filter',
     '$scope'
@@ -75,6 +76,7 @@ function GamesArenaChartController(
     games,
     teams,
     leagues,
+    session,
     $stateParams,
     $filter,
     $scope
@@ -85,7 +87,8 @@ function GamesArenaChartController(
     const opposingTeam = teams.get(game.opposingTeamId);
     const league = leagues.get(team.leagueId);
     const arenaEvents = game.getArenaEvents();
-    const customTags = customtags.getList({teamId: team.id});
+    const currentTeamId = session.getCurrentTeamId();
+    const customTags = customtags.getList({teamId: currentTeamId});
 
     const gameTeamRoster = game.getRoster(game.teamId);
     const teamPlayerList = players.getList({rosterId: gameTeamRoster.id});

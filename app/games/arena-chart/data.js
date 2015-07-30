@@ -5,14 +5,16 @@ ArenaChartDataDependencies.$inject = [
     'GamesFactory',
     'SessionService',
     'PlayersFactory',
-    'CustomtagsFactory'
+    'CustomtagsFactory',
+    '$q'
 ];
 
 function ArenaChartDataDependencies (
     games,
     session,
     players,
-    customtags
+    customtags,
+    $q
 ) {
 
     class ArenaChartData {
@@ -20,27 +22,31 @@ function ArenaChartDataDependencies (
         constructor (gameId) {
 
             /* Load data. */
-            this.game = games.load(gameId).then(() => {
 
+            this.playersByGame = players.load({gameId});
+
+            this.games = games.load(gameId).then(() => {
+
+                const data = {};
                 const game = games.get(gameId);
                 const teamId = session.getCurrentTeamId();
 
-                this.playersByGameId = players.load({gameId});
+                data.playersByGameId = players.load({gameId});
 
                 const gameTeamRoster = game.getRoster(game.teamId);
                 const gameOpposingTeamRoster = game.getRoster(game.opposingTeamId);
-                this.playersByRosters = players.load({
+                data.playersByRosters = players.load({
                         'rosterId[]': [
                             gameTeamRoster.id,
                             gameOpposingTeamRoster.id
                         ]
                     });
 
-                this.arenaEvents = game.retrieveArenaEvents();
-                this.customTags = customtags.load({teamId});
-            });
+                data.arenaEvents = game.retrieveArenaEvents();
+                data.customTags = customtags.load({teamId});
 
-            this.playersByGame = players.load({gameId});
+                return $q.all(data);
+            });
         }
     }
 
