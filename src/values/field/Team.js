@@ -25,46 +25,41 @@ class TeamField extends Field {
                 let calculatedName = !this.isRequired ? 'Optional' : 'Select';
                 if (teamId && window && window.angular && document) {
                     let injector = angular.element(document).injector();
-                    let teams = injector.get('TeamsFactory');
-                    let team = teams.get(teamId);
-                    calculatedName = angular.copy(team.name);
+                    if (injector) {
+                        let teams = injector.get('TeamsFactory');
+                        let team = teams.get(teamId);
+                        calculatedName = angular.copy(team.name);
+                    }
                 }
                 return calculatedName;
             }
         };
-        this.currentValue = value;
-    }
-
-    get currentValue () {
-
-        return this._value;
-    }
-
-    set currentValue (teamOption) {
-        this._value = teamOption;
+        this.value = value;
     }
 
     get availableValues () {
-            if (!this.gameId) return [];
-
+            let values = [];
             let injector = angular.element(document).injector();
 
-            let games = injector.get('GamesFactory');
-            let teams = injector.get('TeamsFactory');
+            if (injector) {
+                let games = injector.get('GamesFactory');
+                let teams = injector.get('TeamsFactory');
 
-            let game = games.get(this.gameId);
-            let team = game.teamId ? teams.get(game.teamId) : null;
-            let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
-            let values = [team, opposingTeam].map((localTeam) => {
-                return {
-                    teamId: localTeam.id,
-                    name: localTeam.name,
-                    color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
-                };
-            });
+                let game = games.get(this.gameId);
+                let team = game.teamId ? teams.get(game.teamId) : null;
+                let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
+
+                values.conact([team, opposingTeam].map((localTeam) => {
+                    return {
+                        teamId: localTeam.id,
+                        name: localTeam.name,
+                        color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
+                    };
+                }));
+            }
 
             if (!this.isRequired) {
-                values.push({teamId: null, name: 'Optional', color: null});
+                values.unshift({teamId: null, name: 'Optional', color: null});
             }
             return values;
         }
@@ -83,7 +78,7 @@ class TeamField extends Field {
      * @type {Boolean}
      */
     get valid () {
-        let value = this.currentValue;
+        let value = this.value;
         return this.isRequired ?
             Number.isInteger(value.teamId) :
             true;
@@ -98,7 +93,7 @@ class TeamField extends Field {
     toJSON () {
 
         let variableValue = {};
-        let teamId = this._value.teamId ? this._value.teamId : null;
+        let teamId = this.value.teamId ? this.value.teamId : null;
         variableValue = {
             type: 'Team',
             value: teamId
