@@ -8,8 +8,6 @@
             <span class="jerseyNumber">{{athlete.jerseyNumbers[rosterId]}}</span>
             {{athlete.firstName}}
             {{athlete.lastName}}
-            <!-- Temporarily hide view stats
-            <a href> (View Stats) </a>-->
         </h3>
         <h3 class="modal-title last-accessed" ng-if="athlete.firstName && users[athlete.userId].lastAccessed">{{users[athlete.userId].lastAccessed | date: 'mediumDate'}}</h3>
 
