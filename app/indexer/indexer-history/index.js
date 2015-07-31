@@ -1,22 +1,22 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
-const IndexerGames = angular.module('IndexerGames', []);
+const IndexerHistory = angular.module('IndexerHistory', []);
 
 import IndexerDataDependencies from '../data';
 import IndexerGamesController from '../controller';
 import template from './template.html';
 
-IndexerGames.factory('IndexerDataDependencies', IndexerDataDependencies);
-IndexerGames.controller('IndexerGamesController', IndexerGamesController);
+IndexerHistory.factory('IndexerDataDependencies', IndexerDataDependencies);
+IndexerHistory.controller('IndexerGamesController', IndexerGamesController);
 
-IndexerGames.config([
+IndexerHistory.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
         $stateProvider
 
-            .state('IndexerGames', {
-                url: '/games',
+            .state('IndexerHistory', {
+                url: '/history',
                 parent: 'Indexer',
                 views: {
                     'main@root': {
@@ -37,4 +37,4 @@ IndexerGames.config([
     }
 ]);
 
-export default IndexerGames;
+export default IndexerHistory;
