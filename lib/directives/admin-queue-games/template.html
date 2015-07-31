@@ -39,7 +39,7 @@
 
                 <ul
                  ng-if="game.hasIndexerAssignment()"
-                 ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: false } | limitTo:1"
+                 ng-repeat="assignment in game.indexerAssignments | filter:{ isQa: false } | limitTo:1"
                 >
 
                     <li>
@@ -68,7 +68,7 @@
 
                 <ul
                  ng-if="game.hasQaAssignment()"
-                 ng-repeat="assignment in game.indexerAssignments.slice().reverse() | filter:{ isQa: true } | limitTo:1"
+                 ng-repeat="assignment in game.indexerAssignments | filter:{ isQa: true } | limitTo:1"
                 >
 
                     <li>

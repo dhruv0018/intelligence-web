@@ -1,14 +1,28 @@
-#v2.8.0#
-##Bug Fixes / Improvements##
+# v2.10.0 #
+
+## Features ##
 - Show game length for uploaded game film to Admin in Queue
 - Design improvements to the queue so there is less scrolling
 
-#v2.7.1#
-##Bug Fixes / Improvements##
+# v2.9.0 #
+
+## Features ##
+- As an indexer, my History tab, should show assigned games that I previously completed
+- As an indexer, my Games tab should only show assigned games I am currently working on
+
+# v2.8.0 #
+
+## Features ##
+- Initial UI/UX styleguide
+
+# v2.7.1 #
+
+## Bug Fixes / Improvements ##
 - Fix an issue with an external library
 
-#v2.7.0#
-##Features##
+# v2.7.0 #
+
+## Features ##
 - Athlete profiles
 - Full screen indexing
 - As a coach, when I am looking at a reel, I should have the same tags/reels functionality as for breakdowns (checkboxes, multiple select, etc)
@@ -16,47 +30,57 @@
 - As an Admin, I should be able to toggle QA status on a user with an indexer role in the user info page
 - Coach or Athlete on Web will see video pause when opening the toolbar
 - As a user, I should be able to see a link to my profile below my resumé
-##Bug Fixes / Improvements##
+
+## Bug Fixes / Improvements ##
 - Center video player controls
 - Profile design enhancements
 - As a basic athlete, I should not be able to add a reel to my profile
 
-#v2.6.0#
-##Features##
+# v2.6.0 #
+
+## Features ##
 - Stats
 
-#v2.5.0#
-##Features##
+# v2.5.0 #
+
+## Features ##
 - Telestrations
 
-#v2.4.2#
-##Bug Fixes / Improvements##
+# v2.4.2 #
+
+## Bug Fixes / Improvements ##
 - As a coach, when selecting an event in the breakdown the play for the event should be selected.
 
-#v2.4.1#
-##Bug Fixes / Improvements##
+# v2.4.1 #
+
+## Bug Fixes / Improvements ##
 - 'Add to Reel' button appearing on Reels for athletes. The button does not do anything when selected.
 - As an athlete, when I create a reel, by adding clips from a breakdown, there is no date on the reel when I go back to the Film Home, until I refresh.
 - When a user applies a custom tag to a large number of plays, the "Tag Added" confirmation is taking a long time to appear.
 
-#v2.4.0#
-##Features##
+# v2.4.0 #
+
+## Features ##
 - Custom tags
 
-#v2.3.1#
-##Bug Fixes / Improvements##
+# v2.3.1 #
+
+## Bug Fixes / Improvements ##
 - Clips Pages Not Loading
 
-#v2.3.0#
-##Known Issues##
+# v2.3.0 #
+
+## Known Issues ##
 - Clips pages not loading
 - As an indexer, while watching the video I should be able to see the video duration
 - On down and distance and formation report, the playlist play button is not starting the video
-##Features##
+
+## Features ##
 - Design improvements to the queue dashboard/status
 - Admin can toggle dashboard up and down on queue
 - As a coach, I should see the number of plays next to the filter button
-##Bug Fixes / Improvements##
+
+## Bug Fixes / Improvements ##
 - Reels page not showing for athletes
 - Show when a game was indexed only if that data is available
 - As an admin, when I use the typeahead to add a school to a team, I should be able to see more than ten results
@@ -66,25 +90,30 @@
 - If 'DNP' is selected, nothing should be editable for that player (jersey number or position)
 - As a mobile device user, I should not see the videoplayer controls on the web
 
-#v2.2.7#
-##Bug Fixes / Improvements##
+# v2.2.7 #
+
+## Bug Fixes / Improvements ##
 - As a coach, when viewing a breakdown, I should see only the clips from that game
 
-#v2.2.6#
-##Known Issues##
+# v2.2.6 #
+
+## Known Issues ##
 - I should not see buttons "glowing"
 - As an indexer, if I delete an event, the playlist script removes the last event of the play. It should remove the event which was deleted.
 - As a coach, when selecting an event in the breakdown the play for the event should be selected.
 - As a coach, when uploading a Football (and all sports) game and entering my team's roster, I should see a header that says DNP. On volleyball games, the header is there.
-##Features##
+
+## Features ##
 - Maintenance Functionality v0.1
 - Update API to force maintenance mode via server config (503) disabling access to all data for read or write
 - Create connection error intercept message displayed on login page disabling logging in for Web Client
 
-#v2.2.5#
-##Known Issues##
+# v2.2.5 #
+
+## Known Issues ##
 - Public Pages Not Loading in Private Window in Safari
-##Bug Fixes / Improvements##
+
+## Bug Fixes / Improvements ##
 - As a coach, athlete, or public user, If the current clip is paused, I want the 'Play button in the playlist' to play that video when I select it, so that the user can play the video from the play button on the playlist
 - The playlist does not force scroll downward when indexing a play
 - If a Coach marks a player as DNP (Did Not Play) while uploading a game, the player should NOT be appearing for the indexer when indexing.
@@ -92,10 +121,12 @@
 - As an indexer, when I index a player field, duplicate selections should not appear
 - Team Names are not showing up on Reels in the Summary sentence
 
-#v2.2.4#
-##Known Issues##
+# v2.2.4 #
+
+## Known Issues ##
 - If 'DNP' is selected, nothing should be editable for that player (jersey number or position)
-##Bug Fixes / Improvements##
+
+## Bug Fixes / Improvements ##
 - Server Error results when adding e-mail address for athlete through roster page. Cannot add athlete account through coach.
 - The team in possession (who is serving) is not displaying in the Breakdown Playlist Event Summaries.
 - End & Start tags are not initiating new plays
@@ -113,8 +144,9 @@
 - Play button not playing plays.
 - Play not displaying on Clips page
 
-#v2.2.3#
-##Bug Fixes / Improvements##
+# v2.2.3 #
+
+## Bug Fixes / Improvements ##
 - After editing any X,Y field (arena selection field), the arena does not cancel out after saving
 - When editing an X,Y field, the previously indexed selection does not appear
 - When indexing, a new play will initiate every time you try to add a new start tag (rather than adding it to the selected play)
@@ -129,8 +161,9 @@
 - Switch Video Player Controls (away from click + hold) back to behavior of Production.
 - Slow and fast forward and rewind buttons should toggle ON and OFF with a click interaction.
 
-#v2.2.2#
-##Bug Fixes / Improvements##
+# v2.2.2 #
+
+## Bug Fixes / Improvements ##
 - Displayed count of viewable plays does not match # of plays viewable in game breakdown on some games.
 - On Game Information Page/Uploader, the tabs have a styling error (a blue box around the tabs) when selected.
 - Game Information page is Blank on games already uploaded.
