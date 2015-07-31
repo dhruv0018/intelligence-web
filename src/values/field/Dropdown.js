@@ -17,37 +17,25 @@ class DropdownField extends Field {
 
         if (!field) return;
         super(field);
-        this.availableValues = JSON.parse(field.options).map(content => {
-            return {content, name: content};
-        });
-        let initialOption = {
-            content: !field.isRequired ? null : undefined,
-            name: !field.isRequired ? 'Optional' : 'Select'
-        };
-        this.availableValues.unshift(initialOption);
 
-        this.initialize();
+        let content = this.initializeValue(field.value, String);
+        let value = {
+            content,
+            name: content ? content : !this.isRequired ? 'Optional' : this.name
+        };
+
+        this.value = value;
     }
 
-    /**
-     * Sets the value property by creating an 'available value'. If called from
-     * the constructor, it uses default value if none are passed in.
-     *
-     * @method initialize
-     * @param {string} [value] - the value to be set
-     * @returns {undefined}
-     */
-    initialize (value = this.value) {
 
-        let dropdownOption = angular.copy(this.availableValues[0]);
-
-        if (value) {
-
-            dropdownOption.content = value;
-            dropdownOption.name    = value;
+    get availableValues() {
+        let availableValues = JSON.parse(this.options).map(content => {
+            return {content, name: content};
+        });
+        if (!this.isRequired) {
+            availableValues.unshift({content: null, name: 'Optional'});
         }
-
-        this.currentValue = dropdownOption;
+        return angular.copy(availableValues);
     }
 
     /**
