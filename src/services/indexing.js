@@ -84,24 +84,6 @@ IntelligenceWebClient.factory('IndexingService', [
             },
 
             /**
-            * Steps the current variable.
-            */
-            step: function() {
-
-                if (!this.isIndexing) return;
-
-                /* Move to the next event variable. */
-                eventManager.current.activeEventVariableIndex++;
-
-                /* If the variable is filled in with an optional value. */
-                if (eventManager.activeEventVariableValue() === null) {
-
-                    /* Clear the variable value. */
-                    eventManager.clearActiveEventVariableValue();
-                }
-            },
-
-            /**
             * Determines if the current this session is savable.
             * @returns {Boolean} true if the session is savable; false otherwise.
             */
