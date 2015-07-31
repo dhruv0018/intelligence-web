@@ -1,17 +1,17 @@
 // jshint ignore: start
 import Field from '../../../../src/values/field/Field.js';
-import FieldData from '../sample-data/Field.js';
+import rawFieldData from '../sample-data/Field.js';
 
 const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
 
-const rawVariableValue = FieldData;
+const rawVariableValue = rawFieldData;
 
 describe('Generic Field', () => {
 
     let field;
-    let testString = 'Test String.';
+    let testString = '1';
 
     beforeEach(angular.mock.module('intelligence-web-client'));
 
@@ -29,6 +29,7 @@ describe('Generic Field', () => {
         expect(Field).to.respondTo('initialize');
         expect(Field).to.respondTo('toString');
         expect(Field).to.respondTo('toJSON');
+        expect(Field).to.respondTo('initializeValue');
     });
 
     it('should have a getter, "currentValue", for the "value" property.', () => {
@@ -45,6 +46,14 @@ describe('Generic Field', () => {
         expect(field.value).to.equal(testString);
     });
 
+    it('should initialize the value correctly via the "initializeValue" method', () => {
+        let value = field.initializeValue(testString, String);
+        expect(value).to.equal(testString);
+
+        value = field.initializeValue(1);
+        expect(value).to.equal(1);
+    });
+
     it('the "initialize" method should sets the value property', () => {
 
         field.initialize(testString);
@@ -57,4 +66,5 @@ describe('Generic Field', () => {
         assert.isDefined(field.type, 'The type property is defined');
         assert.isDefined(field.isRequired, 'The isRequired property is defined');
     });
+
 });

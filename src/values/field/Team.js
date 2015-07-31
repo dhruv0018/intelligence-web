@@ -18,13 +18,7 @@ class TeamField extends Field {
         if (!field) return;
         super(field);
 
-        let teamId = field.value;
-        if (teamId) {
-            teamId = Number(teamId);
-        } else if (!teamId && !this.isRequired) {
-            teamId = null;
-        }
-
+        let teamId = this.initializeValue(field.value);
         let value = {
             teamId,
             get name () {

@@ -43,6 +43,16 @@ class Field extends Value {
         this.currentValue = value;
     }
 
+    initializeValue(value, typeCast = Number) {
+        let fieldValue = value;
+        if (fieldValue) {
+            fieldValue = typeCast(fieldValue);
+        } else if (!this.isRequired) {
+            fieldValue = null;
+        }
+        return fieldValue;
+    }
+
     /**
      * Getter/Setter for the value of the Field
      * @type {object}
