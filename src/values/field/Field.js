@@ -17,17 +17,8 @@ class Field extends Value {
         super(field);
         this.extend(field);
 
-        if (!field.value) {
-            field.value = undefined;
-            return;
-        }
-
-        if (field.value === null && !field.isRequired) {
-            this.value = value;
-            return;
-        } else if (field.value === null && field.isRequired) {
+        if (field.value === null && field.isRequired)
             throw Error('Corrupted data - null value in required field');
-        }
     }
 
     /**
@@ -57,14 +48,14 @@ class Field extends Value {
      * Getter/Setter for the value of the Field
      * @type {object}
      */
-    get currentValue () {
+    get value () {
 
-        return this.value;
+        return this._value;
     }
 
-    set currentValue (value) {
+    set value (value) {
 
-        this.value = value;
+        this._value = value;
     }
 
     /**
@@ -96,6 +87,7 @@ class Field extends Value {
 
             console.error('This field does not validate properly and cannot save to the server');
             console.error(this.type, variableValue);
+            console.error('Is this field required? : ' + this.isRequired);
         }
 
         return isValid;
