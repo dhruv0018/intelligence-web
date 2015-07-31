@@ -1,15 +1,21 @@
+@import (reference) "../main.less";
+
 .btn {
 
     font-weight: 500;
 }
 
 .btn-blank {
-
+    .layout--centered;
     border: none;
     border-radius: none;
     outline: none;
     background: none;
     background-image: none;
+
+    &-primary {
+        color: @brand-primary;
+    }
 }
 
 .btn-sm {
