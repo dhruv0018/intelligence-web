@@ -1,3 +1,5 @@
+# v2.11.0 #
+
 # v2.10.1 #
 
 ## Bug Fixes / Improvements ##
