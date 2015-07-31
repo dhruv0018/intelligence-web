@@ -2,23 +2,7 @@ export default `
 
 <section class="indexer-games-available">
 
-    <aside class="sidebar">
-
-        <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
-
-        <hr>
-
-        <h4>Football FAQ</h4>
-        <ul>
-            <li><a id="football-faq-cta" href="{{footballFAQ}}" target="_blank">Passing zones, run gaps, and formations</a></li>
-        </ul>
-
-        <h4>Volleyball FAQ</h4>
-        <ul>
-            <li><a id="volleyball-faq-cta" href="{{volleyballFAQ}}" target="_blank">Positions for determining rotation</a></li>
-        </ul>
-
-    </aside>
+    <indexer-sidebar></indexer-sidebar>
 
     <div class="game-indexer-content">
         <h3>Available Games to be QA\'d</h3>
