@@ -24,7 +24,7 @@ export default `
                     | gameIsNotSetAside
                     | gameHasCurrentUserAssignment
                     | gameCurrentUserAssignmentIsActive: false
-                    | orderBy: game.userAssignment().timeAssigned"
+                    | orderBy: getLatestAssignmentDate: true"
                 >
                     <td>{{game.userAssignment().timeAssigned | date:'MM/dd/yyyy'}}</td>
                     <td>{{game.id}}</td>

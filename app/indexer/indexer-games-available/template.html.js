@@ -21,6 +21,7 @@ export default `
                     | gameIsDeleted: false
                     | gameIsReadyForQa
                     | gameNotIndexedByMe
+                    | gameHasNotExpired: true
                     | orderBy: 'remainingTime'
                     | limitTo: 100"
                 >

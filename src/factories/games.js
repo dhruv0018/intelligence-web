@@ -1027,7 +1027,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return timeRemaining.asMilliseconds();
             },
-            getDeadline: function(uploaderTeam) {
+            getDeadlineToReturnGame: function(uploaderTeam) {
 
                 let self = this;
 

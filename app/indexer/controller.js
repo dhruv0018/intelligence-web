@@ -85,6 +85,10 @@ function IndexerGamesController(
         }
     };
 
+    $scope.getLatestAssignmentDate = function(game) {
+        return game.userAssignment().timeAssigned;
+    };
+
     let refreshGames = function() {
 
         $scope.games.forEach(game => {
