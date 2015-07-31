@@ -1,5 +1,15 @@
 # v2.10.0 #
 
+## Features ##
+- As a user, I should see a telestrations icon on a play if it has telestrations
+- As an Indexer I'd like to see updated Football FAQ sheet
+- Coach or Athlete should not see telestrations toolbar on mobile
+
+## Bug Fixes / Improvements ##
+- Clicking the browser back button from film detail page doesn't return you to film home
+- Coach or Athlete on Web can manipulate ellipse tool to appropriate scale (beyond perfect circle)
+- Text telestrations on web supports 2 vertexes
+
 # v2.9.0 #
 
 ## Features ##
