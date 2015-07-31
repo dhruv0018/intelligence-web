@@ -502,15 +502,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (!user) throw new Error('No user');
 
-                let isPublished = false;
-
-                user.profile.reelIds.forEach( reelId => {
-                    if (this.id === reelId) {
-                        isPublished = true;
-                    }
-                });
-
-                return isPublished;
+                return user.profile.reelIds.some(reelId => this.id === reelId);
             },
             isFeatured: function(user) {
 
