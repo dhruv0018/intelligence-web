@@ -1,4 +1,4 @@
-<div class="manage-profile-reels">
+<div class="add-profile-team">
 
     <header class="modal-header">
         <h3 class="modal-title" ng-hide="editingExistingTeam">Add a team to your Profile</h3>
@@ -19,17 +19,17 @@
                     required>
 
             <div class="team-dates-row">
-                <div>
+                <div class="team-dates-field">
                     <span>Presently on team?</span>
                     <check-box checked="hideEndYear" ng-click="disableEndYear()"></check-box>
                 </div>
-                <div>
+                <div class="team-dates-field">
                     <span>Starting:</span>
                     <select class="form-control" name="startYear" ng-model="profileTeam.startYear" ng-options="date as date for date in dates" required>
                         <option value="">Pick Year</option>
                     </select>
                 </div>
-                <div>
+                <div class="team-dates-field">
                     <span>Ending:</span>
                     <span class="invalid-date-warning" ng-show="!hideEndYear && profileTeam.endYear < profileTeam.startYear">End date must follow start date</span>
                     <select class="form-control" name="endYear" ng-disabled="hideEndYear" ng-model="profileTeam.endYear" ng-options="date as date for date in dates" ng-required="!hideEndYear" ng-class="{'ng-invalid': !hideEndYear && profileTeam.endYear < profileTeam.startYear}">

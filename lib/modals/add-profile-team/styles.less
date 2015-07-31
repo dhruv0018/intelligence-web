@@ -1,6 +1,6 @@
 @import (reference) "main.less";
 
-.manage-profile-reels {
+.add-profile-team {
 
     .modal-header {
         background-color: @content-bg;
@@ -9,10 +9,6 @@
 
     .modal-body {
         background-color: @content-bg;
-
-        .form-control[disabled] {
-            opacity: .5;
-        }
 
         .team-option {
             margin-bottom: 20px;
@@ -26,7 +22,7 @@
             align-items: center;
             margin: 20px 0px;
 
-            div {
+            .team-dates-field {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
@@ -58,7 +54,7 @@
             .positions-dropdown-container {
                 width: 100%;
 
-                .positions-dropdown-button {
+                .multiselect-dropdown-button {
                     width: 100%;
                     display: flex;
                     justify-content: space-between;
