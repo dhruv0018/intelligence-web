@@ -1,12 +1,13 @@
 <div class="newRole">
 
-    <select data-ng-model="newRole" data-ng-options="role as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole track by role.type.id">
+    <select data-ng-model="newRole" data-elem-id="user-roles-dropdown" 
+    	data-ng-options="role as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole track by role.type.id">
 
         <option value="">Pick a Role</option>
 
     </select>
 
-    <a href data-ng-click="addNewRole(newRole)"><i class="icon icon-plus-sign"></i> Add Role</a>
+    <a href data-elem-id="add-user-role-cta" data-ng-click="addNewRole(newRole)"><i class="icon icon-plus-sign"></i> Add Role</a>
 
 </div>
 
@@ -38,6 +39,7 @@
             <!-- TODO: Remove Angular Material -->
             <md-button
                 class="remove-role"
+                data-elem-id="remove-user-role-cta"
                 ng-click="users.removeRole(user, role)"
             >Remove</md-button>
 
@@ -50,6 +52,7 @@
 
                 <!-- TODO: Remove Angular Material -->
                 <md-switch
+                	data-elem-id="qa-privileges-on-off-cta"
                     ng-model="role.indexerQuality"
                     ng-true-value="1"
                     ng-false-value="0"
@@ -62,7 +65,8 @@
 
 </ul>
 <div class="roles-save">
-    <button class="btn btn-primary" data-ng-disabled="formUserInfo.$invalid" data-ng-click="save(user)">Save</button>
+    <button class="btn btn-primary" data-elem-id="save-user-role-updates-cta" 
+    	data-ng-disabled="formUserInfo.$invalid" data-ng-click="save(user)">Save</button>
 
-    <a class="pull-right" href data-ui-sref="users">Cancel</a>
+    <a class="pull-right" data-elem-id="cancel-user-role-updates-cta" href data-ui-sref="users">Cancel</a>
 </div>
