@@ -107,7 +107,7 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             savable: function() {
 
-                return this.nextable() && eventManager.current.isEnd;
+                return this.nextable() && eventManager.current && eventManager.current.isEnd;
             },
 
             /**
