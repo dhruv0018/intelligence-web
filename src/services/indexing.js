@@ -84,24 +84,6 @@ IntelligenceWebClient.factory('IndexingService', [
             },
 
             /**
-            * Steps the current variable.
-            */
-            step: function() {
-
-                if (!this.isIndexing) return;
-
-                /* Move to the next event variable. */
-                eventManager.current.activeEventVariableIndex++;
-
-                /* If the variable is filled in with an optional value. */
-                if (eventManager.activeEventVariableValue() === null) {
-
-                    /* Clear the variable value. */
-                    eventManager.clearActiveEventVariableValue();
-                }
-            },
-
-            /**
             * Determines if the current this session is savable.
             * @returns {Boolean} true if the session is savable; false otherwise.
             */
@@ -249,11 +231,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     videoPlayer.play();
                 }
 
-                /* If the event doesn't have variables of If the first variable is empty. */
-                else if (eventManager.current &&
-                        !eventManager.current.hasVariables ||
-                        (eventManager.current.activeEventVariableIndex === 1 &&
-                        !eventManager.activeEventVariableValue())) {
+                else if (this.showScript) {
 
                     /* Remove the event from the play. */
                     playManager.removeEvent(eventManager.current);
@@ -261,29 +239,6 @@ IntelligenceWebClient.factory('IndexingService', [
                     /* Drop back to tagging state. */
                     this.showTags = true;
                     this.showScript = false;
-                }
-
-                /* If the active variable is empty. */
-                else if (!eventManager.activeEventVariableValue()) {
-
-                    /* While the active variable is empty. */
-                    while (
-                        eventManager.current.activeEventVariableIndex > 1 &&
-                !eventManager.activeEventVariableValue()) {
-
-                        /* Move back one variable. */
-                        eventManager.current.activeEventVariableIndex--;
-                    }
-
-                    /* Clear the value of the first variable is not empty. */
-                    eventManager.clearActiveEventVariableValue();
-                }
-
-                /* If the active variable has a value. */
-                else if (eventManager.activeEventVariableValue()) {
-
-                    /* Clear the active variables value. */
-                    eventManager.clearActiveEventVariableValue();
                 }
             },
 
