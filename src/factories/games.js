@@ -997,19 +997,25 @@ IntelligenceWebClient.factory('GamesFactory', [
                 let model = $injector.get(game.model);
                 let storage = $injector.get(game.storage);
 
-                if (!game.id) throw new Error('Game must be saved before getting arena events');
+                if (!game.id) throw new Error('Game must be saved before retrieving arena events');
 
-                return model.retrieveArenaEvents({ id: game.id}).$promise.then(
-                    (arenaEvents) => {
-                        game.arenaEvents = arenaEvents;
-                        storage.set(game);
-                    },
-                    (reason) => {
-                        // No arena events at this time
-                        game.arenaEvents = [];
-                        storage.set(game);
-                    }
-                );
+                const query = model.retrieveArenaEvents({ id: game.id});
+                const request = query.$promise;
+
+                request.then(receiveArenaEvents, retrieveArenaEventsError);
+
+                function receiveArenaEvents (arenaEvents) {
+                    game.arenaEvents = arenaEvents;
+                    storage.set(game);
+                }
+
+                function retrieveArenaEventsError(reason) {
+                    // No arena events at this time
+                    game.arenaEvents = [];
+                    storage.set(game);
+                }
+
+                return request;
             },
 
             getArenaEvents: function(game = this) {
