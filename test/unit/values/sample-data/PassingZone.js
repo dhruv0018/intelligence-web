@@ -1,25 +1,12 @@
-let PassingZoneFieldData = {};
-
-PassingZoneFieldData.Tag = {
+let field = {
     formations: [],
     id: 1,
     index: 1,
     type: 'PASSING_ZONE',
     isRequired: true,
     options: [],
-    type: null
-};
-
-PassingZoneFieldData.Event = {
-    formations: [],
-    id: 1,
-    index: 1,
-    type: 'PASSING_ZONE',
-    isRequired: true,
-    options: [],
-    type: null,
     value: '1'
 };
 
 
-export default PassingZoneFieldData;
+export default field;
