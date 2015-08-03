@@ -35,7 +35,8 @@
     "videogular-overlay-play": "2fdevs/bower-videogular-overlay-play",
     "videogular-poster": "2fdevs/bower-videogular-poster",
     "fullscreen-api-polyfill": "https://github.com/neovov/Fullscreen-API-Polyfill.git",
-    "svg.draggable.js": "https://github.com/krossoverintelligence/svg.draggable.js.git"
+    "svg.draggable.js": "https://github.com/krossoverintelligence/svg.draggable.js.git",
+    "animate.css": "https://github.com/daneden/animate.css.git"
   },
   "dependencies": {
     "express": "^4.11.0",
