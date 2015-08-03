@@ -21,7 +21,9 @@ class DropdownField extends Field {
         let content = this.initializeValue(field.value, String);
         let value = {
             content,
-            name: content ? content : !this.isRequired ? 'Optional' : this.name
+            get name() {
+                return content ? content : !this.isRequired ? 'Optional' : this.name;
+            }
         };
 
         this.value = value;
