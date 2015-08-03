@@ -404,11 +404,11 @@ IntelligenceWebClient.factory('TeamsFactory', [
             },
             /**
              * @class Team
-             * @method getTeamSport
+             * @method getSport
              *
              * Gets the sport for this team
              */
-            getTeamSport: function() {
+            getSport: function() {
                 let league = leagues.get(this.leagueId);
                 let sport = sports.get(league.sportId);
                 return sport;

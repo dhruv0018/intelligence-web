@@ -37,8 +37,9 @@ Highlights.config([
                     profileOnboardingModal
                 ) {
                     let currentUser = session.getCurrentUser();
-                    if (currentUser.id === Number($stateParams.id) && !currentUser.profile.primarySportId) {
-                        let onboardingModal = profileOnboardingModal.open();
+                    const userId = Number($stateParams.id);
+                    if (currentUser.id === userId && !currentUser.profile.primarySportId) {
+                        profileOnboardingModal.open();
                     }
                 }
             ]

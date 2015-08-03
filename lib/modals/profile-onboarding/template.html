@@ -16,7 +16,7 @@
             <p class="onboarding-item-label">1. Check the box if you want to add your Krossover team to your public profile.</p>
 
             <div class="krossover-team" ng-repeat="team in teams">
-                <sport-placeholder sport="team.getTeamSport()"></sport-placeholder>
+                <sport-placeholder sport="team.getSport()"></sport-placeholder>
                 <div class="team-info">
                     <span>Head Coach {{getTeamCoachName(team)}}</span>
                     <span>{{team.name}}</span>
