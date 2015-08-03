@@ -8,7 +8,7 @@ const should  = chai.should();
 
 const rawVariableValue = rawFieldData;
 
-describe('Generic Field', () => {
+describe.only('Generic Field', () => {
 
     let field;
     let testString = '1';
@@ -25,23 +25,21 @@ describe('Generic Field', () => {
     });
 
     it('should have public API', () => {
-
-        expect(Field).to.respondTo('initialize');
         expect(Field).to.respondTo('toString');
         expect(Field).to.respondTo('toJSON');
         expect(Field).to.respondTo('initializeValue');
     });
 
-    it('should have a getter, "currentValue", for the "value" property.', () => {
+    it('should have a value getter', () => {
 
         field.value = testString;
 
-        expect(field.currentValue).to.equal(testString);
+        expect(field.value).to.equal(testString);
     });
 
-    it('should have a setter, "currentValue", for the "value" property.', () => {
+    it('should have a value setter', () => {
 
-        field.currentValue = testString;
+        field.value = testString;
 
         expect(field.value).to.equal(testString);
     });
@@ -52,13 +50,6 @@ describe('Generic Field', () => {
 
         value = field.initializeValue(1);
         expect(value).to.equal(1);
-    });
-
-    it('the "initialize" method should sets the value property', () => {
-
-        field.initialize(testString);
-
-        expect(field.currentValue).to.equal(testString);
     });
 
     it('has appropriate properties expected from the model', () => {

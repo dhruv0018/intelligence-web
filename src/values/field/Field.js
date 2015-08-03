@@ -21,19 +21,6 @@ class Field extends Value {
             throw Error('Corrupted data - null value in required field');
     }
 
-    /**
-     * Sets the value property by creating an 'available value'. If called from
-     * the constructor, it uses default value if none are passed in.
-     *
-     * @method initialize
-     * @param {object} [value] - the value to be set
-     * @returns {undefined}
-     */
-    initialize (value = this.value) {
-
-        this.currentValue = value;
-    }
-
     initializeValue(value, typeCast = Number) {
         let fieldValue = value;
         if (fieldValue) {
