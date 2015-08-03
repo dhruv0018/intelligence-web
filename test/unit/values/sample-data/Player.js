@@ -1,14 +1,4 @@
-let PlayerFieldData = {};
-
-PlayerFieldData.Tag = {
-    formations: [],
-    id: 1,
-    index: 1,
-    isRequired: true,
-    options: [],
-};
-
-PlayerFieldData.Event = {
+let field = {
     formations: [],
     id: 1,
     index: 1,
@@ -19,4 +9,4 @@ PlayerFieldData.Event = {
 };
 
 
-export default PlayerFieldData;
+export default field;

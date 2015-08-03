@@ -8,7 +8,7 @@ const should  = chai.should();
 
 const rawVariableValue = rawFieldData;
 
-describe.only('Generic Field', () => {
+describe('Generic Field', () => {
 
     let field;
     let testString = '1';
