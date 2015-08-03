@@ -89,7 +89,7 @@ class Field extends Value {
     toString () {
 
         // TODO: Removed this method or change to a sensible default.
-        return `<h1>TEMPORARY!!!! toString method not defined for this field!</h1>`;
+        return `<span class="value">${this.value.name}</span>`;
     }
 
     /**

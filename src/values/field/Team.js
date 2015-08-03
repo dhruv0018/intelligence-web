@@ -40,7 +40,6 @@ class TeamField extends Field {
     get availableValues () {
             let values = [];
             let injector = angular.element(document).injector();
-
             if (injector) {
                 let games = injector.get('GamesFactory');
                 let teams = injector.get('TeamsFactory');
@@ -49,13 +48,14 @@ class TeamField extends Field {
                 let team = game.teamId ? teams.get(game.teamId) : null;
                 let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
 
-                values.conact([team, opposingTeam].map((localTeam) => {
+                let teamValues = [team, opposingTeam].map((localTeam) => {
                     return {
                         teamId: localTeam.id,
                         name: localTeam.name,
                         color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
                     };
-                }));
+                });
+                values = teamValues;
             }
 
             if (!this.isRequired) {
@@ -63,15 +63,6 @@ class TeamField extends Field {
             }
             return values;
         }
-    /**
-     * Generates an HTML string of the field.
-     *
-     * @method toString
-     * @returns {String} HTML of the field
-     */
-    toString () {
-        return `<span class="value team-field">${this.currentValue.name}</span>`;
-    }
 
     /**
      * Getter for the validity of the Field

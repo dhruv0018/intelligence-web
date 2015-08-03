@@ -102,28 +102,16 @@ class PlayerField extends Field {
      * @returns {String} - HTML of the field
      */
     toString () {
-
-        let player = this.availableValues.find(value => value.playerId === this.currentValue.playerId);
-
-        // TODO: Fix this
-        if (!player) {
-
-            player = {
-
-                name: 'Optional',
-                jerseyColor: '#000000',
-                jerseyNumber: ''
-            };
-        }
+        let value = this.value;
 
         return `
         <span class="value">
 
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-                <rect fill="${player.jerseyColor}" stroke="black" stroke-width="${player.jerseyColor === '#ffffff' ? 1 : 0}" x="0" y="0" width="16px" height="16px" />
+                <rect fill="${value.jerseyColor}" stroke="black" stroke-width="${value.jerseyColor === '#ffffff' ? 1 : 0}" x="0" y="0" width="16px" height="16px" />
             </svg>
 
-            <span class="player-name">${player.name}</span>
+            <span class="player-name">${value.name}</span>
 
         </span>
         `;

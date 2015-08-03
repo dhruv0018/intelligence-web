@@ -63,17 +63,6 @@ class FormationField extends Field {
     }
 
     /**
-     * Generates an HTML string of the field.
-     *
-     * @method toString
-     * @returns {String} - HTML of the field
-     */
-    toString () {
-
-        return `<span class="value formation-field">${this.currentValue.name}</span>`;
-    }
-
-    /**
      * Getter for the validity of the Field
      * @type {Boolean}
      */

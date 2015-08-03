@@ -41,17 +41,6 @@ class DropdownField extends Field {
     }
 
     /**
-     * Generates an HTML string of the field.
-     *
-     * @method toString
-     * @returns {String} - HTML of the field
-     */
-    toString () {
-
-        return `<span class="value dropdown-field">${this.currentValue.content}</span>`;
-    }
-
-    /**
      * Getter for the validity of the Field
      * @type {Boolean}
      */

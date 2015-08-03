@@ -14,7 +14,7 @@ describe('General TeamPlayer Field', () => {
     });
 });
 
-describe.only('Player Dropdown Field', () => {
+describe('Player Dropdown Field', () => {
     let srcPlayerField;
     let srcTeamField;
     let playerField;

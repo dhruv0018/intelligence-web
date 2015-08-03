@@ -55,17 +55,6 @@ class YardField extends Field {
     }
 
     /**
-     * Generates an HTML string of the field.
-     *
-     * @method toString
-     * @returns {String} - HTML of the field
-     */
-    toString () {
-
-        return `<span class="value">${this.currentValue.content}</span>`;
-    }
-
-    /**
      * Getter/Setter for the value of the Field
      * @type {object}
      */

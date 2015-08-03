@@ -14,7 +14,6 @@ class TeamPlayerField extends Field {
      * @param {Object} field - Field JSON from server
      */
     constructor (field, variableValueType) {
-
         if (!field) return;
 
         super(field);
@@ -143,20 +142,17 @@ class TeamPlayerField extends Field {
      * @returns {String} - HTML of the field
      */
     toString () {
-        if (this.currentValue.variableValueType === 'Team') {
-            return `<span class="value">${this.currentValue.name}</span>`;
+        if (this.value.variableValueType === 'Team') {
+            return `<span class="value">${this.value.name}</span>`;
         } else {
-
-            let player = this.availableValues.find(value => value.playerId === this.currentValue.playerId);
-
             return `
             <span class="value">
 
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-                    <rect fill="${player.jerseyColor}" x="0" y="0" width="16px" height="16px" />
+                    <rect fill="${this.value.jerseyColor}" x="0" y="0" width="16px" height="16px" />
                 </svg>
 
-                <span class="player-name">${player.name}</span>
+                <span class="player-name">${this.value.name}</span>
 
             </span>
             `;
