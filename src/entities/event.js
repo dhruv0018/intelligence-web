@@ -51,9 +51,6 @@ class KrossoverEvent extends Entity {
 
             this.id     = event.id;
             this.playId = event.playId;
-
-            /* TODO: Get rid of this property when indexing service is refactored */
-            this.activeEventVariableIndex = event.activeEventVariableIndex || 1;
         }
 
         this.fields = {};
@@ -172,27 +169,6 @@ class KrossoverEvent extends Entity {
     get keyboardShortcut () {
 
         return this.shortcutKey;
-    }
-
-    /**
-     * Getter for this.fields
-     *
-     * @readonly
-     * @type {Object}
-     */
-
-    /* FIXME: variableValues is deprecated but many areas of the code still
-     * reference it. Ultimately, all code should access fields directly. */
-    get variableValues () {
-
-        let variableValues = {};
-
-        Object.keys(this.fields).forEach(order => {
-
-            variableValues[this.fields[order].id] = this.fields[order];
-        });
-
-        return variableValues;
     }
 
     /**
