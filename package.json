@@ -69,6 +69,7 @@
     "component-builder-less": "0.0.2",
     "connect-modrewrite": "0.7.11",
     "cucumber": "0.4.8",
+    "cz-conventional-changelog": "1.1.0",
     "envify": "1.2.1",
     "es6ify": "1.6.0",
     "eslint": "0.17.1",
