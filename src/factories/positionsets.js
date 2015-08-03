@@ -45,11 +45,21 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
                 return indexedPositions;
             },
 
+            /**
+             * Gets a position
+             * @param {number} positionId
+             * @returns {position}
+             */
             getPosition: function(positionId) {
 
                 return this.positions.find(position => positionId === position.id);
             },
 
+            /**
+             * Gets a set of positions as an array
+             * @param {number} positionIds
+             * @returns {position[]}
+             */
             getPositions: function(positionIds) {
 
                 if (!positionIds) return this.positions;
@@ -60,6 +70,11 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
                 });
             },
 
+            /**
+             * Gets the names from a set of positions as an array
+             * @param {number} positionIds
+             * @returns {positionName[]}
+             */
             getPositionNames: function(positionIds) {
 
                 return this.getPositions(positionIds).map(position => {
