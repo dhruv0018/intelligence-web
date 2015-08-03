@@ -21,7 +21,9 @@ class KrossoverTag extends Entity {
             writable: false,
         });
 
-        this.mapScriptTypes();
+        this.userScript    = this.mapScriptTypes(this.userScript);
+        this.indexerScript = this.mapScriptTypes(this.indexerScript);
+        this.summaryScript = this.mapScriptTypes(this.summaryScript);
     }
 
     /**
@@ -42,48 +44,45 @@ class KrossoverTag extends Entity {
      * @method mapScriptTypes
      * @returns {undefined}
      */
-    mapScriptTypes () {
+    mapScriptTypes (script) {
 
         let VARIABLE_PATTERN       = /(__\d__)/;
         let VARIABLE_INDEX_PATTERN = /\d/;
 
-        ['userScript', 'indexerScript', 'summaryScript'].forEach(scriptType => {
+        if (script) {
 
-            let script = this[scriptType];
+            /* Split up script into array items and replace variables
+             * with the actual tag variable object. */
+            script = script.split(VARIABLE_PATTERN)
 
-            if (script) {
+            /* Filter script items. */
+            .filter(item => {
 
-                /* Split up script into array items and replace variables
-                 * with the actual tag variable object. */
-                this[scriptType] = script.split(VARIABLE_PATTERN)
+                /* Filter out empty items. */
+                return item.length;
+            })
 
-                /* Filter script items. */
-                .filter(item => {
+            /* Map script items. */
+            .map(item => {
 
-                    /* Filter out empty items. */
-                    return item.length;
-                })
+                if (!VARIABLE_PATTERN.test(item)) {
 
-                /* Map script items. */
-                .map(item => {
+                    let rawField = {
 
-                    if (!VARIABLE_PATTERN.test(item)) {
+                        value: item,
+                        type: 'STATIC'
+                    };
 
-                        let rawField = {
+                    // TODO: Add this to FieldFactory
+                    return new StaticField(rawField);
+                } else {
 
-                            value: item,
-                            type: 'STATIC'
-                        };
+                    return item;
+                }
+            });
+        }
 
-                        // TODO: Add this to FieldFactory
-                        return new StaticField(rawField);
-                    } else {
-
-                        return item;
-                    }
-                });
-            }
-        });
+        return script;
     }
 
     /**
