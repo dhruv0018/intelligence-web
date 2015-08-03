@@ -19,18 +19,9 @@ class TeamPlayerField extends Field {
 
         super(field);
 
-        let id = field.value;
+        let id = this.initializeValue(field.value);
 
-        if (id) {
-            id = Number(id);
-        } else if (!id && !this.isRequired) {
-            id = null;
-        }
-
-        let value = {
-            teamId  : !this.isRequired ? null : undefined,
-            playerId: !this.isRequired ? null : undefined
-        };
+        let value = {};
 
         switch (variableValueType) {
             case 'Player':
@@ -76,12 +67,11 @@ class TeamPlayerField extends Field {
                 break;
         }
 
-        this.currentValue = value;
+        this.value = value;
 
     }
 
     get availableValues () {
-            if (!this.gameId) return [];
 
             let injector     = angular.element(document).injector();
 
@@ -184,14 +174,13 @@ class TeamPlayerField extends Field {
             return true;
         }
 
-        switch (this.currentValue.type) {
+        switch (this.value.type) {
 
             case 'Player': return Number.isInteger(this.value.playerId);
 
             case 'Team': return Number.isInteger(this.value.teamId);
 
             default:
-                // throw new Error('TeamPlayerField.type must be Player or Team');
                 return true;
         }
     }
@@ -203,10 +192,8 @@ class TeamPlayerField extends Field {
      * @returns {String} - JSON ready version of the object.
      */
     toJSON () {
-        let value = this.currentValue;
         let variableValue = {
-
-            type: this.currentValue.variableValueType
+            type: this.value.variableValueType
         };
 
         switch (variableValue.type) {

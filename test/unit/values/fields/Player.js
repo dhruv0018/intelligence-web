@@ -13,7 +13,7 @@ describe('General Player Field', () => {
     });
 });
 
-describe.only('Player Dropdown Field', () => {
+describe('Player Dropdown Field', () => {
     let srcField;
     let requiredField;
     let unrequiredField;
