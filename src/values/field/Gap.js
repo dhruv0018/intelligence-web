@@ -1,5 +1,7 @@
 import Field from './Field';
 import GapConstants from '../../constants/football/gaps';
+const GAPS = GapConstants.GAPS;
+const GAP_IDS = GapConstants.GAP_IDS;
 
 /**
  * GapField Field Model
@@ -16,10 +18,27 @@ class GapField extends Field {
         if (!field) return;
         super(field);
 
-        this.GAPS = GapConstants.GAPS;
-        this.GAP_IDS = GapConstants.GAP_IDS;
-        this.availableValues = Object.keys(this.GAPS).map(key => {
-            let currentGap = angular.copy(this.GAPS[key]);
+        let gapId = this.initializeValue(field.value);
+        let gap = angular.copy(GAPS[GAP_IDS[gapId]]);
+        let value = {
+            gapId,
+            get name () {
+                let calculatedName = !this.isRequired ? 'Optional' : this.name;
+                if (gapId) {
+                    calculatedName = gap.name;
+                }
+                return calculatedName;
+            },
+            get keyboardShortcut() {
+                return gap.shortcut;
+            }
+        };
+        this.value = value;
+    }
+    get availableValues() {
+        let values = [];
+        values = Object.keys(GAPS).map(key => {
+            let currentGap = angular.copy(GAPS[key]);
             let value = {
                 gapId: Number(currentGap.value),
                 name: currentGap.name,
@@ -27,41 +46,10 @@ class GapField extends Field {
             };
             return value;
         });
-        let initialGap = {
-            name: !field.isRequired ? 'Optional' : 'Select',
-            gapId: !field.isRequired ? null : undefined,
-            keyboardShortcut: undefined
-        };
-        this.availableValues.unshift(initialGap);
-
-        this.initialize();
-    }
-
-    /**
-     * Sets the value property by creating an 'available value'. If called from
-     * the constructor, it uses default value if none are passed in.
-     *
-     * @method initialize
-     * @param {object} [value] - the value to be set
-     * @returns {undefined}
-     */
-    initialize (value = this.value) {
-
-        let gap = angular.copy(this.availableValues[0]);
-
-        if (value) {
-
-            let currentGap = angular.copy(this.GAPS[this.GAP_IDS[value]]);
-
-            gap = {
-
-                gapId           : Number(currentGap.value),
-                name            : currentGap.name,
-                keyboardShortcut: currentGap.shortcut
-            };
+        if (!this.isRequired) {
+            values.unshift({name: 'Optional', gapId: null, keyboardShortcut: undefined});
         }
-
-        this.currentValue = gap;
+        return values;
     }
 
     /**
