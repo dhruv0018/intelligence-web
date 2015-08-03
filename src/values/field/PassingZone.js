@@ -50,16 +50,6 @@ class PassingZoneField extends Field {
         return values;
     }
 
-    /**
-     * Generates an HTML string of the field.
-     *
-     * @method toString
-     * @returns {String} - HTML of the field
-     */
-    toString () {
-
-        return `<span class="value passing-zone-field">${this.currentValue.name}</span>`;
-    }
 
     /**
      * Getter for the validity of the Field

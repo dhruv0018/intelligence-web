@@ -14,23 +14,13 @@ class TeamPlayerField extends Field {
      * @param {Object} field - Field JSON from server
      */
     constructor (field, variableValueType) {
-
         if (!field) return;
 
         super(field);
 
-        let id = field.value;
+        let id = this.initializeValue(field.value);
 
-        if (id) {
-            id = Number(id);
-        } else if (!id && !this.isRequired) {
-            id = null;
-        }
-
-        let value = {
-            teamId  : !this.isRequired ? null : undefined,
-            playerId: !this.isRequired ? null : undefined
-        };
+        let value = {};
 
         switch (variableValueType) {
             case 'Player':
@@ -76,12 +66,11 @@ class TeamPlayerField extends Field {
                 break;
         }
 
-        this.currentValue = value;
+        this.value = value;
 
     }
 
     get availableValues () {
-            if (!this.gameId) return [];
 
             let injector     = angular.element(document).injector();
 
@@ -153,20 +142,17 @@ class TeamPlayerField extends Field {
      * @returns {String} - HTML of the field
      */
     toString () {
-        if (this.currentValue.variableValueType === 'Team') {
-            return `<span class="value">${this.currentValue.name}</span>`;
+        if (this.value.variableValueType === 'Team') {
+            return `<span class="value">${this.value.name}</span>`;
         } else {
-
-            let player = this.availableValues.find(value => value.playerId === this.currentValue.playerId);
-
             return `
             <span class="value">
 
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-                    <rect fill="${player.jerseyColor}" x="0" y="0" width="16px" height="16px" />
+                    <rect fill="${this.value.jerseyColor}" x="0" y="0" width="16px" height="16px" />
                 </svg>
 
-                <span class="player-name">${player.name}</span>
+                <span class="player-name">${this.value.name}</span>
 
             </span>
             `;
@@ -184,14 +170,13 @@ class TeamPlayerField extends Field {
             return true;
         }
 
-        switch (this.currentValue.type) {
+        switch (this.value.type) {
 
             case 'Player': return Number.isInteger(this.value.playerId);
 
             case 'Team': return Number.isInteger(this.value.teamId);
 
             default:
-                // throw new Error('TeamPlayerField.type must be Player or Team');
                 return true;
         }
     }
@@ -203,10 +188,8 @@ class TeamPlayerField extends Field {
      * @returns {String} - JSON ready version of the object.
      */
     toJSON () {
-        let value = this.currentValue;
         let variableValue = {
-
-            type: this.currentValue.variableValueType
+            type: this.value.variableValueType
         };
 
         switch (variableValue.type) {

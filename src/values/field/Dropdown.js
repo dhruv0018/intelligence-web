@@ -21,7 +21,9 @@ class DropdownField extends Field {
         let content = this.initializeValue(field.value, String);
         let value = {
             content,
-            name: content ? content : !this.isRequired ? 'Optional' : this.name
+            get name() {
+                return content ? content : !this.isRequired ? 'Optional' : this.name;
+            }
         };
 
         this.value = value;
@@ -36,17 +38,6 @@ class DropdownField extends Field {
             availableValues.unshift({content: null, name: 'Optional'});
         }
         return angular.copy(availableValues);
-    }
-
-    /**
-     * Generates an HTML string of the field.
-     *
-     * @method toString
-     * @returns {String} - HTML of the field
-     */
-    toString () {
-
-        return `<span class="value dropdown-field">${this.currentValue.content}</span>`;
     }
 
     /**

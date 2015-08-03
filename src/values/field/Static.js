@@ -25,18 +25,7 @@ class StaticField extends Field {
             name   : field.value
         };
 
-        this.currentValue = value;
-    }
-
-    /**
-     * Generates an HTML string of the field.
-     *
-     * @method toString
-     * @returns {String} - HTML of the field
-     */
-    toString () {
-
-        return `<span class="static static-field">${this.currentValue.name}</span>`;
+        this.value = value;
     }
 
     /**
