@@ -142,7 +142,7 @@ Indexing.config([
                         playerlist.fill(game);
                         if (!game.isAssignedToUser(userId)) {
 
-                            $state.go('indexer-games');
+                            $state.go('IndexerGames');
                         }
 
                         else if (game.canBeIndexed() || game.canBeQAed()) {
@@ -164,7 +164,7 @@ Indexing.config([
 
                                 timeExpiredModal.result.finally(function() {
 
-                                    $state.go('indexer-game', { id: game.id });
+                                    $state.go('IndexerGame', { id: game.id });
                                 });
                             };
 

@@ -260,7 +260,9 @@ module.exports = function(grunt) {
                         'lib/directives/play/styles.less',
                         'lib/directives/indexing-block/styles.less',
                         'lib/directives/dynamic-tables/styles.less',
-                        'app/reel/styles.less'
+                        'app/reel/*.less',
+                        'app/indexer/**/*.less',
+                        'app/styleguide/**/*.less'
                     ]
                 }
             }

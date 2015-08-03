@@ -85,6 +85,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.shares = game.shares || [];
                 game.sharedWithUsers = game.sharedWithUsers || {};
 
+                //Sort indexer assignments by time assigned
+                if(game.indexerAssignments && game.indexerAssignments.length > 1) {
+                    game.indexerAssignments.sort((a,b) => moment.utc(b.timeAssigned).diff(moment.utc(a.timeAssigned)));
+                }
+
                 if (game.shares && game.shares.length) {
 
                     angular.forEach(game.shares, function(share, index) {
@@ -532,7 +537,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     };
 
                     /* Add assignment. */
-                    self.indexerAssignments.push(assignment);
+                    self.indexerAssignments.unshift(assignment);
 
                     /* Update game status. */
                     self.status = GAME_STATUSES.INDEXING.id;
@@ -578,7 +583,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     };
 
                     /* Add assignment. */
-                    self.indexerAssignments.push(assignment);
+                    self.indexerAssignments.unshift(assignment);
 
                     /* Update game status. */
                     self.status = GAME_STATUSES.QAING.id;
@@ -684,24 +689,26 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!this.indexerAssignments) return undefined;
 
-                /* The last assignment in the array is the current one. */
-                return this.indexerAssignments.slice(-1).pop();
+                /* The first assignment is the newest since indexer assignments
+                    are sorted in the extend in descending order
+                */
+                return this.indexerAssignments[0];
             },
 
-            userAssignment: function(userId) {
+            userAssignment: function(userId=null) {
 
                 var self = this;
+
+                if(!userId) {
+                    userId = session.getCurrentUserId();
+                }
 
                 var assignments = self.indexerAssignments;
 
                 if (!assignments) return undefined;
 
                 /* Find the users assignment in the assignments. */
-                var index = assignments.map(function(assignment) {
-
-                    return assignment.userId;
-
-                }).indexOf(userId);
+                var index = assignments.map(assignment => assignment.userId).indexOf(userId);
 
                 /* Return the assignment if found. */
                 return ~index ? assignments[index] : undefined;

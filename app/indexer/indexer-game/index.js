@@ -1,107 +1,39 @@
-
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+const IndexerGame = angular.module('IndexerGame', []);
 
-/**
- * Indexer Game page module.
- * @module Game
- */
-var Game = angular.module('indexer-game', []);
+import IndexerDataDependencies from '../data';
+import IndexerGameController from './controller';
+import template from './template.html';
 
-/* Cache the template file */
-Game.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('indexer-game.html', require('./indexer-game.html'));
-    }
-]);
-
-/**
- * Indexer game data dependencies.
- * @module Game
- * @type {service}
- */
-Game.service('Indexer.Game.Data.Dependencies', [
-    'SessionService', 'TeamsFactory', 'LeaguesFactory', 'SportsFactory', 'UsersFactory', 'GamesFactory', 'SchoolsFactory',
-    function(session, teams, leagues, sports, users, games, schools) {
-
-        var Data = {
-
-            sports: sports.load(),
-            leagues: leagues.load(),
-
-            get users() {
-
-                var userId = session.currentUser.id;
-
-                return users.load({ relatedUserId: userId });
-            },
-
-            get teams() {
-
-                var userId = session.currentUser.id;
-
-                return teams.load({ relatedUserId: userId });
-            },
-
-            get schools() {
-
-                return this.teams.then(function(teams) {
-
-                    var schoolIds = teams
-
-                    .filter(function(team) {
-
-                        return team.schoolId;
-                    })
-
-                    .map(function(team) {
-
-                        return team.schoolId;
-                    });
-
-                    if (schoolIds.length) return schools.load(schoolIds);
-                });
-            },
-
-            get games() {
-
-                var userId = session.currentUser.id;
-
-                return games.load({ assignedUserId: userId });
-            }
-        };
-
-        return Data;
-    }
-]);
+IndexerGame.factory('IndexerDataDependencies', IndexerDataDependencies);
+IndexerGame.controller('IndexerGameController', IndexerGameController);
 
 /**
  * Indexer game page state router.
  * @module Game
  * @type {UI-Router}
  */
-Game.config([
+IndexerGame.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
         $stateProvider
 
-            .state('indexer-game', {
+            .state('IndexerGame', {
                 url: '/game/:id',
-                parent: 'indexer',
+                parent: 'Indexer',
                 views: {
                     'main@root': {
-                        templateUrl: 'indexer-game.html',
-                        controller: 'indexer-game.Controller'
+                        template,
+                        controller: IndexerGameController
                     }
                 },
                 resolve: {
                     'Indexer.Game.Data': [
-                        '$q', 'Indexer.Game.Data.Dependencies',
-                        function($q, data) {
-
+                        '$q', 'IndexerDataDependencies',
+                        function($q, IndexingGameData) {
+                            let data = new IndexingGameData();
                             return $q.all(data);
                         }
                     ]
@@ -131,5 +63,4 @@ Game.config([
     }
 ]);
 
-/* File dependencies. */
-require('./indexer-game-controller');
+export default IndexerGame;
