@@ -1,25 +1,12 @@
-let TeamFieldData = {};
-
-TeamFieldData.Tag = {
+let field = {
     formations: [],
     id: 1,
     index: 1,
     type: 'TEAM_DROPDOWN',
     isRequired: true,
     options: [],
-    type: 'Team'
-};
-
-TeamFieldData.Event = {
-    formations: [],
-    id: 1,
-    index: 1,
-    type: 'TEAM_DROPDOWN',
-    isRequired: true,
-    options: [],
-    type: 'Team',
     value: '1'
 };
 
 
-export default TeamFieldData;
+export default field;

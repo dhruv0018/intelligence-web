@@ -18,64 +18,48 @@ class FormationField extends Field {
         if (!field) return;
         super(field);
 
-        let initialFormation = {
-            formationId: !field.isRequired ? null : undefined,
-            numberOfPlayers: 0,
-            name: !field.isRequired ? 'Optional' : 'Select'
-        };
-        this.keyedFormations = {};
-        this.formations.forEach(formation => this.keyedFormations[formation.id] = formation);
+        let formationId = this.initializeValue(field.value);
+        let formation = {};
 
-        this.availableValues = [];
-        this.availableValues = this.formations.map(formation => {
-            let currentFormation = angular.copy(formation);
-            return {
-                formationId: currentFormation.id,
-                numberOfPlayers: currentFormation.numberPlayers,
-                name: currentFormation.name
-            };
+        this.formations.forEach((currentFormation)=> {
+            if (currentFormation.id === formationId) {
+                formation = currentFormation;
+            }
         });
-        this.availableValues.unshift(initialFormation);
 
-        this.initialize();
+        let value = {
+            formationId,
+            get name() {
+                let calculatedName = !this.isRequired ? 'Optional' : this.name;
+                if (formationId) {
+                    calculatedName = formation.name;
+                }
+                return calculatedName;
+            },
+            get numberPlayers(){
+                return formation.numberPlayers;
+            }
+        };
+
+        this.value = value;
     }
 
-    /**
-     * Sets the value property by creating an 'available value'. If called from
-     * the constructor, it uses default value if none are passed in.
-     *
-     * @method initialize
-     * @param {object} [value] - the value to be set
-     * @returns {undefined}
-     */
-    initialize (value = this.value) {
-
-        let formation = angular.copy(this.availableValues[0]);
-
-        if (value) {
-
-            let currentFormation = angular.copy(this.keyedFormations[value]);
-
-            formation = {
-
-                formationId    : currentFormation.id,
-                numberOfPlayers: currentFormation.numberPlayers,
-                name           : currentFormation.name
-            };
+    get availableValues() {
+        let values = [];
+        if (this.formations) {
+            let values = this.formations.map(formation => {
+                let currentFormation = angular.copy(formation);
+                return {
+                    formationId: Number(currentFormation.id),
+                    numberOfPlayers: currentFormation.numberPlayers,
+                    name: currentFormation.name
+                };
+            });
         }
-
-        this.currentValue = formation;
-    }
-
-    /**
-     * Generates an HTML string of the field.
-     *
-     * @method toString
-     * @returns {String} - HTML of the field
-     */
-    toString () {
-
-        return `<span class="value formation-field">${this.currentValue.name}</span>`;
+        if (!this.isRequired) {
+            values.unshift({name: 'Optional', formationId: null, numberOfPlayers: 0});
+        }
+        return values;
     }
 
     /**

@@ -1,11 +1,10 @@
-let FieldData = {
+let field = {
     formations: [],
     id: 1,
     index: 1,
-    type: 'TEXT',
+    type: 'YARD',
     isRequired: true,
-    options: [],
-    type: null
+    options: []
 };
 
-export default FieldData;
+export default field;

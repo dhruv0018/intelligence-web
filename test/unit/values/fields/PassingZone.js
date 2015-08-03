@@ -6,94 +6,61 @@ const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
 
-const tagVariable = PassingZoneFieldData.Tag;
-const eventVariable = PassingZoneFieldData.Event;
+const rawField = PassingZoneFieldData;
 
 describe('General PassingZone Field', () => {
-    let tagField = new PassingZoneField(tagVariable);
-    it('The PassingZone Class should Exist', () => {
+    it('The DropdownField Class should Exist', () => {
         expect(PassingZoneField).to.exist;
     });
 });
 
-describe('Passing Zone Tag Field', () => {
-    it('Should be initialized correctly if required', () => {
-        let localTagVariable = angular.copy(tagVariable);
-        localTagVariable.isRequired = true;
-        let tagField = new PassingZoneField(localTagVariable);
-        let value = tagField.currentValue;
+describe('Passing Zone Field', () => {
+    let srcField;
+    let requiredField;
+    let unrequiredField;
 
-        expect(value.zoneId).to.be.undefined;
-        expect(value.name).to.equal('Select');
-        expect(value.keyboardShortcut).to.be.undefined;
+    beforeEach(() => {
+        srcField    = angular.copy(rawField);
+        requiredField = new PassingZoneField(srcField);
+        srcField.isRequired = false;
+        unrequiredField = new PassingZoneField(srcField);
     });
 
-    it('Should be initialized correctly if not required', () => {
-        let localTagVariable = angular.copy(tagVariable);
-        localTagVariable.isRequired = false;
-        let tagField = new PassingZoneField(localTagVariable);
-        let value = tagField.currentValue;
-
-        expect(value.zoneId).to.be.null;
-        expect(value.name).to.equal('Optional');
-        expect(value.keyboardShortcut).to.be.undefined;
-    });
-
-});
-
-describe('Passing Zone Event Field', () => {
-
-    it('Should have properly set value if required', () => {
-        let localEventVariable = angular.copy(eventVariable);
-        localEventVariable.isRequired = true;
-        let eventField = new PassingZoneField(localEventVariable);
-        let value = eventField.currentValue;
-
+    it('Should set values properly', () => {
+        let field = requiredField;
+        let value = field.value;
         expect(value.zoneId).to.equal(1);
         expect(value.name).to.equal('Loss Far Left');
         expect(value.keyboardShortcut).to.equal('FL');
     });
 
-    it('Should set values properly', () => {
-        let localEventVariable = angular.copy(eventVariable);
-        localEventVariable.isRequired = true;
-        let eventField = new PassingZoneField(localEventVariable);
-        eventField.currentValue = eventField.availableValues[2];
-        let value = eventField.currentValue;
+    it('Should be able to set an optional value if the field is not required' , () => {
+        let field = unrequiredField;
 
-        expect(value.gapId).to.equal(2);
-        expect(value.name).to.equal('Loss Left');
-        expect(value.keyboardShortcut).to.equal('LL');
+        field.value = field.availableValues[0];
+        let value = field.value;
+        expect(value.zoneId).to.be.null;
+        expect(value.name).to.equal('Optional');
     });
 
     it('toJSON should serialize to the right format if the field has a value', () => {
-        let localEventVariable = angular.copy(eventVariable);
-        localEventVariable.isRequired = true;
-        let eventField = new PassingZoneField(localEventVariable);
-        let value = eventField.currentValue;
-
-        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":"1"}');
+        let payload = requiredField.toJSON();
+        expect(JSON.stringify(payload)).to.equal('{"type":null,"value":"1"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
-        let localEventVariable = angular.copy(eventVariable);
-        localEventVariable.isRequired = false;
-        localEventVariable.value = undefined;
+        let field = unrequiredField;
+        field.value = field.availableValues[0];
 
-        let eventField = new PassingZoneField(localEventVariable);
-        let value = eventField.currentValue;
-
-        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":null}');
+        let payload = field.toJSON();
+        expect(JSON.stringify(payload)).to.equal('{"type":null,"value":null}');
     });
 
-    it('Should be able to switch back to an optional value from a set value', () => {
-        let localEventVariable = angular.copy(eventVariable);
-        localEventVariable.isRequired = false;
-        let eventField = new PassingZoneField(localEventVariable);
-        let value = eventField.currentValue;
-        expect(value.zoneId).to.not.be.null;
-        eventField.currentValue = eventField.availableValues[0];
-        value = eventField.currentValue;
-        expect(value.zoneId).to.be.null;
+    it('Should validate correctly', () => {
+        let field = unrequiredField;
+        field.availableValues.forEach(value => {
+            field.value = value;
+            expect(field.valid).to.be.true;
+        });
     });
 });

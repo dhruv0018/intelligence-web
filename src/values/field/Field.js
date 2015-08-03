@@ -17,44 +17,32 @@ class Field extends Value {
         super(field);
         this.extend(field);
 
-        if (!field.value) {
-            field.value = undefined;
-            return;
-        }
-
-        if (field.value === null && !field.isRequired) {
-            this.value = value;
-            return;
-        } else if (field.value === null && field.isRequired) {
+        if (field.value === null && field.isRequired)
             throw Error('Corrupted data - null value in required field');
-        }
     }
 
-    /**
-     * Sets the value property by creating an 'available value'. If called from
-     * the constructor, it uses default value if none are passed in.
-     *
-     * @method initialize
-     * @param {object} [value] - the value to be set
-     * @returns {undefined}
-     */
-    initialize (value = this.value) {
-
-        this.currentValue = value;
+    initializeValue(value, typeCast = Number) {
+        let fieldValue = value;
+        if (fieldValue) {
+            fieldValue = typeCast(fieldValue);
+        } else if (!this.isRequired) {
+            fieldValue = null;
+        }
+        return fieldValue;
     }
 
     /**
      * Getter/Setter for the value of the Field
      * @type {object}
      */
-    get currentValue () {
+    get value () {
 
-        return this.value;
+        return this._value;
     }
 
-    set currentValue (value) {
+    set value (value) {
 
-        this.value = value;
+        this._value = value;
     }
 
     /**
@@ -86,6 +74,7 @@ class Field extends Value {
 
             console.error('This field does not validate properly and cannot save to the server');
             console.error(this.type, variableValue);
+            console.error('Is this field required? : ' + this.isRequired);
         }
 
         return isValid;
@@ -100,7 +89,7 @@ class Field extends Value {
     toString () {
 
         // TODO: Removed this method or change to a sensible default.
-        return `<h1>TEMPORARY!!!! toString method not defined for this field!</h1>`;
+        return `<span class="value">${this.value.name}</span>`;
     }
 
     /**

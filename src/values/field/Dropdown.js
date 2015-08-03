@@ -17,48 +17,27 @@ class DropdownField extends Field {
 
         if (!field) return;
         super(field);
-        this.availableValues = JSON.parse(field.options).map(content => {
+
+        let content = this.initializeValue(field.value, String);
+        let value = {
+            content,
+            get name() {
+                return content ? content : !this.isRequired ? 'Optional' : this.name;
+            }
+        };
+
+        this.value = value;
+    }
+
+
+    get availableValues() {
+        let availableValues = JSON.parse(this.options).map(content => {
             return {content, name: content};
         });
-        let initialOption = {
-            content: !field.isRequired ? null : undefined,
-            name: !field.isRequired ? 'Optional' : 'Select'
-        };
-        this.availableValues.unshift(initialOption);
-
-        this.initialize();
-    }
-
-    /**
-     * Sets the value property by creating an 'available value'. If called from
-     * the constructor, it uses default value if none are passed in.
-     *
-     * @method initialize
-     * @param {string} [value] - the value to be set
-     * @returns {undefined}
-     */
-    initialize (value = this.value) {
-
-        let dropdownOption = angular.copy(this.availableValues[0]);
-
-        if (value) {
-
-            dropdownOption.content = value;
-            dropdownOption.name    = value;
+        if (!this.isRequired) {
+            availableValues.unshift({content: null, name: 'Optional'});
         }
-
-        this.currentValue = dropdownOption;
-    }
-
-    /**
-     * Generates an HTML string of the field.
-     *
-     * @method toString
-     * @returns {String} - HTML of the field
-     */
-    toString () {
-
-        return `<span class="value dropdown-field">${this.currentValue.content}</span>`;
+        return angular.copy(availableValues);
     }
 
     /**
