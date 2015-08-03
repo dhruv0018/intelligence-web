@@ -215,7 +215,6 @@ class KrossoverEvent extends Entity {
 
         let copy = Object.assign({}, this);
 
-        delete copy.activeEventVariableIndex;
         delete copy.indexerScript;
         delete copy.userScript;
         delete copy.shortcutKey;
