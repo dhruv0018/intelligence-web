@@ -14,7 +14,7 @@ describe('General PassingZone Field', () => {
     });
 });
 
-describe.only('Passing Zone Field', () => {
+describe('Passing Zone Field', () => {
     let srcField;
     let requiredField;
     let unrequiredField;

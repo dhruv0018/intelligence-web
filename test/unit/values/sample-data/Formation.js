@@ -1,16 +1,4 @@
-let FormationFieldData = {};
-
-FormationFieldData.Tag = {
-    formations: [],
-    id: 1,
-    index: 1,
-    type: 'FORMATION',
-    isRequired: true,
-    options: [],
-    type: null
-};
-
-FormationFieldData.Event = {
+let field = {
     formations: [
         {
             id: 1,
@@ -30,8 +18,7 @@ FormationFieldData.Event = {
     type: 'FORMATION',
     isRequired: true,
     options: [],
-    type: null,
     value: '1'
 };
 
-export default FormationFieldData;
+export default field;
