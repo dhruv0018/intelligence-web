@@ -47,17 +47,12 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
 
             getPosition: function(positionId) {
 
-                let position = this.positions.filter(position => {
-
-                    return position.id === positionId;
-                });
-
-                return position.length ? position[0] : [];
+                return this.positions.find(position => positionId === position.id);
             },
 
             getPositions: function(positionIds) {
 
-                if (!positionIds) throw new Error(`getPositions requires parameter 'positionIds'`);
+                if (!positionIds) return this.positions;
 
                 return positionIds.map(positionId => {
 
@@ -66,8 +61,6 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
             },
 
             getPositionNames: function(positionIds) {
-
-                if (!positionIds) throw new Error(`getPositionNames requires parameter 'positionIds'`);
 
                 return this.getPositions(positionIds).map(position => {
 
