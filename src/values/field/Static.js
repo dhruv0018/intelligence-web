@@ -29,6 +29,17 @@ class StaticField extends Field {
     }
 
     /**
+     * Generates an HTML string of the field.
+     *
+     * @method toString
+     * @returns {String} - HTML of the field
+     */
+    toString () {
+
+        return `<span class="static static-field">${this.value.name}</span>`;
+    }
+
+    /**
      * Reverts the class instance to JSON suitable for the server.
      *
      * @method toJSON
