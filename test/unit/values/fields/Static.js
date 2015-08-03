@@ -34,8 +34,8 @@ describe('Static Field', () => {
 
     it('should be initialized correctly.', () => {
 
-        expect(staticField.currentValue.name).to.equal(sampleData.value);
-        expect(staticField.currentValue.content).to.equal(sampleData.value);
+        expect(staticField.value.name).to.equal(sampleData.value);
+        expect(staticField.value.content).to.equal(sampleData.value);
     });
 
     it('should have a toJSON method that returns the original value.', () => {
