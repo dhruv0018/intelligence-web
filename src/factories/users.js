@@ -86,6 +86,11 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user.subscriptions.map(subscription => new Subscription(subscription)) :
                     [];
 
+                // Get full name for user
+                Object.defineProperty(user, 'name', {
+                    get: () => user.firstName + ' ' + user.lastName
+                });
+
                 /* Copy all of the properties from the retrieved $resource
                  * "user" object. */
                 angular.extend(user, self);
@@ -174,18 +179,6 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 //TODO use normal save()
                 return self.baseSave();
-            },
-
-            /**
-            * @class User
-            * @method
-            * @returns {String} returns the users first and last name as a
-            * concatenated string.
-            * Gets the users full name.
-            */
-            get name() {
-
-                return this.firstName + ' ' + this.lastName;
             },
 
             /**
