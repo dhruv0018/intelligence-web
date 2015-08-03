@@ -90,7 +90,6 @@ describe('Event Entity', () => {
             'buffer',
             'fields',
             'tagId',
-            'activeEventVariableIndex',
             'time'
         ]);
     });
