@@ -242,6 +242,7 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
+                    'vendor-less',
                     'theme',
                     'node_modules/bootstrap/less'
                 ]
@@ -309,6 +310,7 @@ module.exports = function(grunt) {
                     stylePlugins: function(builder) {
                         builder.use('styles', less({
                             paths: [
+                                'vendor-less',
                                 'theme',
                                 'node_modules/bootstrap/less'
                             ]
@@ -380,6 +382,11 @@ module.exports = function(grunt) {
         /* Distribution/Deployment */
 
         copy: {
+            'theme-vendor': {
+                files: {
+                    'vendor-less/animate.less': 'node_modules/animate.css/animate.css'
+                }
+            },
             svg: {
                 expand: true,
                 cwd:    'svg',
@@ -695,6 +702,7 @@ module.exports = function(grunt) {
         'env:dev',
         'componentbuild:dev',
         'browserify:dev',
+        'copy:theme-vendor',
         'componentbuild:styles',
         'less',
         'copy:svg',
@@ -716,6 +724,7 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'browserify:prod',
         'ngAnnotate',
+        'copy:theme-vendor',
         'componentbuild:styles',
         'less',
         'svgmin',
@@ -740,6 +749,7 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'browserify:prod',
         'ngAnnotate',
+        'copy:theme-vendor',
         'componentbuild:styles',
         'less',
         'svgmin',
@@ -766,6 +776,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'ngAnnotate',
         'uglify',
+        'copy:theme-vendor',
         'componentbuild:styles',
         'less',
         'svgmin',
