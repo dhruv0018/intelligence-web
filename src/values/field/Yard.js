@@ -18,60 +18,21 @@ class YardField extends Field {
         if (!field) return;
 
         super(field);
+        let content = this.initializeValue(field.value, String);
+        this.value = {
+            content,
+            name: content ? content : !this.isRequired ? 'Optional': this.name
+        };
+    }
 
-        this.initialize();
-
-        this.availableValues = [];
-
-        this.availableValues = Array.from(new Array(99), (item, yardLength) => {
+    get availableValues() {
+        let values = Array.from(new Array(99), (item, yardLength) => {
             return {content: yardLength + 1, name: String(yardLength + 1)};
         });
-
-    }
-
-    /**
-     * Sets the value property by creating an 'available value'. If called from
-     * the constructor, it uses default value if none are passed in.
-     *
-     * @method initialize
-     * @param {string} [value] - the value to be set
-     * @returns {undefined}
-     */
-    initialize (value = this.value) {
-
-        let yard = {
-
-            content: !this.isRequired ? null       : undefined,
-            name   : !this.isRequired ? 'Optional' : 'Select'
-        };
-
-        if (value) {
-
-            yard.content = Number(value);
-            yard.name    = String(value);
+        if (!this.isRequired) {
+            values.unshift({content: null, name: 'Optional'});
         }
-
-        this.currentValue = yard;
-    }
-
-    /**
-     * Getter/Setter for the value of the Field
-     * @type {object}
-     */
-    get currentValue () {
-
-        return this.value;
-    }
-
-    set currentValue (yard) {
-
-        let value = {
-
-            name   : String(yard.name),
-            content: yard.content
-        };
-
-        this.value = value;
+        return values;
     }
 
     /**

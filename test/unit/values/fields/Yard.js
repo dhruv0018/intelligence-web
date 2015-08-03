@@ -6,78 +6,60 @@ const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
 
-const tagVariable = YardFieldData.Tag;
-const eventVariable = YardFieldData.Event;
+const rawField = YardFieldData;
 
 describe('General Yard Field', () => {
-    let tagField = new YardField(tagVariable);
     it('The Yard Class should Exist', () => {
         expect(YardField).to.exist;
     });
 });
 
-describe('Yard Tag Field', () => {
-    it('Should be initialized correctly if required', () => {
-        let localTagVariable = angular.copy(tagVariable);
-        localTagVariable.isRequired = true;
-        let tagField = new YardField(localTagVariable);
-        let value = tagField.currentValue;
-        expect(value.content).to.be.undefined;
-        expect(value.name).to.equal('Select');
+describe('Yard Field', () => {
+    let srcField;
+    let requiredField;
+    let unrequiredField;
+
+    beforeEach(() => {
+        srcField    = angular.copy(rawField);
+        requiredField = new YardField(srcField);
+        srcField.isRequired = false;
+        unrequiredField = new YardField(srcField);
     });
 
-    it('Should be initialized correctly if not required', () => {
-        let localTagVariable = angular.copy(tagVariable);
-        localTagVariable.isRequired = false;
-        let tagField = new YardField(localTagVariable);
-        let value = tagField.currentValue;
+    it('Should set values properly', () => {
+        let field = requiredField;
+        let value = field.value;
+        expect(value.content).to.equal('1');
+        expect(value.name).to.equal('1');
+    });
+
+    it('Should be able to set an optional value if the field is not required' , () => {
+        let field = unrequiredField;
+
+        field.value = field.availableValues[0];
+        let value = field.value;
         expect(value.content).to.be.null;
         expect(value.name).to.equal('Optional');
     });
 
-});
-
-describe('Yard Event Field', () => {
-
-    it('Should have properly set value if required', () => {
-        let localEventVariable = angular.copy(eventVariable);
-        localEventVariable.isRequired = true;
-        let eventField = new YardField(localEventVariable);
-        let value = eventField.currentValue;
-
-        expect(value.content).to.equal(1);
-        expect(value.name).to.equal('1');
-    });
-
-    it('Should have a "initialize" method that property sets the value', () => {
-        let localTagVariable = angular.copy(tagVariable);
-        localTagVariable.isRequired = false;
-        let tagField = new YardField(localTagVariable);
-
-        tagField.initialize('1');
-        let value = tagField.currentValue;
-
-        expect(value.content).to.equal(1);
-        expect(value.name).to.equal('1');
-    });
-
     it('toJSON should serialize to the right format if the field has a value', () => {
-        let localEventVariable = angular.copy(eventVariable);
-        localEventVariable.isRequired = true;
-        let eventField = new YardField(localEventVariable);
-        let value = eventField.currentValue;
-
-        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":"1"}');
+        let payload = requiredField.toJSON();
+        expect(JSON.stringify(payload)).to.equal('{"type":null,"value":"1"}');
     });
 
     it('toJSON should serialize to the right format if the field has no value', () => {
-        let localEventVariable = angular.copy(eventVariable);
-        localEventVariable.isRequired = false;
-        localEventVariable.value = undefined;
+        let field = unrequiredField;
+        field.value = field.availableValues[0];
 
-        let eventField = new YardField(localEventVariable);
-        let value = eventField.currentValue;
+        let payload = field.toJSON();
+        expect(JSON.stringify(payload)).to.equal('{"type":null,"value":null}');
+    });
 
-        expect(JSON.stringify(eventField)).to.equal('{"type":null,"value":null}');
+    it('Should validate correctly', () => {
+        let field = unrequiredField;
+        field.availableValues.forEach(value => {
+            field.value = value;
+            expect(field.valid).to.be.true;
+        });
     });
 });
