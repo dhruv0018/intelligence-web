@@ -17,22 +17,30 @@ class FormationField extends Field {
 
         if (!field) return;
         super(field);
+
         let formationId = this.initializeValue(field.value);
-        let formations = this.formations;
+        let formation = {};
+
+        this.formations.forEach((currentFormation)=> {
+            if (currentFormation.id === formationId) {
+                formation = currentFormation;
+            }
+        });
+
         let value = {
             formationId,
             get name() {
                 let calculatedName = !this.isRequired ? 'Optional' : this.name;
                 if (formationId) {
-                    formations.forEach((formation)=> {
-                        if (formation.id === formationId) {
-                            calculatedName = angular.copy(formation.name);
-                        }
-                    });
+                    calculatedName = formation.name;
                 }
                 return calculatedName;
+            },
+            get numberPlayers(){
+                return formation.numberPlayers;
             }
         };
+
         this.value = value;
     }
 
