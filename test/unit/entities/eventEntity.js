@@ -88,7 +88,7 @@ describe('Event Entity', () => {
         expect(sampleEvent.time).to.equal(srcEvent.time);
     });
 
-    it('should have the proper game ID on each variable value', () => {
+    it('should have the proper game ID on each field', () => {
 
         Object.keys(sampleEvent.fields).forEach(order => {
 
@@ -96,7 +96,7 @@ describe('Event Entity', () => {
         });
     });
 
-    it('should have a "keyboardShortcut" getter that works.', () => {
+    it('should have a "keyboardShortcut" getter', () => {
 
         expect(sampleEvent.keyboardShortcut).to.be.a('string');
         expect(sampleEvent.keyboardShortcut).to.equal('K');
@@ -114,7 +114,7 @@ describe('Event Entity', () => {
         expect(sampleEvent.keyboardShortcut).to.equal('K');
     });
 
-    it('should have a "isFloat" method that works.', () => {
+    it('should have a "isFloat" method.', () => {
 
         expect(sampleEvent.isFloat()).to.be.a('boolean');
         expect(sampleEvent.isFloat()).to.be.false;
@@ -164,13 +164,13 @@ describe('Event Entity', () => {
         });
     });
 
-    it('should have a "isEndAndStart" method that works.', () => {
+    it('should have a "isEndAndStart" method', () => {
 
         expect(sampleEvent.isEndAndStart()).to.be.a('boolean');
         expect(sampleEvent.isEndAndStart()).to.be.false;
     });
 
-    it('should have called toJSON on a JSON.stringify call.', () => {
+    it('should have called toJSON on a JSON.stringify call', () => {
 
         sampleEvent.toJSON = sinon.spy();
 
