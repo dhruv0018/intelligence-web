@@ -21,20 +21,22 @@ function ArenaChartDataDependencies (
 
         constructor (gameId) {
 
+            const teamId = session.getCurrentTeamId();
+
             /* Load data. */
 
             this.playersByGame = players.load({gameId});
+            this.customTags = customtags.load({teamId});
 
             this.games = games.load(gameId).then(() => {
 
                 const data = {};
                 const game = games.get(gameId);
-                const teamId = session.getCurrentTeamId();
-
-                data.playersByGameId = players.load({gameId});
 
                 const gameTeamRoster = game.getRoster(game.teamId);
                 const gameOpposingTeamRoster = game.getRoster(game.opposingTeamId);
+
+                // TODO: Use filter once implemented: players?gameId
                 data.playersByRosters = players.load({
                         'rosterId[]': [
                             gameTeamRoster.id,
@@ -43,7 +45,6 @@ function ArenaChartDataDependencies (
                     });
 
                 data.arenaEvents = game.retrieveArenaEvents();
-                data.customTags = customtags.load({teamId});
 
                 return $q.all(data);
             });
