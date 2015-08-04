@@ -64,6 +64,8 @@ class KrossoverEvent extends Entity {
             rawField.value = variableValue.value;
             this.fields[index + 1] = FieldFactory.createField(rawField, variableValue.type);
         });
+
+        delete this.tagVariables;
     }
 
     /**
