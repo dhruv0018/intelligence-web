@@ -135,7 +135,8 @@
                         <a id="share-film-public-anyone-reel-link-cta" data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/r/{{shortId}}</a>
                     </div>
                 </div>
-                <div class="method-row">
+                <!-- Hide embed code for games until further notice -->
+                <div class="method-row" ng-hide="isGame">
                     <div class="public-link-box pull-right" data-ng-show="linkActive">
                         <code id="share-film-public-embed-game-field" data-ng-show="isGame">&lt;iframe src="{{config.links.intelligence.uri}}/g/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
                         <code id="share-film-public-embed-reel-field" data-ng-show="!isGame">&lt;iframe src="{{config.links.intelligence.uri}}/r/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
