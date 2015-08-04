@@ -33,20 +33,28 @@ GamesDownAndDistance.config([
 
                         var gameId = Number($stateParams.id);
 
-                        return games.load(gameId).then(function() {
+                        let gamePromise = games.load(gameId);
+
+                        let Data = {
+                            game: gamePromise,
+                            tagsets: tagsets.load(),
+                            filtersets: filtersets.load()
+                        };
+
+                        gamePromise.then(function() {
 
                             let game = games.get(gameId);
+
+                            let teamsPromise = teams.load([
+                                game.uploaderTeamId,
+                                game.teamId,
+                                game.opposingTeamId
+                            ]);
 
                             let Data = {
                                 game: game,
                                 user: users.load(game.uploaderUserId),
-                                tagsets: tagsets.load(),
-                                filtersets: filtersets.load(),
-                                teams: teams.load([
-                                    game.uploaderTeamId,
-                                    game.teamId,
-                                    game.opposingTeamId
-                                ]),
+                                teams: teamsPromise,
                                 plays: plays.load({
                                     gameId: game.id
                                 }),
@@ -57,7 +65,8 @@ GamesDownAndDistance.config([
                                     ]
                                 })
                             };
-                            Data.league = Data.teams.then(function() {
+
+                            Data.league = teamsPromise.then(function() {
                                 let uploaderTeam = teams.get(game.uploaderTeamId);
                                 return leagues.load(uploaderTeam.leagueId);
                             });
@@ -65,6 +74,7 @@ GamesDownAndDistance.config([
                             return $q.all(Data);
                         });
 
+                        return $q.all(Data);
                     }
                 ]
             }
