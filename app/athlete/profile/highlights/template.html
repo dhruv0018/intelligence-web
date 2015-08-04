@@ -1,5 +1,7 @@
 <div class="highlights">
 
+    <button class="circle-button add-reels-button" ng-show="isCurrentUser" ng-click="manageReels()" hide show-gt-sm><i class="icon icon-plus"></i></button>
+
     <div class="athlete-info-container">
         <athlete-resume athlete="athlete"></athlete-resume>
 
@@ -13,7 +15,7 @@
 
         <div class="featured-reel-video">
             <div class="featured-reel-header">
-                <h3>{{featuredReel.name}}</h3>
+                <a ui-sref="Reel({id:featuredReel.id})" target="_blank">{{featuredReel.name}}</a>
             </div>
             <video-player sources="sources"></video-player>
         </div>

@@ -464,42 +464,53 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return teamId === this.uploaderTeamId;
             },
-            publishToProfile: function() {
-                var self = this;
+            publishToProfile: function(user) {
+                // Publishes this reel to a user's profile
+                user = user || session.getCurrentUser();
 
-                if (!self.isSharedWithPublic()) {
-                    self.togglePublicSharing();
+                if (!user) throw new Error('No user');
+
+                if (!this.isSharedWithPublic()) {
+                    this.togglePublicSharing();
                 }
 
-                self.isPublishedToProfile = true;
+                if (!this.isPublishedToProfile(user)) {
+                    user.profile.reelIds.push(this.id);
+                }
             },
-            unpublishFromProfile: function() {
-                var self = this;
+            unpublishFromProfile: function(user) {
+                // Unpublishes this reel from a user's profile
+                user = user || session.getCurrentUser();
 
-                if (self.isSharedWithPublic()) {
-                    self.togglePublicSharing();
+                if (!user) throw new Error('No user');
+
+                if (this.isSharedWithPublic()) {
+                    this.togglePublicSharing();
                 }
 
-                self.isPublishedToProfile = false;
+                if (this.isPublishedToProfile(user)) {
+                    user.profile.reelIds.forEach( (reelId, index) => {
+                        if (reelId === this.id) {
+                            user.profile.reelIds.splice(index, 1);
+                        }
+                    });
+                }
             },
-            getPublishedReels: function(userId) {
-                userId = userId || session.getCurrentUserId();
+            isPublishedToProfile: function(user) {
+                // Determines if this reel is on a user's profile
+                user = user || session.getCurrentUser();
 
-                if (!userId) throw new Error('No userId');
+                if (!user) throw new Error('No user');
 
-                var reels = this.getList();
-
-                return reels.filter(function publishedReels(reel) {
-
-                    return reel.uploaderUserId == userId &&
-                        reel.isPublishedToProfile === true;
+                return user.profile.reelIds.find( reelId => {
+                    return this.id === reelId;
                 });
             },
             isFeatured: function(user) {
-                var self = this;
+
                 user = user || session.getCurrentUser();
 
-                return self.id == user.profile.featuredReelId;
+                return this.id === user.profile.reelIds[0];
             },
             getFeaturedReel: function(user) {
 
@@ -507,9 +518,41 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (!user) throw new Error('No user');
 
-                let featuredReelId = user.profile.featuredReelId;
+                let featuredReelId = user.profile.reelIds[0];
 
                 return featuredReelId ? this.get(featuredReelId) : undefined;
+            },
+            getSortedProfileReels: function(user) {
+
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
+
+                /* Sort profile reels objects by order on profile */
+                let sortedProfileReels = user.profile.reelIds.map(reelId => this.get(reelId));
+
+                return sortedProfileReels;
+            },
+            getUserReels: function(userId, teamId) {
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                let userReels = [];
+
+                if (session.currentUser.is(ROLES.COACH)) {
+
+                    userReels = this.getByUploaderRole(userId, teamId);
+                    userReels = userReels.concat(this.getByUploaderTeamId(teamId));
+                }
+
+                else if (session.currentUser.is(ROLES.ATHLETE)) {
+
+                    userReels = this.getByUploaderUserId(userId);
+                    userReels = userReels.filter(reel => !reel.uploaderTeamId);
+                }
+
+                return userReels;
             }
         };
 

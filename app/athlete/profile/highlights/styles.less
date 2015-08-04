@@ -62,12 +62,19 @@
                 height: 60px;
                 background-color: white;
                 text-align: center;
+                cursor: pointer;
 
-                h3 {
+                &:hover {
+                    background-color: @play-selected-bg;
+                }
+
+                a {
                     margin: 0;
                     line-height: 60px;
                     font-weight: 400;
                     color: @gray-darker;
+                    text-decoration: none;
+                    display: block;
                 }
             }
         }
@@ -117,6 +124,18 @@
         @media only screen
         and (min-width: @md-screen-md) {
             margin-left: 100px;
+        }
+    }
+
+    .add-reels-button {
+        background-color: @brand-light-blue;
+        color: white;
+        position: absolute;
+        top: 175px;
+        right: 50px;
+
+        &:hover {
+            background-color: @brand-info;
         }
     }
 }

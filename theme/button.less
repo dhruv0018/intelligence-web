@@ -153,6 +153,7 @@
     letter-spacing: normal;
     text-transform: uppercase;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
         color: darken(@brand-success, 10%);
@@ -165,9 +166,27 @@
     letter-spacing: normal;
     text-transform: uppercase;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
         color: darken(@brand-danger, 10%);
         text-decoration: none;
+    }
+}
+
+.circle-button {
+    border-radius: 100%;
+    border: none;
+    box-shadow: 1px 1px 5px black;
+    width: 45px;
+    height: 45px;
+    font-size: 30px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+        margin: auto;
     }
 }
