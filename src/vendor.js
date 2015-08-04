@@ -34,3 +34,4 @@ require('videogular-poster/vg-poster');
 require('fullscreen-api-polyfill/fullscreen-api-polyfill');
 require('object.observe/dist/object-observe');
 require('@krossover/fit-element');
+require('@krossover/krossover-checkbox');
