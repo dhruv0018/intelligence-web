@@ -260,10 +260,7 @@ module.exports = function(grunt) {
                         'lib/directives/play/styles.less',
                         'lib/directives/indexing-block/styles.less',
                         'lib/directives/dynamic-tables/styles.less',
-                        'lib/directives/field/styles.less',
-                        'lib/directives/field/field.less',
-                        'lib/directives/field/team-player-dropdown/styles.less',
-                        'lib/directives/field/player-dropdown/styles.less',
+                        'lib/directives/field/**/*.less',
                         'app/reel/*.less',
                         'app/indexer/**/*.less',
                         'app/styleguide/**/*.less'
