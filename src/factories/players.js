@@ -44,9 +44,14 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 return player;
             },
 
+            /**
+             * Gets a player's jersey number on a specific roster
+             * @param {roster} roster
+             * @returns {string} jersey number or empty string if does not exist
+             */
             getJerseyNumber: function(roster) {
 
-                if (!roster) throw new Error(`getJerseyNumber() required 'roster' parameter'.`);
+                if (!roster) throw new Error(`getJerseyNumber() requires 'roster' parameter`);
 
                 try {
 
@@ -56,6 +61,20 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                     return '';
                 }
+            },
+
+            /**
+             * Gets a player label, a combination of a players jersey number, name, and other attributes
+             * @param {roster} roster
+             * @returns {string} the player label
+             */
+            getPlayerLabel: function(roster) {
+
+                if (!roster) throw new Error(`getPlayerLabel() requires 'roster' parameter`);
+
+                const jerseyNumber = this.getJerseyNumber(roster);
+
+                return jerseyNumber ? `${jerseyNumber} ${this.shortName}` : this.shortName;
             },
 
             resendEmail: function(userId, teamId) {

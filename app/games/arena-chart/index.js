@@ -105,24 +105,24 @@ function GamesArenaChartController(
     const pills = [];
 
     teamPlayerList.forEach((player) => {
-        const playerCopy = angular.copy(player);
-        const jerseyNumber = player.getJerseyNumber(game.rosters[team.id]);
-        playerCopy.name = jerseyNumber ? `${jerseyNumber} ${player.shortName}` : player.shortName;
-        pills.push(playerCopy);
+        const playerLabel = player.getPlayerLabel(gameTeamRoster);
+        pills.push({
+            id: player.id,
+            name: playerLabel
+        });
     });
 
     opposingTeamPlayerList.forEach((player) => {
-        const playerCopy = angular.copy(player);
-        const jerseyNumber = player.getJerseyNumber(game.rosters[opposingTeam.id]);
-        playerCopy.name = jerseyNumber ? `${jerseyNumber} ${player.shortName}` : player.shortName;
-        pills.push(playerCopy);
+        const playerLabel = player.getPlayerLabel(gameOpposingTeamRoster);
+        pills.push({
+            id: player.id,
+            name: playerLabel
+        });
     });
 
     customTags.forEach((tag) => {
         pills.push(tag);
     });
-
-    this.activePills = pills;
 
     /* reset filters */
     this.resetFilters = () => eventEmitter.emit(EVENT.ARENA_CHART.FILTERS.RESET);
@@ -132,61 +132,55 @@ function GamesArenaChartController(
         if (!pill) return;
 
         let index;
+        let filters = this.filters;
+        let teamPlayersIds = filters.teamPlayersIds;
+        let opposingTeamPlayersIds = filters.opposingTeamPlayersIds;
+        let customTagIds = filters.customTagIds;
 
-        if (pill.model === 'PlayersResource') {
+        index = teamPlayersIds.indexOf(pill.id);
+        if (index !== -1) {
+            teamPlayersIds.splice(index, 1);
+            return;
+        }
 
-            index = this.filters.teamPlayersIds.indexOf(pill.id);
-            if (index != -1) this.filters.teamPlayersIds.splice(index, 1);
+        index = opposingTeamPlayersIds.indexOf(pill.id);
+        if (index !== -1) {
+            opposingTeamPlayersIds.splice(index, 1);
+            return;
+        }
 
-            index = this.filters.opposingTeamPlayersIds.indexOf(pill.id);
-            if (index != -1) this.filters.opposingTeamPlayersIds.splice(index, 1);
-
-        } else if (pill.model === 'CustomtagsResource') {
-
-            index = this.filters.customTagIds.indexOf(pill.id);
-            if (index != -1) this.filters.customTagIds.splice(index, 1);
+        index = customTagIds.indexOf(pill.id);
+        if (index !== -1) {
+            customTagIds.splice(index, 1);
+            return;
         }
     };
 
-    $scope.$watch(
-        () => {
+    const DEEP_WATCH = true;
 
-            return this.filters;
+    const filtersWatch = (newFilters) => {
 
-        },
-        (newFilters) => {
+        if (!newFilters) return;
 
-            if (!newFilters) return;
+        /* Filter out active pills */
+        this.activePills = pills.filter(getActivePills);
 
-            /* Filter out active pills */
-            this.activePills = pills.filter((pill) => {
+        function getActivePills(pill) {
 
-                /* Team Players */
-                if (pill.model === 'PlayersResource') {
+            let isActive = newFilters.teamPlayersIds.some(playerId => playerId === pill.id);
+            if (isActive) return true;
 
-                    let isTeamPlayer = newFilters.teamPlayersIds.some((playerId) => {
-                        return pill.id === playerId;
-                    });
+            isActive = newFilters.opposingTeamPlayersIds.some(playerId => playerId === pill.id);
+            if (isActive) return true;
 
-                    if (isTeamPlayer) return isTeamPlayer;
+            isActive = newFilters.customTagIds.some(tagId => tagId === pill.id);
+            if (isActive) return true;
 
-                    let isOpposingTeamPlayer = newFilters.opposingTeamPlayersIds.some((playerId) => {
-                        return pill.id === playerId;
-                    });
+            return false;
+        }
+    };
 
-                    return isOpposingTeamPlayer;
-
-                } else if (pill.model === 'CustomtagsResource') {
-
-                    let isCustomTag = newFilters.customTagIds.some((tagId) => {
-                        return pill.id === tagId;
-                    });
-
-                    return isCustomTag;
-                }
-            });
-        }, true
-    );
+    $scope.$watch(() => this.filters, filtersWatch, DEEP_WATCH);
 }
 
 GamesArenaChart.controller('GamesArenaChart.controller', GamesArenaChartController);
