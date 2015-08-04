@@ -17,7 +17,8 @@
         "change-password",
         "admin-management",
         "kvs-uploader-interface",
-        "manage-profile-reels"
+        "manage-profile-reels",
+        "add-profile-team"
     ],
     "scripts": [
         "index.js"

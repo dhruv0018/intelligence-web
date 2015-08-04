@@ -502,9 +502,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (!user) throw new Error('No user');
 
-                return user.profile.reelIds.find( reelId => {
-                    return this.id === reelId;
-                });
+                return user.profile.reelIds.some(reelId => this.id === reelId);
             },
             isFeatured: function(user) {
 
@@ -521,17 +519,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 let featuredReelId = user.profile.reelIds[0];
 
                 return featuredReelId ? this.get(featuredReelId) : undefined;
-            },
-            getSortedProfileReels: function(user) {
-
-                user = user || session.getCurrentUser();
-
-                if (!user) throw new Error('No user');
-
-                /* Sort profile reels objects by order on profile */
-                let sortedProfileReels = user.profile.reelIds.map(reelId => this.get(reelId));
-
-                return sortedProfileReels;
             },
             getUserReels: function(userId, teamId) {
 

@@ -1,12 +1,9 @@
 <div class="manage-profile-reels">
 
-    <header class="modal-header" ng-class="{'centered': reordering}">
-
-        <span class="btn-simple-cancel" ng-click="$dismiss()" ng-hide="reordering">Cancel</span>
+    <header class="modal-header">
         <h3 class="modal-title" ng-hide="reordering">Manage Reels on your Profile</h3>
         <h3 class="modal-title" ng-show="reordering">Reorder Reels on your Profile</h3>
-        <button class="circle-button" ng-click="saveProfile()" ng-hide="reordering"><i class="icon icon-ok"></i></button>
-
+        <i class="icon icon-remove" ng-click="$dismiss()"></i>
     </header>
 
     <div class="modal-body">
@@ -77,6 +74,11 @@
                     <li>Name the new reel, and then you're done!</li>
                 </ol>
             </div>
+        </div>
+
+        <div class="button-row" ng-hide="reordering">
+            <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
+            <button class="btn btn-primary" ng-click="saveProfile()">Done</button>
         </div>
     </div>
 

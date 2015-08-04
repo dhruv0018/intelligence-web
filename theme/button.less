@@ -190,3 +190,30 @@
         margin: auto;
     }
 }
+
+.multiselect-dropdown-button {
+    padding: 8px;
+    border: thin solid @gray-border;
+    border-radius: 4px;
+    color: @gray;
+    font-weight: 400;
+
+    .icon-chevron-down {
+        font-size: 12px;
+        margin-left: 10px;
+    }
+}
+
+.multiselect-dropdown-button,
+.multiselect-dropdown-button:hover,
+.multiselect-dropdown-button:active,
+.multiselect-dropdown-button:focus {
+    background-color: white;
+    box-shadow: none !important;
+}
+
+.multiselect-dropdown-button[disabled] {
+    cursor: not-allowed;
+    opacity: .5;
+    background-color: @gray-lighter !important;
+}

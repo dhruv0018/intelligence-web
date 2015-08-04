@@ -23,7 +23,7 @@
             </p>
             <ul>
                 <li class="team-position" ng-repeat="positionId in team.positionIds">
-                    {{getPositionsForProfileTeam(team)[positionId].description}}
+                    {{getPositionForProfileTeam(team, positionId).description}}
                 </li>
             </ul>
         </div>
