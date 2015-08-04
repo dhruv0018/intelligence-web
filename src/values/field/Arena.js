@@ -1,4 +1,5 @@
 import Field from './Field';
+import ARENA_REGIONS_BY_ID from '../../constants/arenas.js';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
@@ -16,7 +17,6 @@ class ArenaField extends Field {
     constructor (field) {
         if (!field) return;
         super(field);
-
         let region = field.value && field.value.region ? this.initializeValue(field.value.region) : this.initializeValue(field.value);
         let coordinates = {
             x: field.value && field.value.coordinates && field.value.coordinates.x ? this.initializeValue(field.value.coordinates.x) : null,
@@ -29,17 +29,25 @@ class ArenaField extends Field {
             get name() {
                 let calculatedName = !this.isRequired ? 'Optional' : this.name;
                 if (region) {
-                    let injector = angular.element(document).injector();
-                    this.regionMap = injector.get('ARENA_REGIONS_BY_ID');
-                    calculatedName = angular.copy(this.regionMap[this.region].name);
+                    calculatedName = angular.copy(ARENA_REGIONS_BY_ID[region].name);
                 }
                 return calculatedName;
+            },
+            get regionId(){
+                return region;
             }
         };
-
         this.value = value;
     }
 
+
+    // get value(){
+    //     return super.value;
+    // }
+    // set value(arena) {
+    //     arena.regionId = arena.region ?;
+    //     this._value = arena;
+    // }
     /**
      * Getter for the validity of the Field
      * @type {Boolean}
@@ -63,13 +71,15 @@ class ArenaField extends Field {
     toJSON () {
 
         let variableValue = {};
+        let value = this.value;
+        let region = value.region && value.region.id ? value.region.id : value.region;
 
         variableValue = {
 
             type: null,
             value: {
                 coordinates: this.value.coordinates,
-                region: this.value.region
+                region
             }
         };
 
