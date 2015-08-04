@@ -1,6 +1,7 @@
 import KrossoverEvent from '../../../src/entities/event';
 import KrossoverTag from '../../../src/entities/tag';
 import Field from '../../../src/values/field/Field';
+import Static from '../../../src/values/field/Static';
 import playData from './sample-data/play';
 import tagData from './sample-data/tag-22';
 
@@ -86,6 +87,33 @@ describe('Event Entity', () => {
 
         /* Properties from Event JSON */
         expect(sampleEvent.time).to.equal(srcEvent.time);
+    });
+
+    it('should have an "indexerScript" property', () => {
+
+        expect(sampleEvent.indexerScript).to.be.an.array;
+        sampleEvent.indexerScript.forEach(field => {
+
+            expect(typeof field === "string" || field instanceof Static).to.be.true;
+        });
+    });
+
+    it('should have an "userScript" property', () => {
+
+        expect(sampleEvent.userScript).to.be.an.array;
+        sampleEvent.userScript.forEach(field => {
+
+            expect(typeof field === "string" || field instanceof Static).to.be.true;
+        });
+    });
+
+    it('should have an "summaryScript" property', () => {
+
+        expect(sampleEvent.summaryScript).to.be.an.array;
+        sampleEvent.summaryScript.forEach(field => {
+
+            expect(typeof field === "string" || field instanceof Static).to.be.true;
+        });
     });
 
     it('should have the proper game ID on each field', () => {
