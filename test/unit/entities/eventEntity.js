@@ -198,6 +198,12 @@ describe('Event Entity', () => {
         expect(sampleEvent.isEndAndStart()).to.be.false;
     });
 
+    it('should have a "valid" getter that tests the validity of the fields', () => {
+
+        expect(sampleEvent.valid).to.be.a.boolean;
+        expect(sampleEvent.valid).to.be.true;
+    });
+
     it('should have called toJSON on a JSON.stringify call', () => {
 
         sampleEvent.toJSON = sinon.spy();
