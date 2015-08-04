@@ -30,7 +30,7 @@ class FormationField extends Field {
         let value = {
             formationId,
             get name() {
-                let calculatedName = !this.isRequired ? 'Optional' : this.name;
+                let calculatedName = !field.isRequired ? 'Optional' : field.name;
                 if (formationId) {
                     calculatedName = formation.name;
                 }

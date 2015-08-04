@@ -22,7 +22,7 @@ class PlayerField extends Field {
         let value = {
             playerId,
             get name () {
-                let calculatedName = !this.isRequired ? 'Optional' : this.name;
+                let calculatedName = !field.isRequired ? 'Optional' : field.name;
                 if (playerId) {
                     let injector = angular.element(document).injector();
                     let players = injector.get('PlayersFactory');

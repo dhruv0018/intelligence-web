@@ -23,7 +23,7 @@ class GapField extends Field {
         let value = {
             gapId,
             get name () {
-                let calculatedName = !this.isRequired ? 'Optional' : this.name;
+                let calculatedName = !field.isRequired ? 'Optional' : field.name;
                 if (gapId) {
                     calculatedName = gap.name;
                 }

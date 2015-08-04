@@ -30,7 +30,7 @@ class TeamPlayerField extends Field {
                 value.variableValueType    = 'Player';
                 Object.defineProperty(value, 'name', {
                     get: () => {
-                        let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+                        let calculatedName = !field.isRequired ? 'Optional' : field.name;
                         if (playerId && window && window.angular && document) {
                             let injector = angular.element(document).injector();
                             let players = injector.get('PlayersFactory');
@@ -48,7 +48,7 @@ class TeamPlayerField extends Field {
                 value.variableValueType = 'Team';
                 Object.defineProperty(value, 'name', {
                     get: () => {
-                        let calculatedName = !this.isRequired ? 'Optional' : 'Select';
+                        let calculatedName = !field.isRequired ? 'Optional' : field.name;
                         if (teamId && window && window.angular && document) {
                             let injector = angular.element(document).injector();
                             let teams = injector.get('TeamsFactory');

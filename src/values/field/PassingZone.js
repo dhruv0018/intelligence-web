@@ -25,7 +25,7 @@ class PassingZoneField extends Field {
         let value = {
             zoneId,
             get name() {
-                let calculatedName = !field.isRequired ? 'Optional' : this.name;
+                let calculatedName = !field.isRequired ? 'Optional' : field.name;
                 if (zone) {
                     calculatedName = zone.name;
                 }
