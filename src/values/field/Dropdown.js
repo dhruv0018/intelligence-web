@@ -22,7 +22,7 @@ class DropdownField extends Field {
         let value = {
             content,
             get name() {
-                return content ? content : !this.isRequired ? 'Optional' : this.name;
+                return content ? content : !field.isRequired ? 'Optional' : field.name;
             }
         };
 

@@ -22,7 +22,7 @@ class TeamField extends Field {
         let value = {
             teamId,
             get name () {
-                let calculatedName = !this.isRequired ? 'Optional' : this.name;
+                let calculatedName = !field.isRequired ? 'Optional' : field.name;
                 if (teamId && window && window.angular && document) {
                     let injector = angular.element(document).injector();
                     if (injector) {

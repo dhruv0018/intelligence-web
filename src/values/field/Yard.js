@@ -21,7 +21,7 @@ class YardField extends Field {
         let content = this.initializeValue(field.value, String);
         this.value = {
             content,
-            name: content ? content : !this.isRequired ? 'Optional': this.name
+            name: content ? content : !field.isRequired ? 'Optional': field.name
         };
     }
 
