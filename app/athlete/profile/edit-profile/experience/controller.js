@@ -12,6 +12,7 @@ const Experience = angular.module('Athlete.Profile.EditProfile.Experience');
 */
 ExperienceController.$inject = [
     '$scope',
+    '$filter',
     'TeamsFactory',
     'LeaguesFactory',
     'SportsFactory',
@@ -30,6 +31,7 @@ ExperienceController.$inject = [
  */
 function ExperienceController (
     $scope,
+    $filter,
     teams,
     leagues,
     sports,
@@ -56,11 +58,9 @@ function ExperienceController (
         return position;
     };
 
-    $scope.getTeamSport = function(teamId) {
+    $scope.getProfileTeamSport = function(teamId) {
         let team = teams.get(teamId);
-        let league = leagues.get(team.leagueId);
-        let sport = sports.get(league.sportId);
-        return sport;
+        return team.getSport();
     };
 
     $scope.openTeamModal = function(profileTeam) {
