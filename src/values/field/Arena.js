@@ -17,8 +17,7 @@ class ArenaField extends Field {
     constructor (field) {
         if (!field) return;
         super(field);
-
-        let region = field.value && field.value.region ? {id: this.initializeValue(field.value.region)} : {id: this.initializeValue(field.value)};
+        let region = field.value && field.value.region ? this.initializeValue(field.value.region) : this.initializeValue(field.value);
         let coordinates = {
             x: field.value && field.value.coordinates && field.value.coordinates.x ? this.initializeValue(field.value.coordinates.x) : null,
             y: field.value && field.value.coordinates && field.value.coordinates.y ?  this.initializeValue(field.value.coordinates.y) : null
@@ -29,37 +28,26 @@ class ArenaField extends Field {
             coordinates,
             get name() {
                 let calculatedName = !this.isRequired ? 'Optional' : this.name;
-                if (regionId) {
-                    calculatedName = angular.copy(ARENA_REGIONS_BY_ID[regionId].name);
+                if (region) {
+                    calculatedName = angular.copy(ARENA_REGIONS_BY_ID[region].name);
                 }
                 return calculatedName;
-            }
-        };
-
-        this.value = value;
-    }
-    get value() {
-        return super.value;
-    }
-
-    set value(arena) {
-        arena.regionId = arena.region.id;
-        this._value = arena;
-    }
-
-    clear() {
-        let value = {
-            region: {
-                id: null
             },
-            coordinates: {
-                x: null,
-                y: null
+            get regionId(){
+                return region;
             }
         };
         this.value = value;
     }
 
+
+    // get value(){
+    //     return super.value;
+    // }
+    // set value(arena) {
+    //     arena.regionId = arena.region ?;
+    //     this._value = arena;
+    // }
     /**
      * Getter for the validity of the Field
      * @type {Boolean}
@@ -67,7 +55,7 @@ class ArenaField extends Field {
     get valid () {
 
         return this.isRequired ?
-            (Number.isInteger(this.value.regionId) &&
+            (Number.isInteger(this.value.region) &&
             !isNaN(this.value.coordinates.x) &&
             !isNaN(this.value.coordinates.y)) :
             true;
@@ -83,13 +71,15 @@ class ArenaField extends Field {
     toJSON () {
 
         let variableValue = {};
+        let value = this.value;
+        let region = value.region && value.region.id ? value.region.id : value.region;
 
         variableValue = {
 
             type: null,
             value: {
                 coordinates: this.value.coordinates,
-                region: this.value.regionId
+                region
             }
         };
 
