@@ -60,7 +60,6 @@ describe('Event Entity', () => {
             'fields',
             'tagId',
             'time',
-            'tagVariables',
             'indexerScript',
             'userScript',
             'summaryScript',
@@ -84,8 +83,6 @@ describe('Event Entity', () => {
         expect(sampleEvent.isPeriodTag).to.equal(srcTag.isPeriodTag);
         expect(sampleEvent.buffer).to.equal(srcTag.buffer);
         expect(sampleEvent.tagId).to.equal(srcTag.id);
-        expect(sampleEvent.tagVariables).to.be.an.array;
-        expect(sampleEvent.tagVariables).to.deep.equal(srcTag.tagVariables);
         expect(sampleEvent.summaryPriority).to.equal(srcTag.summaryPriority);
 
         /* Properties from Event JSON */
