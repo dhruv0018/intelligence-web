@@ -42,6 +42,60 @@ describe('Event Entity', () => {
         expect(KrossoverEvent).to.respondTo('isEndAndStart');
     });
 
+    it('should have certain properties when instantiated.', () => {
+
+        expect(sampleEvent).to.contain.keys([
+            'name',
+            'description',
+            'isStart',
+            'isEnd',
+            'tagSetId',
+            'shortcutKey',
+            'children',
+            'pointsAssigned',
+            'assignThisTeam',
+            'isPeriodTag',
+            'buffer',
+            'fields',
+            'tagId',
+            'time',
+            'indexerScript',
+            'userScript',
+            'summaryScript',
+            'summaryPriority'
+        ]);
+    });
+
+    it('should have certain properties whose values equal the source JSON when instantiated.', () => {
+
+        /* Properties from Tag JSON */
+        expect(sampleEvent.name).to.equal(srcTag.name);
+        expect(sampleEvent.description).to.equal(srcTag.description);
+        expect(sampleEvent.isStart).to.equal(srcTag.isStart);
+        expect(sampleEvent.isEnd).to.equal(srcTag.isEnd);
+        expect(sampleEvent.tagSetId).to.equal(srcTag.tagSetId);
+        expect(sampleEvent.shortcutKey).to.equal(srcTag.shortcutKey);
+        expect(sampleEvent.children).to.be.an.array;
+        expect(sampleEvent.children).to.deep.equal(srcTag.children);
+        expect(sampleEvent.pointsAssigned).to.equal(srcTag.pointsAssigned);
+        expect(sampleEvent.assignThisTeam).to.equal(srcTag.assignThisTeam);
+        expect(sampleEvent.isPeriodTag).to.equal(srcTag.isPeriodTag);
+        expect(sampleEvent.buffer).to.equal(srcTag.buffer);
+        expect(sampleEvent.tagId).to.equal(srcTag.id);
+        expect(sampleEvent.summaryPriority).to.equal(srcTag.summaryPriority);
+
+        /* Properties from Event JSON */
+        expect(sampleEvent.time).to.equal(srcEvent.time);
+    });
+
+    it('should have the proper game ID on each variable value', () => {
+
+        Object.keys(sampleEvent.fields).forEach(order => {
+
+            expect(sampleEvent.fields[order].gameId).to.equal(srcJSON.gameId);
+        });
+    });
+
     it('should have a "keyboardShortcut" getter that works.', () => {
 
         expect(sampleEvent.keyboardShortcut).to.be.a('string');
@@ -114,38 +168,6 @@ describe('Event Entity', () => {
 
         expect(sampleEvent.isEndAndStart()).to.be.a('boolean');
         expect(sampleEvent.isEndAndStart()).to.be.false;
-    });
-
-    it('should have certain properties when instantiated.', () => {
-
-        expect(sampleEvent).to.contain.keys([
-            'name',
-            'indexerScript',
-            'userScript',
-            'shortcutKey',
-            'description',
-            'isStart',
-            'isEnd',
-            'tagSetId',
-            'children',
-            'pointsAssigned',
-            'assignThisTeam',
-            'isPeriodTag',
-            'summaryPriority',
-            'summaryScript',
-            'buffer',
-            'fields',
-            'tagId',
-            'time'
-        ]);
-    });
-
-    it('should have the proper game ID on each variable value', () => {
-
-        Object.keys(sampleEvent.fields).forEach(order => {
-
-            expect(sampleEvent.fields[order].gameId).to.equal(srcJSON.gameId);
-        });
     });
 
     it('should have called toJSON on a JSON.stringify call.', () => {
