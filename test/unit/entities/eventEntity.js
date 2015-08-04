@@ -1,5 +1,6 @@
 import KrossoverEvent from '../../../src/entities/event';
 import KrossoverTag from '../../../src/entities/tag';
+import Field from '../../../src/values/field/Field';
 import playData from './sample-data/play';
 import tagData from './sample-data/tag-22';
 
@@ -36,6 +37,7 @@ describe('Event Entity', () => {
     it('should have public API', () => {
 
         expect(KrossoverEvent).to.respondTo('toJSON');
+        expect(KrossoverEvent).to.respondTo('mapScript');
         expect(KrossoverEvent).to.respondTo('isFloat');
         expect(KrossoverEvent).to.respondTo('isEndAndStart');
     });
@@ -62,6 +64,50 @@ describe('Event Entity', () => {
 
         expect(sampleEvent.isFloat()).to.be.a('boolean');
         expect(sampleEvent.isFloat()).to.be.false;
+    });
+
+    it('should return null if trying to map a script that doesn\'t exist.', () => {
+
+        expect(sampleEvent.mapScript()).to.be.null;
+    });
+
+    it('should have a getter for "indexerFields"', () => {
+
+        expect(sampleEvent.indexerFields).to.be.an.array;
+    });
+
+    it('should return an array of Fields when calling the "indexerFields" getter', () => {
+
+        sampleEvent.indexerFields.forEach(field => {
+
+            expect(field instanceof Field).to.be.true;
+        });
+    });
+
+    it('should have a getter for "userFields"', () => {
+
+        expect(sampleEvent.userFields).to.be.an.array;
+    });
+
+    it('should return an array of Fields when calling the "userFields" getter', () => {
+
+        sampleEvent.userFields.forEach(field => {
+
+            expect(field instanceof Field).to.be.true;
+        });
+    });
+
+    it('should have a getter for "summaryFields"', () => {
+
+        expect(sampleEvent.summaryFields).to.be.an.array;
+    });
+
+    it('should return an array of Fields when calling the "summaryFields" getter', () => {
+
+        sampleEvent.summaryFields.forEach(field => {
+
+            expect(field instanceof Field).to.be.true;
+        });
     });
 
     it('should have a "isEndAndStart" method that works.', () => {
@@ -126,3 +172,5 @@ describe('Event Entity', () => {
         });
     });
 });
+
+// TODO: Write unit tests for Events that are not passed in Event JSON
