@@ -89,6 +89,11 @@ function ReelController(
 
     playManager.current = play;
 
+    // For clips navigation in mobile and embedded views
+    $scope.playsManager = playsManager;
+    $scope.playsFactory = playsFactory;
+    $scope.currentPlay = play;
+    $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
 
     /* TODO: game.getPosterImage() */
     $scope.posterImage = {
@@ -259,6 +264,8 @@ function ReelController(
 
             $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
             $scope.currentPlayId = play.id;
+            $scope.currentPlay = play;
+            $scope.clipIndex = playsManager.getIndex(play) + 1;
         }
     }
 
