@@ -17,10 +17,10 @@ class ArenaField extends Field {
         if (!field) return;
         super(field);
 
-        let region = this.initializeValue(field.value.region);
+        let region = field.value && field.value.region ? this.initializeValue(field.value.region) : this.initializeValue(field.value);
         let coordinates = {
-            x: this.initializeValue(field.value.coordinates.x),
-            y: this.initializeValue(field.value.coordinates.y)
+            x: field.value && field.value.coordinates && field.value.coordinates.x ? this.initializeValue(field.value.coordinates.x) : null,
+            y: field.value && field.value.coordinates && field.value.coordinates.y ?  this.initializeValue(field.value.coordinates.y) : null
         };
 
         let value = {
