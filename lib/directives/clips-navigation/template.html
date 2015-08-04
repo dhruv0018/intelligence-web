@@ -1,0 +1,21 @@
+<div class="clips-navigation">
+    <div ng-class="{disabled: !previousPlay}"
+         class="clip-previous"
+         ng-click="goToPlay(previousPlay)">
+        <i class="icon icon-chevron-left"></i>
+        <span hide show-gt-sm>&nbsp;Prev</span>
+    </div>
+
+    <div class="clip-info">
+        Clip&nbsp;{{clipIndex}}/{{clipTotal}}
+    </div>
+
+    <div ng-class="{disabled: !nextPlay}"
+         class="clip-next"
+         ng-click="goToPlay(nextPlay)">
+        <span hide show-gt-sm>Next&nbsp;</span>
+        <i class="icon icon-chevron-right"></i>
+    </div>
+
+    <krossover-playlist-control play-count="clipTotal"></krossover-playlist-control>
+</div>
