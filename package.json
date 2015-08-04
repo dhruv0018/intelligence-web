@@ -130,7 +130,8 @@
     "svg.js": "2.0.0",
     "time-grunt": "1.1.0",
     "traceur": "0.0.86",
-    "tv4": "1.1.12"
+    "tv4": "1.1.12",
+    "@krossover/fit-element": "0.2.0"
   },
   "main": "./src/main.js",
   "scripts": {
