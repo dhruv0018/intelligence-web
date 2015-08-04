@@ -18,5 +18,6 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'Directives',
     'Dialogs',
     'FitElement',
-    'KrossoverCheckbox'
+    'KrossoverCheckbox',
+    'KrossoverMultiselect'
 ]);
