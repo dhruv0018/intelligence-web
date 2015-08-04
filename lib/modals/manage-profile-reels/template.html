@@ -22,7 +22,7 @@
         <p class="reels-list-header">
             <span ng-hide="reordering">On Profile ({{matchingProfileReels.length}})</span>
             <span ng-show="reordering">Drag to reorder <span class="reorder-subtitle">- the video for the top most reel will be featured on your profile</span></span>
-            <span class="reorder" ng-click="reordering = true" ng-hide="reordering || !matchingProfileReels.length">Reorder</span>
+            <span class="reorder" ng-click="reordering = true" ng-hide="reordering || !matchingProfileReels.length || isMobile">Reorder</span>
             <span class="reorder" ng-click="reorderProfileReels()" ng-show="reordering">Done</span>
         </p>
         <div class="reels-list" ng-show="matchingProfileReels.length && !reordering">
