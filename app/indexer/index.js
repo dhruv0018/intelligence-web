@@ -1,17 +1,19 @@
 /* Component dependencies */
-require('indexer-game');
-require('indexer-games');
+import IndexerGame from './indexer-game/';
+import IndexerGames from './indexer-games/';
+import IndexerHistory from './indexer-history/';
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Indexer module.
  * @module Indexer
  */
-var Indexer = angular.module('indexer', [
-    'indexer-game',
-    'indexer-games'
+const Indexer = angular.module('Indexer', [
+    'IndexerGame',
+    'IndexerGames',
+    'IndexerHistory'
 ]);
 
 /**
@@ -25,10 +27,12 @@ Indexer.config([
 
         $stateProvider
 
-            .state('indexer', {
+            .state('Indexer', {
                 url: '/indexer',
                 parent: 'base',
                 abstract: true
             });
     }
 ]);
+
+export default Indexer;
