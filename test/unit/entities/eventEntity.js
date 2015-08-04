@@ -163,6 +163,12 @@ describe('Event Entity', () => {
         sampleEvent.indexerFields.forEach(field => {
 
             expect(field instanceof Field).to.be.true;
+            expect(field.isVariableValueValid(field)).to.be.true;
+
+            if (!field instanceof Static) {
+
+                expect(field.valid).to.be.true;
+            }
         });
     });
 
@@ -176,6 +182,12 @@ describe('Event Entity', () => {
         sampleEvent.userFields.forEach(field => {
 
             expect(field instanceof Field).to.be.true;
+            expect(field.isVariableValueValid(field)).to.be.true;
+
+            if (!field instanceof Static) {
+
+                expect(field.valid).to.be.true;
+            }
         });
     });
 
@@ -189,6 +201,12 @@ describe('Event Entity', () => {
         sampleEvent.summaryFields.forEach(field => {
 
             expect(field instanceof Field).to.be.true;
+            expect(field.isVariableValueValid(field)).to.be.true;
+
+            if (!field instanceof Static) {
+
+                expect(field.valid).to.be.true;
+            }
         });
     });
 
