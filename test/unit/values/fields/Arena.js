@@ -14,7 +14,7 @@ describe('General Arena Field', () => {
     });
 });
 
-describe.only('Arena Field', () => {
+describe('Arena Field', () => {
     let srcField;
     let requiredField;
     let unrequiredField;
