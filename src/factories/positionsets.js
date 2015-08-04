@@ -64,10 +64,7 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
 
                 if (!positionIds) return this.positions;
 
-                return positionIds.map(positionId => {
-
-                    return this.getPosition(positionId);
-                });
+                return positionIds.map(positionId => this.getPosition(positionId));
             },
 
             /**
@@ -77,10 +74,7 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
              */
             getPositionNames: function(positionIds) {
 
-                return this.getPositions(positionIds).map(position => {
-
-                    return position.name;
-                });
+                return this.getPositions(positionIds).map(position => position.name);
             }
         };
 
