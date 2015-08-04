@@ -1,0 +1,24 @@
+@import (reference) "main.less";
+
+.field() {
+
+    padding: 2px;
+    margin: 2px;
+    border: thin solid @brand-primary;
+    border-radius: 3px;
+    color: @brand-primary;
+    text-align: center;
+    text-overflow: ellipsis;
+
+    &:focus {
+
+        border: thin solid @gray-light;
+        color: @gray;
+    }
+
+    // Angular override
+    &.ng-dirty.ng-invalid:not(:focus) {
+
+        border-color: transparent;
+    }
+}
