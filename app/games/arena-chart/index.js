@@ -106,7 +106,7 @@ function GamesArenaChartController(
     const pills = [];
 
     teamPlayerList.forEach((player) => {
-        const playerLabel = player.getPlayerLabel(teamRoster);
+        const playerLabel = player.getPlayerTitle(teamRoster);
         pills.push({
             id: player.id,
             name: playerLabel
@@ -114,7 +114,7 @@ function GamesArenaChartController(
     });
 
     opposingTeamPlayerList.forEach((player) => {
-        const playerLabel = player.getPlayerLabel(opposingTeamRoster);
+        const playerLabel = player.getPlayerTitle(opposingTeamRoster);
         pills.push({
             id: player.id,
             name: playerLabel

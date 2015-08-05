@@ -53,29 +53,42 @@ IntelligenceWebClient.factory('PlayersFactory', [
             getJerseyNumber: function(roster, padLength = 3) {
 
                 if (!roster) throw new Error(`getJerseyNumber() requires 'roster' parameter`);
+                if (padLength && typeof padLength !== 'number') throw new Error(`getPlayerTitle() 'roster' should be of type 'number'`);
+
+                let jerseyNumber;
+                let playerInfo;
 
                 try {
-
-                    let jerseyNumber = roster.playerInfo[this.id].jerseyNumber;
-                    return $filter('padSpacesToFixedLength')(jerseyNumber, padLength, 'left');
-
+                    playerInfo = roster.playerInfo;
                 } catch (error) {
-
-                    return '';
+                    throw new Error(`getJerseyNumber(): playerInfo is not defined on roster`);
                 }
+
+                let specificPlayerInfo;
+
+                try {
+                    specificPlayerInfo = playerInfo[this.id];
+                } catch (error) {
+                    throw new Error(`getJerseyNumber(): player with id ${player.id} cannot be found on the roster given`);
+                }
+
+                jerseyNumber = specificPlayerInfo ? specificPlayerInfo.jerseyNumber : '';
+
+                return $filter('padSpacesToFixedLength')(jerseyNumber, padLength, 'left');
             },
 
             /**
-             * Gets a player label, a combination of a players jersey number, name, and other attributes
+             * Gets a player title, a combination of a players jersey number & shortName
              * @param {roster} roster
-             * @param {boolean} padding Pads the jerseyNumber with up to 3 spaces or less if desired
-             * @returns {string} the player label
+             * @param {?number} padLength Pads the jerseyNumber with up to 3 spaces or less/more if desired
+             * @returns {string} 'jerseyNumber shortName' or 'shortName' if has no jerseyNumber
              */
-            getPlayerLabel: function(roster, padding = 3) {
+            getPlayerTitle: function(roster, padLength = 3) {
 
-                if (!roster) throw new Error(`getPlayerLabel() requires 'roster' parameter`);
+                if (!roster) throw new Error(`getPlayerTitle() requires 'roster' parameter`);
+                if (padLength && typeof padLength !== 'number') throw new Error(`getPlayerTitle() 'roster' should be of type 'number'`);
 
-                const jerseyNumber = this.getJerseyNumber(roster, padding);
+                const jerseyNumber = this.getJerseyNumber(roster, padLength);
 
                 return jerseyNumber ? `${jerseyNumber} ${this.shortName}` : this.shortName;
             },
