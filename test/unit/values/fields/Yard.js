@@ -29,7 +29,7 @@ describe('Yard Field', () => {
     it('Should set values properly', () => {
         let field = requiredField;
         let value = field.value;
-        expect(value.content).to.equal('1');
+        expect(value.content).to.equal(1);
         expect(value.name).to.equal('1');
     });
 

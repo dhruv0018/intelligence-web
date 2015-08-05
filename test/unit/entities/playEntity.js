@@ -28,18 +28,11 @@ describe('Play Entity', () => {
 
             this.getTag = (tagId) => {
 
-                let tag = this.getTagJSON(tagId);
-
-                return new KrossoverTag(tag);
-            };
-
-            this.getTagJSON = (tagId) => {
-
                 let tag = angular.copy(srcTags[tagId]);
 
                 if (!tag) throw new Error(`Tag ${tagId} not found`);
 
-                return tag;
+                return new KrossoverTag(tag);
             };
         });
     }));

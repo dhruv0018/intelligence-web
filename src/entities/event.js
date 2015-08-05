@@ -225,29 +225,23 @@ class KrossoverEvent extends Entity {
      */
     toJSON () {
 
-        let copy = Object.assign({}, this);
+        if (!this.valid) {
 
-        delete copy.indexerScript;
-        delete copy.userScript;
-        delete copy.shortcutKey;
-        delete copy.description;
-        delete copy.isStart;
-        delete copy.isEnd;
-        delete copy.tagSetId;
-        delete copy.children;
-        delete copy.pointsAssigned;
-        delete copy.assignThisTeam;
-        delete copy.isPeriodTag;
-        delete copy.summaryPriority;
-        delete copy.summaryScript;
-        delete copy.buffer;
-        delete copy.name;
+            throw new Error('Cannot convert event to JSON without valid field data!');
+        }
 
-        copy.variableValues = {};
+        let copy = {
 
-        Object.keys(copy.fields).forEach(order => {
+            id            : this.id,
+            time          : this.time,
+            tagId         : this.tagId,
+            playId        : this.playId,
+            variableValues: {},
+        };
 
-            copy.variableValues[copy.fields[order].id] = copy.fields[order].toJSON();
+        Object.keys(this.fields).forEach(index => {
+
+            copy.variableValues[this.fields[index].id] = this.fields[index].toJSON();
         });
 
         return copy;
