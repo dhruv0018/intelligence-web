@@ -2,7 +2,7 @@
 
     <header>
 
-        <div class="header-content">
+        <div class="filters__helper">
 
             <count-label all-count="gamesArenaChart.arenaEvents.length" current-count="gamesArenaChart.filteredArenaEvents.length" label="Shots"></count-label>
 
@@ -23,12 +23,12 @@
 
         </div>
 
+        <arena-chart-filters filter-model="gamesArenaChart.filters"></arena-chart-filters>
+
     </header>
 
 
     <main class="content-full">
-
-        <arena-chart-filters filter-model="gamesArenaChart.filters" class="container"></arena-chart-filters>
 
         <div class="arena-chart-container">
 
