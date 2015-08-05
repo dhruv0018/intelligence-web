@@ -257,7 +257,9 @@ module.exports = function(grunt) {
                         'app/reel/*.less',
                         'app/indexer/**/*.less',
                         'lib/directives/indexing-block/styles.less',
-                        'lib/directives/dynamic-tables/styles.less'
+                        'lib/directives/dynamic-tables/styles.less',
+                        'app/reel/styles.less',
+                        'app/styleguide/**/*.less'
                     ]
                 }
             }

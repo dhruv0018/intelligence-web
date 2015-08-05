@@ -550,5 +550,25 @@
     "ShortClips": {
 
         "*": true
+    },
+
+    "Styleguide": {
+        "*": true
+    },
+
+    "Styleguide.Colors": {
+        "*": true
+    },
+
+    "Styleguide.Typography": {
+        "*": true
+    },
+
+    "Styleguide.Buttons": {
+        "*": true
+    },
+
+    "Styleguide.Forms": {
+        "*": true
     }
 }
