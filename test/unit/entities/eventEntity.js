@@ -431,5 +431,8 @@ describe('Event Entity', () => {
 
             expect(sampleEvent.variableValues[tagId]).to.deep.equal(srcEvent.variableValues[tagId]);
         });
+
+        /* Instantiated without event JSON */
+        expect(() => sampleEvent.toJSON()).to.throw(Error);
     });
 });
