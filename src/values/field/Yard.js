@@ -18,10 +18,10 @@ class YardField extends Field {
         if (!field) return;
 
         super(field);
-        let content = this.initializeValue(field.value, String);
+        let content = this.initializeValue(field.value);
         this.value = {
             content,
-            name: content ? content : !field.isRequired ? 'Optional': field.name
+            name: content ? String(content) : !field.isRequired ? 'Optional': field.name
         };
     }
 
