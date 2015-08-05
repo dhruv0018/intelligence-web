@@ -33,6 +33,15 @@
         border-left: 2px solid @gray-dark;
     }
 
+    &:first-child::after {
+        content: "";
+        position: absolute;
+        top: ~"calc(-70% + 7px)";
+        left: -2px;
+        border-left: 2px solid @gray-dark;
+        height: 70%;
+    }
+
     &:last-child::before {
 
         content: "";

@@ -4,11 +4,12 @@
     .playHeadingContainer {
 
         display: flex;
+        align-items: center;
         cursor: pointer;
 
         check-box {
             margin-right: 10px;
-            font-size: 25px;
+            font-size: 20px;
         }
 
         .playHeading {
@@ -92,7 +93,7 @@
 
         .watch-play,
         .play-chevron {
-            font-size: 36px;
+            font-size: 30px;
             width: 36px;
             color: @gray-light;
             cursor: pointer;
@@ -111,6 +112,10 @@
             &.invisible {
                 visibility: hidden;
             }
+        }
+
+        .watch-play {
+            z-index: 1;
         }
     }
 }
