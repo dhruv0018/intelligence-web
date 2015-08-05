@@ -58,6 +58,30 @@ describe('Play Entity', () => {
         expect(KrossoverPlay).to.respondTo('toJSON');
     });
 
+    it('should have certain properties when instantiated', () => {
+
+        expect(play).to.contain.keys([
+            'id',
+            'startTime',
+            'endTime',
+            'events',
+            'gameId',
+            'flags',
+            'clip',
+            'shares',
+            'createdAt',
+            'updatedAt',
+            'customTagIds',
+            'events',
+            'period',
+            'indexedScore',
+            'opposingIndexedScore',
+            'customTagIds',
+            'hasVisibleEvents',
+            'possessionTeamId'
+        ]);
+    });
+
     it('should have a "indexerScript" getter', () => {
 
         expect(play.indexerScript).to.be.an.array;
