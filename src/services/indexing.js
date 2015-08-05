@@ -104,6 +104,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 videoPlayer.seekTime(event.time);
 
                 playManager.current.save();
+                playsManager.calculatePlays();
                 playManager.clear();
                 tagsManager.reset();
                 eventManager.current = null;
