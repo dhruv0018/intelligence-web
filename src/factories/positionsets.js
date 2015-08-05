@@ -70,11 +70,13 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
             /**
              * Gets the names from a set of positions as an array
              * @param {number} positionIds
-             * @returns {positionName[]}
+             * @returns {string} positionNames Concatenated names with commas or empty string
              */
             getPositionNames: function(positionIds) {
 
-                return this.getPositions(positionIds).map(position => position.name);
+                let positionNames = this.getPositions(positionIds).map(position => position.name);
+
+                return positionNames.length ? '(' + positionNames.join(', ') + ')' : '';
             }
         };
 

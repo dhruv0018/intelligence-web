@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlayersFactory', [
-    '$injector', '$q', 'BaseFactory',
-    function($injector, $q, BaseFactory) {
+    '$injector', '$q', 'BaseFactory', '$filter',
+    function($injector, $q, BaseFactory, $filter) {
 
         var PlayersFactory = {
 
@@ -47,15 +47,17 @@ IntelligenceWebClient.factory('PlayersFactory', [
             /**
              * Gets a player's jersey number on a specific roster
              * @param {roster} roster
+             * @param {number} padLength The length the jerseyNumber should be padded with spaces. Default is 3.
              * @returns {string} jersey number or empty string if does not exist
              */
-            getJerseyNumber: function(roster) {
+            getJerseyNumber: function(roster, padLength = 3) {
 
                 if (!roster) throw new Error(`getJerseyNumber() requires 'roster' parameter`);
 
                 try {
 
-                    return roster.playerInfo[this.id].jerseyNumber;
+                    let jerseyNumber = roster.playerInfo[this.id].jerseyNumber;
+                    return $filter('padSpacesToFixedLength')(jerseyNumber, padLength, 'left');
 
                 } catch (error) {
 
@@ -66,13 +68,14 @@ IntelligenceWebClient.factory('PlayersFactory', [
             /**
              * Gets a player label, a combination of a players jersey number, name, and other attributes
              * @param {roster} roster
+             * @param {boolean} padding Pads the jerseyNumber with up to 3 spaces or less if desired
              * @returns {string} the player label
              */
-            getPlayerLabel: function(roster) {
+            getPlayerLabel: function(roster, padding = 3) {
 
                 if (!roster) throw new Error(`getPlayerLabel() requires 'roster' parameter`);
 
-                const jerseyNumber = this.getJerseyNumber(roster);
+                const jerseyNumber = this.getJerseyNumber(roster, padding);
 
                 return jerseyNumber ? `${jerseyNumber} ${this.shortName}` : this.shortName;
             },
