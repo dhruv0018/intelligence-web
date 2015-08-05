@@ -165,12 +165,7 @@ class TeamPlayerField extends Field {
      */
     get valid () {
 
-        if (!this.isRequired) {
-
-            return true;
-        }
-
-        switch (this.value.type) {
+        switch (this.value.variableValueType) {
 
             case 'Player': return Number.isInteger(this.value.playerId);
 
