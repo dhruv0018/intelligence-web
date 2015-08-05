@@ -173,18 +173,18 @@ IntelligenceWebClient.service('PlaysManager', [
 
             let firstField = event.fields[1];
             if (!firstField) return;
-            let firstFieldId = firstField.order;
+            let firstFieldId = firstField.index;
             let field = event.fields[firstFieldId];
             /* If the field value is defined. */
             if (angular.isDefined(field) && angular.isDefined(field.value)) {
 
                 /* If its a team field. */
-                teamId = field.currentValue.teamId;
+                teamId = field.value.teamId;
 
                 /* If its a player field. */
                 if (!teamId) {
 
-                    let playerId = field.currentValue.playerId;
+                    let playerId = field.value.playerId;
                     teamId = playerId && game.isPlayerOnTeam(playerId) ? game.teamId : game.opposingTeamId;
 
                     if (!teamId) {

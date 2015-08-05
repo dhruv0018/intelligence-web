@@ -2,18 +2,44 @@
 
 .field() {
 
+    // LESS helpers
+    @field-spacing: ;
+    .field-colors(@color, @borderColor: @color) {
+
+        color: @color;
+        border-color: @borderColor;
+    }
+
     padding: 2px;
-    margin: 2px;
-    border: thin solid @brand-primary;
+    border-width: thin;
+    border-style: solid;
     border-radius: 3px;
-    color: @brand-primary;
     text-align: center;
     text-overflow: ellipsis;
 
+    &.field-required {
+
+        .field-colors(@brand-primary);
+    }
+
+    &.field-optional {
+
+        .field-colors(@brand-blue);
+    }
+
+    &.field-valid {
+
+        border-color: transparent;
+        font-weight: 500;
+    }
+
+    &.field-invalid {
+
+    }
+
     &:focus {
 
-        border: thin solid @gray-light;
-        color: @gray;
+        .field-colors(@gray, @gray-light);
     }
 
     // Angular override
