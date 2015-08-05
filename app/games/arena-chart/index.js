@@ -82,7 +82,8 @@ function GamesArenaChartController(
     $scope
 ) {
 
-    const game = games.get($stateParams.id);
+    const gameId = Number($stateParams.id);
+    const game = games.get(gameId);
     const team = teams.get(game.teamId);
     const opposingTeam = teams.get(game.opposingTeamId);
     const league = leagues.get(team.leagueId);
@@ -90,11 +91,11 @@ function GamesArenaChartController(
     const currentTeamId = session.getCurrentTeamId();
     const customTags = customtags.getList({teamId: currentTeamId});
 
-    const gameTeamRoster = game.getRoster(game.teamId);
-    const teamPlayerList = players.getList({rosterId: gameTeamRoster.id});
+    const teamRoster = game.getRoster(game.teamId);
+    const teamPlayerList = players.getList({rosterId: teamRoster.id});
 
-    const gameOpposingTeamRoster = game.getRoster(game.opposingTeamId);
-    const opposingTeamPlayerList = players.getList({rosterId: gameOpposingTeamRoster.id});
+    const opposingTeamRoster = game.getRoster(game.opposingTeamId);
+    const opposingTeamPlayerList = players.getList({rosterId: opposingTeamRoster.id});
 
     // Determine arena type
     this.arenaType = ARENA_TYPES[league.arenaId].type;
@@ -105,7 +106,7 @@ function GamesArenaChartController(
     const pills = [];
 
     teamPlayerList.forEach((player) => {
-        const playerLabel = player.getPlayerLabel(gameTeamRoster);
+        const playerLabel = player.getPlayerLabel(teamRoster);
         pills.push({
             id: player.id,
             name: playerLabel
@@ -113,7 +114,7 @@ function GamesArenaChartController(
     });
 
     opposingTeamPlayerList.forEach((player) => {
-        const playerLabel = player.getPlayerLabel(gameOpposingTeamRoster);
+        const playerLabel = player.getPlayerLabel(opposingTeamRoster);
         pills.push({
             id: player.id,
             name: playerLabel
