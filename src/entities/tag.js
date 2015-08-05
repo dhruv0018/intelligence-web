@@ -95,7 +95,7 @@ class KrossoverTag extends Entity {
 
         // TODO: Implement this one day when the server is updated
 
-        return;
+        throw new Error('Cannot call toJSON on a Tag Entity; nothing to send to server!');
     }
 }
 
