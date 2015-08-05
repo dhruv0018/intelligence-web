@@ -10,6 +10,26 @@
         width: 100%;
     }
 
+    .filters__helper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        color: #000;
+        align-items: center;
+        padding: 10px;
+    }
+
+    arena-chart-filters {
+        margin-bottom: 30px !important;
+        .slideInDown;
+        animation-duration: 0.5s;
+
+        &.ng-hide {
+            .slideOutUp;
+            animation-duration: 0.5s;
+        }
+    }
+
     button[name=reset-filters] i {
         padding-right: 2px;
     }
@@ -24,17 +44,6 @@
         overflow: hidden;
         background-color: inherit;
 
-        arena-chart-filters {
-            margin-bottom: 30px !important;
-            .slideInDown;
-            animation-duration: 0.5s;
-
-            &.ng-hide {
-                .slideOutUp;
-                animation-duration: 0.5s;
-            }
-        }
-
         // Container is required for fit-element directive to work correctly
         .arena-chart-container {
             width: 100%;
@@ -46,14 +55,5 @@
                 transition-duration: 1s;
             }
         }
-    }
-
-    .filters__helper {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        color: #000;
-        align-items: center;
-        padding: 10px;
     }
 }
