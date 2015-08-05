@@ -81,4 +81,9 @@ describe('Tag Entity', () => {
 
         assert(tag.toJSON.should.have.been.called);
     });
+
+    it('should throw an error on a JSON.stringify call', () => {
+
+        expect(() => JSON.stringify(tag)).to.throw(Error);
+    });
 });
