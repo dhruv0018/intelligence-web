@@ -180,28 +180,6 @@ describe('Play Entity', () => {
         })
     });
 
-    it('should have certain properties when instantiated', inject(TagsetsFactory => {
-
-        expect(play).to.contain.keys([
-            'id',
-            'startTime',
-            'endTime',
-            'events',
-            'gameId',
-            'flags',
-            'clip',
-            'shares',
-            'createdAt',
-            'updatedAt',
-            'customTagIds',
-            'period',
-            'indexedScore',
-            'opposingIndexedScore',
-            'hasVisibleEvents',
-            'possessionTeamId'
-        ]);
-    }));
-
     it('should have called toJSON on a JSON.stringify call', inject(TagsetsFactory => {
 
         play.toJSON = sinon.spy();
