@@ -3,7 +3,6 @@ var angular = window.angular;
 
 ArenaChartDataDependencies.$inject = [
     'GamesFactory',
-    'SessionService',
     'PlayersFactory',
     'CustomtagsFactory',
     '$q'
@@ -11,7 +10,6 @@ ArenaChartDataDependencies.$inject = [
 
 function ArenaChartDataDependencies (
     games,
-    session,
     players,
     customtags,
     $q
@@ -21,12 +19,9 @@ function ArenaChartDataDependencies (
 
         constructor (gameId) {
 
-            const teamId = session.getCurrentTeamId();
-
             /* Load data. */
 
             this.playersByGame = players.load({gameId});
-            this.customTags = customtags.load({teamId});
 
             this.games = games.load(gameId).then(() => {
 
@@ -45,6 +40,7 @@ function ArenaChartDataDependencies (
                     });
 
                 data.arenaEvents = game.retrieveArenaEvents();
+                data.customTags = customtags.load({teamId: game.uploaderTeamId});
 
                 return $q.all(data);
             });
