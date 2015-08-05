@@ -69,8 +69,7 @@ class FormationField extends Field {
     get valid () {
 
         return this.isRequired ?
-            (Number.isInteger(this.value.formationId) &&
-            Number.isInteger(this.value.numberOfPlayers)) :
+            Number.isInteger(this.value.formationId) :
             true;
     }
 
