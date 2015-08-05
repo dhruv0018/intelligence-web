@@ -27,10 +27,19 @@ class YardField extends Field {
 
     get availableValues() {
         let values = Array.from(new Array(99), (item, yardLength) => {
-            return {content: yardLength + 1, name: String(yardLength + 1)};
+            //yards start from 1 not 0
+            let adjustedLength = yardLength + 1;
+            let name = adjustedLength < 10 ? '0' + String(yardLength + 1) : String(yardLength + 1);
+            return {
+                content: adjustedLength,
+                name,
+                get order() {
+                    return adjustedLength;
+                }
+            };
         });
         if (!this.isRequired) {
-            values.unshift({content: null, name: 'Optional'});
+            values.unshift({content: null, name: 'Optional', order: 0});
         }
         return values;
     }
