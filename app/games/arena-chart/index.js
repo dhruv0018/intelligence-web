@@ -90,12 +90,10 @@ function GamesArenaChartController(
     const arenaEvents = game.getArenaEvents();
     const currentTeamId = session.getCurrentTeamId();
     const customTags = customtags.getList({teamId: currentTeamId});
-
+    const opposingTeamPlayers = game.getOpposingTeamPlayers();
+    const teamPlayers = game.getTeamPlayers();
     const teamRoster = game.getRoster(game.teamId);
-    const teamPlayerList = players.getList({rosterId: teamRoster.id});
-
     const opposingTeamRoster = game.getRoster(game.opposingTeamId);
-    const opposingTeamPlayerList = players.getList({rosterId: opposingTeamRoster.id});
 
     // Determine arena type
     this.arenaType = ARENA_TYPES[league.arenaId].type;
@@ -105,7 +103,7 @@ function GamesArenaChartController(
 
     const pills = [];
 
-    teamPlayerList.forEach((player) => {
+    teamPlayers.forEach((player) => {
         const playerLabel = player.getPlayerTitle(teamRoster);
         pills.push({
             id: player.id,
@@ -113,7 +111,7 @@ function GamesArenaChartController(
         });
     });
 
-    opposingTeamPlayerList.forEach((player) => {
+    opposingTeamPlayers.forEach((player) => {
         const playerLabel = player.getPlayerTitle(opposingTeamRoster);
         pills.push({
             id: player.id,

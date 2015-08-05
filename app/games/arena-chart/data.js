@@ -28,17 +28,6 @@ function ArenaChartDataDependencies (
                 const data = {};
                 const game = games.get(gameId);
 
-                const gameTeamRoster = game.getRoster(game.teamId);
-                const gameOpposingTeamRoster = game.getRoster(game.opposingTeamId);
-
-                // TODO: Use filter once implemented: players?gameId
-                data.playersByRosters = players.load({
-                        'rosterId[]': [
-                            gameTeamRoster.id,
-                            gameOpposingTeamRoster.id
-                        ]
-                    });
-
                 data.arenaEvents = game.retrieveArenaEvents();
                 data.customTags = customtags.load({teamId: game.uploaderTeamId});
 

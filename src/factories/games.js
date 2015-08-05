@@ -992,37 +992,46 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
             },
 
-            retrieveArenaEvents: function(game = this) {
+            /**
+             * Retrieves the arena events for a game, and stores in game storage
+             * @param {?number[]} gameId Defaults to this game's id if no gameId given
+             * @returns {arenaEvent[]}
+             */
+            retrieveArenaEvents: function() {
 
-                let model = $injector.get(game.model);
-                let storage = $injector.get(game.storage);
+                let model = $injector.get(this.model);
+                let storage = $injector.get(this.storage);
 
-                if (!game.id) throw new Error('Game must be saved before retrieving arena events');
+                if (!this.id) throw new Error(`retrieveArenaEvents(): Game has no id. Game must be saved before retrieving arena events`);
 
-                const query = model.retrieveArenaEvents({ id: game.id});
+                const query = model.retrieveArenaEvents({ id: this.id});
                 const request = query.$promise;
 
-                request.then(receiveArenaEvents, retrieveArenaEventsError);
+                const receiveArenaEvents = (arenaEvents) => {
+                    this.arenaEvents = arenaEvents;
+                    storage.set(this);
+                };
 
-                function receiveArenaEvents (arenaEvents) {
-                    game.arenaEvents = arenaEvents;
-                    storage.set(game);
-                }
-
-                function retrieveArenaEventsError(reason) {
+                const retrieveArenaEventsError = (reason) => {
                     // No arena events at this time
-                    game.arenaEvents = [];
-                    storage.set(game);
-                }
+                    this.arenaEvents = [];
+                    storage.set(this);
+                };
+
+                request.then(receiveArenaEvents, retrieveArenaEventsError);
 
                 return request;
             },
 
-            getArenaEvents: function(game = this) {
+            /**
+             * Gets the arena events for a game
+             * @returns {arenaEvent[]}
+             */
+            getArenaEvents: function() {
 
-                if (!game.arenaEvents) throw new Error('game.arenaEvents is not defined');
+                if (!this.arenaEvents) throw new Error(`getArenaEvents(): arenaEvents on game is not defined`);
 
-                return game.arenaEvents;
+                return this.arenaEvents;
             },
 
             getRemainingTime: function(uploaderTeam, now) {
