@@ -59,9 +59,7 @@ class TeamPlayerField extends Field {
      * @returns {String} - HTML of the field
      */
     toString () {
-        if (this.value.variableValueType === 'Team') {
-            return `<span class="value">${this.value.name}</span>`;
-        } else {
+        if (this.value.variableValueType === 'Player') {
             return `
             <span class="value">
 
@@ -74,6 +72,7 @@ class TeamPlayerField extends Field {
             </span>
             `;
         }
+        return super.toString();
     }
 
     /**
