@@ -242,7 +242,7 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
-                    'vendor-less',
+                    'build/temp-less',
                     'theme',
                     'node_modules/bootstrap/less'
                 ]
@@ -310,7 +310,7 @@ module.exports = function(grunt) {
                     stylePlugins: function(builder) {
                         builder.use('styles', less({
                             paths: [
-                                'vendor-less',
+                                'build/temp-less',
                                 'theme',
                                 'node_modules/bootstrap/less'
                             ]
@@ -384,7 +384,7 @@ module.exports = function(grunt) {
         copy: {
             'theme-vendor': {
                 files: {
-                    'vendor-less/animate.less': 'node_modules/animate.css/animate.css'
+                    'build/temp-less/animate.less': 'node_modules/animate.css/animate.css'
                 }
             },
             svg: {

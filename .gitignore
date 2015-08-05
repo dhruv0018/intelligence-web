@@ -10,9 +10,6 @@
 # Ignore NPM modules
 /node_modules
 
-# Ignore Vendor-less files
-/vendor-less
-
 # Ignore docs
 /docs
 
