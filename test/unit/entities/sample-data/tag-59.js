@@ -12,8 +12,8 @@ const tag = {
     "tagVariables": [
         {
             "id": 1,
-            "name": "Player 1",
-            "type": "PLAYER_DROPDOWN",
+            "name": "D Left",
+            "type": "GAP",
             "isRequired": true,
             "options": [],
             "formations": []
