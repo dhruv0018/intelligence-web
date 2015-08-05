@@ -58,6 +58,33 @@ describe('Play Entity', () => {
         expect(KrossoverPlay).to.respondTo('toJSON');
     });
 
+    it('should have a "indexerScript" getter', () => {
+
+        expect(play.indexerScript).to.be.an.array;
+        play.indexerScript.forEach(event => {
+
+            expect(event).to.be.a('string');
+        })
+    });
+
+    it('should have a "userScript" getter', () => {
+
+        expect(play.userScript).to.be.an.array;
+        play.userScript.forEach(event => {
+
+            expect(event).to.be.a('string');
+        })
+    });
+
+    it('should have a "summaryScript" getter', () => {
+
+        expect(play.summaryScript).to.be.an.array;
+        play.summaryScript.forEach(event => {
+
+            expect(event).to.be.a('string');
+        })
+    });
+
     it('should have certain properties when instantiated', inject(TagsetsFactory => {
 
         expect(play).to.contain.keys([
