@@ -29,9 +29,8 @@ class KrossoverTag extends Entity {
     /**
      * Getter for tag.shortcutKey
      *
-     * @method keyboardShortcut
      * @readonly
-     * @returns {String} - this.shortcutKey
+     * @type {String}
      */
     get keyboardShortcut () {
 
