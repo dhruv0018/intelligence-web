@@ -137,6 +137,7 @@
   },
   "main": "./src/main.js",
   "scripts": {
+    "preinstall": "npm login --scope=krossover",
     "install": "node_modules/.bin/napa; node_modules/.bin/component install",
     "postinstall": "node_modules/protractor/bin/webdriver-manager update",
     "serve": "node server.js",
