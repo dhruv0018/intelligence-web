@@ -47,7 +47,7 @@ class FormationField extends Field {
     get availableValues() {
         let values = [];
         if (this.formations) {
-            let values = this.formations.map(formation => {
+            values = this.formations.map(formation => {
                 let currentFormation = angular.copy(formation);
                 return {
                     formationId: Number(currentFormation.id),
