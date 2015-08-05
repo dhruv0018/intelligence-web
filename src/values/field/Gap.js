@@ -30,7 +30,7 @@ class GapField extends Field {
                 return calculatedName;
             },
             get keyboardShortcut() {
-                return gap.shortcut;
+                return gap ? gap.shortcut : undefined;
             }
         };
         this.value = value;
