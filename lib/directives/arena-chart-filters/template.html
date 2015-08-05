@@ -6,11 +6,11 @@
         <!--  team player filter -->
         <div class="filter-group__item">
 
-            <div class="team-label">
+            <div>
 
                 <color-shape color="::game.primaryJerseyColor"></color-shape>
 
-                <div class="team-label__name">{{::team.name}}</div>
+                <h4 class="team-label__name">{{::team.name}}</h4>
 
             </div>
 
@@ -30,12 +30,14 @@
 
     </div>
 
+    <div class="divider__vertical"></div>
+
     <div class="arena-chart-filters-center filter-group">
 
         <!-- shots filter -->
         <div class="filter-group__item">
 
-            <label> Shots </label>
+            <h4> Shots </h4>
 
             <div>
 
@@ -54,7 +56,7 @@
         <!-- period filter -->
         <div class="filter-group__item">
 
-            <label> Period </label>
+            <h4> Period </h4>
 
             <div>
 
@@ -88,7 +90,7 @@
         <!-- custom tags filter -->
         <div class="filter-group__item">
 
-            <label> Tags </label>
+            <h4> Tags </h4>
 
             <div>
 
@@ -106,14 +108,16 @@
 
     </div>
 
+    <div class="divider__vertical"></div>
+
     <div class="arena-chart-filters-end filter-group">
 
         <!-- opposing team filter -->
         <div class="filter-group__item">
 
-            <div class="team-label">
+            <div>
 
-                <div class="team-label__name">{{::opposingTeam.name}}</div>
+                <h4 class="team-label__name">{{::opposingTeam.name}}</h4>
 
                 <color-shape color="::game.opposingPrimaryJerseyColor"></color-shape>
 
