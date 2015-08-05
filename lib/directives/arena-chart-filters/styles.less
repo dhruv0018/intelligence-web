@@ -16,7 +16,7 @@ arena-chart-filters {
 
     @team-name-width: 120px;
 
-    &-left {
+    &-start {
         justify-content: flex-start;
         border-right: thin solid @gray-light;
 
@@ -29,7 +29,7 @@ arena-chart-filters {
         justify-content: center;
     }
 
-    &-right {
+    &-end {
         justify-content: flex-end;
         border-left: thin solid @gray-light;
 
@@ -71,22 +71,8 @@ arena-chart-filters {
         font-weight: 400;
     }
 
-    player-multiselect {
-        display: block;
-    }
-
     krossover-checkbox {
         margin-right: 5px;
-    }
-
-    // TODO: Remove this override when custom-tags-multiselect styles
-    // and other button styles are consistent
-    custom-tags-multiselect {
-        button {
-            .btn-default;
-            padding: 6px 12px;
-            font-weight: 500;
-        }
     }
 
     .team-label {

@@ -1,9 +1,10 @@
 <div class="arena-chart-filters">
 
     <!-- Filters -->
-    <div class="arena-chart-filters-left filter-group">
+    <div class="arena-chart-filters-start filter-group">
 
-        <div class="players filter-group__item">
+        <!--  team player filter -->
+        <div class="filter-group__item">
 
             <div class="team-label">
 
@@ -13,7 +14,7 @@
 
             </div>
 
-            <div class="filter-group__item--options">
+            <div>
 
                 <krossover-multiselect
                     ng-model="filterModel.teamPlayersIds"
@@ -31,11 +32,12 @@
 
     <div class="arena-chart-filters-center filter-group">
 
-        <div class="shots filter-group__item">
+        <!-- shots filter -->
+        <div class="filter-group__item">
 
             <label> Shots </label>
 
-            <div class="filter-group__item--options">
+            <div>
 
                 <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
                     <i class="shot-icon icon-diamond"></i>Made
@@ -49,11 +51,12 @@
 
         </div>
 
-        <div class="periods filter-group__item">
+        <!-- period filter -->
+        <div class="filter-group__item">
 
             <label> Period </label>
 
-            <div class="filter-group__item--options">
+            <div>
 
                 <krossover-checkbox ng-model="filterModel.allPeriods" children-models="filterModel.period" children-listen="false">
                     All
@@ -82,11 +85,12 @@
             </div>
         </div>
 
-        <div class="custom-tags filter-group__item">
+        <!-- custom tags filter -->
+        <div class="filter-group__item">
 
             <label> Tags </label>
 
-            <div class="filter-group__item--options">
+            <div>
 
                 <krossover-multiselect
                     ng-model="filterModel.customTagIds"
@@ -102,9 +106,10 @@
 
     </div>
 
-    <div class="arena-chart-filters-right filter-group">
+    <div class="arena-chart-filters-end filter-group">
 
-        <div class="players filter-group__item">
+        <!-- opposing team filter -->
+        <div class="filter-group__item">
 
             <div class="team-label">
 
@@ -114,7 +119,7 @@
 
             </div>
 
-            <div class="filter-group__item--options">
+            <div>
 
                 <krossover-multiselect
                     ng-model="filterModel.opposingTeamPlayersIds"
