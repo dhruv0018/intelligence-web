@@ -55,17 +55,25 @@
                 }
 
                 &.option-your-team {
-
                     cursor: auto;
 
-                    .icon {
-                        color: @brand-blue;
-                        font-size: 40px;
+                    .icon-ok {
+                        display: inline;
+                        font-size: 16px;
+                        margin-top: 0px;
+                        margin-right: 2px;
+                    }
+
+                    h3,
+                    .icon-ok,
+                    .icon-group, {
+                        color: @brand-success;
                     }
 
                     &:hover {
-                        .icon {
-                            color: @brand-blue;
+                        .icon-ok,
+                        .icon-group, {
+                            color: @brand-success;
                         }
                     }
                 }
@@ -84,7 +92,7 @@
 
                 .icon {
                     display: block;
-                    color: @gray-lighter;
+                    color: @brand-blue;
                     margin-top: 30px;
                     font-size: 70px;
                 }
