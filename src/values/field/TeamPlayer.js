@@ -1,4 +1,5 @@
 import Field from './Field';
+import Getters from './DynamicGetters';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
@@ -20,49 +21,25 @@ class TeamPlayerField extends Field {
 
         let id = this.initializeValue(field.value);
 
-        let value = {};
+        let value = {
+            get name() {
+                if (!variableValueType) {
+                    return !field.isRequired ? 'Optional' : field.name;
+                }
+                return variableValueType === 'Team' ? Getters.teamName(field, id) : Getters.playerName(field, id);
+            }
+        };
 
         switch (variableValueType) {
             case 'Player':
-                let playerId  = id;
-                value.playerId = playerId;
-                value.teamId   = undefined;
-                value.variableValueType    = 'Player';
-                Object.defineProperty(value, 'name', {
-                    get: () => {
-                        let calculatedName = !field.isRequired ? 'Optional' : field.name;
-                        if (playerId && window && window.angular && document) {
-                            let injector = angular.element(document).injector();
-                            let players = injector.get('PlayersFactory');
-                            let player = players.get(playerId);
-                            calculatedName = player.firstName + ' ' + player.lastName;
-                        }
-                        return calculatedName;
-                    }
-                });
+                value.playerId = id;
+                value.teamId = undefined;
+                value.variableValueType = 'Player';
                 break;
             case 'Team':
-                let teamId = id;
-                value.teamId = teamId;
+                value.teamId = id;
                 value.playerId = undefined;
                 value.variableValueType = 'Team';
-                Object.defineProperty(value, 'name', {
-                    get: () => {
-                        let calculatedName = !field.isRequired ? 'Optional' : field.name;
-                        if (teamId && window && window.angular && document) {
-                            let injector = angular.element(document).injector();
-                            let teams = injector.get('TeamsFactory');
-                            let team = teams.get(teamId);
-                            calculatedName = angular.copy(team.name);
-                        }
-                        return calculatedName;
-                    }
-                });
-                break;
-            default:
-                //TODO had to initialize it to something, meh
-                value.variableValueType = 'Team';
-                value.name = !this.isRequired ? 'Optional' : this.name;
                 break;
         }
 
@@ -71,67 +48,7 @@ class TeamPlayerField extends Field {
     }
 
     get availableValues () {
-
-            let injector     = angular.element(document).injector();
-
-            let games        = injector.get('GamesFactory');
-            let teams        = injector.get('TeamsFactory');
-            let players      = injector.get('PlayersFactory');
-
-            let game         = games.get(this.gameId);
-            let team         = game.teamId ? teams.get(game.teamId) : null;
-            let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
-
-            let teamPlayersValues = Object.keys(game.rosters[team.id].playerInfo).map( (playerId) => {
-
-                let rosterEntry  = game.rosters[team.id].playerInfo[playerId];
-                let player       = players.get(playerId);
-                let jerseyNumber = player.isUnknown ? 'U' : rosterEntry.jerseyNumber;
-
-                let value = {
-
-                    playerId   : player.id,
-                    jerseyColor: game.primaryJerseyColor,
-                    jerseyNumber,
-                    name       : '(' + jerseyNumber + ')  ' + player.firstName + ' ' + player.lastName,
-                    variableValueType       : 'Player'
-                };
-
-                return value;
-            });
-
-            let opposingTeamPlayersValues = Object.keys(game.rosters[opposingTeam.id].playerInfo).map( (playerId) => {
-
-                let rosterEntry  = game.rosters[opposingTeam.id].playerInfo[playerId];
-                let player       = players.get(playerId);
-                let jerseyNumber = player.isUnknown ? 'U' : rosterEntry.jerseyNumber;
-
-                let value = {
-
-                    playerId   : player.id,
-                    jerseyColor: game.opposingPrimaryJerseyColor,
-                    jerseyNumber,
-                    name       : '(' + jerseyNumber + ')  '  + player.firstName + ' ' + player.lastName,
-                    variableValueType       : 'Player'
-                };
-
-                return value;
-            });
-
-            let teamValues = [team, opposingTeam].map((localTeam) => {
-
-                return {
-
-                    teamId: localTeam.id,
-                    name  : localTeam.name,
-                    color : (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor,
-                    variableValueType  : 'Team'
-                };
-            });
-
-            let playerValues = teamPlayersValues.concat(opposingTeamPlayersValues);
-
-            return teamValues.concat(playerValues);
+        return Getters.teamPlayerValues(this);
     }
 
 

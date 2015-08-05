@@ -1,4 +1,5 @@
 import Field from './Field';
+import Getters from './DynamicGetters';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
@@ -22,47 +23,15 @@ class TeamField extends Field {
         let value = {
             teamId,
             get name () {
-                let calculatedName = !field.isRequired ? 'Optional' : field.name;
-                if (teamId && window && window.angular && document) {
-                    let injector = angular.element(document).injector();
-                    if (injector) {
-                        let teams = injector.get('TeamsFactory');
-                        let team = teams.get(teamId);
-                        calculatedName = angular.copy(team.name);
-                    }
-                }
-                return calculatedName;
+                return Getters.teamName(field, teamId);
             }
         };
         this.value = value;
     }
 
     get availableValues () {
-            let values = [];
-            let injector = angular.element(document).injector();
-            if (injector) {
-                let games = injector.get('GamesFactory');
-                let teams = injector.get('TeamsFactory');
-
-                let game = games.get(this.gameId);
-                let team = game.teamId ? teams.get(game.teamId) : null;
-                let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
-
-                let teamValues = [team, opposingTeam].map((localTeam) => {
-                    return {
-                        teamId: localTeam.id,
-                        name: localTeam.name,
-                        color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
-                    };
-                });
-                values = teamValues;
-            }
-
-            if (!this.isRequired) {
-                values.unshift({teamId: null, name: 'Optional', color: null});
-            }
-            return values;
-        }
+        return Getters.teamValues(this);
+    }
 
     /**
      * Getter for the validity of the Field

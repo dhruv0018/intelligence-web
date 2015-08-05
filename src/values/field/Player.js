@@ -1,4 +1,5 @@
 import Field from './Field';
+import Getters from './DynamicGetters';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
@@ -22,66 +23,14 @@ class PlayerField extends Field {
         let value = {
             playerId,
             get name () {
-                let calculatedName = !field.isRequired ? 'Optional' : field.name;
-                if (playerId) {
-                    let injector = angular.element(document).injector();
-                    let players = injector.get('PlayersFactory');
-                    let player = players.get(playerId);
-                    calculatedName = player.firstName + ' ' + player.lastName;
-                }
-                return calculatedName;
+                return Getters.playerName(field, playerId);
             }
         };
         this.value = value;
     }
 
     get availableValues() {
-        let injector = angular.element(document).injector();
-        let values = [];
-
-        if (window && injector && document && window.angular) {
-            let games = injector.get('GamesFactory');
-            let teams = injector.get('TeamsFactory');
-            let players = injector.get('PlayersFactory');
-
-            let game = games.get(this.gameId);
-            let team = game.teamId ? teams.get(game.teamId) : null;
-            let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
-
-            let teamPlayersValues = Object.keys(game.rosters[team.id].playerInfo).map( (playerId) => {
-                let rosterEntry = game.rosters[team.id].playerInfo[playerId];
-                let player = players.get(playerId);
-                let jerseyNumber = player.isUnknown ? 'U' : angular.copy(rosterEntry.jerseyNumber);
-
-                let value = {
-                    playerId: angular.copy(player.id),
-                    jerseyColor: angular.copy(game.primaryJerseyColor),
-                    jerseyNumber,
-                    name: '(' + jerseyNumber + ')  ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
-                };
-                return value;
-            });
-
-            let opposingTeamPlayersValues = Object.keys(game.rosters[opposingTeam.id].playerInfo).map( (playerId) => {
-                let rosterEntry = game.rosters[opposingTeam.id].playerInfo[playerId];
-                let player = players.get(playerId);
-                let jerseyNumber = player.isUnknown ? 'U' : angular.copy(rosterEntry.jerseyNumber);
-                let value = {
-                    playerId: angular.copy(player.id),
-                    jerseyColor: angular.copy(game.opposingPrimaryJerseyColor),
-                    jerseyNumber,
-                    name: '(' + jerseyNumber + ')  ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
-                };
-                return value;
-            });
-            values =  teamPlayersValues.concat(opposingTeamPlayersValues);
-        }
-
-        if (!this.isRequired) {
-            values.unshift({playerId: null, jerseyColor: null, jerseyNumber: 'NONE', name: 'Optional'});
-        }
-
-        return values;
+        return Getters.playerValues(this);
     }
 
     /**
