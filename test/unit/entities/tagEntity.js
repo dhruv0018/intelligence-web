@@ -1,4 +1,5 @@
 import KrossoverTag from '../../../src/entities/tag';
+import Static from '../../../src/values/field/Static';
 import tagData from './sample-data/tag-22';
 import tagTransformedData from './sample-data/tag-transformed';
 
@@ -73,6 +74,39 @@ describe('Tag Entity', () => {
         expect(tag.keyboardShortcut).to.equal('K');
     });
 
+    it('should have a property indexerScript', () => {
+
+        expect(tag).to.contain.keys('indexerScript');
+        expect(tag.indexerScript).to.be.an.array;
+
+        tag.indexerScript.forEach(field => {
+
+            expect(typeof field === "string" || field instanceof Static).to.be.true;
+        });
+    });
+
+    it('should have a property userScript', () => {
+
+        expect(tag).to.contain.keys('userScript');
+        expect(tag.userScript).to.be.an.array;
+
+        tag.userScript.forEach(field => {
+
+            expect(typeof field === "string" || field instanceof Static).to.be.true;
+        });
+    });
+
+    it('should have a property summaryScript', () => {
+
+        expect(tag).to.contain.keys('summaryScript');
+        expect(tag.summaryScript).to.be.an.array;
+
+        tag.summaryScript.forEach(field => {
+
+            expect(typeof field === "string" || field instanceof Static).to.be.true;
+        });
+    });
+
     it('should have called toJSON on a JSON.stringify call', () => {
 
         tag.toJSON = sinon.spy();
@@ -80,5 +114,10 @@ describe('Tag Entity', () => {
         JSON.stringify(tag);
 
         assert(tag.toJSON.should.have.been.called);
+    });
+
+    it('should throw an error on a JSON.stringify call', () => {
+
+        expect(() => JSON.stringify(tag)).to.throw(Error);
     });
 });

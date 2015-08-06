@@ -1,6 +1,6 @@
 import KrossoverPlay from '../../../src/entities/play';
 import KrossoverTag from '../../../src/entities/tag';
-import playData from './sample-data/play';
+import playJSON from './sample-data/play';
 import tagData22 from './sample-data/tag-22';
 import tagData59 from './sample-data/tag-59';
 
@@ -8,7 +8,6 @@ const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
 
-const srcJSON = playData;
 const srcTags = {
 
     '22': tagData22,
@@ -39,7 +38,7 @@ describe('Play Entity', () => {
 
     beforeEach(inject(TagsetsFactory => {
 
-        samplePlay = angular.copy(srcJSON);
+        samplePlay = angular.copy(playJSON);
         play       = new KrossoverPlay(samplePlay, TagsetsFactory);
     }));
 
@@ -58,27 +57,127 @@ describe('Play Entity', () => {
         expect(KrossoverPlay).to.respondTo('toJSON');
     });
 
-    it('should have certain properties when instantiated', inject(TagsetsFactory => {
+    it('should have a property "id"', () => {
 
-        expect(play).to.contain.keys([
-            'id',
-            'startTime',
-            'endTime',
-            'events',
-            'gameId',
-            'flags',
-            'clip',
-            'shares',
-            'createdAt',
-            'updatedAt',
-            'customTagIds',
-            'period',
-            'indexedScore',
-            'opposingIndexedScore',
-            'hasVisibleEvents',
-            'possessionTeamId'
-        ]);
-    }));
+        expect(play).to.contain.keys('id');
+        expect(play.id).to.equal(playJSON.id);
+    });
+
+    it('should have a property "startTime"', () => {
+
+        expect(play).to.contain.keys('startTime');
+        expect(play.startTime).to.equal(playJSON.startTime);
+    });
+
+    it('should have a property "endTime"', () => {
+
+        expect(play).to.contain.keys('endTime');
+        expect(play.endTime).to.equal(playJSON.endTime);
+    });
+
+    it('should have a property "events"', () => {
+
+        expect(play).to.contain.keys('events');
+    });
+
+    it('should have a property "gameId"', () => {
+
+        expect(play).to.contain.keys('gameId');
+        expect(play.gameId).to.equal(playJSON.gameId);
+    });
+
+    it('should have a property "flags"', () => {
+
+        expect(play).to.contain.keys('flags');
+        expect(play.flags).to.deep.equal(playJSON.flags);
+    });
+
+    it('should have a property "clip"', () => {
+
+        expect(play).to.contain.keys('clip');
+        expect(play.clip).to.deep.equal(playJSON.clip);
+    });
+
+    it('should have a property "shares"', () => {
+
+        expect(play).to.contain.keys('shares');
+        expect(play.shares).to.deep.equal(playJSON.shares);
+    });
+
+    it('should have a property "createdAt"', () => {
+
+        expect(play).to.contain.keys('createdAt');
+        expect(play.createdAt).to.equal(playJSON.createdAt);
+    });
+
+    it('should have a property "updatedAt"', () => {
+
+        expect(play).to.contain.keys('updatedAt');
+        expect(play.updatedAt).to.equal(playJSON.updatedAt);
+    });
+
+    it('should have a property "customTagIds"', () => {
+
+        expect(play).to.contain.keys('customTagIds');
+        expect(play.customTagIds).to.deep.equal(playJSON.customTagIds);
+    });
+
+    it('should have a property "period"', () => {
+
+        expect(play).to.contain.keys('period');
+        expect(play.period).to.equal(0);
+    });
+
+    it('should have a property "indexedScore"', () => {
+
+        expect(play).to.contain.keys('indexedScore');
+        expect(play.indexedScore).to.equal(0);
+    });
+
+    it('should have a property "opposingIndexedScore"', () => {
+
+        expect(play).to.contain.keys('opposingIndexedScore');
+        expect(play.opposingIndexedScore).to.equal(0);
+    });
+
+    it('should have a property "hasVisibleEvents"', () => {
+
+        expect(play).to.contain.keys('hasVisibleEvents');
+        expect(play.hasVisibleEvents).to.be.false;
+    });
+
+    it('should have a property "possessionTeamId"', () => {
+
+        expect(play).to.contain.keys('possessionTeamId');
+        expect(play.possessionTeamId).to.be.null;
+    });
+
+    it('should have a "indexerScript" getter', () => {
+
+        expect(play.indexerScript).to.be.an.array;
+        play.indexerScript.forEach(event => {
+
+            expect(event).to.be.a('string');
+        })
+    });
+
+    it('should have a "userScript" getter', () => {
+
+        expect(play.userScript).to.be.an.array;
+        play.userScript.forEach(event => {
+
+            expect(event).to.be.a('string');
+        })
+    });
+
+    it('should have a "summaryScript" getter', () => {
+
+        expect(play.summaryScript).to.be.an.array;
+        play.summaryScript.forEach(event => {
+
+            expect(event).to.be.a('string');
+        })
+    });
 
     it('should have called toJSON on a JSON.stringify call', inject(TagsetsFactory => {
 
@@ -93,21 +192,21 @@ describe('Play Entity', () => {
 
         play = play.toJSON();
 
-        expect(play.id).to.equal(srcJSON.id);
-        expect(play.startTime).to.equal(srcJSON.startTime);
-        expect(play.endTime).to.equal(srcJSON.endTime);
+        expect(play.id).to.equal(playJSON.id);
+        expect(play.startTime).to.equal(playJSON.startTime);
+        expect(play.endTime).to.equal(playJSON.endTime);
 
         expect(play.events).to.be.an('array');
 
-        expect(play.gameId).to.equal(srcJSON.gameId);
+        expect(play.gameId).to.equal(playJSON.gameId);
 
         expect(play.flags).to.be.an('array');
-        expect(play.flags).to.deep.equal(srcJSON.flags);
+        expect(play.flags).to.deep.equal(playJSON.flags);
 
-        expect(play.clip).to.deep.equal(srcJSON.clip);
-        expect(play.shares).to.deep.equal(srcJSON.shares);
-        expect(play.createdAt).to.equal(srcJSON.createdAt);
-        expect(play.updatedAt).to.equal(srcJSON.updatedAt);
-        expect(play.customTagIds).to.deep.equal(srcJSON.customTagIds);
+        expect(play.clip).to.deep.equal(playJSON.clip);
+        expect(play.shares).to.deep.equal(playJSON.shares);
+        expect(play.createdAt).to.equal(playJSON.createdAt);
+        expect(play.updatedAt).to.equal(playJSON.updatedAt);
+        expect(play.customTagIds).to.deep.equal(playJSON.customTagIds);
     }));
 });

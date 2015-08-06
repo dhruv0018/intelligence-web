@@ -29,9 +29,8 @@ class KrossoverTag extends Entity {
     /**
      * Getter for tag.shortcutKey
      *
-     * @method keyboardShortcut
      * @readonly
-     * @returns {String} - this.shortcutKey
+     * @type {String}
      */
     get keyboardShortcut () {
 
@@ -96,7 +95,7 @@ class KrossoverTag extends Entity {
 
         // TODO: Implement this one day when the server is updated
 
-        return;
+        throw new Error('Cannot call toJSON on a Tag Entity; nothing to send to server!');
     }
 }
 
