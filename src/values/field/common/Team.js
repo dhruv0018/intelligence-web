@@ -44,7 +44,7 @@ function availableValues(field) {
     }
 
     if (!field.isRequired) {
-        values.unshift({teamId: null, name: this.name, color: null});
+        values.unshift({teamId: null, name: field.name, color: null});
     }
     return values;
 }

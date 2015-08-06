@@ -40,7 +40,7 @@ describe('Formation Field', () => {
         field.value = field.availableValues[0];
         let value = field.value;
         expect(value.formationId).to.be.null;
-        expect(value.name).to.equal('Optional');
+        expect(value.name).to.equal('QB Gun');
     });
 
     it('toJSON should serialize to the right format if the field has a value', () => {

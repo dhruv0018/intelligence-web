@@ -22,7 +22,7 @@ class DropdownField extends Field {
         let value = {
             content,
             get name() {
-                return field.name;
+                return content ? content : field.name;
             }
         };
 

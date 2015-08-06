@@ -3,6 +3,7 @@ let field = {
     id: 1,
     index: 1,
     type: 'PASSING_ZONE',
+    name: 'Passing Zone',
     isRequired: true,
     options: [],
     value: '1'
