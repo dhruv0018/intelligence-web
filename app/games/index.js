@@ -158,6 +158,8 @@ Games.config([
 ]);
 
 Games.controller('Games.controller', [
+    'DEVICE',
+    '$rootScope',
     'TELESTRATION_PERMISSIONS',
     '$scope',
     '$state',
@@ -172,6 +174,8 @@ Games.controller('Games.controller', [
     'SPORT_IDS',
     'ROLES',
     function controller(
+        DEVICE,
+        $rootScope,
         TELESTRATION_PERMISSIONS,
         $scope,
         $state,
@@ -202,7 +206,7 @@ Games.controller('Games.controller', [
         let isCoach = currentUser.is(ROLES.COACH);
         let isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
         let isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
-
+        let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
 
         /* Scope */
 
@@ -216,9 +220,11 @@ Games.controller('Games.controller', [
         $scope.auth = auth;
 
         // Telestrations Permissions
-
+        if (isMobile) {
+            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
+        }
         // uploader could be a coach or an athlete (they have permissions to edit by default)
-        if (isUploader) {
+        else if (isUploader) {
 
             $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
 
