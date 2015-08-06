@@ -22,7 +22,7 @@ class DropdownField extends Field {
         let value = {
             content,
             get name() {
-                return content ? content : !field.isRequired ? 'Optional' : field.name;
+                return content ? content : field.name;
             }
         };
 
@@ -35,7 +35,7 @@ class DropdownField extends Field {
             return {content, name: content};
         });
         if (!this.isRequired) {
-            availableValues.unshift({content: null, name: 'Optional'});
+            availableValues.unshift({content: null, name: this.name});
         }
         return angular.copy(availableValues);
     }

@@ -5,6 +5,7 @@ let field = {
     type: 'ARENA',
     isRequired: true,
     options: [],
+    name: 'Arena 1',
     value: {
         coordinates: {
             x: 10,

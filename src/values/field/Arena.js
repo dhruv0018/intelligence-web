@@ -27,7 +27,7 @@ class ArenaField extends Field {
             region,
             coordinates,
             get name() {
-                let calculatedName = !field.isRequired ? 'Optional' : field.name;
+                let calculatedName = field.name;
                 if (region) {
                     calculatedName = angular.copy(ARENA_REGIONS_BY_ID[region].name);
                 }

@@ -5,6 +5,7 @@ let dropdownField = {
     type: 'DROPDOWN',
     isRequired: true,
     options: '[\"Normal\", \"Onside\"]',
+    name: 'Kickoff',
     value: 'Normal'
 };
 

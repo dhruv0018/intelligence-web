@@ -21,16 +21,25 @@ class YardField extends Field {
         let content = this.initializeValue(field.value);
         this.value = {
             content,
-            name: content ? String(content) : !field.isRequired ? 'Optional': field.name
+            name: content ? String(content) : field.name
         };
     }
 
     get availableValues() {
         let values = Array.from(new Array(99), (item, yardLength) => {
-            return {content: yardLength + 1, name: String(yardLength + 1)};
+            //yards start from 1 not 0
+            let adjustedLength = yardLength + 1;
+            let name = adjustedLength < 10 ? '0' + String(yardLength + 1) : String(yardLength + 1);
+            return {
+                content: adjustedLength,
+                name,
+                get order() {
+                    return adjustedLength;
+                }
+            };
         });
         if (!this.isRequired) {
-            values.unshift({content: null, name: 'Optional'});
+            values.unshift({content: null, name: this.name, order: 0});
         }
         return values;
     }

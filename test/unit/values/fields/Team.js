@@ -41,7 +41,7 @@ describe('Team Dropdown Field', () => {
         field.value = field.availableValues[0];
         let value = field.value;
         expect(value.teamId).to.be.null;
-        expect(value.name).to.equal('Optional');
+        expect(value.name).to.equal('Team 1');
     });
 
     it('Should have properly set value if required', () => {

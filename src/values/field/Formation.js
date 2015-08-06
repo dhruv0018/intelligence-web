@@ -30,7 +30,7 @@ class FormationField extends Field {
         let value = {
             formationId,
             get name() {
-                let calculatedName = !field.isRequired ? 'Optional' : field.name;
+                let calculatedName = field.name;
                 if (formationId) {
                     calculatedName = formation.name;
                 }
@@ -57,7 +57,7 @@ class FormationField extends Field {
             });
         }
         if (!this.isRequired) {
-            values.unshift({name: 'Optional', formationId: null, numberOfPlayers: 0});
+            values.unshift({name: this.name, formationId: null, numberOfPlayers: 0});
         }
         return values;
     }
