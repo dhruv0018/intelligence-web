@@ -26,8 +26,8 @@ const play = {
             "playId": 15999,
             "variableValues": {
                 "1": {
-                    "type": "Player",
-                    "value": 9188
+                    "type": null,
+                    "value": 1
                 },
                 "24": {
                     "type": null,

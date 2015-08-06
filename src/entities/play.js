@@ -48,12 +48,12 @@ class KrossoverPlay extends Entity {
     }
 
     /**
-     * Method returns an HTML string of the indexer script for the play.
+     * Getter returns an HTML string of the indexer script for the play.
      *
-     * @function indexerScript
-     * @returns {String} - HTML
+     * @readonly
+     * @type {String} - HTML
      */
-    indexerScript () {
+    get indexerScript () {
 
         return this.events.map((event, index) => {
 
@@ -66,12 +66,12 @@ class KrossoverPlay extends Entity {
     }
 
     /**
-     * Method returns an HTML string of the summary script for the play.
+     * Getter returns an HTML string of the summary script for the play.
      *
-     * @function summaryScript
-     * @returns {String} - HTML
+     * @readonly
+     * @type {String} - HTML
      */
-    summaryScript () {
+    get summaryScript () {
 
         return this.events.map((event, index) => {
 
@@ -84,12 +84,12 @@ class KrossoverPlay extends Entity {
     }
 
     /**
-     * Method returns an HTML string of the user script for the play.
+     * Getter returns an HTML string of the user script for the play.
      *
-     * @function userScript
-     * @returns {String} - HTML
+     * @readonly
+     * @type {String} - HTML
      */
-    userScript () {
+    get userScript () {
 
         return this.events.map((event, index) => {
 

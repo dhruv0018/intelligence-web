@@ -88,7 +88,6 @@ class Field extends Value {
      */
     toString () {
 
-        // TODO: Removed this method or change to a sensible default.
         return `<span class="value">${this.value.name}</span>`;
     }
 
