@@ -1,5 +1,6 @@
 import Field from './Field';
-import Getters from './DynamicGetters';
+import Team from './common/Team';
+import Player from './common/Player';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
@@ -26,7 +27,10 @@ class TeamPlayerField extends Field {
                 if (!variableValueType) {
                     return field.name;
                 }
-                return variableValueType === 'Team' ? Getters.teamName(field, id) : Getters.playerName(field, id);
+                return variableValueType === 'Team' ? Team.getters.name(field, id) : Player.getters.name(field, id);
+            },
+            get variableValueType() {
+                return variableValueType;
             }
         };
 
@@ -34,12 +38,10 @@ class TeamPlayerField extends Field {
             case 'Player':
                 value.playerId = id;
                 value.teamId = undefined;
-                value.variableValueType = 'Player';
                 break;
             case 'Team':
                 value.teamId = id;
                 value.playerId = undefined;
-                value.variableValueType = 'Team';
                 break;
         }
 
@@ -48,7 +50,7 @@ class TeamPlayerField extends Field {
     }
 
     get availableValues () {
-        return Getters.teamPlayerValues(this);
+        return Team.getters.availableValues(this).concat(Player.getters.availableValues(this));
     }
 
 
@@ -60,17 +62,7 @@ class TeamPlayerField extends Field {
      */
     toString () {
         if (this.value.variableValueType === 'Player') {
-            return `
-            <span class="value">
-
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-                    <rect fill="${this.value.jerseyColor}" x="0" y="0" width="16px" height="16px" />
-                </svg>
-
-                <span class="player-name">${this.value.name}</span>
-
-            </span>
-            `;
+            return Player.functionality.toString(this);
         }
         return super.toString();
     }
