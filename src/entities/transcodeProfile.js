@@ -158,7 +158,7 @@ class TranscodeProfile extends Entity {
         let validation = this.validate(transcodeProfile);
         if (validation.errors.length) {
 
-            throw new Error(validation.errors.shift());
+            console.error(validation.errors.shift());
         }
 
         super(transcodeProfile);
