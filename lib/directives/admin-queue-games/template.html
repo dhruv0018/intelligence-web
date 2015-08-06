@@ -39,7 +39,7 @@
 
                 <ul
                  ng-if="game.hasIndexerAssignment()"
-                 ng-repeat="assignment in game.indexerAssignments.slice() | filter:{ isQa: false } | limitTo:1"
+                 ng-repeat="assignment in game.indexerAssignments | filter:{ isQa: false } | limitTo:1"
                 >
 
                     <li>
@@ -68,7 +68,7 @@
 
                 <ul
                  ng-if="game.hasQaAssignment()"
-                 ng-repeat="assignment in game.indexerAssignments.slice() | filter:{ isQa: true } | limitTo:1"
+                 ng-repeat="assignment in game.indexerAssignments | filter:{ isQa: true } | limitTo:1"
                 >
 
                     <li>
@@ -85,7 +85,7 @@
 
             </td>
 
-            <td>{{ game.video.duration | millisecondsAsHoursMinutesSeconds }}</td>
+            <td class="game-duration">{{ game.video.duration | secondsAsHoursMinutesSeconds }}</td>
 
             <td class="time-left">
                 <span class="late" ng-if="game.remainingTime < 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
