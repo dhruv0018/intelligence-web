@@ -256,10 +256,12 @@ module.exports = function(grunt) {
             components: {
                 files: {
                     'build/components.css': [
-                        'app/reel/styles.less',
-                        'lib/directives/video-player/select-media-src/styles.less',
+                        'app/reel/*.less',
+                        'app/indexer/**/*.less',
                         'lib/directives/indexing-block/styles.less',
-                        'lib/directives/dynamic-tables/styles.less'
+                        'lib/directives/dynamic-tables/styles.less',
+                        'app/styleguide/**/*.less',
+                        'lib/directives/video-player/select-media-src/styles.less'
                     ]
                 }
             }
