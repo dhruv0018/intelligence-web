@@ -22,7 +22,7 @@
             <p>
                 <span data-ng-if="users[player.userId].lastAccessed">{{usersFactory.getLastAccessed(users[player.userId]) | date: 'mediumDate'}}</span>
                 <span data-ng-if="!player.userId && !users[player.userId].lastAccessed">No Account</span>
-                <a href data-ng-if="player.userId && !users[player.userId].lastAccessed" data-ng-click="resendInvite(player.userId, team.id, player)" data-ng-hide="player.sendingEmail">Resend Invitation</a>
+                <a href id="resend-player-invite-cta" data-ng-if="player.userId && !users[player.userId].lastAccessed" data-ng-click="resendInvite(player.userId, team.id, player)" data-ng-hide="player.sendingEmail">Resend Invitation</a>
                 <span class="resending" data-ng-show="player.sendingEmail">
                     <krossover-spinner ng-show="!player.confirmSent" size="15px"></krossover-spinner>
                     <span data-ng-show="player.confirmSent"><i class="icon icon-ok"></i> Invitation Resent</span>

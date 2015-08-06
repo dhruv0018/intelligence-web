@@ -6,7 +6,7 @@
 
             <div data-ng-if="!athlete.firstName">
                 <p class="pull-left">Add a new player to your roster</p>
-                <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i>
+                <i id="dismiss-new-player-modal-cta" class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i>
             </div>
 
             <div data-ng-if="athlete.firstName">
@@ -22,7 +22,7 @@
                 <div class="pull-right">
                     <span data-ng-if="users[athlete.userId].lastAccessed">{{usersFactory.getLastAccessed(users[athlete.userId]) | date: 'mediumDate'}}</span>
 
-                    <i class="icon icon-remove" data-ng-click="$dismiss()"></i>
+                    <i id="dismiss-existing-player-modal-cta" class="icon icon-remove" data-ng-click="$dismiss()"></i>
                 </div>
 
             </div>
@@ -66,10 +66,10 @@
                                 </tr>
                             </thead>
                             <tr>
-                                <td><input type="text" class="name" placeholder="First Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.firstName" required></td>
-                                <td><input type="text" class="name" placeholder="Last Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.lastName" required></td>
+                                <td><input id="enter-player-first-name-cta" type="text" class="name" placeholder="First Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.firstName" required></td>
+                                <td><input id="enter-player-last-name-cta" type="text" class="name" placeholder="Last Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.lastName" required></td>
                                 <td data-ng-if="athlete.description === 'players'">
-                                    <input placeholder="#" size="3" type="text" data-ng-model="playerInfo.jerseyNumber" required>
+                                    <input id="enter-player-jersey-number-cta" placeholder="#" size="3" type="text" data-ng-model="playerInfo.jerseyNumber" required>
                                 </td>
                             </tr>
                         </table>
@@ -96,8 +96,8 @@
                         <div class="col-md-6">
                             <strong>Player's Email</strong>
                             <br/>
-                            <input type="text" data-ng-if="!athlete.userId" data-ng-model="user.email" placeholder="Email Address">
-                            <input type="text" data-ng-if="athlete.userId" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="users[athlete.userId].email" placeholder="Email Address">
+                            <input id="enter-player-email-cta" type="text" data-ng-if="!athlete.userId" data-ng-model="user.email" placeholder="Email Address">
+                            <input id="edit-player-email-cta" type="text" data-ng-if="athlete.userId" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="users[athlete.userId].email" placeholder="Email Address">
                         </div>
                         <div ng-hide="true" class="col-md-6">
                             <strong>Allow player to edit event details</strong>
@@ -109,6 +109,7 @@
                     <div class="col-md-6">
                         <input type="submit" data-ng-if="athlete.description !== 'players'" class="btn btn-primary" value="Save" data-ng-click="savePlayer()">
                         <input type="submit"
+                               id="submit-player-info-cta"
                                data-ng-if="athlete.description === 'players'"
                                class="btn btn-primary"
                                data-ng-disabled="athleteForm.$invalid"
@@ -117,8 +118,8 @@
                     </div>
                     <div data-ng-if="athlete.description === 'players'" class="remove col-md-6">
                         <a class="pull-right" href data-ng-click="togglePlayer()">
-                            <span data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === true"><i class="icon icon-remove"></i> Remove from current roster</span>
-                            <span data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === false"><i class="icon icon-add"></i> Add player to current roster</span>
+                            <span id="remove-player-from-roster-cta" data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === true"><i class="icon icon-remove"></i> Remove from current roster</span>
+                            <span id="add-player-to-roster-cta" data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === false"><i class="icon icon-add"></i> Add player to current roster</span>
                         </a>
                     </div>
                 </div>
