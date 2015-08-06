@@ -37,7 +37,7 @@ describe('Player Dropdown Field', () => {
         field.value = field.availableValues[0];
         let value = field.value;
         expect(value.playerId).to.be.null;
-        expect(value.name).to.equal('Optional');
+        expect(value.name).to.equal('Player 1');
     });
 
     it('Should have properly set value if required', () => {

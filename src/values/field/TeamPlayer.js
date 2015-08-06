@@ -1,5 +1,6 @@
 import Field from './Field';
-import Getters from './DynamicGetters';
+import Team from './common/Team';
+import Player from './common/Player';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
@@ -14,7 +15,7 @@ class TeamPlayerField extends Field {
      * @constructs TeamPlayerField
      * @param {Object} field - Field JSON from server
      */
-    constructor (field, variableValueType) {
+    constructor (field, type) {
         if (!field) return;
 
         super(field);
@@ -23,34 +24,24 @@ class TeamPlayerField extends Field {
 
         let value = {
             get name() {
-                if (!variableValueType) {
+                if (!type) {
                     return field.name;
                 }
-                return variableValueType === 'Team' ? Getters.teamName(field, id) : Getters.playerName(field, id);
-            }
+                return type === 'Team' ? Team.getters.name(field, id) : Player.getters.name(field, id);
+            },
+            get type() {
+                return type;
+            },
+            id
         };
-
-        switch (variableValueType) {
-            case 'Player':
-                value.playerId = id;
-                value.teamId = undefined;
-                value.variableValueType = 'Player';
-                break;
-            case 'Team':
-                value.teamId = id;
-                value.playerId = undefined;
-                value.variableValueType = 'Team';
-                break;
-        }
 
         this.value = value;
 
     }
 
     get availableValues () {
-        return Getters.teamPlayerValues(this);
+        return Team.getters.availableValues(this).concat(Player.getters.availableValues(this));
     }
-
 
     /**
      * Generates an HTML string of the field.
@@ -59,20 +50,7 @@ class TeamPlayerField extends Field {
      * @returns {String} - HTML of the field
      */
     toString () {
-        if (this.value.variableValueType === 'Player') {
-            return `
-            <span class="value">
-
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-                    <rect fill="${this.value.jerseyColor}" x="0" y="0" width="16px" height="16px" />
-                </svg>
-
-                <span class="player-name">${this.value.name}</span>
-
-            </span>
-            `;
-        }
-        return super.toString();
+        return this.value.type === 'Player' ? Player.functionality.toString(this) : super.toString();
     }
 
     /**
@@ -80,16 +58,7 @@ class TeamPlayerField extends Field {
      * @type {Boolean}
      */
     get valid () {
-
-        switch (this.value.variableValueType) {
-
-            case 'Player': return Number.isInteger(this.value.playerId);
-
-            case 'Team': return Number.isInteger(this.value.teamId);
-
-            default:
-                return true;
-        }
+        return Number.isInteger(this.value.id);
     }
 
     /**
@@ -100,21 +69,11 @@ class TeamPlayerField extends Field {
      */
     toJSON () {
         let variableValue = {
-            type: this.value.variableValueType
+            type: this.value.type,
+            value: Number(this.value.id)
         };
 
-        switch (variableValue.type) {
-
-            case 'Player':
-                variableValue.value = (!this.isRequired && this.value.playerId === null) ? null : Number(this.value.playerId);
-                break;
-
-            case 'Team':
-                variableValue.value = (!this.isRequired && this.value.teamId === null) ? null : Number(this.value.teamId);
-                break;
-        }
-
-        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
+        return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.value.type;
     }
 }
 

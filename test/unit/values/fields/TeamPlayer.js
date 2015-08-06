@@ -15,23 +15,22 @@ describe('General TeamPlayer Field', () => {
 });
 
 describe('Player Dropdown Field', () => {
-    let srcPlayerField;
-    let srcTeamField;
+    let srcField;
     let playerField;
     let teamField;
 
     beforeEach(() => {
-        srcPlayerField = angular.copy(rawField.player);
-        srcTeamField = angular.copy(rawField.team);
-        playerField = new TeamPlayerField(srcPlayerField, 'Player');
-        teamField = new TeamPlayerField(srcTeamField, 'Team');
+        srcField = angular.copy(rawField);
+        playerField = new TeamPlayerField(srcField, 'Player');
+        teamField = new TeamPlayerField(srcField, 'Team');
     });
 
     it('Should set values properly (always required)', () => {
         let playerValue = playerField.value;
         let teamValue = teamField.value;
 
-        expect(playerValue.playerId).to.equal(1);
+        expect(playerValue.id).to.equal(1);
+        expect(teamValue.id).to.equal(1);
     });
 
     it('toJSON should serialize to the right format if the field has a value', () => {
@@ -40,12 +39,4 @@ describe('Player Dropdown Field', () => {
         expect(JSON.stringify(playerPayload)).to.equal('{"type":"Player","value":1}');
         expect(JSON.stringify(teamPayload)).to.equal('{"type":"Team","value":1}');
     });
-
-    // it('Should validate correctly', () => {
-    //     let field = unrequiredField;
-    //     field.availableValues.forEach(value => {
-    //         field.value = value;
-    //         expect(field.valid).to.be.true;
-    //     });
-    // });
 });

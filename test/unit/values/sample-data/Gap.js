@@ -3,6 +3,7 @@ let field =  {
     id: 1,
     index: 1,
     type: 'GAP',
+    name: 'Gap',
     isRequired: true,
     options: [],
     value: '1'

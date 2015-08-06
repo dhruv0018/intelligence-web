@@ -4,7 +4,8 @@ let field = {
     index: 1,
     isRequired: true,
     options: [],
-    type: 'Player',
+    type: 'PLAYER_DROPDOWN',
+    name: 'Player 1',
     value: '1'
 };
 

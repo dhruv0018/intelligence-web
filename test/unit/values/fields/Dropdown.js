@@ -41,9 +41,8 @@ describe('Dropdown Field', () => {
 
         field.value = field.availableValues[0];
         let value = field.value;
-
         expect(value.content).to.be.null;
-        expect(value.name).to.equal('Optional');
+        expect(value.name).to.equal('Kickoff');
     });
 
     it('Should have properly set value if required', () => {

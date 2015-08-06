@@ -18,6 +18,7 @@ let field = {
     type: 'FORMATION',
     isRequired: true,
     options: [],
+    name: 'QB Gun',
     value: '1'
 };
 

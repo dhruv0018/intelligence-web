@@ -1,7 +1,7 @@
 //TODO many of these will be removable IF we get server delivering names on variableValues
 let angular = window.angular;
 
-function playerName(field, playerId) {
+function name(field, playerId) {
     let calculatedName = field.name;
     if (playerId && window && window.angular && document) {
         let injector = angular.element(document).injector();
@@ -12,7 +12,7 @@ function playerName(field, playerId) {
     return calculatedName;
 }
 
-function playerValues(field) {
+function availableValues(field) {
     let injector = angular.element(document).injector();
     let values = [];
     if (window && injector && document && window.angular) {
@@ -40,6 +40,12 @@ function playerValues(field) {
                     } else {
                         return Number(jerseyNumber);
                     }
+                },
+                get type() {
+                    return 'Player';
+                },
+                get id() {
+                    return player.id;
                 }
             };
             return value;
@@ -60,6 +66,12 @@ function playerValues(field) {
                     } else {
                         return Number(jerseyNumber);
                     }
+                },
+                get type() {
+                    return 'Player';
+                },
+                get id() {
+                    return player.id;
                 }
             };
             return value;
@@ -74,59 +86,29 @@ function playerValues(field) {
     return values;
 }
 
-function teamName(field, teamId) {
-    let calculatedName = field.name;
-    if (teamId && window && window.angular && document) {
-        let injector = angular.element(document).injector();
-        if (injector) {
-            let teams = injector.get('TeamsFactory');
-            let team = teams.get(teamId);
-            calculatedName = angular.copy(team.name);
-        }
-    }
-    return calculatedName;
+function toString(field) {
+    let value = field.value;
+    return `
+    <span class="value">
+
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
+            <rect fill="${value.jerseyColor}" stroke="black" stroke-width="${value.jerseyColor === '#ffffff' ? 1 : 0}" x="0" y="0" width="16px" height="16px" />
+        </svg>
+
+        <span class="player-name">${value.name}</span>
+
+    </span>
+    `;
 }
 
-function teamValues(field) {
-    let values = [];
-    let injector = angular.element(document).injector();
-    if (injector) {
-        let games = injector.get('GamesFactory');
-        let teams = injector.get('TeamsFactory');
-
-        let game = games.get(field.gameId);
-        let team = game.teamId ? teams.get(game.teamId) : null;
-        let opposingTeam = game.opposingTeamId ? teams.get(game.opposingTeamId) : null;
-
-        values = [team, opposingTeam].map((localTeam) => {
-            return {
-                teamId: localTeam.id,
-                name: localTeam.name,
-                color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor,
-                //so they are placed at highest priority
-                get order() {
-                    return -1;
-                }
-            };
-        });
+let common = {
+    getters: {
+        name,
+        availableValues
+    },
+    functionality: {
+        toString
     }
-
-    if (!field.isRequired) {
-        values.unshift({teamId: null, name: this.name, color: null});
-    }
-    return values;
-}
-
-function teamPlayerValues(field) {
-    return teamValues(field).concat(playerValues(field));
-}
-
-let getters = {
-    playerName,
-    playerValues,
-    teamName,
-    teamValues,
-    teamPlayerValues
 };
 
-export default getters;
+export default common;

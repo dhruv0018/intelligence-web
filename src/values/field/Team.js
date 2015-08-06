@@ -1,5 +1,5 @@
 import Field from './Field';
-import Getters from './DynamicGetters';
+import Team from './common/Team';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
@@ -23,14 +23,14 @@ class TeamField extends Field {
         let value = {
             teamId,
             get name () {
-                return Getters.teamName(field, teamId);
+                return Team.getters.name(field, teamId);
             }
         };
         this.value = value;
     }
 
     get availableValues () {
-        return Getters.teamValues(this);
+        return Team.getters.availableValues(this);
     }
 
     /**
