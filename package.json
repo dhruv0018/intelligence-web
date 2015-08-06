@@ -137,7 +137,7 @@
   },
   "main": "./src/main.js",
   "scripts": {
-    "preinstall": "expect -f npm_login_expect.sh krossover Popcorn23 'purchase@krossover.com'",
+    "preinstall": "npm login --scope=krossover",
     "install": "node_modules/.bin/napa; node_modules/.bin/component install",
     "postinstall": "node_modules/protractor/bin/webdriver-manager update",
     "serve": "node server.js",
