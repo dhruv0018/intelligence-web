@@ -33,7 +33,14 @@ function playerValues(field) {
                 playerId: angular.copy(player.id),
                 jerseyColor: angular.copy(game.primaryJerseyColor),
                 jerseyNumber,
-                name: '(' + jerseyNumber + ')  ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
+                name: '(' + jerseyNumber + ')  ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName),
+                get order() {
+                    if (rosterEntry.isUnknown) {
+                        return 1;
+                    } else {
+                        return Number(jerseyNumber);
+                    }
+                }
             };
             return value;
         });
@@ -46,7 +53,14 @@ function playerValues(field) {
                 playerId: angular.copy(player.id),
                 jerseyColor: angular.copy(game.opposingPrimaryJerseyColor),
                 jerseyNumber,
-                name: '(' + jerseyNumber + ')  ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName)
+                name: '(' + jerseyNumber + ')  ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName),
+                get order() {
+                    if (rosterEntry.isUnknown) {
+                        return 1;
+                    } else {
+                        return Number(jerseyNumber);
+                    }
+                }
             };
             return value;
         });
@@ -88,7 +102,11 @@ function teamValues(field) {
             return {
                 teamId: localTeam.id,
                 name: localTeam.name,
-                color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor
+                color: (localTeam.id === game.teamId) ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor,
+                //so they are placed at highest priority
+                get order() {
+                    return -1;
+                }
             };
         });
     }
