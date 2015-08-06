@@ -23,7 +23,7 @@ class GapField extends Field {
         let value = {
             gapId,
             get name () {
-                let calculatedName = !field.isRequired ? 'Optional' : field.name;
+                let calculatedName = field.name;
                 if (gapId) {
                     calculatedName = gap.name;
                 }
@@ -47,7 +47,7 @@ class GapField extends Field {
             return value;
         });
         if (!this.isRequired) {
-            values.unshift({name: 'Optional', gapId: null, keyboardShortcut: undefined});
+            values.unshift({name: this.name, gapId: null, keyboardShortcut: undefined});
         }
         return values;
     }

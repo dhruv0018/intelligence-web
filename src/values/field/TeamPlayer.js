@@ -24,7 +24,7 @@ class TeamPlayerField extends Field {
         let value = {
             get name() {
                 if (!variableValueType) {
-                    return !field.isRequired ? 'Optional' : field.name;
+                    return field.name;
                 }
                 return variableValueType === 'Team' ? Getters.teamName(field, id) : Getters.playerName(field, id);
             }

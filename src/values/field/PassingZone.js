@@ -25,7 +25,7 @@ class PassingZoneField extends Field {
         let value = {
             zoneId,
             get name() {
-                let calculatedName = !field.isRequired ? 'Optional' : field.name;
+                let calculatedName = field.name;
                 if (zone) {
                     calculatedName = zone.name;
                 }
@@ -46,7 +46,7 @@ class PassingZoneField extends Field {
             };
             return value;
         });
-        values.unshift({zoneId: null, name: 'Optional'});
+        values.unshift({zoneId: null, name: this.name});
         return values;
     }
 

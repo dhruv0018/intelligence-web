@@ -2,7 +2,7 @@
 let angular = window.angular;
 
 function playerName(field, playerId) {
-    let calculatedName = !field.isRequired ? 'Optional' : field.name;
+    let calculatedName = field.name;
     if (playerId && window && window.angular && document) {
         let injector = angular.element(document).injector();
         let players = injector.get('PlayersFactory');
@@ -68,14 +68,14 @@ function playerValues(field) {
     }
 
     if (!field.isRequired) {
-        values.unshift({playerId: null, jerseyColor: null, jerseyNumber: 'NONE', name: 'Optional'});
+        values.unshift({playerId: null, jerseyColor: null, jerseyNumber: 'NONE', name: field.name});
     }
 
     return values;
 }
 
 function teamName(field, teamId) {
-    let calculatedName = !field.isRequired ? 'Optional' : field.name;
+    let calculatedName = field.name;
     if (teamId && window && window.angular && document) {
         let injector = angular.element(document).injector();
         if (injector) {
@@ -112,7 +112,7 @@ function teamValues(field) {
     }
 
     if (!field.isRequired) {
-        values.unshift({teamId: null, name: 'Optional', color: null});
+        values.unshift({teamId: null, name: this.name, color: null});
     }
     return values;
 }
