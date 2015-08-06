@@ -28,7 +28,7 @@ FilmHome.controller('Athlete.FilmHome.controller', [
         let reelsList = reels.getByRelatedRole();
         $scope.filmsList = gamesList.concat(reelsList);
         $scope.query = '';
-        $scope.currentUser = users.get(session.currentUser.id);
+        $scope.currentUser = session.getCurrentUser();
         $scope.userPlayers = players.getList();
 
         //ui
