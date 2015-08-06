@@ -25,7 +25,7 @@
         <div class="share-options-container" data-ng-show="!withTeam && !withOtherUsers && !withPublic">
         	<!--With Team Option for Game-->
             <div class="share-options option-your-team" data-ng-show="isGame">
-        		<h3><i class="icon icon-ok"></i> Shared With Your Team</h3>
+        		<h3><i class="icon icon-ok"></i>Shared With Your Team</h3>
         		<i class="icon icon-group"></i>
         	</div>
             <!--With Team Option for Reel-->
@@ -108,47 +108,47 @@
         </div>
 
         <div class="sharing-with-public-container" data-ng-show="withPublic">
-            <div class="info-box">
-                <p data-ng-if="!linkActive">By clicking on "Publish to Web", you can share  this video with anyone by copying the link or embedding the video in your website.</p>
-                <p data-ng-if="linkActive">If you would like to make the video private, no one will be able to access this game with this link.</p>
-                <p data-ng-if="!linkActive">Anyone with this link will be able to access this video.</p>
-                <p data-ng-if="linkActive">If you have shared this game with another Krossover user's account, making the video private will not remove it from their account.</p>
+
+            <p class="public-share-option-title">How would you like to share?</p>
+            <div class="public-share-types">
+                <button id="share-film-make-public-cta" type="button" class="btn-radio" ng-model="linkActive" btn-radio="true" ng-change="togglePublicLink()" required>Make video public</button>
+                <button id="share-film-make-private-cta" type="button" class="btn-radio" ng-model="linkActive" btn-radio="false" ng-change="togglePublicLink()" required>Keep video private</button>
             </div>
 
-            <div class="activate-row">
-                <span class="video-status-private" data-ng-if="!linkActive">Video is currently private.</span>
-                <span class="video-status-public" data-ng-if="linkActive">Video is now public on the web.</span>
-                <button id="share-film-public-toggle-cta" class="btn btn-primary pull-right" data-ng-click="togglePublicLink()">{{linkActive ? 'Make Private' : 'Publish to Web'}}</button>
-            </div>
-            <p class="public-share-option-title" data-ng-show="isGame && film.isDelivered() && linkActive">What would you like to share?</p>
-            <div class="public-share-types" data-ng-show="isGame && film.isDelivered() && linkActive">
-                <button id="share-film-public-raw-film-only-cta" type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="false" data-ng-change="film.save()" required>Share Raw Film Only</button>
-                <button id="share-film-public-raw-film-and-breakdown-cta" type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="true" data-ng-change="film.save()" required>Share Breakdown and Raw Film</button>
-            </div>
-            <!--<p class="public-share-option-title" data-ng-show="linkActive">How would you like to share?</p>-->
-            <div class="public-share-methods" data-ng-show="linkActive">
-                <div class="method-row">
-                    <span class="link-label">Share link with anyone</span>
-                    <div class="public-link-box pull-right" data-ng-class="{inActive:!linkActive}">
-                        <a id="share-film-public-anyone-game-link-cta" data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/g/{{shortId}}</a>
-                        <a id="share-film-public-anyone-reel-link-cta" data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/r/{{shortId}}</a>
+            <div class="options-for-publicly-shared-films" ng-class="{'expanded': linkActive}">
+                <p class="public-share-option-title" data-ng-show="isGame && film.isDelivered()">What would you like to share?</p>
+                <div class="public-share-types" data-ng-show="isGame && film.isDelivered()">
+                    <button id="share-film-public-raw-film-only-cta" type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="false" data-ng-change="film.save()" required>Share Raw Film Only</button>
+                    <button id="share-film-public-raw-film-and-breakdown-cta" type="button" class="btn-radio" data-ng-model="film.publicShare.isBreakdownShared" data-btn-radio="true" data-ng-change="film.save()" required>Share Breakdown and Raw Film</button>
+                </div>
+                <!--<p class="public-share-option-title" data-ng-show="linkActive">How would you like to share?</p>-->
+                <div class="public-share-methods">
+                    <div class="method-row">
+                        <p class="link-label">Public Link:</p>
+                        <div class="public-link-box" data-ng-class="{inActive:!linkActive}">
+                            <a id="share-film-public-anyone-game-link-cta" data-ng-if="isGame" href="/intelligence/g/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/g/{{shortId}}</a>
+                            <a id="share-film-public-anyone-reel-link-cta" data-ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/r/{{shortId}}</a>
+                        </div>
+                    </div>
+                    <div class="method-row">
+                        <div class="embed-options">
+                            <span>Embed Code:</span>
+                            <div>
+                                Video Size:
+                                <select id="share-film-public-video-size-cta" data-ng-model="embedSize">
+                                    <option value="width:480px;height:500px;">480x500</option>
+                                    <option value="width:720px;height:750px;">720x750</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="public-link-box pull-right">
+                            <code id="share-film-public-embed-game-field" data-ng-show="isGame">&lt;iframe src="{{config.links.intelligence.uri}}/g/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
+                            <code id="share-film-public-embed-reel-field" data-ng-show="!isGame">&lt;iframe src="{{config.links.intelligence.uri}}/r/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
+                        </div>
                     </div>
                 </div>
-                <div class="method-row">
-                    <div class="public-link-box pull-right" data-ng-show="linkActive">
-                        <code id="share-film-public-embed-game-field" data-ng-show="isGame">&lt;iframe src="{{config.links.intelligence.uri}}/g/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
-                        <code id="share-film-public-embed-reel-field" data-ng-show="!isGame">&lt;iframe src="{{config.links.intelligence.uri}}/r/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
-                    </div>
-                    <div class="method-column">
-                        <p class="embed-label">Embed video on your website</p>
-                        Video Size:
-                        <select id="share-film-public-video-size-cta" data-ng-model="embedSize">
-                            <option value="width:480px;height:500px;">480x500</option>
-                            <option value="width:720px;height:750px;">720x750</option>
-                        </select>
-                    </div>
-                </div>
             </div>
+
             <div class="button-row">
                 <button id="share-film-public-back-cta" class="btn btn-default" data-ng-click="withPublic = false"><i class="icon icon-chevron-left"></i> Back</button>
                 <button id="share-film-public-done-cta" class="btn btn-primary pull-right" data-ng-click="$close()">Done</button>

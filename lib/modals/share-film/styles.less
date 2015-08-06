@@ -228,6 +228,19 @@
 
         .sharing-with-public-container {
 
+            .options-for-publicly-shared-films {
+                overflow: hidden;
+                max-height: 0px;
+                transition: max-height 0.8s;
+                -moz-transition: max-height 0.8s; /* Firefox 4 */
+                -webkit-transition: max-height 0.8s; /* Safari and Chrome */
+                -o-transition: max-height 0.8s; /* Opera */
+
+                &.expanded {
+                    max-height: 500px;
+                }
+            }
+
             .btn-radio {
                 .btn;
                 background-color: white;
@@ -269,10 +282,9 @@
             .public-link-box {
                 border: 2px solid @gray-border;
                 border-radius: 4px;
-                width: 65%;
+                width: 100%;
                 margin: 0px auto 10px;
                 padding: 10px;
-                display: inline-block;
                 word-wrap: break-word;
 
                 code {
@@ -301,11 +313,14 @@
             .public-share-methods {
 
                 .method-row {
+                    border-top: thin solid @gray-border;
+                    padding: 10px 0;
 
-                    .method-column {
-                        width: 180px;
-                        display: inline-block;
-                        padding-top: 20px;
+                    .embed-options {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 10px;
 
                         select {
                             padding-right: 35px;
