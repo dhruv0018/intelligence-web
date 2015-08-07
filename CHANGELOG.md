@@ -8,6 +8,7 @@
 - [PROFILE] As an athlete, when I view a video vertically on my iPad, the video should span the full width of iPad if the resumé is no longer visible.
 - [PROFILE] As an athlete, when I upload a profile picture, it should be cropped and scaled proportionally when I see it on my profile.
 - [PROFILE] Design/UX Enhancements
+- Public page footer needs date revision
 
 # v2.10.1 #
 
