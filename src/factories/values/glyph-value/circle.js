@@ -7,7 +7,7 @@ module.exports = [
 
         function Circle(type, options, container, SVGContext) {
 
-            SVGGlyph.call(this, type, options, container, SVGContext, SVGContext.circle());
+            SVGGlyph.call(this, type, options, container, SVGContext, SVGContext.ellipse());
 
             this.addMoveHandlers();
         }
