@@ -1,5 +1,10 @@
 # v2.11.0 #
 
+## Features ##
+- [VIDEOPLAYER] User on Web can select the quality of the video.
+- [VIDEOPLAYER] User on Web can download raw film as an .mp4 file.
+- [VIDEOPLAYER] User on Web can download a clip from a breakdown or a reel as an .mp4 file.
+
 # v2.10.1 #
 
 ## Bug Fixes / Improvements ##
