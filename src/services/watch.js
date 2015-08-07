@@ -1,3 +1,8 @@
+/* Import Angular IntelligenceWebClient module */
+const pkg = require('../../package.json');
+const angular = window.angular;
+const IntelligenceWebClient = angular.module(pkg.name);
+
 /**
  * Object property watch service backed by Object.observe
  * @module Watch
@@ -11,9 +16,9 @@
  */
 class Watch {
 
-    constructor (obj, propertyName, callback) {
+    constructor (object, propertyName, callback) {
 
-        return Object.observe(obj, changes => {
+        return Object.observe(object, changes => {
 
             const change = changes.shift();
 
@@ -23,7 +28,7 @@ class Watch {
             ) {
 
                 const oldValue = change.oldValue;
-                const newValue = obj[propertyName];
+                const newValue = object[propertyName];
 
                 callback(oldValue, newValue);
             }
@@ -31,4 +36,8 @@ class Watch {
     }
 }
 
+/* Open Watch service to Angular DI */
+IntelligenceWebClient.service('Watch', Watch);
+
+/* Export Watch class for ES6 modules */
 export default Watch;
