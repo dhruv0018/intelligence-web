@@ -52,8 +52,8 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
              */
             getPosition: function(positionId) {
 
-                if (!positionId) throw new Error(`getPosition() requires 'positionId' parameter`);
-                if (typeof positionId !== 'number') throw new Error(`getPosition() 'positionId' must be of type 'number'`);
+                if (!positionId) throw new Error(`Missing required parameter: 'positionId'`);
+                if (!Number.isInteger(positionId)) throw new Error(`'positionId' must be an integer`);
 
                 return this.positions.find(position => positionId === position.id);
             },
@@ -66,7 +66,7 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
             getPositions: function(positionIds) {
 
                 if (!positionIds) return this.positions;
-                if (typeof positionIds !== 'object') throw new Error(`getPositions() 'positionIds' must be of type 'array'`);
+                if (!Array.isArray(positionIds)) throw new Error(`'positionIds' must be an array`);
 
                 return positionIds.map(positionId => this.getPosition(positionId));
             },
@@ -91,16 +91,16 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
              */
             getPlayerPositionNames: function(roster, playerId) {
 
-                if (!roster) throw new Error(`getPlayerPositionNames() requires 'roster' parameter`);
-                if (!playerId) throw new Error(`getPlayerPositionNames() requires 'playerId' parameter`);
-                if (typeof playerId !== 'number') throw new Error(`getPlayerPositionNames() 'playerId' must be of type 'number'`);
+                if (!roster) throw new Error(`Missing required parameter: 'roster'`);
+                if (!playerId) throw new Error(`Missing required parameter: 'playerId'`);
+                if (!Number.isInteger(playerId)) throw new Error(`'playerId' must be an integer`);
 
                 let playerInfo;
 
                 try {
                     playerInfo = roster.playerInfo;
                 } catch (error) {
-                    throw new Error(`getPlayerPositionNames(): playerInfo is not defined on roster`);
+                    throw new Error(`'playerInfo' is not defined on roster`);
                 }
 
                 let specificPlayerInfo;
@@ -108,7 +108,7 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
                 try {
                     specificPlayerInfo = playerInfo[playerId];
                 } catch (error) {
-                    throw new Error(`getPlayerPositionNames(): player with id ${player.id} cannot be found on the roster given`);
+                    throw new Error(`player with id ${player.id} cannot be found on the roster given`);
                 }
 
                 return this.getPositionNames(specificPlayerInfo.positionIds);

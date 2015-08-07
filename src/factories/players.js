@@ -52,8 +52,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
              */
             getJerseyNumber: function(roster, padLength = 3) {
 
-                if (!roster) throw new Error(`getJerseyNumber() requires 'roster' parameter`);
-                if (padLength && typeof padLength !== 'number') throw new Error(`getPlayerTitle() 'roster' should be of type 'number'`);
+                if (!roster) throw new Error(`Missing required parameter: 'roster'`);
+                if (padLength && !Number.isInteger(padLength)) throw new Error(`'padLength' should be an integer`);
 
                 let jerseyNumber;
                 let playerInfo;
@@ -61,7 +61,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 try {
                     playerInfo = roster.playerInfo;
                 } catch (error) {
-                    throw new Error(`getJerseyNumber(): playerInfo is not defined on roster`);
+                    throw new Error(`'playerInfo' is not defined on roster`);
                 }
 
                 let specificPlayerInfo;
@@ -69,7 +69,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 try {
                     specificPlayerInfo = playerInfo[this.id];
                 } catch (error) {
-                    throw new Error(`getJerseyNumber(): player with id ${player.id} cannot be found on the roster given`);
+                    throw new Error(`player with id ${player.id} cannot be found on the roster given`);
                 }
 
                 jerseyNumber = specificPlayerInfo ? specificPlayerInfo.jerseyNumber : '';
@@ -85,8 +85,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
              */
             getPlayerTitle: function(roster, padLength = 3) {
 
-                if (!roster) throw new Error(`getPlayerTitle() requires 'roster' parameter`);
-                if (padLength && typeof padLength !== 'number') throw new Error(`getPlayerTitle() 'roster' should be of type 'number'`);
+                if (!roster) throw new Error(`Missing required parameter: 'roster'`);
+                if (padLength && !Number.isInteger(padLength)) throw new Error(`'padLength' should be an integer`);
 
                 const jerseyNumber = this.getJerseyNumber(roster, padLength);
 

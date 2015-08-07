@@ -1,3 +1,4 @@
+
 var PAGE_SIZE = 20;
 
 var moment = require('moment');
@@ -1009,7 +1010,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 let model = $injector.get(this.model);
                 let storage = $injector.get(this.storage);
 
-                if (!this.id) throw new Error(`retrieveArenaEvents(): Game has no id. Game must be saved before retrieving arena events`);
+                if (!this.hasOwnProperty('id')) throw new Error(`Game has no id. Game must be saved before retrieving arena events`);
 
                 const query = model.retrieveArenaEvents({ id: this.id});
                 const request = query.$promise;
@@ -1036,7 +1037,7 @@ IntelligenceWebClient.factory('GamesFactory', [
              */
             getArenaEvents: function() {
 
-                if (!this.arenaEvents) throw new Error(`getArenaEvents(): arenaEvents on game is not defined`);
+                if (!this.hasOwnProperty('arenaEvents')) throw new Error(`'arenaEvents' on game is not defined`);
 
                 return this.arenaEvents;
             },
