@@ -1,3 +1,8 @@
+# v2.10.1 #
+
+## Bug Fixes / Improvements ##
+- Fix an issue with an external library
+
 # v2.10.0 #
 
 ## Features ##
