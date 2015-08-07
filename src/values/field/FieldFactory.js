@@ -45,7 +45,7 @@ class FieldFactory {
             field = new TeamField(rawField);
             break;
         case 'PLAYER_TEAM_DROPDOWN':
-            field = new TeamPlayerField(rawField);
+            field = new TeamPlayerField(rawField, variableValueType);
             break;
         case 'GAP':
             field = new GapField(rawField);
