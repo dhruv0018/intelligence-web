@@ -12,6 +12,7 @@
         "normalize",
         "height",
         "weight",
+        "games",
         "padding",
         "to-array"
     ],

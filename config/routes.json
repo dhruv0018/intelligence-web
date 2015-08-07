@@ -218,12 +218,17 @@
         "Super Admin": true
     },
 
-    "indexer-game": {
+    "IndexerGame": {
 
         "Indexer": true
     },
 
-    "indexer-games": {
+    "IndexerGames": {
+
+        "Indexer": true
+    },
+
+    "IndexerHistory": {
 
         "Indexer": true
     },
@@ -534,6 +539,26 @@
 
     "ShortClips": {
 
+        "*": true
+    },
+
+    "Styleguide": {
+        "*": true
+    },
+
+    "Styleguide.Colors": {
+        "*": true
+    },
+
+    "Styleguide.Typography": {
+        "*": true
+    },
+
+    "Styleguide.Buttons": {
+        "*": true
+    },
+
+    "Styleguide.Forms": {
         "*": true
     }
 }
