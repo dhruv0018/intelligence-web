@@ -4,6 +4,10 @@
 - [VIDEOPLAYER] User on Web can select the quality of the video.
 - [VIDEOPLAYER] User on Web can download raw film as an .mp4 file.
 - [VIDEOPLAYER] User on Web can download a clip from a breakdown or a reel as an .mp4 file.
+- [PROFILE] As a user, I should be able to see a link to my profile below my resumé.
+- [PROFILE] As an athlete, when I view a video vertically on my iPad, the video should span the full width of iPad if the resumé is no longer visible.
+- [PROFILE] As an athlete, when I upload a profile picture, it should be cropped and scaled proportionally when I see it on my profile.
+- [PROFILE] Design/UX Enhancements
 
 # v2.10.1 #
 
