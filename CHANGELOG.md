@@ -9,6 +9,7 @@
 - [PROFILE] As an athlete, when I upload a profile picture, it should be cropped and scaled proportionally when I see it on my profile.
 - [PROFILE] Design/UX Enhancements
 - Public page footer needs date revision
+- As a coach, on the film home, when viewing my active team roster in the sidebar it should only contain active players
 
 # v2.10.1 #
 
