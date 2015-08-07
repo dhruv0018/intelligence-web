@@ -4,7 +4,6 @@
         "."
     ],
     "locals": [
-        "pills",
         "count-label",
         "arena-chart-filters",
         "color-shape",

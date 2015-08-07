@@ -133,7 +133,8 @@
     "tv4": "1.1.12",
     "@krossover/fit-element": "0.2.0",
     "@krossover/krossover-checkbox": "0.2.0",
-    "@krossover/krossover-multiselect": "0.1.0"
+    "@krossover/krossover-multiselect": "0.1.0",
+    "@krossover/pills": "0.1.0"
   },
   "main": "./src/main.js",
   "scripts": {

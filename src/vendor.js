@@ -36,3 +36,4 @@ require('object.observe/dist/object-observe');
 require('@krossover/fit-element');
 require('@krossover/krossover-checkbox');
 require('@krossover/krossover-multiselect');
+require('@krossover/pills');
