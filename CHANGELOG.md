@@ -4,6 +4,7 @@
 
 ## Bug Fixes / Improvements ##
 - Fix an issue with an external library
+- On Down and Distance/Formation Report, the Playlist Play Button is not starting the video
 
 # v2.10.0 #
 
