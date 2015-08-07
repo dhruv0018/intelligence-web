@@ -21,6 +21,7 @@ import Indexer from '../app/indexer/index.js';
 import Styleguide from '../app/styleguide/index.js';
 import IndexingBlock from '../lib/directives/indexing-block/index';
 import DynamicTables from '../lib/directives/dynamic-tables/index';
+import ArenaChart from '../lib/directives/arena-chart/index';
 
 /* App dependencies */
 require('./config');

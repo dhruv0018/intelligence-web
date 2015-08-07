@@ -259,6 +259,7 @@ module.exports = function(grunt) {
                         'app/indexer/**/*.less',
                         'lib/directives/indexing-block/styles.less',
                         'lib/directives/dynamic-tables/styles.less',
+                        'lib/directives/arena-chart/styles.less',
                         'app/reel/styles.less',
                         'app/styleguide/**/*.less'
                     ]
