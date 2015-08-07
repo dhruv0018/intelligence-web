@@ -18,7 +18,8 @@ IndexerGamesController.$inject = [
     'SessionService',
     'Indexer.Games.Data',
     'INDEXER_GROUPS',
-    'GAME_STATUSES'
+    'GAME_STATUSES',
+    'VIEWS',
 ];
 
 function IndexerGamesController(
@@ -37,7 +38,8 @@ function IndexerGamesController(
     session,
     data,
     INDEXER_GROUPS,
-    GAME_STATUSES
+    GAME_STATUSES,
+    VIEWS
 ) {
 
     const ONE_MINUTE = 60000;
@@ -70,8 +72,8 @@ function IndexerGamesController(
     $scope.gamesAvailable = games.getList();
     $scope.currentUser = session.getCurrentUser();
 
-    const indexerQuality = $scope.currentUser.currentRole.indexerQuality;
-    $scope.indexerQuality = (indexerQuality) ? indexerQuality : null;
+    const currentRole = session.getCurrentRole();
+    $scope.indexerQuality = currentRole.indexerQuality;
 
     $scope.games.forEach(game => game.timeRemaining = game.assignmentTimeRemaining());
 
@@ -89,6 +91,20 @@ function IndexerGamesController(
         return game.userAssignment().timeAssigned;
     };
 
+    $scope.getHeadCoachName = function(game) {
+        // console.log('game', game);
+        // let uploaderTeamId = game.uploaderTeamId;
+        // if(teams[uploaderTeamId]) {
+        //     let uploaderHeadCoachRole = teams[uploaderTeamId].getHeadCoachRole();
+        //
+        //     console.log('uploaderHeadCoachRole', uploaderHeadCoachRole);
+        //     let uploaderHeadCoachUser = users[uploaderHeadCoachRole.userId];
+        //     console.log('uploaderHeadCoachUser', uploaderHeadCoachUser);
+        //     return uploaderHeadCoachUser.firstName + ' ' + uploaderHeadCoachUser.lastName;
+        // }
+        return;
+    };
+
     let refreshGames = function() {
 
         $scope.games.forEach(game => {
@@ -98,10 +114,6 @@ function IndexerGamesController(
                 game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
             }
 
-            if (game.remainingTime) {
-
-                game.remainingTime = moment.duration(game.remainingTime).subtract(1, 'minute').asMilliseconds();
-            }
         });
     };
 

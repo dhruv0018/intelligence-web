@@ -22,16 +22,16 @@ export default `
                     | gameIsReadyForQa
                     | gameNotIndexedByMe
                     | gameHasNotExpired: true
-                    | orderBy: 'remainingTime'
+                    | orderBy: 'timeRemaining'
                     | limitTo: 100"
                 >
                     <td>{{game.id}}</td>
                     <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
                     <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
-                    <td>{{ game.remainingTime | millisecondsAsDaysHoursMinutes }}</td>
+                    <td>{{ game.timeRemaining | millisecondsAsDaysHoursMinutes }}</td>
                     <td>
                         <button id="pick-up-qa-cta" class="btn btn-default index-button" open-modal="QaPickup.Modal" modal-options="game.id">
-                            <span>Pick Up to QA </span>
+                            Pick Up to QA
                         </button>
                     </td>
                     </tr>

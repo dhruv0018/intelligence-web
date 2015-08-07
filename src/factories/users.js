@@ -405,6 +405,18 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return teamIds;
             },
+            /**
+            * @class User
+            * @method
+            * @returns {Boolean} the indexerquality for the user.
+            * Gets the user's indexerquality for the current role
+            */
+            getIndexerQuality: function(user) {
+
+                user = user || this;
+                return user.getCurrentRole().indexerQuality;
+
+            },
 
             /**
              * @class User
