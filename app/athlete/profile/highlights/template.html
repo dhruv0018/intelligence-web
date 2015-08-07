@@ -18,14 +18,7 @@
             <video-player sources="sources"></video-player>
         </div>
 
-        <clips-navigation
-            sources="sources"
-            current-play="currentPlay"
-            previous-play="previousPlay"
-            next-play="nextPlay"
-            clip-index="clipIndex"
-            clip-total="clipTotal"
-        ></clips-navigation>
+        <clips-navigation sources="sources" plays="playsArray"></clips-navigation>
     </div>
 
     <no-profile-reels ng-hide="highlightReels.length || featuredReel"></no-profile-reels>
