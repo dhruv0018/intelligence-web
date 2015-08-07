@@ -3,9 +3,6 @@
 	"templates": [
 		"template.html"
 	],
-	"styles": [
-		"styles.less"
-	],
 	"scripts": [
 		"index.js"
 	]
