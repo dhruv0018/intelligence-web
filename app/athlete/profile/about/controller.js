@@ -14,8 +14,9 @@ AboutController.$inject = [
     '$scope',
     '$state',
     '$stateParams',
+    '$window',
     'UsersFactory',
-    'VIEWPORTS'
+    'BREAKPOINTS'
 ];
 
 /**
@@ -28,15 +29,16 @@ function AboutController (
     $scope,
     $state,
     $stateParams,
+    $window,
     users,
-    VIEWPORTS
+    BREAKPOINTS
 ) {
     $scope.athlete = users.get($stateParams.id);
-    $scope.VIEWPORTS = VIEWPORTS;
 
-    // Go to highlights state if screen size exceeds mobile viewport
-    $scope.$watch('viewport', function() {
-        if ($scope.viewport === VIEWPORTS.DESKTOP) {
+    $scope.$watch( () => {
+        return $window.innerWidth;
+    }, (windowWidth) => {
+        if (windowWidth >= BREAKPOINTS.MD_SCREEN_MD) {
             $scope.tabs.index = 0;
             $state.go('Athlete.Profile.Highlights');
         }
