@@ -41,13 +41,10 @@ class ArenaField extends Field {
     }
 
 
-    // get value(){
-    //     return super.value;
-    // }
-    // set value(arena) {
-    //     arena.regionId = arena.region ?;
-    //     this._value = arena;
-    // }
+    /**
+     * TODO: Remove after replacing all Field.valid
+     * occurences with Field.isValid()
+     */
     /**
      * Getter for the validity of the Field
      * @type {Boolean}
@@ -58,6 +55,21 @@ class ArenaField extends Field {
             (Number.isInteger(this.value.region) &&
             !isNaN(this.value.coordinates.x) &&
             !isNaN(this.value.coordinates.y)) :
+            true;
+    }
+
+    /**
+     * Returns true if field is valid
+     * @method ArenaField.isValid
+     * @param {Object} value
+     * @returns {Boolean} valid
+     */
+    isValid(value = this.value) {
+
+        return this.isRequired ?
+            (Number.isInteger(value.region) &&
+            !isNaN(value.coordinates.x) &&
+            !isNaN(value.coordinates.y)) :
             true;
     }
 
