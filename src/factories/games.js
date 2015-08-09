@@ -1002,22 +1002,23 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             /**
              * Retrieves the arena events for a game, and stores in game storage
-             * @param {?number[]} gameId Defaults to this game's id if no gameId given
+             * @param {?game} game Defaults to the thisObject
              * @returns {arenaEvent[]}
              */
-            retrieveArenaEvents: function() {
+            retrieveArenaEvents: function(game = this) {
 
-                let model = $injector.get(this.model);
-                let storage = $injector.get(this.storage);
+                let model = $injector.get(game.model);
+                let storage = $injector.get(game.storage);
 
-                if (!this.hasOwnProperty('id')) throw new Error(`Game has no id. Game must be saved before retrieving arena events`);
+                if (!game.hasOwnProperty('id')) throw new Error(`Game has no id. Game must be saved before retrieving arena events`);
 
-                const query = model.retrieveArenaEvents({ id: this.id});
+                const query = model.retrieveArenaEvents({ id: game.id});
                 const request = query.$promise;
 
+                // TODO: Store separately from on a game so retrieving arena events can be independant of loading a game
                 const receiveArenaEvents = (arenaEvents) => {
-                    this.arenaEvents = arenaEvents;
-                    storage.set(this);
+                    game.arenaEvents = arenaEvents;
+                    storage.set(game);
                 };
 
                 const retrieveArenaEventsError = (reason) => {
