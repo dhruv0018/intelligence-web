@@ -240,6 +240,78 @@ function LoginController(
         };
     }
 
+    $scope.submitNewUserLogin = function submitNewUserLogin () {
+
+        $scope.login.submitted = true;
+
+        let email    = $scope.login.email;
+        let password = $scope.login.password;
+
+        /* Login the user. */
+        auth.loginUser(email, password)
+        .then((user) => {
+
+            if (user) {
+
+                /* Track the event for MixPanel */
+                analytics.track({
+                    category : 'Login',
+                    action   : 'Selected',
+                    label    : 'SignIn'
+                });
+
+                /* First login, so user has already accepted Terms and
+                 * Conditions by setting password. Record that. */
+                user.updateTermsAcceptedDate();
+
+                /* Update last accessed data and save. */
+                user.lastAccessed = new Date().toISOString();
+                user.save();
+
+                /* Once successfully logged in, determine the user's home state.
+                 * Then, track user in analytics (user may not have a default
+                 * roll yet). */
+                account.gotoUsersHomeState(user)
+                .then(analytics.identify);
+            }
+        }, function(error) {
+
+            if (error) {
+
+                $scope.login.submitted = false;
+
+                /* Handle case where the API returns an error because the
+                 * user is forbidden from logging in. */
+                if (error.name === 'ForbiddenError') {
+
+                    $state.go('locked');
+                }
+
+                /* Handle case where the API returns an error because the
+                 * user was not found in the system. */
+                else if (error.name === 'NotFoundError') {
+
+                    alerts.add({
+                        type: 'danger',
+                        message: 'No account found for that email.'
+                    });
+                }
+
+                /* Handle case where the API returns an error because the
+                 * user is not authorized. */
+                else if (error.name === 'NotAuthorizedError') {
+
+                    alerts.add({
+                        type: 'danger',
+                        message: 'Not authorized.'
+                    });
+                }
+
+                else throw error;
+            }
+        });
+    };
+
     $scope.submitLogin = function submitLogin () {
 
         $scope.login.submitted = true;
@@ -258,13 +330,6 @@ function LoginController(
                     action   : 'Selected',
                     label    : 'SignIn'
                 });
-
-                /* If first login, user has already accepted Terms and
-                 * Conditions by setting password, so record that. */
-                if (!user.lastAccessed) {
-
-                    user.updateTermsAcceptedDate();
-                }
 
                 /* Update last accessed data and save. */
                 user.lastAccessed = new Date().toISOString();
@@ -416,7 +481,7 @@ function LoginController(
                     $scope.login.email    = data.email;
                     $scope.login.password = password;
 
-                    $scope.submitLogin();
+                    $scope.submitNewUserLogin();
                 },
 
                 function error(data, status) {
