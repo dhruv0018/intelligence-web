@@ -17,7 +17,18 @@ const EVENT = {
             SELECT: 'PLAYLIST_EVENT_SELECT',
             CURRENT_CHANGE: 'PLAYLIST_EVENT_CURRENT_CHANGE'
         }
+    },
+
+    UI: {
+
+        KEY_DOWN: {
+
+            ENTER: 'ENTER_KEY_DOWN',
+            ESC: 'ESC_KEY_DOWN'
+        }
     }
 };
 
 IntelligenceWebClient.constant('EVENT', EVENT);
+
+export default EVENT;

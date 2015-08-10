@@ -1,8 +1,27 @@
+<<<<<<< HEAD
 # v2.10.0 #
 
 ## Features ##
 - Show game length for uploaded game film to Admin in Queue
 - Design improvements to the queue so there is less scrolling
+=======
+# v2.10.1 #
+
+## Bug Fixes / Improvements ##
+- Fix an issue with an external library
+
+# v2.10.0 #
+
+## Features ##
+- As a user, I should see a telestrations icon on a play if it has telestrations
+- As an Indexer I'd like to see updated Football FAQ sheet
+- Coach or Athlete should not see telestrations toolbar on mobile
+
+## Bug Fixes / Improvements ##
+- Clicking the browser back button from film detail page doesn't return you to film home
+- Coach or Athlete on Web can manipulate ellipse tool to appropriate scale (beyond perfect circle)
+- Text telestrations on web supports 2 vertexes
+>>>>>>> origin/master
 
 # v2.9.0 #
 
