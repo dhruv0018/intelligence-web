@@ -234,12 +234,17 @@
         "Super Admin": true
     },
 
-    "indexer-game": {
+    "IndexerGame": {
 
         "Indexer": true
     },
 
-    "indexer-games": {
+    "IndexerGames": {
+
+        "Indexer": true
+    },
+
+    "IndexerHistory": {
 
         "Indexer": true
     },
@@ -272,7 +277,7 @@
         "Head Coach": true,
         "Assistant Coach": true
     },
-    
+
     "Coach.Analytics.Player": {
 
         "Head Coach": true,
@@ -559,7 +564,26 @@
     },
 
     "UpdatedTermsAndConditions": {
+        "*": true
+    },
 
+    "Styleguide": {
+        "*": true
+    },
+
+    "Styleguide.Colors": {
+        "*": true
+    },
+
+    "Styleguide.Typography": {
+        "*": true
+    },
+
+    "Styleguide.Buttons": {
+        "*": true
+    },
+
+    "Styleguide.Forms": {
         "*": true
     }
 }
