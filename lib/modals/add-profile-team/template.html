@@ -50,7 +50,10 @@
 
             <div class="button-row">
                 <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
-                <button class="btn btn-primary" ng-click="saveProfileTeam()" ng-disabled="formIncomplete()">Done</button>
+                <button class="btn btn-primary save-team" ng-click="saveProfileTeam()" ng-disabled="formIncomplete() || isSaving">
+                    <span ng-show="!isSaving">Done</span>
+                    <krossover-spinner ng-show="isSaving" size="'15px'"></krossover-spinner>
+                </button>
             </div>
         </form>
     </div>
