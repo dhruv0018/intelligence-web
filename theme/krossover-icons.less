@@ -14,10 +14,16 @@
     }
 
     &-large {
+        position: absolute;
         height: @font-size-large;
         width: @font-size-large;
         font-size: @font-size-large;
         display: inline-block;
+
+        &-centered {
+            top: -@font-size-large / 2;
+            left: -@font-size-large / 2;
+        }
 
         &.icon-x, &.svg-icon-x {
             height: @font-size-base;
