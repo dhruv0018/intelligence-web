@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'EVENT', 'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter', 'Utilities',
-    function(EVENT, config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter, utils) {
+    'PlaysFactory', 'EVENT', 'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter', 'Utilities',
+    function(plays, EVENT, config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter, utils) {
 
         var IndexingService = {
 
@@ -103,7 +103,14 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Snap video back to time of current event. */
                 videoPlayer.seekTime(event.time);
 
-                playManager.current.save();
+                playManager.current.save()
+                .then((play) => plays.load(play.id))
+                .then((serverPlay) => {
+
+                    // playManager.current = serverPlay[0];
+                    playlistEventEmitter.emit(EVENT.PLAYLIST.PLAY.CHANGE, serverPlay[0]);
+                });
+
                 playsManager.calculatePlays();
                 playManager.clear();
                 tagsManager.reset();
