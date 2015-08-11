@@ -12,7 +12,7 @@ export default (event, scriptHtmlString) => {
     return `
     <li class="event">
 
-        <button class="item btn-select-event" ng-click="selectEvent(${event.id});">
+        <button id="select-event-${event.id}-cta" class="item btn-select-event" ng-click="selectEvent(${event.id});">
 
             ${scriptHtmlString}
 
