@@ -12,6 +12,7 @@
 - Profile design/UX Enhancements
 - Public page footer needs date revision
 - As a coach, on the film home, when viewing my active team roster in the sidebar it should only contain active players
+- On Down and Distance/Formation Report, the Playlist Play Button is not starting the video
 
 # v2.10.1 #
 
