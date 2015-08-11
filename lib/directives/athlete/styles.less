@@ -7,25 +7,25 @@
         opacity:.5;
     }
 
-    a {
-        margin-left: 5px;
-        text-decoration: none;
-        color: @gray-dark;
-
-        &:hover {
-            color: @gray-dark;
-            text-decoration: none;
-        }
-    }
-
     div {
         display: inline-block;
         margin-right: 5px;
-    }
+        line-height: 1.1;
 
-    .last-access {
-        display: block;
-        font-style: italic;
+        span {
+            display: inline-block;
+            margin-right: 5px;
+            color: @gray-dark;
+        }
+
+        .athlete-information {
+            font-weight: 500;
+        }
+
+        .athlete-last-access {
+            font-size: 14px;
+            font-style: italic;
+        }
     }
 
     .sidebar-athlete {
