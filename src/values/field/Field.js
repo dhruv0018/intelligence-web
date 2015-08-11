@@ -18,7 +18,7 @@ class Field extends Value {
         this.extend(field);
 
         if (field.value === null && field.isRequired)
-            throw Error('Corrupted data - null value in required field');
+            console.error('Corrupted data - null value in required field');
     }
 
     initializeValue(value, typeCast = Number) {
