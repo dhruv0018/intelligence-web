@@ -17,11 +17,7 @@ HighlightsController.$inject = [
     'ReelsFactory',
     'UsersFactory',
     'PlaysFactory',
-    'PlaysManager',
-    'PlayManager',
-    'VideoPlayer',
-    'VideoPlayerEventEmitter',
-    'VIDEO_PLAYER_EVENTS'
+    'PlaysManager'
 ];
 
 /**
@@ -37,11 +33,7 @@ function HighlightsController (
     reels,
     users,
     plays,
-    playsManager,
-    playManager,
-    videoPlayer,
-    VideoPlayerEventEmitter,
-    VIDEO_PLAYER_EVENTS
+    playsManager
 )   {
         $scope.athlete = users.get($stateParams.id);
         $scope.featuredReel = reels.getFeaturedReel($scope.athlete);
