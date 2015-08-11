@@ -8,11 +8,10 @@
  */
 
 export default (event, scriptHtmlString) => {
-
     return `
     <li class="event">
 
-        <button id="select-event-${event.id}-cta" class="item btn-select-event" ng-click="selectEvent(${event.id});">
+        <button id="${ event.id ? 'select-event-' + event.id + '-cta' : 'select-event-new-cta'}" class="item btn-select-event" ng-click="selectEvent(${event.id});">
 
             ${scriptHtmlString}
 
