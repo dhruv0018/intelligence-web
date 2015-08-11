@@ -442,7 +442,11 @@ function LoginController(
 
                     $scope.reset.submitted = false;
 
-                    $state.go('login');
+                    $scope.login          = {};
+                    $scope.login.email    = data.email;
+                    $scope.login.password = password;
+
+                    $scope.submitLogin();
                 },
 
                 function error(data, status) {
