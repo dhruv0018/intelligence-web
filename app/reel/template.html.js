@@ -40,11 +40,7 @@ export default `
                 <clips-navigation
                     ng-if="$root.viewport.name === VIEWPORTS.MOBILE.name"
                     sources="sources"
-                    current-play="currentPlay"
-                    previous-play="playsManager.getPreviousPlay(currentPlay)"
-                    next-play="playsManager.getNextPlay(currentPlay)"
-                    clip-index="clipIndex"
-                    clip-total="plays.length"
+                    plays="plays"
                 ></clips-navigation>
 
             </div>
