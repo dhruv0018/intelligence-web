@@ -36,6 +36,7 @@ function TextValue(
     angular.inheritPrototype(Text, Glyph);
 
     Text.prototype.RESIZABLE = false;
+    Text.prototype.MIN_VERTICES = 1;
     Text.prototype.BASE_CONTAINER_WIDTH = 1280; // px
     Text.prototype.BASE_FONT_SIZE = 22; // px
     Text.prototype.BASE_HORIZONTAL_PADDING = 5; // px
@@ -383,11 +384,8 @@ function TextValue(
 
             let newLeft = boundingBox.left - containerBoundingBox.left;
             let newTop = boundingBox.top - containerBoundingBox.top;
-            let newRight = boundingBox.right - containerBoundingBox.right;
-            let newBottom = boundingBox.bottom - containerBoundingBox.bottom;
 
             parentGlyph.updateStartPointFromPixels(newLeft, newTop);
-            parentGlyph.updateEndPointFromPixels(newRight, newBottom);
         }
 
         /**
