@@ -9,15 +9,13 @@
     <div class="modal-body">
 
 	    <krossover-sidebar>
-            <krossover-playlist-control plays="currentPlays"></krossover-playlist-control>
-	    	<krossover-plays expand-all="expandAll" game="game" reels="reels" plays="currentPlays" team="team" opposing-team="opposingTeam" league="league"></krossover-plays>
+	    	<krossover-playlist show-header="showHeader" show-footer="showFooter" expand-all="expandAll"
+	    		game="game" reels="reels" plays="currentPlays" team="team" opposing-team="opposingTeam" league="league">
+	    	</krossover-playlist>
 	    <!--	<no-results ng-hide="plays.length"></no-results>-->
 	    </krossover-sidebar>
 
-        <video-player
-         sources="sources"
-        >
-        </video-player>
+        <video-player video="video"></video-player>
 
     </div>
 

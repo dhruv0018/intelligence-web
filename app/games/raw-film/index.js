@@ -70,11 +70,11 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         // video player
 
-        $scope.sources = $scope.game.getVideoSources();
         $scope.cuePoints = [];
         $scope.posterImage = {
             url: $scope.game.video.thumbnail
         };
+        $scope.video = $scope.game.video;
 
         let removeTelestrationsSaveListener = angular.noop;
 
