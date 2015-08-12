@@ -9,7 +9,7 @@
 @text-font-size: 14px;
 
 @control-bar-bg: #1a1a1a;
-@control-bar-color: #e4e4e4;
+@control-bar-color: @gray-lighter;
 @scrubber-bg: #808080;
 @scrubber-buffered-color: #bfbfbf;
 @scrubber-elapsed-color: @brand-primary;
@@ -46,36 +46,42 @@ videogular vg-play-pause-button .icon {
     font-size: @icon-font-size-lg;
 }
 
-.iconButton,
-.control-button {
-
-    transition: color 0.3s;
-
-    &:hover {
-        color: @brand-light-blue;
-    }
-
-    &:active,
-    &.active {
-        color: @brand-primary;
-    }
-
-    .icon {
-
-        margin-right: 15px;
-    }
-}
-
 videogular vg-controls {
     display: block;
     flex: 0 0 @controls-height;
     width: 100%;
 
+    a:hover {
+        color: @brand-light-blue;
+    }
+
+    .icon,
+    .iconButton,
+    .control-button {
+
+        cursor: button;
+        transition: color 0.3s;
+
+        &:hover {
+            color: @brand-light-blue;
+        }
+
+        &:active,
+        &.active {
+            color: @brand-primary;
+        }
+
+        .icon {
+
+            margin-right: 15px;
+        }
+    }
+
     .controls-container {
         display: block;
         width: 100%;
         height: 100%;
-        color: white;
+        color: @control-bar-color;
 
         .controls-bottom {
             display: flex;
@@ -114,6 +120,15 @@ videogular vg-controls {
             align-items: center;
             justify-content: flex-end;
         }
+    }
+
+    a {
+        color: @control-bar-color;
+    }
+
+    .download {
+        padding: 0 4px;
+        font-size: @font-size-large;
     }
 }
 
@@ -167,7 +182,7 @@ videogular vg-volume-bar {
 
     .verticalVolumeBar {
         width: 50px;
-        height: 100px;
+        height: 120px;
         position: absolute;
     }
 

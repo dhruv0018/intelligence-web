@@ -82,8 +82,9 @@
         "custom-tags-dropdown",
         "custom-tags-multiselect",
         "custom-tag-pills",
-        "telestrations",
-        "indexer-sidebar"
+        "indexer-sidebar",
+        "clips-navigation",
+        "telestrations"
     ],
     "scripts": [
         "index.js"
