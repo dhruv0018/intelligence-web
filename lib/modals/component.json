@@ -16,7 +16,8 @@
         "info",
         "change-password",
         "admin-management",
-        "kvs-uploader-interface"
+        "kvs-uploader-interface",
+        "game-copy"
     ],
     "scripts": [
         "index.js"
