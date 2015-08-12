@@ -120,7 +120,8 @@ module.exports = function(grunt) {
                 src: [
                     'app/**/*.js',
                     'lib/**/*.js',
-                    'src/**/*.js'
+                    'src/**/*.js',
+                    'test/unit/**/*/*.js'
                 ]
             },
             less: {
@@ -143,7 +144,8 @@ module.exports = function(grunt) {
                 src: [
                     'app/**/*.js',
                     'lib/**/*.js',
-                    'src/**/*.js'
+                    'src/**/*.js',
+                    'test/unit/**/*/*.js'
                 ],
                 options: {
                     newline: true,
@@ -254,9 +256,12 @@ module.exports = function(grunt) {
             components: {
                 files: {
                     'build/components.css': [
+                        'app/reel/*.less',
+                        'app/indexer/**/*.less',
                         'lib/directives/indexing-block/styles.less',
                         'lib/directives/dynamic-tables/styles.less',
-                        'app/reel/styles.less'
+                        'app/styleguide/**/*.less',
+                        'lib/directives/video-player/select-media-src/styles.less'
                     ]
                 }
             }
