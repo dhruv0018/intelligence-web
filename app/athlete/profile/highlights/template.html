@@ -15,10 +15,10 @@
             <div class="featured-reel-header">
                 <h3>{{featuredReel.name}}</h3>
             </div>
-            <video-player sources="sources"></video-player>
+            <video-player video="video"></video-player>
         </div>
 
-        <clips-navigation sources="sources" plays="playsArray"></clips-navigation>
+        <clips-navigation video="video" plays="playsArray"></clips-navigation>
     </div>
 
     <no-profile-reels ng-hide="highlightReels.length || featuredReel"></no-profile-reels>

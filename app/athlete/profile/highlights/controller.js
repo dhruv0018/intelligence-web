@@ -45,6 +45,8 @@ function HighlightsController (
             $scope.playsArray = $scope.featuredReel.plays.map(function(playId) {
                 return plays.get(playId);
             });
+
+            $scope.video = $scope.playsArray[0].clip;
         }
 
         $scope.highlightReels = [];

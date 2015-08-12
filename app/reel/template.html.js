@@ -27,7 +27,6 @@ export default `
                 </krossover-sidebar>
 
                 <video-player
-                    data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name"
                     class="reels-video-container"
                     poster-image="posterImage"
                     video="video"
@@ -40,7 +39,7 @@ export default `
 
                 <clips-navigation
                     ng-if="$root.viewport.name === VIEWPORTS.MOBILE.name"
-                    sources="sources"
+                    video="video"
                     plays="plays"
                 ></clips-navigation>
 

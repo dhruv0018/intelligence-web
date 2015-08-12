@@ -270,8 +270,6 @@ function ReelController(
 
             $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
             $scope.currentPlayId = play.id;
-            $scope.currentPlay = play;
-            $scope.clipIndex = playsManager.getIndex(play) + 1;
         }
     }
 
