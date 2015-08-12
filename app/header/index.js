@@ -117,7 +117,7 @@ function HeaderController(
     leagues,
     teams,
     SPORTS,
-    SPORTS_IDS,
+    SPORT_IDS,
     SUBSCRIPTIONS
 ) {
     $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
@@ -142,7 +142,7 @@ function HeaderController(
             var team = teams.get(currentUser.currentRole.teamId);
             $scope.league = leagues.get(team.leagueId);
             $scope.SPORTS = SPORTS;
-            $scope.SPORTS_IDS = SPORTS_IDS;
+            $scope.SPORT_IDS = SPORT_IDS;
         }
     }
 
