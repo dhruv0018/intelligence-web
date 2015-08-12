@@ -7,9 +7,55 @@ function name(field, playerId) {
         let injector = angular.element(document).injector();
         let players = injector.get('PlayersFactory');
         let player = players.get(playerId);
-        calculatedName = player.firstName + ' ' + player.lastName;
+        let number = jerseyNumber(field, playerId);
+        calculatedName = '(' + number + ') ' + player.firstName + ' ' + player.lastName;
     }
     return calculatedName;
+}
+
+function jerseyColor(field, playerId) {
+    let color = '#000000';
+    let injector = angular.element(document).injector();
+    if (playerId && window && window.angular && document) {
+
+        let games = injector.get('GamesFactory');
+        let teams = injector.get('TeamsFactory');
+        let game = games.get(field.gameId);
+
+        let teamRoster = game.rosters[game.teamId];
+        let opposingTeamRoster = game.rosters[game.opposingTeamId];
+
+        let playerIds = Object.keys(teamRoster.playerInfo);
+        let opposingPlayerIds = Object.keys(opposingTeamRoster.playerInfo);
+
+        let isHomeTeam = playerIds.indexOf(String(playerId)) >= 0;
+        let isAwayTeam = opposingPlayerIds.indexOf(String(playerId)) >= 0;
+
+        color = isHomeTeam ? angular.copy(game.primaryJerseyColor) : angular.copy(game.opposingPrimaryJerseyColor);
+    }
+    return color;
+}
+
+function jerseyNumber(field, playerId) {
+    let number = 0;
+    let injector = angular.element(document).injector();
+    if (playerId && window && window.angular && document) {
+        let games = injector.get('GamesFactory');
+        let teams = injector.get('TeamsFactory');
+        let game = games.get(field.gameId);
+        let teamRoster = game.rosters[game.teamId];
+        let playerIds = Object.keys(teamRoster.playerInfo);
+
+        if (playerIds.indexOf(String(playerId)) >= 0) {
+            let playerInfo = teamRoster.playerInfo[playerId];
+            number = playerInfo.jerseyNumber;
+        } else {
+            let opposingTeamRoster = game.rosters[game.opposingTeamId];
+            let playerInfo = opposingTeamRoster.playerInfo[playerId];
+            number = playerInfo.jerseyNumber;
+        }
+    }
+    return number === '' ? 'U': number;
 }
 
 function availableValues(field) {
@@ -88,14 +134,17 @@ function availableValues(field) {
 
 function toString(field) {
     let value = field.value;
+    let jerseyColor = value.jerseyColor;
+    let name = value.name;
+    let strokeWidth = value.jerseyColor === '#ffffff' ? 1 : 0;
     return `
     <span class="value">
 
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-            <rect fill="${value.jerseyColor}" stroke="black" stroke-width="${value.jerseyColor === '#ffffff' ? 1 : 0}" x="0" y="0" width="16px" height="16px" />
+            <rect fill="${jerseyColor}" stroke="black" stroke-width="${strokeWidth}" x="0" y="0" width="16px" height="16px" />
         </svg>
 
-        <span class="player-name">${value.name}</span>
+        <span class="player-name">${name}</span>
 
     </span>
     `;
@@ -104,7 +153,8 @@ function toString(field) {
 let common = {
     getters: {
         name,
-        availableValues
+        availableValues,
+        jerseyColor
     },
     functionality: {
         toString
