@@ -6,7 +6,7 @@ export default `
 
     <div class="game-indexer-content">
         <div class="indexer-links-container">
-            <a class="lookup" id="looking-for-game-cta" ng-href="{{signUpLocation}}" target="_blank">
+            <a class="lookup" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank">
                 <div class="lookup-container">
                     <div class="right-container">
                         <i class="icon icon-chevron-right"></i>
