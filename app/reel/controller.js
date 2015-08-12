@@ -92,12 +92,6 @@ function ReelController(
 
     playManager.current = play;
 
-    // For clips navigation in mobile and embedded views
-    $scope.playsManager = playsManager;
-    $scope.playsFactory = playsFactory;
-    $scope.currentPlay = play;
-    $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
-
     /* TODO: game.getPosterImage() */
     $scope.posterImage = {
         url: game.video.thumbnail

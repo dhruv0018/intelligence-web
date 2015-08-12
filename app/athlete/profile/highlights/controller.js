@@ -45,11 +45,6 @@ function HighlightsController (
             $scope.playsArray = $scope.featuredReel.plays.map(function(playId) {
                 return plays.get(playId);
             });
-
-            /* Load the plays in the plays manager
-             * TODO: accomplish this without playsManager
-             */
-            playsManager.reset($scope.playsArray);
         }
 
         $scope.highlightReels = [];
