@@ -30,7 +30,7 @@ class Subscription extends Entity {
             throw new Error(validation.errors.shift());
         }
 
-        return this.extend(subscription);
+        return super(subscription);
     }
 
     /**

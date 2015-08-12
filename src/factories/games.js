@@ -1,3 +1,4 @@
+import Video from '../entities/video';
 
 var PAGE_SIZE = 20;
 
@@ -54,6 +55,21 @@ IntelligenceWebClient.factory('GamesFactory', [
                     if (copy[key] && copy[key].unextend) copy[key] = copy[key].unextend();
                 });
 
+                /*
+                 * FIXME:
+                 * Using Object.assign to strip video of getters during
+                 * resource save to in order to pass JSON validation.
+                 * TODO:
+                 * delete copy.video.resourceUrls;
+                 * delete copy.video.transcodeProfiles;
+                 * Investigate why ^ doesn't work
+                 */
+                copy.video = Object.assign({}, copy.video);
+
+                if (copy.video.videoTranscodeProfiles) {
+                    copy.video.videoTranscodeProfiles = copy.video.videoTranscodeProfiles.map(profile => Object.assign({}, profile.toJSON()));
+                }
+
                 return copy;
             },
             extend: function(game) {
@@ -62,8 +78,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 angular.augment(game, self);
                 game.isSaving = false;
-                game.video = game.video || {};
-                game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
+                game.video = game.video ? new Video(game.video) : {};
                 game.notes = game.notes || {};
                 game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
@@ -411,43 +426,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var players = teamPlayers.concat(opposingTeamPlayers);
 
                 return players;
-            },
-
-            getVideoSources: function() {
-
-                var self = this;
-
-                var sources = [];
-                var defaultVideo;
-                var DEFAULT_VIDEO_ID = config.defaultVideoId;
-
-                if (self.video && self.video.status) {
-
-                    if (self.video.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                        self.video.videoTranscodeProfiles.forEach(function(profile) {
-
-                            if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                                var source = {
-                                    type: 'video/mp4',
-                                    src: $sce.trustAsResourceUrl(profile.videoUrl)
-                                };
-
-                                if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
-                                    defaultVideo = source;
-                                } else {
-                                    sources.push(source);
-                                }
-                            }
-                        });
-
-                    }
-                }
-
-                if (defaultVideo) sources.unshift(defaultVideo);
-
-                return sources;
             },
 
             /**
