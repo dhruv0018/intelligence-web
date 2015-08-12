@@ -5,6 +5,13 @@ arena-chart {
     height: 100%;
 }
 
+arena-chart:fullscreen {
+
+    .arena-chart {
+        padding: 0px;
+    }
+}
+
 .arena-chart {
     width: 100%;
     height: 100%;
@@ -35,7 +42,15 @@ arena-chart {
     }
 
     button[name=reset-filters] i {
-        padding-right: 2px;
+        font-size: @font-size-large;
+    }
+
+    button[name=fullscreen] {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 5px;
+        padding: 5px;
     }
 
     .filter-pills {
