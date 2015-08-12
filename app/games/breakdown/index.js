@@ -236,10 +236,9 @@ function GamesBreakdownController (
             .sort(utilities.compareStartTimes)
             .filter(play => play.hasVisibleEvents);
             $scope.totalPlays = $scope.plays; // TODO: Unnecessary variable?
+
             let play = $scope.plays[0];
             if (play) {
-                playManager.current = play;
-                $scope.sources = play.getVideoSources();
                 playManager.current = play;
             }
 
@@ -258,8 +257,6 @@ function GamesBreakdownController (
 
                 $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId, play.startTime);
             }
-
-            $scope.sources = play.getVideoSources();
 
             /* TODO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.
