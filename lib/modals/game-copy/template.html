@@ -1,24 +1,20 @@
-<div class="admin-management">
 <div class="copy-game">
 
     <header class="modal-header">
-
         <h3 class="modal-title">
             Copy A Game
-
-            <a class="pull-right" ng-click="$close()">
+            <a class="pull-right" data-ng-click="$close()">
                 <i class="icon icon-remove"></i>
             </a>
         </h3>
-
     </header>
 
     <div class="modal-body">
-
         <form role="form" novalidate>
             <div>
                 <span class="form-text">Copy this game to team id: </span>
                 <span><input type="number" data-ng-model="teamId" class="team-id" required /></span>
+                <span><button data-ng-click="copyGame()" class="btn btn-default" data-ng-disabled="form.$invalid">{{buttonText}}</button></span>
             </div>
         </form>
     </div>
