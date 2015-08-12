@@ -7,16 +7,24 @@
 
     .indexable-region {
         fill: #D1B98B;
-
-        &:hover,
-        &:active,
-        &:focus {
-            fill: darken(#D1B98B, 10%);
-            transition: fill 0.3s;
-        }
     }
 
     .stroke {
         stroke-width: 4;
+    }
+}
+
+.krossover-arena {
+
+    &.highlight-regions {
+
+        .basketball-arena .indexable-region {
+            &:hover,
+            &:active,
+            &:focus {
+                fill: darken(#D1B98B, 10%);
+                transition: fill 0.3s;
+            }
+        }
     }
 }
