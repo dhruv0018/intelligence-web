@@ -1,16 +1,26 @@
 @import (reference) "main.less";
 
-.admin-management {
-
-    .picktime {
-        display:inline-block;
+.copy-game {
+    span {
+        display: inline-block;
+        margin-right: 5px;
     }
 
-    .indexer-info{
-        .extend-deadline{
-            margin-left: 5px;
+    .team-id {
+        width: 60px;
+        height: 35px;
+        margin-right: 5px;
+        text-align: center;
+        border: thin solid @gray-border;
+        border-radius: @border-radius-base;
+        -moz-appearance: textfield;
+
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
         }
-        margin-bottom: 10px;
-    }
 
+        &:focus {
+            outline: none;
+        }
+    }
 }
