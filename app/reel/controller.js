@@ -85,7 +85,7 @@ function ReelController(
     $scope.isReelsPlay = true;
     $scope.plays = plays;
     $scope.playManager = playManager;
-    $scope.sources = plays[0].getVideoSources();
+    $scope.video = plays[0].clip;
     $scope.currentPlayId = play.id;
     $scope.game = game;
     $scope.league = league;
