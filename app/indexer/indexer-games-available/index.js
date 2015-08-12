@@ -2,12 +2,12 @@
 const angular = window.angular;
 const IndexerGamesAvailable = angular.module('IndexerGamesAvailable', []);
 
-import IndexerDataDependencies from '../data';
-import IndexerGamesAvailableController from '../controller';
+import IndexerDataDependenciess from './data';
+import IndexerGamesAvailableControllers from './controller';
 import template from './template.html';
 
-IndexerGamesAvailable.factory('IndexerDataDependencies', IndexerDataDependencies);
-IndexerGamesAvailable.controller('IndexerGamesAvailableController', IndexerGamesAvailableController);
+IndexerGamesAvailable.factory('IndexerDataDependenciess', IndexerDataDependenciess);
+IndexerGamesAvailable.controller('IndexerGamesAvailableControllers', IndexerGamesAvailableControllers);
 
 IndexerGamesAvailable.config([
     '$stateProvider', '$urlRouterProvider',
@@ -21,14 +21,16 @@ IndexerGamesAvailable.config([
                 views: {
                     'main@root': {
                         template,
-                        controller: IndexerGamesAvailableController
+                        controller: IndexerGamesAvailableControllers
                     }
                 },
                 resolve: {
                     'Indexer.Games.Data': [
-                        '$q', 'IndexerDataDependencies',
+                        '$q', 'IndexerDataDependenciess',
                         function($q, IndexerGamesAvailableData) {
+                            console.log('IndexerGamesAvailableData', IndexerGamesAvailableData);
                             let data = new IndexerGamesAvailableData();
+                            console.log('data', data);
                             return $q.all(data);
                         }
                     ]

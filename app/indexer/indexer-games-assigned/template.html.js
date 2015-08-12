@@ -2,7 +2,7 @@ export default `
 
 <section class="indexer-games-assigned">
 
-    <indexer-sidebar></indexer-sidebar>
+    <indexer-sidebar class="sidebar"></indexer-sidebar>
 
     <div class="game-indexer-content">
         <div class="indexer-links-container">
@@ -50,7 +50,7 @@ export default `
             <tbody>
                 <tr ng-repeat="game in games
                     | gameIsDeleted: false
-                    | gameIsNotSetAside
+                    | gameIsIndexingOrQaing
                     | gameHasCurrentUserAssignment
                     | gameCurrentUserAssignmentIsActive: true
                     | orderBy: 'timeRemaining':true"

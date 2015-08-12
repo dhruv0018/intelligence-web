@@ -105,19 +105,18 @@ function IndexerGamesController(
         return;
     };
 
-    let refreshGames = function() {
+    var refreshGames = function() {
 
-        $scope.games.forEach(game => {
+        angular.forEach($scope.gamesAvailable, function(game) {
 
             if (game.timeRemaining) {
 
                 game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
             }
-
         });
     };
 
-    let refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
+    var refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
 
     $scope.$on('$destroy', function() {
 
