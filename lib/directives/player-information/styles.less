@@ -6,7 +6,9 @@
         border-bottom: 1px solid @gray-border;
         padding-bottom: 10px;
         margin-bottom: 10px;
-        letter-spacing: normal;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
 
         .placeholder-picture,
         .profile-picture {
@@ -24,11 +26,11 @@
 
         h3 {
             margin: 0px;
-            display: inline;
+            flex: 1;
         }
 
         a {
-            .pull-right;
+            align-self: flex-start;
         }
 
     }

@@ -174,7 +174,7 @@
                 <footer>
 
                     <button id="your-account-cta" class="btn-footer" ui-sref="Account.ContactInfo" ng-disabled="$state.current.parent === 'Account'"><i class="icon icon-cog"></i> Your Account</button>
-                    <button class="btn-footer" ng-if="session.isPreviousUserStored()" ng-click="account.returnToPreviousUser()"><i class="icon icon-signout"></i> Return to previous user</button>
+                    <button id="previous-account-cta" class="btn-footer" ng-if="session.isPreviousUserStored()" ng-click="account.returnToPreviousUser()"><i class="icon icon-signout"></i> Return to previous user</button>
                     <button id="logout-cta" class="btn-footer" ng-if="!session.isPreviousUserStored()" ng-click="$state.go('logout')"><i class="icon icon-signout"></i> Log out</button>
 
                 </footer>

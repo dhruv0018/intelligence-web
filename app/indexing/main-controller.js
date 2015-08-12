@@ -73,7 +73,6 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.opposingTeamPlayers = data.opposingTeamPlayers;
         $scope.league = leagues.get($scope.team.leagueId);
         $scope.tagset = tagsets.get($scope.league.tagSetId);
-        $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
 
         //Watch for fullscreen change
