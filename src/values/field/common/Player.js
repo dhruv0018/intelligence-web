@@ -72,6 +72,7 @@ function availableValues(field) {
 
         let teamPlayersValues = Object.keys(game.rosters[team.id].playerInfo).map( (playerId) => {
             let rosterEntry = game.rosters[team.id].playerInfo[playerId];
+
             let player = players.get(playerId);
             let jerseyNumber = player.isUnknown ? 'U' : angular.copy(rosterEntry.jerseyNumber);
 
@@ -92,10 +93,13 @@ function availableValues(field) {
                 },
                 get id() {
                     return player.id;
+                },
+                get isActive() {
+                    return rosterEntry.isActive;
                 }
             };
             return value;
-        });
+        }).filter(value => value.isActive);
 
         let opposingTeamPlayersValues = Object.keys(game.rosters[opposingTeam.id].playerInfo).map( (playerId) => {
             let rosterEntry = game.rosters[opposingTeam.id].playerInfo[playerId];
@@ -118,10 +122,13 @@ function availableValues(field) {
                 },
                 get id() {
                     return player.id;
+                },
+                get isActive() {                    
+                    return rosterEntry.isActive;
                 }
             };
             return value;
-        });
+        }).filter(value => value.isActive);
         values =  teamPlayersValues.concat(opposingTeamPlayersValues);
     }
 
