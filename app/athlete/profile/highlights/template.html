@@ -20,18 +20,10 @@
                 <div class="featured-reel-header">
                     <a ui-sref="Reel({id:featuredReel.id})" target="_blank">{{featuredReel.name}}</a>
                 </div>
-                <video-player sources="sources"></video-player>
+                <video-player video="video"></video-player>
             </div>
 
-            <clips-navigation
-                sources="sources"
-                current-play="currentPlay"
-                previous-play="previousPlay"
-                next-play="nextPlay"
-                clip-index="clipIndex"
-                clip-total="clipTotal"
-            ></clips-navigation>
-
+            <clips-navigation video="video" plays="playsArray"></clips-navigation>
         </div>
 
         <div class="reels" ng-show="profileReels.length">
