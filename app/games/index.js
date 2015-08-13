@@ -120,10 +120,11 @@ Games.config([
                         return games.load(gameId).then(function() {
 
                             let game = games.get(gameId);
+                            const currentUserId = session.getCurrentUserId();
 
                             let Data = {
                                 leagues: leagues.load(),
-                                reels: reels.load({ relatedUserId: session.getCurrentUserId() })
+                                reels: reels.load({ relatedUserId: currentUserId })
                             };
 
                             //Load custom tags
