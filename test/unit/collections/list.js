@@ -110,6 +110,12 @@ describe('List', () => {
     it('should throw an error if you attempt to set a length without specifying a value', () => {
 
         expect(() => sampleList.length = 'asdf').to.throw(Error);
+        expect(() => sampleList.length = null).to.throw(Error);
+        expect(() => sampleList.length = NaN).to.throw(Error);
+        expect(() => sampleList.length = undefined).to.throw(Error);
+        expect(() => sampleList.length = {}).to.throw(Error);
+        expect(() => sampleList.length = []).to.throw(Error);
+        expect(() => sampleList.length = [1]).to.throw(Error);
     });
 
     it('should have an "identity" method that returns the data as a plain array', () => {
