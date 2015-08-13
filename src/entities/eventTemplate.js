@@ -8,16 +8,15 @@
  */
 
 export default (event, scriptHtmlString) => {
-    let domId = event.id ? 'select-event-' + event.id + '-cta' : 'select-event-new-cta';
     return `
-    <li class="event">
+    <button
+        class="item btn-select-event"
+        ng-class="{'active': isButtonActive}"
+        ng-click="selectEvent();"
+    >
 
-        <button id="${domId}" class="item btn-select-event" ng-click="selectEvent(${event.id});">
+        ${scriptHtmlString}
 
-            ${scriptHtmlString}
-
-        </button>
-
-    </li>
+    </button>
     `;
 };

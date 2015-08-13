@@ -1,5 +1,6 @@
 import Entity from './entity';
 import FieldFactory from '../values/field/FieldFactory';
+import eventTemplate from './eventTemplate';
 
 const schema = require('../../schemas/event.json');
 
@@ -89,6 +90,19 @@ class KrossoverEvent extends Entity {
     }
 
     /**
+     * Getter for Indexer Fields HTML
+     *
+     * @type {String}
+     */
+    get indexerHTML () {
+
+        if (this.indexerFields) {
+
+            return eventTemplate(this, this.indexerFields.toString());
+        }
+    }
+
+    /**
      * Getter for Summary Fields
      *
      * @type {Array}
@@ -112,6 +126,19 @@ class KrossoverEvent extends Entity {
     get userFields () {
 
         return this.mapScript(this.userScript);
+    }
+
+    /**
+     * Getter for User Fields HTML
+     *
+     * @type {String}
+     */
+    get userHTML () {
+
+        if (this.userFields) {
+
+            return eventTemplate(this, this.userFields.toString());
+        }
     }
 
     /**
