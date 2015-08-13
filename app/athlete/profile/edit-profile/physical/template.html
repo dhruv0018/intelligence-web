@@ -1,18 +1,72 @@
 <div class="physical">
-    <form>
+    <form ng-submit="savePhysical()">
         <div class="form-block-full">
             <div class="form-block-third">
                 <h4>Height</h4>
-                <input type="number" class="form-control small-text-field" ng-model="athleteHeightFeet"/> ft
-                <input type="number" class="form-control small-text-field" ng-model="athleteHeightInches"/> in
+                <input type="number" class="form-control small-text-field" ng-model="athleteHeightFeet"/><span class="field-label">ft</span>
+                <input type="number" max="11" class="form-control small-text-field" ng-model="athleteHeightInches"/><span class="field-label">in</span>
             </div>
             <div class="form-block-third">
                 <h4>Weight</h4>
-                <input type="number" class="form-control small-text-field" ng-model="athlete.profile.weight"/> lbs
+                <input type="number" min="1" class="form-control large-text-field" ng-model="athlete.profile.weight"/><span class="field-label">lbs</span>
+            </div>
+            <div class="form-block-third">
+                <h4>Dominant Hand</h4>
+                <select ng-model="athlete.profile.dominantHandType">
+                    <option value="">None Selected</option>
+                    <option value="1">Right Hand</option>
+                    <option value="2">Left Hand</option>
+                    <option value="3">Ambidextrous</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-block-full">
+            <div class="form-block-third">
+                <h4>1 Mile Time</h4>
+                <input type="number" class="form-control small-text-field" ng-model="athleteOneMileTimeMinutes"/><span class="field-label">min</span>
+                <input type="number" max="59" class="form-control small-text-field" ng-model="athleteOneMileTimeSeconds"/><span class="field-label">sec</span>
+            </div>
+            <div class="form-block-third">
+                <h4>3 Mile Time</h4>
+                <input type="number" class="form-control small-text-field" ng-model="athleteThreeMileTimeMinutes"/><span class="field-label">min</span>
+                <input type="number" max="59" class="form-control small-text-field" ng-model="athleteThreeMileTimeSeconds"/><span class="field-label">sec</span>
+            </div>
+            <div class="form-block-third">
+                <h4>40 Yard Dash</h4>
+                <input type="number" step="any" class="form-control large-text-field" ng-model="athlete.profile.fortyYardDash"/><span class="field-label">sec</span>
+            </div>
+        </div>
+        <div class="form-block-full">
+            <div class="form-block-third">
+                <h4>Bench Press</h4>
+                <input type="number" min="1" class="form-control large-text-field" ng-model="athlete.profile.benchPress"/><span class="field-label">lbs</span>
+            </div>
+            <div class="form-block-third">
+                <h4>Clean</h4>
+                <input type="number" min="1" class="form-control large-text-field" ng-model="athlete.profile.clean"/><span class="field-label">lbs</span>
+            </div>
+            <div class="form-block-third">
+                <h4>Deadlift</h4>
+                <input type="number" min="1" class="form-control large-text-field" ng-model="athlete.profile.deadlift"/><span class="field-label">lbs</span>
+            </div>
+        </div>
+        <div class="form-block-full">
+            <div class="form-block-third">
+                <h4>Squat</h4>
+                <input type="number" min="1" class="form-control large-text-field" ng-model="athlete.profile.squat"/><span class="field-label">lbs</span>
+            </div>
+            <div class="form-block-third">
+                <h4>Vertical Leap</h4>
+                <input type="number" min="1" class="form-control large-text-field" ng-model="athlete.profile.verticalLeap"/><span class="field-label">in</span>
+            </div>
+            <div class="form-block-third">
+                <h4>Wingspan</h4>
+                <input type="number" class="form-control small-text-field" ng-model="athleteWingFeet"/><span class="field-label">ft</span>
+                <input type="number" max="11" class="form-control small-text-field" ng-model="athleteWingInches"/><span class="field-label">in</span>
             </div>
         </div>
         <div class="button-row">
-            <button class="btn btn-primary" ng-click="savePhysical()">Save</button>
+            <save-button is-saving="isSaving" confirm-save="confirmSave"></save-button>
             <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
         </div>
     </form>

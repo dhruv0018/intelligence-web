@@ -1,3 +1,5 @@
+import Video from '../entities/video';
+
 var PAGE_SIZE = 20;
 
 var moment = require('moment');
@@ -53,6 +55,21 @@ IntelligenceWebClient.factory('GamesFactory', [
                     if (copy[key] && copy[key].unextend) copy[key] = copy[key].unextend();
                 });
 
+                /*
+                 * FIXME:
+                 * Using Object.assign to strip video of getters during
+                 * resource save to in order to pass JSON validation.
+                 * TODO:
+                 * delete copy.video.resourceUrls;
+                 * delete copy.video.transcodeProfiles;
+                 * Investigate why ^ doesn't work
+                 */
+                copy.video = Object.assign({}, copy.video);
+
+                if (copy.video.videoTranscodeProfiles) {
+                    copy.video.videoTranscodeProfiles = copy.video.videoTranscodeProfiles.map(profile => Object.assign({}, profile.toJSON()));
+                }
+
                 return copy;
             },
             extend: function(game) {
@@ -61,8 +78,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 angular.augment(game, self);
                 game.isSaving = false;
-                game.video = game.video || {};
-                game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
+                game.video = game.video ? new Video(game.video) : {};
                 game.notes = game.notes || {};
                 game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
@@ -84,6 +100,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* build lookup table of shares by userId shared with */
                 game.shares = game.shares || [];
                 game.sharedWithUsers = game.sharedWithUsers || {};
+
+                //Sort indexer assignments by time assigned
+                if(game.indexerAssignments && game.indexerAssignments.length > 1) {
+                    game.indexerAssignments.sort((a,b) => moment.utc(b.timeAssigned).diff(moment.utc(a.timeAssigned)));
+                }
 
                 if (game.shares && game.shares.length) {
 
@@ -405,43 +426,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return players;
             },
 
-            getVideoSources: function() {
-
-                var self = this;
-
-                var sources = [];
-                var defaultVideo;
-                var DEFAULT_VIDEO_ID = config.defaultVideoId;
-
-                if (self.video && self.video.status) {
-
-                    if (self.video.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                        self.video.videoTranscodeProfiles.forEach(function(profile) {
-
-                            if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                                var source = {
-                                    type: 'video/mp4',
-                                    src: $sce.trustAsResourceUrl(profile.videoUrl)
-                                };
-
-                                if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
-                                    defaultVideo = source;
-                                } else {
-                                    sources.push(source);
-                                }
-                            }
-                        });
-
-                    }
-                }
-
-                if (defaultVideo) sources.unshift(defaultVideo);
-
-                return sources;
-            },
-
             /**
              * Determines if the game can be assigned to an indexer.
              * Indexer assignments follow the these rules:
@@ -532,7 +516,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     };
 
                     /* Add assignment. */
-                    self.indexerAssignments.push(assignment);
+                    self.indexerAssignments.unshift(assignment);
 
                     /* Update game status. */
                     self.status = GAME_STATUSES.INDEXING.id;
@@ -578,7 +562,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     };
 
                     /* Add assignment. */
-                    self.indexerAssignments.push(assignment);
+                    self.indexerAssignments.unshift(assignment);
 
                     /* Update game status. */
                     self.status = GAME_STATUSES.QAING.id;
@@ -684,24 +668,26 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!this.indexerAssignments) return undefined;
 
-                /* The last assignment in the array is the current one. */
-                return this.indexerAssignments.slice(-1).pop();
+                /* The first assignment is the newest since indexer assignments
+                    are sorted in the extend in descending order
+                */
+                return this.indexerAssignments[0];
             },
 
-            userAssignment: function(userId) {
+            userAssignment: function(userId=null) {
 
                 var self = this;
+
+                if(!userId) {
+                    userId = session.getCurrentUserId();
+                }
 
                 var assignments = self.indexerAssignments;
 
                 if (!assignments) return undefined;
 
                 /* Find the users assignment in the assignments. */
-                var index = assignments.map(function(assignment) {
-
-                    return assignment.userId;
-
-                }).indexOf(userId);
+                var index = assignments.map(assignment => assignment.userId).indexOf(userId);
 
                 /* Return the assignment if found. */
                 return ~index ? assignments[index] : undefined;

@@ -15,14 +15,19 @@ md-content {
             justify-content: space-around;
 
             .edit-profile-picture-container {
+                text-align: center;
 
                 .profile-picture {
-                    margin-top: 50px;
+                    margin: 100px auto 0px;
                     text-align: center;
 
                     img,
                     .placeholder-picture {
                         border-color: @gray-border;
+                    }
+
+                    .placeholder-picture {
+                        padding-top: 22px;
                     }
                 }
 
@@ -41,6 +46,15 @@ md-content {
 
                 &:last-child {
                     float: right;
+                }
+            }
+
+            .form-block-half-row {
+                flex: 1;
+                width: 49%;
+
+                select {
+                    width: 100%;
                 }
             }
 
@@ -73,7 +87,26 @@ md-content {
 
             .small-text-field {
                 display: inline-block;
-                width: 50px;
+                width: 30%;
+            }
+
+            .large-text-field {
+                display: inline-block;
+                width: 80%;
+            }
+
+            .field-label {
+                display: inline-block;
+                width: 19%;
+                margin-left: 1%;
+                margin-right: -4px;
+            }
+
+            select {
+                background-color: white;
+                padding-right: 30px;
+                text-transform: capitalize;
+                width: 80%;
             }
 
             .header-description {
@@ -87,6 +120,7 @@ md-content {
                 font-size: @font-size-base;
                 margin-left: 20px;
                 text-decoration: none;
+                display: none;
             }
 
             .team-table {

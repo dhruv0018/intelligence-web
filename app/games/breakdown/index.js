@@ -236,10 +236,9 @@ function GamesBreakdownController (
             .sort(utilities.compareStartTimes)
             .filter(play => play.hasVisibleEvents);
             $scope.totalPlays = $scope.plays; // TODO: Unnecessary variable?
+
             let play = $scope.plays[0];
             if (play) {
-                playManager.current = play;
-                $scope.sources = play.getVideoSources();
                 playManager.current = play;
             }
 
@@ -247,13 +246,17 @@ function GamesBreakdownController (
             $scope.telestrationsEntity = $scope.game.playTelestrations;
             $scope.currentPlayId = play.id;
 
+            /* Telestrations associated with plays */
+
+            $scope.plays.forEach((play) => {
+                play.hasTelestrations = $scope.game.playTelestrations.some((telestration) => play.id === telestration.playId && telestration.hasGlyphs());
+            });
+
             // set initial cuepoints
             if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
                 $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId, play.startTime);
             }
-
-            $scope.sources = play.getVideoSources();
 
             /* TODO: Remove this sessionStorage once playIds
              * is a valid back-end property on the games object.

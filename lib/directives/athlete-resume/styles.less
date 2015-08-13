@@ -1,0 +1,101 @@
+@import (reference) "main.less";
+
+.athlete-resume {
+
+    border: thin solid @gray-border;
+    background-color: white;
+    width: 100%;
+
+    .resume-header {
+
+        height: 60px;
+        line-height: 60px;
+        padding: 0 10px;
+        border-bottom: thin solid @gray-border;
+        text-transform: uppercase;
+        cursor: pointer;
+
+        .dropdown-toggle-button {
+            display: block;
+
+            ng-md-icon {
+                .pull-right;
+            }
+        }
+    }
+
+    .resume-body {
+        border-bottom: thin solid @gray-border;
+        padding: 10px 20px;
+        background-color: @active-bg;
+        text-transform: capitalize;
+        -webkit-transition: max-height 1s;
+        -moz-transition: max-height 1s;
+        transition: max-height 1s;
+
+        p {
+            margin-bottom: 0;
+            margin-left: 20px;
+        }
+
+        .profile-list-title {
+            font-size: 18px;
+        }
+
+        .team-sport {
+            font-weight: 500;
+        }
+
+        .add-field,
+        .edit-field {
+            cursor: pointer;
+            color: @gray;
+
+            &:hover {
+                color: black;
+            }
+        }
+
+        .edit-field {
+            font-size: 12px;
+        }
+
+        .icon-plus {
+            font-size: 14px;
+        }
+
+        .physical-measurement {
+            .pull-right;
+            font-weight: 500;
+        }
+    }
+
+    #toggle-physical > ul {
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .collapsed {
+        max-height: 0px;
+        padding: 0;
+        border: none;
+        display: none;
+    }
+
+    .expanded {
+        max-height: 4000px;
+        display: block;
+    }
+
+    @media only screen
+    and (min-width: @md-screen-sm) {
+        width: 80%;
+        margin: auto;
+    }
+
+    @media only screen
+    and (min-width: @md-screen-md) {
+        width: 375px;
+    }
+
+}

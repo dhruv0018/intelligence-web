@@ -6,7 +6,6 @@ require('account');
 require('admin');
 require('coach');
 require('athlete');
-require('indexer');
 require('indexing');
 require('games');
 require('clips');
@@ -25,11 +24,12 @@ var App = angular.module('App', [
     'header',
     'Account',
     'Admin',
-    'indexer',
+    'Indexer',
     'Indexing',
     'Coach',
     'Athlete',
     'Games',
     'Clips',
-    'Reel'
+    'Reel',
+    'Styleguide'
 ]);

@@ -2,6 +2,7 @@
 const angular = window.angular;
 
 ReelController.$inject = [
+    'DEVICE',
     '$rootScope',
     '$scope',
     '$state',
@@ -34,6 +35,7 @@ ReelController.$inject = [
  * @type {Controller}
  */
 function ReelController(
+    DEVICE,
     $rootScope,
     $scope,
     $state,
@@ -74,6 +76,7 @@ function ReelController(
     let isTelestrationsSharedPublicly = reel.isTelestrationsSharedPublicly();
     let team = teamsFactory.get(game.teamId);
     let league = leaguesFactory.get(team.leagueId);
+    let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
 
     $scope.VIEWPORTS = VIEWPORTS;
     $scope.reel = reel;
@@ -82,13 +85,12 @@ function ReelController(
     $scope.isReelsPlay = true;
     $scope.plays = plays;
     $scope.playManager = playManager;
-    $scope.sources = plays[0].getVideoSources();
+    $scope.video = plays[0].clip;
     $scope.currentPlayId = play.id;
     $scope.game = game;
     $scope.league = league;
 
     playManager.current = play;
-
 
     /* TODO: game.getPosterImage() */
     $scope.posterImage = {
@@ -119,6 +121,12 @@ function ReelController(
         });
     });
 
+    /* Telestrations associated with plays */
+
+    $scope.plays.forEach((play) => {
+        play.hasTelestrations = reel.telestrations.some((telestration) => play.id === telestration.playId && telestration.hasGlyphs());
+    });
+
     /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
     // Editing config
 
@@ -145,7 +153,10 @@ function ReelController(
     $scope.telestrationsEntity = reel.telestrations;
 
     // uploader could be a coach or an athlete (they have permissions to edit by default)
-    if (isUploader) {
+    if (isMobile) {
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
+    }
+    else if (isUploader) {
 
         $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
 

@@ -1,0 +1,14 @@
+<button class="save-button" ng-class="{'save-confirmed': confirmSave}" ng-click="saveResource()" type="submit">
+    <span
+        ng-hide="isSaving"
+    >
+        Save
+    </span>
+
+    <span
+        ng-show="isSaving"
+    >
+        <krossover-spinner ng-show="!confirmSave" size="'15px'"></krossover-spinner>
+        <i class="icon icon-ok" ng-show="confirmSave"></i>
+    </span>
+</button>

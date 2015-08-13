@@ -55,7 +55,8 @@ Indexing.controller('Indexing.Main.Controller', [
                         teams,
                         games,
                         plays,
-                        videoPlayer) {
+                        videoPlayer
+                        ) {
 
         var gameId = Number($stateParams.id);
 
@@ -72,8 +73,10 @@ Indexing.controller('Indexing.Main.Controller', [
         $scope.opposingTeamPlayers = data.opposingTeamPlayers;
         $scope.league = leagues.get($scope.team.leagueId);
         $scope.tagset = tagsets.get($scope.league.tagSetId);
-        $scope.sources = $scope.game.getVideoSources();
         $scope.videoPlayer = videoPlayer;
+
+        //Watch for fullscreen change
+        $scope.$watch(videoPlayerFullScreenWatch.bind(this));
 
         var playsList = plays.getList({ gameId: gameId });
 
@@ -81,6 +84,13 @@ Indexing.controller('Indexing.Main.Controller', [
 
         playlistManager.isEditable = true;
 
-        var indexingElement = document.getElementsByClassName('indexing')[0];
+        /**
+         * Watch for video player full screen changes.
+         */
+        function videoPlayerFullScreenWatch () {
+            $scope.fullScreenEnabled = videoPlayer.isFullScreen || document.fullscreenEnabled;
+        }
+
     }
+
 ]);

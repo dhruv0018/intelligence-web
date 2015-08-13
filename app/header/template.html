@@ -3,75 +3,78 @@
 <nav class="header header-default" role="navigation">
 
     <!-- Mobile Menu Begin -->
-    <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-left dropdown mobile-nav navbar-fixed-top" dropdown>
+    <div ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-left dropdown mobile-nav navbar-fixed-top" dropdown>
 
         <button id="mobile-menu-dropdown-toggle" class="dropdown-toggle" dropdown-toggle><i class="icon icon-bars">&nbsp;</i>Menu</button>
 
         <!-- Admin Menu -->
-        <menu class="dropdown-menu" data-ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
-            <li data-ui-sref-active="active"><a id="mobile-menu-admin-users-cta" data-ui-sref="users">Users</a></li>
-            <li data-ui-sref-active="active"><a id="mobile-menu-admin-teams-cta" data-ui-sref="teams">Teams</a></li>
-            <li data-ui-sref-active="active"><a id="mobile-menu-admin-schools-cta" data-ui-sref="schools">Schools</a></li>
-            <li data-ui-sref-active="active"><a id="mobile-menu-admin-queue-cta" data-ui-sref="queue">Queue</a></li>
-            <li data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)" data-ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
+        <menu class="dropdown-menu" ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
+            <li ui-sref-active="active"><a id="mobile-menu-admin-users-cta" ui-sref="users">Users</a></li>
+            <li ui-sref-active="active"><a id="mobile-menu-admin-teams-cta" ui-sref="teams">Teams</a></li>
+            <li ui-sref-active="active"><a id="mobile-menu-admin-schools-cta" ui-sref="schools">Schools</a></li>
+            <li ui-sref-active="active"><a id="mobile-menu-admin-queue-cta" ui-sref="queue">Queue</a></li>
+            <li ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN)" ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
                 <a>Platform</a>
-                <ul class="mobile-submenu" data-ng-show="subMenu">
-                    <li><a data-ui-sref="plan-defaults">Plan Defaults</a></li>
-                    <li><a data-ui-sref="leagues">Leagues</a></li>
+                <ul class="mobile-submenu" ng-show="subMenu">
+                    <li><a ui-sref="plan-defaults">Plan Defaults</a></li>
+                    <li><a ui-sref="leagues">Leagues</a></li>
                 </ul>
             </li>
         </menu>
 
         <!-- Indexer Menu -->
-        <menu class="dropdown-menu" data-ng-if="currentUser.is(INDEXER)">
-            <li data-ui-sref-active="active"><a id="mobile-menu-indexer-games-cta" data-ui-sref="indexer-games">Games</a></li>
+        <menu class="dropdown-menu" ng-if="currentUser.is(INDEXER)">
+            <li ui-sref-active="active"><a id="mobile-menu-indexer-games-cta" ui-sref="IndexerGames">Games</a></li>
+            <li ui-sref-active="active"><a id="mobile-menu-indexer-history-cta" ui-sref="IndexerHistory">History</a></li>
         </menu>
 
         <!-- Coach Menu -->
-        <menu class="dropdown-menu" data-ng-if="currentUser.is(COACH)">
-            <li data-ui-sref-active="active"><a id="mobile-menu-coach-film-home-cta" data-ui-sref="Coach.FilmHome">Film Home</a></li>
-            <li id="mobile-menu-coach-team-cta" data-ng-class="{active: $state.includes('Coach.Team')}" data-ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
+        <menu class="dropdown-menu" ng-if="currentUser.is(COACH)">
+            <li ui-sref-active="active"><a id="mobile-menu-coach-film-home-cta" ui-sref="Coach.FilmHome">Film Home</a></li>
+            <li id="mobile-menu-coach-team-cta" ng-class="{active: $state.includes('Coach.Team')}" ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
                 <a>Team</a>
-                <ul class="mobile-submenu" data-ng-show="subMenu">
-                    <li><a id="mobile-menu-coach-roster-cta" data-ui-sref="Coach.Team.Roster">Roster</a></li>
-                    <li data-ng-if="currentUser.is(HEAD_COACH)"><a id="mobile-menu-coach-coaches-cta" data-ui-sref="Coach.Team.Assistants">Coaches</a></li>
+                <ul class="mobile-submenu" ng-show="subMenu">
+                    <li><a id="mobile-menu-coach-roster-cta" ui-sref="Coach.Team.Roster">Roster</a></li>
+                    <li ng-if="currentUser.is(HEAD_COACH)"><a id="mobile-menu-coach-coaches-cta" ui-sref="Coach.Team.Assistants">Coaches</a></li>
                 </ul>
             </li>
-            <li><a id="mobile-menu-coach-support-cta" data-ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
-            <li data-ui-sref-active="active"><button id="mobile-menu-coach-add-film-cta" class="btn btn-primary navbar-btn" data-ng-click="tabs.reset()" data-ui-sref="add-film" data-ui-sref-opts="{reload: true}">Add Film</button></li>
+            <li><a id="mobile-menu-coach-support-cta" ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
+            <li ui-sref-active="active"><button id="mobile-menu-coach-add-film-cta" class="btn btn-primary navbar-btn" ng-click="tabs.reset()" ui-sref="add-film" ui-sref-opts="{reload: true}">Add Film</button></li>
         </menu>
 
         <!-- Athlete Menu -->
         <menu class="dropdown-menu" data-ng-if="currentUser.is(ATHLETE)">
             <li id="mobile-menu-athlete-film-home-cta" data-ui-sref-active="active"><a data-ui-sref="Athlete.FilmHome">Film Home</a></li>
             <li
-                data-ng-if="config.athleteProfile.isEnabled"
-                data-ui-sref-active="active"
+                ng-if="config.athleteProfile.isEnabled"
+                ng-show="currentUserIsAthleteRecruit"
+                class="ng-hide"
+                ui-sref-active="active"
             ><a id="mobile-menu-athlete-profile-cta" data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
         </menu>
 
     </div>
 
     <!-- Logo -->
-    <header class="navbar-header" data-ng-class="{public: !auth.isLoggedIn}">
-        <a class="navbar-brand" data-sref="Account.ContactInfo"><div class="icon icon-krossover-symbol"></div></a>
+    <header class="navbar-header" ng-class="{public: !auth.isLoggedIn}">
+        <a class="navbar-brand" sref="Account.ContactInfo"><div class="icon icon-krossover-symbol"></div></a>
     </header>
-    <header class="navbar-header navbar-brand-lg" data-ng-if="!auth.isLoggedIn">
-        <a class="navbar-brand" data-sref="Account.ContactInfo" href="http://www.krossover.com"><div class="icon icon-krossover-logo-tagline"></div></a>
+    <header class="navbar-header navbar-brand-lg" ng-if="!auth.isLoggedIn">
+        <a class="navbar-brand" sref="Account.ContactInfo" href="http://www.krossover.com"><div class="icon icon-krossover-logo-tagline"></div></a>
     </header>
 
     <!-- Admin menu -->
-    <menu class="nav navbar-nav" data-ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
+    <menu class="nav navbar-nav" ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
 
-        <li data-ui-sref-active="active"><a id="menu-admin-users-cta" data-ui-sref="users">Users</a></li>
-        <li data-ui-sref-active="active"><a id="menu-admin-teams-cta" data-ui-sref="teams">Teams</a></li>
-        <li data-ui-sref-active="active"><a id="menu-admin-schools-cta" data-ui-sref="schools">Schools</a></li>
-        <li data-ui-sref-active="active"><a id="menu-admin-queue-cta" data-ui-sref="queue">Queue</a></li>
+        <li ui-sref-active="active"><a id="menu-admin-users-cta" ui-sref="users">Users</a></li>
+        <li ui-sref-active="active"><a id="menu-admin-teams-cta" ui-sref="teams">Teams</a></li>
+        <li ui-sref-active="active"><a id="menu-admin-schools-cta" ui-sref="schools">Schools</a></li>
+        <li ui-sref-active="active"><a id="menu-admin-queue-cta" ui-sref="queue">Queue</a></li>
         <!--<li class="disabled" data-ui-sref-active="active"><a data-ui-sref="reports">Reports</a></li>-->
-        <li class="header-dropdown" data-ui-sref-active="active" data-ng-show="currentUser.is(SUPER_ADMIN)"><a class="dropdown-toggle" dropdown-toggle>Platform</a>
+        <li class="header-dropdown" ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN)"><a class="dropdown-toggle" dropdown-toggle>Platform</a>
             <ul class="dropdown-menu">
-                <li><a data-ui-sref="plan-defaults">Plan Defaults</a></li>
-                <li><a data-ui-sref="leagues">Leagues</a></li>
+                <li><a ui-sref="plan-defaults">Plan Defaults</a></li>
+                <li><a ui-sref="leagues">Leagues</a></li>
                 <!--<li data-ng-hide="true"><a href="#">Indexing Pricing</a></li>-->
                 <!--<li data-ng-hide="true"><a href="#">Action Rules</a></li>-->
                 <!--<li data-ng-hide="true"><a href="#">Set Aside Times</a></li>-->
@@ -81,15 +84,15 @@
     </menu>
 
     <!-- Indexer menu -->
-    <menu class="nav navbar-nav" data-ng-if="currentUser.is(INDEXER)">
+    <menu class="nav navbar-nav" ng-if="currentUser.is(INDEXER)">
 
-        <li data-ui-sref-active="active"><a id="menu-indexer-games-cta" data-ui-sref="indexer-games">Games</a></li>
-        <!--<li class="disabled" data-ui-sref-active="active"><a data-ui-sref="indexer-history">History</a></li>-->
+        <li ui-sref-active="active"><a id="menu-indexer-games-cta" ui-sref="IndexerGames">Games</a></li>
+        <li ui-sref-active="active"><a id="menu-indexer-history-cta" ui-sref="IndexerHistory">History</a></li>
 
     </menu>
 
     <!-- Coach menu -->
-    <menu class="nav navbar-nav" data-ng-if="currentUser.is(COACH)">
+    <menu class="nav navbar-nav" ng-if="currentUser.is(COACH)">
 
         <li data-ui-sref-active="active"><a id="menu-coach-film-home-cta" data-ui-sref="Coach.FilmHome">Film Home</a></li>
         <li ng-if="league.sportId === SPORTS.FOOTBALL.id || league.sportId === SPORTS.VOLLEYBALL.id" id="menu-coach-analytics-cta" class="header-dropdown" ng-class="{active: $state.includes('Coach.Analytics')}">
@@ -112,52 +115,54 @@
         <li id="menu-coach-team-cta" class="header-dropdown" data-ng-class="{active: $state.includes('Coach.Team')}">
             <a class="dropdown-toggle" dropdown-toggle>Team</a>
             <ul class="dropdown-menu">
-                <li><a id="menu-coach-roster-cta" data-ui-sref="Coach.Team.Roster">Roster</a></li>
-                <li data-ng-if="currentUser.is(HEAD_COACH)"><a id="menu-coach-coaches-cta" data-ui-sref="Coach.Team.Assistants">Coaches</a></li>
+                <li><a id="menu-coach-roster-cta" ui-sref="Coach.Team.Roster">Roster</a></li>
+                <li ng-if="currentUser.is(HEAD_COACH)"><a id="menu-coach-coaches-cta" ui-sref="Coach.Team.Assistants">Coaches</a></li>
                 <!--<li data-ng-hide="true"><a href="#">Sets</a></li>-->
             </ul>
 
         </li>
-        <li><a id="menu-coach-support-cta" data-ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
-        <li data-ui-sref-active="active"><button id="menu-coach-add-film-cta" class="btn btn-primary navbar-btn" data-ng-click="tabs.reset()" data-ui-sref="add-film" data-ui-sref-opts="{reload: true}">Add Film</button></li>
+        <li><a id="menu-coach-support-cta" ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
+        <li ui-sref-active="active"><button id="menu-coach-add-film-cta" class="btn btn-primary navbar-btn" ng-click="tabs.reset()" ui-sref="add-film" ui-sref-opts="{reload: true}">Add Film</button></li>
     </menu>
 
     <!-- Athlete menu -->
     <menu class="nav navbar-nav" data-ng-if="currentUser.is(ATHLETE)">
         <li data-ui-sref-active="active"><a id="menu-athlete-film-home-cta" data-ui-sref="Athlete.FilmHome">Film Home</a></li>
         <li
-            data-ng-if="config.athleteProfile.isEnabled"
-            data-ui-sref-active="active"
+            ng-if="config.athleteProfile.isEnabled"
+            ng-show="currentUserIsAthleteRecruit"
+            class="ng-hide"
+            ui-sref-active="active"
         ><a id="menu-athlete-profile-cta" data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
     </menu>
 
     <!-- Role Dropdown -->
-    <div data-ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-right">
+    <div ng-if="auth.isLoggedIn" class="nav navbar-nav navbar-right">
 
         <div class="role-dropdown" data-dropdown data-is-open="status.isopen">
 
             <button id="menu-dropdown-toggle" class="dropdown-toggle" dropdown-toggle>
 
-                <i class="icon" data-ng-class="{'icon-chevron-up': status.isopen, 'icon-chevron-down': !status.isopen}"></i>
+                <i class="icon" ng-class="{'icon-chevron-up': status.isopen, 'icon-chevron-down': !status.isopen}"></i>
                 <x-krossover-role user="currentUser" role="currentUser.currentRole"></x-krossover-role>
 
             </button>
 
             <ul class="dropdown-menu">
 
-                <div data-ng-repeat="roleType in currentUser.roleTypes track by $index">
-                    <li data-ng-if="roleType[0].type.id !== ATHLETE.type.id" data-ng-repeat="role in roleType">
+                <div ng-repeat="roleType in currentUser.roleTypes track by $index">
+                    <li ng-if="roleType[0].type.id !== ATHLETE.type.id" ng-repeat="role in roleType">
 
-                        <a data-ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href data-ng-click="account.changeCurrentUserRole(role)">
+                        <a ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(role)">
 
                             <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
                         </a>
 
                     </li>
-                    <li data-ng-if="roleType[0].type.id === ATHLETE.type.id">
+                    <li ng-if="roleType[0].type.id === ATHLETE.type.id">
 
-                        <a data-ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href data-ng-click="account.changeCurrentUserRole(roleType[0])">
+                        <a ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(roleType[0])">
 
                             <x-krossover-role user="currentUser" role="roleType[0]"></x-krossover-role>
 
@@ -168,9 +173,9 @@
 
                 <footer>
 
-                    <button id="your-account-cta" class="btn-footer" data-ui-sref="Account.ContactInfo" data-ng-disabled="$state.current.parent === 'Account'"><i class="icon icon-cog"></i> Your Account</button>
-                    <button class="btn-footer" data-ng-if="session.isPreviousUserStored()" data-ng-click="account.returnToPreviousUser()"><i class="icon icon-signout"></i> Return to previous user</button>
-                    <button id="logout-cta" class="btn-footer" data-ng-if="!session.isPreviousUserStored()" data-ng-click="$state.go('logout')"><i class="icon icon-signout"></i> Log out</button>
+                    <button id="your-account-cta" class="btn-footer" ui-sref="Account.ContactInfo" ng-disabled="$state.current.parent === 'Account'"><i class="icon icon-cog"></i> Your Account</button>
+                    <button id="previous-account-cta" class="btn-footer" ng-if="session.isPreviousUserStored()" ng-click="account.returnToPreviousUser()"><i class="icon icon-signout"></i> Return to previous user</button>
+                    <button id="logout-cta" class="btn-footer" ng-if="!session.isPreviousUserStored()" ng-click="$state.go('logout')"><i class="icon icon-signout"></i> Log out</button>
 
                 </footer>
 
@@ -180,8 +185,8 @@
 
     </div>
 
-    <div data-ng-if="!auth.isLoggedIn" class="nav navbar-nav navbar-right public-view">
-        <a data-ui-sref="login" class="btn btn-primary">Sign In</a>
+    <div ng-if="!auth.isLoggedIn" class="nav navbar-nav navbar-right public-view">
+        <a ui-sref="login" class="btn btn-primary">Sign In</a>
     </div>
 
 </nav>

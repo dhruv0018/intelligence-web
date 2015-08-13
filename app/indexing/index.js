@@ -142,7 +142,7 @@ Indexing.config([
                         playerlist.fill(game);
                         if (!game.isAssignedToUser(userId)) {
 
-                            $state.go('indexer-games');
+                            $state.go('IndexerGames');
                         }
 
                         else if (game.canBeIndexed() || game.canBeQAed()) {
@@ -164,7 +164,7 @@ Indexing.config([
 
                                 timeExpiredModal.result.finally(function() {
 
-                                    $state.go('indexer-game', { id: game.id });
+                                    $state.go('IndexerGame', { id: game.id });
                                 });
                             };
 
@@ -179,7 +179,8 @@ Indexing.config([
                             'right': true,
                             'enter': true,
                             'tab': true,
-                            'esc': true
+                            'esc': true,
+                            'shift+backspace': true
                         };
 
                         var originalStopCallback = Mousetrap.stopCallback;
@@ -205,33 +206,29 @@ Indexing.config([
 
                         Mousetrap.bind('enter', function() {
 
-                            $timeout(function() {
-
-                                indexing.index();
-
-                            }, 0);
+                            $timeout(() => indexing.index());
 
                             return false;
                         });
 
                         Mousetrap.bind('tab', function() {
 
-                            $timeout(function() {
-
-                                indexing.step();
-
-                            }, 0);
+                            $timeout(() => indexing.step());
 
                             return false;
                         });
 
                         Mousetrap.bind('esc', function() {
 
-                            $timeout(function() {
+                            $timeout(() => indexing.back());
 
-                                indexing.back();
+                            return false;
+                        });
 
-                            }, 0);
+                        //Used primarily to go back when indexing in fullscreen
+                        Mousetrap.bind('shift+backspace', function() {
+
+                            $timeout(() => indexing.back());
 
                             return false;
                         });
@@ -246,6 +243,7 @@ Indexing.config([
                         Mousetrap.unbind('enter');
                         Mousetrap.unbind('tab');
                         Mousetrap.unbind('esc');
+                        Mousetrap.unbind('shift+backspace');
                     }
                 ]
             });

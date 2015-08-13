@@ -1,6 +1,39 @@
 <div class="highlights">
-    <ul class="reels" ng-hide="!reel">
-        <krossover-film ng-if="reel" film="reel"></krossover-film>
-    </ul>
-    <no-profile-reels class="ng-hide" ng-show="!reel"></no-profile-reels>
+
+    <div class="athlete-info-container">
+        <athlete-resume athlete="athlete"></athlete-resume>
+
+        <div class="profile-link-container">
+            Share this link:<br>
+            <span>{{config.links.intelligence.uri}}/intelligence/athlete/{{athlete.id}}/profile</span>
+        </div>
+    </div>
+
+    <div class="featured-reel-container" ng-show="featuredReel">
+
+        <div class="featured-reel-video">
+            <div class="featured-reel-header">
+                <h3>{{featuredReel.name}}</h3>
+            </div>
+            <video-player sources="sources"></video-player>
+        </div>
+
+        <clips-navigation
+            sources="sources"
+            current-play="currentPlay"
+            previous-play="previousPlay"
+            next-play="nextPlay"
+            clip-index="clipIndex"
+            clip-total="clipTotal"
+        ></clips-navigation>
+    </div>
+
+    <no-profile-reels ng-hide="highlightReels.length || featuredReel"></no-profile-reels>
+
+    <div>
+        <ul class="reels" ng-show="highlightReels.length">
+            <krossover-film ng-repeat="reel in highlightReels" film="reel"></krossover-film>
+        </ul>
+    </div>
+
 </div>

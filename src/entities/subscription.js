@@ -3,6 +3,7 @@ import Entity from './entity.js';
 
 const tv4 = require('tv4');
 const schema = require('../../schemas/subscription.json');
+const moment = require('moment');
 
 class Subscription extends Entity {
 
@@ -29,7 +30,7 @@ class Subscription extends Entity {
             throw new Error(validation.errors.shift());
         }
 
-        return this.extend(subscription);
+        return super(subscription);
     }
 
     /**
@@ -60,7 +61,7 @@ class Subscription extends Entity {
      * @param: {SUBSCRIPTION} (req) Subscription constant to check against
      * @return: {Boolean} [true] if given subscription matches given type, else [false]
      */
-    is (match) {
+    is (subscriptionConstant) {
 
         switch (arguments.length) {
 
@@ -69,22 +70,25 @@ class Subscription extends Entity {
                 throw new Error('Invoking Subscription.is without passing a SUBSCRIPTION to match');
         }
 
-        return this.type === match.type.id;
+        return this.type === subscriptionConstant.type.id;
     }
 
     /**
      * Method:isActive
-     * Determine if given subscription is active
+     * Determine if given subscription is active and of the given type
      *
-     * @return: {Boolean} [true] if active, else [false]
+     * @param: {SUBSCRIPTION} Subscription constant to check against
+     * @return: {Boolean} [true] if active and given subscription matches given type, else [false]
      */
-    get isActive() {
+    isActive(subscriptionConstant) {
 
-        let today = moment.utc();
-        let activation = moment.utc(this.activatesAt);
-        let expiration = moment.utc(this.expiresAt);
+        const now = moment.utc();
+        const activation = moment.utc(this.activatesAt);
+        const expiration = moment.utc(this.expiresAt);
 
-        return today.isAfter(activation) && today.isBefore(expiration);
+        const isActive = now.isAfter(activation) && now.isBefore(expiration);
+
+        return subscriptionConstant ? (this.is(subscriptionConstant) && isActive) : isActive;
     }
 }
 

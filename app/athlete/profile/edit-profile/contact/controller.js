@@ -1,11 +1,11 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * EditProfile.Contact page module.
  * @module EditProfile.Contact
  */
-var Contact = angular.module('Athlete.Profile.EditProfile.Contact');
+const Contact = angular.module('Athlete.Profile.EditProfile.Contact');
 
 /*
 * EditProfile.Contact dependencies
