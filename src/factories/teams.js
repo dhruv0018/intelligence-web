@@ -197,6 +197,14 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 return currentHeadCoachRoles.pop();
             },
 
+            getHeadCoachName: function() {
+
+                let headCoachRole = this.getHeadCoachRole();
+                let uploaderHeadCoachUser = users.get(headCoachRole.userId);
+
+                return uploaderHeadCoachUser.firstName + ' ' + uploaderHeadCoachUser.lastName;
+            },
+
             has: function(match, matchIsCurrent) {
 
                 var self = this;

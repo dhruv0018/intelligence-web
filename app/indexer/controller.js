@@ -92,17 +92,10 @@ function IndexerGamesController(
     };
 
     $scope.getHeadCoachName = function(game) {
-        // console.log('game', game);
-        // let uploaderTeamId = game.uploaderTeamId;
-        // if(teams[uploaderTeamId]) {
-        //     let uploaderHeadCoachRole = teams[uploaderTeamId].getHeadCoachRole();
-        //
-        //     console.log('uploaderHeadCoachRole', uploaderHeadCoachRole);
-        //     let uploaderHeadCoachUser = users[uploaderHeadCoachRole.userId];
-        //     console.log('uploaderHeadCoachUser', uploaderHeadCoachUser);
-        //     return uploaderHeadCoachUser.firstName + ' ' + uploaderHeadCoachUser.lastName;
-        // }
-        return;
+
+        let uploaderTeamId = game.uploaderTeamId;
+        let team = $scope.teams[uploaderTeamId];
+        return team.getHeadCoachName();
     };
 
     var refreshGames = function() {

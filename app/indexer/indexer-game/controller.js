@@ -89,7 +89,7 @@ function IndexerGameController(
 
         $scope.game.assignToIndexer(previousAssignment.userId, newDeadline);
         $scope.game.save();
-        $state.go('IndexerGames');
+        $state.go('IndexerGamesAssigned');
     };
 
     $scope.setAside = function() {
