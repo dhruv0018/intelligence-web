@@ -19,23 +19,8 @@ arena-event {
 
 .arena-event {
     position: absolute;
-    @arena-event-fill-hover: #5DBCD2;
 
     &:hover {
-        z-index: 100; // bring to front
         cursor: pointer;
-    }
-
-    svg {
-        transition: all 0.1s ease-out;
-    }
-
-    svg:hover {
-
-        .inner {
-            fill: @arena-event-fill-hover !important;
-        }
-
-        transform: scale(1.25);
     }
 }
