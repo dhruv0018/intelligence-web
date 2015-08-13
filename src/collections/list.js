@@ -3,7 +3,6 @@
  * @class List
  * @classdesc Takes an array as a data source and adds convenience methods
  * including a linked list-like capabilities.
- * @file src/collections/list.js
  */
 class List {
 
@@ -76,7 +75,6 @@ class List {
 
         return this.identity();
     }
-    /* NEW */
 
     /**
      * Removes all entries in the list
@@ -135,7 +133,7 @@ class List {
      *
      * @method add
      * @param {Object|Array} item    - Item(s) to add
-     * @param {Boolean} [toEnd=true] - Add to end (false), or begging (true)
+     * @param {Boolean} [toEnd=true] - Add to end (false), or beginning (true)
      * @returns {Integer}            - Length
      */
     add (item, toEnd = true) {
@@ -164,8 +162,8 @@ class List {
      * Removes an entry from the list
      *
      * @method remove
-     * @param {Object} item - Item to remove
-     * @returns {Integer}   - Length, OR undefined
+     * @param {Object} item         - Item to remove
+     * @returns {Integer|undefined} - Array length
      */
     remove (item) {
 

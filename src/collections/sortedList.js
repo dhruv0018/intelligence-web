@@ -24,7 +24,7 @@ class SortedList extends List {
 
         if (!sortProperty) {
 
-            throw new Error('Invoked List.constructor without passing a sort property');
+            throw new Error('Invoked SortedList.constructor without passing a sort property');
         }
 
         this.sortProperty = sortProperty;
@@ -41,7 +41,6 @@ class SortedList extends List {
      */
     sort () {
 
-        /* Create a temporary Array to sort with */
         return this.data.sort((a, b) => {
 
             a = a[this.sortProperty];
