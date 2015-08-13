@@ -24,6 +24,9 @@ class PlayerField extends Field {
             playerId,
             get name () {
                 return Player.getters.name(field, playerId);
+            },
+            get jerseyColor() {
+                return Player.getters.jerseyColor(field, playerId);
             }
         };
         this.value = value;

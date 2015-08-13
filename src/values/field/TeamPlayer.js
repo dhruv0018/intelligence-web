@@ -32,6 +32,9 @@ class TeamPlayerField extends Field {
             get type() {
                 return type;
             },
+            get jerseyColor(){
+                return Player.getters.jerseyColor(field, id);
+            },
             id
         };
 
