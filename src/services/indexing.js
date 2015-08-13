@@ -103,13 +103,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Snap video back to time of current event. */
                 videoPlayer.seekTime(event.time);
 
-                playManager.current.save()
-                .then((play) => plays.load(play.id))
-                .then((serverPlay) => {
-
-                    // playManager.current = serverPlay[0];
-                    playlistEventEmitter.emit(EVENT.PLAYLIST.PLAY.CHANGE, serverPlay[0]);
-                });
+                playManager.current.save();
 
                 playsManager.calculatePlays();
                 playManager.clear();
