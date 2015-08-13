@@ -72,12 +72,11 @@ class KrossoverPlay extends Entity {
      * @type {String} - HTML
      */
     get summaryScript () {
-
         return this.events.map((event, index) => {
 
             if (event.summaryScript) {
 
-                return event.summaryFields.toString();
+                return event.summaryFields.toString() + '<br/>';
             }
         })
         .filter(Boolean);
