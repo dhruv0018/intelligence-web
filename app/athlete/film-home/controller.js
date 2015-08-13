@@ -29,7 +29,6 @@ FilmHome.controller('Athlete.FilmHome.controller', [
         $scope.filmsList = gamesList.concat(reelsList);
         $scope.query = '';
         $scope.currentUser = session.getCurrentUser();
-        $scope.userPlayers = players.getList();
 
         //ui
         $scope.filteredFilmsList = $scope.filmsList;
