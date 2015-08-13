@@ -11,8 +11,7 @@ const EVENT = {
         PLAY: {
             WATCH: 'PLAYLIST_PLAY_WATCH',
             SELECT: 'PLAYLIST_PLAY_SELECT',
-            CURRENT: 'PLAYLIST_PLAY_CURRENT',
-            CHANGE: 'PLAYLIST_PLAY_CHANGE'
+            CURRENT: 'PLAYLIST_PLAY_CURRENT'
         },
         EVENT: {
             SELECT: 'PLAYLIST_EVENT_SELECT',
