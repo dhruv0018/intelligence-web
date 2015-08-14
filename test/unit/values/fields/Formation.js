@@ -63,4 +63,16 @@ describe('Formation Field', () => {
             expect(field.valid).to.be.true;
         });
     });
+
+    it('Should have available values that are ordered by the number of players in the formation', () => {
+        let field = unrequiredField;
+        let values = field.availableValues;
+        let previousNumberOfPlayers = 0;
+
+        values.sort( (v1, v2) => v1.order - v2.order);
+        values.forEach(value => {
+            expect(value.numberOfPlayers).to.be.at.least(previousNumberOfPlayers);
+            previousNumberOfPlayers = value.numberOfPlayers;
+        });
+    });
 });
