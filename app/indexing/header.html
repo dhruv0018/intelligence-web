@@ -18,11 +18,11 @@
 
         <h1>
 
-            <div class="color" style="background-color: {{ game.primaryJerseyColor }};"></div>
+            <div class="color" style="background-color: {{ game.primaryJerseyColor ? game.primaryJerseyColor : '#000000' }};"></div>
 
             {{ team.name }} <b>{{ game.indexedScore }}</b> vs <b>{{ game.opposingIndexedScore }}</b> {{ opposingTeam.name }}
 
-            <div class="color" style="background-color: {{ game.opposingPrimaryJerseyColor }};"></div>
+            <div class="color" style="background-color: {{ game.opposingPrimaryJerseyColor ? game.opposingPrimaryJerseyColor : '#000000' }};"></div>
 
         </h1>
 
