@@ -187,22 +187,12 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                     return users.is(role, ROLES.HEAD_COACH);
                 });
-
                 /* Filter out all of the head coach roles that are current. */
                 var currentHeadCoachRoles = headCoachRoles.filter(function(coach) {
 
                     return !coach.tenureEnd;
                 });
-
                 return currentHeadCoachRoles.pop();
-            },
-
-            getHeadCoachName: function() {
-
-                let headCoachRole = this.getHeadCoachRole();
-                let uploaderHeadCoachUser = users.get(headCoachRole.userId);
-
-                return uploaderHeadCoachUser.firstName + ' ' + uploaderHeadCoachUser.lastName;
             },
 
             has: function(match, matchIsCurrent) {

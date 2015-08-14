@@ -40,9 +40,9 @@ function IndexerGamesController(
 
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
-    $scope.teams = teams.getCollection();
-    $scope.users = users.getCollection();
-    $scope.games = games.getList();
+    $scope.teams = teams.getCollection(VIEWS.QUEUE.TEAMS);
+    $scope.users = users.getCollection(VIEWS.QUEUE.USERS);
+    $scope.games = games.getList(VIEWS.QUEUE.GAME);
     $scope.currentUser = session.getCurrentUser();
     $scope.options = {scope: $scope};
 

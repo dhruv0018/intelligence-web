@@ -48,8 +48,8 @@ function IndexerGamesController(
     $scope.GAME_STATUSES = GAME_STATUSES;
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
-    $scope.teams = teams.getCollection();
-    $scope.users = users.getCollection();
+    $scope.teams = teams.getCollection({ relatedUserId: this.userId });
+    $scope.users = users.getCollection({ relatedUserId: this.userId });
     $scope.userId = session.getCurrentUserId();
     $scope.footballFAQ = config.links.indexerFAQ.football.uri;
     $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
@@ -95,7 +95,10 @@ function IndexerGamesController(
 
         let uploaderTeamId = game.uploaderTeamId;
         let team = $scope.teams[uploaderTeamId];
-        return team.getHeadCoachName();
+        let headCoachRole = team.getHeadCoachRole();
+        let user = $scope.users[headCoachRole.userId];
+
+        return user.firstName + ' ' + user.lastName;
     };
 
     var refreshGames = function() {
