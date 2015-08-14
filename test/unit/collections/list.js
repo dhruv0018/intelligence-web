@@ -255,6 +255,17 @@ describe('List', () => {
         expect(() => sampleList.remove()).to.throw(Error);
     });
 
+    it('should have an indexOf method that returns the index or -1', () => {
+
+        expect(sampleList.indexOf(1)).to.equal(0);
+        expect(sampleList.indexOf(123456)).to.equal(-1);
+        expect(sampleList.indexOf({foo: 4})).to.equal(3);
+        expect(sampleList.indexOf(false)).to.equal(-1);
+        expect(sampleList.indexOf(null)).to.equal(4);
+        expect(sampleList.indexOf(undefined)).to.equal(5);
+        expect(sampleList.indexOf([])).to.equal(-1);
+    });
+
     it('should let you know if the array is empty when you call "isEmpty"', () => {
 
         expect(sampleList.isEmpty()).to.be.a('boolean');
