@@ -52,7 +52,10 @@ class FormationField extends Field {
                 return {
                     formationId: Number(currentFormation.id),
                     numberOfPlayers: currentFormation.numberPlayers,
-                    name: currentFormation.name
+                    name: currentFormation.name,
+                    get order() {
+                        return currentFormation.numberPlayers;
+                    }
                 };
             });
         }
