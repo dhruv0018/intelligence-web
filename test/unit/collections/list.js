@@ -255,7 +255,7 @@ describe('List', () => {
         expect(() => sampleList.remove()).to.throw(Error);
     });
 
-    if('should let you know if the array is empty when you call "isEmpty"', () => {
+    it('should let you know if the array is empty when you call "isEmpty"', () => {
 
         expect(sampleList.isEmpty()).to.be.a('boolean');
         expect(sampleList.isEmpty()).to.be.false;
