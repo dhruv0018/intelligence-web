@@ -220,7 +220,7 @@ class List {
      */
     isEmpty () {
 
-        return !!this.data.length;
+        return !this.data.length;
     }
 }
 
