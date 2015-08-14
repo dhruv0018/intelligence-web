@@ -54,7 +54,7 @@
         </div>
 
         <!-- period filter -->
-        <div class="filter-group__item">
+        <div class="filter-group__item" ng-if="league.numberOfPeriods !== 1">
 
             <h4> Period </h4>
 
@@ -64,20 +64,29 @@
                     All
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-model="filterModel.period.one">
-                    {{ league.periodAbbreviationLabel }}1
+                <krossover-checkbox ng-model="filterModel.period.one"
+                    ng-if="league.numberOfPeriods === 2 ||
+                        league.numberOfPeriods === 3 ||
+                        league.numberOfPeriods === 4">
+                    {{ ::league.periodAbbreviationLabel }}1
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-model="filterModel.period.two">
-                    {{ league.periodAbbreviationLabel }}2
+                <krossover-checkbox ng-model="filterModel.period.two"
+                    ng-if="league.numberOfPeriods === 2 ||
+                        league.numberOfPeriods === 3 ||
+                        league.numberOfPeriods === 4">
+                    {{ ::league.periodAbbreviationLabel }}2
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-if="league.numberOfPeriods == 4" ng-model="filterModel.period.three">
-                    {{ league.periodAbbreviationLabel }}3
+                <krossover-checkbox ng-model="filterModel.period.three"
+                    ng-if="league.numberOfPeriods === 3 ||
+                        league.numberOfPeriods === 4">
+                    {{ ::league.periodAbbreviationLabel }}3
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-if="league.numberOfPeriods == 4" ng-model="filterModel.period.four">
-                    {{ league.periodAbbreviationLabel }}4
+                <krossover-checkbox ng-model="filterModel.period.four"
+                    ng-if="league.numberOfPeriods === 4">
+                    {{ ::league.periodAbbreviationLabel }}4
                 </krossover-checkbox>
 
                 <krossover-checkbox ng-model="filterModel.period.overtime">
