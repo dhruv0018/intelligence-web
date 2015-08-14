@@ -60,36 +60,16 @@
 
             <div>
 
-                <krossover-checkbox ng-model="filterModel.allPeriods" children-models="filterModel.period" children-listen="false">
+                <krossover-checkbox ng-model="filterModel.allPeriods" children-models="filterModel.periods" children-listen="false">
                     All
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-model="filterModel.period.one"
-                    ng-if="league.numberOfPeriods === 2 ||
-                        league.numberOfPeriods === 3 ||
-                        league.numberOfPeriods === 4">
-                    {{ ::league.periodAbbreviationLabel }}1
+                <krossover-checkbox ng-repeat="periodNumber in periods"
+                    ng-model="filterModel.periods[periodNumber]">
+                    {{ ::league.periodAbbreviationLabel }}{{ ::periodNumber }}
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-model="filterModel.period.two"
-                    ng-if="league.numberOfPeriods === 2 ||
-                        league.numberOfPeriods === 3 ||
-                        league.numberOfPeriods === 4">
-                    {{ ::league.periodAbbreviationLabel }}2
-                </krossover-checkbox>
-
-                <krossover-checkbox ng-model="filterModel.period.three"
-                    ng-if="league.numberOfPeriods === 3 ||
-                        league.numberOfPeriods === 4">
-                    {{ ::league.periodAbbreviationLabel }}3
-                </krossover-checkbox>
-
-                <krossover-checkbox ng-model="filterModel.period.four"
-                    ng-if="league.numberOfPeriods === 4">
-                    {{ ::league.periodAbbreviationLabel }}4
-                </krossover-checkbox>
-
-                <krossover-checkbox ng-model="filterModel.period.overtime">
+                <krossover-checkbox ng-model="filterModel.periods.OT">
                     OT
                 </krossover-checkbox>
 
