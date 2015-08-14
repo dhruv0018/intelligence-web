@@ -1,5 +1,10 @@
 # v2.12.0 #
 
+## Features ##
+
+## Bug Fixes / Improvements ##
+- When an indexer/QA sets a game aside, Operations should receive an e-mail
+
 # v2.11.0 #
 
 ## Features ##
