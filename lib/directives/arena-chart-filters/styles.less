@@ -30,35 +30,8 @@ arena-chart-filters {
         }
     }
 
-    .filter-group {
-        display: flex;
-        padding: 0px 15px;
-
-        &__item {
-            margin: 0 15px;
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            flex-direction: column;
-
-            &:first-child {
-                margin-left: 0px;
-            }
-
-            &:last-child {
-                margin-right: 0px;
-            }
-        }
-
-        &:first-child, &:last-child {
-            .filter-group__item {
-                align-items: center;
-            }
-        }
-    }
-
-    krossover-checkbox {
-        margin-right: 5px;
+    .arena-chart-filters-end .dropdown-menu {
+        right: 34px;
     }
 
     .team-label {
@@ -69,9 +42,5 @@ arena-chart-filters {
             width: @team-name-width;
             vertical-align: middle;
         }
-    }
-
-    .shot-icon {
-        margin-right: 4px;
     }
 }
