@@ -32,6 +32,8 @@ IntelligenceWebClient.service('AnalyticsService', [
                 let leagueId = '';
                 let sportId  = '';
 
+                // TODO: This should be safe to call without the try/catch
+                // block. Find out why and fix it.
                 try {
 
                     teamId = session.getCurrentTeamId();
