@@ -250,7 +250,7 @@ describe('List', () => {
         expect(sampleList).to.deep.equal(controlList);
     });
 
-    it('should throw an error if you attempt to remove an element without specifying an index', () => {
+    it('should throw an error if you attempt to remove an element without specifying an item', () => {
 
         expect(() => sampleList.remove()).to.throw(Error);
     });
