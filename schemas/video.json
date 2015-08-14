@@ -10,17 +10,17 @@
             "type": "string"
         },
         "status": {
-            "type": "integer"
+            "type": ["null", "integer"]
         },
         "videoTranscodeProfiles": {
             "type": "array",
             "items": { "$ref": "transcodeProfile" }
         },
         "duration": {
-            "type": "number"
+            "type": ["null", "number"]
         },
         "thumbnail": {
-            "type": "string"
+            "type": ["null", "string"]
         }
     },
     "additionalProperties": false
