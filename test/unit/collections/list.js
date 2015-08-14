@@ -216,17 +216,23 @@ describe('List', () => {
         expect(sampleList.get(0)).to.equal(2);
         expect(sampleList.includes(1)).to.be.false;
 
-        sampleList.remove({foo: 4});
         expect(sampleList.length).to.equal(12);
-        expect(sampleList.get(0)).to.equal(2);
-        expect(sampleList.get(2)).to.deep.equal({foo: 4});
+        sampleList.remove({foo: 4});
+        expect(sampleList.length).to.equal(11);
+        expect(sampleList.get(2)).to.be.null;
         expect(sampleList.includes({foo: 4})).to.be.false;
 
-        sampleList.remove(srcArray[3]);
         expect(sampleList.length).to.equal(11);
-        expect(sampleList.get(0)).to.equal(2);
-        expect(sampleList.get(2)).to.equal(null);
-        expect(sampleList.includes(srcArray[3])).to.be.false
+        sampleList.remove('3');
+        expect(sampleList.length).to.equal(10);
+        expect(sampleList.get(1)).to.be.null;
+        expect(sampleList.includes('3')).to.be.false;
+
+        expect(sampleList.length).to.equal(10);
+        sampleList.remove(null);
+        expect(sampleList.length).to.equal(9);
+        expect(sampleList.get(1)).to.be.undefined;
+        expect(sampleList.includes(null)).to.be.false;
     });
 
     it('should not remove elements that do not exist', () => {
