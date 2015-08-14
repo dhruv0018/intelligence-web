@@ -82,7 +82,7 @@ class List {
      * @method clear
      * @returns {List} - The array that was cleared
      */
-    clear() {
+    clear () {
 
         return this.data.splice(0, Number.MAX_VALUE);
     }
