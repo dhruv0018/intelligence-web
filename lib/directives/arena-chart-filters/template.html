@@ -65,19 +65,19 @@
                 </krossover-checkbox>
 
                 <krossover-checkbox ng-model="filterModel.period.one">
-                    Q1
+                    {{ league.periodAbbreviationLabel }}1
                 </krossover-checkbox>
 
                 <krossover-checkbox ng-model="filterModel.period.two">
-                    Q2
+                    {{ league.periodAbbreviationLabel }}2
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-model="filterModel.period.three">
-                    Q3
+                <krossover-checkbox ng-if="league.numberOfPeriods == 4" ng-model="filterModel.period.three">
+                    {{ league.periodAbbreviationLabel }}3
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-model="filterModel.period.four">
-                    Q4
+                <krossover-checkbox ng-if="league.numberOfPeriods == 4" ng-model="filterModel.period.four">
+                    {{ league.periodAbbreviationLabel }}4
                 </krossover-checkbox>
 
                 <krossover-checkbox ng-model="filterModel.period.overtime">
