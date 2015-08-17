@@ -1,7 +1,7 @@
 <div class="player-information">
     <div class="player-profile-container">
-        <profile-picture user="user"></profile-picture>
-        <h3>{{user.firstName}} {{user.lastName}}</h3>
+        <profile-picture user="currentUser"></profile-picture>
+        <h3>{{currentUser.firstName}} {{currentUser.lastName}}</h3>
         <a href open-modal="BasicEditProfile.Modal" ng-if="!user.isAthleteRecruit()">Edit Profile</a>
     </div>
     <div class="player-roles-info" ng-repeat="roleInfo in rolesInfo">

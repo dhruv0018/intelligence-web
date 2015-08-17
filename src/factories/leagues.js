@@ -21,9 +21,7 @@ IntelligenceWebClient.factory('LeaguesFactory', [
 
             getLeaguesBySportId: function(sportId) {
                 let allLeagues = this.getList();
-                return allLeagues.filter(league => {
-                    return league.sportId === sportId;
-                });
+                return allLeagues.filter(league => league.sportId === sportId);
             }
         };
 
