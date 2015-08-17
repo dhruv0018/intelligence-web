@@ -81,7 +81,7 @@ describe('SortedList', () => {
 
     it('should be ascending sorted after instantiation, if descending set to false.', () => {
 
-        let ascendingList = new SortedList(srcArray.slice(0), 'foo', false);
+        let ascendingList = new SortedList(srcArrayCopy, 'foo', false);
 
         expect(ascendingList.get(0)).to.deep.equal(srcArray[2]);
         expect(ascendingList.get(1)).to.deep.equal(srcArray[0]);
