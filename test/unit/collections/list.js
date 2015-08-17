@@ -102,6 +102,8 @@ describe('List', () => {
 
         let controlArray = srcArrayCopy.slice(0);
 
+        expect(sampleList.length).to.equal(13);
+
         sampleList.length   = 3;
         controlArray.length = 3;
 
@@ -136,6 +138,7 @@ describe('List', () => {
         expect(() => sampleList.length = {}).to.throw(Error);
         expect(() => sampleList.length = []).to.throw(Error);
         expect(() => sampleList.length = [1]).to.throw(Error);
+        expect(() => sampleList.length = (function () { return false; })).to.throw(Error);
     });
 
     it('should have an "identity" method that returns the data as a plain array', () => {
