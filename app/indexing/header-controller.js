@@ -14,8 +14,40 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Header.Controller', [
-    '$window', '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'SessionService', 'IndexingService', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'PlaysManager',
-    function controller($window, $scope, $state, $stateParams, $modal, GAME_STATUSES, session, indexing, sidebar, data, leagues, teams, games, playsManager) {
+    '$window',
+    '$scope',
+    '$state',
+    '$stateParams',
+    '$modal',
+    'GAME_STATUSES',
+    'SessionService',
+    'IndexingService',
+    'Indexing.Sidebar',
+    'Indexing.Data',
+    'LeaguesFactory',
+    'TeamsFactory',
+    'GamesFactory',
+    'PlaysManager',
+    'PlaylistEventEmitter',
+    'EVENT',
+    function controller(
+        $window,
+        $scope,
+        $state,
+        $stateParams,
+        $modal,
+        GAME_STATUSES,
+        session,
+        indexing,
+        sidebar,
+        data,
+        leagues,
+        teams,
+        games,
+        playsManager,
+        playlistEventEmitter,
+        EVENT
+    ) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
 
