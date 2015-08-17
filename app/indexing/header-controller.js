@@ -65,28 +65,23 @@ Indexing.controller('Indexing.Header.Controller', [
 
         $scope.playsManager = playsManager;
 
-        const watchLastPlayIndexedScore = $scope.$watch('playsManager.plays[playsManager.plays.length-1].indexedScore', function onLastPlayIndexedScoreChange (indexedScore) {
 
-            if (angular.isDefined(indexedScore)) {
+        playlistEventEmitter.on(EVENT.PLAYLIST.PLAYS.CALCULATE, onCalculatePlays);
 
-                $scope.game.indexedScore = indexedScore;
-            }
-        });
+        function onCalculatePlays (plays) {
 
-        const watchLastPlayOpposingIndexedScore = $scope.$watch('playsManager.plays[playsManager.plays.length-1].opposingIndexedScore', function onLastPlayOpposingIndexedScoreChange (opposingIndexedScore) {
+            const lastPlayIndex = plays.length - 1;
+            const lastPlay = plays[lastPlayIndex];
 
-            if (angular.isDefined(opposingIndexedScore)) {
-
-                $scope.game.opposingIndexedScore = opposingIndexedScore;
-            }
-        });
+            $scope.game.indexedScore = lastPlay ? lastPlay.indexedScore : 0;
+            $scope.game.opposingIndexedScore = lastPlay ? lastPlay.opposingIndexedScore : 0;
+        }
 
         $scope.$on('$destroy', onDestroy);
 
         function onDestroy () {
 
-            watchLastPlayIndexedScore();
-            watchLastPlayOpposingIndexedScore();
+            playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAYS.CALCULATE, onCalculatePlays);
 
             $scope.game.save();
         }

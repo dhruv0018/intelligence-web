@@ -160,6 +160,8 @@ IntelligenceWebClient.service('PlaysManager', [
 
             this.plays.sort(utilities.compareStartTimes);
             this.plays.forEach(calculatePlay);
+
+            playlistEventEmitter.emit(EVENT.PLAYLIST.PLAYS.CALCULATE, this.plays);
         };
 
         function calculatePlay (play, index) {

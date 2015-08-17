@@ -16,6 +16,9 @@ const EVENT = {
         EVENT: {
             SELECT: 'PLAYLIST_EVENT_SELECT',
             CURRENT_CHANGE: 'PLAYLIST_EVENT_CURRENT_CHANGE'
+        },
+        PLAYS: {
+            CALCULATE: 'PLAYLIST_PLAYS_CALCULATE'
         }
     },
 
