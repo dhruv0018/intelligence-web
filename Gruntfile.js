@@ -120,7 +120,8 @@ module.exports = function(grunt) {
                 src: [
                     'app/**/*.js',
                     'lib/**/*.js',
-                    'src/**/*.js'
+                    'src/**/*.js',
+                    'test/unit/**/*/*.js'
                 ]
             },
             less: {
@@ -143,7 +144,8 @@ module.exports = function(grunt) {
                 src: [
                     'app/**/*.js',
                     'lib/**/*.js',
-                    'src/**/*.js'
+                    'src/**/*.js',
+                    'test/unit/**/*/*.js'
                 ],
                 options: {
                     newline: true,
@@ -260,6 +262,7 @@ module.exports = function(grunt) {
                         'lib/directives/play/styles.less',
                         'lib/directives/indexing-block/styles.less',
                         'lib/directives/dynamic-tables/styles.less',
+                        'lib/directives/video-player/select-media-src/styles.less',
                         'lib/directives/field/**/*.less',
                         'app/reel/*.less',
                         'app/indexer/**/*.less',

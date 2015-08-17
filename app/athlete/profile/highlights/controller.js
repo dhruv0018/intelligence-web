@@ -13,6 +13,7 @@ const Highlights = angular.module('Athlete.Profile.Highlights');
 HighlightsController.$inject = [
     '$scope',
     '$stateParams',
+    'config',
     'ReelsFactory',
     'UsersFactory',
     'PlaysFactory',
@@ -20,8 +21,7 @@ HighlightsController.$inject = [
     'PlayManager',
     'VideoPlayer',
     'VideoPlayerEventEmitter',
-    'VIDEO_PLAYER_EVENTS',
-    'VIEWPORTS'
+    'VIDEO_PLAYER_EVENTS'
 ];
 
 /**
@@ -33,6 +33,7 @@ HighlightsController.$inject = [
 function HighlightsController (
     $scope,
     $stateParams,
+    config,
     reels,
     users,
     plays,
@@ -40,12 +41,11 @@ function HighlightsController (
     playManager,
     videoPlayer,
     VideoPlayerEventEmitter,
-    VIDEO_PLAYER_EVENTS,
-    VIEWPORTS
+    VIDEO_PLAYER_EVENTS
 )   {
         $scope.athlete = users.get($stateParams.id);
         $scope.featuredReel = reels.getFeaturedReel($scope.athlete);
-        $scope.VIEWPORTS = VIEWPORTS;
+        $scope.config = config;
 
         if ($scope.featuredReel) {
 
@@ -71,17 +71,6 @@ function HighlightsController (
                 $scope.nextPlay = playsManager.getNextPlay($scope.currentPlay);
             });
         }
-
-        $scope.goToPlay = function goToPlay(play) {
-            $scope.currentPlay = play;
-
-            // Replace video sources
-            $scope.sources = $scope.currentPlay.getVideoSources();
-            videoPlayer.changeSource($scope.sources);
-
-            // Change clip index to reflect current play
-            $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
-        };
 
         // When clip finishes playing, go to next play if continuous play is on
         VideoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.ON_CLIP_COMPLETE, onCompleteVideo);

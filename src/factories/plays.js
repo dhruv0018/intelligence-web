@@ -1,5 +1,7 @@
 import KrossoverPlay from '../entities/play';
 import KrossoverPlayDataDependencies from '../entities/playDataDependencies';
+import Video from '../entities/video';
+import KrossoverEvent from '../entities/event.js';
 
 const pkg = require('../../package.json');
 
@@ -28,6 +30,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 angular.extend(play, this);
                 play = new KrossoverPlay(play);
+
+                play.clip = play.clip ? new Video(play.clip) : {};
 
                 return play;
             },
@@ -74,41 +78,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
             load (filter) {
 
                 return tagsets.load().then(() => { return this.baseLoad(filter); });
-            },
-
-            /**
-             * Gets the video sources for a play.
-             * If a play has a clip the clips video transcode profiles are
-             * mapped to video sources that can be used in videogular.
-             * @returns Array - an array of video sources.
-             */
-            getVideoSources: function() {
-
-                var self = this;
-
-                /* If there is no clip for the play, return an empty array. */
-                if (!self.clip) return [];
-
-                /* Get the video transcode profiles. */
-                var profiles = self.clip.videoTranscodeProfiles;
-
-                /* Map the video transcode profiles to video sources. */
-                return profiles.map(profileToSource);
-
-                function profileToSource(profile) {
-
-                    /* If the transcode profile is complete. */
-                    if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                        /* Create a video source. */
-                        var source = {
-                            type: 'video/mp4',
-                            src: $sce.trustAsResourceUrl(profile.videoUrl)
-                        };
-
-                        return source;
-                    }
-                }
             },
 
             // TODO: move to list modelling
