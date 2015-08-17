@@ -49,15 +49,33 @@
 
                     <button-video-step-backward
                         ng-show="userIsIndexer"
+                        ng-click="onSeekClick()"
                         class="ng-hide"
                     ></button-video-step-backward>
-                    <button-video-fast-backward></button-video-fast-backward>
-                    <button-video-slow-backward></button-video-slow-backward>
-                    <vg-play-pause-button ng-click="onClickPlayPause()"></vg-play-pause-button>
-                    <button-video-slow-forward></button-video-slow-forward>
-                    <button-video-fast-forward></button-video-fast-forward>
+
+                    <button-video-fast-backward
+                        ng-click="onSeekClick()"
+                    ></button-video-fast-backward>
+
+                    <button-video-slow-backward
+                        ng-click="onSeekClick()"
+                    ></button-video-slow-backward>
+
+                    <vg-play-pause-button
+                        ng-click="onSeekClick()"
+                    ></vg-play-pause-button>
+
+                    <button-video-slow-forward
+                        ng-click="onSeekClick()"
+                    ></button-video-slow-forward>
+
+                    <button-video-fast-forward
+                        ng-click="onSeekClick()"
+                    ></button-video-fast-forward>
+
                     <button-video-step-forward
                         ng-show="userIsIndexer"
+                        ng-click="onSeekClick()"
                         class="ng-hide"
                     ></button-video-step-forward>
 
