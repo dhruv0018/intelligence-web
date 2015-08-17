@@ -218,20 +218,19 @@ describe('List', () => {
 
         expect(sampleList.length).to.equal(12);
         sampleList.remove({foo: 4});
-        expect(sampleList.length).to.equal(11);
-        expect(sampleList.get(2)).to.be.null;
-        expect(sampleList.includes({foo: 4})).to.be.false;
+        expect(sampleList.length).to.equal(12);
+        expect(sampleList.get(2)).to.deep.equal({foo: 4});
 
-        expect(sampleList.length).to.equal(11);
+        expect(sampleList.length).to.equal(12);
         sampleList.remove('3');
-        expect(sampleList.length).to.equal(10);
-        expect(sampleList.get(1)).to.be.null;
+        expect(sampleList.length).to.equal(11);
+        expect(sampleList.get(1)).to.deep.equal({foo: 4});
         expect(sampleList.includes('3')).to.be.false;
 
-        expect(sampleList.length).to.equal(10);
+        expect(sampleList.length).to.equal(11);
         sampleList.remove(null);
-        expect(sampleList.length).to.equal(9);
-        expect(sampleList.get(1)).to.be.undefined;
+        expect(sampleList.length).to.equal(10);
+        expect(sampleList.get(2)).to.be.undefined;
         expect(sampleList.includes(null)).to.be.false;
     });
 
@@ -253,17 +252,6 @@ describe('List', () => {
     it('should throw an error if you attempt to remove an element without specifying an item', () => {
 
         expect(() => sampleList.remove()).to.throw(Error);
-    });
-
-    it('should have an indexOf method that returns the index or -1', () => {
-
-        expect(sampleList.indexOf(1)).to.equal(0);
-        expect(sampleList.indexOf(123456)).to.equal(-1);
-        expect(sampleList.indexOf({foo: 4})).to.equal(3);
-        expect(sampleList.indexOf(false)).to.equal(-1);
-        expect(sampleList.indexOf(null)).to.equal(4);
-        expect(sampleList.indexOf(undefined)).to.equal(5);
-        expect(sampleList.indexOf([])).to.equal(-1);
     });
 
     it('should let you know if the array is empty when you call "isEmpty"', () => {

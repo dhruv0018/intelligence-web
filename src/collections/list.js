@@ -32,7 +32,7 @@ class List {
      */
     includes (searchElement, fromIndex) {
 
-        return !!~this.indexOf(searchElement, fromIndex);
+        return !!~this.data.indexOf(searchElement, fromIndex);
     }
 
     /**
@@ -176,40 +176,9 @@ class List {
 
         if (this.includes(item)) {
 
-            let itemIndex = this.indexOf(item);
+            let itemIndex = this.data.indexOf(item);
             return this.data.splice(itemIndex, 1);
         }
-    }
-
-    /**
-     * Finds the index of the element to search for. A beefed up version of
-     * the array's indexOf but allows for objects.
-     *
-     * @method indexOf
-     * @param {Object} searchElement  - The element to search for
-     * @param {Integer} [fromIndex=0] - The array index to begin searching from
-     * @returns {Integer}             - The index of the array element
-     */
-    indexOf (searchElement, fromIndex = 0) {
-
-        let index = -1;
-
-        if (typeof searchElement === 'object') {
-
-            for (let i = fromIndex; i < this.data.length; i++) {
-
-                if (angular.equals(this.data[i], searchElement)) {
-
-                    index = i;
-                    break;
-                }
-            }
-        } else {
-
-            index = this.data.indexOf(searchElement, fromIndex);
-        }
-
-        return index;
     }
 
     /**
