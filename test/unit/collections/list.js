@@ -37,9 +37,14 @@ describe('List', () => {
         'isEmpty'
     ];
 
+    let srcArrayCopy;
     let sampleList;
 
-    beforeEach(() => sampleList = new List(srcArray.slice(0)));
+    beforeEach(() => {
+
+        srcArrayCopy = srcArray.slice(0);
+        sampleList = new List(srcArrayCopy);
+    });
 
     it('should exist.', () => {
 
@@ -49,6 +54,11 @@ describe('List', () => {
     it('should have public API', () => {
 
         classMethods.forEach(method => expect(List).to.respondTo(method));
+    });
+
+    it('should have a backing store that is a reference to the array passed to the constructor', () => {
+
+        expect(sampleList.data).to.deep.equal(srcArrayCopy);
     });
 
     it('should have a length property', () => {
@@ -80,7 +90,7 @@ describe('List', () => {
 
     it('should have a setter for length that allows the array to be truncated', () => {
 
-        let controlArray = srcArray.slice(0);
+        let controlArray = srcArrayCopy.slice(0);
 
         sampleList.length   = 3;
         controlArray.length = 3;
@@ -91,7 +101,7 @@ describe('List', () => {
 
     it('should have a setter that does nothing if value equals the length', () => {
 
-        let controlArray = srcArray.slice(0);
+        let controlArray = srcArrayCopy.slice(0);
 
         sampleList.length = sampleList.length;
         controlArray.length = controlArray.length;
@@ -100,7 +110,7 @@ describe('List', () => {
 
     it('should have a setter that allows you to increase the length with a length value longer than the length', () => {
 
-        let controlArray = srcArray.slice(0);
+        let controlArray = srcArrayCopy.slice(0);
 
         controlArray.length = 20;
         sampleList.length = 20;
@@ -121,10 +131,10 @@ describe('List', () => {
     it('should have an "identity" method that returns the data as a plain array', () => {
 
         expect(sampleList.identity()).to.be.an('array');
-        expect(sampleList.identity().length).to.equal(srcArray.length);
+        expect(sampleList.identity().length).to.equal(srcArrayCopy.length);
         sampleList.identity().forEach((element, index) => {
 
-            expect(element).to.deep.equal(srcArray[index]);
+            expect(element).to.deep.equal(srcArrayCopy[index]);
         });
     });
 
@@ -137,11 +147,11 @@ describe('List', () => {
 
     it('should have a get "get" method that returns a specific element.', () => {
 
-        expect(sampleList.get(3)).to.deep.equal(srcArray[3]);
-        expect(sampleList.get(2)).to.equal(srcArray[2]);
-        expect(sampleList.get(5)).to.equal(srcArray[5]);
-        expect(sampleList.get(6)).to.equal(srcArray[6]);
-        expect(sampleList.get(7)).to.equal(srcArray[7]);
+        expect(sampleList.get(3)).to.deep.equal(srcArrayCopy[3]);
+        expect(sampleList.get(2)).to.equal(srcArrayCopy[2]);
+        expect(sampleList.get(5)).to.equal(srcArrayCopy[5]);
+        expect(sampleList.get(6)).to.equal(srcArrayCopy[6]);
+        expect(sampleList.get(7)).to.equal(srcArrayCopy[7]);
     });
 
     it('should throw an error if you attempt to get an element without specifying an index', () => {
@@ -151,12 +161,12 @@ describe('List', () => {
 
     it('should have a "first" method that returns the first element in the array', () => {
 
-        expect(sampleList.first()).to.equal(srcArray[0]);
+        expect(sampleList.first()).to.equal(srcArrayCopy[0]);
     });
 
     it('should have a "last" method that returns the last element of the array', () => {
 
-        expect(sampleList.last()).to.equal(srcArray[srcArray.length - 1]);
+        expect(sampleList.last()).to.equal(srcArrayCopy[srcArrayCopy.length - 1]);
     });
 
     it('should have an "add" method that adds elements to the beginning of the array', () => {
@@ -236,7 +246,7 @@ describe('List', () => {
 
     it('should not remove elements that do not exist', () => {
 
-        let controlList = new List(srcArray);
+        let controlList = new List(srcArrayCopy);
 
         expect(sampleList).to.deep.equal(controlList);
 
@@ -276,6 +286,6 @@ describe('List', () => {
 
     it('should restore the original Array on JSON.stringify calls', () => {
 
-        expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(srcArray));
+        expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(srcArrayCopy));
     });
 });
