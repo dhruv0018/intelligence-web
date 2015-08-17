@@ -228,7 +228,7 @@ describe('List', () => {
         expect(() => sampleList.add()).to.throw(Error);
     });
 
-    it('should have a "remove" method that removes elements from the array', () => {
+    it('should have a "remove" method that removes integers from the array', () => {
 
         // const srcArray = [
         //     1,
@@ -244,49 +244,50 @@ describe('List', () => {
         expect(sampleList.length).to.equal(12);
         expect(sampleList.get(0)).to.equal(2);
         expect(sampleList.includes(1)).to.be.false;
+    });
 
-        // const srcArray = [
-        //     2,
-        //     '3',
-        //     {foo: 4},
-        //     null,
-        //     undefined,
-        //     ...
+    it('should have a "remove" method that removes objects from the array', () => {
 
+        expect(sampleList.length).to.equal(13);
+        sampleList.remove(srcArrayCopy[3]);
         expect(sampleList.length).to.equal(12);
-        sampleList.remove(srcArrayCopy[2]);
-        expect(sampleList.length).to.equal(11);
-        expect(sampleList.get(2)).to.be.null;
+        expect(sampleList.get(3)).to.be.null;
+    });
 
-        // const srcArray = [
-        //     2,
-        //     '3',
-        //     null,
-        //     undefined,
-        //     ...
+    it('should have a "remove" method that removes strings from the array', () => {
 
-        expect(sampleList.length).to.equal(11);
+        expect(sampleList.length).to.equal(13);
         sampleList.remove('3');
-        expect(sampleList.length).to.equal(10);
-        expect(sampleList.get(1)).to.be.null;
+        expect(sampleList.length).to.equal(12);
+        expect(sampleList.get(2)).to.deep.equal({foo: 4});
         expect(sampleList.includes('3')).to.be.false;
+    });
 
-        // const srcArray = [
-        //     2,
-        //     null,
-        //     undefined,
-        //     ...
+    it('should have a "remove" method that removes null from the array', () => {
 
-        expect(sampleList.length).to.equal(10);
+        expect(sampleList.length).to.equal(13);
         sampleList.remove(null);
-        expect(sampleList.length).to.equal(9);
-        expect(sampleList.get(2)).to.be.undefined;
+        expect(sampleList.length).to.equal(12);
+        expect(sampleList.get(4)).to.be.undefined;
         expect(sampleList.includes(null)).to.be.false;
+    });
 
-        // const srcArray = [
-        //     2,
-        //     undefined,
-        //     ...
+    it('should have a "remove" method that removes undefined from the array', () => {
+
+        expect(sampleList.length).to.equal(13);
+        sampleList.remove(undefined);
+        expect(sampleList.length).to.equal(12);
+        expect(sampleList.get(5)).to.be.undefined;
+        expect(sampleList.includes(undefined)).to.be.false;
+    });
+
+    it('should have a "remove" method that removes booleans from the array', () => {
+
+        expect(sampleList.length).to.equal(13);
+        sampleList.remove(true);
+        expect(sampleList.length).to.equal(12);
+        expect(sampleList.get(12)).to.be.undefined;
+        expect(sampleList.includes(true)).to.be.false;
     });
 
     it('should not remove elements that do not exist', () => {
