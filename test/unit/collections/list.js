@@ -66,16 +66,63 @@ describe('List', () => {
         expect(sampleList.length).to.equal(13);
     });
 
-    it('should have an "includes" method', () => {
+    it('should have an "includes" method that works for integers', () => {
 
         /* From start of Array onwards */
         expect(sampleList.includes(1)).to.be.a('boolean');
         expect(sampleList.includes(1)).to.be.true;
         expect(sampleList.includes(999)).to.be.a('boolean');
         expect(sampleList.includes(999)).to.be.false;
+
+        /* From index onwards */
+        expect(sampleList.includes(1, 3)).to.be.a('boolean');
+        expect(sampleList.includes(1, 3)).to.be.false;
+        expect(sampleList.includes(999, 3)).to.be.a('boolean');
+        expect(sampleList.includes(999, 3)).to.be.false;
+    });
+
+    it('should have an "includes" method that works for strings', () => {
+
+        /* From start of Array onwards */
+        expect(sampleList.includes('3')).to.be.a('boolean');
+        expect(sampleList.includes('3')).to.be.true;
+        expect(sampleList.includes('999')).to.be.a('boolean');
+        expect(sampleList.includes('999')).to.be.false;
+
+        /* From index onwards */
+        expect(sampleList.includes('3', 3)).to.be.a('boolean');
+        expect(sampleList.includes('3', 3)).to.be.false;
+        expect(sampleList.includes('999', 3)).to.be.a('boolean');
+        expect(sampleList.includes('999', 3)).to.be.false;
+    });
+
+    it('should have an "includes" method that works for undefined', () => {
+
+        expect(sampleList.includes(undefined)).to.be.a('boolean');
+        expect(sampleList.includes(undefined)).to.be.true;
         /* The following is true because there are a lot of undefined elements */
         expect(sampleList.includes()).to.be.a('boolean');
         expect(sampleList.includes()).to.be.true;
+
+        /* From index onwards */
+        /* The following is false because there are no undefined elements from
+         * index 10 onwards */
+        expect(sampleList.includes(undefined, 10)).to.be.a('boolean');
+        expect(sampleList.includes(undefined, 10)).to.be.false;
+    });
+
+    it('should have an "includes" method that works for null', () => {
+
+        expect(sampleList.includes(null)).to.be.a('boolean');
+        expect(sampleList.includes(null)).to.be.true;
+
+        /* From index onwards */
+        expect(sampleList.includes(null, 10)).to.be.a('boolean');
+        expect(sampleList.includes(null, 10)).to.be.false;
+    });
+
+    it('should have an "includes" method that works for objects', () => {
+
         /* The following is true because the the object literal does not passed
          * strict equality even though it properties are idenitical but refer
          * to different references. */
@@ -83,14 +130,6 @@ describe('List', () => {
         expect(sampleList.includes(srcArrayCopy[3])).to.be.true;
 
         /* From index onwards */
-        expect(sampleList.includes(1, 3)).to.be.a('boolean');
-        expect(sampleList.includes(1, 3)).to.be.false;
-        expect(sampleList.includes(999, 3)).to.be.a('boolean');
-        expect(sampleList.includes(999, 3)).to.be.false;
-        /* The following is false because there are no undefined elements from
-         * index 10 onwards */
-        expect(sampleList.includes(undefined, 10)).to.be.a('boolean');
-        expect(sampleList.includes(undefined, 10)).to.be.false;
         /* The following is true because the the object literal does not passed
          * strict equality even though it properties are idenitical but refer
          * to different references. */
