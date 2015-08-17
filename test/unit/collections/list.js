@@ -76,6 +76,11 @@ describe('List', () => {
         /* The following is true because there are a lot of undefined elements */
         expect(sampleList.includes()).to.be.a('boolean');
         expect(sampleList.includes()).to.be.true;
+        /* The following is true because the the object literal does not passed
+         * strict equality even though it properties are idenitical but refer
+         * to different references. */
+        expect(sampleList.includes({foo: 4})).to.be.false;
+        expect(sampleList.includes(srcArrayCopy[3])).to.be.true;
 
         /* From index onwards */
         expect(sampleList.includes(1, 3)).to.be.a('boolean');
@@ -86,6 +91,11 @@ describe('List', () => {
          * index 10 onwards */
         expect(sampleList.includes(undefined, 10)).to.be.a('boolean');
         expect(sampleList.includes(undefined, 10)).to.be.false;
+        /* The following is true because the the object literal does not passed
+         * strict equality even though it properties are idenitical but refer
+         * to different references. */
+        expect(sampleList.includes({foo: 4}, 2)).to.be.false;
+        expect(sampleList.includes(srcArrayCopy[3], 2)).to.be.true;
     });
 
     it('should have a setter for length that allows the array to be truncated', () => {
@@ -220,28 +230,63 @@ describe('List', () => {
 
     it('should have a "remove" method that removes elements from the array', () => {
 
+        // const srcArray = [
+        //     1,
+        //     2,
+        //     '3',
+        //     {foo: 4},
+        //     null,
+        //     undefined,
+        //     ...
+
         expect(sampleList.length).to.equal(13);
         sampleList.remove(1);
         expect(sampleList.length).to.equal(12);
         expect(sampleList.get(0)).to.equal(2);
         expect(sampleList.includes(1)).to.be.false;
 
-        expect(sampleList.length).to.equal(12);
-        sampleList.remove({foo: 4});
-        expect(sampleList.length).to.equal(12);
-        expect(sampleList.get(2)).to.deep.equal({foo: 4});
+        // const srcArray = [
+        //     2,
+        //     '3',
+        //     {foo: 4},
+        //     null,
+        //     undefined,
+        //     ...
 
         expect(sampleList.length).to.equal(12);
-        sampleList.remove('3');
+        sampleList.remove(srcArrayCopy[2]);
         expect(sampleList.length).to.equal(11);
-        expect(sampleList.get(1)).to.deep.equal({foo: 4});
+        expect(sampleList.get(2)).to.be.null;
+
+        // const srcArray = [
+        //     2,
+        //     '3',
+        //     null,
+        //     undefined,
+        //     ...
+
+        expect(sampleList.length).to.equal(11);
+        sampleList.remove('3');
+        expect(sampleList.length).to.equal(10);
+        expect(sampleList.get(1)).to.be.null;
         expect(sampleList.includes('3')).to.be.false;
 
-        expect(sampleList.length).to.equal(11);
-        sampleList.remove(null);
+        // const srcArray = [
+        //     2,
+        //     null,
+        //     undefined,
+        //     ...
+
         expect(sampleList.length).to.equal(10);
+        sampleList.remove(null);
+        expect(sampleList.length).to.equal(9);
         expect(sampleList.get(2)).to.be.undefined;
         expect(sampleList.includes(null)).to.be.false;
+
+        // const srcArray = [
+        //     2,
+        //     undefined,
+        //     ...
     });
 
     it('should not remove elements that do not exist', () => {
@@ -251,11 +296,15 @@ describe('List', () => {
         expect(sampleList).to.deep.equal(controlList);
 
         sampleList.remove('asdfasdf');
-
         expect(sampleList).to.deep.equal(controlList);
 
         sampleList.remove(999);
+        expect(sampleList).to.deep.equal(controlList);
 
+        /* The following object literal will not be removed because it doesn't
+         * pass the strict equality test; backing store array passed in by
+         * reference */
+        sampleList.remove({foo: 4});
         expect(sampleList).to.deep.equal(controlList);
     });
 
