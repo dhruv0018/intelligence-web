@@ -40,7 +40,7 @@ export default `
                 </table>
             </div>
             <div ng-hide="filteredGames.length > 0">
-                <p>You haven't worked on any games yet.</p
+                <h3>You haven't worked on any games yet.</h3>
             </div>
         </div>
 

@@ -23,7 +23,7 @@ export default `
                         | gameIsReadyForQa
                         | gameNotIndexedByMe
                         | orderBy: 'timeRemaining'
-                        | limitTo: 100)"
+                        | limitTo: 0)"
                     >
                         <td>{{game.id}}</td>
                         <td>{{ teams[game.teamId].name }} vs {{ teams[game.opposingTeamId].name }}</td>
@@ -43,7 +43,7 @@ export default `
             </table>
         </div>
         <div ng-hide="filteredGames.length > 0">
-            <p>There aren't any games available for you currently. Please check back later.</p
+            <h3>There aren't any games available for you currently. Please check back later.</h3>
         </div>
     </div>
 

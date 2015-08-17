@@ -83,6 +83,9 @@ export default `
                 </tbody>
             </table>
         </div>
+        <div ng-hide="filteredGames.length > 0">
+            <h3>You aren't currently working on any games.</h3>
+        </div>
     </div>
 
 
