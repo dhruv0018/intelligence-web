@@ -23,7 +23,7 @@ export default `
                         | gameIsReadyForQa
                         | gameNotIndexedByMe
                         | orderBy: 'timeRemaining'
-                        | limitTo: 0)"
+                        | limitTo: 100)"
                     >
                         <td>{{game.id}}</td>
                         <td>{{ teams[game.teamId].name }} vs {{ teams[game.opposingTeamId].name }}</td>
