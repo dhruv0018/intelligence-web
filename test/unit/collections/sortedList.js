@@ -48,9 +48,14 @@ describe('SortedList', () => {
         'sort'
     ];
 
+    let srcArrayCopy;
     let sampleList;
 
-    beforeEach(() => sampleList = new SortedList(srcArray.slice(0), 'foo'));
+    beforeEach(() => {
+
+        srcArrayCopy = srcArray.slice(0);
+        sampleList   = new SortedList(srcArrayCopy, 'foo');
+    });
 
     it('should exist.', () => {
 
@@ -60,6 +65,11 @@ describe('SortedList', () => {
     it('should have public API', () => {
 
         classMethods.forEach(method => expect(SortedList).to.respondTo(method));
+    });
+
+    it('should have a backing store that is a reference to the array passed to the constructor', () => {
+
+        expect(sampleList.data).to.deep.equal(srcArrayCopy);
     });
 
     it('should be sorted after instantiation.', () => {
