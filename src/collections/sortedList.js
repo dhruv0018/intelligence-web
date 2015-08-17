@@ -3,7 +3,6 @@
  * @class List
  * @classdesc Extends base List class: takes an array as a data source and adds
  * the ability to sort the array automatically.
- * @file src/collections/list.js
  */
 
 import List from './list';
