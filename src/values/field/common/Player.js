@@ -123,7 +123,7 @@ function availableValues(field) {
                 get id() {
                     return player.id;
                 },
-                get isActive() {                    
+                get isActive() {
                     return rosterEntry.isActive;
                 }
             };
