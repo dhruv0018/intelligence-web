@@ -72,6 +72,7 @@ function HighlightsController (
                 if ($scope.featuredReel) {
                     plays.query({reelId: $scope.featuredReel.id}).then(featuredPlays => {
                         $scope.playsArray = featuredPlays;
+                        $scope.video = $scope.playsArray[0].clip;
                     });
                 }
             });
