@@ -272,15 +272,6 @@ describe('List', () => {
 
     it('should have a "remove" method that removes integers from the array', () => {
 
-        // const srcArray = [
-        //     1,
-        //     2,
-        //     '3',
-        //     {foo: 4},
-        //     null,
-        //     undefined,
-        //     ...
-
         expect(sampleList.length).to.equal(13);
         sampleList.remove(1);
         expect(sampleList.length).to.equal(12);
