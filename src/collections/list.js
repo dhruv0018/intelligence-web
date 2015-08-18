@@ -125,7 +125,7 @@ class List {
      */
     last () {
 
-        return this.data.slice(this.length - 1).pop();
+        return this.data[this.data.length - 1];
     }
 
     /**
