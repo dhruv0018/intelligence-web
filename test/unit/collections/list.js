@@ -1,9 +1,5 @@
 import List from '../../../src/collections/list';
 
-/* Utility for consoling out large objects. */
-const util = require('util');
-const krog = obj => console.log(util.inspect(obj));
-
 const srcArray = [
     1,
     2,
@@ -30,8 +26,6 @@ describe('List', () => {
         'toJSON',
         'clear',
         'get',
-        'first',
-        'last',
         'add',
         'remove',
         'isEmpty'
@@ -66,31 +60,78 @@ describe('List', () => {
         expect(sampleList.length).to.equal(13);
     });
 
-    it('should have an "includes" method', () => {
+    it('should have an "includes" method that works for integers', () => {
 
-        /* From start of Array onwards */
         expect(sampleList.includes(1)).to.be.a('boolean');
         expect(sampleList.includes(1)).to.be.true;
         expect(sampleList.includes(999)).to.be.a('boolean');
         expect(sampleList.includes(999)).to.be.false;
+    });
+
+    it('should have an "includes" method that works for integers from a specific index', () => {
+
+        expect(sampleList.includes(1, 3)).to.be.a('boolean');
+        expect(sampleList.includes(1, 3)).to.be.false;
+        expect(sampleList.includes(999, 3)).to.be.a('boolean');
+        expect(sampleList.includes(999, 3)).to.be.false;
+    });
+
+    it('should have an "includes" method that works for strings', () => {
+
+        expect(sampleList.includes('3')).to.be.a('boolean');
+        expect(sampleList.includes('3')).to.be.true;
+        expect(sampleList.includes('999')).to.be.a('boolean');
+        expect(sampleList.includes('999')).to.be.false;
+    });
+
+    it('should have an "includes" method that works for strings from a specific index', () => {
+
+        expect(sampleList.includes('3', 3)).to.be.a('boolean');
+        expect(sampleList.includes('3', 3)).to.be.false;
+        expect(sampleList.includes('999', 3)).to.be.a('boolean');
+        expect(sampleList.includes('999', 3)).to.be.false;
+    });
+
+    it('should have an "includes" method that works for `undefined`', () => {
+
+        expect(sampleList.includes(undefined)).to.be.a('boolean');
+        expect(sampleList.includes(undefined)).to.be.true;
         /* The following is true because there are a lot of undefined elements */
         expect(sampleList.includes()).to.be.a('boolean');
         expect(sampleList.includes()).to.be.true;
+    });
+
+    it('should have an "includes" method that works for `undefined` from a specific index', () => {
+
+        /* The following is false because there are no undefined elements from
+         * index 10 onwards */
+        expect(sampleList.includes(undefined, 10)).to.be.a('boolean');
+        expect(sampleList.includes(undefined, 10)).to.be.false;
+    });
+
+    it('should have an "includes" method that works for `null`', () => {
+
+        expect(sampleList.includes(null)).to.be.a('boolean');
+        expect(sampleList.includes(null)).to.be.true;
+    });
+
+    it('should have an "includes" method that works for `null` from a specific index', () => {
+
+        expect(sampleList.includes(null, 10)).to.be.a('boolean');
+        expect(sampleList.includes(null, 10)).to.be.false;
+    });
+
+    it('should have an "includes" method that works for objects', () => {
+
         /* The following is true because the the object literal does not passed
          * strict equality even though it properties are idenitical but refer
          * to different references. */
         expect(sampleList.includes({foo: 4})).to.be.false;
         expect(sampleList.includes(srcArrayCopy[3])).to.be.true;
+    });
 
-        /* From index onwards */
-        expect(sampleList.includes(1, 3)).to.be.a('boolean');
-        expect(sampleList.includes(1, 3)).to.be.false;
-        expect(sampleList.includes(999, 3)).to.be.a('boolean');
-        expect(sampleList.includes(999, 3)).to.be.false;
-        /* The following is false because there are no undefined elements from
-         * index 10 onwards */
-        expect(sampleList.includes(undefined, 10)).to.be.a('boolean');
-        expect(sampleList.includes(undefined, 10)).to.be.false;
+    it('should have an "includes" method that works for objects from a specific index', () => {
+
         /* The following is true because the the object literal does not passed
          * strict equality even though it properties are idenitical but refer
          * to different references. */
@@ -101,11 +142,14 @@ describe('List', () => {
     it('should have a setter for length that allows the array to be truncated', () => {
 
         let controlArray = srcArrayCopy.slice(0);
+        const testLength = 3;
 
-        sampleList.length   = 3;
-        controlArray.length = 3;
+        expect(sampleList.length).to.equal(13);
 
-        expect(sampleList.length).to.equal(3);
+        sampleList.length   = testLength;
+        controlArray.length = testLength;
+
+        expect(sampleList.length).to.equal(testLength);
         expect(JSON.stringify(sampleList.identity())).to.equal(JSON.stringify(controlArray));
     });
 
@@ -121,9 +165,10 @@ describe('List', () => {
     it('should have a setter that allows you to increase the length with a length value longer than the length', () => {
 
         let controlArray = srcArrayCopy.slice(0);
+        const testLength = 20;
 
-        controlArray.length = 20;
-        sampleList.length = 20;
+        controlArray.length = testLength;
+        sampleList.length   = testLength;
         expect(JSON.stringify(sampleList.identity())).to.equal(JSON.stringify(controlArray));
     });
 
@@ -136,6 +181,7 @@ describe('List', () => {
         expect(() => sampleList.length = {}).to.throw(Error);
         expect(() => sampleList.length = []).to.throw(Error);
         expect(() => sampleList.length = [1]).to.throw(Error);
+        expect(() => sampleList.length = (function () { return false; })).to.throw(Error);
     });
 
     it('should have an "identity" method that returns the data as a plain array', () => {
@@ -157,11 +203,10 @@ describe('List', () => {
 
     it('should have a get "get" method that returns a specific element.', () => {
 
-        expect(sampleList.get(3)).to.deep.equal(srcArrayCopy[3]);
-        expect(sampleList.get(2)).to.equal(srcArrayCopy[2]);
-        expect(sampleList.get(5)).to.equal(srcArrayCopy[5]);
-        expect(sampleList.get(6)).to.equal(srcArrayCopy[6]);
-        expect(sampleList.get(7)).to.equal(srcArrayCopy[7]);
+        srcArrayCopy.forEach((item, i) => {
+
+            expect(item).to.deep.equal(sampleList.get(i));
+        });
     });
 
     it('should throw an error if you attempt to get an element without specifying an index', () => {
@@ -169,14 +214,14 @@ describe('List', () => {
         expect(() => sampleList.get()).to.throw(Error);
     });
 
-    it('should have a "first" method that returns the first element in the array', () => {
+    it('should have a "first" getter that returns the first element in the array', () => {
 
-        expect(sampleList.first()).to.equal(srcArrayCopy[0]);
+        expect(sampleList.first).to.equal(srcArrayCopy[0]);
     });
 
-    it('should have a "last" method that returns the last element of the array', () => {
+    it('should have a "last" getter that returns the last element of the array', () => {
 
-        expect(sampleList.last()).to.equal(srcArrayCopy[srcArrayCopy.length - 1]);
+        expect(sampleList.last).to.equal(srcArrayCopy[srcArrayCopy.length - 1]);
     });
 
     it('should have an "add" method that adds elements to the beginning of the array', () => {
@@ -228,65 +273,57 @@ describe('List', () => {
         expect(() => sampleList.add()).to.throw(Error);
     });
 
-    it('should have a "remove" method that removes elements from the array', () => {
-
-        // const srcArray = [
-        //     1,
-        //     2,
-        //     '3',
-        //     {foo: 4},
-        //     null,
-        //     undefined,
-        //     ...
+    it('should have a "remove" method that removes integers from the array', () => {
 
         expect(sampleList.length).to.equal(13);
         sampleList.remove(1);
         expect(sampleList.length).to.equal(12);
         expect(sampleList.get(0)).to.equal(2);
         expect(sampleList.includes(1)).to.be.false;
+    });
 
-        // const srcArray = [
-        //     2,
-        //     '3',
-        //     {foo: 4},
-        //     null,
-        //     undefined,
-        //     ...
+    it('should have a "remove" method that removes objects from the array', () => {
 
+        expect(sampleList.length).to.equal(13);
+        sampleList.remove(srcArrayCopy[3]);
         expect(sampleList.length).to.equal(12);
-        sampleList.remove(srcArrayCopy[2]);
-        expect(sampleList.length).to.equal(11);
-        expect(sampleList.get(2)).to.be.null;
+        expect(sampleList.get(3)).to.be.null;
+    });
 
-        // const srcArray = [
-        //     2,
-        //     '3',
-        //     null,
-        //     undefined,
-        //     ...
+    it('should have a "remove" method that removes strings from the array', () => {
 
-        expect(sampleList.length).to.equal(11);
+        expect(sampleList.length).to.equal(13);
         sampleList.remove('3');
-        expect(sampleList.length).to.equal(10);
-        expect(sampleList.get(1)).to.be.null;
+        expect(sampleList.length).to.equal(12);
+        expect(sampleList.get(2)).to.deep.equal({foo: 4});
         expect(sampleList.includes('3')).to.be.false;
+    });
 
-        // const srcArray = [
-        //     2,
-        //     null,
-        //     undefined,
-        //     ...
+    it('should have a "remove" method that removes null from the array', () => {
 
-        expect(sampleList.length).to.equal(10);
+        expect(sampleList.length).to.equal(13);
         sampleList.remove(null);
-        expect(sampleList.length).to.equal(9);
-        expect(sampleList.get(2)).to.be.undefined;
+        expect(sampleList.length).to.equal(12);
+        expect(sampleList.get(4)).to.be.undefined;
         expect(sampleList.includes(null)).to.be.false;
+    });
 
-        // const srcArray = [
-        //     2,
-        //     undefined,
-        //     ...
+    it('should have a "remove" method that removes undefined from the array', () => {
+
+        expect(sampleList.length).to.equal(13);
+        sampleList.remove(undefined);
+        expect(sampleList.length).to.equal(12);
+        expect(sampleList.get(5)).to.be.undefined;
+        expect(sampleList.includes(undefined)).to.be.false;
+    });
+
+    it('should have a "remove" method that removes booleans from the array', () => {
+
+        expect(sampleList.length).to.equal(13);
+        sampleList.remove(true);
+        expect(sampleList.length).to.equal(12);
+        expect(sampleList.get(12)).to.be.undefined;
+        expect(sampleList.includes(true)).to.be.false;
     });
 
     it('should not remove elements that do not exist', () => {

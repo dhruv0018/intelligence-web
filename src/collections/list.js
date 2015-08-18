@@ -37,6 +37,7 @@ class List {
 
     /**
      * Getter/Setter for the length of the data store
+     *
      * @type {Integer}
      */
     get length () {
@@ -46,7 +47,7 @@ class List {
 
     set length (value) {
 
-        if (Number(value) !== value || value % 1 !== 0) {
+        if (!Number.isInteger(value)) {
 
             throw new Error('List length setter must be given an integer value!');
         }
@@ -88,11 +89,9 @@ class List {
     }
 
     /**
-     * Return the element at the specified index
+     * Getter for elements at a specified index
      *
-     * @method get
-     * @param {Integer} index - Index of array element
-     * @returns {Object}      - Entry at index
+     * @type {}
      */
     get (index) {
 
@@ -107,25 +106,23 @@ class List {
     }
 
     /**
-     * Return first element
+     * Getter for first element
      *
-     * @method first
-     * @returns {Object} - First element, OR undefined
+     * @type {}
      */
-    first () {
+    get first () {
 
-        return this.data.slice(0, 1).pop();
+        return this.data[0];
     }
 
     /**
-     * Return last element
+     * Getter for last element
      *
-     * @method last
-     * @returns {Object} - Last element, OR undefined
+     * @type {}
      */
-    last () {
+    get last () {
 
-        return this.data.slice(this.length - 1).pop();
+        return this.data[this.data.length - 1];
     }
 
     /**
