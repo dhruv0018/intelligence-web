@@ -23,7 +23,7 @@
 
         </telestrations>
 
-        <vg-controls ng-hide="deviceIsiPhone">
+        <vg-controls class="controls-container" ng-hide="deviceIsiPhone">
 
             <vg-scrub-bar>
                 <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
@@ -38,7 +38,7 @@
                         <strong>{{ currentTime | millisecondsAsHoursMinutesSeconds }}</strong> / {{ totalTime | millisecondsAsHoursMinutesSeconds }}
                     </vg-time-display>
 
-                    <vg-volume title="Adjust Volume">
+                    <vg-volume>
                         <vg-mute-button></vg-mute-button>
                         <vg-volume-bar></vg-volume-bar>
                     </vg-volume>
@@ -83,7 +83,13 @@
 
                 <div class="controls-right">
 
-                    <vg-fullscreen-button title="Toggle Fullscreen"></vg-fullscreen-button>
+                    <a class="download control-button" ng-href="{{videoPlayer.sources[0].src}}" tooltip="Download" download>
+                        <i class="icon icon-download"></i>
+                    </a>
+
+                    <select-media-src></select-media-src>
+
+                    <vg-fullscreen-button tooltip="Toggle Fullscreen"></vg-fullscreen-button>
 
                 </div>
             </div>

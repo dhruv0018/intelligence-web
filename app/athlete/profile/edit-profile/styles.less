@@ -15,14 +15,19 @@ md-content {
             justify-content: space-around;
 
             .edit-profile-picture-container {
+                text-align: center;
 
                 .profile-picture {
-                    margin-top: 100px;
+                    margin: 100px auto 0px;
                     text-align: center;
 
                     img,
                     .placeholder-picture {
                         border-color: @gray-border;
+                    }
+
+                    .placeholder-picture {
+                        padding-top: 22px;
                     }
                 }
 
@@ -82,13 +87,26 @@ md-content {
 
             .small-text-field {
                 display: inline-block;
-                width: 60px;
+                width: 30%;
+            }
+
+            .large-text-field {
+                display: inline-block;
+                width: 80%;
+            }
+
+            .field-label {
+                display: inline-block;
+                width: 19%;
+                margin-left: 1%;
+                margin-right: -4px;
             }
 
             select {
                 background-color: white;
                 padding-right: 30px;
                 text-transform: capitalize;
+                width: 80%;
             }
 
             .header-description {

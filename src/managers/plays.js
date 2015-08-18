@@ -13,8 +13,32 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlaysManager', [
-    '$injector', 'Utilities', 'FIELD_TYPE', 'AlertsService', 'TagsManager', 'PlayManager', 'EventManager', 'PlaysFactory', 'GamesFactory', 'TagsetsFactory',
-    function service($injector, utilities, FIELD_TYPE, alerts, tagsManager, playManager, eventManager, plays, games, tagsets) {
+    '$injector',
+    'Utilities',
+    'FIELD_TYPE',
+    'AlertsService',
+    'TagsManager',
+    'PlayManager',
+    'EventManager',
+    'PlaysFactory',
+    'GamesFactory',
+    'TagsetsFactory',
+    'PlaylistEventEmitter',
+    'EVENT',
+    function service(
+        $injector,
+        utilities,
+        FIELD_TYPE,
+        alerts,
+        tagsManager,
+        playManager,
+        eventManager,
+        plays,
+        games,
+        tagsets,
+        playlistEventEmitter,
+        EVENT
+    ) {
 
         var period;
         var indexing;
@@ -136,6 +160,8 @@ IntelligenceWebClient.service('PlaysManager', [
 
             this.plays.sort(utilities.compareStartTimes);
             this.plays.forEach(calculatePlay);
+
+            playlistEventEmitter.emit(EVENT.PLAYLIST.PLAYS.CALCULATE, this.plays);
         };
 
         function calculatePlay (play, index) {
