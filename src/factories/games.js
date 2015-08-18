@@ -961,6 +961,17 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return model.getFormationReport({ id: self.id });
             },
 
+            copy: function(criteria) {
+
+                var self = this;
+
+                var Resource = $injector.get(self.model);
+
+                var gameCopy = new Resource(criteria);
+
+                return $q.when(gameCopy.$copy({ id: criteria.gameId }));
+            },
+
             getDownAndDistanceReport: function(report) {
 
                 /* TODO: the only thing used from parameter is gameId */

@@ -42,6 +42,11 @@ IntelligenceWebClient.factory('GamesResource', [
                 method: 'GET',
                 url: url + '/stats',
                 isArray: true
+            },
+
+            copy: {
+                method: 'POST',
+                url: url + '/copy',
             }
         };
 
