@@ -7,26 +7,26 @@
         opacity:.5;
     }
 
-    div {
+    .athelete-profile-picture, .athlete-profile-details {
         display: inline-block;
         margin-right: 5px;
-        line-height: 1.1;
+        line-height: @headings-line-height;
 
-        span {
+        .athlete-information, .athlete-last-access {
             display: inline-block;
             margin-right: 5px;
             color: @gray-dark;
         }
 
         .athlete-information {
-            font-weight: 500;
+            font-weight: @headings-font-weight;
         }
 
         .athlete-last-access {
-            font-size: 14px;
+            font-size: @font-size-small;
             font-style: italic;
         }
-        
+
         .text-transform-none {
             text-transform : none;
         }

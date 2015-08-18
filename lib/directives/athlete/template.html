@@ -1,16 +1,16 @@
 <div class="krossover-athlete">
     <div class="sidebar-athlete" ng-if="!editable">
-        <div>
+        <div class="athelete-profile-picture">
             <img ng-if="athlete.picture.url" ng-src="{{athlete.picture.url}}" width="40" height="40" alt="Avatar">
             <profile-placeholder ng-if="!player.picture.url" data-size="small"></profile-placeholder>
         </div>
-        <div>
+        <div class="athlete-profile-details">
             <span class="athlete-information">
             	{{team.roster.playerInfo[athlete.id].jerseyNumber}}
             </span> <span class="athlete-information">
             	{{athlete.firstName[0] + '.'}} {{athlete.lastName}}
             </span>  <br/>
-            <span class="athlete-last-access" ng-if="athlete.userId && users[athlete.userId].lastAccessed">Last login - {{ UsersFactory.getLastAccessed(users[athlete.userId]) | date: 'mediumDate' }}</span>
+            <span class="athlete-last-access" ng-if="athlete.userId && users[athlete.userId].lastAccessed">Last login - {{users[athlete.userId].lastAccessed | date: 'mediumDate' }}</span>
             <span class="athlete-last-access text-transform-none" ng-if="athlete.userId && !users[athlete.userId].lastAccessed">Has not logged in.</span>
         </div>
     </div>
