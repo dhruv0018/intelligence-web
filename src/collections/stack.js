@@ -6,10 +6,10 @@
 class Stack {
 
     /**
-     * Constructor:
      * Instantaties Stack as a new array
      *
-     * @param: {Array} (opt) Array to copy
+     * @constructs Stack
+     * @param {Array} [array] - Array to use as stack data structure
      */
     constructor (array = []) {
 
@@ -21,18 +21,12 @@ class Stack {
         this.stack = array;
     }
 
-    // /**
-    //  * This is a foo method
-    //  *
-    //  * @method Class.methodName
-    //  * @param {Object} myParameter
-    //  * @returns {Boolean} flag
-    //  */
     /**
-     * Method:push
-     * Pushes element to the top of the stack
+     * Adds a new element to the stack
      *
-     * @return: null
+     * @method push
+     * @param {Object|Integer|Boolean}
+     *
      */
     push (value) {
 
@@ -44,10 +38,10 @@ class Stack {
     }
 
     /**
-     * Method:pop
-     * Returns element at the top of the stack
+     * Removes an element from the stack
      *
-     * @return: {Object} [true] if stack has elements, else null
+     * @method pop
+     * @returns {Object|Integer|Boolean|undefined}
      */
     pop () {
 
@@ -55,10 +49,11 @@ class Stack {
     }
 
     /**
-     * Method:top
-     * Returns the element at the top of the stack
+     * Returns the element at the top of the stack without removing it
      *
-     * @return: {Object} [true] if stack has elements, else null
+     * @method top
+     * @return: {Object|Integer|Boolean|undefined}
+     * 
      */
     top () {
 
@@ -68,10 +63,10 @@ class Stack {
     }
 
     /**
-     * Removes all entries in the list
+     * Removes all entries in the stack
      *
      * @method clear
-     * @returns {Stack} - The array that was cleared
+     *
      */
     clear () {
 
@@ -79,10 +74,11 @@ class Stack {
     }
 
     /**
-     * Returns a copy of the array, and only the array
+     * Returns a copy of the stack
      *
      * @method identity
-     * @returns {Array} - A copy of the data backing store.
+     * @returns {Array} - A copy of the stack.
+     *
      */
     identity () {
 
@@ -90,10 +86,11 @@ class Stack {
     }
 
     /**
-     * Method:size
      * Returns the number of elements in the stack
      *
-     * @return: {Integer}
+     * @method size
+     * @returns {Integer}
+     *
      */
     get size () {
 
@@ -101,10 +98,11 @@ class Stack {
     }
 
     /**
-     * Method:empty
-     * Returns empty Stack status
+     * Returns true or false depending on if the stack is empty or not
      *
-     * @return: {Boolean} [true] if empty, else [false]
+     * @method empty
+     * @returns {Boolean}
+     *
      */
     empty () {
 
