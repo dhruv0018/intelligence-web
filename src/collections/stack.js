@@ -36,7 +36,11 @@ class Stack {
      */
     push (value) {
 
-        this.stack.push(value);
+        if(value) {
+            this.stack.push(value);
+        } else {
+            throw new Error('Cannot push on Stack without passing an element!');
+        }
     }
 
     /**
@@ -58,9 +62,31 @@ class Stack {
      */
     top () {
 
-        if(this.stack.length) {
-            return this.stack[this.stack.length - 1];
+        if(this.stack.size) {
+            return this.stack[this.stack.size - 1];
         }
+    }
+
+    /**
+     * Removes all entries in the list
+     *
+     * @method clear
+     * @returns {Stack} - The array that was cleared
+     */
+    clear () {
+
+        this.stack = [];
+    }
+
+    /**
+     * Returns a copy of the array, and only the array
+     *
+     * @method identity
+     * @returns {Array} - A copy of the data backing store.
+     */
+    identity () {
+
+        return this.stack.slice(0);
     }
 
     /**
@@ -82,7 +108,7 @@ class Stack {
      */
     empty () {
 
-        return !!this.stack.length;
+        return !this.stack.length;
     }
 
 }
