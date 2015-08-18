@@ -69,6 +69,12 @@ describe('SortedList', () => {
         expect(() => new SortedList('five', 'foo')).to.throw(Error);
     });
 
+    it('should throw an error if you attempt to instantiate without a sort property', () => {
+
+        expect(() => new SortedList([])).to.throw(Error);
+        expect(() => new SortedList(srcArrayCopy)).to.throw(Error);
+    });
+
     it('should have a backing store that is a reference to the array passed to the constructor', () => {
 
         expect(sampleList.data).to.deep.equal(srcArrayCopy);
