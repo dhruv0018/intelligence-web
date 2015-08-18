@@ -1,5 +1,5 @@
 <div class="qa-pickup">
-    <div ng-hide="successfulPickup">
+    <div ng-show="!successfulPickup && !gameAlreadyTaken">
         <header class="modal-header">
 
             <h3 class="modal-title">
@@ -27,7 +27,7 @@
         </footer>
     </div>
 
-    <div ng-show="successfulPickup" class="pickup-success">
+    <div ng-show="successfulPickup && !gameAlreadyTaken" class="pickup-success">
         <header class="modal-header no-border">
             <a class="pull-right" ng-click="$dismiss()">
                 <i class="icon icon-remove"></i>
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div ng-show="gameAlreadyTaken">
+    <div ng-show="!successfulPickup && gameAlreadyTaken">
 
         <div class="modal-body">
             <div>
