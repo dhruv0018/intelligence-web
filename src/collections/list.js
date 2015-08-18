@@ -37,6 +37,7 @@ class List {
 
     /**
      * Getter/Setter for the length of the data store
+     *
      * @type {Integer}
      */
     get length () {
@@ -88,11 +89,9 @@ class List {
     }
 
     /**
-     * Return the element at the specified index
+     * Getter for elements at a specified index
      *
-     * @method get
-     * @param {Integer} index - Index of array element
-     * @returns {Object}      - Entry at index
+     * @type {}
      */
     get (index) {
 
