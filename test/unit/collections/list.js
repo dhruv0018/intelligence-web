@@ -205,11 +205,10 @@ describe('List', () => {
 
     it('should have a get "get" method that returns a specific element.', () => {
 
-        expect(sampleList.get(3)).to.deep.equal(srcArrayCopy[3]);
-        expect(sampleList.get(2)).to.equal(srcArrayCopy[2]);
-        expect(sampleList.get(5)).to.equal(srcArrayCopy[5]);
-        expect(sampleList.get(6)).to.equal(srcArrayCopy[6]);
-        expect(sampleList.get(7)).to.equal(srcArrayCopy[7]);
+        srcArrayCopy.forEach((item, i) => {
+
+            expect(item).to.deep.equal(sampleList.get(i));
+        });
     });
 
     it('should throw an error if you attempt to get an element without specifying an index', () => {
