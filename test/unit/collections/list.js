@@ -167,9 +167,10 @@ describe('List', () => {
     it('should have a setter that allows you to increase the length with a length value longer than the length', () => {
 
         let controlArray = srcArrayCopy.slice(0);
+        const testLength = 20;
 
-        controlArray.length = 20;
-        sampleList.length = 20;
+        controlArray.length = testLength;
+        sampleList.length   = testLength;
         expect(JSON.stringify(sampleList.identity())).to.equal(JSON.stringify(controlArray));
     });
 
