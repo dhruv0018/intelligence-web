@@ -160,11 +160,16 @@ class List {
                 throw new Error('Invoked List.remove without passing an Object to remove');
         }
 
-        if (this.includes(item)) {
+        let removed = [];
+
+        while (this.includes(item)) {
 
             let itemIndex = this.data.indexOf(item);
-            return this.data.splice(itemIndex, 1);
+
+            removed = removed.concat(this.data.splice(itemIndex, 1));
         }
+
+        return removed;
     }
 
     /**
