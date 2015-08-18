@@ -1,9 +1,5 @@
 import List from '../../../src/collections/list';
 
-/* Utility for consoling out large objects. */
-const util = require('util');
-const krog = obj => console.log(util.inspect(obj));
-
 const srcArray = [
     1,
     2,

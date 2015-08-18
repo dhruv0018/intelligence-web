@@ -1,9 +1,5 @@
 import SortedList from '../../../src/collections/sortedList';
 
-/* Utility for consoling out large objects. */
-const util = require('util');
-const krog = obj => console.log(util.inspect(obj));
-
 const srcArray = [
     {
         foo: 'def',
