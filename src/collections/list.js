@@ -46,7 +46,6 @@ class List {
 
     set length (value) {
 
-        // if (Number(value) !== value || value % 1 !== 0) {
         if (!Number.isInteger(value)) {
 
             throw new Error('List length setter must be given an integer value!');
