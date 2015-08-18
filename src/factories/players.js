@@ -90,8 +90,6 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 const jerseyNumber = this.getJerseyNumber(roster, padLength);
 
-                console.log('jereseyNumber', jerseyNumber.length);
-
                 return jerseyNumber ? `${jerseyNumber} ${this.shortName}` : this.shortName;
             },
 
