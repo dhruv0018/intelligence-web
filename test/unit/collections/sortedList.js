@@ -36,8 +36,6 @@ describe('SortedList', () => {
         'toJSON',
         'clear',
         'get',
-        'first',
-        'last',
         'add',
         'remove',
         'isEmpty',

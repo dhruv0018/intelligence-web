@@ -26,8 +26,6 @@ describe('List', () => {
         'toJSON',
         'clear',
         'get',
-        'first',
-        'last',
         'add',
         'remove',
         'isEmpty'
@@ -216,14 +214,14 @@ describe('List', () => {
         expect(() => sampleList.get()).to.throw(Error);
     });
 
-    it('should have a "first" method that returns the first element in the array', () => {
+    it('should have a "first" getter that returns the first element in the array', () => {
 
-        expect(sampleList.first()).to.equal(srcArrayCopy[0]);
+        expect(sampleList.first).to.equal(srcArrayCopy[0]);
     });
 
-    it('should have a "last" method that returns the last element of the array', () => {
+    it('should have a "last" getter that returns the last element of the array', () => {
 
-        expect(sampleList.last()).to.equal(srcArrayCopy[srcArrayCopy.length - 1]);
+        expect(sampleList.last).to.equal(srcArrayCopy[srcArrayCopy.length - 1]);
     });
 
     it('should have an "add" method that adds elements to the beginning of the array', () => {
