@@ -22,7 +22,6 @@ describe('List', () => {
 
     const classMethods = [
         'includes',
-        'identity',
         'toJSON',
         'clear',
         'get',
@@ -150,7 +149,7 @@ describe('List', () => {
         controlArray.length = testLength;
 
         expect(sampleList.length).to.equal(testLength);
-        expect(JSON.stringify(sampleList.identity())).to.equal(JSON.stringify(controlArray));
+        expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(controlArray));
     });
 
     it('should have a setter that does nothing if value equals the length', () => {
@@ -159,7 +158,7 @@ describe('List', () => {
 
         sampleList.length = sampleList.length;
         controlArray.length = controlArray.length;
-        expect(JSON.stringify(sampleList.identity())).to.equal(JSON.stringify(controlArray));
+        expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(controlArray));
     });
 
     it('should have a setter that allows you to increase the length with a length value longer than the length', () => {
@@ -169,7 +168,7 @@ describe('List', () => {
 
         controlArray.length = testLength;
         sampleList.length   = testLength;
-        expect(JSON.stringify(sampleList.identity())).to.equal(JSON.stringify(controlArray));
+        expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(controlArray));
     });
 
     it('should throw an error if you attempt to set a length without specifying a value', () => {
@@ -184,21 +183,11 @@ describe('List', () => {
         expect(() => sampleList.length = (function () { return false; })).to.throw(Error);
     });
 
-    it('should have an "identity" method that returns the data as a plain array', () => {
-
-        expect(sampleList.identity()).to.be.an('array');
-        expect(sampleList.identity().length).to.equal(srcArrayCopy.length);
-        sampleList.identity().forEach((element, index) => {
-
-            expect(element).to.deep.equal(srcArrayCopy[index]);
-        });
-    });
-
     it('should have a "clear" method that empties the array', () => {
 
         sampleList.clear();
         expect(sampleList.length).to.equal(0);
-        expect(sampleList.identity()).to.deep.equal([]);
+        expect(sampleList.toJSON()).to.deep.equal([]);
     });
 
     it('should have a get "get" method that returns a specific element.', () => {
