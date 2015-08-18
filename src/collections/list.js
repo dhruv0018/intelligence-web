@@ -107,23 +107,21 @@ class List {
     }
 
     /**
-     * Return first element
+     * Getter for first element
      *
-     * @method first
-     * @returns {Object} - First element, OR undefined
+     * @type {}
      */
-    first () {
+    get first () {
 
         return this.data[0];
     }
 
     /**
-     * Return last element
+     * Getter for last element
      *
-     * @method last
-     * @returns {Object} - Last element, OR undefined
+     * @type {}
      */
-    last () {
+    get last () {
 
         return this.data[this.data.length - 1];
     }
