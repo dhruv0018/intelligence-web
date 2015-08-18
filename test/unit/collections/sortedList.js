@@ -32,7 +32,6 @@ describe('SortedList', () => {
 
     const classMethods = [
         'includes',
-        'identity',
         'toJSON',
         'clear',
         'get',
