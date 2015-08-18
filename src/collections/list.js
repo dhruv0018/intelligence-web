@@ -114,7 +114,7 @@ class List {
      */
     first () {
 
-        return this.data.slice(0, 1).pop();
+        return this.data[0];
     }
 
     /**
