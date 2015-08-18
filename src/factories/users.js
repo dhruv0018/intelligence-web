@@ -88,7 +88,8 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 // Get full name for user
                 Object.defineProperty(user, 'name', {
-                    get: () => user.firstName + ' ' + user.lastName
+                    get: () => user.firstName + ' ' + user.lastName,
+                    configurable: true
                 });
 
                 /* Copy all of the properties from the retrieved $resource
