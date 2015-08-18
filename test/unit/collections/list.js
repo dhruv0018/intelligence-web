@@ -144,13 +144,14 @@ describe('List', () => {
     it('should have a setter for length that allows the array to be truncated', () => {
 
         let controlArray = srcArrayCopy.slice(0);
+        const testLength = 3;
 
         expect(sampleList.length).to.equal(13);
 
-        sampleList.length   = 3;
-        controlArray.length = 3;
+        sampleList.length   = testLength;
+        controlArray.length = testLength;
 
-        expect(sampleList.length).to.equal(3);
+        expect(sampleList.length).to.equal(testLength);
         expect(JSON.stringify(sampleList.identity())).to.equal(JSON.stringify(controlArray));
     });
 
