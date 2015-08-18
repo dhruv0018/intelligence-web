@@ -23,7 +23,7 @@
 
             <h4 class="column" ng-if="!isIndexer && !isReelsPlay">
 
-                <span class="team"><span ng-show="playIndex >= 0">{{playIndex + 1}}. </span>{{teams[play.possessionTeamId].name}}</span>
+                <span class="team"><span ng-show="play.index >= 0">{{play.index + 1}}. </span>{{teams[play.possessionTeamId].name}}</span>
 
                 <div class="summariesContainer">
 
@@ -34,7 +34,7 @@
             </h4>
             <div ng-if="!isIndexer && isReelsPlay">
                 <h4 class="title">
-                    <span ng-show="playIndex >= 0">{{playIndex + 1}}.&nbsp;</span>
+                    <span ng-show="play.index >= 0">{{play.index + 1}}.&nbsp;</span>
                     <krossover-play-summaries events="play.events"></krossover-play-summaries>
                     <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                 </h4>
