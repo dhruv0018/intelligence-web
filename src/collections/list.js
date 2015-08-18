@@ -58,23 +58,12 @@ class List {
     /**
      * Returns a copy of the array, and only the array
      *
-     * @method identity
-     * @returns {Array} - A copy of the data backing store.
-     */
-    identity () {
-
-        return this.data.slice(0);
-    }
-
-    /**
-     * Returns a copy of the array, and only the array
-     *
      * @method toJSON
      * @returns {Array}
      */
     toJSON () {
 
-        return this.identity();
+        return this.data.slice(0);
     }
 
     /**
