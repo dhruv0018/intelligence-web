@@ -14,7 +14,7 @@ describe('General Formation Field', () => {
     });
 });
 
-describe.only('Formation Field', () => {
+describe('Formation Field', () => {
     let srcField;
     let requiredField;
     let unrequiredField;
