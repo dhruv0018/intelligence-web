@@ -119,6 +119,19 @@ class KrossoverEvent extends Entity {
     }
 
     /**
+     * Getter for Summary Fields HTML
+     *
+     * @type {String}
+     */
+    get summaryHTML () {
+
+        if (this.summaryFields) {
+
+            return this.summaryFields.toString();
+        }
+    }
+
+    /**
      * Getter for User Fields
      *
      * @type {Array}

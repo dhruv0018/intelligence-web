@@ -306,6 +306,15 @@ describe('Event Entity', () => {
         });
     });
 
+    it('should have a getter for "indexerHTML"', () => {
+
+        /* Instantiated with event JSON */
+        expect(sampleEvent.indexerHTML).to.be.a.string;
+
+        /* Instantiated without event JSON */
+        expect(sampleEmptyEvent.indexerHTML).to.be.a.string;
+    });
+
     it('should have a getter for "userFields"', () => {
 
         /* Instantiated with event JSON */
@@ -342,6 +351,15 @@ describe('Event Entity', () => {
         });
     });
 
+    it('should have a getter for "userHTML"', () => {
+
+        /* Instantiated with event JSON */
+        expect(sampleEvent.userHTML).to.be.a.string;
+
+        /* Instantiated without event JSON */
+        expect(sampleEmptyEvent.userHTML).to.be.a.string;
+    });
+
     it('should have a getter for "summaryFields"', () => {
 
         /* Instantiated with event JSON */
@@ -376,6 +394,15 @@ describe('Event Entity', () => {
                 expect(field.valid).to.be.true;
             }
         });
+    });
+
+    it('should have a getter for "summaryHTML"', () => {
+
+        /* Instantiated with event JSON */
+        expect(sampleEvent.summaryHTML).to.be.a.string;
+
+        /* Instantiated without event JSON */
+        expect(sampleEmptyEvent.summaryHTML).to.be.a.string;
     });
 
     it('should have a "isEndAndStart" method', () => {
