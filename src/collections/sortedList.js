@@ -19,7 +19,7 @@ class SortedList extends List {
      */
     constructor (array, sortProperty, descending = true) {
 
-        super(array || []);
+        super(array);
 
         if (!sortProperty) {
 

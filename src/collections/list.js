@@ -56,7 +56,7 @@ class List {
     }
 
     /**
-     * Returns a copy of the array, and only the array
+     * Returns the backing store array, and only the array
      *
      * @method toJSON
      * @returns {Array}

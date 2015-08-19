@@ -49,6 +49,15 @@ describe('List', () => {
         classMethods.forEach(method => expect(List).to.respondTo(method));
     });
 
+    it('should throw an error if you attempt to instantiate with an non-array', () => {
+
+        expect(() => new List(true)).to.throw(Error);
+        expect(() => new List(false)).to.throw(Error);
+        expect(() => new List({foo: 5})).to.throw(Error);
+        expect(() => new List(5)).to.throw(Error);
+        expect(() => new List('five')).to.throw(Error);
+    });
+
     it('should have a backing store that is a reference to the array passed to the constructor', () => {
 
         expect(sampleList.data).to.deep.equal(srcArrayCopy);

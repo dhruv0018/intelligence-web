@@ -60,6 +60,21 @@ describe('SortedList', () => {
         classMethods.forEach(method => expect(SortedList).to.respondTo(method));
     });
 
+    it('should throw an error if you attempt to instantiate with an non-array', () => {
+
+        expect(() => new SortedList(true)).to.throw(Error);
+        expect(() => new SortedList(false)).to.throw(Error);
+        expect(() => new SortedList({foo: 5}, 'foo')).to.throw(Error);
+        expect(() => new SortedList(5, 'foo')).to.throw(Error);
+        expect(() => new SortedList('five', 'foo')).to.throw(Error);
+    });
+
+    it('should throw an error if you attempt to instantiate without a sort property', () => {
+
+        expect(() => new SortedList([])).to.throw(Error);
+        expect(() => new SortedList(srcArrayCopy)).to.throw(Error);
+    });
+
     it('should have a backing store that is a reference to the array passed to the constructor', () => {
 
         expect(sampleList.data).to.deep.equal(srcArrayCopy);
