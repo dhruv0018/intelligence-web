@@ -38,8 +38,10 @@ function PhysicalController (
     $scope.isSaving = false;
     $scope.confirmSave = false;
 
-    if ($scope.athlete.profile.dominantHandType === null) {
-        $scope.athlete.profile.dominantHandType = '';
+    $scope.dominantHandType = $scope.athlete.profile.dominantHandType;
+
+    if ($scope.dominantHandType === null) {
+        $scope.dominantHandType = '';
     }
 
     //display height and wingspan as temporary feet and inches variables
@@ -66,6 +68,8 @@ function PhysicalController (
 
     $scope.savePhysical = function savePhysical() {
         $scope.isSaving = true;
+
+        $scope.athlete.profile.dominantHandType = $scope.dominantHandType;
 
         if ($scope.athlete.profile.dominantHandType === '') {
             $scope.athlete.profile.dominantHandType = null;
