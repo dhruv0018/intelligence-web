@@ -77,10 +77,19 @@ class KrossoverPlay extends Entity {
 
             if (event.summaryFields) {
 
-                return event.summaryHTML + '<br/>';
+                return event;
             }
         })
         .filter(Boolean)
+        .sort((a, b) => {
+
+            return (a.summaryPriority - b.summaryPriority) * -1;
+        })
+        .slice(0, 2)
+        .map((event, index) => {
+
+            return event.summaryHTML + '</br>';
+        })
         .join('');
     }
 
