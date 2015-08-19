@@ -248,8 +248,7 @@ function GamesBreakdownController (
 
             /* Telestrations associated with plays */
 
-            $scope.plays.forEach((play,index) => {
-                play.index = index;
+            $scope.plays.forEach((play) => {
                 play.hasTelestrations = $scope.game.playTelestrations.some((telestration) => play.id === telestration.playId && telestration.hasGlyphs());
             });
 
