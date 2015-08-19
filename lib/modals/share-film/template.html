@@ -15,8 +15,9 @@
                 <span>Share this film via public URL</span>
                 <span class="modal-title-side-caption" ng-show="currentUser.is(ROLES.COACH)">(does not include telestrations)</span>
             </span>
-	        <i id="share-film-dismiss-cta" class="icon icon-remove pull-right" ng-click="$dismiss()"></i>
 	    </h3>
+
+        <i id="share-film-dismiss-cta" class="icon icon-remove" ng-click="$dismiss()"></i>
 
     </header>
 
@@ -135,7 +136,8 @@
                         <a id="share-film-public-anyone-reel-link-cta" ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/r/{{shortId}}</a>
                     </div>
                 </div>
-                <div class="method-row">
+                <!-- Hide embed code for games until further notice -->
+                <div class="method-row" ng-hide="isGame">
                     <div class="public-link-box pull-right" ng-show="linkActive">
                         <code id="share-film-public-embed-game-field" ng-show="isGame">&lt;iframe src="{{config.links.intelligence.uri}}/g/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
                         <code id="share-film-public-embed-reel-field" ng-show="!isGame">&lt;iframe src="{{config.links.intelligence.uri}}/r/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
@@ -144,8 +146,8 @@
                         <p class="embed-label">Embed video on your website</p>
                         Video Size:
                         <select id="share-film-public-video-size-cta" ng-model="embedSize">
-                            <option value="width:480px;height:500px;">480x500</option>
-                            <option value="width:720px;height:750px;">720x750</option>
+                            <option value="width:480px;height:458px;">480x458</option>
+                            <option value="width:720px;height:585px;">720x585</option>
                         </select>
                     </div>
                 </div>

@@ -95,6 +95,7 @@ Games.config([
                     '$q',
                     '$stateParams',
                     'GamesFactory',
+                    'ReelsFactory',
                     'TeamsFactory',
                     'UsersFactory',
                     'LeaguesFactory',
@@ -105,6 +106,7 @@ Games.config([
                         $q,
                         $stateParams,
                         games,
+                        reels,
                         teams,
                         users,
                         leagues,
@@ -120,7 +122,8 @@ Games.config([
                             let game = games.get(gameId);
 
                             let Data = {
-                                leagues: leagues.load()
+                                leagues: leagues.load(),
+                                reels: reels.load({ relatedUserId: session.getCurrentUserId() })
                             };
 
                             //Load custom tags

@@ -12,14 +12,25 @@
     &.in { .opacity(.9); }
 }
 
-.modal-title {
+.modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 
-    color: @brand-blue;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    text-align: center;
-    text-transform: uppercase;
+    .modal-title {
+        color: @brand-blue;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .icon-remove {
+        color: @brand-danger;
+        cursor: pointer;
+    }
 }
 
 .modal-content {
@@ -36,4 +47,12 @@
         margin: 10px;
         height: 21px;
     }
+}
+
+.button-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
 }
