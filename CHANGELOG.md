@@ -1,5 +1,15 @@
 # v2.13.0 #
 
+## Features ##
+- Updates to embed player for reels
+- Athlete profile onboarding modal
+- Athlete profile shows all profile reels under featured reel
+- Athlete can add, edit, and remove teams on their profile
+- Athlete can manage their profile reels
+
+## Bug Fixes / Improvements ##
+- Imposes character limit for various profile fields
+
 # v2.12.0 #
 
 # v2.11.0 #
