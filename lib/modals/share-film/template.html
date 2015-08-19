@@ -31,15 +31,15 @@
         		Games are automatically shared amongst team coaches and athletes on your active roster.
         	</div>
             <!--With Team Option for Reel-->
-            <div id="share-with-team-cta" class="share-options option-your-team-reels" ng-show="!isGame" ng-click="withTeam = true" ng-class="{'athlete-option': currentUser.is(ROLES.ATHLETE)}">
+            <div id="share-with-team-cta" class="share-options option-your-team-reels" ng-show="!isGame" ng-click="withTeam = true" ng-class="{'athlete-option': currentUserIsAthleteRecruit}">
                 <h3>Your Team</h3>
                 <i class="icon icon-group"></i>
             </div>
-        	<div class="share-options middle-option" id="share-other-users-cta" ng-click="withOtherUsers = true" ng-class="{'athlete-option': currentUser.is(ROLES.ATHLETE)}">
+        	<div class="share-options middle-option" id="share-other-users-cta" ng-click="withOtherUsers = true" ng-class="{'athlete-option': currentUserIsAthleteRecruit}">
         		<h3>Other Krossover Users</h3>
         		<i class="icon icon-logo"></i>
         	</div>
-        	<div class="share-options" id="share-public-cta" ng-click="withPublic = true" ng-show="currentUser.is(ROLES.COACH)">
+        	<div class="share-options" id="share-public-cta" ng-click="withPublic = true" ng-hide="currentUserIsAthleteRecruit">
         		<h3>Recruiters or others via public URL</h3>
         		<i class="icon icon-globe"></i>
         	</div>
