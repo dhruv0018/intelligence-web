@@ -145,7 +145,7 @@ class List {
     }
 
     /**
-     * Removes an entry from the list
+     * Removes all references of an entry from the list
      *
      * @method remove
      * @param {Object} item         - Item to remove
