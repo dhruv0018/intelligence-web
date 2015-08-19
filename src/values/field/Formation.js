@@ -54,6 +54,8 @@ class FormationField extends Field {
                     numberOfPlayers: currentFormation.numberPlayers,
                     name: currentFormation.name,
                     get order() {
+                        //low priority formation is sent to the bottom
+                        if (currentFormation.name === 'Other') return 100;
                         return currentFormation.numberPlayers;
                     }
                 };

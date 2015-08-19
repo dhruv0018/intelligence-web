@@ -14,7 +14,7 @@ describe('General Formation Field', () => {
     });
 });
 
-describe('Formation Field', () => {
+describe.only('Formation Field', () => {
     let srcField;
     let requiredField;
     let unrequiredField;
@@ -64,15 +64,19 @@ describe('Formation Field', () => {
         });
     });
 
-    it('Should have available values that are ordered by the number of players in the formation', () => {
+    it('Should have available values that are ordered by the number of players in the formation, with the other value being last', () => {
         let field = unrequiredField;
         let values = field.availableValues;
         let previousNumberOfPlayers = 0;
 
         values.sort( (v1, v2) => v1.order - v2.order);
-        values.forEach(value => {
+
+        for (let index = 0; index < values.length - 2; index++) {
+            let value = values[index];
             expect(value.numberOfPlayers).to.be.at.least(previousNumberOfPlayers);
             previousNumberOfPlayers = value.numberOfPlayers;
-        });
+        };
+
+        expect(values[values.length -1].name).to.equal('Other');
     });
 });
