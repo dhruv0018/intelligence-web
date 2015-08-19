@@ -9,6 +9,7 @@
 
 ## Bug Fixes / Improvements ##
 - Imposes character limit for various profile fields
+- Hide public share option for athletes with recruit only
 
 # v2.12.0 #
 
