@@ -148,8 +148,8 @@ class List {
      * Removes all references of an entry from the list
      *
      * @method remove
-     * @param {Object} item         - Item to remove
-     * @returns {Integer|undefined} - Array length
+     * @param {Object} item - Item to remove
+     * @returns {array}     - An array of the removed items or empty array
      */
     remove (item) {
 
