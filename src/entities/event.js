@@ -209,7 +209,7 @@ class KrossoverEvent extends Entity {
     get valid () {
 
         return Object.keys(this.fields)
-        .map(fieldIndex => this.fields[fieldIndex])
+        .map(key => this.fields[key])
         .every(field => field.valid);
     }
 
