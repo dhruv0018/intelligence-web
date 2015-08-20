@@ -37,9 +37,9 @@ var STATE_NAMES = {
         id: 'formation-report-cta'
     },
 
-    'Games.ShotChart': {
+    'Games.ArenaChart': {
         display: 'Shot Chart',
-        id: 'shot-chart-cta'
+        id: 'arena-chart-cta'
     }
 };
 

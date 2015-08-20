@@ -1,0 +1,43 @@
+@import (reference) "main.less";
+
+krossover-checkbox {
+    display: inline-block;
+}
+
+.krossover-checkbox {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: black;
+    font-size: @font-size-large;
+
+    &-toggle, &-label {
+        margin: 0 2px;
+    }
+
+    * {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        user-select: none;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    &.reverse {
+        flex-direction: row-reverse;
+    }
+
+    &-toggle i {
+        display: flex;
+        align-items: center;
+    }
+
+    i {
+        &.icon-check-square, &.icon-check-square-o {
+            color: @brand-primary;
+        }
+    }
+}

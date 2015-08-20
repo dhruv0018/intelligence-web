@@ -35,7 +35,8 @@
     "videogular-overlay-play": "2fdevs/bower-videogular-overlay-play",
     "videogular-poster": "2fdevs/bower-videogular-poster",
     "fullscreen-api-polyfill": "https://github.com/neovov/Fullscreen-API-Polyfill.git",
-    "svg.draggable.js": "https://github.com/krossoverintelligence/svg.draggable.js.git"
+    "svg.draggable.js": "https://github.com/krossoverintelligence/svg.draggable.js.git",
+    "animate.css": "https://github.com/daneden/animate.css.git"
   },
   "dependencies": {
     "express": "^4.11.0",
@@ -132,7 +133,11 @@
     "svg.js": "2.0.0",
     "time-grunt": "1.1.0",
     "traceur": "0.0.86",
-    "tv4": "1.1.12"
+    "tv4": "1.1.12",
+    "@krossover/fit-element": "0.2.0",
+    "@krossover/krossover-checkbox": "0.2.0",
+    "@krossover/krossover-multiselect": "0.1.0",
+    "@krossover/pills": "0.1.0"
   },
   "main": "./src/main.js",
   "scripts": {

@@ -1,0 +1,128 @@
+@import (reference) "main.less";
+
+.krossover-multiselect {
+
+    line-height: normal;
+    text-align: left;
+    display: inline-block;
+
+    .krossover-multiselect-container {
+        position: relative;
+    }
+
+    button .icon-chevron-down {
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    .krossover-multiselect__label {
+        margin-right: 3px;
+    }
+
+    .dropdown-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: start;
+        padding: 6px 8px;
+        font-size: @font-size-base;
+        background-color: white;
+        min-width: 120px;
+
+        :first-child {
+            flex: 1;
+        }
+    }
+
+    .dropdown-menu {
+        width: 200px;
+        overflow-y: none;
+        letter-spacing: normal;
+        top: auto;
+        left: auto;
+        padding: 0px;
+
+        input {
+            border: thin solid @gray-border;
+            border-radius: 5px;
+            padding-left: 22px;
+        }
+
+        .icon-search {
+            position: absolute;
+            left: 10px;
+            top: 12px;
+            color: @gray-light;
+        }
+
+        .dropdown-menu-options {
+            max-height: 250px;
+            overflow-y: scroll;
+        }
+
+        .dropdown-menu-option {
+            position: relative;
+            padding: 3px;
+            cursor: pointer;
+            text-align: left;
+            border-bottom: thin solid @gray-border;
+
+            &:hover {
+                background-color: @dropdown-link-hover-bg;
+
+                a {
+                    color: @dropdown-link-hover-color;
+                }
+            }
+
+            a {
+                position: relative;
+                padding: 3px 5px;
+                .icon {
+                    position: absolute;
+                }
+
+                .item-label {
+                    margin-left: 25px;
+                    white-space: pre;
+                }
+            }
+
+        }
+
+        &-bottom, &-top {
+            position: relative;
+            padding: 5px;
+            background-color: @content-bg;
+        }
+
+        &-top {
+            text-align: left;
+            border-bottom: thin solid @gray-border;
+        }
+
+        &-bottom {
+            text-align: right;
+            border-top: thin solid @gray-border;
+        }
+
+        li a {
+            display: inline-block;
+            cursor: pointer;
+            text-decoration: none;
+
+            &:hover, &:focus, &:active {
+                background-color: transparent;
+                text-decoration: underline;
+            }
+        }
+
+        .reset-filter {
+            color: @link-color;
+
+            &.disabled {
+                color: @dropdown-link-disabled-color;
+            }
+        }
+    }
+}

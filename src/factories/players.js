@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlayersFactory', [
-    '$injector', '$q', 'BaseFactory',
-    function($injector, $q, BaseFactory) {
+    '$injector', '$q', 'BaseFactory', '$filter',
+    function($injector, $q, BaseFactory, $filter) {
 
         var PlayersFactory = {
 
@@ -34,7 +34,63 @@ IntelligenceWebClient.factory('PlayersFactory', [
                     configurable: true
                 });
 
+                Object.defineProperty(player, 'shortName', {
+                    get: function() {
+                        return this.firstName[0] + '. ' + this.lastName;
+                    },
+                    configurable: true
+                });
+
                 return player;
+            },
+
+            /**
+             * Gets a player's jersey number on a specific roster
+             * @param {roster} roster
+             * @param {number} padLength The length the jerseyNumber should be padded with spaces. Default is 3.
+             * @returns {string} jersey number or empty string if does not exist
+             */
+            getJerseyNumber: function(roster, padLength = 3) {
+
+                if (!roster) throw new Error(`Missing required parameter: 'roster'`);
+                if (padLength && !Number.isInteger(padLength)) throw new Error(`'padLength' should be an integer`);
+
+                let jerseyNumber;
+                let playerInfo;
+
+                try {
+                    playerInfo = roster.playerInfo;
+                } catch (error) {
+                    throw new Error(`'playerInfo' is not defined on roster`);
+                }
+
+                let specificPlayerInfo;
+
+                try {
+                    specificPlayerInfo = playerInfo[this.id];
+                } catch (error) {
+                    throw new Error(`player with id ${player.id} cannot be found on the roster given`);
+                }
+
+                jerseyNumber = specificPlayerInfo ? specificPlayerInfo.jerseyNumber : '';
+
+                return $filter('padSpacesToFixedLength')(jerseyNumber, padLength, 'left');
+            },
+
+            /**
+             * Gets a player title, a combination of a players jersey number & shortName
+             * @param {roster} roster
+             * @param {?number} padLength Pads the jerseyNumber with up to 3 spaces or less/more if desired
+             * @returns {string} 'jerseyNumber shortName' or 'shortName' if has no jerseyNumber
+             */
+            getPlayerTitle: function(roster, padLength = 3) {
+
+                if (!roster) throw new Error(`Missing required parameter: 'roster'`);
+                if (padLength && !Number.isInteger(padLength)) throw new Error(`'padLength' should be an integer`);
+
+                const jerseyNumber = this.getJerseyNumber(roster, padLength);
+
+                return jerseyNumber ? `${jerseyNumber} ${this.shortName}` : this.shortName;
             },
 
             resendEmail: function(userId, teamId) {
