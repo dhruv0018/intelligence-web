@@ -181,24 +181,11 @@ class KrossoverEvent extends Entity {
 
         scriptFields.toString = () => {
 
-            let string = ``;
+            return scriptFields.map(field => {
 
-            scriptFields.forEach(item => {
-
-                if (item.type === 'STATIC') {
-
-                    string += item.toString();
-                } else {
-
-                    let field = this.fields[item.index];
-                    if (field) {
-
-                        string += field.toString();
-                    }
-                }
-            });
-
-            return string;
+                return field.toString();
+            })
+            .join('');
         };
 
         return scriptFields;
