@@ -1,38 +1,41 @@
 @import (reference) "main.less";
 
-indexer-sidebar {
-    h4 {
-        margin-bottom: 0;
-    }
+.indexer-games-assigned, .indexer-games-available, .indexer-history {
+    .sidebar {
 
-    ul {
-
-        padding-left: 20px;
-        list-style: none;
-        margin-bottom: 30px;
-
-        li:before {
-            content: "";
-            border-color: transparent @brand-primary;
-            border-style: solid;
-            border-width: 0.3em 0 0.3em 0.4em;
-            display: block;
-            height: 0;
-            width: 0;
-            left: -10px;
-            top: 15px;
-            position: relative;
+        h4 {
+            margin-bottom: 0;
         }
 
-        li {
+        ul {
 
-            margin-left: 0;
-            height: 25px;
+            padding-left: 20px;
+            list-style: none;
+            margin-bottom: 30px;
 
-            a {
-                color: @brand-primary;
-                border: none;
-                padding: 0;
+            li:before {
+                content: "";
+                border-color: transparent @brand-primary;
+                border-style: solid;
+                border-width: 0.3em 0 0.3em 0.4em;
+                display: block;
+                height: 0;
+                width: 0;
+                left: -10px;
+                top: 15px;
+                position: relative;
+            }
+
+            li {
+
+                margin-left: 0;
+                height: 25px;
+
+                a {
+                    color: @brand-primary;
+                    border: none;
+                    padding: 0;
+                }
             }
         }
     }
