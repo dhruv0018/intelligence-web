@@ -1,7 +1,11 @@
 import Entity from '../../../src/entities/entity';
-import sampleEvent from './sample-data/event';
+import genericData from './sample-data/generic-data';
+import genericDataBad from './sample-data/generic-data-bad';
+const genericSchema = require('./sample-data/generic-schema.json');
 
-const schema = require('../../../schemas/event.json');
+/* Utility for consoling out large objects. */
+const util = require('util');
+const krog = obj => console.log(util.inspect(obj));
 
 const assert  = chai.assert;
 const expect  = chai.expect;
@@ -36,11 +40,25 @@ describe('Base Entity', () => {
 
     // TODO: Finish tests for validate method.
 
-    xit('should validate JSON according to a schema', () => {
+    it('should validate valid JSON according to a schema', () => {
 
-        let validation = entity.validate(sampleEvent, schema);
+        let validation = entity.validate(genericData, genericSchema);
 
         expect(validation).to.be.an.object;
+        expect(validation.errors).to.be.an.array;
         expect(validation.errors.length).to.equal(0);
+        expect(validation.valid).to.be.a.boolean;
+        expect(validation.valid).to.be.true;
+    });
+
+    it('should validate invalid JSON according to a schema', () => {
+
+        let validation = entity.validate(genericDataBad, genericSchema);
+
+        expect(validation).to.be.an.object;
+        expect(validation.errors).to.be.an.array;
+        expect(validation.errors.length).to.equal(1);
+        expect(validation.valid).to.be.a.boolean;
+        expect(validation.valid).to.be.false;
     });
 });
