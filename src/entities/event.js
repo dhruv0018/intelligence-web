@@ -206,7 +206,7 @@ class KrossoverEvent extends Entity {
      * Getter for the validity of the Field
      * @type {Boolean}
      */
-    get valid () {
+    get isValid () {
 
         return Object.keys(this.fields)
         .map(key => this.fields[key])
@@ -244,7 +244,7 @@ class KrossoverEvent extends Entity {
      */
     toJSON () {
 
-        if (!this.valid) {
+        if (!this.isValid) {
 
             throw new Error('Cannot convert event to JSON without valid field data!');
         }
