@@ -204,6 +204,7 @@ class KrossoverEvent extends Entity {
 
     /**
      * Getter for the validity of the Field
+     *
      * @type {Boolean}
      */
     get isValid () {
@@ -214,24 +215,22 @@ class KrossoverEvent extends Entity {
     }
 
     /**
-     * Checks whether the event is a floating event.
+     * Getter for whether the event is a floating event.
      *
-     * @method isFloat
-     * @returns {Boolean} - true if the event is floating event; false otherwise.
+     * @type {Boolean}
      */
-    isFloat () {
+    get isFloat () {
 
         return this.isStart === false && this.isEnd === false && this.children && this.children.length === 0;
     }
 
     /**
-     * Checks whether the event is an end-and-start event: is an end tag and
+     * Getter whether the event is an end-and-start event: is an end tag and
      * only has one child.
      *
-     * @method isEndAndStart
-     * @returns {Boolean} - true if the event is an end-and-start event; false otherwise.
+     * @type {Boolean}
      */
-    isEndAndStart () {
+    get isEndAndStart () {
 
         return this.isEnd && this.children && this.children.length === 1;
     }
