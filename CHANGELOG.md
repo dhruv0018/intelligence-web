@@ -10,6 +10,7 @@
 ## Bug Fixes / Improvements ##
 - Imposes character limit for various profile fields
 - Hide public share option for athletes with recruit only
+- Working red zone filters for down & distance and formation reports
 
 # v2.12.0 #
 
