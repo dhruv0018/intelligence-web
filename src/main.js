@@ -84,6 +84,7 @@ require('./constants/device');
 require('./constants/states');
 require('./constants/video-player');
 require('./constants/views');
+require('./constants/mobile-apps');
 require('./constants/schemas');
 require('./constants/subscriptions');
 require('./constants/playlist');
@@ -92,6 +93,7 @@ require('./constants/telestrations');
 require('./constants/feature-flags');
 require('./constants/cue-points');
 require('./constants/transcodeProfiles');
+
 
 require('./models/users');
 require('./models/sports');

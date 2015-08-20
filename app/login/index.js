@@ -1,11 +1,11 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Login module for managing user logins.
  * @module Login
  */
-var Login = angular.module('login', [
+const Login = angular.module('login', [
     'ui.router',
     'ui.bootstrap'
 ]);
@@ -22,6 +22,7 @@ Login.run([
         $templateCache.put('locked.html', require('./locked.html'));
         $templateCache.put('forgot.html', require('./forgot.html'));
         $templateCache.put('reset.html', require('./reset.html'));
+        $templateCache.put('new-user.html', require('./new-user.html'));
     }
 ]);
 
@@ -69,32 +70,19 @@ Login.config([
 
                 onEnter: [
                     '$state', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService',
-                    function($state, ROLES, auth, session, account) {
+                    function ($state, ROLES, auth, session, account) {
 
                         if (auth.isLoggedIn) {
 
-                            var currentUser = session.retrieveCurrentUser();
+                            let currentUser = session.retrieveCurrentUser();
 
-                            /* If the user has more than one role, but has not
-                            * selected a default one yet. */
-                            if (currentUser &&
-                                currentUser.roles &&
-                                currentUser.roles.length > 1 &&
-                                !currentUser.defaultRole) {
-
-                                $state.go('roles', false);
-
-                            } else {
-
-                                account.gotoUsersHomeState(currentUser);
-                            }
+                            account.gotoUsersHomeState(currentUser);
                         }
                     }
                 ]
             })
 
             .state('locked', {
-                public: true,
                 url: '',
                 parent: 'login',
                 views: {
@@ -109,7 +97,6 @@ Login.config([
             })
 
             .state('forgot', {
-                public: true,
                 url: '^/forgot-password',
                 parent: 'login',
                 views: {
@@ -124,7 +111,6 @@ Login.config([
             })
 
             .state('reset', {
-                public: true,
                 url: '^/password-reset/:token',
                 parent: 'login',
                 views: {
@@ -136,13 +122,45 @@ Login.config([
                         controller: 'LoginController'
                     }
                 },
+                data: {
+
+                    isResettingPassword: true
+                },
 
                 onEnter: ['$state', '$stateParams',
-                    function($state, $stateParams) {
+                    function resetOnEnter ($state, $stateParams) {
 
                         if (!$stateParams.token) {
 
                             throw new Error('No password reset token!');
+                        }
+                    }
+                ]
+            })
+
+            .state('new', {
+                url: '^/new-user/:token',
+                parent: 'login',
+                views: {
+                    'header@login': {
+                        templateUrl: 'signup.html'
+                    },
+                    'main@login': {
+                        templateUrl: 'new-user.html',
+                        controller: 'LoginController'
+                    }
+                },
+                data: {
+
+                    isNewUser: true
+                },
+
+                onEnter: ['$state', '$stateParams',
+                    function newOnEnter ($state, $stateParams) {
+
+                        if (!$stateParams.token) {
+
+                            throw new Error('No new user token!');
                         }
                     }
                 ]
@@ -172,7 +190,9 @@ LoginController.$inject = [
     'AlertsService',
     'UsersFactory',
     'AnalyticsService',
+    'TermsDialog.Service',
     'EMAIL_REQUEST_TYPES',
+    'MOBILE_APP_URLS'
 ];
 
 function LoginController(
@@ -189,12 +209,15 @@ function LoginController(
     alerts,
     users,
     analytics,
-    EMAIL_REQUEST_TYPES
+    TermsDialog,
+    EMAIL_REQUEST_TYPES,
+    MOBILE_APP_URLS
 ) {
 
-    $scope.config = config;
+    $scope.config          = config;
+    $scope.MOBILE_APP_URLS = MOBILE_APP_URLS;
 
-    var currentUser = session.retrieveCurrentUser();
+    let currentUser = session.retrieveCurrentUser();
 
     if (currentUser && currentUser.persist) {
 
@@ -203,41 +226,121 @@ function LoginController(
         $scope.login.remember = currentUser.persist;
     }
 
-    $scope.submitLogin = function() {
+    if ($state.current.data && $state.current.data.isResettingPassword) {
+
+        $scope.resetPassword = true;
+    }
+
+    if ($state.current.data && $state.current.data.isNewUser) {
+
+        $scope.newUser = {
+            password     : undefined,
+            showPassword : true, // By default, show the new user's password
+            agree        : false
+        };
+    }
+
+    $scope.submitNewUserLogin = function submitNewUserLogin () {
 
         $scope.login.submitted = true;
 
-        var email = $scope.login.email;
-        var password = $scope.login.password;
-        var persist = $scope.login.remember;
+        let email    = $scope.login.email;
+        let password = $scope.login.password;
+
+        /* Login the user. */
+        auth.loginUser(email, password)
+        .then((user) => {
+
+            if (user) {
+
+                /* Track the event for MixPanel */
+                analytics.track({
+                    category : 'Login',
+                    action   : 'Selected',
+                    label    : 'SignIn'
+                });
+
+                /* First login, so user has already accepted Terms and
+                 * Conditions by setting password. Record that. */
+                user.updateTermsAcceptedDate();
+
+                /* Update last accessed data and save. */
+                user.lastAccessed = new Date().toISOString();
+                user.save();
+
+                /* Once successfully logged in, determine the user's home state.
+                 * Then, track user in analytics (user may not have a default
+                 * roll yet). */
+                account.gotoUsersHomeState(user)
+                .then(analytics.identify);
+            }
+        }, function(error) {
+
+            if (error) {
+
+                $scope.login.submitted = false;
+
+                /* Handle case where the API returns an error because the
+                 * user is forbidden from logging in. */
+                if (error.name === 'ForbiddenError') {
+
+                    $state.go('locked');
+                }
+
+                /* Handle case where the API returns an error because the
+                 * user was not found in the system. */
+                else if (error.name === 'NotFoundError') {
+
+                    alerts.add({
+                        type: 'danger',
+                        message: 'No account found for that email.'
+                    });
+                }
+
+                /* Handle case where the API returns an error because the
+                 * user is not authorized. */
+                else if (error.name === 'NotAuthorizedError') {
+
+                    alerts.add({
+                        type: 'danger',
+                        message: 'Not authorized.'
+                    });
+                }
+
+                else throw error;
+            }
+        });
+    };
+
+    $scope.submitLogin = function submitLogin () {
+
+        $scope.login.submitted = true;
+
+        let email = $scope.login.email;
+        let password = $scope.login.password;
+        let persist = $scope.login.remember;
 
         /* Login the user. */
         auth.loginUser(email, password, persist).then(function(user) {
             if (user) {
 
                 /* Track the event for MixPanel */
-                analytics.track('Login', 'Selected', 'SignIn');
+                analytics.track({
+                    category : 'Login',
+                    action   : 'Selected',
+                    label    : 'SignIn'
+                });
 
-                /* If the user has more than one role, but has not selected
-                 * a default one yet. */
-                if (user.isActive() && !user.defaultRole) {
-                    $state.go('roles', false).then(function () {
-
-                        /* Indentify the user for MixPanel */
-                        analytics.identify();
-                    });
-                } else {
-                    account.gotoUsersHomeState(user).then(function () {
-
-                        /* Indentify the user for MixPanel */
-                        analytics.identify();
-                    });
-                }
-
+                /* Update last accessed data and save. */
                 user.lastAccessed = new Date().toISOString();
                 user.save();
-            }
 
+                /* Once successfully logged in, determine the user's home state.
+                 * Then, track user in analytics (user may not have a default
+                 * roll yet). */
+                account.gotoUsersHomeState(user)
+                .then(analytics.identify);
+            }
         }, function(error) {
 
             if (error) {
@@ -273,11 +376,11 @@ function LoginController(
         });
     };
 
-    $scope.submitForgotPassword = function() {
+    $scope.submitForgotPassword = function submitForgotPassword () {
 
         $scope.login.submitted = true;
 
-        var email = $scope.$parent.login.email;
+        let email = $scope.$parent.login.email;
 
         users.resendEmail(EMAIL_REQUEST_TYPES.FORGOTTEN_PASSWORD, null, email).then(
 
@@ -324,25 +427,31 @@ function LoginController(
         );
     };
 
-    $scope.submitResetPassword = function() {
+    $scope.submitResetPassword = function submitResetPassword () {
+
+        $scope.reset.submitted = true;
 
         if ($stateParams.token) {
 
-            users.passwordReset($stateParams.token, $scope.reset.password).then(
+            let token    = $stateParams.token;
+            let password = $scope.reset.password;
 
+            users.passwordReset(token, password).then(
 
                 function success(data, status) {
 
                     $scope.reset.submitted = false;
 
-                    $scope.login = {};
-                    $scope.login.email = data.email;
-                    $scope.login.password = $scope.reset.password;
+                    $scope.login          = {};
+                    $scope.login.email    = data.email;
+                    $scope.login.password = password;
 
                     $scope.submitLogin();
                 },
 
                 function error(data, status) {
+
+                    $scope.reset.submitted = false;
 
                     alerts.add({
                         type: 'danger',
@@ -353,5 +462,56 @@ function LoginController(
                 }
             );
         }
+    };
+
+    /**
+     * Upon first login, save the user's new password
+     * @method submitNewUserPassword
+     */
+    $scope.submitNewUserPassword = function submitNewUserPassword () {
+
+        $scope.newUser.submitted = true;
+
+        if ($stateParams.token) {
+
+            let token    = $stateParams.token;
+            let password = $scope.newUser.password;
+
+            users.passwordReset(token, password).then(
+
+                function success(data, status) {
+
+                    $scope.login          = {};
+                    $scope.login.email    = data.email;
+                    $scope.login.password = password;
+
+                    $scope.submitNewUserLogin();
+                },
+
+                function error(data, status) {
+
+                    $scope.newUser.submitted = false;
+
+                    alerts.add({
+                        type: 'danger',
+                        message: 'There was a problem setting your new password'
+                    });
+
+                    throw new Error('Could not set new password');
+                }
+            );
+        }
+    };
+
+    /**
+     * Show the Terms & Conditions modal.
+     * @method showTerms
+     * @param {Object} Click event object to prevent propagation. Clicking terms
+     * link toggles check box otherwise.
+     */
+    $scope.showTerms = function showTerms (event) {
+
+        event.stopPropagation();
+        TermsDialog.show();
     };
 }
