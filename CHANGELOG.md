@@ -13,6 +13,8 @@
 - Imposes character limit for various profile fields
 - Hide public share option for athletes with recruit only
 - Working red zone filters for down & distance and formation reports
+- After indexing arena, should be able to view tagged coordinates again if clicking on arena tag; currently the coordinates disappear if calling up arena again
+- Double-clicking on a coordinate for an arena tag makes tag move to upper corner - not sure if intentional
 
 # v2.12.0 #
 
