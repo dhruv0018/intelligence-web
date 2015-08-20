@@ -1,10 +1,10 @@
-var pkg = require('../../package.json');
-var moment = require('moment');
+const pkg    = require('../../package.json');
+const moment = require('moment');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
 /**
  * A service to handle segment.io analytics for user information
@@ -28,9 +28,19 @@ IntelligenceWebClient.service('AnalyticsService', [
             identify: function () {
 
                 let user     = session.retrieveCurrentUser();
-                let teamId   = session.getCurrentTeamId() || '';
+                let teamId   = '';
                 let leagueId = '';
                 let sportId  = '';
+
+                // TODO: This should be safe to call without the try/catch
+                // block. Find out why and fix it.
+                try {
+
+                    teamId = session.getCurrentTeamId();
+                } catch (e) {
+
+                    return;
+                }
 
                 if (teamId) {
 
@@ -59,22 +69,23 @@ IntelligenceWebClient.service('AnalyticsService', [
             /**
              * Tracks the user event that has just occurred and reports
              * to Mixpanel (via segment.io).
-             * @param {String} category  - The section of the application the event originated (e.g. 'Account', 'Breakdown').
-             * @param {String} action    - The action performed to initate the event (e.g. 'Selected', 'Filtered', etc.).
-             * @param {String} label     - The item or target of the event action.
-             * @param {String} pageInfo  - Info about the page.
-             * @param {String} property1 - Extra property.
-             * @param {String} property2 - Extra property.
+             * @param {Object} event - The details of the event to track:
+             * category  - The section of the application the event originated (e.g. 'Account', 'Breakdown').
+             * action    - The action performed to initate the event (e.g. 'Selected', 'Filtered', etc.).
+             * label     - The item or target of the event action.
+             * pageInfo  - Info about the page.
+             * property1 - Extra property.
+             * property2 - Extra property.
              * @return undefined
              */
-            track: function (category, action, label, pageInfo, property1, property2) {
+            track: function (event) {
 
-                $analytics.eventTrack(action, {
-                    'Category'  : category,
-                    'Label'     : label,
-                    'Page Info' : pageInfo || '',
-                    'Property'  : property1 || '',
-                    'Property2' : property2 || ''
+                $analytics.eventTrack(event.action, {
+                    'Category'  : event.category,
+                    'Label'     : event.label,
+                    'Page Info' : event.pageInfo || '',
+                    'Property'  : event.property1 || '',
+                    'Property2' : event.property2 || ''
                 });
             }
         };

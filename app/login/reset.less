@@ -15,10 +15,12 @@
             position: relative;
         }
 
-        .form-group:first-child {
+        .desktop({
+            .form-group:first-child {
 
-            margin-bottom: 50px;
-        }
+                margin-bottom: 50px;
+            }
+        });
 
         .form-group:last-child {
 
@@ -35,6 +37,11 @@
         h2 {
 
             letter-spacing: -0.01em;
+
+            .mobile({
+
+                font-size: @font-size-large;
+            });
         }
 
         h3 {
