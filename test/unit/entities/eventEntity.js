@@ -418,12 +418,12 @@ describe('Event Entity', () => {
     it('should have a "valid" getter that tests the validity of the fields', () => {
 
         /* Instantiated with event JSON */
-        expect(sampleEvent.valid).to.be.a.boolean;
-        expect(sampleEvent.valid).to.be.true;
+        expect(sampleEvent.isValid).to.be.a.boolean;
+        expect(sampleEvent.isValid).to.be.true;
 
         /* Instantiated without event JSON */
-        expect(sampleEmptyEvent.valid).to.be.a.boolean;
-        expect(sampleEmptyEvent.valid).to.be.false;
+        expect(sampleEmptyEvent.isValid).to.be.a.boolean;
+        expect(sampleEmptyEvent.isValid).to.be.false;
     });
 
     it('should have called toJSON on a JSON.stringify call', () => {
