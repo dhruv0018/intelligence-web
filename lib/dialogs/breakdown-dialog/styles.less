@@ -1,0 +1,30 @@
+@import (reference) "main.less";
+
+.breakdown-dialog {
+
+    display: flex;
+    flex-basis: 100%;
+    height: 100%;
+
+    .dialog-content,
+    .dialog-body {
+        display: flex;
+        flex: 1;
+    }
+
+    .dialog-header {
+
+        padding: 0 16px;
+
+        .dialog-title {
+
+            text-align: left;
+
+            i {
+                cursor: pointer;
+                color: @brand-danger;
+            }
+        }
+
+    }
+}

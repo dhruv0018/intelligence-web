@@ -1,12 +1,12 @@
 {
-    "name": "film-breakdown",
+    "name": "form-toggle",
     "templates": [
         "template.html"
     ],
-    "styles": [
-        "styles.less"
-    ],
     "scripts": [
         "index.js"
+    ],
+    "styles": [
+        "styles.less"
     ]
 }

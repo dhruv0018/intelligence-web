@@ -1,7 +1,6 @@
 <div class="player-information">
     <div class="player-profile-container">
-        <profile-placeholder data-ng-if="!user.imageUrl"></profile-placeholder>
-        <img alt="profile image" class="profile-picture" data-ng-if="user.imageUrl" data-ng-src="{{user.imageUrl}}">
+        <profile-picture user="user"></profile-picture>
         <h3>{{user.firstName}} {{user.lastName}}</h3>
         <a href open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = user">Edit Profile</a>
     </div>
