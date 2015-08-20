@@ -103,17 +103,11 @@ class KrossoverEvent extends Entity {
     /**
      * Getter for Summary Fields
      *
-     * @type {Array}
+     * @type {Array|null}
      */
     get summaryFields () {
 
-        if (this.summaryScript) {
-
-            return this.mapScript(this.summaryScript);
-        } else {
-
-            return null;
-        }
+        return this.mapScript(this.summaryScript);
     }
 
     /**
