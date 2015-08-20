@@ -35,8 +35,6 @@ class KrossoverEvent extends Entity {
         this.tagId = tag.id;
         this.time  = time;
 
-        delete this.id;
-
         /* If we have an event, fill in the details */
         if (event) {
 
