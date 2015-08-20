@@ -54,7 +54,7 @@ function ExperienceController (
 
     $scope.getPosition = function(teamId, positionId) {
         let positionset = $scope.getPositionSet(teamId);
-        let position = positionset.getPositionById(positionId);
+        let position = positionset.getPosition(positionId);
         return position;
     };
 

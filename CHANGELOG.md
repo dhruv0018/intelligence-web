@@ -14,6 +14,15 @@
 
 # v2.12.0 #
 
+## Features ##
+- Design improvements to the queue so there is less scrolling
+- Show game length for uploaded game film to Admin in Queue
+- New users need to agree to Terms & Conditions
+- Old users need to agree to Terms & Conditions
+
+## Bug Fixes / Improvements ##
+- When an indexer/QA sets a game aside, Operations should receive an e-mail
+
 # v2.11.0 #
 
 ## Features ##

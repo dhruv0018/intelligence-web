@@ -1,0 +1,77 @@
+@import (reference) "main.less";
+
+arena-chart-filters {
+    display: block;
+}
+
+.arena-chart-filters {
+    height: 90px;
+    justify-content: space-between;
+
+    @team-name-width: 120px;
+
+    &-start {
+        justify-content: flex-start;
+
+        &:first-child {
+            text-align: left;
+        }
+    }
+
+    &-center {
+        justify-content: center;
+    }
+
+    &-end {
+        justify-content: flex-end;
+
+        &:last-child {
+            text-align: right;
+        }
+    }
+
+    .filter-group {
+        display: flex;
+        padding: 0px 15px;
+
+        &__item {
+            margin: 0 15px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-direction: column;
+
+            &:first-child {
+                margin-left: 0px;
+            }
+
+            &:last-child {
+                margin-right: 0px;
+            }
+        }
+
+        &:first-child, &:last-child {
+            .filter-group__item {
+                align-items: center;
+            }
+        }
+    }
+
+    krossover-checkbox {
+        margin-right: 5px;
+    }
+
+    .team-label {
+
+        &__name {
+            .text-overflow;
+            display: inline-block;
+            width: @team-name-width;
+            vertical-align: middle;
+        }
+    }
+
+    .shot-icon {
+        margin-right: 4px;
+    }
+}

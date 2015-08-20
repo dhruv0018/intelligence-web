@@ -8,12 +8,12 @@ require('down-and-distance');
 require('game-info');
 require('stats');
 require('formations');
-require('shot-chart');
+require('arena-chart');
 
 /**
- * Coach game area raw film page module.
- * @module Games
- */
+* Coach game area raw film page module.
+* @module Games
+*/
 const Games = angular.module('Games', [
     'Games.RawFilm',
     'Games.Breakdown',
@@ -21,7 +21,7 @@ const Games = angular.module('Games', [
     'Games.Info',
     'Games.Stats',
     'Games.Formations',
-    'Games.ShotChart'
+    'Games.ArenaChart'
 ]);
 
 Games.run([
@@ -94,6 +94,7 @@ Games.config([
                 'Games.Data': [
                     '$q',
                     '$stateParams',
+                    'PositionsetsFactory',
                     'GamesFactory',
                     'ReelsFactory',
                     'TeamsFactory',
@@ -105,6 +106,7 @@ Games.config([
                     function(
                         $q,
                         $stateParams,
+                        positionsets,
                         games,
                         reels,
                         teams,
@@ -123,7 +125,11 @@ Games.config([
 
                             let Data = {
                                 leagues: leagues.load(),
-                                reels: reels.load({ relatedUserId: session.getCurrentUserId() })
+
+                                reels: reels.load({ relatedUserId: session.getCurrentUserId() }),
+
+                                positionsets: positionsets.load()
+
                             };
 
                             //Load custom tags
@@ -160,7 +166,8 @@ Games.config([
     }
 ]);
 
-Games.controller('Games.controller', [
+GamesController.$inject = [
+    'Features',
     'DEVICE',
     '$rootScope',
     'TELESTRATION_PERMISSIONS',
@@ -175,122 +182,129 @@ Games.controller('Games.controller', [
     'SessionService',
     'SPORTS',
     'SPORT_IDS',
-    'ROLES',
-    function controller(
-        DEVICE,
-        $rootScope,
-        TELESTRATION_PERMISSIONS,
-        $scope,
-        $state,
-        $stateParams,
-        games,
-        teams,
-        leagues,
-        users,
-        auth,
-        session,
-        SPORTS,
-        SPORT_IDS,
-        ROLES
-    ) {
+    'ROLES'
+];
 
-        let gameId = Number($stateParams.id);
-        let game = games.get(gameId);
-        let team = teams.get(game.uploaderTeamId);
-        let league = leagues.get(team.leagueId);
-        let currentUser = session.getCurrentUser();
-        let sport = SPORTS[SPORT_IDS[league.sportId]];
-        let transcodeCompleted = game.isVideoTranscodeComplete();
-        let breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isSharedWithUser(currentUser) && game.getShareByUser(currentUser).isBreakdownShared;
-        let uploader = users.get(game.uploaderUserId);
-        let uploaderIsCoach = uploader.is(ROLES.COACH);
-        let isUploader = game.isUploader(currentUser.id);
-        let isTeamUploadersTeam = game.isTeamUploadersTeam(currentUser.currentRole.teamId);
-        let isCoach = currentUser.is(ROLES.COACH);
-        let isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
-        let isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
-        let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
+function GamesController(
+    features,
+    DEVICE,
+    $rootScope,
+    TELESTRATION_PERMISSIONS,
+    $scope,
+    $state,
+    $stateParams,
+    games,
+    teams,
+    leagues,
+    users,
+    auth,
+    session,
+    SPORTS,
+    SPORT_IDS,
+    ROLES
+) {
 
-        /* Scope */
+    let gameId = Number($stateParams.id);
+    let game = games.get(gameId);
+    let team = teams.get(game.uploaderTeamId);
+    let league = leagues.get(team.leagueId);
+    let currentUser = session.getCurrentUser();
+    let sport = SPORTS[SPORT_IDS[league.sportId]];
+    let transcodeCompleted = game.isVideoTranscodeComplete();
+    let breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isSharedWithUser(currentUser) && game.getShareByUser(currentUser).isBreakdownShared;
+    let uploader = users.get(game.uploaderUserId);
+    let uploaderIsCoach = uploader.is(ROLES.COACH);
+    let isUploader = game.isUploader(currentUser.id);
+    let isTeamUploadersTeam = game.isTeamUploadersTeam(currentUser.currentRole.teamId);
+    let isCoach = currentUser.is(ROLES.COACH);
+    let isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
+    let isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
+    let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
 
-        $scope.game = game;
-        $scope.teams = teams.getCollection();
-        $scope.team = $scope.teams[game.teamId];
-        $scope.opposingTeam = $scope.teams[game.opposingTeamId];
-        $scope.league = league;
+    /* Scope */
 
-        // services
-        $scope.auth = auth;
+    $scope.game = game;
+    $scope.teams = teams.getCollection();
+    $scope.team = $scope.teams[game.teamId];
+    $scope.opposingTeam = $scope.teams[game.opposingTeamId];
+    $scope.league = league;
 
-        // Telestrations Permissions
-        if (isMobile) {
-            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
-        }
-        // uploader could be a coach or an athlete (they have permissions to edit by default)
-        else if (isUploader) {
+    // services
+    $scope.auth = auth;
 
-            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+    // Telestrations Permissions
+    if (isMobile) {
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
+    }
+    // uploader could be a coach or an athlete (they have permissions to edit by default)
+    else if (isUploader) {
 
-        }
-        // Coaches on the same team as the uploader can edit
-        else if (isTeamUploadersTeam && isCoach) {
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
 
-            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+    }
+    // Coaches on the same team as the uploader can edit
+    else if (isTeamUploadersTeam && isCoach) {
 
-        } else if (isTelestrationsSharedWithCurrentUser || isTelestrationsSharedPublicly) {
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
 
-            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
+    } else if (isTelestrationsSharedWithCurrentUser || isTelestrationsSharedPublicly) {
 
-        } else {
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
 
-            $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
-        }
+    } else {
 
-        /* Define view selector states */
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
+    }
 
-        $scope.gameStates = [];
+    /* Define view selector states */
 
-        // Enable features for the game for coaches that are on the uploaders team
-        if (isTeamUploadersTeam && isCoach) {
+    $scope.gameStates = [];
 
-            // game information
-            $scope.gameStates.push({name: 'Games.Info'});
+    // Enable features for the game for coaches that are on the uploaders team
+    if (isTeamUploadersTeam && isCoach) {
 
-            // statistics related states
-            if (game.isDelivered()) {
+        // game information
+        $scope.gameStates.push({name: 'Games.Info'});
 
-                if (sport.hasStatistics) {
+        // statistics related states
+        if (game.isDelivered()) {
 
-                    $scope.gameStates.push({name: 'Games.Stats'});
-                }
+            if (sport.hasStatistics) {
 
-                // sport specific states
-                switch (sport.id) {
-                    case SPORTS.BASKETBALL.id:
-                        $scope.gameStates.push({name: 'Games.ShotChart'});
-                        break;
-                    case SPORTS.FOOTBALL.id:
-                        $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
-                        break;
-                }
+                $scope.gameStates.push({name: 'Games.Stats'});
             }
-        }
 
-        // video related states
-        if (transcodeCompleted) {
-
-            $scope.gameStates.unshift({name: 'Games.RawFilm'});
-
-            if (game.isDelivered()) {
-
-                $scope.gameStates.unshift({name: 'Games.Breakdown'});
-
-                //handles public sharing
-                if (!breakdownShared && !isTeamUploadersTeam) {
-
-                    $scope.gameStates.shift();
-                }
+            // sport specific states
+            switch (sport.id) {
+                case SPORTS.BASKETBALL.id:
+                    if (features.isEnabled('ArenaChart')) {
+                        $scope.gameStates.push({name: 'Games.ArenaChart'});
+                    }
+                    break;
+                case SPORTS.FOOTBALL.id:
+                    $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                    break;
             }
         }
     }
-]);
+
+    //video related states
+    if (transcodeCompleted) {
+
+        $scope.gameStates.unshift({name: 'Games.RawFilm'});
+
+        if (game.isDelivered()) {
+
+            $scope.gameStates.unshift({name: 'Games.Breakdown'});
+
+            //handles public sharing
+            if (!breakdownShared && !isTeamUploadersTeam) {
+
+                $scope.gameStates.shift();
+            }
+        }
+    }
+
+}
+
+Games.controller('Games.controller', GamesController);
