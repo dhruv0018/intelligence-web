@@ -136,60 +136,111 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
         //Plays Related
         $scope.plays = plays.getList({ gameId: $scope.game.id });
 
-        //Used to render the view for the
+        //Used to render the view for the dropdowns
         $scope.options = {
-            'distance': {
-                'Any': undefined,
-                'Short': 'short',
-                'Medium': 'medium',
-                'Long': 'long'
-            },
-            'weight': {
-                'Any': undefined,
-                'Left': 'Left',
-                'Right': 'Right',
-                'Balanced': 'Balanced'
-            },
-            'down': {
-                'Any': undefined,
-                '1st': '1st',
-                '2nd': '2nd',
-                '3rd': '3rd',
-                '4th': '4th'
-            },
-            'hash': {
-                'Any': undefined,
-                'Left': 'Left',
-                'Right': 'Right',
-                'Middle': 'Middle'
-            }
+            'distance': [
+                {
+                    name: 'Any',
+                    value: undefined
+                },
+                {
+                    name: 'Short',
+                    value: 'short'
+                },
+                {
+                    name: 'Medium',
+                    value: 'medium'
+                },
+                {
+                    name: 'Long',
+                    value: 'long'
+                }
+            ],
+            'weight': [
+                {
+                    name: 'Any',
+                    value: undefined
+                },
+                {
+                    name: 'Left',
+                    value: 'Left'
+                },
+                {
+                    name: 'Right',
+                    value: 'Right'
+                },
+                {
+                    name: 'Balanced',
+                    value: 'Balanced'
+                }
+            ],
+            'down': [
+                {
+                    name: 'Any',
+                    value: undefined
+                },
+                {
+                    name: '1st',
+                    value: '1st'
+                },
+                {
+                    name: '2nd',
+                    value: '2nd'
+                },
+                {
+                    name: '3rd',
+                    value: '3rd'
+                },
+                {
+                    name: '4th',
+                    value: '4th'
+                }
+            ],
+            'hash': [
+                {
+                    name: 'Any',
+                    value: undefined
+                },
+                {
+                    name: 'Left',
+                    value: 'Left'
+                },
+                {
+                    name: 'Right',
+                    value: 'Right'
+                },
+                {
+                    name: 'Middle',
+                    value: 'Middle'
+                }
+            ],
+            'redZone': [
+                {
+                    name: 'Whole Field',
+                    value: false
+                },
+                {
+                    name: 'Redzone',
+                    value: true
+                }
+            ]
         };
 
         //Default Report request
         $scope.dndReport = {
             gameId: $scope.game.id,
             teamId: $scope.teamId,
-            distance: $scope.options.distance[0],
-            strength: $scope.options.weight[0],
-            redZone: false,
-            hash: $scope.options.hash[0],
-            down: $scope.options.down[0],
+            distance: $scope.options.distance[0].value,
+            strength: $scope.options.weight[0].value,
+            redZone: $scope.options.redZone[0].value,
+            hash: $scope.options.hash[0].value,
+            down: $scope.options.down[0].value,
             customTagIds: []
         };
-
 
         //Generates a down and distant report based on various properties stored on the dndReport object
         $scope.createDownAndDistanceReport = function() {
             $scope.creatingDnDReport = true;
-
-            //TODO This casting seems very awkward -- perhaps the generation method should handle the casting
-            if ($scope.dndReport.redZone === 'true') {
-                $scope.dndReport.redZone = true;
-                $scope.redzone = true;
-            } else {
-                $scope.dndReport.redZone = false;
-                $scope.redzone = false;
-            }
 
             //TODO this doesn't seem to be doing anything at all, it is basically setting the variable back to itself
             if ($scope.dndReport.teamId == $scope.teamId) {
