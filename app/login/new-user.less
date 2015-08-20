@@ -1,0 +1,135 @@
+@import (reference) "main.less";
+@import (reference) "styles.less";
+
+.login-new-user {
+
+    padding: @mobile-pad;
+
+    .form-new-user {
+
+        .form-horizontal;
+
+        .form-group {
+
+            margin-left: 0;
+            margin-right: 0;
+            position: relative;
+        }
+    }
+
+    .new-user-form-group {
+
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+    .new-user-password {
+
+        .form-control;
+        width: 100%;
+        box-sizing: border-box;
+        height: auto;
+        line-height: 36px;
+        border-width: 2px;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+
+        &.ng-dirty {
+
+            &.ng-invalid-notfound:focus
+            &.ng-invalid-password:focus {
+
+                border-color: red;
+            }
+
+            &.ng-invalid-notfound:focus + .error,
+            &.ng-invalid-password:focus + .error {
+
+                .show;
+            }
+        }
+    }
+
+    .input-button-combo {
+
+        position: relative;
+    }
+
+    .show-hide-password {
+
+        .btn;
+        .btn-default;
+        .btn-sm;
+        min-width: 4em;
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        bottom: 6px;
+    }
+
+    .new-user-errors {
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        line-height: 1;
+
+        .error {
+
+            line-height: 1;
+            margin: 10px 0;
+            width: 100%;
+        }
+    }
+
+    .button-set-password {
+
+        height: 45px;
+        background-color: @btn-default-bg;
+        margin: auto;
+        .btn;
+        .btn-lg;
+
+        &:enabled {
+
+            .btn-primary;
+        }
+    }
+
+    .new-user-accept {
+
+        display: inline-block;
+        line-height: 1;
+
+        label {
+
+            width: 100%;
+            display: inline-block;
+            line-height: 1;
+            margin: 0;
+        }
+
+        check-box {
+
+            line-height: 1;
+        }
+
+        .error {
+
+            display: none;
+        }
+
+        &-label {
+
+            margin-bottom: 0;
+        }
+    }
+}
+
+.new-user-login {
+
+    padding-right: 0;
+    border-right: none;
+}
