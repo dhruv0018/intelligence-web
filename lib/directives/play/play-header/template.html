@@ -24,7 +24,7 @@
             <h4 class="column" ng-if="!isIndexer && !isReelsPlay">
 
                 <span class="playNumberAndTeam">
-                    <span ng-show="play.number >= 0">{{play.number + 1}}.&nbsp;</span>
+                    <span ng-show="play.number">{{play.number}}.&nbsp;</span>
                     {{teams[play.possessionTeamId].name}}
                 </span>
 
