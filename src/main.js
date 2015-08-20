@@ -23,6 +23,7 @@ import IndexingBlock from '../lib/directives/indexing-block/index';
 import DynamicTables from '../lib/directives/dynamic-tables/index';
 import SelectMediaSrc from '../lib/directives/video-player/select-media-src/index';
 import ArenaChart from '../lib/directives/arena-chart/index';
+import BreakdownDialog from '../lib/dialogs/breakdown-dialog/index';
 
 /* App dependencies */
 require('./config');

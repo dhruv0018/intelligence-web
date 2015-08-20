@@ -263,7 +263,8 @@ module.exports = function(grunt) {
                         'lib/directives/dynamic-tables/styles.less',
                         'app/styleguide/**/*.less',
                         'lib/directives/video-player/select-media-src/styles.less',
-                        'lib/directives/arena-chart/styles.less'
+                        'lib/directives/arena-chart/styles.less',
+                        'lib/dialogs/breakdown-dialog/styles.less'
                     ]
                 }
             }
