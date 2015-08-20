@@ -156,7 +156,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
                 /* If there are variables in the current event. */
                 else {
-                    return eventManager.current.valid;
+                    return eventManager.current.isValid;
                 }
 
             },
