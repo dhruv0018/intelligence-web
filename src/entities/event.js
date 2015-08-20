@@ -257,9 +257,9 @@ class KrossoverEvent extends Entity {
             variableValues: {},
         };
 
-        Object.keys(this.fields).forEach(index => {
+        Object.keys(this.fields).forEach(key => {
 
-            copy.variableValues[this.fields[index].id] = this.fields[index].toJSON();
+            copy.variableValues[this.fields[key].id] = this.fields[key].toJSON();
         });
 
         return copy;
