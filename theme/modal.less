@@ -3,13 +3,44 @@
 .modal {
 
     display: block;
+
+    /* For Angular Material */
+    &-content {
+
+        padding: 0;
+    }
 }
 
-.modal-backdrop {
+/* Base Modal Mixin: Common styles for modals used as prompts */
+.base-modal() {
 
-    height: 100%;
+    .desktop({
 
-    &.in { .opacity(.9); }
+        min-width: 50%;
+        max-width: 50%;
+    });
+
+    .modal {
+
+        &-body {
+
+            overflow: hidden;
+            overflow-y: auto;
+        }
+
+        &-header,
+        &-footer {
+
+            flex: 1 0 auto;
+        }
+    }
+}
+
+/* Modal layout */
+
+.modal-header {
+
+    width: 100%;
 }
 
 .modal-header {
@@ -33,11 +64,21 @@
     }
 }
 
+.modal-title {
+
+    color: @brand-blue;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
 .modal-content {
 
     font-size: 15px;
     font-family: @font-family-serif;
     border-radius: @border-radius-base;
+    border: none;
+    box-shadow: none;
 }
 
 .modal-body {
@@ -55,4 +96,82 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+}
+
+.modal-footer {
+
+    width: 100%;
+}
+
+/* Buttons */
+
+.modal-button {
+
+    .btn;
+
+    &:enabled {
+
+        .btn-primary;
+    }
+
+    &:disabled {
+
+        .btn;
+    }
+
+}
+
+/* Generic Actionable Items */
+
+.modal-cta {
+
+    cursor: pointer;
+
+    &:focus {
+
+        outline: none;
+    }
+
+    &-selected {
+
+        color: @brand-blue;
+        font-weight: 500;
+    }
+}
+
+/* Angular Material Overrides */
+
+/* Place the dialog above the loading Spinner */
+.md-dialog-container {
+
+    // TODO: Remove these flex overrides once Alex Young's modal fixed are
+    // merged into master.
+    align-items: center;
+    justify-content: center;
+    z-index: @zindex-modal;
+}
+
+/* Set the modal backdrop to blue */
+md-backdrop.md-opaque.md-default-theme {
+
+    background-color: fade(@brand-blue, 90%);
+}
+
+/* On mobile, make the modal dialog full screen */
+md-dialog.md-default-theme {
+
+    /* Screens less than this size */
+    .mobile({
+
+        display: block;
+        top: @mobile-pad;
+        left: @mobile-pad;
+        bottom: @mobile-pad;
+        right: @mobile-pad;
+        position: absolute;
+        max-width: 100%;
+        max-height: calc(~"100% - @{mobile-pad} - @{mobile-pad}");
+        min-width: 0;
+        min-height: 0;
+    });
 }

@@ -102,6 +102,16 @@
         width: 500px;
     }
 
+    .role {
+
+        // FIXME: This is a hack. Should find a better way of doing this
+        /* Override for Firefox flexbox */
+        * {
+            min-height: 0px;
+            min-width: 0px;
+        }
+    }
+
     .roles-save {
         margin-top: 20px;
     }

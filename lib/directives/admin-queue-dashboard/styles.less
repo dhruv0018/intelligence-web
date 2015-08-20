@@ -1,94 +1,94 @@
 @import (reference) "main.less";
 
-.admin-queue-dashboard {
-    .queue-dashboard {
-        position: relative;
-        width: 100%;
-        padding: 20px;
-        background-color: white;
-        border-bottom: thin solid @gray-border;
-        letter-spacing: normal;
-        min-height: 50px;
+admin-queue-dashboard {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    border-bottom: thin solid @gray-border;
+    letter-spacing: normal;
+    min-height: 50px;
+    display: table;
+    flex: 0 0 auto;
 
-        .general-status-row {
+    .general-status-row {
 
+        display: table-row;
+        height: 100px;
 
-            height: 100px;
+        .general-status-col {
+            display: table-cell;
+            padding: 0 20px;
+            border-right: thin solid @gray-border;
+            font-weight: 400;
 
-            .general-status-col {
-                display: table-cell;
-                padding: 0 20px;
-                border-right: thin solid @gray-border;
-                font-weight: 400;
-
-                &:last-child {
-                    border-right: none;
-                    position: relative;
-                    top: 30px;
-                }
-
-                h4 {
-                    font-size: 18px;
-                }
-
-                .status-good {
-                    font-size: 30px;
-                    color: @brand-success;
-                    font-weight: 500;
-                }
-
-                .status-bad {
-                    font-size: 30px;
-                    color: @brand-danger;
-                    font-weight: 500;
-                }
-
-                .general-status-info {
-                    display: block;
-                    width: 100%;
-
-                    span {
-                        margin-right: 20px;
-                    }
-
-                    .filter {
-                        display: inline-block;
-                        width: 110px;
-                        a {
-                            margin-right: 5px;
-                        }
-                    }
-                }
+            &:last-child {
+                border-right: none;
+                position: relative;
+                top: 30px;
             }
 
-        }
-
-        .time-status-row,
-        .assigned-status-row {
-            display: inline-block;
-            background-color: white;
-
-            th, td {
-                width: 90px;
-                border: thin solid @gray-border;
-                padding: 5px;
-                text-align: center;
-                vertical-align: middle;
+            h4 {
+                font-size: 18px;
             }
 
-            td {
+            .status-good {
                 font-size: 30px;
+                color: @brand-success;
+                font-weight: 500;
+            }
+
+            .status-bad {
+                font-size: 30px;
+                color: @brand-danger;
+                font-weight: 500;
+            }
+
+            .general-status-info {
+                display: block;
+                width: 100%;
+
+                span {
+                    margin-right: 20px;
+                }
+
+                .filter {
+                    display: inline-block;
+                    width: 110px;
+                    a {
+                        margin-right: 5px;
+                    }
+                }
             }
         }
 
-        .assigned-status-row {
-            margin-left: 10px;
+    }
+
+    .time-status-row,
+    .assigned-status-row {
+        display: inline-block;
+        background-color: white;
+
+        th, td {
+            width: 90px;
+            border: thin solid @gray-border;
+            padding: 5px;
+            text-align: center;
+            vertical-align: middle;
         }
 
+        td {
+            font-size: 30px;
+        }
     }
-    .toggle{
-        position: absolute;
-        cursor: pointer;
-        right: 25px;
+
+    .assigned-status-row {
+        margin-left: 10px;
     }
+
+}
+.toggle{
+    position: absolute;
+    cursor: pointer;
+    right: 25px;
 }
