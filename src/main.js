@@ -21,7 +21,9 @@ import Indexer from '../app/indexer/index.js';
 import Styleguide from '../app/styleguide/index.js';
 import IndexingBlock from '../lib/directives/indexing-block/index';
 import DynamicTables from '../lib/directives/dynamic-tables/index';
+import SelectMediaSrc from '../lib/directives/video-player/select-media-src/index';
 import ArenaChart from '../lib/directives/arena-chart/index';
+import BreakdownDialog from '../lib/dialogs/breakdown-dialog/index';
 
 /* App dependencies */
 require('./config');
@@ -83,6 +85,7 @@ require('./constants/device');
 require('./constants/states');
 require('./constants/video-player');
 require('./constants/views');
+require('./constants/mobile-apps');
 require('./constants/schemas');
 require('./constants/subscriptions');
 require('./constants/playlist');
@@ -90,6 +93,8 @@ require('./constants/keyboard');
 require('./constants/telestrations');
 require('./constants/feature-flags');
 require('./constants/cue-points');
+require('./constants/transcodeProfiles');
+
 
 require('./models/users');
 require('./models/sports');
@@ -180,3 +185,4 @@ import CustomTagsEvent from './events/customtags';
 require('./bootstrap');
 
 import * as Brokers from './brokers/index';
+import * as Entities from './entities/index';
