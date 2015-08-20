@@ -25,6 +25,10 @@
         "lastAccessed": {
             "type": "string",
             "format": "date-time"
+        },
+        "termsAcceptedDate": {
+            "type": "string",
+            "format": "date-time"
         }
     },
     "additionalProperties": false
