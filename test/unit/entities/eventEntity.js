@@ -46,8 +46,6 @@ describe('Event Entity', () => {
 
         expect(KrossoverEvent).to.respondTo('toJSON');
         expect(KrossoverEvent).to.respondTo('mapScript');
-        expect(KrossoverEvent).to.respondTo('isFloat');
-        expect(KrossoverEvent).to.respondTo('isEndAndStart');
     });
 
     it('should have certain properties when instantiated with event JSON', () => {
@@ -249,15 +247,15 @@ describe('Event Entity', () => {
         expect(sampleEmptyEvent.keyboardShortcut).to.equal('K');
     });
 
-    it('should have a "isFloat" method.', () => {
+    it('should have a "isFloat" getter.', () => {
 
         /* Instantiated with event JSON */
-        expect(sampleEvent.isFloat()).to.be.a('boolean');
-        expect(sampleEvent.isFloat()).to.be.false;
+        expect(sampleEvent.isFloat).to.be.a('boolean');
+        expect(sampleEvent.isFloat).to.be.false;
 
         /* Instantiated without event JSON */
-        expect(sampleEvent.isFloat()).to.be.a('boolean');
-        expect(sampleEvent.isFloat()).to.be.false;
+        expect(sampleEvent.isFloat).to.be.a('boolean');
+        expect(sampleEvent.isFloat).to.be.false;
     });
 
     it('should return null if trying to map a script that doesn\'t exist.', () => {
@@ -404,15 +402,15 @@ describe('Event Entity', () => {
         expect(sampleEmptyEvent.summaryHTML).to.be.a.string;
     });
 
-    it('should have a "isEndAndStart" method', () => {
+    it('should have a "isEndAndStart" getter', () => {
 
         /* Instantiated with event JSON */
-        expect(sampleEvent.isEndAndStart()).to.be.a('boolean');
-        expect(sampleEvent.isEndAndStart()).to.be.false;
+        expect(sampleEvent.isEndAndStart).to.be.a('boolean');
+        expect(sampleEvent.isEndAndStart).to.be.false;
 
         /* Instantiated without event JSON */
-        expect(sampleEmptyEvent.isEndAndStart()).to.be.a('boolean');
-        expect(sampleEmptyEvent.isEndAndStart()).to.be.false;
+        expect(sampleEmptyEvent.isEndAndStart).to.be.a('boolean');
+        expect(sampleEmptyEvent.isEndAndStart).to.be.false;
     });
 
     it('should have a "valid" getter that tests the validity of the fields', () => {
