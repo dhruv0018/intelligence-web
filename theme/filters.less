@@ -16,4 +16,22 @@
         background-color: @gray-lighter;
         color: @brand-blue;
     }
+
+    .filter-group {
+        display: flex;
+
+        &__item {
+            margin: 0px 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        &:first-child, &:last-child {
+            .filter-group__item {
+                align-items: center;
+            }
+        }
+    }
 }
