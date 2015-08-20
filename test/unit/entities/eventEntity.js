@@ -143,7 +143,6 @@ describe('Event Entity', () => {
 
     it('should not have certain properties when instantiated without event JSON', () => {
 
-        expect(sampleEmptyEvent.id).to.be.undefined;
         expect(sampleEmptyEvent.playId).to.be.undefined;
     });
 
