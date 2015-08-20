@@ -16,8 +16,40 @@ IntelligenceWebClient.config([
 IntelligenceWebClient.value('$previousState', {});
 
 IntelligenceWebClient.run([
-    'ANONYMOUS_USER', '$rootScope', '$urlRouter', '$state', '$stateParams', '$previousState', 'TokensService', 'AuthenticationService', 'AuthorizationService', 'SessionService', 'AlertsService',
-    function run(ANONYMOUS_USER, $rootScope, $urlRouter, $state, $stateParams, $previousState, tokens, auth, authz, session, alerts) {
+    '$timeout',
+    'DetectDeviceService',
+    'MobileAppDialog.Service',
+    'ANONYMOUS_USER',
+    '$rootScope',
+    '$urlRouter',
+    '$state',
+    '$stateParams',
+    '$previousState',
+    '$q',
+    'TokensService',
+    'AuthenticationService',
+    'AuthorizationService',
+    'SessionService',
+    'AlertsService',
+    'AccountService',
+    function run(
+        $timeout,
+        detectDevice,
+        MobileAppDialog,
+        ANONYMOUS_USER,
+        $rootScope,
+        $urlRouter,
+        $state,
+        $stateParams,
+        $previousState,
+        $q,
+        tokens,
+        auth,
+        authz,
+        session,
+        alerts,
+        account
+    ) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -100,6 +132,32 @@ IntelligenceWebClient.run([
 
             /* Store previous state */
             $previousState = fromState;
+
+            /* Get previous user */
+            let previousUser = session.retrievePreviousUser();
+
+            /* Make sure we aren't an admin switching to another user as we
+             * don't want to accidentially accept the terms on behalf of the
+             * user. Also make sure we're logged in. Then check for terms. */
+            if (previousUser || !auth.isLoggedIn) return;
+
+            /* Check for latest Terms acceptance/prompt user to accept. */
+            if (!account.hasAcceptedTerms()) {
+
+                /* If the user has NOT accepted the Terms & Conditions,
+                 * prompt them to accept. */
+                $state.go('UpdatedTermsAndConditions');
+            } else {
+
+                /* Is user using an iOS or Android device? */
+                let isMobile = detectDevice.iOS() || detectDevice.Android();
+
+                /* If a new user, then only show the mobile app promo dialog. */
+                if (isMobile) {
+
+                    $timeout(MobileAppDialog.show);
+                }
+            }
         });
 
         $rootScope.$on('roleChangeSuccess', function(event, role) {

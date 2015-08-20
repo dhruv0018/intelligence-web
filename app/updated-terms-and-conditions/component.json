@@ -1,0 +1,13 @@
+{
+    "name": "updated-terms-and-conditions",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}
