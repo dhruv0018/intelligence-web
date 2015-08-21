@@ -1,4 +1,4 @@
-import KrossoverEvent from '../../../src/entities/event';
+import KrossoverEvent from '../../../src/entities/event/index';
 import KrossoverTag from '../../../src/entities/tag';
 import Field from '../../../src/values/field/Field';
 import Static from '../../../src/values/field/Static';
