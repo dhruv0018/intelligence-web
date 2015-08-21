@@ -1,7 +1,7 @@
 class Value {
 
     constructor (value) {
-
+        this.extend(value);
     }
 
     extend (value) {

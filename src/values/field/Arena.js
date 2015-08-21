@@ -14,8 +14,7 @@ class ArenaField extends Field {
      * @constructs ArenaField
      * @param {Object} field - Field JSON from server
      */
-    constructor (field) {
-        if (!field) return;
+    constructor (field) {        
         super(field);
         let region = field.value && field.value.region ? this.initializeValue(field.value.region) : this.initializeValue(field.value);
         let coordinates = {

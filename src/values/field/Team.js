@@ -15,8 +15,6 @@ class TeamField extends Field {
      * @param {Object} field - Field JSON from server
      */
     constructor (field) {
-
-        if (!field) return;
         super(field);
 
         let teamId = this.initializeValue(field.value);

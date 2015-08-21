@@ -11,12 +11,6 @@ class StaticField extends Field {
      * @param {Object} field - Field JSON from server
      */
     constructor (field) {
-
-        if (!field && !field.value) {
-
-            throw new Error('StaticField constructor requires a field!');
-        }
-
         super(field);
 
         let value = {
