@@ -17,13 +17,7 @@ class FormationField extends Field {
         super(field);
 
         let formationId = this.initializeValue(field.value);
-        let formation = {};
-
-        this.formations.forEach((currentFormation)=> {
-            if (currentFormation.id === formationId) {
-                formation = currentFormation;
-            }
-        });
+        let formation = this.formations.find(formation => formation.id === formationId);
 
         let value = {
             formationId,
