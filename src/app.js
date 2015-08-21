@@ -4,6 +4,7 @@ var pkg = require('../package.json');
 var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name, [
+    'KrossoverBlurOnSelect',
     'ngSanitize',
     'ngResource',
     'angulartics',
