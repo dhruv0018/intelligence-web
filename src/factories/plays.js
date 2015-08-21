@@ -1,7 +1,7 @@
 import KrossoverPlay from '../entities/play';
 import KrossoverPlayDataDependencies from '../entities/playDataDependencies';
 import Video from '../entities/video';
-import KrossoverEvent from '../entities/event.js';
+import KrossoverEvent from '../entities/event/index';
 
 const pkg = require('../../package.json');
 

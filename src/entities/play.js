@@ -1,6 +1,6 @@
 import Entity from './entity';
-import KrossoverEvent from '../entities/event';
-import eventTemplate from './eventTemplate';
+import KrossoverEvent from './event/index';
+import template from './event/template';
 
 /**
  * KrossoverPlay Entity Model
@@ -60,7 +60,7 @@ class KrossoverPlay extends Entity {
             if (event.indexerScript) {
 
                 let indexerScriptHTMLString = event.indexerFields.toString();
-                return eventTemplate(event, indexerScriptHTMLString);
+                return template(event, indexerScriptHTMLString);
             }
         });
     }
@@ -104,7 +104,7 @@ class KrossoverPlay extends Entity {
         return this.events.map((event, index) => {
 
             let userScriptHTMLString = event.userFields.toString();
-            return eventTemplate(event, userScriptHTMLString);
+            return template(event, userScriptHTMLString);
         });
     }
 
