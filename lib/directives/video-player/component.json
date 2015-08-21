@@ -5,6 +5,7 @@
     ],
     "locals": [
         "video-player-seeking-controls",
+        "button-blur",
         "button-video-fast-forward",
         "button-video-fast-backward",
         "button-video-slow-forward",
