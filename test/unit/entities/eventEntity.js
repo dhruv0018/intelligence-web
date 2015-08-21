@@ -1,4 +1,4 @@
-import KrossoverEvent from '../../../src/entities/event';
+import KrossoverEvent from '../../../src/entities/event/index';
 import KrossoverTag from '../../../src/entities/tag';
 import Field from '../../../src/values/field/Field';
 import Static from '../../../src/values/field/Static';
@@ -46,8 +46,6 @@ describe('Event Entity', () => {
 
         expect(KrossoverEvent).to.respondTo('toJSON');
         expect(KrossoverEvent).to.respondTo('mapScript');
-        expect(KrossoverEvent).to.respondTo('isFloat');
-        expect(KrossoverEvent).to.respondTo('isEndAndStart');
     });
 
     it('should have certain properties when instantiated with event JSON', () => {
@@ -249,15 +247,15 @@ describe('Event Entity', () => {
         expect(sampleEmptyEvent.keyboardShortcut).to.equal('K');
     });
 
-    it('should have a "isFloat" method.', () => {
+    it('should have a "isFloat" getter.', () => {
 
         /* Instantiated with event JSON */
-        expect(sampleEvent.isFloat()).to.be.a('boolean');
-        expect(sampleEvent.isFloat()).to.be.false;
+        expect(sampleEvent.isFloat).to.be.a('boolean');
+        expect(sampleEvent.isFloat).to.be.false;
 
         /* Instantiated without event JSON */
-        expect(sampleEvent.isFloat()).to.be.a('boolean');
-        expect(sampleEvent.isFloat()).to.be.false;
+        expect(sampleEvent.isFloat).to.be.a('boolean');
+        expect(sampleEvent.isFloat).to.be.false;
     });
 
     it('should return null if trying to map a script that doesn\'t exist.', () => {
@@ -404,26 +402,26 @@ describe('Event Entity', () => {
         expect(sampleEmptyEvent.summaryHTML).to.be.a.string;
     });
 
-    it('should have a "isEndAndStart" method', () => {
+    it('should have a "isEndAndStart" getter', () => {
 
         /* Instantiated with event JSON */
-        expect(sampleEvent.isEndAndStart()).to.be.a('boolean');
-        expect(sampleEvent.isEndAndStart()).to.be.false;
+        expect(sampleEvent.isEndAndStart).to.be.a('boolean');
+        expect(sampleEvent.isEndAndStart).to.be.false;
 
         /* Instantiated without event JSON */
-        expect(sampleEmptyEvent.isEndAndStart()).to.be.a('boolean');
-        expect(sampleEmptyEvent.isEndAndStart()).to.be.false;
+        expect(sampleEmptyEvent.isEndAndStart).to.be.a('boolean');
+        expect(sampleEmptyEvent.isEndAndStart).to.be.false;
     });
 
     it('should have a "valid" getter that tests the validity of the fields', () => {
 
         /* Instantiated with event JSON */
-        expect(sampleEvent.valid).to.be.a.boolean;
-        expect(sampleEvent.valid).to.be.true;
+        expect(sampleEvent.isValid).to.be.a.boolean;
+        expect(sampleEvent.isValid).to.be.true;
 
         /* Instantiated without event JSON */
-        expect(sampleEmptyEvent.valid).to.be.a.boolean;
-        expect(sampleEmptyEvent.valid).to.be.false;
+        expect(sampleEmptyEvent.isValid).to.be.a.boolean;
+        expect(sampleEmptyEvent.isValid).to.be.false;
     });
 
     it('should have called toJSON on a JSON.stringify call', () => {

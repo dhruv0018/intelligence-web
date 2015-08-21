@@ -1,4 +1,4 @@
-import KrossoverEvent from '../entities/event.js';
+import KrossoverEvent from '../entities/event/index';
 
 var pkg = require('../../package.json');
 

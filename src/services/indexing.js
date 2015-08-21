@@ -1,4 +1,4 @@
-import KrossoverEvent from '../entities/event.js';
+import KrossoverEvent from '../entities/event/index';
 
 var pkg = require('../../package.json');
 
@@ -111,7 +111,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
-                if (event.isEndAndStart()) {
+                if (event.isEndAndStart) {
 
                     /* Get the tagId of the event. */
                     var tagId = event.tagId;
@@ -156,7 +156,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
                 /* If there are variables in the current event. */
                 else {
-                    return eventManager.current.valid;
+                    return eventManager.current.isValid;
                 }
 
             },
@@ -174,7 +174,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 /* If the event is a floating event. */
-                if (eventManager.current && eventManager.current.isFloat()) {
+                if (eventManager.current && eventManager.current.isFloat) {
 
                     let currentEvent = eventManager.current;
 
@@ -182,7 +182,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     let previousEvent = playManager.previousEvent(currentEvent);
 
                     /* While the previous event is a float. */
-                    while (previousEvent.isFloat()) {
+                    while (previousEvent.isFloat) {
 
                         /* Get the previous event. */
                         previousEvent = playManager.previousEvent(previousEvent);
