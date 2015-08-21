@@ -2,6 +2,8 @@ import Entity from './entity';
 import KrossoverEvent from './event/index';
 import template from './event/template';
 
+const schema = require('../../schemas/play.json');
+
 /**
  * KrossoverPlay Entity Model
  * @class KrossoverPlay
@@ -19,6 +21,16 @@ class KrossoverPlay extends Entity {
 
             throw new Error('Invoking KrossoverPlay.constructor without passing a JSON object');
         }
+
+        /* Validate event JSON */
+        /* TODO: Re-enable this at some point. Right now, far too many
+         * plays are failing validtion and polluting the console. */
+        // let validation = this.validate(play, schema);
+        //
+        // if (validation.errors.length) {
+        //
+        //     console.warn(validation.errors.shift());
+        // }
 
         super(play);
 
