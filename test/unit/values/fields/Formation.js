@@ -31,7 +31,7 @@ describe('Formation Field', () => {
         let value = field.value;
         expect(value.formationId).to.equal(1);
         expect(value.name).to.equal('Empty');
-        expect(value.numberPlayers).to.equal(6);
+        expect(value.numberOfPlayers).to.equal(6);
     });
 
     it('Should be able to set an optional value if the field is not required' , () => {
