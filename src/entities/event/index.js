@@ -1,8 +1,8 @@
-import Entity from './entity';
-import FieldFactory from '../values/field/FieldFactory';
-import eventTemplate from './eventTemplate';
+import Entity from '../entity';
+import FieldFactory from '../../values/field/FieldFactory';
+import template from './template';
 
-const schema = require('../../schemas/event.json');
+const schema = require('../../../schemas/event.json');
 
 /**
  * KrossoverEvent Entity Model
@@ -98,7 +98,7 @@ class KrossoverEvent extends Entity {
 
         if (this.indexerFields) {
 
-            return eventTemplate(this, this.indexerFields.toString());
+            return template(this, this.indexerFields.toString());
         }
     }
 
@@ -144,7 +144,7 @@ class KrossoverEvent extends Entity {
 
         if (this.userFields) {
 
-            return eventTemplate(this, this.userFields.toString());
+            return template(this, this.userFields.toString());
         }
     }
 
