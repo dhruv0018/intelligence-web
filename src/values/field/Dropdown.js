@@ -14,8 +14,6 @@ class DropdownField extends Field {
      * @param {Object} field - Field JSON from server
      */
     constructor (field) {
-
-        if (!field) return;
         super(field);
 
         let content = this.initializeValue(field.value, String);

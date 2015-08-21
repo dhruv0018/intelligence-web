@@ -17,8 +17,6 @@ class PassingZoneField extends Field {
      * @param {Object} field - Field JSON from server
      */
     constructor (field) {
-
-        if (!field) return;
         super(field);
         let zoneId = this.initializeValue(field.value);
         let zone = angular.copy(ZONES[ZONE_IDS[zoneId]]);

@@ -14,8 +14,6 @@ class FormationField extends Field {
      * @param {Object} field - Field JSON from server
      */
     constructor (field) {
-
-        if (!field) return;
         super(field);
 
         let formationId = this.initializeValue(field.value);
