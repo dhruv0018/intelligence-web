@@ -1,6 +1,8 @@
 # v2.13.0 #
 
 ## Features ##
+- Create list collection class
+- Create ordered list collection class
 - Updates to embed player for reels
 - Athlete profile onboarding modal
 - Athlete profile shows all profile reels under featured reel
