@@ -77,13 +77,24 @@
 
                 <div class="controls-right">
 
-                    <a class="download control-button" ng-href="{{videoPlayer.sources[0].src}}" tooltip="Download" download>
+                    <a
+                        class="download control-button"
+                        ng-href="{{videoPlayer.sources[0].src}}"
+                        tooltip="Download"
+                        download
+                        button-blur
+                    >
                         <i class="icon icon-download"></i>
                     </a>
 
-                    <select-media-src></select-media-src>
+                    <select-media-src
+                        button-blur
+                    ></select-media-src>
 
-                    <vg-fullscreen-button tooltip="Toggle Fullscreen"></vg-fullscreen-button>
+                    <vg-fullscreen-button
+                        button-blur
+                        tooltip="Toggle Fullscreen"
+                    ></vg-fullscreen-button>
 
                 </div>
             </div>
