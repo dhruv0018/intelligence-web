@@ -55,7 +55,7 @@ class KrossoverPlay extends Entity {
      */
     get indexerScript () {
 
-        return this.events.map((event, index) => {
+        return this.events.map(event => {
 
             if (event.indexerScript) {
 
