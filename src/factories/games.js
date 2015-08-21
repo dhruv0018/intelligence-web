@@ -961,15 +961,27 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return model.getFormationReport({ id: self.id });
             },
 
-            copy: function(criteria) {
+            /**
+             * copy a game to team
+             * @param {Integer} teamId - the team ID of the team for which the
+             * game should be copied.
+             * @throws {Error} if there its an unsaved game.
+             */
+            copy: function(teamId) {
 
-                var self = this;
+                let self = this;
 
-                var Resource = $injector.get(self.model);
+                if (!self.id) throw new Error('Game must exist to copy');
 
-                var gameCopy = new Resource(criteria);
+                const copyCriteria = {
+                    teamId : teamId,
+                    gameId : self.id
+                };
 
-                return $q.when(gameCopy.$copy({ id: criteria.gameId }));
+                let Resource = $injector.get(self.model);
+                let copyResource = new Resource(copyCriteria);
+
+                return $q.when(copyResource.$copy());
             },
 
             getDownAndDistanceReport: function(report) {
