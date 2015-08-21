@@ -24,7 +24,7 @@ class FormationField extends Field {
             get name() {
                 return formationId ? formation.name : field.name;
             },
-            get numberPlayers(){
+            get numberOfPlayers(){
                 return formation.numberPlayers;
             }
         };
