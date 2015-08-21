@@ -35,15 +35,14 @@ class FormationField extends Field {
     get availableValues() {
         let values = [];
         values = this.formations.map(formation => {
-            let currentFormation = formation;
             return {
-                formationId: Number(currentFormation.id),
-                numberOfPlayers: currentFormation.numberPlayers,
-                name: currentFormation.name,
+                formationId: Number(formation.id),
+                numberOfPlayers: formation.numberPlayers,
+                name: formation.name,
                 get order() {
                     //low priority formation is sent to the bottom
-                    if (currentFormation.name === 'Other') return 100;
-                    return currentFormation.numberPlayers;
+                    if (formation.name === 'Other') return 100;
+                    return formation.numberPlayers;
                 }
             };
         });
