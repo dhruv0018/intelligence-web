@@ -22,11 +22,7 @@ class FormationField extends Field {
         let value = {
             formationId,
             get name() {
-                let calculatedName = field.name;
-                if (formationId) {
-                    calculatedName = formation.name;
-                }
-                return calculatedName;
+                return formationId ? formation.name : field.name;
             },
             get numberPlayers(){
                 return formation.numberPlayers;
