@@ -34,21 +34,19 @@ class FormationField extends Field {
 
     get availableValues() {
         let values = [];
-        if (this.formations) {
-            values = this.formations.map(formation => {
-                let currentFormation = angular.copy(formation);
-                return {
-                    formationId: Number(currentFormation.id),
-                    numberOfPlayers: currentFormation.numberPlayers,
-                    name: currentFormation.name,
-                    get order() {
-                        //low priority formation is sent to the bottom
-                        if (currentFormation.name === 'Other') return 100;
-                        return currentFormation.numberPlayers;
-                    }
-                };
-            });
-        }
+        values = this.formations.map(formation => {
+            let currentFormation = formation;
+            return {
+                formationId: Number(currentFormation.id),
+                numberOfPlayers: currentFormation.numberPlayers,
+                name: currentFormation.name,
+                get order() {
+                    //low priority formation is sent to the bottom
+                    if (currentFormation.name === 'Other') return 100;
+                    return currentFormation.numberPlayers;
+                }
+            };
+        });
         if (!this.isRequired) {
             values.unshift({name: this.name, formationId: null, numberOfPlayers: 0});
         }
