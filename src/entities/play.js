@@ -85,7 +85,7 @@ class KrossoverPlay extends Entity {
      */
     get summaryScript () {
 
-        return this.events.map((event, index) => {
+        return this.events.map(event => {
 
             if (event.summaryFields) {
 
@@ -98,7 +98,7 @@ class KrossoverPlay extends Entity {
             return (a.summaryPriority - b.summaryPriority) * -1;
         })
         .slice(0, 2)
-        .map((event, index) => {
+        .map(event => {
 
             return event.summaryHTML + '</br>';
         })
@@ -113,7 +113,7 @@ class KrossoverPlay extends Entity {
      */
     get userScript () {
 
-        return this.events.map((event, index) => {
+        return this.events.map(event => {
 
             let userScriptHTMLString = event.userFields.toString();
             return template(event, userScriptHTMLString);
