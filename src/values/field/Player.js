@@ -64,7 +64,7 @@ class PlayerField extends Field {
     toJSON () {
 
         let variableValue = {};
-        let value         = (!this.isRequired && this.value.playerId === null) ? null : Number(this.value.playerId);
+        let value = this.value.playerId;
 
         variableValue = {
 

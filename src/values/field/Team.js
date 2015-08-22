@@ -51,7 +51,7 @@ class TeamField extends Field {
     toJSON () {
 
         let variableValue = {};
-        let teamId = this.value.teamId ? this.value.teamId : null;
+        let teamId = this.value.teamId;
         variableValue = {
             type: 'Team',
             value: teamId
