@@ -8,6 +8,7 @@ import YardField from './Yard';
 import ArenaField from './Arena';
 import PlayerField from './Player';
 import TeamField from './Team';
+import StaticField from './Static';
 
 /**
  * FieldFactory Entity Model
@@ -69,6 +70,9 @@ class FieldFactory {
             break;
         case 'ARENA':
             field = new ArenaField(rawField);
+            break;
+        case 'STATIC':
+            field = new StaticField(rawField);
             break;
         default:
             field = rawField;
