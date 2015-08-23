@@ -29,7 +29,6 @@ function jerseyColor(field, playerId) {
         let opposingPlayerIds = Object.keys(opposingTeamRoster.playerInfo);
 
         let isHomeTeam = playerIds.indexOf(String(playerId)) >= 0;
-        let isAwayTeam = opposingPlayerIds.indexOf(String(playerId)) >= 0;
 
         color = isHomeTeam ? angular.copy(game.primaryJerseyColor) : angular.copy(game.opposingPrimaryJerseyColor);
     }
