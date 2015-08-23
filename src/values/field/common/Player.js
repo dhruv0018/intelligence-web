@@ -57,6 +57,34 @@ function jerseyNumber(field, playerId) {
     return number === '' ? 'U': number;
 }
 
+function playerValue(field, player, rosterEntry) {
+    let playerId = player.id;
+    let number = jerseyNumber(field, playerId);
+    let value = {
+        playerId,
+        jerseyColor: jerseyColor(field, playerId),
+        jerseyNumber: number,
+        name: name(field, playerId),
+        get order() {
+            if (rosterEntry.isUnknown) {
+                return 1;
+            } else {
+                return Number(number);
+            }
+        },
+        get type() {
+            return 'Player';
+        },
+        get id() {
+            return playerId;
+        },
+        get isActive() {
+            return rosterEntry.isActive;
+        }
+    };
+    return value;
+}
+
 function availableValues(field) {
     let injector = angular.element(document).injector();
     let values = [];
@@ -71,63 +99,16 @@ function availableValues(field) {
 
         let teamPlayersValues = Object.keys(game.rosters[team.id].playerInfo).map( (playerId) => {
             let rosterEntry = game.rosters[team.id].playerInfo[playerId];
-
             let player = players.get(playerId);
-            let jerseyNumber = player.isUnknown ? 'U' : angular.copy(rosterEntry.jerseyNumber);
-
-            let value = {
-                playerId: angular.copy(player.id),
-                jerseyColor: angular.copy(game.primaryJerseyColor),
-                jerseyNumber,
-                name: '(' + jerseyNumber + ')  ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName),
-                get order() {
-                    if (rosterEntry.isUnknown) {
-                        return 1;
-                    } else {
-                        return Number(jerseyNumber);
-                    }
-                },
-                get type() {
-                    return 'Player';
-                },
-                get id() {
-                    return player.id;
-                },
-                get isActive() {
-                    return rosterEntry.isActive;
-                }
-            };
-            return value;
+            return playerValue(field, player, rosterEntry);
         }).filter(value => value.isActive);
 
         let opposingTeamPlayersValues = Object.keys(game.rosters[opposingTeam.id].playerInfo).map( (playerId) => {
             let rosterEntry = game.rosters[opposingTeam.id].playerInfo[playerId];
             let player = players.get(playerId);
-            let jerseyNumber = player.isUnknown ? 'U' : angular.copy(rosterEntry.jerseyNumber);
-            let value = {
-                playerId: angular.copy(player.id),
-                jerseyColor: angular.copy(game.opposingPrimaryJerseyColor),
-                jerseyNumber,
-                name: '(' + jerseyNumber + ')  ' + angular.copy(player.firstName) + ' ' + angular.copy(player.lastName),
-                get order() {
-                    if (rosterEntry.isUnknown) {
-                        return 1;
-                    } else {
-                        return Number(jerseyNumber);
-                    }
-                },
-                get type() {
-                    return 'Player';
-                },
-                get id() {
-                    return player.id;
-                },
-                get isActive() {
-                    return rosterEntry.isActive;
-                }
-            };
-            return value;
+            return playerValue(field, player, rosterEntry);
         }).filter(value => value.isActive);
+
         values =  teamPlayersValues.concat(opposingTeamPlayersValues);
     }
 
