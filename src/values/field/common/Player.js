@@ -30,7 +30,7 @@ function jerseyColor(field, playerId) {
 
         let isHomeTeam = playerIds.indexOf(String(playerId)) >= 0;
 
-        color = isHomeTeam ? angular.copy(game.primaryJerseyColor) : angular.copy(game.opposingPrimaryJerseyColor);
+        color = isHomeTeam ? game.primaryJerseyColor : game.opposingPrimaryJerseyColor;
     }
     return color;
 }
