@@ -41,7 +41,7 @@ class StaticField extends Field {
      */
     toJSON () {
 
-        throw Error('Static class cannot be stringified!');
+        throw Error('Cannot convert Static class to JSON!');
     }
 }
 
