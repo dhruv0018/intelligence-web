@@ -5,9 +5,6 @@ import Static from '../../../src/values/field/Static';
 import playData from './sample-data/play';
 import tagData from './sample-data/tag-22';
 
-const util    = require('util');
-const krog    = (obj, msg) => console.log(msg, util.inspect(obj));
-
 const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
