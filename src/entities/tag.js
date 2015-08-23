@@ -1,6 +1,5 @@
 import Entity from './entity';
 import FieldFactory from '../values/field/FieldFactory';
-import StaticField from '../values/field/Static';
 
 /**
  * KrossoverTag Entity Model
