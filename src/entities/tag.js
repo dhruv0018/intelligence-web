@@ -1,6 +1,5 @@
 import Entity from './entity';
 import FieldFactory from '../values/field/FieldFactory';
-import StaticField from '../values/field/Static';
 
 /**
  * KrossoverTag Entity Model
@@ -27,7 +26,7 @@ class KrossoverTag extends Entity {
     }
 
     /**
-     * Getter for tag.shortcutKey
+     * Getter for keyboard shortcut, or key sequence, used to apply tag.
      *
      * @readonly
      * @type {String}
@@ -45,8 +44,7 @@ class KrossoverTag extends Entity {
      */
     mapScriptTypes (script) {
 
-        let VARIABLE_PATTERN       = /(__\d__)/;
-        let VARIABLE_INDEX_PATTERN = /\d/;
+        let VARIABLE_PATTERN = /(__\d__)/;
 
         if (script) {
 
@@ -55,28 +53,17 @@ class KrossoverTag extends Entity {
             script = script.split(VARIABLE_PATTERN)
 
             /* Filter script items. */
-            .filter(item => {
-
-                /* Filter out empty items. */
-                return item.length;
-            })
+            .filter(item => item.length)
 
             /* Map script items. */
             .map(item => {
 
-                if (!VARIABLE_PATTERN.test(item)) {
-
-                    let rawField = {
-
-                        value: item,
-                        type: 'STATIC'
-                    };
-
-                    // TODO: Add this to FieldFactory
-                    return new StaticField(rawField);
-                } else {
+                if (VARIABLE_PATTERN.test(item)) {
 
                     return item;
+                } else {
+
+                    return FieldFactory.createField({value: item, type: 'STATIC'});
                 }
             });
         }

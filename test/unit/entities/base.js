@@ -3,10 +3,6 @@ import genericData from './sample-data/generic-data';
 import genericDataBad from './sample-data/generic-data-bad';
 const genericSchema = require('./sample-data/generic-schema.json');
 
-/* Utility for consoling out large objects. */
-const util = require('util');
-const krog = obj => console.log(util.inspect(obj));
-
 const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();

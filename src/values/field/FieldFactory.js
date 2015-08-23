@@ -8,6 +8,7 @@ import YardField from './Yard';
 import ArenaField from './Arena';
 import PlayerField from './Player';
 import TeamField from './Team';
+import StaticField from './Static';
 
 /**
  * FieldFactory Entity Model
@@ -34,47 +35,35 @@ class FieldFactory {
      */
     static createField (rawField, variableValueType) {
 
-        let field;
-
         switch (rawField.type) {
 
         case 'PLAYER_DROPDOWN':
-            field = new PlayerField(rawField);
-            break;
+            return new PlayerField(rawField);
         case 'TEAM_DROPDOWN':
-            field = new TeamField(rawField);
-            break;
+            return new TeamField(rawField);
         case 'PLAYER_TEAM_DROPDOWN':
-            field = new TeamPlayerField(rawField, variableValueType);
-            break;
+            return new TeamPlayerField(rawField, variableValueType);
         case 'GAP':
-            field = new GapField(rawField);
-            break;
+            return new GapField(rawField);
         case 'PASSING_ZONE':
-            field = new PassingZoneField(rawField);
-            break;
+            return new PassingZoneField(rawField);
         case 'FORMATION':
-            field = new FormationField(rawField);
-            break;
+            return new FormationField(rawField);
         case 'DROPDOWN':
-            field = new DropdownField(rawField);
-            break;
+            return new DropdownField(rawField);
         // case 'TEXT':
-        //     field = new TextField(rawField);
-        //     break;
+        //     return new TextField(rawField);
         //todo tech debt
         case 'YARD':
         case 'TEXT':
-            field = new YardField(rawField);
-            break;
+            return new YardField(rawField);
         case 'ARENA':
-            field = new ArenaField(rawField);
-            break;
+            return new ArenaField(rawField);
+        case 'STATIC':
+            return new StaticField(rawField);
         default:
-            field = rawField;
+            return rawField;
         }
-
-        return field;
     }
 }
 
