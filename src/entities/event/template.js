@@ -7,10 +7,10 @@
  * @returns {String} - HTML string
  */
 
-export default (event, scriptHtmlString, isButtonActive) => {
+export default (event, scriptHtmlString) => {
     return `
     <button
-        class="item btn-select-event ${isButtonActive}"
+        class="item btn-select-event"
         krossover-event-active
         ng-click="selectEvent();"
     >
