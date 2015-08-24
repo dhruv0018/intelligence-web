@@ -20,6 +20,9 @@ const MOBILE_APP_URLS = {
     }
 };
 
-IntelligenceWebClient.constant('MOBILE_APP_URLS', MOBILE_APP_URLS);
+const MOBILE_APP_PROMPT_SHOWN = 'MOBILE_APP_PROMPT_SHOWN';
 
-export {MOBILE_APP_URLS};
+IntelligenceWebClient.constant('MOBILE_APP_URLS', MOBILE_APP_URLS);
+IntelligenceWebClient.constant('MOBILE_APP_PROMPT_SHOWN', MOBILE_APP_PROMPT_SHOWN);
+
+export {MOBILE_APP_URLS, MOBILE_APP_PROMPT_SHOWN};
