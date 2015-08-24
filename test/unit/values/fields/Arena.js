@@ -34,7 +34,12 @@ describe('Arena Field', () => {
 
     it('toJSON should serialize to the right format if the field has a value', () => {
         let payload = requiredField.toJSON();
-        expect(JSON.stringify(payload)).to.equal('{"type":null,"value":{"coordinates":{"x":10,"y":10},"region":1}}');
+        let variableValue = {
+            type: null,
+            value: rawField.value
+        };
+        let expectedString = JSON.stringify(variableValue);
+        expect(JSON.stringify(payload)).to.equal(expectedString);
     });
 
     it('Should validate correctly', () => {
