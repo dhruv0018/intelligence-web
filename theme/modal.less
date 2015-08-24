@@ -120,6 +120,12 @@
     align-items: center;
     justify-content: center;
     z-index: @zindex-modal;
+
+    /* Prevent Angular Material from pushing the modal down on iOS Safari. */
+    .mobile({
+
+        top: 0 !important;
+    });
 }
 
 /* Set the modal backdrop to blue */
