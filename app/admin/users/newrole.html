@@ -9,7 +9,7 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="sport" data-elem-id="user-role-sport-dropdown" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sportsList" required>
+                <select class="form-control" name="sport" id="user-role-sport-dropdown" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sportsList" required>
 
                     <option value="">Pick a Sport</option>
 
@@ -18,17 +18,17 @@
             </div>
 
             <div class="form-group">
-                <team-typeahead data-elem-id="user-role-team-field" data-ng-hide="!sportId" data-ng-if="users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-customer-teams="true" data-ng-model="role.teamId" data-without-role="ROLES.HEAD_COACH"></team-typeahead>
-                <team-typeahead data-elem-id="user-role-team-field" data-ng-hide="!sportId" data-ng-if="!users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-customer-teams="true" data-ng-model="role.teamId"></team-typeahead>
+                <team-typeahead  data-ng-hide="!sportId" data-ng-if="users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-customer-teams="true" data-ng-model="role.teamId" data-without-role="ROLES.HEAD_COACH"></team-typeahead>
+                <team-typeahead data-element-id="user-role-team-field" data-ng-hide="!sportId" data-ng-if="!users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-customer-teams="true" data-ng-model="role.teamId"></team-typeahead>
             </div>
 
             <div class="form-group">
 
-                <button type="button" data-elem-id="add-new-user-role-cta" class="btn-role-new" 
-                	href data-ng-disabled="form.$invalid" data-ng-click="addRole(role)">
-                	<i class="icon icon-plus-sign"></i> Add New Role
+                <button type="button" id="coach-add-new-user-role-cta" class="btn-role-new"
+                    href data-ng-disabled="form.$invalid" data-ng-click="addRole(role)">
+                    <i class="icon icon-plus-sign"></i> Add New Role
                 </button>
-                
+
             </div>
 
         </form>
@@ -40,7 +40,7 @@
         <h4>Indexer</h4>
         <form>
             <div class="form-group">
-                <select class="form-control" name="indexerGroup" data-elem-id="user-role-indexer-group-dropdown" data-ng-model="role.indexerGroupId" data-ng-options="key as value for (key,value) in INDEXER_GROUPS_ID" required>
+                <select class="form-control" name="indexerGroup" id="user-role-indexer-group-dropdown" data-ng-model="role.indexerGroupId" data-ng-options="key as value for (key,value) in INDEXER_GROUPS_ID" required>
 
                     <option value="">Pick an Office/Marketplace</option>
 
@@ -48,7 +48,7 @@
             </div>
             <div>
 
-                <a class="btn-role-new" data-elem-id="add-new-user-role-cta" href data-ng-click="addRole(role)"><i class="icon icon-plus-sign"></i> Add New Role</a>
+                <a class="btn-role-new" id="indexer-add-new-user-role-cta" href data-ng-click="addRole(role)"><i class="icon icon-plus-sign"></i> Add New Role</a>
 
             </div>
         </form>
@@ -64,7 +64,7 @@
 
         <div>
 
-            <a class="btn-role-new" href data-elem-id="add-new-user-role-cta" data-ng-click="addRole(role)"><i class="icon icon-plus-sign"></i> Add New Role</a>
+            <a class="btn-role-new" href id="athlete-add-new-user-role-cta" data-ng-click="addRole(role)"><i class="icon icon-plus-sign"></i> Add New Role</a>
 
         </div>
 
