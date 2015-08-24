@@ -1,7 +1,7 @@
 import KrossoverPlay from '../entities/play';
-import KrossoverPlayDataDependencies from '../entities/playDataDependencies';
+import KrossoverPlayFactory from '../entities/playFactory';
 import Video from '../entities/video';
-import KrossoverEvent from '../entities/event/index';
+import KrossoverEvent from '../entities/event';
 
 const pkg = require('../../package.json');
 
@@ -10,11 +10,31 @@ const angular = window.angular;
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.factory('KrossoverPlayDataDependencies', KrossoverPlayDataDependencies);
+IntelligenceWebClient.factory('KrossoverPlayFactory', KrossoverPlayFactory);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_CONSTANTS', 'KrossoverPlayDataDependencies',
-    function($injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_CONSTANTS, KrossoverPlay) {
+    '$injector',
+    'config',
+    '$sce',
+    'VIDEO_STATUSES',
+    'PlaysResource',
+    'BaseFactory',
+    'TagsetsFactory',
+    'Utilities',
+    'CUEPOINT_CONSTANTS',
+    'KrossoverPlayFactory',
+    function(
+        $injector,
+        config,
+        $sce,
+        VIDEO_STATUSES,
+        PlaysResource,
+        BaseFactory,
+        tagsets,
+        utils,
+        CUEPOINT_CONSTANTS,
+        KrossoverPlayFactory
+    ) {
 
         var PlaysFactory = {
 
@@ -28,8 +48,16 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             extend: function (play) {
 
-                angular.extend(play, this);
-                play = new KrossoverPlay(play);
+                const playIsEntity = play instanceof KrossoverPlay;
+                const eventsAreEntities =
+                    play.events &&
+                    play.events[0] instanceof KrossoverEvent;
+
+                if (!(playIsEntity || eventsAreEntities)) {
+
+                    angular.extend(play, this);
+                    play = KrossoverPlayFactory.create(play);
+                }
 
                 play.clip = play.clip ? new Video(play.clip) : {};
 
