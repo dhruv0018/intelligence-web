@@ -73,7 +73,7 @@ class PlayerValue {
         return jerseyColor(this.field, this.playerId);
     }
     get order() {
-        if (this.rosterEntry.isUnknown) {
+        if (this.rosterEntry && this.rosterEntry.isUnknown) {
             return 1;
         } else {
             return Number(this.jerseyNumber);
@@ -86,7 +86,7 @@ class PlayerValue {
         return this.playerId;
     }
     get isActive() {
-        return this.rosterEntry.isActive;
+        return this.rosterEntry && this.rosterEntry.isActive ? this.rosterEntry.isActive : false;
     }
 }
 
@@ -119,7 +119,7 @@ function availableValues(field) {
     }
 
     if (!field.isRequired) {
-        values.unshift({playerId: null, jerseyColor: null, jerseyNumber: 'NONE', name: field.name});
+        values.unshift(new PlayerValue(field, null));
     }
 
     return values;
