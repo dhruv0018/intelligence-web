@@ -1,7 +1,7 @@
 import KrossoverPlay from '../entities/play';
 import KrossoverPlayFactory from '../entities/playFactory';
 import Video from '../entities/video';
-import KrossoverEvent from '../entities/event/index';
+import KrossoverEvent from '../entities/event';
 
 const pkg = require('../../package.json');
 
@@ -48,8 +48,16 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             extend: function (play) {
 
-                angular.extend(play, this);
-                play = KrossoverPlayFactory.create(play);
+                const playIsEntity = play instanceof KrossoverPlay;
+                const eventsAreEntities =
+                    play.events &&
+                    play.events[0] instanceof KrossoverEvent;
+
+                if (!(playIsEntity || eventsAreEntities)) {
+
+                    angular.extend(play, this);
+                    play = KrossoverPlayFactory.create(play);
+                }
 
                 play.clip = play.clip ? new Video(play.clip) : {};
 

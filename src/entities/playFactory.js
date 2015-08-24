@@ -9,6 +9,8 @@ function KrossoverPlayFactory (
 ) {
 
     this.create = play => new KrossoverPlay(play, tagsets);
+
+    return this;
 }
 
 export default KrossoverPlayFactory;
