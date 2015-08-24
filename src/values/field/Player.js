@@ -18,15 +18,7 @@ class PlayerField extends Field {
         super(field);
 
         let playerId = this.initializeValue(field.value);
-        let value = {
-            playerId,
-            get name () {
-                return Player.getters.name(field, playerId);
-            },
-            get jerseyColor() {
-                return Player.getters.jerseyColor(field, playerId);
-            }
-        };
+        let value = new Player.value(field, playerId);
         this.value = value;
     }
 
@@ -64,7 +56,7 @@ class PlayerField extends Field {
     toJSON () {
 
         let variableValue = {};
-        let value         = (!this.isRequired && this.value.playerId === null) ? null : Number(this.value.playerId);
+        let value = this.value.playerId;
 
         variableValue = {
 
