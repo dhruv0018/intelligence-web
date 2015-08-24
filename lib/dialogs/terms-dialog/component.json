@@ -1,0 +1,14 @@
+{
+    "name": "terms-dialog",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js",
+        "dialog.js"
+    ]
+}

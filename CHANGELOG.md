@@ -1,3 +1,48 @@
+# v2.12.0 #
+
+## Features ##
+- Design improvements to the queue so there is less scrolling
+- Show game length for uploaded game film to Admin in Queue
+- New users need to agree to Terms & Conditions
+- Old users need to agree to Terms & Conditions
+
+## Bug Fixes / Improvements ##
+- When an indexer/QA sets a game aside, Operations should receive an e-mail
+
+# v2.11.0 #
+
+## Features ##
+- User on Web can select the quality of the video
+- User on Web can download raw film as an .mp4 file
+- User on Web can download a clip from a breakdown or a reel as an .mp4 file
+- As a user, I should be able to see a link to my profile below my resumé
+- As an athlete, when I view a video vertically on my iPad, the video should span the full width of iPad if the resumé is no longer visible
+- As an athlete, when I upload a profile picture, it should be cropped and scaled proportionally when I see it on my profile
+
+## Bug Fixes / Improvements ##
+- Profile design/UX Enhancements
+- Public page footer needs date revision
+- As a coach, on the film home, when viewing my active team roster in the sidebar it should only contain active players
+- On Down and Distance/Formation Report, the Playlist Play Button is not starting the video
+
+# v2.10.1 #
+
+## Bug Fixes / Improvements ##
+- Fix an issue with an external library
+- On Down and Distance/Formation Report, the Playlist Play Button is not starting the video
+
+# v2.10.0 #
+
+## Features ##
+- As a user, I should see a telestrations icon on a play if it has telestrations
+- As an Indexer I'd like to see updated Football FAQ sheet
+- Coach or Athlete should not see telestrations toolbar on mobile
+
+## Bug Fixes / Improvements ##
+- Clicking the browser back button from film detail page doesn't return you to film home
+- Coach or Athlete on Web can manipulate ellipse tool to appropriate scale (beyond perfect circle)
+- Text telestrations on web supports 2 vertexes
+
 # v2.9.0 #
 
 ## Features ##

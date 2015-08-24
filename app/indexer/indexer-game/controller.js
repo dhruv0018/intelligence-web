@@ -21,7 +21,8 @@ IndexerGameController.$inject = [
     'SchoolsFactory',
     'TeamsFactory',
     'GamesFactory',
-    'UsersFactory'
+    'UsersFactory',
+    'EMAIL_REQUEST_TYPES'
 ];
 
 function IndexerGameController(
@@ -43,7 +44,8 @@ function IndexerGameController(
     schools,
     teams,
     games,
-    users
+    users,
+    EMAIL_REQUEST_TYPES
 ) {
 
     const gameId = Number($stateParams.id);
@@ -93,6 +95,8 @@ function IndexerGameController(
     };
 
     $scope.setAside = function() {
+        const roleId = session.getCurrentRoleId();
+        const userId = session.getCurrentUserId();
         const modalInstance = basicModal.openForConfirm({
             title: 'Set aside this Game?',
             bodyText: 'Are you sure you want to set aside this game?'
@@ -101,6 +105,7 @@ function IndexerGameController(
         modalInstance.result.then(function() {
             $scope.game.setAside();
             $scope.game.save();
+            users.resendEmail(EMAIL_REQUEST_TYPES.SET_ASIDE_EMAIL, {roleType: roleId, gameId: gameId}, userId);
             $state.go('IndexerGames');
         });
     };

@@ -73,21 +73,22 @@ describe('GamesFactory', function() {
 
 
         it('should return true when the game status is "Indexing, not started"', inject([
-           'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, VIDEO_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
-            var game = {
+                var game = {
 
-                status: GAME_STATUSES.READY_FOR_INDEXING.id,
-                video: {
-                    status: VIDEO_STATUSES.COMPLETE.id
-                }
-            };
+                    status: GAME_STATUSES.READY_FOR_INDEXING.id,
+                    video: {
+                        status: VIDEO_STATUSES.COMPLETE.id
+                    }
+                };
 
-            game = games.extend(game);
+                game = games.extend(game);
 
-            game.canBeAssignedToIndexer().should.be.true;
-        }]));
+                game.canBeAssignedToIndexer().should.be.true;
+            }
+        ]));
 
         it('should return false when the game status is "Set Aside", but not from indexing', inject([
             'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
@@ -137,7 +138,7 @@ describe('GamesFactory', function() {
             Object.keys(GAME_STATUSES).filter(function(status) {
 
                 return status !== 'READY_FOR_INDEXING' &&
-                       status !== 'SET_ASIDE';
+                    status !== 'SET_ASIDE';
 
             }).forEach(function(status) {
 
@@ -261,7 +262,7 @@ describe('GamesFactory', function() {
             Object.keys(GAME_STATUSES).filter(function(status) {
 
                 return status !== 'READY_FOR_QA' &&
-                       status !== 'SET_ASIDE';
+                    status !== 'SET_ASIDE';
 
             }).forEach(function(status) {
 
@@ -478,8 +479,8 @@ describe('GamesFactory', function() {
     describe('startAssignment', function() {
 
         it('should start indexer assignment', inject([
-           'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, VIDEO_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 1;
             var isQa = false;
@@ -543,8 +544,8 @@ describe('GamesFactory', function() {
         var userId = 1;
 
         beforeEach(inject([
-           'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, VIDEO_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 game = {
 
@@ -564,7 +565,7 @@ describe('GamesFactory', function() {
         ]));
 
         it('should return false if no indexer assignments are started', inject([
-           function() {
+            function() {
 
             expect(game.currentAssignment()).to.not.have.property('timeStarted');
 
@@ -572,7 +573,7 @@ describe('GamesFactory', function() {
         }]));
 
         it('should return true if an indexer assignment is started', inject([
-           function() {
+            function() {
 
             game.startAssignment(userId);
 
@@ -585,8 +586,8 @@ describe('GamesFactory', function() {
     describe('finishAssignment', function() {
 
         it('should finish indexer assignment', inject([
-           'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, VIDEO_STATUSES, games) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 1;
             var isQa = false;
@@ -615,7 +616,7 @@ describe('GamesFactory', function() {
 
         it('should finish QA assignment', inject([
             'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
-           function(GAME_STATUSES, VIDEO_STATUSES, games) {
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
             var userId = 1;
             var isQa = true;
@@ -1091,7 +1092,7 @@ describe('GamesFactory', function() {
             var sharedWithUserIds = [{id: 1},{id: 2},{id: 3},{id: 4},{id: 5}];
             var beforeSharingLength = (game.shares) ? game.shares.length : 0;
             var gameId = game.id;
-            
+
             sharedWithUserIds.forEach(function(userId){
                 game.shareWithUser(userId);
             });
@@ -1103,7 +1104,7 @@ describe('GamesFactory', function() {
             var sharedWithUserIds = [];
             var beforeSharingLength = (game.shares) ? game.shares.length : 0;
             var gameId = game.id;
-            
+
             sharedWithUserIds.forEach(function(userId){
                 game.shareWithUser(userId);
             });
@@ -1167,4 +1168,3 @@ describe('GamesFactory', function() {
         });
     });
 });
-

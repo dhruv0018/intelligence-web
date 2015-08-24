@@ -74,6 +74,8 @@
         "role-class",
         "spinner",
         "check-box",
+        "terms-and-conditions",
+        "form-toggle",
         "buttons",
         "feature",
         "search-dropdown",
@@ -81,6 +83,8 @@
         "custom-tags-dropdown",
         "custom-tags-multiselect",
         "custom-tag-pills",
+        "feature",
+        "clips-navigation",
         "telestrations"
     ],
     "scripts": [

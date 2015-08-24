@@ -15,13 +15,7 @@
 
     .icon-krossover-logo {
 
-        width: 447px;
-        height: 109px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        background-size: contain;
-        background-position: center center;
-        margin: auto;
+        .full-page-icon-krossover-logo;
     }
 
     .login-container {
@@ -64,9 +58,9 @@
         }
     }
 
-    .newLogin {
+    .new-login {
 
-        width: 49%;
+        width: 50%;
         display: table-cell;
         vertical-align: middle;
         text-align: center;
@@ -80,11 +74,17 @@
             font-size: 60px;
             margin-right: 20px;
         }
+
+        &.new-user {
+
+            padding-right: 0;
+            border-right: none;
+        }
     }
 
     .oldLogin {
 
-        width: 49%;
+        width: 50%;
         display: table-cell;
         padding-top: 30px;
         padding-left: 50px;
@@ -138,20 +138,14 @@ and (max-width: 479px) {
         flex-direction: column;
         padding: 0;
 
-        .icon-krossover-logo {
-
-            width: 270px;
-        }
-
         .login-container {
             display: block;
         }
 
-        .newLogin {
+        .new-login {
 
             padding: 0;
             border: none;
-            display: none;
 
             .form-field-login {
 
