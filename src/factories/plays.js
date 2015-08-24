@@ -1,5 +1,5 @@
 import KrossoverPlay from '../entities/play';
-import KrossoverPlayDataDependencies from '../entities/playDataDependencies';
+import KrossoverPlayFactory from '../entities/playFactory';
 import Video from '../entities/video';
 import KrossoverEvent from '../entities/event/index';
 
@@ -10,7 +10,7 @@ const angular = window.angular;
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.factory('KrossoverPlayDataDependencies', KrossoverPlayDataDependencies);
+IntelligenceWebClient.factory('KrossoverPlayFactory', KrossoverPlayFactory);
 
 IntelligenceWebClient.factory('PlaysFactory', [
     '$injector',
@@ -22,7 +22,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
     'TagsetsFactory',
     'Utilities',
     'CUEPOINT_CONSTANTS',
-    'KrossoverPlayDataDependencies',
+    'KrossoverPlayFactory',
     function(
         $injector,
         config,
@@ -33,7 +33,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
         tagsets,
         utils,
         CUEPOINT_CONSTANTS,
-        KrossoverPlay
+        KrossoverPlayFactory
     ) {
 
         var PlaysFactory = {
@@ -49,7 +49,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
             extend: function (play) {
 
                 angular.extend(play, this);
-                play = new KrossoverPlay(play);
+                play = KrossoverPlayFactory.create(play);
 
                 play.clip = play.clip ? new Video(play.clip) : {};
 
