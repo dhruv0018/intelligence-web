@@ -14,8 +14,6 @@ class DropdownField extends Field {
      * @param {Object} field - Field JSON from server
      */
     constructor (field) {
-
-        if (!field) return;
         super(field);
 
         let content = this.initializeValue(field.value, String);
@@ -31,13 +29,23 @@ class DropdownField extends Field {
 
 
     get availableValues() {
-        let availableValues = JSON.parse(this.options).map(content => {
-            return {content, name: content};
-        });
+        const options = JSON.parse(this.options);
+        let availableValues = options.map(optionsToAvailableValues);
+
+        function optionsToAvailableValues (option) {
+
+            let value = {
+                content: option,
+                name: option
+            };
+            return value;
+        }
+
         if (!this.isRequired) {
             availableValues.unshift({content: null, name: this.name});
         }
-        return angular.copy(availableValues);
+
+        return availableValues;
     }
 
     /**

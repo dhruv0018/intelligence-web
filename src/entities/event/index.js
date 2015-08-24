@@ -1,8 +1,8 @@
-import Entity from './entity';
-import FieldFactory from '../values/field/FieldFactory';
-import eventTemplate from './eventTemplate';
+import Entity from '../entity';
+import FieldFactory from '../../values/field/FieldFactory';
+import template from './template';
 
-const schema = require('../../schemas/event.json');
+const schema = require('../../../schemas/event.json');
 
 /**
  * KrossoverEvent Entity Model
@@ -98,23 +98,30 @@ class KrossoverEvent extends Entity {
 
         if (this.indexerFields) {
 
-            return eventTemplate(this, this.indexerFields.toString());
+            return template(this, this.indexerFields.toString());
         }
     }
 
     /**
      * Getter for Summary Fields
      *
-     * @type {Array}
+     * @type {Array|null}
      */
     get summaryFields () {
 
-        if (this.summaryScript) {
+        return this.mapScript(this.summaryScript);
+    }
 
-            return this.mapScript(this.summaryScript);
-        } else {
+    /**
+     * Getter for Summary Fields HTML
+     *
+     * @type {String}
+     */
+    get summaryHTML () {
 
-            return null;
+        if (this.summaryFields) {
+
+            return this.summaryFields.toString();
         }
     }
 
@@ -137,7 +144,7 @@ class KrossoverEvent extends Entity {
 
         if (this.userFields) {
 
-            return eventTemplate(this, this.userFields.toString());
+            return template(this, this.userFields.toString());
         }
     }
 
@@ -176,24 +183,11 @@ class KrossoverEvent extends Entity {
 
         scriptFields.toString = () => {
 
-            let string = ``;
+            return scriptFields.map(field => {
 
-            scriptFields.forEach(item => {
-
-                if (item.type === 'STATIC') {
-
-                    string += item.toString();
-                } else {
-
-                    let field = this.fields[item.index];
-                    if (field) {
-
-                        string += field.toString();
-                    }
-                }
-            });
-
-            return string;
+                return field.toString();
+            })
+            .join('');
         };
 
         return scriptFields;
@@ -212,34 +206,33 @@ class KrossoverEvent extends Entity {
 
     /**
      * Getter for the validity of the Field
+     *
      * @type {Boolean}
      */
-    get valid () {
+    get isValid () {
 
         return Object.keys(this.fields)
-        .map(fieldIndex => this.fields[fieldIndex])
+        .map(key => this.fields[key])
         .every(field => field.valid);
     }
 
     /**
-     * Checks whether the event is a floating event.
+     * Getter for whether the event is a floating event.
      *
-     * @method isFloat
-     * @returns {Boolean} - true if the event is floating event; false otherwise.
+     * @type {Boolean}
      */
-    isFloat () {
+    get isFloat () {
 
         return this.isStart === false && this.isEnd === false && this.children && this.children.length === 0;
     }
 
     /**
-     * Checks whether the event is an end-and-start event: is an end tag and
+     * Getter whether the event is an end-and-start event: is an end tag and
      * only has one child.
      *
-     * @method isEndAndStart
-     * @returns {Boolean} - true if the event is an end-and-start event; false otherwise.
+     * @type {Boolean}
      */
-    isEndAndStart () {
+    get isEndAndStart () {
 
         return this.isEnd && this.children && this.children.length === 1;
     }
@@ -252,7 +245,7 @@ class KrossoverEvent extends Entity {
      */
     toJSON () {
 
-        if (!this.valid) {
+        if (!this.isValid) {
 
             throw new Error('Cannot convert event to JSON without valid field data!');
         }
@@ -266,9 +259,9 @@ class KrossoverEvent extends Entity {
             variableValues: {},
         };
 
-        Object.keys(this.fields).forEach(index => {
+        Object.keys(this.fields).forEach(key => {
 
-            copy.variableValues[this.fields[index].id] = this.fields[index].toJSON();
+            copy.variableValues[this.fields[key].id] = this.fields[key].toJSON();
         });
 
         return copy;

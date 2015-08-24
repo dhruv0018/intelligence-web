@@ -681,7 +681,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['build', 'karma']);
-    grunt.registerTask('test-no-build', ['karma']);
     grunt.registerTask('lint', ['trimtrailingspaces', 'lintspaces', 'htmlhint', 'jshint', 'eslint']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);

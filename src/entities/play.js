@@ -1,6 +1,8 @@
 import Entity from './entity';
-import KrossoverEvent from '../entities/event';
-import eventTemplate from './eventTemplate';
+import KrossoverEvent from './event/index';
+import template from './event/template';
+
+const schema = require('../../schemas/play.json');
 
 /**
  * KrossoverPlay Entity Model
@@ -19,6 +21,16 @@ class KrossoverPlay extends Entity {
 
             throw new Error('Invoking KrossoverPlay.constructor without passing a JSON object');
         }
+
+        /* Validate event JSON */
+        /* TODO: Re-enable this at some point. Right now, far too many
+         * plays are failing validtion and polluting the console. */
+        // let validation = this.validate(play, schema);
+        //
+        // if (validation.errors.length) {
+        //
+        //     console.warn(validation.errors.shift());
+        // }
 
         super(play);
 
@@ -55,12 +67,12 @@ class KrossoverPlay extends Entity {
      */
     get indexerScript () {
 
-        return this.events.map((event, index) => {
+        return this.events.map(event => {
 
             if (event.indexerScript) {
 
                 let indexerScriptHTMLString = event.indexerFields.toString();
-                return eventTemplate(event, indexerScriptHTMLString);
+                return template(event, indexerScriptHTMLString);
             }
         });
     }
@@ -72,14 +84,25 @@ class KrossoverPlay extends Entity {
      * @type {String} - HTML
      */
     get summaryScript () {
-        return this.events.map((event, index) => {
 
-            if (event.summaryScript) {
+        return this.events.map(event => {
 
-                return event.summaryFields.toString() + '<br/>';
+            if (event.summaryFields) {
+
+                return event;
             }
         })
-        .filter(Boolean);
+        .filter(Boolean)
+        .sort((a, b) => {
+
+            return (a.summaryPriority - b.summaryPriority) * -1;
+        })
+        .slice(0, 2)
+        .map(event => {
+
+            return event.summaryHTML + '</br>';
+        })
+        .join('');
     }
 
     /**
@@ -90,10 +113,10 @@ class KrossoverPlay extends Entity {
      */
     get userScript () {
 
-        return this.events.map((event, index) => {
+        return this.events.map(event => {
 
             let userScriptHTMLString = event.userFields.toString();
-            return eventTemplate(event, userScriptHTMLString);
+            return template(event, userScriptHTMLString);
         });
     }
 

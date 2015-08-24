@@ -15,8 +15,6 @@ class TeamField extends Field {
      * @param {Object} field - Field JSON from server
      */
     constructor (field) {
-
-        if (!field) return;
         super(field);
 
         let teamId = this.initializeValue(field.value);
@@ -53,7 +51,7 @@ class TeamField extends Field {
     toJSON () {
 
         let variableValue = {};
-        let teamId = this.value.teamId ? this.value.teamId : null;
+        let teamId = this.value.teamId;
         variableValue = {
             type: 'Team',
             value: teamId

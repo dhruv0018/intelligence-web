@@ -24,11 +24,9 @@ class Entity {
      */
     validate (data, schema) {
 
-        switch (arguments.length < 2) {
+        if (arguments.length < 2) {
 
-            case 0:
-
-                throw new Error('Invoking Subscription.validate without passing a JSON object and/or schema!');
+            throw new Error('Invoking Entity.validate without passing a JSON object and/or schema!');
         }
 
         let validation = tv4.validateMultiple(data, schema);

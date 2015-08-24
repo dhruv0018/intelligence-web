@@ -12,10 +12,11 @@ class Field extends Value {
      */
     constructor (field) {
 
-        if (!field) return;
+        if (!field) {
+            throw new Error('You need to pass in a field');
+        }
 
         super(field);
-        this.extend(field);
 
         if (field.value === null && field.isRequired)
             console.error('Corrupted data - null value in required field');

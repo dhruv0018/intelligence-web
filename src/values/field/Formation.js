@@ -14,29 +14,17 @@ class FormationField extends Field {
      * @param {Object} field - Field JSON from server
      */
     constructor (field) {
-
-        if (!field) return;
         super(field);
 
         let formationId = this.initializeValue(field.value);
-        let formation = {};
-
-        this.formations.forEach((currentFormation)=> {
-            if (currentFormation.id === formationId) {
-                formation = currentFormation;
-            }
-        });
+        let formation = this.formations.find(formation => formation.id === formationId);
 
         let value = {
             formationId,
             get name() {
-                let calculatedName = field.name;
-                if (formationId) {
-                    calculatedName = formation.name;
-                }
-                return calculatedName;
+                return formationId ? formation.name : field.name;
             },
-            get numberPlayers(){
+            get numberOfPlayers(){
                 return formation.numberPlayers;
             }
         };
@@ -46,19 +34,18 @@ class FormationField extends Field {
 
     get availableValues() {
         let values = [];
-        if (this.formations) {
-            values = this.formations.map(formation => {
-                let currentFormation = angular.copy(formation);
-                return {
-                    formationId: Number(currentFormation.id),
-                    numberOfPlayers: currentFormation.numberPlayers,
-                    name: currentFormation.name,
-                    get order() {
-                        return currentFormation.numberPlayers;
-                    }
-                };
-            });
-        }
+        values = this.formations.map(formation => {
+            return {
+                formationId: Number(formation.id),
+                numberOfPlayers: formation.numberPlayers,
+                name: formation.name,
+                get order() {
+                    //low priority formation is sent to the bottom
+                    if (formation.name === 'Other') return 100;
+                    return formation.numberPlayers;
+                }
+            };
+        });
         if (!this.isRequired) {
             values.unshift({name: this.name, formationId: null, numberOfPlayers: 0});
         }

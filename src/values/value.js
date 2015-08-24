@@ -1,14 +1,16 @@
+/**
+ * Value Model
+ * @class Value
+ */
 class Value {
 
+    /**
+     * @constructs Value
+     * @param {Object} value - JSON
+     */
     constructor (value) {
 
-    }
-
-    extend (value) {
-
         Object.assign(this, value);
-
-        return this;
     }
 }
 

@@ -11,6 +11,12 @@ let field = {
             name: 'Ace',
             numberPlayers: 7,
             variableId: 17
+        },
+        {
+            id: 9,
+            name: 'Other',
+            numberPlayers: 0,
+            variableId: 17
         }
     ],
     id: 1,

@@ -172,11 +172,7 @@ describe('Play Entity', () => {
 
     it('should have a "summaryScript" getter', () => {
 
-        expect(play.summaryScript).to.be.an.array;
-        play.summaryScript.forEach(event => {
-
-            expect(event).to.be.a('string');
-        })
+        expect(play.summaryScript).to.be.a.string;
     });
 
     it('should have called toJSON on a JSON.stringify call', inject(TagsetsFactory => {

@@ -1,4 +1,4 @@
-import KrossoverEvent from '../entities/event.js';
+import KrossoverEvent from '../entities/event/index';
 
 var pkg = require('../../package.json');
 
@@ -57,7 +57,14 @@ IntelligenceWebClient.factory('IndexingService', [
             * Selects a tag.
             * @param {Number} tagId - the ID of the tag selected.
             */
-            selectTag: function(tagId, game = null) {
+            selectTag: function(tagId, game) {
+                if (!tagId) {
+                    throw new Error('No tagId specified');
+                }
+
+                if (!game && game.id) {
+                    throw new Error('No game specified');
+                }
 
                 /* Get current time from the video. */
                 var time = videoPlayer.currentTime;
@@ -69,12 +76,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 time = utils.toFixedFloat(time);
 
                 /* Create new event. */
-
-                if (game) {
-                    eventManager.current = new KrossoverEvent(null, tag, time, game.id);
-                } else {
-                    eventManager.current = new KrossoverEvent(null, tag, time);
-                }
+                eventManager.current = new KrossoverEvent(null, tag, time, game.id);
 
                 /* Add event to the current play. */
                 playManager.addEvent(eventManager.current);
@@ -111,7 +113,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
-                if (event.isEndAndStart()) {
+                if (event.isEndAndStart) {
 
                     /* Get the tagId of the event. */
                     var tagId = event.tagId;
@@ -156,7 +158,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
                 /* If there are variables in the current event. */
                 else {
-                    return eventManager.current.valid;
+                    return eventManager.current.isValid;
                 }
 
             },
@@ -174,7 +176,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 /* If the event is a floating event. */
-                if (eventManager.current && eventManager.current.isFloat()) {
+                if (eventManager.current && eventManager.current.isFloat) {
 
                     let currentEvent = eventManager.current;
 
@@ -182,7 +184,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     let previousEvent = playManager.previousEvent(currentEvent);
 
                     /* While the previous event is a float. */
-                    while (previousEvent.isFloat()) {
+                    while (previousEvent.isFloat) {
 
                         /* Get the previous event. */
                         previousEvent = playManager.previousEvent(previousEvent);
