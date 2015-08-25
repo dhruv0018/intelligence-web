@@ -7,7 +7,7 @@ function name(field, teamId) {
         if (injector) {
             let teams = injector.get('TeamsFactory');
             let team = teams.get(teamId);
-            calculatedName = angular.copy(team.name);
+            calculatedName = team.name;
         }
     }
     return calculatedName;
