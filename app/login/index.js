@@ -455,7 +455,7 @@ function LoginController(
 
                     alerts.add({
                         type: 'danger',
-                        message: 'There was a problem resetting your password'
+                        message: 'There was a problem resetting your password. <a href data-ui-sref="login">Return to login</a>'
                     });
 
                     throw new Error('Could not reset password');
