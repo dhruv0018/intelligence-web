@@ -1,5 +1,6 @@
 import KrossoverPlay from '../entities/play';
 import KrossoverEvent from '../entities/event';
+import Video from '../entities/video';
 
 const pkg = require('../../package.json');
 
@@ -70,6 +71,10 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     play = new KrossoverPlay(play, tagsets);
                     angular.extend(play, this);
                 }
+
+                // TODO: Move to Play entity constructor
+                /* Instantiate Video entity */
+                play.clip = play.clip ? new Video(play.clip) : {};
 
                 return play;
             },
