@@ -70,15 +70,10 @@ class FormationField extends Field {
      * @returns {String} - JSON ready version of the object.
      */
     toJSON () {
-
-        let variableValue = {};
-        let value         = this.value.formationId === null ? null : String(this.value.formationId);
-
-        variableValue = {
-
-            type: null,
-            value
+        let variableValue = {
+            type: null
         };
+        variableValue.value = this.value.formationId === null ? null : String(this.value.formationId);
 
         return this.isVariableValueValid(variableValue) ? variableValue : 'Corrupted ' + this.type;
     }
