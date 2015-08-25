@@ -143,6 +143,8 @@ function toString(field) {
     `;
 }
 
+//exporting common functions that are used between the player and team player fields
+//TODO maybe refactor into a class
 let common = {
     value: PlayerValue,
     getters: {

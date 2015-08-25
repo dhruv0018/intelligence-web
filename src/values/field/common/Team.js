@@ -49,6 +49,8 @@ function availableValues(field) {
     return values;
 }
 
+//exporting common functions that are used between the team and team player fields
+//TODO maybe refactor into a class
 let common = {
     getters: {
         availableValues,
