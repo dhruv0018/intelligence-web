@@ -11,7 +11,7 @@ export default (event, scriptHtmlString) => {
     return `
     <button
         class="item btn-select-event"
-        krossover-event-active
+        krossover-event-highlighting
         ng-click="selectEvent();"
     >
 
