@@ -23,6 +23,7 @@ Login.run([
         $templateCache.put('forgot.html', require('./forgot.html'));
         $templateCache.put('reset.html', require('./reset.html'));
         $templateCache.put('new-user.html', require('./new-user.html'));
+        $templateCache.put('new-user-error.html', require('./new-user-error.html'));
     }
 ]);
 
@@ -164,6 +165,24 @@ Login.config([
                         }
                     }
                 ]
+            })
+
+            .state('new-error', {
+                url: '^/new-user-error',
+                parent: 'login',
+                views: {
+                    'header@login': {
+                        templateUrl: 'signup.html'
+                    },
+                    'main@login': {
+                        templateUrl: 'new-user-error.html',
+                        controller: 'LoginController'
+                    }
+                },
+                data: {
+
+                    isNewUser: true
+                }
             });
     }
 ]);
@@ -490,14 +509,7 @@ function LoginController(
 
                 function error(data, status) {
 
-                    $scope.newUser.submitted = false;
-
-                    alerts.add({
-                        type: 'danger',
-                        message: 'There was a problem setting your new password'
-                    });
-
-                    throw new Error('Could not set new password');
+                    $state.go('new-error');
                 }
             );
         }

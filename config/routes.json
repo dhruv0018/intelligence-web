@@ -59,6 +59,11 @@
         "*": true
     },
 
+    "new-error": {
+
+        "*": true
+    },
+
     "roles": {
 
         "*": true
