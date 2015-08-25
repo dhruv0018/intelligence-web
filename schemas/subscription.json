@@ -33,5 +33,5 @@
         }
     },
     "required": ["userId", "teamId"],
-    "additionalProperties": false
+    "additionalProperties": true
 }

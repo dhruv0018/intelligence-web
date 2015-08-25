@@ -96,6 +96,7 @@ Games.config([
                     '$stateParams',
                     'PositionsetsFactory',
                     'GamesFactory',
+                    'ReelsFactory',
                     'TeamsFactory',
                     'UsersFactory',
                     'LeaguesFactory',
@@ -107,6 +108,7 @@ Games.config([
                         $stateParams,
                         positionsets,
                         games,
+                        reels,
                         teams,
                         users,
                         leagues,
@@ -123,7 +125,11 @@ Games.config([
 
                             let Data = {
                                 leagues: leagues.load(),
+
+                                reels: reels.load({ relatedUserId: session.getCurrentUserId() }),
+
                                 positionsets: positionsets.load()
+
                             };
 
                             //Load custom tags
