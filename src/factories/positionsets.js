@@ -1,15 +1,15 @@
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PositionsetsFactory', [
     'BaseFactory', '$filter',
     function(BaseFactory, $filter) {
 
-        var PositionsetsFactory = {
+        const PositionsetsFactory = {
 
             description: 'positionsets',
 
@@ -19,7 +19,7 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
 
             extend: function(positionset) {
 
-                var self = this;
+                let self = this;
 
                 positionset.indexedPositions = {};
                 angular.forEach(positionset.positions, function(position) {
@@ -35,7 +35,7 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
 
             getIndexedPositions: function() {
 
-                var indexedPositions = {};
+                let indexedPositions = {};
 
                 this.positions.forEach(function(position) {
 

@@ -7,16 +7,24 @@
 
     .indexable-region {
         fill: #92B286;
-
-        &:hover,
-        &:active,
-        &:focus {
-            fill: darken(#92B286, 10%);
-            transition: fill 0.3s;
-        }
     }
 
     .stroke {
         stroke-width: 2;
+    }
+}
+
+.krossover-arena {
+
+    &.highlight-regions {
+
+        .lacrosse-arena .indexable-region {
+            &:hover,
+            &:active,
+            &:focus {
+                fill: darken(#92B286, 10%);
+                transition: fill 0.3s;
+            }
+        }
     }
 }

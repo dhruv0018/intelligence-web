@@ -30,6 +30,8 @@
     },
     "rules": {
 
+        "no-proto": false,
+
         "quotes": "single",
         "strict": false,
         "curly": false,

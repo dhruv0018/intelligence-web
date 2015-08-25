@@ -1,0 +1,85 @@
+<div class="manage-profile-reels">
+
+    <header class="modal-header">
+        <h3 class="modal-title" ng-hide="reordering">Manage Reels on your Profile</h3>
+        <h3 class="modal-title" ng-show="reordering">Reorder Reels on your Profile</h3>
+        <i class="icon icon-remove" ng-click="$dismiss()"></i>
+    </header>
+
+    <div class="modal-body">
+        <div class="profile-reels-filter" ng-hide="reordering">
+            <i class="icon icon-search"></i>
+            <input
+                class="form-control"
+                type="text"
+                ng-model="filters.name"
+                placeholder="Search Reels">
+        </div>
+
+        <p class="reels-list-header">
+            <span ng-hide="reordering">On Profile ({{matchingProfileReels.length}})</span>
+            <span ng-show="reordering">Drag to reorder <span class="reorder-subtitle">- the video for the top most reel will be featured on your profile</span></span>
+            <span class="reorder" ng-click="reordering = true" ng-hide="reordering || !matchingProfileReels.length || isMobile">Reorder</span>
+            <span class="reorder" ng-click="reorderProfileReels()" ng-show="reordering">Done</span>
+        </p>
+        <div class="reels-list" ng-show="matchingProfileReels.length && !reordering">
+            <div
+                class="reel-option"
+                ng-repeat="reel in matchingProfileReels = (profileReels | filter: filters)"
+            >
+                <div>
+                    <p class="reel-name">{{reel.name}}</p>
+                    <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM. d, yyyy'}}</p>
+                </div>
+                <button class="remove-from-profile" ng-click="removeReelFromProfile(reel)">Remove</button>
+            </div>
+        </div>
+        <p ng-hide="profileReels.length">You haven't added any reels to your profile yet.</p>
+        <p ng-hide="matchingProfileReels.length || !profileReels.length">No reels match your search.</p>
+
+        <!-- Show without filter when reordering -->
+        <div class="reels-list reorder-list" ng-show="reordering">
+            <div
+                class="reel-option"
+                ng-repeat="reel in profileReels"
+                draggable-ordered-list="reordering"
+            >
+                <div>
+                    <p class="reel-name">{{reel.name}}</p>
+                    <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM. d, yyyy'}}</p>
+                </div>
+                <i class="icon icon-bars"></i>
+            </div>
+        </div>
+
+        <div ng-hide="reordering">
+            <p class="reels-list-header">In Film Library ({{matchingNonProfileReels.length}})</p>
+            <div class="reels-list" ng-show="matchingNonProfileReels.length">
+                <div class="reel-option" ng-repeat="reel in matchingNonProfileReels = (nonProfileReels | filter: filters)">
+                    <div>
+                        <p class="reel-name">{{reel.name}}</p>
+                        <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM. d, yyyy'}}</p>
+                    </div>
+                    <span class="add-to-profile" ng-click="addReelToProfile(reel)">Add</span>
+                </div>
+            </div>
+            <p ng-hide="nonProfileReels.length || !reels.length">You don't have any reels in your film library to add to your profile.</p>
+            <p ng-hide="matchingNonProfileReels.length || !nonProfileReels.length">No reels match your search.</p>
+            <div ng-hide="nonProfileReels.length || reels.length">
+                <p>You haven't created any reels yet.</p>
+                <p>Want to know how to create a reel? It's easy:</p>
+                <ol>
+                    <li>Go to any game your coach has broken down.</li>
+                    <li>Select the plays that you want to add to a reel.</li>
+                    <li>Name the new reel, and then you're done!</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="button-row" ng-hide="reordering">
+            <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
+            <button class="btn btn-primary" ng-click="saveProfile()">Done</button>
+        </div>
+    </div>
+
+</div>

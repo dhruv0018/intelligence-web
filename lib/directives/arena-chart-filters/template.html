@@ -21,7 +21,7 @@
                     items="::teamPlayerLabels"
                     type="Player"
                     multiple="true"
-                    default-label="All Players">
+                    default-label="Select Players">
                 </krossover-multiselect>
 
             </div>
@@ -54,33 +54,22 @@
         </div>
 
         <!-- period filter -->
-        <div class="filter-group__item">
+        <div class="filter-group__item" ng-if="league.numberOfPeriods !== 1">
 
             <h4> Period </h4>
 
             <div>
 
-                <krossover-checkbox ng-model="filterModel.allPeriods" children-models="filterModel.period" children-listen="false">
+                <krossover-checkbox ng-model="filterModel.allPeriods" children-models="filterModel.periods" children-listen="false">
                     All
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-model="filterModel.period.one">
-                    Q1
+                <krossover-checkbox ng-repeat="periodNumber in periods"
+                    ng-model="filterModel.periods[periodNumber]">
+                    {{ ::league.periodAbbreviationLabel }}{{ ::periodNumber }}
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-model="filterModel.period.two">
-                    Q2
-                </krossover-checkbox>
-
-                <krossover-checkbox ng-model="filterModel.period.three">
-                    Q3
-                </krossover-checkbox>
-
-                <krossover-checkbox ng-model="filterModel.period.four">
-                    Q4
-                </krossover-checkbox>
-
-                <krossover-checkbox ng-model="filterModel.period.overtime">
+                <krossover-checkbox ng-model="filterModel.periods.OT">
                     OT
                 </krossover-checkbox>
 
@@ -130,7 +119,7 @@
                     items="::opposingTeamPlayerLabels"
                     type="Player"
                     multiple="true"
-                    default-label="All Players">
+                    default-label="Select Players">
                 </krossover-multiselect>
 
             </div>

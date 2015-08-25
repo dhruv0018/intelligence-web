@@ -7,10 +7,9 @@
     font-size: @font-size-base;
     display: inline-block;
 
-    &.icon-x, &.svg-icon-x {
-        height: @font-size-small;
-        width: @font-size-small;
-        font-size: @font-size-small;
+    &-centered {
+        top: -@font-size-base / 2;
+        left: -@font-size-base / 2;
     }
 
     &-large {
@@ -23,12 +22,6 @@
         &-centered {
             top: -@font-size-large / 2;
             left: -@font-size-large / 2;
-        }
-
-        &.icon-x, &.svg-icon-x {
-            height: @font-size-base;
-            width: @font-size-base;
-            font-size: @font-size-base;
         }
     }
 
