@@ -24,6 +24,7 @@ class YardField extends Field {
 
     get availableValues() {
         let values = Array.from(new Array(101), (item, yardLength) => {
+            //TODO rename yardLength to yard and use pad left
             let yard = yardLength < 10 ? '0' + String(yardLength) : String(yardLength);
             return {
                 content: yardLength,
