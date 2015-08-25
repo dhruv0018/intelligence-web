@@ -3,40 +3,10 @@
 .queue {
 
     .queue-container {
+
         width: 100%;
         height: 100%;
-
-        .list {
-            height: calc(~"100% - 232px");
-        }
-
-        .list .table > tbody tr > td {
-            vertical-align: middle;
-        }
-
-        .list {
-
-            .time-left {
-
-                font-size: 28px;
-                font-weight: 600;
-                text-align: right;
-
-                .late {
-
-                    color: @brand-danger;
-                }
-
-                .none {
-
-                    color: @brand-warning;
-                }
-
-                .togo {
-
-                    color: @brand-success;
-                }
-            }
-        }
+        display: flex;
+        flex-direction: column;
     }
 }

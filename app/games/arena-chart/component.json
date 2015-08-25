@@ -1,10 +1,7 @@
 {
-    "name": "shot-chart",
+    "name": "arena-chart",
     "templates": [
         "template.html"
-    ],
-    "styles": [
-        "styles.less"
     ],
     "scripts": [
         "index.js"

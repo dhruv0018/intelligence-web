@@ -1,8 +1,26 @@
+# v2.13.0 #
+
+## Features ##
+- Create list collection class
+- Create ordered list collection class
+- Updates to embed player for reels
+- Athlete profile onboarding modal
+- Athlete profile shows all profile reels under featured reel
+- Athlete can add, edit, and remove teams on their profile
+- Athlete can manage their profile reels
+- Design improvements to the queue so there is less scrolling
+- Show game length for uploaded game film to Admin in Queue
+
+## Bug Fixes / Improvements ##
+- Imposes character limit for various profile fields
+- Hide public share option for athletes with recruit only
+- Working red zone filters for down & distance and formation reports
+- After indexing arena, should be able to view tagged coordinates again if clicking on arena tag; currently the coordinates disappear if calling up arena again
+- Double-clicking on a coordinate for an arena tag makes tag move to upper corner - not sure if intentional
+
 # v2.12.0 #
 
 ## Features ##
-- Design improvements to the queue so there is less scrolling
-- Show game length for uploaded game film to Admin in Queue
 - New users need to agree to Terms & Conditions
 - Old users need to agree to Terms & Conditions
 

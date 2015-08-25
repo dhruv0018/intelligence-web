@@ -2,7 +2,7 @@ export default `
 
     <section class="reels-player-area">
 
-        <film-header data-film="reel" data-is-editable="canUserEdit"></film-header>
+        <film-header film="reel" is-editable="canUserEdit" ng-show="$root.viewport.name === VIEWPORTS.DESKTOP.name"></film-header>
 
         <div class="reel-body">
 
@@ -10,24 +10,23 @@ export default `
 
                 <div class="reel-edit-controls">
 
-                    <a id="reels-edit-clips-cta" href data-ng-hide="editFlag" data-ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
-                    <a id="reels-edit-clips-save-cta" href data-ng-show="editFlag" data-ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
-                    <a id="reels-edit-clips-cancel-cta" href data-ng-show="editFlag" data-ng-click="toggleEditMode()">Cancel</a>
+                    <a id="reels-edit-clips-cta" href ng-hide="editFlag" ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
+                    <a id="reels-edit-clips-save-cta" href ng-show="editFlag" ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
+                    <a id="reels-edit-clips-cancel-cta" href ng-show="editFlag" ng-click="toggleEditMode()">Cancel</a>
 
                 </div>
 
             </div>
 
-            <div class="main-highlight ng-scope" data-ui-view="content" ng-class="{'not-editable': !canUserEdit}">
+            <div class="main-highlight ng-scope" ui-view="content" ng-class="{'not-editable': !canUserEdit}">
 
-                <krossover-sidebar>
+                <krossover-sidebar ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name">
 
                     <krossover-playlist></krossover-playlist>
 
                 </krossover-sidebar>
 
                 <video-player
-                    data-ng-if="$root.viewport.name === VIEWPORTS.DESKTOP.name"
                     class="reels-video-container"
                     poster-image="posterImage"
                     video="video"
@@ -38,11 +37,17 @@ export default `
                 >
                 </video-player>
 
+                <clips-navigation
+                    ng-if="$root.viewport.name === VIEWPORTS.MOBILE.name"
+                    video="video"
+                    plays="plays"
+                ></clips-navigation>
+
             </div>
 
         </div>
 
-        <public-footer data-ng-hide="auth.isLoggedIn"></public-footer>
+        <public-footer ng-hide="auth.isLoggedIn"></public-footer>
 
     </section>
 `;

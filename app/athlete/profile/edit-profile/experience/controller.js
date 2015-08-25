@@ -12,12 +12,15 @@ const Experience = angular.module('Athlete.Profile.EditProfile.Experience');
 */
 ExperienceController.$inject = [
     '$scope',
+    '$filter',
     'TeamsFactory',
     'LeaguesFactory',
     'SportsFactory',
     'PositionsetsFactory',
     'UsersFactory',
-    'SessionService'
+    'SessionService',
+    'AddProfileTeam.Modal',
+    'BasicModals'
 ];
 
 /**
@@ -28,29 +31,57 @@ ExperienceController.$inject = [
  */
 function ExperienceController (
     $scope,
+    $filter,
     teams,
     leagues,
     sports,
     positionsets,
     users,
-    session
+    session,
+    addProfileTeamModal,
+    basicModals
 ) {
     $scope.athlete = session.getCurrentUser();
     $scope.teams = teams.getMap();
     $scope.addingTeam = false;
 
-    $scope.getPositionSet = function getPositionSet(teamId) {
+    $scope.getPositionSet = function(teamId) {
         let team = teams.get(teamId);
         let league = leagues.get(team.leagueId);
         let positionset = positionsets.get(league.positionSetId);
         return positionset;
     };
 
-    $scope.getTeamSportName = function getTeamSportName(teamId) {
+    $scope.getPosition = function(teamId, positionId) {
+        let positionset = $scope.getPositionSet(teamId);
+        let position = positionset.getPosition(positionId);
+        return position;
+    };
+
+    $scope.getProfileTeamSport = function(teamId) {
         let team = teams.get(teamId);
-        let league = leagues.get(team.leagueId);
-        let sport = sports.get(league.sportId);
-        return sport.name;
+        return team.getSport();
+    };
+
+    $scope.openTeamModal = function(profileTeam) {
+        let modal = addProfileTeamModal.open({
+            resolve: {
+                profileTeam: function() { return profileTeam; }
+            }
+        });
+    };
+
+    $scope.removeTeam = function(team) {
+        let removeTeamModal = basicModals.openForConfirm({
+            title: 'Remove Team',
+            bodyText: 'Are you sure you want to remove this team from your profile?',
+            buttonText: 'Yes'
+        });
+
+        removeTeamModal.result.then(function removeTeamModalCallback() {
+            $scope.athlete.removeTeamFromProfile(team.teamId);
+            $scope.athlete.save();
+        });
     };
 }
 
