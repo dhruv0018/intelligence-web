@@ -1,6 +1,4 @@
 import KrossoverPlay from '../entities/play';
-import KrossoverPlayFactory from '../entities/playFactory';
-import Video from '../entities/video';
 import KrossoverEvent from '../entities/event';
 
 const pkg = require('../../package.json');
@@ -9,8 +7,6 @@ const pkg = require('../../package.json');
 const angular = window.angular;
 
 const IntelligenceWebClient = angular.module(pkg.name);
-
-IntelligenceWebClient.factory('KrossoverPlayFactory', KrossoverPlayFactory);
 
 IntelligenceWebClient.factory('PlaysFactory', [
     '$injector',
@@ -22,7 +18,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
     'TagsetsFactory',
     'Utilities',
     'CUEPOINT_CONSTANTS',
-    'KrossoverPlayFactory',
     function(
         $injector,
         config,
@@ -32,8 +27,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
         BaseFactory,
         tagsets,
         utils,
-        CUEPOINT_CONSTANTS,
-        KrossoverPlayFactory
+        CUEPOINT_CONSTANTS
     ) {
 
         var PlaysFactory = {
@@ -48,20 +42,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             extend: function (play) {
 
-                const playIsEntity = play instanceof KrossoverPlay;
-                const eventsAreEntities =
-                    play.events &&
-                    play.events[0] instanceof KrossoverEvent;
-
-                if (!(playIsEntity || eventsAreEntities)) {
-
-                    angular.extend(play, this);
-                    play = KrossoverPlayFactory.create(play);
-                }
-
-                play.clip = play.clip ? new Video(play.clip) : {};
-
-                return play;
+                return this.instantiate(play);
             },
 
             unextend: function (play) {
@@ -69,6 +50,28 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 play = play || this;
 
                 return play.toJSON();
+            },
+
+            /**
+             * FIXME:
+             * Rename to method 'create'. Must resolve any issues
+             * where BaseFactory.create is invoked, as renaming
+             * will overrride BaseFactory.create
+             */
+            instantiate: function (play) {
+
+                const playIsEntity = play instanceof KrossoverPlay;
+                const eventsAreEntities =
+                    play.events &&
+                    play.events[0] instanceof KrossoverEvent;
+
+                if (!(playIsEntity || eventsAreEntities)) {
+
+                    play = new KrossoverPlay(play, tagsets);
+                    angular.extend(play, this);
+                }
+
+                return play;
             },
 
             filterPlays: function(filterId, resources, success, error) {
