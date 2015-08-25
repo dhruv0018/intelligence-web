@@ -59,7 +59,10 @@ class TeamPlayerField extends Field {
      * @type {Boolean}
      */
     get valid () {
-        return Number.isInteger(this.value.id);
+        let value = this.value.id;
+        return this.isRequired ?
+            Number.isInteger(value) :
+            value === null ? true : false;
     }
 
     /**
