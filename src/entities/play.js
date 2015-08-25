@@ -1,7 +1,6 @@
 import Entity from './entity';
 import template from './event/template';
 import KrossoverEvent from './event/index';
-import Video from './video';
 
 const schema = require('../../schemas/play.json');
 
@@ -58,9 +57,6 @@ class KrossoverPlay extends Entity {
 
             return new KrossoverEvent(event, tag, event.time, this.gameId);
         });
-
-        /* Instantiate Video entity */
-        play.clip = play.clip ? new Video(play.clip) : {};
     }
 
     /**
