@@ -1,5 +1,6 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const moment  = require('moment');
 
 /**
  * Login module for managing user logins.
@@ -140,7 +141,7 @@ Login.config([
             })
 
             .state('new', {
-                url: '^/new-user/:token',
+                url: '^/new-user/:token?email&expires',
                 parent: 'login',
                 views: {
                     'header@login': {
@@ -159,16 +160,44 @@ Login.config([
                 onEnter: ['$state', '$stateParams',
                     function newOnEnter ($state, $stateParams) {
 
-                        if (!$stateParams.token) {
+                        let token   = $stateParams.token;
+                        let email   = $stateParams.email;
+                        let expires = $stateParams.expires;
 
+                        if (!token) {
+
+                            $state.go('new-error', {email});
                             throw new Error('No new user token!');
+                        }
+
+                        if (!email) {
+
+                            $state.go('new-error');
+                            throw new Error('No new user email!');
+                        }
+
+                        if (!expires) {
+
+                            $state.go('new-error', {email});
+                            throw new Error('No new user expires date!');
+                        }
+
+                        /* Check if token has expired. If expired, redirect
+                         * user to New User error state. */
+                        expires = moment.unix(expires);
+                        let now = moment();
+
+                        if (expires.isAfter(now)) {
+
+                            $state.go('new-error', {email});
+                            throw new Error('New user token has expired!');
                         }
                     }
                 ]
             })
 
             .state('new-error', {
-                url: '^/new-user-error',
+                url: '^/new-user-error/:email',
                 parent: 'login',
                 views: {
                     'header@login': {
@@ -182,7 +211,30 @@ Login.config([
                 data: {
 
                     isNewUser: true
-                }
+                },
+                onEnter: [
+                    '$state',
+                    '$stateParams',
+                    'UsersFactory',
+                    'EMAIL_REQUEST_TYPES',
+
+                    function onNewErrorEnter (
+                        $state,
+                        $stateParams,
+                        users,
+                        EMAIL_REQUEST_TYPES
+                    ) {
+
+                        let email = $stateParams.email;
+
+                        /* If an email was present on the original new user url,
+                         * request the server to send a new new user email. */
+                        if (email) {
+
+                            users.resendEmail(EMAIL_REQUEST_TYPES.NEW_USER, null, email);
+                        }
+                    }
+                ]
             });
     }
 ]);
@@ -255,7 +307,8 @@ function LoginController(
         $scope.newUser = {
             password     : undefined,
             showPassword : true, // By default, show the new user's password
-            agree        : false
+            agree        : false,
+            email        : $stateParams.email
         };
     }
 
@@ -494,6 +547,7 @@ function LoginController(
         if ($stateParams.token) {
 
             let token    = $stateParams.token;
+            let email    = $stateParams.email;
             let password = $scope.newUser.password;
 
             users.passwordReset(token, password).then(
@@ -509,7 +563,7 @@ function LoginController(
 
                 function error(data, status) {
 
-                    $state.go('new-error');
+                    $state.go('new-error', {email});
                 }
             );
         }
