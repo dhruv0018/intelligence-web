@@ -25,6 +25,7 @@
         "objectLiteralShorthandProperties": true,
         "regexUFlag": true,
         "regexYFlag": true,
+        "spread": true,
         "unicodeCodePointEscapes": true
     },
     "rules": {

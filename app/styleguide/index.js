@@ -1,4 +1,5 @@
 import StyleguideState from './state.js';
+import StyleguideDialogs from './dialogs';
 import StyleguideColors from './colors';
 import StyleguideTypography from './typography';
 import StyleguideButtons from './buttons';
@@ -14,6 +15,7 @@ const angular = window.angular;
 const Styleguide = angular.module('Styleguide', [
     'ui.router',
     'ui.bootstrap',
+    'Styleguide.Dialogs',
     'Styleguide.Colors',
     'Styleguide.Typography',
     'Styleguide.Buttons',
