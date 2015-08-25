@@ -1,11 +1,11 @@
 {
-    "node": true,
-    "browser": true,
-    "esnext": true,
-    "indent"        : 4,
-    "newcap"        : true,
-    "camelcase"     : true,
-    "quotmark"      : true,
-    "trailing"      : true,
-    "asi"           : false
+    "node"      : true,
+    "browser"   : true,
+    "esnext"    : true,
+    "indent"    : 4,
+    "newcap"    : true,
+    "camelcase" : true,
+    "quotmark"  : true,
+    "trailing"  : true,
+    "asi"       : false
 }

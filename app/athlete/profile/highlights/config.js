@@ -26,7 +26,23 @@ Highlights.config([
                     templateUrl: templateUrl,
                     controller: 'Athlete.Profile.Highlights.controller'
                 }
-            }
+            },
+            onEnter: [
+                '$stateParams',
+                'SessionService',
+                'ProfileOnboarding.Modal',
+                function onboarding(
+                    $stateParams,
+                    session,
+                    profileOnboardingModal
+                ) {
+                    let currentUser = session.getCurrentUser();
+                    const userId = Number($stateParams.id);
+                    if (currentUser.id === userId && !currentUser.profile.primarySportId) {
+                        profileOnboardingModal.open();
+                    }
+                }
+            ]
         });
     }
 ]);
