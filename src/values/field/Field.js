@@ -1,8 +1,8 @@
 import Value from '../value';
 
 /**
- * KrossoverField Field Model
- * @class KrossoverField
+ * Field Field Model
+ * @class Field
  */
 class Field extends Value {
 
