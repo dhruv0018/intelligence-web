@@ -86,6 +86,12 @@ IntelligenceWebClient.factory('UsersFactory', [
                     user.subscriptions.map(subscription => new Subscription(subscription)) :
                     [];
 
+                // Get full name for user
+                Object.defineProperty(user, 'name', {
+                    get: () => user.firstName + ' ' + user.lastName,
+                    configurable: true
+                });
+
                 /* Copy all of the properties from the retrieved $resource
                  * "user" object. */
                 angular.extend(user, self);
@@ -174,18 +180,6 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 //TODO use normal save()
                 return self.baseSave();
-            },
-
-            /**
-            * @class User
-            * @method
-            * @returns {String} returns the users first and last name as a
-            * concatenated string.
-            * Gets the users full name.
-            */
-            get name() {
-
-                return this.firstName + ' ' + this.lastName;
             },
 
             /**
@@ -539,9 +533,35 @@ IntelligenceWebClient.factory('UsersFactory', [
                 /* Assume all other roles do not have access. */
                 return false;
             },
+
+            // TODO: This method should be removed
             getLastAccessed: function(user) {
                 return new Date(user.lastAccessed);
             },
+
+            /**
+             * @class User
+             * @method getTermsAcceptedDate
+             * Returns the date of the last time the user has accepted the
+             * Terms and conditions.
+             * @return {(String|undefined)} The date user last accepted terms
+             */
+            getTermsAcceptedDate: function getTermsAcceptedDate () {
+
+                return this.termsAcceptedDate;
+            },
+
+            /**
+             * @class User
+             * @method updateTermsAcceptedDate
+             * Record the date of Terms & Conditions acceptance.
+             * @return {Promise} The date user last accepted terms
+             */
+            updateTermsAcceptedDate: function updateTermsAcceptedDate () {
+
+                this.termsAcceptedDate = new Date().toISOString();
+            },
+
             /**
              * @class User
              * @method
@@ -596,10 +616,17 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return vettedUsers;
             },
-            passwordReset: function(token, password) {
-                var self = this;
 
-                var model = $injector.get(self.model);
+            /**
+             * @class User
+             * @method passwordReset
+             * @param {String} password reset token
+             * @param {String} new password
+             * @returns {Object} resource promise
+             */
+            passwordReset: function passwordReset (token, password) {
+
+                const model = $injector.get(this.model);
 
                 return model.resetPassword(
                     {token: token},

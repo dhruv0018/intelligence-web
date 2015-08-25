@@ -244,6 +244,7 @@ module.exports = function(grunt) {
         less: {
             options: {
                 paths: [
+                    'build/temp-less',
                     'theme',
                     'node_modules/bootstrap/less'
                 ]
@@ -266,7 +267,8 @@ module.exports = function(grunt) {
                         'lib/directives/field/**/*.less',
                         'app/reel/*.less',
                         'app/indexer/**/*.less',
-                        'app/styleguide/**/*.less'
+                        'app/styleguide/**/*.less',
+                        'lib/directives/arena-chart/styles.less'
                     ]
                 }
             }
@@ -285,7 +287,7 @@ module.exports = function(grunt) {
 
         concat: {
             unprefixed: {
-                src: ['fonts.css', 'icons.css', 'vendor/css/animate.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'node_modules/angular-material/angular-material.css', 'build/build.css', 'build/components.css', 'build/theme.css'],
+                src: ['fonts.css', 'icons.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'node_modules/angular-material/angular-material.css', 'build/build.css', 'build/components.css', 'build/theme.css'],
                 dest: 'build/unprefixed.css'
             }
         },
@@ -319,6 +321,7 @@ module.exports = function(grunt) {
                     stylePlugins: function(builder) {
                         builder.use('styles', less({
                             paths: [
+                                'build/temp-less',
                                 'theme',
                                 'node_modules/bootstrap/less'
                             ]
@@ -390,6 +393,11 @@ module.exports = function(grunt) {
         /* Distribution/Deployment */
 
         copy: {
+            'theme-vendor': {
+                files: {
+                    'build/temp-less/animate.less': 'node_modules/animate.css/animate.css'
+                }
+            },
             svg: {
                 expand: true,
                 cwd:    'svg',
@@ -705,6 +713,7 @@ module.exports = function(grunt) {
         'env:dev',
         'componentbuild:dev',
         'browserify:dev',
+        'copy:theme-vendor',
         'componentbuild:styles',
         'less',
         'copy:svg',
@@ -726,6 +735,7 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'browserify:prod',
         'ngAnnotate',
+        'copy:theme-vendor',
         'componentbuild:styles',
         'less',
         'svgmin',
@@ -750,6 +760,7 @@ module.exports = function(grunt) {
         'componentbuild:prod',
         'browserify:prod',
         'ngAnnotate',
+        'copy:theme-vendor',
         'componentbuild:styles',
         'less',
         'svgmin',
@@ -776,6 +787,7 @@ module.exports = function(grunt) {
         'browserify:prod',
         'ngAnnotate',
         'uglify',
+        'copy:theme-vendor',
         'componentbuild:styles',
         'less',
         'svgmin',

@@ -18,10 +18,9 @@ HighlightsController.$inject = [
     'UsersFactory',
     'PlaysFactory',
     'PlaysManager',
-    'PlayManager',
-    'VideoPlayer',
-    'VideoPlayerEventEmitter',
-    'VIDEO_PLAYER_EVENTS'
+    'SessionService',
+    'Utilities',
+    'ManageProfileReels.Modal'
 ];
 
 /**
@@ -38,57 +37,46 @@ function HighlightsController (
     users,
     plays,
     playsManager,
-    playManager,
-    videoPlayer,
-    VideoPlayerEventEmitter,
-    VIDEO_PLAYER_EVENTS
+    session,
+    utils,
+    manageProfileReelsModal
 )   {
         $scope.athlete = users.get($stateParams.id);
-        $scope.featuredReel = reels.getFeaturedReel($scope.athlete);
+        $scope.profileReels = utils.getSortedArrayByIds(reels, $scope.athlete.profile.reelIds);
+        $scope.featuredReel = $scope.profileReels[0];
         $scope.config = config;
+        $scope.options = {scope: $scope};
+
+        // Check if user is on their own profile
+        $scope.isCurrentUser = $scope.athlete.id === session.getCurrentUserId();
 
         if ($scope.featuredReel) {
 
             // Populate the array with play objects from playIds
-            let playsArray = $scope.featuredReel.plays.map(function(playId) {
+            $scope.playsArray = $scope.featuredReel.plays.map(function(playId) {
                 return plays.get(playId);
             });
 
-            /* Load the plays in the plays manager
-             * TODO: accomplish this without playsManager
-             */
-            playsManager.reset(playsArray);
+            $scope.video = $scope.playsArray[0].clip;
+        }
 
-            // Start with first play
-            $scope.currentPlay = playsArray[0];
-            $scope.sources = $scope.currentPlay.getVideoSources();
-            $scope.clipTotal = $scope.featuredReel.plays.length;
-            $scope.clipIndex = playsManager.getIndex($scope.currentPlay) + 1;
-
-            $scope.$watch('clipIndex', function updatePlayInfo() {
-                // When clip index is changed, adjust adjacent plays accordingly
-                $scope.previousPlay = playsManager.getPreviousPlay($scope.currentPlay);
-                $scope.nextPlay = playsManager.getNextPlay($scope.currentPlay);
+        $scope.manageReels = function() {
+            let modal = manageProfileReelsModal.open({
+                options: $scope.options
             });
-        }
 
-        // When clip finishes playing, go to next play if continuous play is on
-        VideoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.ON_CLIP_COMPLETE, onCompleteVideo);
-
-        function onCompleteVideo() {
-
-            /* If continuous play is on. */
-            if (playManager.playAllPlays) {
-                $scope.goToPlay($scope.nextPlay);
-
-                VideoPlayerEventEmitter.on(VIDEO_PLAYER_EVENTS.ON_CAN_PLAY, function playVideo() {
-                    videoPlayer.play();
-                    VideoPlayerEventEmitter.removeListener(VIDEO_PLAYER_EVENTS.ON_CAN_PLAY, playVideo);
-                });
-            }
-        }
-
-        $scope.highlightReels = [];
+            modal.result.then( () => {
+                $scope.athlete = users.get($stateParams.id);
+                $scope.profileReels = utils.getSortedArrayByIds(reels, $scope.athlete.profile.reelIds);
+                $scope.featuredReel = $scope.profileReels[0];
+                if ($scope.featuredReel) {
+                    plays.query({reelId: $scope.featuredReel.id}).then(featuredPlays => {
+                        $scope.playsArray = featuredPlays;
+                        $scope.video = $scope.playsArray[0].clip;
+                    });
+                }
+            });
+        };
 }
 
 Highlights.controller('Athlete.Profile.Highlights.controller', HighlightsController);

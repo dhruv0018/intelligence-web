@@ -15,8 +15,9 @@
                 <span>Share this film via public URL</span>
                 <span class="modal-title-side-caption" ng-show="currentUser.is(ROLES.COACH)">(does not include telestrations)</span>
             </span>
-	        <i id="share-film-dismiss-cta" class="icon icon-remove pull-right" ng-click="$dismiss()"></i>
 	    </h3>
+
+        <i id="share-film-dismiss-cta" class="icon icon-remove" ng-click="$dismiss()"></i>
 
     </header>
 
@@ -30,15 +31,15 @@
         		Games are automatically shared amongst team coaches and athletes on your active roster.
         	</div>
             <!--With Team Option for Reel-->
-            <div id="share-with-team-cta" class="share-options option-your-team-reels" ng-show="!isGame" ng-click="withTeam = true" ng-class="{'athlete-option': currentUser.is(ROLES.ATHLETE)}">
+            <div id="share-with-team-cta" class="share-options option-your-team-reels" ng-show="!isGame" ng-click="withTeam = true" ng-class="{'athlete-option': currentUserIsAthleteRecruit}">
                 <h3>Your Team</h3>
                 <i class="icon icon-group"></i>
             </div>
-        	<div class="share-options middle-option" id="share-other-users-cta" ng-click="withOtherUsers = true" ng-class="{'athlete-option': currentUser.is(ROLES.ATHLETE)}">
+        	<div class="share-options middle-option" id="share-other-users-cta" ng-click="withOtherUsers = true" ng-class="{'athlete-option': currentUserIsAthleteRecruit}">
         		<h3>Other Krossover Users</h3>
         		<i class="icon icon-logo"></i>
         	</div>
-        	<div class="share-options" id="share-public-cta" ng-click="withPublic = true" ng-show="currentUser.is(ROLES.COACH)">
+        	<div class="share-options" id="share-public-cta" ng-click="withPublic = true" ng-hide="currentUserIsAthleteRecruit">
         		<h3>Recruiters or others via public URL</h3>
         		<i class="icon icon-globe"></i>
         	</div>
@@ -135,7 +136,8 @@
                         <a id="share-film-public-anyone-reel-link-cta" ng-if="!isGame" href="/intelligence/r/{{shortId}}" target="_blank">{{config.links.intelligence.uri}}/r/{{shortId}}</a>
                     </div>
                 </div>
-                <div class="method-row">
+                <!-- Hide embed code for games until further notice -->
+                <div class="method-row" ng-hide="isGame">
                     <div class="public-link-box pull-right" ng-show="linkActive">
                         <code id="share-film-public-embed-game-field" ng-show="isGame">&lt;iframe src="{{config.links.intelligence.uri}}/g/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
                         <code id="share-film-public-embed-reel-field" ng-show="!isGame">&lt;iframe src="{{config.links.intelligence.uri}}/r/{{shortId}}" style="{{embedSize}}" allowfullscreen&gt;&lt;/iframe&gt;</code>
@@ -144,8 +146,8 @@
                         <p class="embed-label">Embed video on your website</p>
                         Video Size:
                         <select id="share-film-public-video-size-cta" ng-model="embedSize">
-                            <option value="width:480px;height:500px;">480x500</option>
-                            <option value="width:720px;height:750px;">720x750</option>
+                            <option value="width:480px;height:458px;">480x458</option>
+                            <option value="width:720px;height:585px;">720x585</option>
                         </select>
                     </div>
                 </div>

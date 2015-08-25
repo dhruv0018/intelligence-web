@@ -978,6 +978,49 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
             },
 
+            /**
+             * Retrieves the arena events for a game, and stores in game storage
+             * @param {?game} game Defaults to the thisObject
+             * @returns {arenaEvent[]}
+             */
+            retrieveArenaEvents: function(game = this) {
+
+                let model = $injector.get(game.model);
+                let storage = $injector.get(game.storage);
+
+                if (!game.hasOwnProperty('id')) throw new Error(`Game has no id. Game must be saved before retrieving arena events`);
+
+                const query = model.retrieveArenaEvents({ id: game.id});
+                const request = query.$promise;
+
+                // TODO: Store separately from on a game so retrieving arena events can be independant of loading a game
+                const receiveArenaEvents = (arenaEvents) => {
+                    game.arenaEvents = arenaEvents;
+                    storage.set(game);
+                };
+
+                const retrieveArenaEventsError = (reason) => {
+                    // No arena events at this time
+                    this.arenaEvents = [];
+                    storage.set(this);
+                };
+
+                request.then(receiveArenaEvents, retrieveArenaEventsError);
+
+                return request;
+            },
+
+            /**
+             * Gets the arena events for a game
+             * @returns {arenaEvent[]}
+             */
+            getArenaEvents: function() {
+
+                if (!this.hasOwnProperty('arenaEvents')) throw new Error(`'arenaEvents' on game is not defined`);
+
+                return this.arenaEvents;
+            },
+
             getRemainingTime: function(uploaderTeam, now) {
 
                 var self = this;

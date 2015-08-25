@@ -32,6 +32,12 @@ const EVENT = {
         }
     },
 
+    ARENA_CHART: {
+        FILTERS: {
+            RESET: 'RESET'
+        }
+    },
+
     UI: {
 
         KEY_DOWN: {
