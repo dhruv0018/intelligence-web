@@ -400,11 +400,6 @@
         "Assistant Coach": true
     },
 
-    "ga-shot-chart": {
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
     "ga-formations": {
         "Head Coach": true,
         "Assistant Coach": true
@@ -544,7 +539,7 @@
         "Assistant Coach": true
     },
 
-    "Games.ShotChart": {
+    "Games.ArenaChart": {
         "Head Coach": true,
         "Assistant Coach": true
     },

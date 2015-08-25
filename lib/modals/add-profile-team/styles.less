@@ -1,0 +1,75 @@
+@import (reference) "main.less";
+
+.add-profile-team {
+
+    .modal-header {
+        background-color: @content-bg;
+        border: none;
+    }
+
+    .modal-body {
+        background-color: @content-bg;
+
+        .team-option {
+            margin-bottom: 20px;
+            text-transform: capitalize;
+        }
+
+        .team-dates-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0px;
+
+            .team-dates-field {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                position: relative;
+            }
+
+            .invalid-date-warning {
+                position: absolute;
+                top: -15px;
+                right: 0px;
+                color: @brand-danger;
+                font-size: 12px;
+            }
+
+            check-box {
+                font-size: 24px;
+                margin-left: 10px;
+            }
+
+            select {
+                padding-right: 60px;
+                margin-left: 20px;
+            }
+        }
+
+        .positions-dropdown {
+            width: 100%;
+
+            .positions-dropdown-container {
+                width: 100%;
+
+                .multiselect-dropdown-button {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding-right: 10px;
+
+                    .icon-chevron-down {
+                        margin-left: auto;
+                    }
+                }
+            }
+        }
+
+        .save-team {
+            min-width: 60px;
+        }
+    }
+}

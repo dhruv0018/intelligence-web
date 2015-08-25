@@ -1,0 +1,37 @@
+@import (reference) "krossover-variables.less";
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    color: #000;
+    border: thin solid @gray-border;
+    border-radius: 2px;
+    background-color: @content-bg;
+
+    &__header {
+        width: 100%;
+        height: 40px;
+        padding: 10px 20px;
+        background-color: @gray-lighter;
+        color: @brand-blue;
+    }
+
+    .filter-group {
+        display: flex;
+
+        &__item {
+            margin: 0px 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        &:first-child, &:last-child {
+            .filter-group__item {
+                align-items: center;
+            }
+        }
+    }
+}
