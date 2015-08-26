@@ -140,7 +140,7 @@ Login.config([
                 ]
             })
 
-            .state('new', {
+            .state('new-user', {
                 url: '^/new-user/:token?email&expires',
                 parent: 'login',
                 views: {
@@ -166,19 +166,19 @@ Login.config([
 
                         if (!token) {
 
-                            $state.go('new-error', {email});
+                            $state.go('new-user-error', {email});
                             throw new Error('No new user token!');
                         }
 
                         if (!email) {
 
-                            $state.go('new-error');
+                            $state.go('new-user-error');
                             throw new Error('No new user email!');
                         }
 
                         if (!expires) {
 
-                            $state.go('new-error', {email});
+                            $state.go('new-user-error', {email});
                             throw new Error('No new user expires date!');
                         }
 
@@ -189,14 +189,14 @@ Login.config([
 
                         if (expires.isAfter(now)) {
 
-                            $state.go('new-error', {email});
+                            $state.go('new-user-error', {email});
                             throw new Error('New user token has expired!');
                         }
                     }
                 ]
             })
 
-            .state('new-error', {
+            .state('new-user-error', {
                 url: '^/new-user-error/:email',
                 parent: 'login',
                 views: {
@@ -563,7 +563,7 @@ function LoginController(
 
                 function error(data, status) {
 
-                    $state.go('new-error', {email});
+                    $state.go('new-user-error', {email});
                 }
             );
         }

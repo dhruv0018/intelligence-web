@@ -54,12 +54,12 @@
         "*": true
     },
 
-    "new": {
+    "new-user": {
 
         "*": true
     },
 
-    "new-error": {
+    "new-user-error": {
 
         "*": true
     },
