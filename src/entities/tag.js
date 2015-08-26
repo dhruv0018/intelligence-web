@@ -15,11 +15,6 @@ class KrossoverTag extends Entity {
 
         super(tag);
 
-        Object.defineProperty(this, 'shortcutKey', {
-
-            writable: false,
-        });
-
         this.userScript    = this.mapScriptTypes(this.userScript);
         this.indexerScript = this.mapScriptTypes(this.indexerScript);
         this.summaryScript = this.mapScriptTypes(this.summaryScript);
