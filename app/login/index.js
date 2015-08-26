@@ -140,7 +140,7 @@ Login.config([
                 ]
             })
 
-            .state('new', {
+            .state('new-user', {
                 url: '^/new-user/:token?email&expires',
                 parent: 'login',
                 views: {
@@ -193,8 +193,10 @@ Login.config([
                          * Handles any errors arising from the new user URL
                          *
                          * @function onNewUserError
+                         * @param {string} errorMsg - The message to be used in
+                         * the throw.
                          */
-                        function onNewUserError (error) {
+                        function onNewUserError (errorMsg) {
 
                             $state.go('new-error', {email});
 
@@ -205,13 +207,13 @@ Login.config([
                                 users.resendEmail(EMAIL_REQUEST_TYPES.NEW_USER, null, email);
                             }
 
-                            throw new Error(error);
+                            throw new Error(errorMsg);
                         }
                     }
                 ]
             })
 
-            .state('new-error', {
+            .state('new-user-error', {
                 url: '^/new-user-error/:email',
                 parent: 'login',
                 views: {
@@ -519,7 +521,7 @@ function LoginController(
 
                     alerts.add({
                         type: 'danger',
-                        message: 'Sorry, the link is no longer valid. Click <a href="/intelligence/login">here</a> to reset your password again.'
+                        message: 'Sorry, the link is no longer valid. Click <a href="/intelligence/forgot-password">here</a> to reset your password again.'
                     });
 
                     throw new Error('Could not reset password');
@@ -555,7 +557,7 @@ function LoginController(
 
                 function error(data, status) {
 
-                    $state.go('new-error', {email});
+                    $state.go('new-user-error', {email});
                 }
             );
         }
