@@ -28,10 +28,17 @@ describe('Base Entity', () => {
         expect(Entity).to.respondTo('validate');
     });
 
-    it('should throw an error if validate is called with no JSON object and/or schema', () => {
+    it('should throw an error if validate is called with no schema', () => {
 
         expect(() => entity.validate()).to.throw(Error);
-        expect(() => entity.validate({})).to.throw(Error);
+        expect(() => entity.validate(genericData)).to.throw(Error);
+    });
+
+    it('should throw an error if validate is called with no JSON object', () => {
+
+        entity.schema = genericSchema;
+
+        expect(() => entity.validate()).to.throw(Error);
     });
 
     // TODO: Finish tests for validate method.
