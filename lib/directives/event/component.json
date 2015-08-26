@@ -1,8 +1,5 @@
 {
     "name": "event",
-    "templates": [
-        "template.html"
-    ],
     "styles": [
         "styles.less"
     ],
