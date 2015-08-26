@@ -4,6 +4,7 @@
         "styles.less"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "template.html.js"
     ]
 }
