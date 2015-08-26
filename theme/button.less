@@ -153,6 +153,7 @@
     letter-spacing: normal;
     text-transform: uppercase;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
         color: darken(@brand-success, 10%);
@@ -165,9 +166,54 @@
     letter-spacing: normal;
     text-transform: uppercase;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
         color: darken(@brand-danger, 10%);
         text-decoration: none;
     }
+}
+
+.circle-button {
+    border-radius: 100%;
+    border: none;
+    box-shadow: 1px 1px 5px black;
+    width: 45px;
+    height: 45px;
+    font-size: 30px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+        margin: auto;
+    }
+}
+
+.multiselect-dropdown-button {
+    padding: 8px;
+    border: thin solid @gray-border;
+    border-radius: 4px;
+    color: @gray;
+    font-weight: 400;
+
+    .icon-chevron-down {
+        font-size: 12px;
+        margin-left: 10px;
+    }
+}
+
+.multiselect-dropdown-button,
+.multiselect-dropdown-button:hover,
+.multiselect-dropdown-button:active,
+.multiselect-dropdown-button:focus {
+    background-color: white;
+    box-shadow: none !important;
+}
+
+.multiselect-dropdown-button[disabled] {
+    cursor: not-allowed;
+    opacity: .5;
+    background-color: @gray-lighter !important;
 }

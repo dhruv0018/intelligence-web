@@ -5,6 +5,11 @@
         "Assistant Coach": true
     },
 
+    "ArenaChart": {
+
+        "*": false
+    },
+
     "PlayerAnalytics": {
 
         "*": true
