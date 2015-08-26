@@ -193,6 +193,8 @@ Login.config([
                          * Handles any errors arising from the new user URL
                          *
                          * @function onNewUserError
+                         * @param {string} errorMsg - The message to be used in
+                         * the throw.
                          */
                         function onNewUserError (errorMsg) {
 
