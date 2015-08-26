@@ -93,15 +93,9 @@ class KrossoverPlay extends Entity {
             }
         })
         .filter(Boolean)
-        .sort((a, b) => {
-
-            return (a.summaryPriority - b.summaryPriority) * -1;
-        })
+        .sort((a, b) => b.summaryPriority - a.summaryPriority)
         .slice(0, 2)
-        .map(event => {
-
-            return event.summaryHTML + '</br>';
-        })
+        .map(event => event.summaryHTML + '</br>')
         .join('');
     }
 
@@ -137,10 +131,7 @@ class KrossoverPlay extends Entity {
         delete copy.hasVisibleEvents;
         delete copy.isFiltered;
 
-        copy.events = copy.events.map(event => {
-
-            return event.toJSON();
-        });
+        copy.events = copy.events.map(event => event.toJSON());
 
         return copy;
     }
