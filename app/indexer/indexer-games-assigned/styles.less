@@ -1,12 +1,6 @@
 @import (reference) "main.less";
 
-@queue-list-font-size: 14px;
-@queue-list-padding: 6px;
-
-
 .indexer-games-assigned, .indexer-games-available, .indexer-history {
-
-    letter-spacing: normal;
 
     .lookup {
 
@@ -31,6 +25,8 @@
                 i {
                     font-size: 20px;
 
+                    /*FIXME: Very specific set of styles applied to generic selector.
+                             Add a better qualifier*/
                     &::before {
 
                         width: 50px;
@@ -85,14 +81,14 @@
 
         width: 100%;
 
+        /*FIXME: VApply this to all list styles in the theme*/
+
         td {
 
             border: none;
             color: black;
             vertical-align: middle;
-            font-size: @queue-list-font-size;
             line-height: 16px;
-            padding: @queue-list-padding;
             padding-left: 15px;
             font-weight: 500;
 

@@ -2,7 +2,7 @@ export default `
 
 <section class="indexer-games-assigned">
 
-    <indexer-sidebar class="sidebar"></indexer-sidebar>
+    <indexer-sidebar></indexer-sidebar>
 
     <div class="game-indexer-content">
         <div class="indexer-links-container">

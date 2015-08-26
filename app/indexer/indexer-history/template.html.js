@@ -2,7 +2,7 @@ export default `
 
     <section class="indexer-history">
 
-        <indexer-sidebar class="sidebar"></indexer-sidebar>
+        <indexer-sidebar></indexer-sidebar>
 
         <div class="game-indexer-content">
             <div ng-show="filteredGames.length > 0">
