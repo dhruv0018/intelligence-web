@@ -157,40 +157,55 @@ Login.config([
                     isNewUser: true
                 },
 
-                onEnter: ['$state', '$stateParams',
-                    function newOnEnter ($state, $stateParams) {
+                onEnter: [
+                    '$state',
+                    '$stateParams',
+                    'UsersFactory',
+                    'EMAIL_REQUEST_TYPES',
+
+                    function newOnEnter (
+                        $state,
+                        $stateParams,
+                        users,
+                        EMAIL_REQUEST_TYPES
+                    ) {
 
                         let token   = $stateParams.token;
                         let email   = $stateParams.email;
-                        let expires = $stateParams.expires;
+                        let expires = moment.unix($stateParams.expires);
+                        let now     = moment();
 
                         if (!token) {
 
-                            $state.go('new-user-error', {email});
-                            throw new Error('No new user token!');
+                            onNewUserError('Missing token in new user activation URL!');
+                        } else if (!email) {
+
+                            onNewUserError('Missing email address in new user activation URL!');
+                        } else if (!expires.isValid()) {
+
+                            onNewUserError('Missing or invalid expires date in new user activation URL!');
+                        } else if (expires.isBefore(now)) {
+
+                            onNewUserError('New user activation token has expired');
                         }
 
-                        if (!email) {
+                        /**
+                         * Handles any errors arising from the new user URL
+                         *
+                         * @function onNewUserError
+                         */
+                        function onNewUserError (error) {
 
-                            $state.go('new-user-error');
-                            throw new Error('No new user email!');
-                        }
+                            $state.go('new-error', {email});
 
-                        if (!expires) {
+                            /* If an email was present on the original new user url,
+                             * request the server to send a new new user email. */
+                            if (email) {
 
-                            $state.go('new-user-error', {email});
-                            throw new Error('No new user expires date!');
-                        }
+                                users.resendEmail(EMAIL_REQUEST_TYPES.NEW_USER, null, email);
+                            }
 
-                        /* Check if token has expired. If expired, redirect
-                         * user to New User error state. */
-                        expires = moment.unix(expires);
-                        let now = moment();
-
-                        if (expires.isAfter(now)) {
-
-                            $state.go('new-user-error', {email});
-                            throw new Error('New user token has expired!');
+                            throw new Error(error);
                         }
                     }
                 ]
@@ -211,30 +226,7 @@ Login.config([
                 data: {
 
                     isNewUser: true
-                },
-                onEnter: [
-                    '$state',
-                    '$stateParams',
-                    'UsersFactory',
-                    'EMAIL_REQUEST_TYPES',
-
-                    function onNewErrorEnter (
-                        $state,
-                        $stateParams,
-                        users,
-                        EMAIL_REQUEST_TYPES
-                    ) {
-
-                        let email = $stateParams.email;
-
-                        /* If an email was present on the original new user url,
-                         * request the server to send a new new user email. */
-                        if (email) {
-
-                            users.resendEmail(EMAIL_REQUEST_TYPES.NEW_USER, null, email);
-                        }
-                    }
-                ]
+                }
             });
     }
 ]);
