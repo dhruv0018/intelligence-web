@@ -965,7 +965,6 @@ IntelligenceWebClient.factory('GamesFactory', [
              * copy a game to team
              * @param {Integer} teamId - the team ID of the team for which the
              * game should be copied.
-             * @throws {Error} if there its an unsaved game.
              */
             copy: function(teamId) {
 
