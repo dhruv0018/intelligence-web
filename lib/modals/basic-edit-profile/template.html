@@ -8,18 +8,18 @@
     <div class="modal-body">
         <div class="profile-info-container">
             <div class="profile-picture-container">
-                <profile-picture user="currentUser"></profile-picture>
+                <profile-picture user="tempUser"></profile-picture>
                 <krossover-uploader upload-label="Change Image" on-upload="setProfilePicture(files)"></krossover-uploader>
             </div>
 
             <div>
                 <h4>First Name</h4>
-                <input type="text" ng-model="currentUser.firstName" class="form-control" placeholder="Enter First Name"/>
+                <input type="text" ng-model="tempUser.firstName" class="form-control" placeholder="Enter First Name"/>
             </div>
 
             <div>
                 <h4>Last Name</h4>
-                <input type="text" ng-model="currentUser.lastName" class="form-control" placeholder="Enter Last Name"/>
+                <input type="text" ng-model="tempUser.lastName" class="form-control" placeholder="Enter Last Name"/>
             </div>
         </div>
         <div class="button-row">
