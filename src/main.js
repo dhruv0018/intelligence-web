@@ -23,7 +23,7 @@ import Styleguide from '../app/styleguide/index.js';
 import FieldComponent from '../lib/directives/field/index';
 import IndexingBlock from '../lib/directives/indexing-block/index';
 import DynamicTables from '../lib/directives/dynamic-tables/index';
-import { IndexerScript } from '../lib/directives/indexer-script/index';
+import { IndexerFields } from '../lib/directives/fields';
 import Play from '../lib/directives/play/index';
 import SelectMediaSrc from '../lib/directives/video-player/select-media-src/index';
 import ArenaChart from '../lib/directives/arena-chart/index';
