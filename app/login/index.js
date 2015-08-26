@@ -194,7 +194,7 @@ Login.config([
                          *
                          * @function onNewUserError
                          */
-                        function onNewUserError (error) {
+                        function onNewUserError (errorMsg) {
 
                             $state.go('new-error', {email});
 
@@ -205,7 +205,7 @@ Login.config([
                                 users.resendEmail(EMAIL_REQUEST_TYPES.NEW_USER, null, email);
                             }
 
-                            throw new Error(error);
+                            throw new Error(errorMsg);
                         }
                     }
                 ]
