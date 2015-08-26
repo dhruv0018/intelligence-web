@@ -18,7 +18,8 @@
                 play === playManager.current ||
                 showPlayBody ||
                 (isReelsPlay && !editFlag && expandAll)"
-            ng-class="{'playHide': (!expandAll && (play != playManager.current || isReelsPlay && editFlag )) && !showPlayBody}"
+            ng-class="{'playHide': (!expandAll && (play != playManager.current || isReelsPlay && editFlag )) && !showPlayBody,
+                       'no-checkbox': !isTeamMember}"
         >
 
             <krossover-event
