@@ -24,11 +24,13 @@ class Entity {
      */
     validate (data, schema) {
 
+        // TODO: Split throw into two
         if (arguments.length < 2) {
 
             throw new Error('Invoking Entity.validate without passing a JSON object and/or schema!');
         }
 
+        // TODO: validate this.schema by setting schema in entity constructor
         let validation = tv4.validateMultiple(data, schema);
 
         return validation;
