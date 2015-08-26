@@ -38,7 +38,8 @@ describe('Base Entity', () => {
 
     it('should validate valid JSON according to a schema', () => {
 
-        let validation = entity.validate(genericData, genericSchema);
+        entity.schema = genericSchema;
+        let validation = entity.validate(genericData);
 
         expect(validation).to.be.an.object;
         expect(validation.errors).to.be.an.array;
@@ -49,7 +50,8 @@ describe('Base Entity', () => {
 
     it('should validate invalid JSON according to a schema', () => {
 
-        let validation = entity.validate(genericDataBad, genericSchema);
+        entity.schema = genericSchema;
+        let validation = entity.validate(genericDataBad);
 
         expect(validation).to.be.an.object;
         expect(validation.errors).to.be.an.array;
