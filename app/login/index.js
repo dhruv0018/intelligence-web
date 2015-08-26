@@ -521,7 +521,7 @@ function LoginController(
 
                     alerts.add({
                         type: 'danger',
-                        message: 'Sorry, the link is no longer valid. Click <a href="/intelligence/login">here</a> to reset your password again.'
+                        message: 'Sorry, the link is no longer valid. Click <a href="/intelligence/forgot-password">here</a> to reset your password again.'
                     });
 
                     throw new Error('Could not reset password');
