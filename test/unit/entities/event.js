@@ -221,29 +221,6 @@ describe('Event Entity', () => {
         expect(sampleEmptyEvent.keyboardShortcut).to.equal('K');
     });
 
-    it('shouldn\'t allow writing to the shortcutKey property.', () => {
-
-        /* Instantiated with event JSON */
-        expect(sampleEvent.keyboardShortcut).to.be.a('string');
-        expect(sampleEvent.keyboardShortcut).to.equal('K');
-
-        expect(() => sampleEvent.shortcutKey = 'T').to.throw(TypeError);
-        expect(() => sampleEvent.keyboardShortcut = 'T').to.throw(TypeError);
-
-        expect(sampleEvent.keyboardShortcut).to.be.a('string');
-        expect(sampleEvent.keyboardShortcut).to.equal('K');
-
-        /* Instantiated without event JSON */
-        expect(sampleEmptyEvent.keyboardShortcut).to.be.a('string');
-        expect(sampleEmptyEvent.keyboardShortcut).to.equal('K');
-
-        expect(() => sampleEmptyEvent.shortcutKey = 'T').to.throw(TypeError);
-        expect(() => sampleEmptyEvent.keyboardShortcut = 'T').to.throw(TypeError);
-
-        expect(sampleEmptyEvent.keyboardShortcut).to.be.a('string');
-        expect(sampleEmptyEvent.keyboardShortcut).to.equal('K');
-    });
-
     it('should have a "isFloat" getter.', () => {
 
         /* Instantiated with event JSON */
