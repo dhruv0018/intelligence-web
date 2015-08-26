@@ -27,11 +27,6 @@ class KrossoverEvent extends Entity {
         /* Use tag to setup event */
         super(tag);
 
-        Object.defineProperty(this, 'shortcutKey', {
-
-            writable: false,
-        });
-
         this.tagId = tag.id;
         this.time  = time;
 
