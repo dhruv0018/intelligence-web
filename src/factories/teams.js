@@ -12,8 +12,28 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('TeamsFactory', [
-    '$injector', '$rootScope', 'ROLES', 'ROLE_ID', 'SchoolsResource', 'UsersResource', 'BaseFactory', 'UsersFactory',
-    function($injector, $rootScope, ROLES, ROLE_ID, schools, usersResource, BaseFactory, users) {
+    '$injector',
+    '$rootScope',
+    'ROLES',
+    'ROLE_ID',
+    'SchoolsResource',
+    'UsersResource',
+    'BaseFactory',
+    'UsersFactory',
+    'LeaguesFactory',
+    'SportsFactory',
+    function(
+        $injector,
+        $rootScope,
+        ROLES,
+        ROLE_ID,
+        schools,
+        usersResource,
+        BaseFactory,
+        users,
+        leagues,
+        sports
+    ) {
 
         var TeamsFactory = {
 
@@ -360,6 +380,17 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 let mostRecent = team.subscriptions.first();
 
                 return (mostRecent.isActive ? mostRecent : undefined);
+            },
+            /**
+             * @class Team
+             * @method getSport
+             *
+             * Gets the sport for this team
+             */
+            getSport: function() {
+                let league = leagues.get(this.leagueId);
+                let sport = sports.get(league.sportId);
+                return sport;
             }
         };
 

@@ -48,55 +48,67 @@
         flex: 1;
     }
 
+    .reel-edit-control-container {
+        display: flex;
+        flex: 0 0 50px;
+        background-color: @gray-lightest;
+    }
+
+    .reel-edit-controls {
+
+        padding: 15px;
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        max-width: 420px;
+
+        .save-edit {
+            color: @brand-success;
+        }
+    }
+
+    .main-highlight {
+        background-color: @gray-lightest;
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+
+        &.not-editable {
+            @media only screen
+            and (min-width: @screen-lg) {
+                padding-top: 15px;
+            }
+        }
+    }
+
+    video-player {
+        margin-left: 15px;
+        margin-right: 15px;
+        width: 100%;
+        position: relative;
+    }
+
     // MOBILE
     @media only screen
     and (max-width: @screen-md-max) {
         .reel-body {
             margin: 0;
             padding: 0;
+
             .playBody{
                 display: none;
             }
         }
-    }
-
-        .reel-edit-control-container {
-            display: flex;
-            flex: 0 0 50px;
-            background-color: @gray-lightest;
-        }
-
-        .reel-edit-controls {
-
-            padding: 15px;
-            display: flex;
-            flex: 1;
-            justify-content: space-between;
-            max-width: 420px;
-
-            .save-edit {
-                color: @brand-success;
-            }
-        }
 
         .main-highlight {
-            background-color: @gray-lightest;
-            display: flex;
-            flex: 1;
-            flex-direction: row;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
 
-            &.not-editable {
-                @media only screen
-                and (min-width: @screen-lg) {
-                    padding-top: 15px;
-                }
+            clips-navigation {
+                width: 100%;
             }
         }
+    }
 
-            video-player {
-                margin-left: 15px;
-                margin-right: 15px;
-                width: 100%;
-                position: relative;
-            }
 }

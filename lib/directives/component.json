@@ -4,6 +4,10 @@
         "."
     ],
     "locals": [
+        "count-label",
+        "arena-chart-filters",
+        "color-shape",
+        "arena-event",
         "role",
         "rolebar",
         "alertbar",

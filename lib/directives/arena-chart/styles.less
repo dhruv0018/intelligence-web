@@ -1,0 +1,63 @@
+@import (reference) "main.less";
+
+arena-chart {
+    width: 100%;
+    height: 100%;
+}
+
+.arena-chart {
+    width: 100%;
+    height: 100%;
+    padding: 0 15px;
+
+    header {
+        margin: 0px auto 15px auto;
+        max-width: @screen-lg;
+        width: 100%;
+    }
+
+    .filters__helper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        color: #000;
+        align-items: center;
+    }
+
+    arena-chart-filters {
+        .slideInDown;
+        animation-duration: 0.5s;
+
+        &.ng-hide {
+            .slideOutUp;
+            animation-duration: 0.5s;
+        }
+    }
+
+    button[name=reset-filters] i {
+        padding-right: 2px;
+    }
+
+    .filter-pills {
+        margin: 0 10px;
+        flex: 1 auto;
+    }
+
+    .content-full {
+        width: 100%;
+        overflow: hidden;
+        background-color: inherit;
+
+        // Container is required for fit-element directive to work correctly
+        .arena-chart-container {
+            width: 100%;
+            height: calc(~"100% - 164px");
+
+            krossover-arena {
+                margin: 0 auto;
+                transition-property: width, height;
+                transition-duration: 1s;
+            }
+        }
+    }
+}

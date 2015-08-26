@@ -22,6 +22,7 @@ import Styleguide from '../app/styleguide/index.js';
 import IndexingBlock from '../lib/directives/indexing-block/index';
 import DynamicTables from '../lib/directives/dynamic-tables/index';
 import SelectMediaSrc from '../lib/directives/video-player/select-media-src/index';
+import ArenaChart from '../lib/directives/arena-chart/index';
 
 /* App dependencies */
 require('./config');
@@ -142,6 +143,7 @@ require('./factories/positionsets');
 require('./factories/plans');
 require('./factories/customtags');
 
+require('./emitters/emitter.js');
 require('./emitters/playlist');
 require('./emitters/video-player');
 require('./emitters/telestrations');
