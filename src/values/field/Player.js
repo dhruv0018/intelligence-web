@@ -31,10 +31,10 @@ class PlayerField extends Field {
      * @type {Boolean}
      */
     get valid () {
-
+        let value = this.value.playerId;
         return this.isRequired ?
-            Number.isInteger(this.value.playerId) :
-            true;
+            Number.isInteger(value) :
+            value === null ? true : false;
     }
 
     /**
