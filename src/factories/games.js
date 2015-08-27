@@ -1,3 +1,5 @@
+import Video from '../entities/video';
+
 var PAGE_SIZE = 20;
 
 var moment = require('moment');
@@ -53,6 +55,21 @@ IntelligenceWebClient.factory('GamesFactory', [
                     if (copy[key] && copy[key].unextend) copy[key] = copy[key].unextend();
                 });
 
+                /*
+                 * FIXME:
+                 * Using Object.assign to strip video of getters during
+                 * resource save to in order to pass JSON validation.
+                 * TODO:
+                 * delete copy.video.resourceUrls;
+                 * delete copy.video.transcodeProfiles;
+                 * Investigate why ^ doesn't work
+                 */
+                copy.video = Object.assign({}, copy.video);
+
+                if (copy.video.videoTranscodeProfiles) {
+                    copy.video.videoTranscodeProfiles = copy.video.videoTranscodeProfiles.map(profile => Object.assign({}, profile.toJSON()));
+                }
+
                 return copy;
             },
             extend: function(game) {
@@ -61,12 +78,13 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 angular.augment(game, self);
                 game.isSaving = false;
-                game.video = game.video || {};
-                game.video.status = game.video.status || VIDEO_STATUSES.INCOMPLETE.id;
+                game.video = game.video ? new Video(game.video) : {};
                 game.notes = game.notes || {};
                 game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
+                game.primaryJerseyColor = game.primaryJerseyColor || '#000';
+                game.opposingJerseyColor = game.opposingJerseyColor || '#000';
 
                 //TODO remove when the back end makes notes always a object
                 if (angular.isArray(game.notes)) {
@@ -408,43 +426,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var players = teamPlayers.concat(opposingTeamPlayers);
 
                 return players;
-            },
-
-            getVideoSources: function() {
-
-                var self = this;
-
-                var sources = [];
-                var defaultVideo;
-                var DEFAULT_VIDEO_ID = config.defaultVideoId;
-
-                if (self.video && self.video.status) {
-
-                    if (self.video.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                        self.video.videoTranscodeProfiles.forEach(function(profile) {
-
-                            if (profile.status === VIDEO_STATUSES.COMPLETE.id) {
-
-                                var source = {
-                                    type: 'video/mp4',
-                                    src: $sce.trustAsResourceUrl(profile.videoUrl)
-                                };
-
-                                if (profile.transcodeProfile.id === DEFAULT_VIDEO_ID) {
-                                    defaultVideo = source;
-                                } else {
-                                    sources.push(source);
-                                }
-                            }
-                        });
-
-                    }
-                }
-
-                if (defaultVideo) sources.unshift(defaultVideo);
-
-                return sources;
             },
 
             /**
@@ -995,6 +976,49 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var dndReport = new Resource(report);
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
+            },
+
+            /**
+             * Retrieves the arena events for a game, and stores in game storage
+             * @param {?game} game Defaults to the thisObject
+             * @returns {arenaEvent[]}
+             */
+            retrieveArenaEvents: function(game = this) {
+
+                let model = $injector.get(game.model);
+                let storage = $injector.get(game.storage);
+
+                if (!game.hasOwnProperty('id')) throw new Error(`Game has no id. Game must be saved before retrieving arena events`);
+
+                const query = model.retrieveArenaEvents({ id: game.id});
+                const request = query.$promise;
+
+                // TODO: Store separately from on a game so retrieving arena events can be independant of loading a game
+                const receiveArenaEvents = (arenaEvents) => {
+                    game.arenaEvents = arenaEvents;
+                    storage.set(game);
+                };
+
+                const retrieveArenaEventsError = (reason) => {
+                    // No arena events at this time
+                    this.arenaEvents = [];
+                    storage.set(this);
+                };
+
+                request.then(receiveArenaEvents, retrieveArenaEventsError);
+
+                return request;
+            },
+
+            /**
+             * Gets the arena events for a game
+             * @returns {arenaEvent[]}
+             */
+            getArenaEvents: function() {
+
+                if (!this.hasOwnProperty('arenaEvents')) throw new Error(`'arenaEvents' on game is not defined`);
+
+                return this.arenaEvents;
             },
 
             getRemainingTime: function(uploaderTeam, now) {

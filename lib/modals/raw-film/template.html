@@ -2,7 +2,7 @@
 
     <header class="modal-header">
 
-        <i class="icon icon-remove pull-right" data-ng-click="cancel()"></i>
+        <i class="icon icon-remove" data-ng-click="$dismiss()"></i>
 
     </header>
 
@@ -10,9 +10,7 @@
 
         <div class="raw-player">
 
-            <video-player
-             sources="sources">
-            </video-player>
+            <video-player video="video"></video-player>
 
         </div>
 

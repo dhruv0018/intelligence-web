@@ -1,45 +1,34 @@
 <div class="highlights">
 
-    <athlete-resume athlete="athlete" ng-if="viewport === VIEWPORTS.DESKTOP"></athlete-resume>
+    <button class="circle-button add-reels-button" ng-show="isCurrentUser" ng-click="manageReels()" hide show-gt-sm><i class="icon icon-plus"></i></button>
 
-    <div class="featured-reel-container">
+    <div class="athlete-info-container">
+        <athlete-resume athlete="athlete"></athlete-resume>
 
-        <div class="featured-reel-video" ng-show="featuredReel">
-            <div class="featured-reel-header">
-                <h3>{{featuredReel.name}}</h3>
-            </div>
-            <video-player sources="sources"></video-player>
-        </div>
-
-        <div class="clips-navigation" ng-show="featuredReel">
-            <div ng-class="{disabled: !previousPlay}"
-                 class="clip-previous"
-                 ng-click="goToPlay(previousPlay)">
-                <i class="icon icon-chevron-left"></i>
-                <span hide show-gt-sm>&nbsp;Prev</span>
-            </div>
-
-            <div class="clip-info">
-                Clip&nbsp;{{clipIndex}}/{{clipTotal}}
-            </div>
-
-            <div ng-class="{disabled: !nextPlay}"
-                 class="clip-next"
-                 ng-click="goToPlay(nextPlay)">
-                <span hide show-gt-sm>Next&nbsp;</span>
-                <i class="icon icon-chevron-right"></i>
-            </div>
-
-            <krossover-playlist-control play-count="clipTotal" hide-play-count="true"></krossover-playlist-control>
+        <div class="profile-link-container">
+            Share this link:<br>
+            <span>{{config.links.intelligence.uri}}/intelligence/athlete/{{athlete.id}}/profile</span>
         </div>
     </div>
 
-    <no-profile-reels ng-hide="highlightReels.length || featuredReel"></no-profile-reels>
+    <div class="profile-reels-container">
+        <no-profile-reels ng-hide="profileReels.length || featuredReel"></no-profile-reels>
 
-    <div>
-        <ul class="reels" ng-show="highlightReels.length">
-            <krossover-film ng-repeat="reel in highlightReels" film="reel"></krossover-film>
-        </ul>
+        <div class="featured-reel-container" ng-show="featuredReel">
+
+            <div class="featured-reel-video">
+                <div class="featured-reel-header">
+                    <a ui-sref="Reel({id:featuredReel.id})" target="_blank">{{featuredReel.name}}</a>
+                </div>
+                <video-player video="video"></video-player>
+            </div>
+
+            <clips-navigation video="video" plays="playsArray"></clips-navigation>
+        </div>
+
+        <div class="reels" ng-show="profileReels.length">
+            <krossover-film ng-repeat="reel in profileReels" ng-if="!$first" film="reel"></krossover-film>
+        </div>
     </div>
 
 </div>

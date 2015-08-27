@@ -23,7 +23,7 @@
 
         </telestrations>
 
-        <vg-controls ng-hide="deviceIsiPhone">
+        <vg-controls class="controls-container" ng-hide="deviceIsiPhone">
 
             <vg-scrub-bar>
                 <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
@@ -38,7 +38,7 @@
                         <strong>{{ currentTime | millisecondsAsHoursMinutesSeconds }}</strong> / {{ totalTime | millisecondsAsHoursMinutesSeconds }}
                     </vg-time-display>
 
-                    <vg-volume title="Adjust Volume">
+                    <vg-volume>
                         <vg-mute-button></vg-mute-button>
                         <vg-volume-bar></vg-volume-bar>
                     </vg-volume>
@@ -48,15 +48,27 @@
                 <div class="controls-center" video-player-seeking-controls>
 
                     <button-video-step-backward
+                        krossover-blur-on-select
                         ng-show="userIsIndexer"
                         class="ng-hide"
                     ></button-video-step-backward>
-                    <button-video-fast-backward></button-video-fast-backward>
-                    <button-video-slow-backward></button-video-slow-backward>
-                    <vg-play-pause-button></vg-play-pause-button>
-                    <button-video-slow-forward></button-video-slow-forward>
-                    <button-video-fast-forward></button-video-fast-forward>
+                    <button-video-fast-backward
+                        krossover-blur-on-select
+                    ></button-video-fast-backward>
+                    <button-video-slow-backward
+                        krossover-blur-on-select
+                    ></button-video-slow-backward>
+                    <vg-play-pause-button
+                        krossover-blur-on-select
+                    ></vg-play-pause-button>
+                    <button-video-slow-forward
+                        krossover-blur-on-select
+                    ></button-video-slow-forward>
+                    <button-video-fast-forward
+                        krossover-blur-on-select
+                    ></button-video-fast-forward>
                     <button-video-step-forward
+                        krossover-blur-on-select
                         ng-show="userIsIndexer"
                         class="ng-hide"
                     ></button-video-step-forward>
@@ -65,7 +77,24 @@
 
                 <div class="controls-right">
 
-                    <vg-fullscreen-button title="Toggle Fullscreen"></vg-fullscreen-button>
+                    <a
+                        class="download control-button"
+                        ng-href="{{videoPlayer.sources[0].src}}"
+                        tooltip="Download"
+                        download
+                        krossover-blur-on-select
+                    >
+                        <i class="icon icon-download"></i>
+                    </a>
+
+                    <select-media-src
+                        krossover-blur-on-select
+                    ></select-media-src>
+
+                    <vg-fullscreen-button
+                        krossover-blur-on-select
+                        tooltip="Toggle Fullscreen"
+                    ></vg-fullscreen-button>
 
                 </div>
             </div>

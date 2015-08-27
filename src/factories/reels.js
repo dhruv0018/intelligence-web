@@ -464,42 +464,51 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return teamId === this.uploaderTeamId;
             },
-            publishToProfile: function() {
-                var self = this;
-
-                if (!self.isSharedWithPublic()) {
-                    self.togglePublicSharing();
-                }
-
-                self.isPublishedToProfile = true;
-            },
-            unpublishFromProfile: function() {
-                var self = this;
-
-                if (self.isSharedWithPublic()) {
-                    self.togglePublicSharing();
-                }
-
-                self.isPublishedToProfile = false;
-            },
-            getPublishedReels: function(userId) {
-                userId = userId || session.getCurrentUserId();
-
-                if (!userId) throw new Error('No userId');
-
-                var reels = this.getList();
-
-                return reels.filter(function publishedReels(reel) {
-
-                    return reel.uploaderUserId == userId &&
-                        reel.isPublishedToProfile === true;
-                });
-            },
-            isFeatured: function(user) {
-                var self = this;
+            publishToProfile: function(user) {
+                // Publishes this reel to a user's profile
                 user = user || session.getCurrentUser();
 
-                return self.id == user.profile.featuredReelId;
+                if (!user) throw new Error('No user');
+
+                if (!this.isSharedWithPublic()) {
+                    this.togglePublicSharing();
+                }
+
+                if (!this.isPublishedToProfile(user)) {
+                    user.profile.reelIds.push(this.id);
+                }
+            },
+            unpublishFromProfile: function(user) {
+                // Unpublishes this reel from a user's profile
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
+
+                if (this.isSharedWithPublic()) {
+                    this.togglePublicSharing();
+                }
+
+                if (this.isPublishedToProfile(user)) {
+                    user.profile.reelIds.forEach( (reelId, index) => {
+                        if (reelId === this.id) {
+                            user.profile.reelIds.splice(index, 1);
+                        }
+                    });
+                }
+            },
+            isPublishedToProfile: function(user) {
+                // Determines if this reel is on a user's profile
+                user = user || session.getCurrentUser();
+
+                if (!user) throw new Error('No user');
+
+                return user.profile.reelIds.some(reelId => this.id === reelId);
+            },
+            isFeatured: function(user) {
+
+                user = user || session.getCurrentUser();
+
+                return this.id === user.profile.reelIds[0];
             },
             getFeaturedReel: function(user) {
 
@@ -507,9 +516,30 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (!user) throw new Error('No user');
 
-                let featuredReelId = user.profile.featuredReelId;
+                let featuredReelId = user.profile.reelIds[0];
 
                 return featuredReelId ? this.get(featuredReelId) : undefined;
+            },
+            getUserReels: function(userId, teamId) {
+
+                userId = userId || session.getCurrentUserId();
+                teamId = teamId || session.getCurrentTeamId();
+
+                let userReels = [];
+
+                if (session.currentUser.is(ROLES.COACH)) {
+
+                    userReels = this.getByUploaderRole(userId, teamId);
+                    userReels = userReels.concat(this.getByUploaderTeamId(teamId));
+                }
+
+                else if (session.currentUser.is(ROLES.ATHLETE)) {
+
+                    userReels = this.getByUploaderUserId(userId);
+                    userReels = userReels.filter(reel => !reel.uploaderTeamId);
+                }
+
+                return userReels;
             }
         };
 
