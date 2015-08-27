@@ -28,17 +28,25 @@ describe('Base Entity', () => {
         expect(Entity).to.respondTo('validate');
     });
 
-    it('should throw an error if validate is called with no JSON object and/or schema', () => {
+    it('should throw an error if validate is called with no schema', () => {
 
         expect(() => entity.validate()).to.throw(Error);
-        expect(() => entity.validate({})).to.throw(Error);
+        expect(() => entity.validate(genericData)).to.throw(Error);
+    });
+
+    it('should throw an error if validate is called with no JSON object', () => {
+
+        entity.schema = genericSchema;
+
+        expect(() => entity.validate()).to.throw(Error);
     });
 
     // TODO: Finish tests for validate method.
 
     it('should validate valid JSON according to a schema', () => {
 
-        let validation = entity.validate(genericData, genericSchema);
+        entity.schema = genericSchema;
+        let validation = entity.validate(genericData);
 
         expect(validation).to.be.an.object;
         expect(validation.errors).to.be.an.array;
@@ -49,7 +57,8 @@ describe('Base Entity', () => {
 
     it('should validate invalid JSON according to a schema', () => {
 
-        let validation = entity.validate(genericDataBad, genericSchema);
+        entity.schema = genericSchema;
+        let validation = entity.validate(genericDataBad);
 
         expect(validation).to.be.an.object;
         expect(validation.errors).to.be.an.array;

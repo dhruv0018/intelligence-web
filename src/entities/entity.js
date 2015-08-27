@@ -22,16 +22,19 @@ class Entity {
      * @param {Object} data - JSON object to validate
      * @returns {Boolean}   - true if valid object
      */
-    validate (data, schema) {
+    validate (data) {
 
-        // TODO: Split throw into two
-        if (arguments.length < 2) {
+        if (!this.schema) {
 
-            throw new Error('Invoking Entity.validate without passing a JSON object and/or schema!');
+            throw new Error('Invoking Entity.validate without a schema!');
         }
 
-        // TODO: validate this.schema by setting schema in entity constructor
-        let validation = tv4.validateMultiple(data, schema);
+        if (!data) {
+
+            throw new Error('Invoking Entity.validate without passing a JSON object!');
+        }
+
+        let validation = tv4.validateMultiple(data, this.schema);
 
         return validation;
     }

@@ -32,9 +32,8 @@ class PlayerField extends Field {
      */
     get valid () {
         let value = this.value.playerId;
-        return this.isRequired ?
-            Number.isInteger(value) :
-            value === null ? true : false;
+        let isValid = this.isRequired ? Number.isInteger(value) : value !== undefined ? true : false;
+        return isValid;
     }
 
     /**
