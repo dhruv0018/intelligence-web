@@ -28,7 +28,7 @@
 
         </div>
 
-        <a open-modal="CopyGame.Modal" ng-if="game.status == GAME_STATUSES.FINALIZED.id" modal-options="game">Copy Game</a> <br />
+        <a open-modal="CopyGame.Modal" ng-if="game.status === GAME_STATUSES.FINALIZED.id" modal-options="game">Copy Game</a> <br />
         <a data-open-modal="DeleteGame.Modal" data-modal-options="game">Delete Game</a>
         <button data-ng-hide="game.status == GAME_STATUSES.NOT_INDEXED.id || (!game.isAssignedToIndexer() && !game.isAssignedToQa()) || game.status == GAME_STATUSES.SET_ASIDE.id || game.isDelivered()"
                 data-ng-click="save()" class="btn btn-primary">Set Aside</button>
