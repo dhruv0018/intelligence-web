@@ -214,8 +214,7 @@ Login.config([
             })
 
             .state('new-user-resend-email', {
-                url: '^/new-user-resend-email/:email',
-                parent: 'new-user',
+                url: '/new-user-resend-email/:email',
                 onEnter: [
                     '$state',
                     '$stateParams',
