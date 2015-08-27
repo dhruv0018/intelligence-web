@@ -59,6 +59,11 @@
         "*": true
     },
 
+    "new-user-resend-email": {
+
+        "*": true
+    },
+
     "new-user-error": {
 
         "*": true

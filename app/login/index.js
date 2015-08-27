@@ -156,14 +156,13 @@ Login.config([
 
                     isNewUser: true
                 },
-
                 onEnter: [
                     '$state',
                     '$stateParams',
                     'UsersFactory',
                     'EMAIL_REQUEST_TYPES',
 
-                    function newOnEnter (
+                    function newUserOnEnter (
                         $state,
                         $stateParams,
                         users,
@@ -198,13 +197,14 @@ Login.config([
                          */
                         function onNewUserError (errorMsg) {
 
-                            $state.go('new-error', {email});
-
                             /* If an email was present on the original new user url,
                              * request the server to send a new new user email. */
                             if (email) {
 
-                                users.resendEmail(EMAIL_REQUEST_TYPES.NEW_USER, null, email);
+                                $state.go('new-user-resend-email', {email}, {location: false});
+                            } else {
+
+                                $state.go('new-error');
                             }
 
                             throw new Error(errorMsg);
@@ -213,8 +213,49 @@ Login.config([
                 ]
             })
 
+            .state('new-user-resend-email', {
+                url: '^/new-user-resend-email/:email',
+                parent: 'new-user',
+                onEnter: [
+                    '$state',
+                    '$stateParams',
+                    'UsersFactory',
+                    'EMAIL_REQUEST_TYPES',
+
+                    function newUserOnErrorEnter (
+                        $state,
+                        $stateParams,
+                        users,
+                        EMAIL_REQUEST_TYPES
+                    ) {
+
+                        let email = $stateParams.email;
+
+                        /* Request server to resend the new user activation email */
+                        users.resendEmail(EMAIL_REQUEST_TYPES.NEW_USER, null, email)
+                        .then(function emailRequestSuccess () {
+
+                            /* Request for new user activation email successful. */
+                            $state.go('new-user-error', {email, resent: true});
+                        }, function emailRequestError (error) {
+
+                            /* User has already activated their account. */
+                            if (error.status === 400) {
+
+                                $state.go('new-user-error', {email, activated: true});
+
+                            /* All other errors; show generic error message. */
+                            } else {
+
+                                $state.go('new-user-error', {email, resent: false});
+                            }
+                        });
+                    }
+                ]
+            })
+
             .state('new-user-error', {
-                url: '^/new-user-error/:email',
+                url: '^/new-user-error/:email?activated&resent',
                 parent: 'login',
                 views: {
                     'header@login': {
@@ -302,7 +343,9 @@ function LoginController(
             password     : undefined,
             showPassword : true, // By default, show the new user's password
             agree        : false,
-            email        : $stateParams.email
+            email        : $stateParams.email,
+            activated    : $stateParams.activated === 'true' ? true : false,
+            resent       : $stateParams.resent === 'true' ? true : false
         };
     }
 
@@ -557,7 +600,7 @@ function LoginController(
 
                 function error(data, status) {
 
-                    $state.go('new-user-error', {email});
+                    $state.go('new-user-resend-email', {email}, {location: false});
                 }
             );
         }
