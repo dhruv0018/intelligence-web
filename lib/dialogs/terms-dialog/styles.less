@@ -1,0 +1,79 @@
+@import (reference) "main.less";
+@import (reference) "modal.less";
+
+.new-terms {
+
+    &-modal {
+
+        .base-modal;
+        height: 100%;
+
+        .modal-content {
+
+            height: 100%;
+        }
+
+        .terms-prompt {
+
+            height: 100%;
+
+            &-form {
+
+                height: 100%;
+
+                .mobile({
+
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                });
+            }
+
+            .modal-body {
+
+                text-align: center;
+                padding-bottom: 50px;
+                height: 100%;
+            }
+
+            .modal-footer {
+
+                padding: 15px;
+                border-color: @modal-header-border-color;
+            }
+        }
+
+        .terms-copy {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* For Scrolling long modal content */
+        @media (min-width: @screen-lg - 1) and (min-height: @screen-height-sm) {
+
+            .modal-body {
+
+                max-height: 300px;
+                overflow: auto;
+            }
+        }
+    }
+
+    &-agree label {
+
+        width: 100%;
+        font-weight: normal;
+        display: block;
+        line-height: @line-height-computed;
+
+        .error {
+
+            line-height: @line-height-computed;
+            font-weight: normal;
+            color: @brand-danger;
+        }
+    }
+}

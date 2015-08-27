@@ -16,7 +16,10 @@
         "info",
         "change-password",
         "admin-management",
-        "kvs-uploader-interface"
+        "kvs-uploader-interface",
+        "manage-profile-reels",
+        "add-profile-team",
+        "profile-onboarding"
     ],
     "scripts": [
         "index.js"
