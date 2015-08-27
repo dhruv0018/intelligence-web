@@ -65,6 +65,13 @@ class KrossoverEvent extends Entity {
             }
 
             let rawField           = Object.assign({}, tagVariable);
+
+            if (event) {
+
+                rawField.eventId = event.id;
+                rawField.playId = event.playId;
+            }
+
             rawField.gameId        = gameId;
             rawField.index         = index + 1;
             rawField.value         = variableValue.value;
