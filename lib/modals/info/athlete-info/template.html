@@ -20,7 +20,7 @@
             <div class="status col-md-12">
                 <div class="inactive" data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-hide="sendingEmail">
                     <strong>This player has not yet activated their account with Krossover.</strong> Once they activate their account you will no longer be able to edit their name and email address.
-                    <a data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-click="resendInvite(athlete.userId, team.id)">Resend Invitation</a>
+                    <a id="resend-invite-cta" data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-click="resendInvite(athlete.userId, team.id)">Resend Invitation</a>
                 </div>
                 <div class="resending-invite" data-ng-show="sendingEmail">
                     <krossover-spinner ng-show="!confirmSent" size="15px"></krossover-spinner>
