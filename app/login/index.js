@@ -204,7 +204,7 @@ Login.config([
                                 $state.go('new-user-resend-email', {email}, {location: false});
                             } else {
 
-                                $state.go('new-error');
+                                $state.go('new-user-error');
                             }
 
                             throw new Error(errorMsg);
