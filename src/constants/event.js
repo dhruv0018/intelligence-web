@@ -18,8 +18,10 @@ const EVENT = {
         EVENT: {
             SELECT: 'PLAYLIST_EVENT_SELECT',
             CURRENT_CHANGE: 'PLAYLIST_EVENT_CURRENT_CHANGE',
-            CANCEL_EDITING: 'PLAYLIST_EVENT_CANCEL_EDITING',
-            CONFIRM_EDITING: 'PLAYLIST_EVENT_CONFIRM_EDITING'
+        },
+
+        FIELD: {
+            SELECT_VALUE: 'PLAYLIST_FIELD_SELECT_VALUE'
         },
 
         PLAYS: {
@@ -35,6 +37,7 @@ const EVENT = {
     },
 
     ARENA_CHART: {
+
         FILTERS: {
             RESET: 'RESET'
         }
