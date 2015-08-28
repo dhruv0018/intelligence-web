@@ -1,36 +1,98 @@
 <x-alertbar></x-alertbar>
 <section class="login">
 
-    <header data-ui-view="header"></header>
+    <header ui-view="header"></header>
+
     <div class="icon icon-krossover-logo"></div>
     <div class="login-container">
-	    <div class="newLogin">
-			<main data-ui-view="main"></main>
-		</div>
-		<div class="oldLogin">
-			<div>
-				<i class="icon icon-basketball"></i>
-				<i class="icon icon-lacrosse"></i>
-			</div>
-			<h1>Basketball + Lacrosse</h1>
-			<div class="temp-warning"><i class="icon icon-warning"></i> Basketball and Lacrosse coaches and athletes, the site will be down for maintenance on Tuesday Oct. 21st, from 8:00 to 9:00 am, ET.</div>
-			<form name="oldLogin" role="oldLogin" action="http://www.krossover.com/intelligence/user/login?redirFromNew=true" method="post" novalidate>
-				<div class="form-group"><input class="form-field-login" data-ng-model="v1Email" name="LoginForm[username]" placeholder="Your email" type="email"></div>
-				<div class="form-group"><input class="form-field-login" data-ng-model="v1Pass" name="LoginForm[password]" placeholder="Password" type="password"></div>
-				<div class="form-group"><div class="password-reset"><a id="forgot-password-old-cta" href="http://www.krossover.com/intelligence/user/forgotPassword">Forgot your password?</a></div></div>
-				<div class="form-group"><button id="sign-in-old-cta" class="button-signin" data-ng-disabled="oldLogin.$invalid || oldLogin.$pristine" type="submit">Sign In</button></div>
-			</form>
-		</div>
-		<div class="app-links">
-			<div>
-			    <i class="icon icon-football"></i>
-			    <i class="icon icon-volleyball"></i>
-		    </div>
-		    <h1>Football + Volleyball</h1>
-		    <a href="http://itunes.com/apps/krossoverintelligenceinc/krossovercoach"><i class="icon icon-mobile-phone"></i> Coaches, please download our iOS app!</a>
-		    <p>Athletes iOS app coming soon!</p>
-		    <p>Android app coming soon for coaches and athletes!</p>
-		</div>
-	</div>
+
+        <div class="new-login" ng-class="{'new-user': newUser}">
+            <main ui-view="main"></main>
+        </div>
+
+        <div class="oldLogin" ng-if="!newUser">
+
+            <div>
+                <i class="icon icon-basketball"></i>
+                <i class="icon icon-lacrosse"></i>
+            </div>
+
+            <h1>Basketball + Lacrosse</h1>
+
+            <div class="temp-warning"><i class="icon icon-warning"></i> Basketball and Lacrosse coaches and athletes, the site will be down for maintenance on Tuesday Oct. 21st, from 8:00 to 9:00 am, ET.</div>
+
+            <form
+             name="oldLogin"
+             role="oldLogin"
+             action="http://www.krossover.com/intelligence/user/login?redirFromNew=true"
+             method="post"
+             novalidate
+            >
+
+                <div class="form-group">
+
+                    <input
+                     id="login-v1-email-field"
+                     class="form-field-login"
+                     ng-model="v1Email"
+                     name="LoginForm[username]"
+                     placeholder="Your email"
+                     type="email"
+                    >
+
+                </div>
+                <div class="form-group">
+
+                    <input
+                     if="login-v1-password-field"
+                     class="form-field-login"
+                     ng-model="v1Pass"
+                     name="LoginForm[password]"
+                     placeholder="Password"
+                     type="password"
+                    >
+
+                </div>
+                <div class="form-group">
+
+                    <div class="password-reset">
+                        <a
+                         id="forgot-password-old-cta"
+                         href="http://www.krossover.com/intelligence/user/forgotPassword"
+                        >Forgot your password?</a>
+                    </div>
+
+                </div>
+                <div class="form-group">
+
+                    <button
+                     id="sign-in-old-cta"
+                     class="button-signin"
+                     ng-disabled="oldLogin.$invalid || oldLogin.$pristine"
+                     type="submit"
+                    >Sign In</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <div ng-if="!newUser && !resetPassword" class="app-links">
+
+            <div>
+                <i class="icon icon-football"></i>
+                <i class="icon icon-volleyball"></i>
+            </div>
+
+            <h1>Football + Volleyball</h1>
+
+            <a ng-href="{{MOBILE_APP_URLS.COACH.IOS}}}"><i class="icon icon-mobile-phone"></i> Coaches, please download our iOS app!</a>
+            <p>Athletes iOS app coming soon!</p>
+            <p>Android app coming soon for coaches and athletes!</p>
+
+        </div>
+    </div>
 </section>
+
 <loading></loading>

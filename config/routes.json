@@ -54,6 +54,21 @@
         "*": true
     },
 
+    "new-user": {
+
+        "*": true
+    },
+
+    "new-user-resend-email": {
+
+        "*": true
+    },
+
+    "new-user-error": {
+
+        "*": true
+    },
+
     "roles": {
 
         "*": true
@@ -76,6 +91,17 @@
     },
 
     "Account.ContactInfo": {
+
+        "!": true,
+        "Super Admin": true,
+        "Admin": true,
+        "Indexer": true,
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
+    },
+
+    "Account.TermsAndConditions": {
 
         "!": true,
         "Super Admin": true,
@@ -379,11 +405,6 @@
         "Assistant Coach": true
     },
 
-    "ga-shot-chart": {
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
     "ga-formations": {
         "Head Coach": true,
         "Assistant Coach": true
@@ -523,7 +544,7 @@
         "Assistant Coach": true
     },
 
-    "Games.ShotChart": {
+    "Games.ArenaChart": {
         "Head Coach": true,
         "Assistant Coach": true
     },
@@ -544,6 +565,10 @@
 
     "ShortClips": {
 
+        "*": true
+    },
+
+    "UpdatedTermsAndConditions": {
         "*": true
     },
 

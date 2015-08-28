@@ -5,9 +5,11 @@
 
 	<ng-transclude></ng-transclude>
 
-	 <i
-        class="coordinate-marker"
-        data-ng-show="relativeCoordinates.x && relativeCoordinates.y"
-    ></i>
+    <div class="xy-coordinates-marker" ng-show="xyCoordinateMarkerStyle" ng-style="xyCoordinateMarkerStyle">
+        <i
+           class="coordinate-marker-icon"
+       ></i>
+    </div>
+
 
 </div>

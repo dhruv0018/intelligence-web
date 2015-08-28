@@ -3,7 +3,8 @@
     "templates": [
         "template.html",
         "contact-info.html",
-        "roles-list.html"
+        "roles-list.html",
+        "terms-and-conditions.html"
     ],
     "scripts": [
         "index.js",

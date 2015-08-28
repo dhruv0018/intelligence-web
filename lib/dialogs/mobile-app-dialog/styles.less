@@ -1,0 +1,42 @@
+@import (reference) "main.less";
+@import (reference) "modal.less";
+
+.mobile-app-modal {
+
+    .base-modal;
+
+    .modal {
+
+        &-body {
+
+            text-align: center;
+        }
+
+        &-header {
+
+            width: 100%;
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &-footer {
+
+            border-color: @modal-header-border-color;
+        }
+    }
+
+    .icon {
+
+        &-volleyball,
+        &-football {
+
+            font-size: 30px;
+        }
+
+        &-football {
+
+            margin-right: 20px;
+        }
+    }
+}

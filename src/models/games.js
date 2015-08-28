@@ -47,6 +47,12 @@ IntelligenceWebClient.factory('GamesResource', [
             copy: {
                 method: 'POST',
                 url: config.api.uri + base + '/actions/copy',
+            },
+
+            retrieveArenaEvents: {
+                method: 'GET',
+                isArray: true,
+                url: config.api.uri + base + '/:id/arena-events'
             }
         };
 
