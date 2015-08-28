@@ -30,7 +30,7 @@
     "flowjs": "flowjs/flow.js#v2.6.2",
     "Mousetrap": "ccampbell/mousetrap",
     "videogular": "2fdevs/bower-videogular",
-    "videogular-controls": "2fdevs/bower-videogular-controls",
+    "videogular-controls": "krossoverintelligence/bower-videogular-controls",
     "videogular-buffering": "2fdevs/bower-videogular-buffering",
     "videogular-overlay-play": "2fdevs/bower-videogular-overlay-play",
     "videogular-poster": "2fdevs/bower-videogular-poster",
