@@ -1,6 +1,7 @@
 {
     "name": "login",
     "templates": [
+        "new-user-error.html",
         "template.html",
         "signup.html",
         "maintenance.html",

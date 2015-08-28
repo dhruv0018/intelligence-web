@@ -54,7 +54,17 @@
         "*": true
     },
 
-    "new": {
+    "new-user": {
+
+        "*": true
+    },
+
+    "new-user-resend-email": {
+
+        "*": true
+    },
+
+    "new-user-error": {
 
         "*": true
     },
