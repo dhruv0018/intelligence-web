@@ -48,7 +48,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 copy.shares.forEach(function (share) {
 
                     share.isBreakdownShared = JSON.parse(share.isBreakdownShared);
-                    copy.isBreakdownShared  = JSON.parse(share.isBreakdownShared);
                 });
 
                 // Unextend any children objects
