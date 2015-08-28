@@ -69,7 +69,6 @@ function IndexerGamesController(
     }
 
     $scope.games = games.getList({ assignedUserId: $scope.userId });
-    $scope.gamesAvailable = games.getList();
     $scope.currentUser = session.getCurrentUser();
 
     const currentRole = session.getCurrentRole();

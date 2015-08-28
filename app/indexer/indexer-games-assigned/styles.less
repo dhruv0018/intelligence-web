@@ -1,5 +1,8 @@
 @import (reference) "main.less";
 
+@indexer-font-size: 14px;
+@indexer-padding: 6px;
+
 .indexer-games-assigned, .indexer-games-available, .indexer-history {
 
     .lookup {
@@ -88,9 +91,11 @@
             border: none;
             color: black;
             vertical-align: middle;
+            font-size: @indexer-font-size;
             line-height: 16px;
             padding-left: 15px;
             font-weight: 500;
+            padding: @indexer-padding;
 
             &:first-child {
 
