@@ -15,14 +15,19 @@ md-content {
             justify-content: space-around;
 
             .edit-profile-picture-container {
+                text-align: center;
 
                 .profile-picture {
-                    margin-top: 100px;
+                    margin: 100px auto 0px;
                     text-align: center;
 
                     img,
                     .placeholder-picture {
                         border-color: @gray-border;
+                    }
+
+                    .placeholder-picture {
+                        padding-top: 22px;
                     }
                 }
 
@@ -82,13 +87,26 @@ md-content {
 
             .small-text-field {
                 display: inline-block;
-                width: 60px;
+                width: 30%;
+            }
+
+            .large-text-field {
+                display: inline-block;
+                width: 80%;
+            }
+
+            .field-label {
+                display: inline-block;
+                width: 19%;
+                margin-left: 1%;
+                margin-right: -4px;
             }
 
             select {
                 background-color: white;
                 padding-right: 30px;
                 text-transform: capitalize;
+                width: 80%;
             }
 
             .header-description {
@@ -102,50 +120,43 @@ md-content {
                 font-size: @font-size-base;
                 margin-left: 20px;
                 text-decoration: none;
-                display: none;
             }
 
-            .team-table {
-
+            .team-row {
+                border: thin solid @gray-border;
+                border-bottom: none;
                 background-color: white;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                padding: 5px 10px;
 
-                .team-row-header {
-                    font-weight: 500;
+                &:last-child {
+                    border-bottom: thin solid @gray-border;
                 }
 
-                .team-row {
+                .team-info {
                     flex: 1;
-                    flex-direction: row;
-                    text-transform: capitalize;
 
-                    td, th {
-                        vertical-align: middle;
-                        text-align: left;
-                        width: 25%;
-                        padding: 10px;
-                        height: auto;
+                    h4, p {
+                        margin: 0px;
                         line-height: normal;
+                        text-transform: capitalize;
                     }
 
-                    .team-cell-radio {
-                        text-align: center;
-                        width: 20%;
-                    }
+                    .position-list {
 
-                    .team-cell-positions {
-                        width: 20%;
-                    }
-
-                    .team-cell-options {
-                        text-align: center;
-                        width: 10%;
-
-                        .icon-remove {
-                            .pull-right;
-                            color: @brand-danger;
-                            cursor: pointer;
+                        &:last-child {
+                            .comma {
+                                display: none;
+                            }
                         }
                     }
+                }
+
+                button {
+                    margin: 0px 10px;
                 }
             }
 

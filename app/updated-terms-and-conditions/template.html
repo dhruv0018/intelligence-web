@@ -1,0 +1,51 @@
+<x-alertbar></x-alertbar>
+
+<section
+ id="updated-terms-and-conditions"
+ class="updated-terms-and-conditions"
+>
+
+    <form
+     class="updated-terms-and-conditions-form"
+     name="new-terms-form"
+     role="form"
+     novalidate
+    >
+
+        <div class="icon icon-krossover-logo"></div>
+
+        <header>
+
+            <h2>Action Required</h2>
+
+        </header>
+
+        <p>Welcome back. Please review our updated Terms &amp; Conditions.</p>
+
+        <div class="form-group updated-terms-form-group">
+
+            <form-toggle
+             class="new-terms-agree"
+             data-id="returning-user-terms-agree-cta"
+             name="remember"
+             data-required="true"
+             model="newTerms.agree"
+            ></form-toggle>
+
+            <label class="new-terms-agree-label">I agree to the <a id="terms-modal-show-terms-cta" ng-click="showTerms($event);">Krossover Terms &amp; Conditions</a></label>
+
+        </div>
+
+        <button
+         id="terms-modal-go-to-account-cta"
+         class="new-terms-accept-cta"
+         type="button"
+         ng-click="acceptTerms();"
+         ng-disabled="!newTerms.agree"
+        >Go to your account</button>
+
+    </form>
+
+</section>
+
+<loading></loading>

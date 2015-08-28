@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Video Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "guid": {
+            "type": "string"
+        },
+        "status": {
+            "type": ["null", "integer"]
+        },
+        "videoTranscodeProfiles": {
+            "type": "array",
+            "items": { "$ref": "transcodeProfile" }
+        },
+        "duration": {
+            "type": ["null", "number"]
+        },
+        "thumbnail": {
+            "type": ["null", "string"]
+        }
+    },
+    "additionalProperties": false
+}

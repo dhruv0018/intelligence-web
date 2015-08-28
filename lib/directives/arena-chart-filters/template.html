@@ -1,0 +1,131 @@
+<div class="arena-chart-filters filters">
+
+    <!-- Filters -->
+    <div class="arena-chart-filters-start filter-group">
+
+        <!--  team player filter -->
+        <div class="filter-group__item">
+
+            <div>
+
+                <color-shape color="::game.primaryJerseyColor"></color-shape>
+
+                <h4 class="team-label__name">{{::team.name}}</h4>
+
+            </div>
+
+            <div>
+
+                <krossover-multiselect
+                    ng-model="filterModel.teamPlayersIds"
+                    items="::teamPlayerLabels"
+                    type="Player"
+                    multiple="true"
+                    default-label="Select Players">
+                </krossover-multiselect>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="divider__vertical"></div>
+
+    <div class="arena-chart-filters-center filter-group">
+
+        <!-- shots filter -->
+        <div class="filter-group__item">
+
+            <h4> Shots </h4>
+
+            <div>
+
+                <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
+                    <i class="arena-event-icon icon-circle"></i>Made
+                </krossover-checkbox>
+
+                <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
+                    <i class="arena-event-icon icon-x"></i>Missed
+                </krossover-checkbox>
+
+            </div>
+
+        </div>
+
+        <!-- period filter -->
+        <div class="filter-group__item" ng-if="league.numberOfPeriods !== 1">
+
+            <h4> Period </h4>
+
+            <div>
+
+                <krossover-checkbox ng-model="filterModel.allPeriods" children-models="filterModel.periods" children-listen="false">
+                    All
+                </krossover-checkbox>
+
+                <krossover-checkbox ng-repeat="periodNumber in periods"
+                    ng-model="filterModel.periods[periodNumber]">
+                    {{ ::league.periodAbbreviationLabel }}{{ ::periodNumber }}
+                </krossover-checkbox>
+
+                <krossover-checkbox ng-model="filterModel.periods.OT">
+                    OT
+                </krossover-checkbox>
+
+            </div>
+        </div>
+
+        <!-- custom tags filter -->
+        <div class="filter-group__item">
+
+            <h4> Tags </h4>
+
+            <div>
+
+                <krossover-multiselect
+                    ng-model="filterModel.customTagIds"
+                    items="::customTagLabels"
+                    type="Tag"
+                    multiple="true"
+                    default-label="Select Tags">
+                </krossover-multiselect>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="divider__vertical"></div>
+
+    <div class="arena-chart-filters-end filter-group">
+
+        <!-- opposing team filter -->
+        <div class="filter-group__item">
+
+            <div>
+
+                <h4 class="team-label__name">{{::opposingTeam.name}}</h4>
+
+                <color-shape color="::game.opposingPrimaryJerseyColor"></color-shape>
+
+            </div>
+
+            <div>
+
+                <krossover-multiselect
+                    ng-model="filterModel.opposingTeamPlayersIds"
+                    items="::opposingTeamPlayerLabels"
+                    type="Player"
+                    multiple="true"
+                    default-label="Select Players">
+                </krossover-multiselect>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

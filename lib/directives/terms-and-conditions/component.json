@@ -1,0 +1,16 @@
+{
+    "name": "terms-and-conditions",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "dependencies": {
+        "moment/moment": "2.9.0"
+    }
+}

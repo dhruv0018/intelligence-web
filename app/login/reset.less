@@ -15,10 +15,12 @@
             position: relative;
         }
 
-        .form-group:first-child {
+        .desktop({
+            .form-group:first-child {
 
-            margin-bottom: 50px;
-        }
+                margin-bottom: 50px;
+            }
+        });
 
         .form-group:last-child {
 
@@ -35,6 +37,11 @@
         h2 {
 
             letter-spacing: -0.01em;
+
+            .mobile({
+
+                font-size: @font-size-large;
+            });
         }
 
         h3 {
@@ -47,21 +54,30 @@
         }
     }
 
+    .go-back {
+
+        .pull-left;
+        font-size: @font-size-base;
+        line-height: 62px;
+
+        /* FIXME: Once mobile login for v2 is enabled, we have to remove the
+         * mobile style below to enable the back button. */
+        .mobile({
+
+            display: none;
+        });
+    }
+
     .button-reset {
 
+        .btn;
+        .btn-lg;
         height: 62px;
-
-        & {
-
-            .btn;
-            .btn-lg;
-        }
 
         &:enabled {
 
             .btn-primary;
         }
-
     }
 }
 

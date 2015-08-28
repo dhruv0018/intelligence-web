@@ -1,5 +1,16 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+
+/* Templates */
+
+const accountTemplate               = require('./template.html');
+const accountTemplateUrl            = 'account/template.html';
+const contactInfoTemplate           = require('./contact-info.html');
+const contactInfoTemplateUrl        = 'account/contact-info.html';
+const rolesListTemplate             = require('./roles-list.html');
+const rolesListTemplateUrl          = 'account/roles-list.html';
+const termsAndConditionsTemplate    = require('./terms-and-conditions.html');
+const termsAndConditionsTemplateUrl = 'account/terms-and-conditions.html';
 
 /**
  * Account page module.
@@ -16,9 +27,10 @@ Account.run([
     '$templateCache',
     function run($templateCache) {
 
-        $templateCache.put('account/template.html', require('./template.html'));
-        $templateCache.put('account/contact-info.html', require('./contact-info.html'));
-        $templateCache.put('account/roles-list.html', require('./roles-list.html'));
+        $templateCache.put(accountTemplateUrl, accountTemplate);
+        $templateCache.put(contactInfoTemplateUrl, contactInfoTemplate);
+        $templateCache.put(rolesListTemplateUrl, rolesListTemplate);
+        $templateCache.put(termsAndConditionsTemplateUrl, termsAndConditionsTemplate);
     }
 ]);
 
@@ -28,44 +40,69 @@ Account.run([
  * @type {UI-Router}
  */
 Account.config([
-    '$stateProvider', '$urlRouterProvider',
-    function config($stateProvider, $urlRouterProvider) {
+    '$stateProvider',
+    '$urlRouterProvider',
+    function config(
+        $stateProvider,
+        $urlRouterProvider
+    ) {
 
         $stateProvider
+        .state('Account', {
 
-            .state('Account', {
-                url: '/account',
-                parent: 'base',
-                abstract: true,
-                views: {
-                    'main@root': {
-                        templateUrl: 'account/template.html',
-                        controller: 'Account.controller'
-                    }
-                }
-            })
+            url: '/account',
+            parent: 'base',
+            abstract: true,
+            defaultChild: 'Account.ContactInfo',
+            views: {
 
-            .state('Account.ContactInfo', {
-                url: '',
-                parent: 'Account',
-                views: {
-                    'content@Account': {
-                        templateUrl: 'account/contact-info.html',
-                        controller: 'Account.ContactInfo.controller'
-                    }
-                }
-            })
+                'main@root': {
 
-            .state('Account.RolesList', {
-                url: '',
-                parent: 'Account',
-                views: {
-                    'content@Account': {
-                        templateUrl: 'account/roles-list.html',
-                        controller: 'Account.RolesList.controller'
-                    }
+                    templateUrl: accountTemplateUrl,
+                    controller: 'Account.controller'
                 }
-            });
+            }
+        })
+
+        .state('Account.ContactInfo', {
+
+            parent: 'Account',
+            url: '',
+            views: {
+
+                'content@Account': {
+
+                    templateUrl: contactInfoTemplateUrl,
+                    controller: 'Account.ContactInfo.controller'
+                }
+            }
+        })
+
+        .state('Account.TermsAndConditions', {
+
+            parent: 'Account',
+            url: '',
+            views: {
+
+                'content@Account': {
+
+                    templateUrl: termsAndConditionsTemplateUrl
+                }
+            }
+        })
+
+        .state('Account.RolesList', {
+
+            parent: 'Account',
+            views: {
+
+                'content@Account': {
+
+                    templateUrl: rolesListTemplateUrl,
+                    controller: 'Account.RolesList.controller'
+                }
+            }
+        });
     }
 ]);
 

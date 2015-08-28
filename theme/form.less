@@ -1,4 +1,4 @@
-@import (reference) "main.less";
+@import (reference) "krossover-variables.less";
 
 
 select,
@@ -12,6 +12,10 @@ select.form-control {
     background-image: url("assets/select.png");
     background-repeat: no-repeat;
     background-position: right;
+}
+
+.form-control[disabled] {
+    opacity: .5;
 }
 
 input[type="color"] {

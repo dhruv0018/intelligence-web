@@ -1,7 +1,7 @@
-<div class="formations-chart-container">
-        <accordion-group data-is-open="status.open">
+<div class="formations-chart-container" ng-hide="redzone && chart.redzoneSnaps < 1">
+        <accordion-group is-open="status.open">
             <accordion-heading>
-                <div data-ng-class="{'field-header-collapsed': !status.open}" class="field-header">
+                <div ng-class="{'field-header-collapsed': !status.open}" class="field-header">
                     <span class="field-info">
                         <span class="field-info-title">Backfield:</span> {{chart.backfieldFormation}}
                     </span>
@@ -12,9 +12,11 @@
                         <span class="field-info-title">WRs:</span> {{chart.WRStrength}}
                     </span>
                     <span class="field-info">
-                        <span class="field-info-title">{{chart.snaps}}</span> snaps
+                        <span class="field-info-title" ng-hide="redzone">{{chart.snaps}}</span>
+                        <span class="field-info-title" ng-show="redzone">{{chart.redzoneSnaps}}</span>
+                        snaps
                     </span>
-                    <i class="pull-right icon" data-ng-class="{'icon-chevron-up': status.open, 'icon-chevron-down': !status.open}"></i>
+                    <i class="pull-right icon" ng-class="{'icon-chevron-up': status.open, 'icon-chevron-down': !status.open}"></i>
                 </div>
             </accordion-heading>
             <div class="field">
