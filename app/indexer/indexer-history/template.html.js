@@ -7,6 +7,7 @@ export default `
         <div class="game-indexer-content">
             <div ng-show="filteredGames.length > 0">
                 <h3>Games History</h3>
+                <!--FIXME: Put in styles for table instead of using other table styles-->
                 <table class="table-striped table-hover indexer-list">
                     <thead>
                     <tr>
@@ -19,12 +20,13 @@ export default `
                     </tr>
                     </thead>
                     <tbody>
-                    <tr data-ng-repeat="game in filteredGames = (games
+                    <tr data-ng-repeat="game in games
                         | gameIsDeleted: false
                         | gameIsNotSetAside
                         | gameHasCurrentUserAssignment
                         | gameCurrentUserAssignmentIsActive: false
-                        | orderBy: getLatestAssignmentDate: true)"
+                        | orderBy: getLatestAssignmentDate: true
+                        as filteredGames"
                     >
                         <td>{{game.userAssignment().timeAssigned | date:'MM/dd/yyyy'}}</td>
                         <td>{{game.id}}</td>

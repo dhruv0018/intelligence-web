@@ -135,7 +135,7 @@ function HeaderController(
     $scope.currentUserIsAthleteRecruit = currentUser.isAthleteRecruit();
 
     const currentRole = session.getCurrentRole();
-    $scope.indexerQuality = currentRole.indexerQuality;
+    $scope.canPickupGame = currentUser.canPickupGames();
 
     //TEMP - get sport id to show Analytics tab for FB only
     if (auth.isLoggedIn) {

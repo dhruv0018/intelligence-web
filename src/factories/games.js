@@ -12,8 +12,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q, playTelestrationEntity, rawTelestrationEntity) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, teams, users, $q, playTelestrationEntity, rawTelestrationEntity) {
 
         var GamesFactory = {
 
@@ -226,6 +226,17 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return self.getList(gameIds);
             },
+
+            getHeadCoachName: function() {
+
+                let uploaderTeamId = this.uploaderTeamId;
+                let team = teams.get(uploaderTeamId);
+                let headCoachRole = team.getHeadCoachRole();
+                let user = users.get(headCoachRole.userId);
+
+                return user.name;
+            },
+
 
             saveNotes: function() {
 
@@ -1053,11 +1064,9 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
             getDeadlineToReturnGame: function(uploaderTeam) {
 
-                let self = this;
+                if (!this.submittedAt) return 0;
 
-                if (!self.submittedAt) return 0;
-
-                let submittedAt = moment.utc(self.submittedAt);
+                let submittedAt = moment.utc(this.submittedAt);
 
                 if (!submittedAt.isValid()) return 0;
 

@@ -7,6 +7,7 @@ export default `
     <div class="game-indexer-content">
         <div class="indexer-links-container">
             <a class="lookup" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank">
+                <!--FIXME: Need a grid system-->
                 <div class="lookup-container">
                     <div class="right-container">
                         <i class="icon icon-chevron-right"></i>
@@ -48,18 +49,20 @@ export default `
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="game in filteredGames = (games
+                    <tr ng-repeat="game in games
                         | gameIsDeleted: false
                         | gameIsIndexingOrQaing
                         | gameHasCurrentUserAssignment
                         | gameCurrentUserAssignmentIsActive: true
-                        | orderBy: 'timeRemaining':true)"
+                        | orderBy: 'timeRemaining':true
+                        as filteredGames"
                     >
                         <td>{{game.id}}</td>
                         <td><a id="select-indexer-game-cta-game-{{$index}}" ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
-                        <td>{{ getHeadCoachName(game) }}</td>
+                        <td>{{ game.getHeadCoachName() }}</td>
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                         <td>{{ game.timeRemaining | millisecondsAsDaysHoursMinutes }}</td>
+                        <!--TODO: Make this into a directive-->
                         <td>
                             <span ng-if="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)">
                                 <span ng-hide="game.isAssignmentStarted()">Ready to Index </span>

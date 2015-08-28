@@ -35,6 +35,7 @@ function IndexerDataDependencies (
             this.users = users.load(VIEWS.QUEUE.USERS);
             this.teams = teams.load(VIEWS.QUEUE.TEAMS);
             this.games = games.load(VIEWS.QUEUE.GAME);
+            /*TODO: schools should use /schools?relatedUserId*/
             this.schools = this.teams.then(function(teams) {
                 let schoolIds = teams
 

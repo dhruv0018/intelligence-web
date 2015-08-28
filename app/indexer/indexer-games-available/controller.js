@@ -35,7 +35,6 @@ function IndexerGamesController(
     GAME_STATUSES,
     VIEWS
 ) {
-
     const ONE_MINUTE = 60000;
 
     $scope.sports = sports.getCollection();
@@ -53,6 +52,7 @@ function IndexerGamesController(
 
     });
 
+    /*TODO: Add function to factory to get sports name*/
     $scope.getSportName = function(teamId) {
         const team = $scope.teams[teamId];
 
@@ -71,6 +71,8 @@ function IndexerGamesController(
         return game.getRemainingTime(teams.get(game.uploaderTeamId));
     };
 
+
+    /*TODO: Make this into a directive as this code appears many times*/
     var refreshGames = function() {
 
         angular.forEach($scope.games, function(game) {

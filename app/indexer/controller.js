@@ -91,16 +91,6 @@ function IndexerGamesController(
         return game.userAssignment().timeAssigned;
     };
 
-    $scope.getHeadCoachName = function(game) {
-
-        let uploaderTeamId = game.uploaderTeamId;
-        let team = $scope.teams[uploaderTeamId];
-        let headCoachRole = team.getHeadCoachRole();
-        let user = $scope.users[headCoachRole.userId];
-
-        return user.firstName + ' ' + user.lastName;
-    };
-
     var refreshGames = function() {
 
         angular.forEach($scope.gamesAvailable, function(game) {

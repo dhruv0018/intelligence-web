@@ -546,6 +546,18 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return false;
             },
 
+            /**
+             * Determines if the an indexer can pickup games
+             * @return true if the user can pickup games
+             */
+            canPickupGames: function() {
+
+                let session = $injector.get('SessionService');
+                const currentRole = session.getCurrentRole();
+                return currentRole.indexerQuality;
+
+            },
+
             // TODO: This method should be removed
             getLastAccessed: function(user) {
                 return new Date(user.lastAccessed);

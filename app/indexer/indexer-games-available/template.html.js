@@ -18,16 +18,19 @@ export default `
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="game in filteredGames = (games
+                    <tr data-ng-repeat="game in games
                         | gameIsDeleted: false
                         | gameIsReadyForQa
-                        | gameNotIndexedByMe
+                        | gameNotIndexedByCurrentUser
                         | orderBy: 'timeRemaining'
-                        | limitTo: 100)"
+                        | limitTo: 100
+                        as filteredGames"
                     >
                         <td>{{game.id}}</td>
+                        <!--TODO:Add as directive or factory method -->
                         <td>{{ teams[game.teamId].name }} vs {{ teams[game.opposingTeamId].name }}</td>
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
+                        <!--TODO:Add as directive since it is used in the queue as well -->
                         <td class="time-left">
                             <span class="late" ng-if="game.timeRemaining < 0">{{ getRemainingTime(game) | millisecondsAsDaysHoursMinutes }}</span>
                             <span class="none" ng-if="game.timeRemaining === 0">None</span>
