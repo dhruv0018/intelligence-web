@@ -3,15 +3,29 @@
     <ng-transclude></ng-transclude>
 
     <!-- Football -->
-    <krossover-arena-football-field data-ng-if="type === 'FOOTBALL'" chart="chart" redzone="redzone" plays="plays"></krossover-arena-football-field>
+    <krossover-arena-football-field
+        ng-if="type === 'FOOTBALL'"
+        chart="chart"
+        redzone="redzone"
+        plays="plays"
+    ></krossover-arena-football-field>
 
     <!-- Basketball -->
-    <basketball-arena data-ng-if="type.indexOf('BASKETBALL') >= 0" data-ng-model="region"></basketball-arena>
+    <basketball-arena
+        ng-if="type.indexOf('BASKETBALL') >= 0"
+        ng-model="region"
+    ></basketball-arena>
 
     <!-- Lacrosse -->
-    <lacrosse-arena data-ng-if="type.indexOf('LACROSSE') >= 0" data-ng-model="region"></lacrosse-arena>
+    <lacrosse-arena
+        ng-if="type.indexOf('LACROSSE') >= 0"
+        ng-model="region"
+    ></lacrosse-arena>
 
     <!-- Volleyball -->
-    <volleyball-arena data-ng-if="type.indexOf('VOLLEYBALL') >= 0" data-ng-model="region"></volleyball-arena>
+    <volleyball-arena
+        ng-if="type.indexOf('VOLLEYBALL') >= 0"
+        ng-model="region"
+    ></volleyball-arena>
 
 </div>
