@@ -8,7 +8,7 @@
     ],
     "scripts": [
         "index.js",
-        "link.js"
+        "controller.js"
     ],
     "paths": [
         "."
