@@ -139,7 +139,7 @@ var ARENA_REGIONS = {
 
         'PERIMETER': {
             id: 9,
-            name: 'PERIMETER',
+            name: 'Perimeter',
             description: 'from the perimeter'
         }
     },
