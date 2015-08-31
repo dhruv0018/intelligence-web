@@ -63,6 +63,13 @@ var ARENA_TYPES = {
         name: 'Volleyball',
         type: 'VOLLEYBALL',
         orientation: 'portrait'
+    },
+
+    9: {
+        id: 9,
+        name: 'Ice Hockey',
+        type: 'ICE_HOCKEY',
+        orientation: 'landscape'
     }
 };
 
@@ -77,7 +84,8 @@ var ARENA_IDS = {
     5: 'LACROSSE',
     6: 'LACROSSE',
     7: 'FOOTBALL',
-    8: 'VOLLEYBALL'
+    8: 'VOLLEYBALL',
+    9: 'ICE_HOCKEY'
 };
 
 IntelligenceWebClient.constant('ARENA_IDS', ARENA_IDS);
@@ -150,6 +158,39 @@ var ARENA_REGIONS = {
             name: 'Court',
             description: 'the court'
         }
+    },
+
+    ICE_HOCKEY: {
+        'BEHIND_THE_NET': {
+            id: 11,
+            name: 'Behind the net',
+            description: 'from behind the net'
+        },
+        'AROUND_THE_NET': {
+            id: 12,
+            name: 'Around the net',
+            description: 'around the net'
+        },
+        'SLOT': {
+            id: 13,
+            name: 'Slot',
+            description: 'from the slot'
+        },
+        'WING': {
+            id: 14,
+            name: 'Wing',
+            description: 'from the wing'
+        },
+        'BLUE_LINE': {
+            id: 15,
+            name: 'Blue line',
+            description: 'from the blue line'
+        },
+        'OUTSIDE_THE_ZONE': {
+            id: 16,
+            name: 'Outside the zone',
+            description: 'from outside the zone'
+        }
     }
 };
 
@@ -166,7 +207,13 @@ var ARENA_REGIONS_BY_ID = {
     7: ARENA_REGIONS.LACROSSE.PORCH,
     8: ARENA_REGIONS.LACROSSE.FLANKS,
     9: ARENA_REGIONS.LACROSSE.PERIMETER,
-    10: ARENA_REGIONS.VOLLEYBALL.COURT
+    10: ARENA_REGIONS.VOLLEYBALL.COURT,
+    11: ARENA_REGIONS.ICE_HOCKEY.BEHIND_THE_NET,
+    12: ARENA_REGIONS.ICE_HOCKEY.AROUND_THE_NET,
+    13: ARENA_REGIONS.ICE_HOCKEY.SLOT,
+    14: ARENA_REGIONS.ICE_HOCKEY.WING,
+    15: ARENA_REGIONS.ICE_HOCKEY.BLUE_LINE,
+    16: ARENA_REGIONS.ICE_HOCKEY.OUTSIDE_THE_ZONE
 };
 
 IntelligenceWebClient.constant('ARENA_REGIONS_BY_ID', ARENA_REGIONS_BY_ID);
