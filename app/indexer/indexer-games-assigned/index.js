@@ -10,8 +10,8 @@ IndexerGamesAssigned.factory('IndexerDataDependencies', IndexerDataDependencies)
 IndexerGamesAssigned.controller('IndexerGamesAssignedController', IndexerGamesAssignedController);
 
 IndexerGamesAssigned.config([
-    '$stateProvider', '$urlRouterProvider',
-    function config($stateProvider, $urlRouterProvider) {
+    '$stateProvider',
+    function config($stateProvider) {
 
         $stateProvider
 

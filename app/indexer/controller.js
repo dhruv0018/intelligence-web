@@ -4,42 +4,30 @@ const moment = require('moment');
 
 IndexerGamesController.$inject = [
     '$scope',
-    '$state',
     '$interval',
     'config',
-    '$mdDialog',
-    '$modal',
-    'GAME_TYPES',
     'TeamsFactory',
     'LeaguesFactory',
     'GamesFactory',
     'SportsFactory',
     'UsersFactory',
     'SessionService',
-    'Indexer.Games.Data',
     'INDEXER_GROUPS',
-    'GAME_STATUSES',
-    'VIEWS',
+    'GAME_STATUSES'
 ];
 
 function IndexerGamesController(
     $scope,
-    $state,
     $interval,
     config,
-    $mdDialog,
-    $modal,
-    GAME_TYPES,
     teams,
     leagues,
     games,
     sports,
     users,
     session,
-    data,
     INDEXER_GROUPS,
-    GAME_STATUSES,
-    VIEWS
+    GAME_STATUSES
 ) {
 
     const ONE_MINUTE = 60000;
@@ -71,6 +59,7 @@ function IndexerGamesController(
     $scope.games = games.getList({ assignedUserId: $scope.userId });
     $scope.currentUser = session.getCurrentUser();
 
+    /*Checks if the indexer has qa privileges*/
     const currentRole = session.getCurrentRole();
     $scope.indexerQuality = currentRole.indexerQuality;
 
@@ -86,14 +75,11 @@ function IndexerGamesController(
         }
     };
 
-    $scope.getLatestAssignmentDate = function(game) {
-        return game.userAssignment().timeAssigned;
-    };
+    $scope.getLatestAssignmentDate = (game) => game.userAssignment().timeAssigned;
 
-    var refreshGames = function() {
+    let refreshGames = function() {
 
-        angular.forEach($scope.gamesAvailable, function(game) {
-
+        $scope.gamesAvailable.forEach(function(game) {
             if (game.timeRemaining) {
 
                 game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
@@ -101,7 +87,7 @@ function IndexerGamesController(
         });
     };
 
-    var refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
+    let refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
 
     $scope.$on('$destroy', function() {
 

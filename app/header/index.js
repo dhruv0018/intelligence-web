@@ -133,14 +133,12 @@ function HeaderController(
 
     let currentUser = session.currentUser;
     $scope.currentUserIsAthleteRecruit = currentUser.isAthleteRecruit();
-
-    const currentRole = session.getCurrentRole();
     $scope.canPickupGame = currentUser.canPickupGames();
 
     //TEMP - get sport id to show Analytics tab for FB only
     if (auth.isLoggedIn) {
         if (currentUser.is(ROLES.COACH)) {
-            var team = teams.get(currentUser.currentRole.teamId);
+            let team = teams.get(currentUser.currentRole.teamId);
             $scope.league = leagues.get(team.leagueId);
             $scope.SPORTS = SPORTS;
         }

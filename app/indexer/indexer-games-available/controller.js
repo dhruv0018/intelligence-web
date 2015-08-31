@@ -48,10 +48,10 @@ function IndexerGamesController(
     $scope.options = {scope: $scope};
 
     let now = moment.utc();
-    angular.forEach($scope.games, function(game) {
+
+    $scope.games.forEach(function(game) {
         let team = teams.get(game.uploaderTeamId);
         game.timeRemaining = game.getRemainingTime(team, now);
-
     });
 
     /*TODO: Add function to factory to get sports name*/
@@ -89,18 +89,19 @@ function IndexerGamesController(
 
 
     /*TODO: Make this into a directive as this code appears many times*/
-    var refreshGames = function() {
+    let refreshGames = function() {
 
-        angular.forEach($scope.games, function(game) {
+        $scope.games.forEach(function(game) {
 
             if (game.timeRemaining) {
 
                 game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
             }
         });
+
     };
 
-    var refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
+    let refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
 
     $scope.$on('$destroy', function() {
 

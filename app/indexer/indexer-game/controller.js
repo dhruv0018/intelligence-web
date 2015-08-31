@@ -49,6 +49,8 @@ function IndexerGameController(
 ) {
 
     const gameId = Number($stateParams.id);
+    const INDEXER_GAMES_ASSIGNED_STATE = 'IndexerGamesAssigned';
+    const INDEXER_GAMES_STATE = 'IndexerGames';
 
     $scope.GAME_TYPES = GAME_TYPES;
     $scope.GAME_STATUSES = GAME_STATUSES;
@@ -91,7 +93,7 @@ function IndexerGameController(
 
         $scope.game.assignToIndexer(previousAssignment.userId, newDeadline);
         $scope.game.save();
-        $state.go('IndexerGamesAssigned');
+        $state.go(INDEXER_GAMES_ASSIGNED_STATE);
     };
 
     $scope.setAside = function() {
@@ -106,7 +108,7 @@ function IndexerGameController(
             $scope.game.setAside();
             $scope.game.save();
             users.resendEmail(EMAIL_REQUEST_TYPES.SET_ASIDE_EMAIL, {roleType: roleId, gameId: gameId}, userId);
-            $state.go('IndexerGames');
+            $state.go(INDEXER_GAMES_STATE);
         });
     };
 

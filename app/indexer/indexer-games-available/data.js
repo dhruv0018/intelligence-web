@@ -36,18 +36,11 @@ function IndexerDataDependencies (
             this.teams = teams.load(VIEWS.QUEUE.TEAMS);
             this.games = games.load(VIEWS.QUEUE.GAME);
             /*TODO: schools should use /schools?relatedUserId*/
+
             this.schools = this.teams.then(function(teams) {
                 let schoolIds = teams
-
-                .filter(function(team) {
-
-                    return team.schoolId;
-                })
-
-                .map(function(team) {
-
-                    return team.schoolId;
-                });
+                .filter(team => team.schoolId)
+                .map(team => team.schoolId);
 
                 if (schoolIds.length) return schools.load(schoolIds);
             });
