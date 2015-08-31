@@ -37,7 +37,7 @@ export default `
                             <span class="togo" ng-if="game.timeRemaining > 0">{{ getRemainingTime(game) | millisecondsAsDaysHoursMinutes }}</span>
                         </td>
                         <td>
-                            <button id="pick-up-qa-cta" class="btn btn-default index-button" open-modal="QaPickup.Modal" modal-options="game.id">
+                            <button id="pick-up-qa-cta" class="btn btn-default index-button" ng-click="qaPickup(game)">
                                 Pick Up to QA
                             </button>
                         </td>

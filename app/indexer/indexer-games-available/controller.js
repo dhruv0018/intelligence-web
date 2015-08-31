@@ -17,6 +17,7 @@ IndexerGamesController.$inject = [
     'SessionService',
     'GAME_STATUSES',
     'VIEWS',
+    'QaPickup.Modal'
 ];
 
 function IndexerGamesController(
@@ -33,7 +34,8 @@ function IndexerGamesController(
     users,
     session,
     GAME_STATUSES,
-    VIEWS
+    VIEWS,
+    QaPickupModal
 ) {
     const ONE_MINUTE = 60000;
 
@@ -69,6 +71,20 @@ function IndexerGamesController(
 
     $scope.getRemainingTime = function(game) {
         return game.getRemainingTime(teams.get(game.uploaderTeamId));
+    };
+
+    $scope.qaPickup = function(game) {
+        let modal = QaPickupModal.open({
+            resolve: {
+                game: function() { return game; }
+            }
+        });
+
+        modal.result.then( () => {
+            /*Load any new games from the serve since list is outdated*/
+            games.load(VIEWS.QUEUE.GAME);
+            $scope.games = games.getList(VIEWS.QUEUE.GAME);
+        });
     };
 
 
