@@ -156,56 +156,17 @@ var ARENA_REGIONS = {
 IntelligenceWebClient.constant('ARENA_REGIONS', ARENA_REGIONS);
 
 var ARENA_REGIONS_BY_ID = {
-    1: {
-        id: 1,
-        name: 'Around the Rim',
-        description: 'around the rim'
-    },
-    2: {
-        id: 2,
-        name: 'Inside the Paint',
-        description: 'from inside the paint'
-    },
-    3: {
-        id: 3,
-        name: 'Mid-Range',
-        description: 'at mid-range'
-    },
-    4: {
-        id: 4,
-        name: 'Behind the Arc',
-        description: 'from behind the arc'
-    },
-    5: {
-        id: 5,
-        name: 'Hole',
-        description: 'from the hole'
-    },
-    6: {
-        id: 6,
-        name: 'Slot',
-        description: 'from the slot'
-    },
-    7: {
-        id: 7,
-        name: 'Porch',
-        description: 'from the porch'
-    },
-    8: {
-        id: 8,
-        name: 'Flanks',
-        description: 'from the flanks'
-    },
-    9: {
-        id: 9,
-        name: 'PERIMETER',
-        description: 'from the perimeter'
-    },
-    10: {
-        id: 10,
-        name: 'Court',
-        description: 'the court'
-    }
+
+    1: ARENA_REGIONS.BASKETBALL.AROUND_THE_RIM,
+    2: ARENA_REGIONS.BASKETBALL.INSIDE_THE_PAINT,
+    3: ARENA_REGIONS.BASKETBALL.MID_RANGE,
+    4: ARENA_REGIONS.BASKETBALL.MID_RANGE,
+    5: ARENA_REGIONS.LACROSSE.HOLE,
+    6: ARENA_REGIONS.LACROSSE.SLOT,
+    7: ARENA_REGIONS.LACROSSE.PORCH,
+    8: ARENA_REGIONS.LACROSSE.FLANKS,
+    9: ARENA_REGIONS.LACROSSE.PERIMETER,
+    10: ARENA_REGIONS.VOLLEYBALL.COURT
 };
 
 IntelligenceWebClient.constant('ARENA_REGIONS_BY_ID', ARENA_REGIONS_BY_ID);
