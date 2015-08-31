@@ -1,5 +1,30 @@
 @import (reference) "main.less";
 
+@background-color: #E6F9FF;
+
 .ice-hockey-arena {
 
+    width: 100%;
+    height: 100%;
+
+    .indexable-region {
+
+        fill: @background-color;
+        stroke: @background-color;
+    }
+}
+
+.krossover-arena {
+
+    &.highlight-regions {
+
+        .ice-hockey-arena .indexable-region {
+            &:hover,
+            &:active,
+            &:focus {
+                fill: darken(@background-color, 10%);
+                transition: fill 0.3s;
+            }
+        }
+    }
 }
