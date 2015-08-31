@@ -5,7 +5,10 @@
 >
     <md-dialog-content>
 
-        <xy-coordinates ng-model="eventManager.current.variableValues[item.id].value.coordinates">
+        <xy-coordinates
+            class="{{arenaType}}"
+            ng-model="eventManager.current.variableValues[item.id].value.coordinates"
+        >
 
             <krossover-arena
                 type="arenaType"
