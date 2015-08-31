@@ -65,7 +65,7 @@
         },
         "indexerFAQ": {
             "football": {
-                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/krossover-football-formations-07-27-2015.pdf"
+                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/dev/krossover-football-formations-07-27-2015.pdf"
             },
             "volleyball": {
                 "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/Krossover-volleyball-rotation-position.pdf"
