@@ -94,10 +94,7 @@
         		<div class="shared-with" ng-repeat="share in film.getUserShares()" ng-hide="!isGame && team.isMember(share.sharedWithUserId) && users.get(share.sharedWithUserId).is(ROLES.ATHLETE)">
         			<strong ng-class="{'user-for-game': isGame}">{{usersMap[share.sharedWithUserId].firstName}} {{usersMap[share.sharedWithUserId].lastName}}</strong>
                     <span class="pull-right">
-                        <select id="share-film-others-options-cta" ng-model="share.isBreakdownShared" ng-change="film.save()" ng-show="isGame">
-                            <option id="share-film-others-raw-film-only-cta" value="false">Sharing raw film only</option>
-                            <option id="share-film-others-raw-film-and-breakdown-cta" value="true">Sharing raw film and breakdown</option>
-                        </select>
+                        <select id="share-film-others-options-cta" ng-model="share.isBreakdownShared" ng-change="film.save()" ng-show="isGame" ng-options="shareVideoOption.value as shareVideoOption.name for shareVideoOption in shareVideoOptions"></select>
                         <span ng-show="!isGame">Sharing reel</span>
                     	<i class="icon icon-remove" ng-click="shareRevoke(usersMap[share.sharedWithUserId])"></i>
                     </span>
