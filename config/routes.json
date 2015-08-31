@@ -590,5 +590,9 @@
 
     "Styleguide.Forms": {
         "*": true
+    },
+
+    "Styleguide.Custom": {
+        "*": true
     }
 }
