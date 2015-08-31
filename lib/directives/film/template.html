@@ -1,40 +1,41 @@
-<div class="krossover-film" data-ng-hide="hideFilm">
+<div class="krossover-film" ng-hide="hideFilm">
 
 
     <film-info
-        data-title="filmTitle"
-        data-film="film"
-        data-ng-if="isGame"
-        data-ui-sref="Games({id:film.id})">
+        title="filmTitle"
+        film="film"
+        ng-if="isGame"
+        ui-sref="Games({id:film.id})">
     </film-info>
 
     <film-info
-        data-title="filmTitle"
-        data-film="film"
-        data-ng-if="!isGame"
-        data-ui-sref="Reel({id:film.id})">
+        title="filmTitle"
+        film="film"
+        ng-if="!isGame"
+        ui-sref="Reel({id:film.id})">
     </film-info>
 
-    <krossover-thumbnail width="400" data-film="film" data-is-game="isGame"></krossover-thumbnail>
+    <krossover-thumbnail width="400" film="film" is-game="isGame"></krossover-thumbnail>
 
     <div class="film-info-footer">
 
         <div class="user-info">
-            <span data-ng-show="!isShared">Uploaded</span>
-            <span data-ng-show="isShared">Shared</span>
+            <span ng-show="!isShared && isGame">Uploaded</span>
+            <span ng-show="!isShared && !isGame">Created</span>
+            <span ng-show="isShared">Shared</span>
             by {{uploaderName}}
         </div>
 
-        <a data-ng-attr-id="{{filmShareElemId}}"
-           data-ng-if="!film.isVideoTranscodeFailed() &&
+        <a ng-attr-id="{{filmShareElemId}}"
+           ng-if="!film.isVideoTranscodeFailed() &&
                        (isUploader || isCoachOnUploaderTeam)"
-           data-ng-click="ShareFilmModal.open(film)"
+           ng-click="ShareFilmModal.open(film)"
            class="share-game">
             <i class="icon icon-share"></i>Share
         </a>
 
-        <a data-ng-if="false"
-           data-ng-href="#"
+        <a ng-if="false"
+           ng-href="#"
            class="embed-game">
             <i class="icon icon-link"></i>Embed
         </a>
