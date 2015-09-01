@@ -54,14 +54,13 @@ function IndexerGamesController(
         game.timeRemaining = game.getRemainingTime(team, now);
     });
 
-    /*TODO: Add function to factory to get sports name*/
     $scope.getSportName = function(teamId) {
+
         const team = $scope.teams[teamId];
 
         if(team && team.leagueId){
-            const gameLeagueId = team.leagueId;
-            const gameSportId = $scope.leagues[gameLeagueId].sportId;
-            return $scope.sports[gameSportId].name;
+
+            return team.getSport().name;
         }
     };
 

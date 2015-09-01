@@ -93,6 +93,7 @@ require('./constants/telestrations');
 require('./constants/feature-flags');
 require('./constants/cue-points');
 require('./constants/transcodeProfiles');
+require('./constants/hours');
 
 
 require('./models/users');
