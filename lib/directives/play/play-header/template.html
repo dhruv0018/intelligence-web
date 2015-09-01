@@ -3,6 +3,7 @@
         <check-box
             feature="SelectPlays"
             ng-if="isTeamMember"
+            ng-hide="$root.viewport.name === VIEWPORTS.MOBILE.name"
             checked="play.isSelected"
             ng-click="togglePlaySelection($event, play)">
         </check-box>
