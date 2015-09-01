@@ -84,7 +84,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
-                game.primaryJerseyColor = game.primaryJerseyColor || '#000000';
+                game.primaryJerseyColor = game.primaryJerseyColor || '#FFFFFF';
                 game.opposingPrimaryJerseyColor = game.opposingPrimaryJerseyColor || '#000000';
 
                 //TODO remove when the back end makes notes always a object
