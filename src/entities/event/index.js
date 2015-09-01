@@ -250,8 +250,8 @@ class KrossoverEvent extends Entity {
     toJSON () {
 
         if (!this.isValid) {
-
-            throw new Error('Cannot convert event to JSON without valid field data!');
+            //FIXME we really should be throwing an error here
+            console.error('Cannot convert event to JSON without valid field data!');
         }
 
         let copy = {
