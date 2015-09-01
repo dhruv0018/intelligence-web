@@ -19,7 +19,8 @@
                 showPlayBody ||
                 (isReelsPlay && !editFlag && expandAll)"
             ng-class="{'playHide': (!expandAll && (play != playManager.current || isReelsPlay && editFlag )) && !showPlayBody,
-                       'no-checkbox': !isTeamMember}"
+                       'no-checkbox': !isTeamMember,
+                       'no-play-button': isIndexer || $root.viewport.name === VIEWPORTS.MOBILE.name}"
         >
 
             <krossover-event
