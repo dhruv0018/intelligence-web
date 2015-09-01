@@ -37,8 +37,12 @@ function IndexerGamesController(
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
     $scope.userId = session.getCurrentUserId();
-    $scope.teams = teams.getCollection({ relatedUserId: $scope.userId });
-    $scope.users = users.getCollection({ relatedUserId: $scope.userId });
+
+    let relatedUserfilter = { relatedUserId: $scope.userId };
+    let assignedUserfilter = { assignedUserId: $scope.userId };
+
+    $scope.teams = teams.getCollection(relatedUserfilter);
+    $scope.users = users.getCollection(relatedUserfilter);
     $scope.footballFAQ = config.links.indexerFAQ.football.uri;
     $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
     $scope.options = {scope: $scope};
@@ -56,7 +60,7 @@ function IndexerGamesController(
             break;
     }
 
-    $scope.games = games.getList({ assignedUserId: $scope.userId });
+    $scope.games = games.getList(assignedUserfilter);
     $scope.currentUser = session.getCurrentUser();
 
     /*Checks if the indexer has qa privileges*/

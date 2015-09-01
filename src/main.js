@@ -94,6 +94,7 @@ require('./constants/feature-flags');
 require('./constants/cue-points');
 require('./constants/transcodeProfiles');
 require('./constants/hours');
+require('./constants/indexer-states');
 
 
 require('./models/users');

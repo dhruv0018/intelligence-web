@@ -5,13 +5,11 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-const HOURS = {
+const INDEXER_STATES = {
 
-    QA_PICKUP: {
-
-        DEADLINE_PASSED: 6
-    },
+    INDEXER_GAMES_ASSIGNED: 'IndexerGamesAssigned',
+    INDEXER_GAMES: 'IndexerGames'
 
 };
 
-IntelligenceWebClient.constant('HOURS', HOURS);
+IntelligenceWebClient.constant('INDEXER_STATES', INDEXER_STATES);
