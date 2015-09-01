@@ -1,6 +1,6 @@
 {
   "name": "intelligence-web-client",
-  "version": "2.13.0",
+  "version": "2.13.3",
   "description": "Krossover Intelligence Web Client",
   "author": "Jason Morganson <jason@krossover.com>",
   "private": true,

@@ -54,21 +54,30 @@
         }
     }
 
+    .go-back {
+
+        .pull-left;
+        font-size: @font-size-base;
+        line-height: 62px;
+
+        /* FIXME: Once mobile login for v2 is enabled, we have to remove the
+         * mobile style below to enable the back button. */
+        .mobile({
+
+            display: none;
+        });
+    }
+
     .button-reset {
 
+        .btn;
+        .btn-lg;
         height: 62px;
-
-        & {
-
-            .btn;
-            .btn-lg;
-        }
 
         &:enabled {
 
             .btn-primary;
         }
-
     }
 }
 
