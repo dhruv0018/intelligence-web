@@ -67,6 +67,13 @@ class KrossoverEvent extends Entity {
             }
 
             let rawField           = Object.assign({}, tagVariable);
+
+            if (event) {
+
+                rawField.eventId = event.id;
+                rawField.playId = event.playId;
+            }
+
             rawField.gameId        = gameId;
             rawField.index         = index + 1;
             rawField.value         = variableValue.value;
@@ -243,8 +250,8 @@ class KrossoverEvent extends Entity {
     toJSON () {
 
         if (!this.isValid) {
-
-            throw new Error('Cannot convert event to JSON without valid field data!');
+            //FIXME we really should be throwing an error here
+            console.error('Cannot convert event to JSON without valid field data!');
         }
 
         let copy = {
