@@ -129,12 +129,11 @@ function toString(field) {
     let value = field.value;
     let jerseyColor = value.jerseyColor;
     let name = value.name;
-    let strokeWidth = value.jerseyColor === '#ffffff' ? 1 : 0;
     return `
     <span class="value">
 
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16px" height="16px" viewbox="0 0 16 16">
-            <rect fill="${jerseyColor}" stroke="black" stroke-width="${strokeWidth}" x="0" y="0" width="16px" height="16px" />
+            <rect fill="${jerseyColor}" stroke="black" stroke-width="1" x="0" y="0" width="16px" height="16px" />
         </svg>
 
         <span class="player-name">${name}</span>
