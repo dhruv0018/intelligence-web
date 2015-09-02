@@ -69,7 +69,7 @@ function onTimeUpdate (timeUpdateEvent) {
             }
 
             /* If event time is before the video time. */
-            if (eventTime <= videoTime) {
+            if (eventTime.toFixed(6) <= videoTime.toFixed(6)) {
 
                 /* Push the event to the mediator. */
                 currentEventMediator.push(event);
