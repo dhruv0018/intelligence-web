@@ -7,11 +7,18 @@
 		<select data-ng-model="selectedNoteText">
 			<option data-ng-repeat="noteText in noteValues" value="{{noteText}}">{{noteText}}</option>
 		</select>
-	    <textarea data-ng-focus="clearKeyListeners()" data-ng-blur="unclearKeyListeners()" data-ng-show="selectedNoteText === noteValues[noteValues.length-1]" data-ng-model="otherNoteValue"></textarea>
-	    <button class="save-note" data-ng-disabled="game.isSaving" data-ng-click="saveIndexingNote()">{{(savingNotes) ? 'Saving...' : 'Save Note'}}</button>
+	    <textarea data-ng-focus="clearKeyListeners()"
+				  data-ng-blur="unclearKeyListeners()"
+				  placeholder="Please fill in your note."
+				  data-ng-show="selectedNoteText === noteValues[noteValues.length-1]"
+				  data-ng-model="otherNoteValue"></textarea>
+	    <button ng-hide="selectedNoteText === 'Other' && otherNoteValue.length === 0"
+				class="save-note"
+				data-ng-disabled="game.isSaving"
+				data-ng-click="saveIndexingNote()">
+			{{(savingNotes) ? 'Saving...' : 'Save Note'}}
+		</button>
     </div>
-
     <krossover-notes-list data-game="game"></krossover-notes-list>
 
 </div>
-
