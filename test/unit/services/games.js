@@ -1167,4 +1167,80 @@ describe('GamesFactory', function() {
             game.sharedWithUsers = backupSharedWithLookupTable;
         });
     });
+
+    describe('getName', function() {
+
+        let GamesFactory;
+
+        beforeEach(angular.mock.module($provide => {
+
+            $provide.service('TeamsFactory', function () {
+
+                this.get = function(id) {
+
+                    if (id === 1) {
+
+                        const team = {
+                            id: 1,
+                            roles: [
+                                {
+                                    id: 1,
+                                    userId: 1,
+                                    type: 3,
+                                    teamId: 1,
+                                    tenureEnd: null
+                                }
+                            ],
+                            getHeadCoachRole: () => { return {userId: 1}; }
+                        };
+
+                        return team;
+                    }
+                };
+            });
+        }));
+
+        beforeEach(angular.mock.module($provide => {
+
+            $provide.service('UsersFactory', function () {
+
+                this.get = function(id) {
+
+                    if (id === 1) {
+
+                        const user = {
+                            id: 1,
+                            firstName: "Test",
+                            lastName: "Person",
+                            name: "Test Person"
+                        };
+
+                        return user;
+                    }
+                };
+
+                this.create = function() {
+                    return true;
+                };
+            });
+        }));
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(_GamesFactory_) {
+
+                GamesFactory = _GamesFactory_;
+
+            }
+        ]));
+
+        it('should return the name of the head coach', ()=> {
+
+                GamesFactory.uploaderTeamId = 1;
+
+                expect(GamesFactory.getHeadCoachName()).to.be.a('string');
+                expect(GamesFactory.getHeadCoachName()).to.equal('Test Person');
+            });
+    });
+
 });
