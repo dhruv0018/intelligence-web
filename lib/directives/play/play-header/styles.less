@@ -4,12 +4,13 @@
     .playHeadingContainer {
 
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         cursor: pointer;
 
         check-box {
             margin-right: 10px;
-            font-size: 25px;
+            font-size: 20px;
+            height: 20px;
         }
 
         .playHeading {
@@ -41,7 +42,6 @@
 
                     position: relative;
                     top: 3px;
-                    max-width: 12ex;
                     .text-overflow();
                 }
 
@@ -105,7 +105,7 @@
 
         .watch-play,
         .play-chevron {
-            font-size: 36px;
+            font-size: 30px;
             width: 36px;
             color: @gray-light;
             cursor: pointer;
@@ -124,6 +124,11 @@
             &.invisible {
                 visibility: hidden;
             }
+        }
+
+        .watch-play {
+            z-index: 1;
+            height: 28px;
         }
     }
 }

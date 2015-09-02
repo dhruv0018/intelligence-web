@@ -1,6 +1,23 @@
 <div>
     <div class="playHeadingContainer" ng-click="openPlay(play)">
-        <check-box feature="SelectPlays" ng-if="isTeamMember" checked="play.isSelected" ng-click="togglePlaySelection($event, play)"></check-box>
+        <check-box
+            feature="SelectPlays"
+            ng-if="isTeamMember"
+            ng-hide="$root.viewport.name === VIEWPORTS.MOBILE.name"
+            checked="play.isSelected"
+            ng-click="togglePlaySelection($event, play)">
+        </check-box>
+
+        <span
+            class="watch-play"
+            ng-hide="isIndexer"
+            id="play-play-cta"
+            ng-click="watchPlay(play)"
+            ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
+            >
+            <i class="icon icon-play-circle"></i>
+        </span>
+
         <div class="playHeading">
 
             <h4 ng-if="isIndexer">
@@ -65,17 +82,6 @@
                                                     isReelsPlay ||
                                                     !play.customTagIds.length ||
                                                     !isTeamMember"></i>
-
-            <span
-                class="watch-play"
-                ng-hide="isIndexer"
-                id="play-play-cta"
-                ng-click="watchPlay(play)"
-                ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
-                >
-                <i class="icon icon-play-circle"></i>
-
-            </span>
 
             <span
                 class="play-chevron"
