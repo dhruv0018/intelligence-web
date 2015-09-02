@@ -35,6 +35,8 @@ class UIEventEmitter extends EventEmitter {
 
         /* FIXME: If a user holds the key down, multiple events will fire. */
         window.onkeydown = event => this.onKeyDown(event);
+
+        this.setMaxListeners(0);
     }
 
     /**
