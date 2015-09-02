@@ -12,7 +12,6 @@ var Indexing = angular.module('Indexing', [
     'ui.router',
     'ui.bootstrap',
     'ui.showhide',
-    'Item',
     'Event',
     'Events',
     'Play',
