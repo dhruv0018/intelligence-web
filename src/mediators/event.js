@@ -38,7 +38,7 @@ IntelligenceWebClient.factory('CurrentEventMediator', [
         function compareTimes (a, b) {
 
             /* Sort in descending order. */
-            return b.time - a.time;
+            return b.time.toFixed(6) - a.time.toFixed(6);
         }
 
         return mediator;
