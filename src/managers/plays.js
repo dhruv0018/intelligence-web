@@ -141,7 +141,7 @@ IntelligenceWebClient.service('PlaysManager', [
         function calculatePlay (play, index) {
 
             /* Record the order of the play in the playlist. */
-            play.number = index;
+            play.number = index + 1;
 
             /* Sort the events by time. */
             play.events.sort(utilities.compareTimes);
