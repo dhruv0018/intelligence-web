@@ -39,10 +39,9 @@ function IndexerGamesController(
     $scope.userId = session.getCurrentUserId();
 
     let relatedUserfilter = { relatedUserId: $scope.userId };
-    let assignedUserfilter = { assignedUserId: $scope.userId };
 
-    $scope.teams = teams.getCollection(relatedUserfilter);
-    $scope.users = users.getCollection(relatedUserfilter);
+    $scope.teams = teams.getMap(relatedUserfilter);
+    $scope.users = users.getMap(relatedUserfilter);
     $scope.footballFAQ = config.links.indexerFAQ.football.uri;
     $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
     $scope.options = {scope: $scope};
@@ -60,7 +59,7 @@ function IndexerGamesController(
             break;
     }
 
-    $scope.games = games.getList(assignedUserfilter);
+    $scope.games = games.getList({ assignedUserId: $scope.userId });
     $scope.currentUser = session.getCurrentUser();
 
     /*Checks if the indexer has qa privileges*/
