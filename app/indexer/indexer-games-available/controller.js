@@ -56,12 +56,8 @@ function IndexerGamesController(
 
     $scope.getSportName = function(teamId) {
 
-        const team = $scope.teams[teamId];
-
-        if(team && team.leagueId){
-
-            return team.getSport().name;
-        }
+        const team = teams.get(teamId);
+        return team.getSport().name;
     };
 
     $scope.getLatestAssignmentDate = function(game) {
@@ -81,8 +77,7 @@ function IndexerGamesController(
 
         modal.result.then( () => {
             /*Load any new games from the serve since list is outdated*/
-            games.load(VIEWS.QUEUE.GAME);
-            $scope.games = games.getList(VIEWS.QUEUE.GAME);
+            games.load(VIEWS.QUEUE.GAME).then(() => $scope.games = games.getList(VIEWS.QUEUE.GAME));
         });
     };
 
