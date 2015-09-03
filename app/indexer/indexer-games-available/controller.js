@@ -41,8 +41,8 @@ function IndexerGamesController(
 
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
-    $scope.teams = teams.getCollection(VIEWS.QUEUE.TEAMS);
-    $scope.users = users.getCollection(VIEWS.QUEUE.USERS);
+    $scope.teams = teams.getCollection();
+    $scope.users = users.getCollection();
     $scope.games = games.getList(VIEWS.QUEUE.GAME);
     $scope.currentUser = session.getCurrentUser();
     $scope.options = {scope: $scope};
@@ -75,9 +75,9 @@ function IndexerGamesController(
             }
         });
 
-        modal.result.then( () => {
-            /*Load any new games from the serve since list is outdated*/
-            games.load(VIEWS.QUEUE.GAME).then(() => $scope.games = games.getList(VIEWS.QUEUE.GAME));
+        modal.result.then( (newGames) => {
+            /*Load new games from the server since list is outdated*/
+            $scope.games = newGames;
         });
     };
 

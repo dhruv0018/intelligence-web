@@ -1,5 +1,6 @@
 @import (reference) "main.less";
 
+/*FIXME: These should be put into the theme*/
 @indexer-font-size: 14px;
 @indexer-padding: 6px;
 
@@ -24,21 +25,6 @@
                 padding-left: 20px;
                 padding-top: 10px;
                 line-height: 70px;
-
-                i {
-                    font-size: 20px;
-
-                    /*FIXME: Very specific set of styles applied to generic selector.
-                             Add a better qualifier*/
-                    &::before {
-
-                        width: 50px;
-                        line-height: 45px;
-                        text-align: center;
-                        border: 3px solid @gray-darker;
-                        border-radius: 50%;
-                    }
-                }
             }
 
             .middle-container {
@@ -62,6 +48,7 @@
                 }
             }
 
+            /*FIXME: Either add to themes or make specific to this feature*/
             div {
                 display: table-cell;
                 vertical-align: middle;
@@ -119,7 +106,7 @@
         }
 
         // Base class for buttons used within the queue table
-        .index-button {
+        .list-button {
 
             padding: 4px 11px;
             line-height: 1;
@@ -143,4 +130,21 @@
 
     }
 
+    .left-container {
+
+            i {
+                font-size: 20px;
+
+                /*FIXME: Very specific set of styles applied to generic selector.
+                         Add a better qualifier*/
+                &::before {
+
+                    width: 50px;
+                    line-height: 45px;
+                    text-align: center;
+                    border: 3px solid @gray-darker;
+                    border-radius: 50%;
+                }
+            }
+    }
 }
