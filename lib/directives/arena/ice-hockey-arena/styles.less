@@ -1,6 +1,6 @@
 @import (reference) "main.less";
 
-@background-color: #E6F9FF;
+@ice-hockey-background-color: #E6F9FF;
 
 .ice-hockey-arena {
 
@@ -9,8 +9,8 @@
 
     .indexable-region {
 
-        fill: @background-color;
-        stroke: @background-color;
+        fill: @ice-hockey-background-color;
+        stroke: @ice-hockey-background-color;
     }
 }
 
@@ -22,7 +22,7 @@
             &:hover,
             &:active,
             &:focus {
-                fill: darken(@background-color, 10%);
+                fill: darken(@ice-hockey-background-color, 10%);
                 transition: fill 0.3s;
             }
         }
