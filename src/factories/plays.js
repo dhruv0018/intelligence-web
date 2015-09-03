@@ -56,7 +56,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
                     return new KrossoverEvent(event, tag, safeEventTime);
                 }
 
-                play.clip = play.clip ? new Video(play.clip) : {};
+                play.clip = play.clip ? new Video(play.clip) : null;
 
                 return play;
             },
