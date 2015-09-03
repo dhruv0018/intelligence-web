@@ -4,7 +4,7 @@ export default `
 
         <h2>Custom Krossover Components</h2>
 
-        <div class="arenas">
+        <div id="arenas">
 
             <h3>Arenas</h3>
 
