@@ -28,6 +28,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
         //team related
         $scope.team = teams.get(teamId);
         $scope.roster = $scope.team.roster;
+        $scope.teamPlayers = $filter('toArray')($scope.roster.playerInfo);
 
         //player related
         var playersFilter = { rosterId: $scope.team.roster.id };
@@ -59,5 +60,9 @@ FilmHome.controller('Coach.FilmHome.controller', [
 
         //ui
         $scope.filteredFilmsList = $scope.filmsList;
+
+        $scope.sortPlayers = function(playerInfo) {
+            return Number(playerInfo.jerseyNumber);
+        };
     }
 ]);
