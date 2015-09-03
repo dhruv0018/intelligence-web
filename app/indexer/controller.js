@@ -37,11 +37,8 @@ function IndexerGamesController(
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
     $scope.userId = session.getCurrentUserId();
-
-    let relatedUserfilter = { relatedUserId: $scope.userId };
-
-    $scope.teams = teams.getMap(relatedUserfilter);
-    $scope.users = users.getMap(relatedUserfilter);
+    $scope.teams = teams.getMap();
+    $scope.users = users.getMap();
     $scope.footballFAQ = config.links.indexerFAQ.football.uri;
     $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
     $scope.options = {scope: $scope};

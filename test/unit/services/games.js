@@ -1219,6 +1219,7 @@ describe('GamesFactory', function() {
                     }
                 };
 
+                //This method was needed to emulate the creation of a new resource
                 this.create = function() {
                     return true;
                 };
