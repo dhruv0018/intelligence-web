@@ -4,24 +4,18 @@
 
     <!-- Football -->
     <krossover-arena-football-field
-        ng-if="type === 'FOOTBALL'"
+        ng-if="type.indexOf('FOOTBALL') >= 0"
         chart="chart"
         redzone="redzone"
         plays="plays"
     ></krossover-arena-football-field>
 
-    <!-- NOTE:
-    indexOf used to catch BASKETBALL_HS, BASEKETBALL_NCAA, etc
-    -->
     <!-- Basketball -->
     <basketball-arena
         ng-if="type.indexOf('BASKETBALL') >= 0"
         ng-model="region"
     ></basketball-arena>
 
-    <!-- NOTE:
-    indexOf used to catch LACROSSE_MENS_OUTDOOR, LACROSSE_WOMENS_OUTDOOR
-    -->
     <!-- Lacrosse -->
     <lacrosse-arena
         ng-if="type.indexOf('LACROSSE') >= 0"
@@ -30,12 +24,12 @@
 
     <!-- Volleyball -->
     <volleyball-arena
-        ng-if="type === 'VOLLEYBALL'"
+        ng-if="type.indexOf('VOLLEYBALL') >= 0"
         ng-model="region"
     ></volleyball-arena>
 
     <ice-hockey-arena
-        ng-if="type === 'ICE_HOCKEY'"
+        ng-if="type.indexOf('ICE_HOCKEY') >= 0"
         ng-model="region"
     ></ice-hockey-arena>
 
