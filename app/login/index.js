@@ -1,5 +1,6 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const moment  = require('moment');
 
 /**
  * Login module for managing user logins.
@@ -23,6 +24,7 @@ Login.run([
         $templateCache.put('forgot.html', require('./forgot.html'));
         $templateCache.put('reset.html', require('./reset.html'));
         $templateCache.put('new-user.html', require('./new-user.html'));
+        $templateCache.put('new-user-error.html', require('./new-user-error.html'));
     }
 ]);
 
@@ -138,8 +140,8 @@ Login.config([
                 ]
             })
 
-            .state('new', {
-                url: '^/new-user/:token',
+            .state('new-user', {
+                url: '^/new-user/:token?email&expires',
                 parent: 'login',
                 views: {
                     'header@login': {
@@ -154,16 +156,119 @@ Login.config([
 
                     isNewUser: true
                 },
+                onEnter: [
+                    '$state',
+                    '$stateParams',
+                    'UsersFactory',
+                    'EMAIL_REQUEST_TYPES',
 
-                onEnter: ['$state', '$stateParams',
-                    function newOnEnter ($state, $stateParams) {
+                    function newUserOnEnter (
+                        $state,
+                        $stateParams,
+                        users,
+                        EMAIL_REQUEST_TYPES
+                    ) {
 
-                        if (!$stateParams.token) {
+                        let token   = $stateParams.token;
+                        let email   = $stateParams.email;
+                        let expires = moment.unix($stateParams.expires);
+                        let now     = moment();
 
-                            throw new Error('No new user token!');
+                        if (!token) {
+
+                            onNewUserError('Missing token in new user activation URL!');
+                        } else if (!email) {
+
+                            onNewUserError('Missing email address in new user activation URL!');
+                        } else if (!expires.isValid()) {
+
+                            onNewUserError('Missing or invalid expires date in new user activation URL!');
+                        } else if (expires.isBefore(now)) {
+
+                            onNewUserError('New user activation token has expired');
+                        }
+
+                        /**
+                         * Handles any errors arising from the new user URL
+                         *
+                         * @function onNewUserError
+                         * @param {string} errorMsg - The message to be used in
+                         * the throw.
+                         */
+                        function onNewUserError (errorMsg) {
+
+                            /* If an email was present on the original new user url,
+                             * request the server to send a new new user email. */
+                            if (email) {
+
+                                $state.go('new-user-resend-email', {email}, {location: false});
+                            } else {
+
+                                $state.go('new-user-error');
+                            }
+
+                            throw new Error(errorMsg);
                         }
                     }
                 ]
+            })
+
+            .state('new-user-resend-email', {
+                url: '/new-user-resend-email/:email',
+                onEnter: [
+                    '$state',
+                    '$stateParams',
+                    'UsersFactory',
+                    'EMAIL_REQUEST_TYPES',
+
+                    function newUserOnErrorEnter (
+                        $state,
+                        $stateParams,
+                        users,
+                        EMAIL_REQUEST_TYPES
+                    ) {
+
+                        let email = $stateParams.email;
+
+                        /* Request server to resend the new user activation email */
+                        users.resendEmail(EMAIL_REQUEST_TYPES.NEW_USER, null, email)
+                        .then(function emailRequestSuccess () {
+
+                            /* Request for new user activation email successful. */
+                            $state.go('new-user-error', {email, resent: true});
+                        }, function emailRequestError (error) {
+
+                            /* User has already activated their account. */
+                            if (error.status === 400) {
+
+                                $state.go('new-user-error', {email, activated: true});
+
+                            /* All other errors; show generic error message. */
+                            } else {
+
+                                $state.go('new-user-error', {email, resent: false});
+                            }
+                        });
+                    }
+                ]
+            })
+
+            .state('new-user-error', {
+                url: '^/new-user-error/:email?activated&resent',
+                parent: 'login',
+                views: {
+                    'header@login': {
+                        templateUrl: 'signup.html'
+                    },
+                    'main@login': {
+                        templateUrl: 'new-user-error.html',
+                        controller: 'LoginController'
+                    }
+                },
+                data: {
+
+                    isNewUser: true
+                }
             });
     }
 ]);
@@ -236,7 +341,10 @@ function LoginController(
         $scope.newUser = {
             password     : undefined,
             showPassword : true, // By default, show the new user's password
-            agree        : false
+            agree        : false,
+            email        : $stateParams.email,
+            activated    : $stateParams.activated === 'true' ? true : false,
+            resent       : $stateParams.resent === 'true' ? true : false
         };
     }
 
@@ -455,7 +563,7 @@ function LoginController(
 
                     alerts.add({
                         type: 'danger',
-                        message: 'There was a problem resetting your password'
+                        message: 'Sorry, the link is no longer valid. Click <a href="/intelligence/forgot-password">here</a> to reset your password again.'
                     });
 
                     throw new Error('Could not reset password');
@@ -475,6 +583,7 @@ function LoginController(
         if ($stateParams.token) {
 
             let token    = $stateParams.token;
+            let email    = $stateParams.email;
             let password = $scope.newUser.password;
 
             users.passwordReset(token, password).then(
@@ -490,14 +599,7 @@ function LoginController(
 
                 function error(data, status) {
 
-                    $scope.newUser.submitted = false;
-
-                    alerts.add({
-                        type: 'danger',
-                        message: 'There was a problem setting your new password'
-                    });
-
-                    throw new Error('Could not set new password');
+                    $state.go('new-user-resend-email', {email}, {location: false});
                 }
             );
         }
