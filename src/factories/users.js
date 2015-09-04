@@ -321,6 +321,32 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return undefined;
             },
+
+            /**
+             * @class User
+             * @method
+             * @param {Integer} teamId - the teamId get role
+             * @returns {Object} the role object for the user. If no
+             * role is defined, it will return `undefined`.
+             * Gets the users role for a team.
+             */
+            getRoleByTeamId: function(teamId) {
+
+                const roles = this.roles;
+
+                if (!roles) return undefined;
+
+                for (var i = 0; i < roles.length; i++) {
+
+                    if (roles[i].teamId === teamId) {
+
+                        return roles[i];
+                    }
+                }
+
+                return undefined;
+            },
+
             /**
             * @class User
             * @method
@@ -699,6 +725,10 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return model.typeahead(filter).$promise.then(function(users) {
                     return users.map(function(user) {
+                        let teams    = $injector.get('TeamsFactory');
+                        let schools  = $injector.get('SchoolsFactory');
+                        user.team    = teams.extend(user.team);
+                        user.school  = schools.extend(user.school);
                         return self.extend(user);
                     });
                 });

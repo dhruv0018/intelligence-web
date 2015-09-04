@@ -29,11 +29,8 @@ IntelligenceWebClient.factory('UsersResource', [
                             var aggregateResources = JSON.parse(data);
                             return aggregateResources.map(function(resource) {
                                 var key = 'user';
-                                resource[key].teamName = resource.team.name;
-                                resource[key].teamId = resource.team.id;
-                                resource[key].leagueId = resource.team.leagueId;
-                                resource[key].schoolName = resource.school.name;
-                                resource[key].schoolId = resource.school.id;
+                                resource[key].school = resource.school;
+                                resource[key].team   = resource.team;
                                 return resource[key];
                             });
                         }

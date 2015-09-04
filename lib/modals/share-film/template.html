@@ -77,11 +77,11 @@
         	</div>
         	<span ng-show="film.isSharedWithUser(user) && (isGame || !team.isMember(user.id) || !user.is(ROLES.ATHLETE))" class="share-error-message"><i class="icon icon-warning"></i> That user is already being shared with.</span>
             <span ng-show="!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE)" class="share-error-message"><i class="icon icon-warning"></i> Add players on your team from the <a ng-click="withOtherUsers = false; withTeam = true">team sharing page</a>.</span>
-        	<span ng-show="user.id === currentUser.id" class="share-error-message"><i class="icon icon-warning"></i> You cannot share with yourself.</span>
+        	<span ng-show="(user.id === currentUser.id && user.team.id === team.id)" class="share-error-message"><i class="icon icon-warning"></i> You cannot share with yourself.</span>
         	<h3>Sharing with:</h3>
         	<form>
         		<role-typeahead id="share-film-others-name-field" ng-model="user" filter="filter"></role-typeahead>
-        		<button type="submit" class="btn btn-primary" ng-disabled="!user.id || film.isSharedWithUser(user) || user.id === currentUser.id || (!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE))" ng-click="shareSubmit(user); user = null">Add</button>
+        		<button type="submit" class="btn btn-primary" ng-disabled="!user.id || film.isSharedWithUser(user) || (user.id === currentUser.id && user.team.id === team.id) || (!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE))" ng-click="shareSubmit(user); user = null">Add</button>
         	</form>
         	<div class="how-to-search">
                 <p>Start typing the name of the user you want to share with.</p>
@@ -89,17 +89,18 @@
                     Please note that if you share a breakdown with the public, the breakdown will automatically be available for all users you select below.
                 </p>
             </div>
-        	<div ng-show="film.getUserShares().length" class="shared-with-table">
+        	<div ng-show="film.shares.length" class="shared-with-table">
         		<div class="shared-with-header">Name</div>
-        		<div class="shared-with" ng-repeat="share in film.getUserShares()" ng-hide="!isGame && team.isMember(share.sharedWithUserId) && users.get(share.sharedWithUserId).is(ROLES.ATHLETE)">
-        			<strong ng-class="{'user-for-game': isGame}">{{usersMap[share.sharedWithUserId].firstName}} {{usersMap[share.sharedWithUserId].lastName}}</strong>
+        		<div class="shared-with" ng-repeat="share in film.shares" ng-hide="!isGame && team.isMember(share.sharedWithUserId) && users.get(share.sharedWithUserId).is(ROLES.ATHLETE)">
+        			<strong ng-if="share.sharedWithUserId" ng-class="{'user-for-game': isGame}">{{usersMap[share.sharedWithUserId].firstName}} {{usersMap[share.sharedWithUserId].lastName}} </strong>
+        			<strong ng-if="share.sharedWithTeamId" ng-class="{'user-for-game': isGame}">Coaching staff, {{teamsMap[share.sharedWithTeamId].name}}</strong>
                     <span class="pull-right">
                         <select id="share-film-others-options-cta" ng-model="share.isBreakdownShared" ng-change="film.save()" ng-show="isGame">
                             <option id="share-film-others-raw-film-only-cta" value="false">Sharing raw film only</option>
                             <option id="share-film-others-raw-film-and-breakdown-cta" value="true">Sharing raw film and breakdown</option>
                         </select>
                         <span ng-show="!isGame">Sharing reel</span>
-                    	<i class="icon icon-remove" ng-click="shareRevoke(usersMap[share.sharedWithUserId])"></i>
+                    	<i class="icon icon-remove" ng-click="shareRevoke(share)"></i>
                     </span>
         		</div>
         	</div>
