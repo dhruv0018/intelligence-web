@@ -229,10 +229,15 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             getHeadCoachName: function() {
 
+                if (!this.uploaderTeamId) throw new Error('No uploader team id');
                 let uploaderTeamId = this.uploaderTeamId;
+
                 let team = teams.get(uploaderTeamId);
+                if (!team) throw new Error('Team does not exist');
+
                 let headCoachRole = team.getHeadCoachRole();
                 let user = users.get(headCoachRole.userId);
+                if (!user) throw new Error('User does not exist');
 
                 return user.name;
             },

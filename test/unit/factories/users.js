@@ -23,7 +23,7 @@ describe('UsersFactory', function() {
 
             $provide.service('SessionService', function () {
 
-                this.getCurrentRole = () => { return {indexerQuality: true}; }
+                this.getCurrentRole = () => { return {indexerQuality: 1}; }
             });
         }));
 
@@ -38,7 +38,7 @@ describe('UsersFactory', function() {
 
         it('should return if an indexer can pick up a game', ()=> {
 
-                expect(UsersFactory.canPickupGames()).to.equal(true);
+                expect(UsersFactory.canPickupGames()).to.equal(1);
             });
     });
 
