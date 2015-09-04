@@ -8,8 +8,7 @@
     "ArenaChart": {
 
         "Head Coach": true,
-        "Assistant Coach": true,
-        "Athlete": true
+        "Assistant Coach": true
     },
 
     "PlayerAnalytics": {
