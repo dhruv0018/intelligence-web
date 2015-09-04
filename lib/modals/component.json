@@ -20,7 +20,8 @@
         "qa-pickup",
         "manage-profile-reels",
         "add-profile-team",
-        "profile-onboarding"
+        "profile-onboarding",
+        "basic-edit-profile"
     ],
     "scripts": [
         "index.js"

@@ -94,6 +94,7 @@ HeaderController.$inject = [
     'LeaguesFactory',
     'TeamsFactory',
     'SPORTS',
+    'SPORT_IDS',
     'SUBSCRIPTIONS'
 ];
 
@@ -116,6 +117,7 @@ function HeaderController(
     leagues,
     teams,
     SPORTS,
+    SPORT_IDS,
     SUBSCRIPTIONS
 ) {
     $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
@@ -141,6 +143,7 @@ function HeaderController(
             let team = teams.get(currentUser.currentRole.teamId);
             $scope.league = leagues.get(team.leagueId);
             $scope.SPORTS = SPORTS;
+            $scope.SPORT_IDS = SPORT_IDS;
         }
     }
 

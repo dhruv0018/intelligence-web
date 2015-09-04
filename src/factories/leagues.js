@@ -17,7 +17,12 @@ IntelligenceWebClient.factory('LeaguesFactory', [
 
             model: 'LeaguesResource',
 
-            storage: 'LeaguesStorage'
+            storage: 'LeaguesStorage',
+
+            getLeaguesBySportId: function(sportId) {
+                let allLeagues = this.getList();
+                return allLeagues.filter(league => league.sportId === sportId);
+            }
         };
 
         angular.augment(LeaguesFactory, BaseFactory);
