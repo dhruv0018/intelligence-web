@@ -1,6 +1,23 @@
 <div>
     <div class="playHeadingContainer" ng-click="openPlay(play)">
-        <check-box feature="SelectPlays" ng-if="isTeamMember" checked="play.isSelected" ng-click="togglePlaySelection($event, play)"></check-box>
+        <check-box
+            feature="SelectPlays"
+            ng-if="isTeamMember"
+            ng-hide="$root.viewport.name === VIEWPORTS.MOBILE.name"
+            checked="play.isSelected"
+            ng-click="togglePlaySelection($event, play)">
+        </check-box>
+
+        <span
+            class="watch-play"
+            ng-hide="isIndexer"
+            id="play-play-cta"
+            ng-click="watchPlay(play)"
+            ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
+            >
+            <i class="icon icon-play-circle"></i>
+        </span>
+
         <div class="playHeading">
 
             <h4 ng-if="isIndexer">
@@ -23,7 +40,10 @@
 
             <h4 class="column" ng-if="!isIndexer && !isReelsPlay">
 
-                <span class="team">{{teams[play.possessionTeamId].name}}</span>
+                <span class="playNumberAndTeam">
+                    <span ng-show="play.number">{{play.number}}.&nbsp;</span>
+                    {{teams[play.possessionTeamId].name}}
+                </span>
 
                 <div class="summariesContainer">
 
@@ -34,7 +54,7 @@
             </h4>
             <div ng-if="!isIndexer && isReelsPlay">
                 <h4 class="title">
-                    <span ng-show="editFlag">{{play.index + 1}}.&nbsp;</span>
+                    <span ng-show="play.index >= 0">{{play.index + 1}}.&nbsp;</span>
                     <krossover-play-summaries events="play.events"></krossover-play-summaries>
                     <span class="datePlayed">&nbsp;-&nbsp;&nbsp;{{game.datePlayed | date:'MMM. d, yyyy'}}</span>
                 </h4>
@@ -65,17 +85,6 @@
                                                     isReelsPlay ||
                                                     !play.customTagIds.length ||
                                                     !isTeamMember"></i>
-
-            <span
-                class="watch-play"
-                ng-hide="isIndexer"
-                id="play-play-cta"
-                ng-click="watchPlay(play)"
-                ng-class="{playing: play === playManager.current && videoPlayer.currentState === VG_STATES.PLAY, invisible: editFlag }"
-                >
-                <i class="icon icon-play-circle"></i>
-
-            </span>
 
             <span
                 class="play-chevron"
