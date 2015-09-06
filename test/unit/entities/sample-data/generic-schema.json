@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Generic Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "complex": {
+            "patternProperties": {
+                "[0-9]": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": ["null", "string"],
+                            "options": ["null", "Foo", "Bar"]
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "value": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "additionalProperties": false
+}

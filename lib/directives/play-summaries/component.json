@@ -1,8 +1,5 @@
 {
     "name": "play-summaries",
-    "templates": [
-        "template.html"
-    ],
     "styles": [
         "styles.less"
     ],

@@ -217,3 +217,4 @@ var ARENA_REGIONS_BY_ID = {
 };
 
 IntelligenceWebClient.constant('ARENA_REGIONS_BY_ID', ARENA_REGIONS_BY_ID);
+export default ARENA_REGIONS_BY_ID;
