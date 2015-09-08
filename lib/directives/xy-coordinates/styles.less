@@ -11,20 +11,29 @@ xy-coordinates {
     height: 100%;
     width: 100%;
 
-    .coordinate-marker {
+    .xy-coordinates-marker {
         position: absolute;
-        height: 20px;
-        width: 20px;
-        border: 1px solid @brand-blue;
+    }
+
+    @icon-size: 20px;
+
+    .coordinate-marker-icon {
+        pointer-events: none; // ignore all clicks on the icon
+        position: absolute;
+        height: @icon-size;
+        width: @icon-size;
+        top: -@icon-size / 2; // center icon
+        left: -@icon-size / 2; // center icon
+        border: 1px solid white;
         border-radius: 10px;
-        background-color: rgba(11, 66, 91, 0.2);
+        background-color: fade(white, 20%);
 
         &::after {
             content: ".";
             position: relative;
             left: 8px;
-            top: -4px;
-            color: @brand-blue;
+            top: -6px;
+            color: white;
         }
     }
 }

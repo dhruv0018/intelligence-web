@@ -145,11 +145,11 @@ class List {
     }
 
     /**
-     * Removes an entry from the list
+     * Removes all references of an entry from the list
      *
      * @method remove
-     * @param {Object} item         - Item to remove
-     * @returns {Integer|undefined} - Array length
+     * @param {Object} item - Item to remove
+     * @returns {array}     - An array of the removed items or empty array
      */
     remove (item) {
 
@@ -160,11 +160,16 @@ class List {
                 throw new Error('Invoked List.remove without passing an Object to remove');
         }
 
-        if (this.includes(item)) {
+        let removed = [];
+
+        while (this.includes(item)) {
 
             let itemIndex = this.data.indexOf(item);
-            return this.data.splice(itemIndex, 1);
+
+            removed = removed.concat(this.data.splice(itemIndex, 1));
         }
+
+        return removed;
     }
 
     /**

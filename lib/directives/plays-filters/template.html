@@ -23,7 +23,7 @@
         </a>
 
         <ul class="dropdown-menu" ng-if="filterMenu.isOpen">
-            <li>
+            <li class="force-scrollbar">
                 <div>
                     <a class="btn" ng-click="setTeam($event, game.teamId)" ng-class="{'btn-default' : (teamId !== game.teamId), 'btn-primary': (teamId === game.teamId)}">
                         {{teams[game.teamId].name}}
@@ -36,12 +36,12 @@
                 </div>
             </li>
 
-            <li>
+            <li class="force-scrollbar">
                 <div ng-repeat="(key, filterCategory) in filtersetCategories | toArray | orderBy: 'sortOrder'">
                     <a ng-click="setFilterCategory($event, filterCategory.id)" class="btn" ng-class="{'btn-default':(filterCategory.id !== currentFilterCategory), 'btn-primary':(filterCategory.id === currentFilterCategory)}" ng-hide="filterCategory.type === 4 && !isTeamMember">{{filterCategory.name}}</a>
                 </div>
             </li>
-            <li>
+            <li class="force-scrollbar">
                 <input class="search-filter" ng-click="$event.stopPropagation()" ng-model="searchFilter.name" placeholder="Search Filters">
                 <div ng-repeat="filter in matchingFilters = (filtersetCategories[currentFilterCategory].subFilters | filter:searchFilter) track by $index">
                     <a ng-if="!filter.customFilter && filter.parent === null" class="btn" ng-class="{'btn-default':(!contains(activeFilters, filter.id)), 'btn-primary':(contains(activeFilters, filter.id))}" ng-click="setFilter(filter)">
@@ -59,4 +59,3 @@
         </ul>
     </div>
 </div>
-

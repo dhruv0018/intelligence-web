@@ -145,3 +145,4 @@ var ZONE_AREAS = {
 };
 
 IntelligenceWebClient.constant('ZONE_AREAS', ZONE_AREAS);
+export default {ZONES, ZONE_IDS};

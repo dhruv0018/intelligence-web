@@ -1,0 +1,13 @@
+{
+    "name": "admin-queue-games",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js",
+        "controller.js"
+    ],
+    "styles": [
+        "styles.less"
+    ]
+}

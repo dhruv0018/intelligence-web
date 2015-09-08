@@ -19,11 +19,11 @@
                 </span>
             </p>
             <p class="team-sport">
-                {{getSportsForProfileTeam(team).name}}
+                {{getProfileTeamSport(team.teamId).name}}
             </p>
             <ul>
                 <li class="team-position" ng-repeat="positionId in team.positionIds">
-                    {{getPositionsForProfileTeam(team)[positionId].description}}
+                    {{getPositionForProfileTeam(team, positionId).description}}
                 </li>
             </ul>
         </div>

@@ -15,24 +15,38 @@
 
         <div class="form-group">
 
-            <input class="form-field-login" name="password" type="password" placeholder="Password" data-ng-model="$parent.login.password" data-ng-change="form.password.$setValidity('password', true);" data-errors="{ required: 'Required!', password: 'Wrong password, try again.' }" oncopy="return false;" onpaste="return false;" required>
+            <input class="form-field-login" name="password" type="password" placeholder="Password" data-ng-model="$parent.login.password" data-ng-change="form.password.$setValidity('password', true);" data-errors="{ required: 'Required!', password: 'Wrong password, try again.' }" oncopy="return false;" required>
 
         </div>
 
         <div class="form-group">
 
-            <div class="user-remember">
-                <input id="remember" name="remember" type="checkbox" data-ng-model="$parent.login.remember">
-                <label for="remember"><i class="icon icon-ok"></i> Remember Me</label>
+            <form-toggle
+             class="remember-me"
+             name="remember"
+             data-id="remember"
+             model="$parent.login.remember">Remember Me</form-toggle>
+
+            <div class="password-reset">
+
+                <a
+                 id="forgot-password-cta"
+                 href
+                 data-ui-sref="forgot"
+                >Forgot your password?</a>
+
             </div>
 
-            <div class="password-reset"><a id="forgot-password-cta" href data-ui-sref="forgot">Forgot your password?</a></div>
-
         </div>
 
         <div class="form-group">
 
-            <button id="sign-in-cta" class="button-signin" type="submit" data-ng-disabled="form.$invalid || $parent.login.submitted">
+            <button
+             id="sign-in-cta"
+             class="button-signin"
+             type="submit"
+             ng-disabled="form.$invalid || $parent.login.submitted"
+            >
 
                 <span data-ng-hide="$parent.login.submitted">Sign In</span>
                 <span data-ng-show="$parent.login.submitted">Signing In...</span>

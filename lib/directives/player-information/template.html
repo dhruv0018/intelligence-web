@@ -1,16 +1,16 @@
 <div class="player-information">
     <div class="player-profile-container">
-        <profile-picture user="user"></profile-picture>
-        <h3>{{user.firstName}} {{user.lastName}}</h3>
-        <a href open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = user">Edit Profile</a>
+        <profile-picture user="currentUser"></profile-picture>
+        <h3>{{currentUser.firstName}} {{currentUser.lastName}}</h3>
+        <a href open-modal="BasicEditProfile.Modal" ng-if="!user.isAthleteRecruit()">Edit Profile</a>
     </div>
-    <div class="player-roles-info" data-ng-repeat="roleInfo in rolesInfo">
-        <sport-placeholder data-sport="roleInfo.sport"></sport-placeholder>
+    <div class="player-roles-info" ng-repeat="roleInfo in rolesInfo">
+        <sport-placeholder sport="roleInfo.sport"></sport-placeholder>
         <div class="player-info-text">
             <span>#{{roleInfo.jerseyNumber}}</span>
-            <span data-ng-repeat="positionId in roleInfo.positionIds" data-ng-class="{'last': $last}">
-                <span data-ng-if="roleInfo.positionIds.length > 1" class="multiple-positions">{{roleInfo.positions[positionId].name}}<span class="comma">,</span></span>
-                <span data-ng-if="roleInfo.positionIds.length === 1" class="one-position">{{roleInfo.positions[positionId].description}}</span>
+            <span ng-repeat="position in roleInfo.positions" ng-class="{'last': $last}">
+                <span ng-if="roleInfo.positions.length > 1" class="multiple-positions">{{position.name}}<span class="comma">,</span></span>
+                <span ng-if="roleInfo.positions.length === 1" class="one-position">{{position.description}}</span>
             </span>
             <span class="team-name">{{roleInfo.team.name}}</span>
         </div>

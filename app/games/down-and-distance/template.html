@@ -13,26 +13,23 @@
             </div>
             <div class="dnd-option">
                 <span class="option-label">Select Down</span>
-                <select data-ng-model="dndReport.down" class="second-choices" data-ng-options="value as key for (key, value) in options.down"></select>
+                <select data-ng-model="dndReport.down" class="second-choices" data-ng-options="option.value as option.name for option in options.down"></select>
             </div>
             <div class="dnd-option">
                 <span class="option-label">Select Distance</span>
-                <select data-ng-model="dndReport.distance" class="second-choices" data-ng-options="value as key for (key, value) in options.distance"></select>
+                <select data-ng-model="dndReport.distance" class="second-choices" data-ng-options="option.value as option.name for option in options.distance"></select>
             </div>
             <div class="dnd-option">
                 <span class="option-label">Select Hash</span>
-                <select data-ng-model="dndReport.hash" class="second-choices" data-ng-options="value as key for (key, value) in options.hash"></select>
+                <select data-ng-model="dndReport.hash" class="second-choices" data-ng-options="option.value as option.name for option in options.hash"></select>
             </div>
             <div class="dnd-option">
-                <span class="option-label">Select Weight</span>
-                <select data-ng-model="dndReport.strength" class="second-choices" data-ng-options="value as key for (key, value) in options.weight"></select>
+                <span class="option-label">Select Strength</span>
+                <select data-ng-model="dndReport.strength" class="second-choices" data-ng-options="option.value as option.name for option in options.strength"></select>
             </div>
-            <div class="dnd-option ng-hide">
+            <div class="dnd-option">
                 <span class="option-label">Show snaps only from</span>
-                <select data-ng-model="dndReport.redZone">
-                    <option value="false">Whole Field</option>
-                    <option value="true">Red Zone</option>
-                </select>
+                <select data-ng-model="dndReport.redZone" class="second-choices" data-ng-options="option.value as option.name for option in options.redZone"></select>
             </div>
             <div class="dnd-option" feature="CustomTags">
                 <span class="option-label">Show snaps with tags</span>
@@ -62,7 +59,7 @@
                 <span data-ng-if="!createdDndReport.hash">Any</span>
             </span>
             <span class="field-info" ng-show="createdDndReport">
-                <span class="field-info-title">Weight:</span>
+                <span class="field-info-title">Strength:</span>
                 <span data-ng-if="createdDndReport.strength">{{createdDndReport.strength}}</span>
                 <span data-ng-if="!createdDndReport.strength">Any</span>
             </span>

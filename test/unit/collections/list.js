@@ -15,7 +15,12 @@ const srcArray = [
     {
         'bar': "baz"
     },
-    true
+    true,
+    'repeat',
+    'repeat',
+    'repeat',
+    'repeat',
+    'repeat'
 ];
 
 describe('List', () => {
@@ -65,7 +70,7 @@ describe('List', () => {
 
     it('should have a length property', () => {
 
-        expect(sampleList.length).to.equal(13);
+        expect(sampleList.length).to.equal(srcArray.length);
     });
 
     it('should have an "includes" method that works for integers', () => {
@@ -152,7 +157,7 @@ describe('List', () => {
         let controlArray = srcArrayCopy.slice(0);
         const testLength = 3;
 
-        expect(sampleList.length).to.equal(13);
+        expect(sampleList.length).to.equal(srcArray.length);
 
         sampleList.length   = testLength;
         controlArray.length = testLength;
@@ -224,43 +229,47 @@ describe('List', () => {
 
     it('should have an "add" method that adds elements to the beginning of the array', () => {
 
-        expect(sampleList.length).to.equal(13);
+        const newElement = 4;
 
-        sampleList.add(4, false);
+        expect(sampleList.length).to.equal(srcArray.length);
 
-        expect(sampleList.length).to.equal(14);
-        expect(sampleList.get(0)).to.equal(4);
+        sampleList.add(newElement, false);
+
+        expect(sampleList.length).to.equal(srcArray.length + 1);
+        expect(sampleList.get(0)).to.equal(newElement);
     });
 
     it('should have an "add" method that adds elements to the end of the array', () => {
 
-        expect(sampleList.length).to.equal(13);
+        const newElement = 4;
 
-        sampleList.add(4);
+        expect(sampleList.length).to.equal(srcArray.length);
 
-        expect(sampleList.length).to.equal(14);
-        expect(sampleList.get(13)).to.equal(4);
+        sampleList.add(newElement);
+
+        expect(sampleList.length).to.equal(srcArray.length + 1);
+        expect(sampleList.get(srcArray.length)).to.equal(newElement);
     });
 
     it('should have an "add" method that accepts an array of items to be appended to the array', () => {
 
-        expect(sampleList.length).to.equal(13);
+        expect(sampleList.length).to.equal(srcArray.length);
 
         sampleList.add([1000, 2000, '3000']);
 
-        expect(sampleList.length).to.equal(16);
-        expect(sampleList.get(13)).to.equal(1000);
-        expect(sampleList.get(14)).to.equal(2000);
-        expect(sampleList.get(15)).to.equal('3000');
+        expect(sampleList.length).to.equal(srcArray.length + 3);
+        expect(sampleList.get(srcArray.length)).to.equal(1000);
+        expect(sampleList.get(srcArray.length + 1)).to.equal(2000);
+        expect(sampleList.get(srcArray.length + 2)).to.equal('3000');
     });
 
     it('should have an "add" method that accepts an array of items to be prepended to the array', () => {
 
-        expect(sampleList.length).to.equal(13);
+        expect(sampleList.length).to.equal(srcArray.length);
 
         sampleList.add([1000, 2000, '3000'], false);
 
-        expect(sampleList.length).to.equal(16);
+        expect(sampleList.length).to.equal(srcArray.length + 3);
         expect(sampleList.get(0)).to.equal(1000);
         expect(sampleList.get(1)).to.equal(2000);
         expect(sampleList.get(2)).to.equal('3000');
@@ -273,55 +282,80 @@ describe('List', () => {
 
     it('should have a "remove" method that removes integers from the array', () => {
 
-        expect(sampleList.length).to.equal(13);
+        expect(sampleList.length).to.equal(srcArray.length);
         sampleList.remove(1);
-        expect(sampleList.length).to.equal(12);
+        expect(sampleList.length).to.equal(srcArray.length - 1);
         expect(sampleList.get(0)).to.equal(2);
         expect(sampleList.includes(1)).to.be.false;
     });
 
     it('should have a "remove" method that removes objects from the array', () => {
 
-        expect(sampleList.length).to.equal(13);
+        expect(sampleList.length).to.equal(srcArray.length);
         sampleList.remove(srcArrayCopy[3]);
-        expect(sampleList.length).to.equal(12);
+        expect(sampleList.length).to.equal(srcArray.length - 1);
         expect(sampleList.get(3)).to.be.null;
     });
 
     it('should have a "remove" method that removes strings from the array', () => {
 
-        expect(sampleList.length).to.equal(13);
+        expect(sampleList.length).to.equal(srcArray.length);
         sampleList.remove('3');
-        expect(sampleList.length).to.equal(12);
+        expect(sampleList.length).to.equal(srcArray.length - 1);
         expect(sampleList.get(2)).to.deep.equal({foo: 4});
         expect(sampleList.includes('3')).to.be.false;
     });
 
     it('should have a "remove" method that removes null from the array', () => {
 
-        expect(sampleList.length).to.equal(13);
+        expect(sampleList.length).to.equal(srcArray.length);
         sampleList.remove(null);
-        expect(sampleList.length).to.equal(12);
+        expect(sampleList.length).to.equal(srcArray.length - 1);
         expect(sampleList.get(4)).to.be.undefined;
         expect(sampleList.includes(null)).to.be.false;
     });
 
     it('should have a "remove" method that removes undefined from the array', () => {
 
-        expect(sampleList.length).to.equal(13);
+        expect(sampleList.length).to.equal(srcArray.length);
         sampleList.remove(undefined);
-        expect(sampleList.length).to.equal(12);
+        expect(sampleList.length).to.equal(srcArray.length - 1);
         expect(sampleList.get(5)).to.be.undefined;
         expect(sampleList.includes(undefined)).to.be.false;
     });
 
     it('should have a "remove" method that removes booleans from the array', () => {
 
-        expect(sampleList.length).to.equal(13);
+        expect(sampleList.length).to.equal(srcArray.length);
         sampleList.remove(true);
-        expect(sampleList.length).to.equal(12);
-        expect(sampleList.get(12)).to.be.undefined;
+        expect(sampleList.length).to.equal(srcArray.length - 1);
+        expect(sampleList.get(12)).to.equal('repeat');
         expect(sampleList.includes(true)).to.be.false;
+    });
+
+    it('should have a "remove" method that removes multiple matches from the array', () => {
+
+        expect(sampleList.length).to.equal(srcArray.length);
+        sampleList.remove('repeat');
+        expect(sampleList.length).to.equal(srcArray.length - 5);
+        expect(sampleList.get(srcArray.length - 6)).to.equal(true);
+        expect(sampleList.includes('repeat')).to.be.false;
+    });
+
+    it('should return the removed elements when calling "remove" for single matches', () => {
+
+        let removed = sampleList.remove(2);
+
+        expect(removed).to.be.an.array;
+        expect(removed).to.deep.equal([2]);
+    });
+
+    it('should return the removed elements when calling "remove" for multiple matches', () => {
+
+        let removed = sampleList.remove('repeat');
+
+        expect(removed).to.be.an.array;
+        expect(removed).to.deep.equal(['repeat', 'repeat', 'repeat', 'repeat', 'repeat']);
     });
 
     it('should not remove elements that do not exist', () => {
