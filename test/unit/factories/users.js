@@ -38,7 +38,7 @@ describe('UsersFactory', function() {
 
         it('should return if an indexer can pick up a game', ()=> {
 
-                expect(UsersFactory.canPickupGames()).to.equal(1);
+                expect(UsersFactory.canPickupGames()).to.equal(true);
             });
     });
 

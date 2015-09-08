@@ -554,7 +554,7 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 let session = $injector.get('SessionService');
                 const currentRole = session.getCurrentRole();
-                return currentRole.indexerQuality;
+                return !!currentRole.indexerQuality;
 
             },
 
