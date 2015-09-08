@@ -79,6 +79,7 @@
 
                     <a
                         class="download control-button"
+                        ng-if="!isPublicUser"
                         ng-href="{{videoPlayer.sources[0].src}}"
                         tooltip="Download"
                         download
