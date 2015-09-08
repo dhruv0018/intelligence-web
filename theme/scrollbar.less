@@ -1,0 +1,25 @@
+@import (reference) "main.less";
+
+/* Take control of scrollbar and force it to show */
+.force-scrollbar::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.force-scrollbar::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+.force-scrollbar::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+.force-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white;
+    background-color: @gray-dark;
+}
+
+.force-scrollbar::-webkit-scrollbar-track,
+.force-scrollbar::-webkit-scrollbar-track-piece {
+    display: none;
+}

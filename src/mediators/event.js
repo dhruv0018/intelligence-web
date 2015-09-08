@@ -13,8 +13,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.factory('CurrentEventMediator', [
-    'Mediator', 'EventManager',
-    function(Mediator, eventManager) {
+    'IndexingService', 'Mediator', 'EventManager',
+    function(indexing, Mediator, eventManager) {
 
         /* Create a new mediator to mediate what the current event should be. */
         var mediator = new Mediator(changeCurrentEvent, compareTimes);
@@ -25,8 +25,11 @@ IntelligenceWebClient.factory('CurrentEventMediator', [
          */
         function changeCurrentEvent (event) {
 
-            /* Set the current play. */
-            eventManager.current = event;
+            if (!indexing.isIndexing) {
+
+                /* Set the current play. */
+                eventManager.current = event;
+            }
         }
 
         /**

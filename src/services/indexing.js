@@ -1,4 +1,4 @@
-import KrossoverEvent from '../entities/event.js';
+import KrossoverEvent from '../entities/event/index';
 
 var pkg = require('../../package.json');
 
@@ -8,8 +8,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('IndexingService', [
-    'EVENT', 'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter', 'Utilities',
-    function(EVENT, config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter, utils) {
+    'PlaysFactory', 'EVENT', 'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter', 'Utilities',
+    function(plays, EVENT, config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter, utils) {
 
         var IndexingService = {
 
@@ -24,7 +24,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 game.indexedScore = 0;
                 game.opposingIndexedScore = 0;
 
-                eventManager.current = new KrossoverEvent();
+                eventManager.current = null;
                 playsManager.reset(plays);
                 tagsManager.reset(tagset);
                 playManager.reset(tagset, game.id);
@@ -41,7 +41,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                     if (this.savable()) this.save();
                     else if (this.nextable()) this.next();
-                    else this.step();
                 }
 
                 else if (videoPlayer.isReady) {
@@ -58,7 +57,14 @@ IntelligenceWebClient.factory('IndexingService', [
             * Selects a tag.
             * @param {Number} tagId - the ID of the tag selected.
             */
-            selectTag: function(tagId) {
+            selectTag: function(tagId, game) {
+                if (!tagId) {
+                    throw new Error('No tagId specified');
+                }
+
+                if (!game && game.id) {
+                    throw new Error('No game specified');
+                }
 
                 /* Get current time from the video. */
                 var time = videoPlayer.currentTime;
@@ -70,7 +76,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 time = utils.toFixedFloat(time);
 
                 /* Create new event. */
-                eventManager.current = new KrossoverEvent(tag, time);
+                eventManager.current = new KrossoverEvent(null, tag, time, game.id);
 
                 /* Add event to the current play. */
                 playManager.addEvent(eventManager.current);
@@ -80,30 +86,12 @@ IntelligenceWebClient.factory('IndexingService', [
             },
 
             /**
-            * Steps the current variable.
-            */
-            step: function() {
-
-                if (!this.isIndexing) return;
-
-                /* Move to the next event variable. */
-                eventManager.current.activeEventVariableIndex++;
-
-                /* If the variable is filled in with an optional value. */
-                if (eventManager.activeEventVariableValue() === null) {
-
-                    /* Clear the variable value. */
-                    eventManager.clearActiveEventVariableValue();
-                }
-            },
-
-            /**
             * Determines if the current this session is savable.
             * @returns {Boolean} true if the session is savable; false otherwise.
             */
             savable: function() {
 
-                return this.nextable() && eventManager.current.isEnd;
+                return this.nextable() && eventManager.current && eventManager.current.isEnd;
             },
 
             /**
@@ -118,9 +106,11 @@ IntelligenceWebClient.factory('IndexingService', [
                 videoPlayer.seekTime(event.time);
 
                 playManager.current.save();
+
+                playsManager.calculatePlays();
                 playManager.clear();
                 tagsManager.reset();
-                eventManager.current = new KrossoverEvent();
+                eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
                 if (event.isEndAndStart) {
@@ -162,16 +152,15 @@ IntelligenceWebClient.factory('IndexingService', [
             nextable: function() {
 
                 /* If not this or the tags are showing. */
-                if (!this.isIndexing || this.showTags) return false;
+                if (!this.isIndexing || this.showTags) {
 
+                    return false;
+                }
                 /* If there are variables in the current event. */
-                else if (eventManager.current.hasVariables) {
-
-                    /* Make sure all of the variables have values. */
+                else {
                     return eventManager.current.isValid;
                 }
 
-                else return true;
             },
 
             /**
@@ -187,7 +176,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.eventSelected = false;
 
                 /* If the event is a floating event. */
-                if (eventManager.current.isFloat) {
+                if (eventManager.current && eventManager.current.isFloat) {
 
                     let currentEvent = eventManager.current;
 
@@ -239,7 +228,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* If the tags are showing. */
                 else if (this.showTags) {
-
                     /* Drop back into not this state. */
                     this.showTags = false;
                     this.showScript = false;
@@ -247,10 +235,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     videoPlayer.play();
                 }
 
-                /* If the event doesn't have variables of If the first variable is empty. */
-                else if (!eventManager.current.hasVariables ||
-                        (eventManager.current.activeEventVariableIndex === 1 &&
-                        !eventManager.activeEventVariableValue())) {
+                else if (this.showScript) {
 
                     /* Remove the event from the play. */
                     playManager.removeEvent(eventManager.current);
@@ -258,29 +243,6 @@ IntelligenceWebClient.factory('IndexingService', [
                     /* Drop back to tagging state. */
                     this.showTags = true;
                     this.showScript = false;
-                }
-
-                /* If the active variable is empty. */
-                else if (!eventManager.activeEventVariableValue()) {
-
-                    /* While the active variable is empty. */
-                    while (
-                        eventManager.current.activeEventVariableIndex > 1 &&
-                !eventManager.activeEventVariableValue()) {
-
-                        /* Move back one variable. */
-                        eventManager.current.activeEventVariableIndex--;
-                    }
-
-                    /* Clear the value of the first variable is not empty. */
-                    eventManager.clearActiveEventVariableValue();
-                }
-
-                /* If the active variable has a value. */
-                else if (eventManager.activeEventVariableValue()) {
-
-                    /* Clear the active variables value. */
-                    eventManager.clearActiveEventVariableValue();
                 }
             },
 

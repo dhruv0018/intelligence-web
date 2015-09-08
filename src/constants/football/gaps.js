@@ -64,3 +64,4 @@ var GAPS = {
 };
 
 IntelligenceWebClient.constant('GAPS', GAPS);
+export default {GAPS, GAP_IDS};

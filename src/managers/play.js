@@ -1,4 +1,4 @@
-import KrossoverEvent from '../entities/event.js';
+import KrossoverEvent from '../entities/event/index';
 
 var pkg = require('../../package.json');
 
@@ -225,7 +225,7 @@ IntelligenceWebClient.service('PlayManager', [
             else {
 
                 /* Reset the current event. */
-                eventManager.current = new KrossoverEvent();
+                eventManager.current = null;
 
                 /* Remove the current play. */
                 this.remove();
