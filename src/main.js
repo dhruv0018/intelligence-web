@@ -27,6 +27,7 @@ import { IndexerFields, UserFields } from '../lib/directives/fields';
 import Play from '../lib/directives/play/index';
 import SelectMediaSrc from '../lib/directives/video-player/select-media-src/index';
 import ArenaChart from '../lib/directives/arena-chart/index';
+import BreakdownDialog from '../lib/dialogs/breakdown-dialog/index';
 
 /* App dependencies */
 require('./config');
