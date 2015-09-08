@@ -6,7 +6,10 @@
 >
     <md-dialog-content>
 
-        <xy-coordinates ng-model="displayValue.coordinates">
+        <xy-coordinates
+            class="{{arena.type}}"
+            ng-model="displayValue.coordinates"
+        >
 
             <krossover-arena
                 type="arena.type"
