@@ -242,6 +242,13 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 self.shares.push(share);
             },
+
+            /**
+             * share reel with team
+             * @param {Object} team - team to be shared with
+             * @param {boolean} isTelestrationsShared
+             * @throws {Error} if the team is not avaliable to share.
+             */
             shareWithTeam: function(team, isTelestrationsShared = false) {
 
                 const self = this;
@@ -266,6 +273,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 self.shares.push(share);
             },
+
+            /**
+             * stop sharing reel
+             * @param {Object} share - shared with object
+             * @throws {Error} if the share object is not avaliable.
+             */
             stopSharing: function(share) {
 
                 const self = this;
@@ -299,6 +312,13 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return self.getShareByUserId(userId);
             },
+
+            /**
+             * get reel sharing by team
+             * @param {Object} team - shared with team
+             * @throws {Error} if the sharedWithTeams or team objects are not avaliable.
+             * @return {Object}
+             */
             getShareByTeam: function(team) {
                 const self = this;
 
@@ -315,6 +335,13 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return self.sharedWithUsers[userId];
             },
+
+            /**
+             * get reel sharing by teamId
+             * @param {Integer} teamId - shared with team
+             * @throws {Error} if the sharedWithTeams are not avaliable.
+             * @return {Object}
+             */
             getShareByTeamId: function(teamId) {
                 var self = this;
 
@@ -331,6 +358,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return angular.isDefined(self.getShareByUser(user));
             },
+
+            /**
+             * check reel shared with team
+             * @param {Object} team - shared with team
+             * @return {boolean}
+             */
             isSharedWithTeam: function(team) {
                 var self = this;
 
@@ -349,6 +382,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return angular.isDefined(self.getShareByUserId(userId));
             },
+
+            /**
+             * check reel shared with teamId
+             * @param {Integer} teamId - shared with team
+             * @return {boolean}
+             */
             isSharedWithTeamId: function(teamId) {
                 const self = this;
 
@@ -363,6 +402,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return self.isFeatureSharedWithUser('isTelestrationsShared', user);
             },
+
+            /**
+             * check teletration for reel are shared with team
+             * @param {Object} team - shared with team
+             * @return {boolean}
+             */
             isTelestrationsSharedWithTeam: function(team) {
                 const self = this;
 
@@ -386,6 +431,11 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return sharesArray;
             },
+
+            /**
+             * get team shares of reel
+             * @return {Array}
+             */
             getTeamShares: function() {
                 const self = this;
 
@@ -460,6 +510,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (angular.isDefined(userShare) && userShare[featureAttribute] === true) return true;
             },
+
+            /**
+             * check a feature of reel is shared with team
+             * @param {Object} team - shared with team
+             * @return {boolean}
+             */
             isFeatureSharedWithTeam: function(featureAttribute, team) {
                 const self = this;
 

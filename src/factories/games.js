@@ -1152,6 +1152,12 @@ IntelligenceWebClient.factory('GamesFactory', [
                 self.shares.push(share);
             },
 
+            /**
+             * share game with team
+             * @param {Object} team - team to be shared with
+             * @param {boolean} isTelestrationsShared
+             * @throws {Error} if the team is not avaliable to share.
+             */
             shareWithTeam: function(team, isTelestrationsShared = false) {
 
                 const self = this;
@@ -1178,6 +1184,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 self.shares.push(share);
             },
 
+            /**
+             * stop sharing game
+             * @param {Object} share - shared with object
+             * @throws {Error} if the share object is not avaliable.
+             */
             stopSharing: function(share) {
 
                 const self = this;
@@ -1213,6 +1224,12 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.getShareByUserId(userId);
             },
 
+            /**
+             * get game sharing by team
+             * @param {Object} team - shared with team
+             * @throws {Error} if the sharedWithTeams or team objects are not avaliable.
+             * @return {Object}
+             */
             getShareByTeam: function(team) {
                 const self = this;
 
@@ -1236,6 +1253,12 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.sharedWithUsers[userId];
             },
 
+            /**
+             * get game sharing by teamId
+             * @param {Integer} teamId - shared with team
+             * @throws {Error} if the sharedWithTeams are not avaliable.
+             * @return {Object}
+             */
             getShareByTeamId: function(teamId) {
                 var self = this;
 
@@ -1254,6 +1277,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return angular.isDefined(self.getShareByUser(user));
             },
 
+            /**
+             * check game shared with team
+             * @param {Object} team - shared with team
+             * @return {boolean}
+             */
             isSharedWithTeam: function(team) {
                 var self = this;
 
@@ -1277,6 +1305,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return angular.isDefined(self.getShareByUserId(userId));
             },
+
+            /**
+             * check game shared with teamId
+             * @param {Integer} teamId - shared with team
+             * @return {boolean}
+             */
             isSharedWithTeamId: function(teamId) {
                 const self = this;
 
@@ -1299,6 +1333,11 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return sharesArray;
             },
+
+            /**
+             * get team shares of game
+             * @return {Array}
+             */
             getTeamShares: function() {
                 const self = this;
 
@@ -1363,6 +1402,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (angular.isDefined(userShare) && userShare[featureAttribute] === true) return true;
             },
+
+            /**
+             * check a feature of game is shared with team
+             * @param {Object} team - shared with team
+             * @return {boolean}
+             */
             isFeatureSharedWithTeam: function(featureAttribute, team) {
                 const self = this;
 
@@ -1378,6 +1423,12 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return self.isFeatureSharedWithUser('isTelestrationsShared', user);
             },
+
+            /**
+             * check teletration for game are shared with team
+             * @param {Object} team - shared with team
+             * @return {boolean}
+             */
             isTelestrationsSharedWithTeam: function(team) {
                 const self = this;
 

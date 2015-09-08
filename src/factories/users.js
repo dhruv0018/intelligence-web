@@ -323,8 +323,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
-             * @class User
-             * @method
              * @param {Integer} teamId - the teamId get role
              * @returns {Object} the role object for the user. If no
              * role is defined, it will return `undefined`.
