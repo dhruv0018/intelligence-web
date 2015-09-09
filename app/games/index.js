@@ -265,26 +265,26 @@ function GamesController(
 
         // game information
         $scope.gameStates.push({name: 'Games.Info'});
+    }
 
-        // statistics related states
-        if (game.isDelivered()) {
+    console.log(sport.hasStatistics);
+    // statistics related states
+    if (isTeamUploadersTeam && game.isDelivered() && sport.hasStatistics) {
 
-            if (sport.hasStatistics) {
+        $scope.gameStates.push({name: 'Games.Stats'});
+    }
 
-                $scope.gameStates.push({name: 'Games.Stats'});
-            }
-
-            // sport specific states
-            switch (sport.id) {
-                case SPORTS.BASKETBALL.id:
-                    if (features.isEnabled('ArenaChart')) {
-                        $scope.gameStates.push({name: 'Games.ArenaChart'});
-                    }
-                    break;
-                case SPORTS.FOOTBALL.id:
-                    $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
-                    break;
-            }
+    if (isTeamUploadersTeam && isCoach && game.isDelivered()) {
+        // sport specific states
+        switch (sport.id) {
+            case SPORTS.BASKETBALL.id:
+                if (features.isEnabled('ArenaChart')) {
+                    $scope.gameStates.push({name: 'Games.ArenaChart'});
+                }
+                break;
+            case SPORTS.FOOTBALL.id:
+                $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                break;
         }
     }
 
