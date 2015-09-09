@@ -29,7 +29,7 @@ describe('Stack', () => {
         'pop',
         'top',
         'clear',
-        'identity',
+        'toJSON',
         'isEmpty'
     ];
 
@@ -51,28 +51,27 @@ describe('Stack', () => {
         classMethods.forEach(method => expect(Stack).to.respondTo(method));
     });
 
-    it('should have a size property', () => {
+    it('should have a length property', () => {
 
-        expect(sampleStack.size).to.equal(13);
+        expect(sampleStack.length).to.equal(13);
     });
 
     it('should have a "top" method that returns the object at the top of the stack without removing it.', () => {
 
-        expect(sampleStack.top()).to.equal(srcArray[srcArray.size - 1]);
+        expect(sampleStack.top()).to.equal(srcArray[srcArray.length - 1]);
     });
 
     it('should have an "push" method that adds an element to the top of the stack', () => {
 
-        expect(sampleStack.size).to.equal(13);
+        expect(sampleStack.length).to.equal(13);
         sampleStack.push(4);
-
-        expect(sampleStack.size).to.equal(14);
-        expect(sampleStack.stack[sampleStack.size - 1]).to.equal(4);
+        expect(sampleStack.length).to.equal(14);
+        expect(sampleStack.list.data[sampleStack.list.data.length - 1]).to.equal(4);
     });
 
     it('should have an "pop" method that removes an element to the top of the stack', () => {
 
-        expect(sampleStack.size).to.equal(13);
+        expect(sampleStack.length).to.equal(13);
 
         expect(sampleStack.pop()).to.equal(true);
     });
@@ -86,15 +85,15 @@ describe('Stack', () => {
     it('should have a "clear" method that empties the stack', () => {
 
         sampleStack.clear();
-        expect(sampleStack.size).to.equal(0);
-        expect(sampleStack.identity()).to.deep.equal([]);
+        expect(sampleStack.length).to.equal(0);
+        expect(sampleStack.toJSON()).to.deep.equal([]);
     });
 
-    it('should have an "identity" method that returns the data as a plain array', () => {
+    it('should have an "toJSON" method that returns the data as a plain array', () => {
 
-        expect(sampleStack.identity()).to.be.an('array');
-        expect(sampleStack.identity().size).to.equal(srcArrayCopy.size);
-        sampleStack.identity().forEach((element, index) => {
+        expect(sampleStack.toJSON()).to.be.an('array');
+        expect(sampleStack.toJSON().length).to.equal(srcArrayCopy.length);
+        sampleStack.toJSON().forEach((element, index) => {
 
             expect(element).to.deep.equal(srcArrayCopy[index]);
         });

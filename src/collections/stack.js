@@ -7,58 +7,51 @@ import List from './list';
 class Stack {
 
     /**
-     * Instantaties Stack as a new array
+     * Instantaties Stack
      *
      * @constructs Stack
      * @param {Array} [array] - Array to use as stack data structure
      */
     constructor (array = []) {
 
-        if (!Array.isArray(array)) {
-
-            throw new Error('Stack data must be an Array!');
-        }
-
-        this.list = new List();
+        this.list = new List(array);
     }
 
     /**
      * Adds a new element to the stack
      *
      * @method push
-     * @param {Object|Integer|Boolean}
+     * @param {Object}
      *
      */
     push (value) {
 
         if (!value) throw new Error('Cannot push on Stack without passing an element!');
 
-        this.list.push(value);
+        this.list.add(value);
     }
 
     /**
      * Removes an element from the stack
      *
      * @method pop
-     * @returns {Object|Integer|Boolean|undefined}
+     * @returns {Object}
      */
     pop () {
 
-        return this.list.pop();
+        return this.list.data.pop();
     }
 
     /**
      * Returns the element at the top of the stack without removing it
      *
      * @method top
-     * @return: {Object|Integer|Boolean|undefined}
+     * @return: {Object}
      *
      */
     top () {
 
-        if(this.list.size) {
-            return this.list[this.list.size - 1];
-        }
+        return this.list.last;
     }
 
     /**
@@ -69,7 +62,7 @@ class Stack {
      */
     clear () {
 
-        this.list = [];
+        this.list.clear();
     }
 
     /**
@@ -79,9 +72,9 @@ class Stack {
      * @returns {Array} - A copy of the stack.
      *
      */
-    identity () {
+    toJSON () {
 
-        return this.list.slice(0);
+        return this.list.toJSON();
     }
 
     /**
@@ -91,7 +84,7 @@ class Stack {
      * @returns {Integer}
      *
      */
-    get size () {
+    get length () {
 
         return this.list.length;
     }
@@ -105,7 +98,7 @@ class Stack {
      */
     isEmpty () {
 
-        return !this.list.length;
+        return this.list.isEmpty();
     }
 
 }
