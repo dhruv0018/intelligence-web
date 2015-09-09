@@ -10,24 +10,28 @@ var SPORTS = {
     BASKETBALL: {
         id: 1,
         name: 'Basketball',
-        hasStatistics: false
+        hasAnalytics: true,
+        hasStatistics: true
     },
 
     FOOTBALL: {
         id: 2,
         name: 'Football',
+        hasAnalytics: true,
         hasStatistics: true
     },
 
     LACROSSE: {
         id: 3,
         name: 'Lacrosse',
+        hasAnalytics: false,
         hasStatistics: false
     },
 
     VOLLEYBALL: {
         id: 4,
         name: 'Volleyball',
+        hasAnalytics: true,
         hasStatistics: true
     }
 };
