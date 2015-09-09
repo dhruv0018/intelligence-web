@@ -40,7 +40,7 @@
         <div class="description">
             <a data-open-modal="AssistantInfo.Modal" data-modal-options="options" data-ng-click="options.targetAssistant = assistant" href>
                 {{assistant.firstName}}
-                {{assistant.lastName[0]}}.
+                {{assistant.lastName}}
             </a>
             <p data-ng-repeat="role in assistant.roles" data-ng-if="role.type.id === ROLE_TYPE.ASSISTANT_COACH && role.teamId === team.id">
                 Tenure: {{role.tenureStart | date: 'mediumDate'}} to
