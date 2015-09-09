@@ -220,6 +220,7 @@ function GamesController(
     let isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
     let isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
     let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
+    let isDelivered = game.isDelivered();
 
     /* Scope */
 
@@ -267,14 +268,13 @@ function GamesController(
         $scope.gameStates.push({name: 'Games.Info'});
     }
 
-    console.log(sport.hasStatistics);
     // statistics related states
-    if (isTeamUploadersTeam && game.isDelivered() && sport.hasStatistics) {
+    if (isTeamUploadersTeam && isDelivered && sport.hasStatistics) {
 
         $scope.gameStates.push({name: 'Games.Stats'});
     }
 
-    if (isTeamUploadersTeam && isCoach && game.isDelivered()) {
+    if (isTeamUploadersTeam && isCoach && isDelivered) {
         // sport specific states
         switch (sport.id) {
             case SPORTS.BASKETBALL.id:
@@ -293,7 +293,7 @@ function GamesController(
 
         $scope.gameStates.unshift({name: 'Games.RawFilm'});
 
-        if (game.isDelivered()) {
+        if (isDelivered) {
 
             $scope.gameStates.unshift({name: 'Games.Breakdown'});
 
