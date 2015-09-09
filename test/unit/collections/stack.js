@@ -33,7 +33,7 @@ describe('Stack', () => {
     let sampleStack;
 
     beforeEach(() => {
-        srcArrayCopy = srcArray.slice(0);
+        srcArrayCopy = angular.copy(srcArray);
         sampleStack = new Stack(srcArrayCopy);
     });
 
@@ -70,6 +70,8 @@ describe('Stack', () => {
         expect(sampleStack.length).to.equal(13);
 
         expect(sampleStack.pop()).to.equal(true);
+
+        expect(sampleStack.length).to.equal(12);
     });
 
 

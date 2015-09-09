@@ -83,9 +83,10 @@ class Stack {
     }
 
     /**
-     * Returns the number of elements in the stack
+     * Getter for the number of elements in the stack
      *
      * @method length
+     * @type {integer}
      * @returns {Integer}
      *
      */
