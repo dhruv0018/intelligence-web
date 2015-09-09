@@ -5,6 +5,7 @@
         <md-button
             class="navbar-brand btn-indexing-back"
             ui-sref="IndexerGame({ id: game.id })"
+            aria-label="Indexer Home"
         >
             <i class="icon icon-chevron-left"></i>
         </md-button>
@@ -17,11 +18,11 @@
 
         <h1>
 
-            <div class="color" style="background-color: {{ game.primaryJerseyColor }};"></div>
+            <div class="color" style="background-color: {{ game.primaryJerseyColor}};"></div>
 
             {{ team.name }} <b>{{ game.indexedScore }}</b> vs <b>{{ game.opposingIndexedScore }}</b> {{ opposingTeam.name }}
 
-            <div class="color" style="background-color: {{ game.opposingPrimaryJerseyColor }};"></div>
+            <div class="color" style="background-color: {{game.opposingPrimaryJerseyColor}};"></div>
 
         </h1>
 
