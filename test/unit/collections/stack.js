@@ -30,7 +30,7 @@ describe('Stack', () => {
         'top',
         'clear',
         'identity',
-        'empty'
+        'isEmpty'
     ];
 
     let srcArrayCopy;
@@ -102,13 +102,13 @@ describe('Stack', () => {
 
     it('should let you know if the array is empty when you call "empty"', () => {
 
-        expect(sampleStack.empty()).to.be.a('boolean');
-        expect(sampleStack.empty()).to.be.false;
+        expect(sampleStack.isEmpty()).to.be.a('boolean');
+        expect(sampleStack.isEmpty()).to.be.false;
 
         sampleStack.clear();
 
-        expect(sampleStack.empty()).to.be.a('boolean');
-        expect(sampleStack.empty()).to.be.true;
+        expect(sampleStack.isEmpty()).to.be.a('boolean');
+        expect(sampleStack.isEmpty()).to.be.true;
     });
 
 });

@@ -1,3 +1,4 @@
+import List from './list';
 /**
  * Creates a Stack
  * @class Stack
@@ -18,7 +19,7 @@ class Stack {
             throw new Error('Stack data must be an Array!');
         }
 
-        this.stack = array;
+        this.list = new List();
     }
 
     /**
@@ -30,11 +31,9 @@ class Stack {
      */
     push (value) {
 
-        if(value) {
-            this.stack.push(value);
-        } else {
-            throw new Error('Cannot push on Stack without passing an element!');
-        }
+        if (!value) throw new Error('Cannot push on Stack without passing an element!');
+
+        this.list.push(value);
     }
 
     /**
@@ -45,7 +44,7 @@ class Stack {
      */
     pop () {
 
-        return this.stack.pop();
+        return this.list.pop();
     }
 
     /**
@@ -53,12 +52,12 @@ class Stack {
      *
      * @method top
      * @return: {Object|Integer|Boolean|undefined}
-     * 
+     *
      */
     top () {
 
-        if(this.stack.size) {
-            return this.stack[this.stack.size - 1];
+        if(this.list.size) {
+            return this.list[this.list.size - 1];
         }
     }
 
@@ -70,7 +69,7 @@ class Stack {
      */
     clear () {
 
-        this.stack = [];
+        this.list = [];
     }
 
     /**
@@ -82,7 +81,7 @@ class Stack {
      */
     identity () {
 
-        return this.stack.slice(0);
+        return this.list.slice(0);
     }
 
     /**
@@ -94,7 +93,7 @@ class Stack {
      */
     get size () {
 
-        return this.stack.length;
+        return this.list.length;
     }
 
     /**
@@ -104,9 +103,9 @@ class Stack {
      * @returns {Boolean}
      *
      */
-    empty () {
+    isEmpty () {
 
-        return !this.stack.length;
+        return !this.list.length;
     }
 
 }
