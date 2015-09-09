@@ -10,7 +10,6 @@ var IntelligenceWebClient = angular.module(pkg.name);
 IntelligenceWebClient.factory('IndexingService', [
     'PlaysFactory', 'EVENT', 'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter', 'Utilities',
     function(plays, EVENT, config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter, utils) {
-        let time = 0;
         var IndexingService = {
 
             reset: function(tagset, game, plays) {
