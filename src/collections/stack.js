@@ -26,7 +26,12 @@ class Stack {
      */
     push (value) {
 
-        if (!value) throw new Error('Cannot push on Stack without passing an element!');
+        switch (arguments.length) {
+
+            case 0:
+
+                throw new Error('Invoked List.add without passing an Object to add');
+        }
 
         this.list.add(value);
     }
@@ -62,13 +67,13 @@ class Stack {
      */
     clear () {
 
-        this.list.clear();
+        return this.list.clear();
     }
 
     /**
      * Returns a copy of the stack
      *
-     * @method identity
+     * @method toJSON
      * @returns {Array} - A copy of the stack.
      *
      */
@@ -80,7 +85,7 @@ class Stack {
     /**
      * Returns the number of elements in the stack
      *
-     * @method size
+     * @method length
      * @returns {Integer}
      *
      */
@@ -92,7 +97,7 @@ class Stack {
     /**
      * Returns true or false depending on if the stack is empty or not
      *
-     * @method empty
+     * @method isEmpty
      * @returns {Boolean}
      *
      */
