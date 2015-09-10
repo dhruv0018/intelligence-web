@@ -85,12 +85,10 @@ class Stack {
     /**
      * Getter for the number of elements in the stack
      *
-     * @method length
      * @type {integer}
-     * @returns {Integer}
      *
      */
-    get length () {
+    get size () {
 
         return this.list.length;
     }
