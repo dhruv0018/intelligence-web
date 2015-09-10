@@ -91,8 +91,21 @@
         text-transform: capitalize;
         overflow-y: auto;
 
-        .krossover-athlete {
+        .sidebar-athlete {
             padding-left: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+
+            img {
+                border: thin solid @gray-border;
+            }
+
+            .sidebar-athlete-info {
+                margin-left: 10px;
+            }
         }
 
         .role-title{
