@@ -111,7 +111,15 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             savable: function() {
 
-                return this.nextable() && eventManager.current && eventManager.current.isEnd;
+                const current = eventManager.current;
+
+                const savable =
+                    this.nextable() &&
+                    current &&
+                    (current.isEnd ||
+                    (current.playId && current.isValid));
+
+                return savable;
             },
 
             /**
