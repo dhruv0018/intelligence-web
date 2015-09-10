@@ -60,6 +60,12 @@ nvm install 4
 nvm alias default 4
 ```
 
+## Install NPM
+
+```
+npm install -g npm@3
+```
+
 ## Install grunt
 
 ```
