@@ -107,8 +107,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 playManager.current.save();
 
-                let gameId = playManager.current.gameId;
-
                 playsManager.calculatePlays();
                 playManager.clear();
                 tagsManager.reset();
@@ -116,6 +114,9 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /* If the event is an end-and-start event. */
                 if (event.isEndAndStart) {
+
+                    /* Get the game ID. */
+                    let gameId = playManager.gameId;
 
                     /* Get the tagId of the event. */
                     var tagId = event.tagId;
