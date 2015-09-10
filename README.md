@@ -51,13 +51,13 @@ _NVM should be sourced in every environment you want to run node and grunt in_
 This will install Node.js and NPM (the Node.js package manager)
 
 ```
-nvm install 0.10
+nvm install 4
 ```
 
 ## Set default node version
 
 ```
-nvm alias default 0.10
+nvm alias default 4
 ```
 
 ## Install grunt
