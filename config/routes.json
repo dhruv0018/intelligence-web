@@ -581,6 +581,10 @@
         "*": true
     },
 
+    "Styleguide.Dialogs": {
+        "*": true
+    },
+
     "Styleguide.Colors": {
         "*": true
     },
