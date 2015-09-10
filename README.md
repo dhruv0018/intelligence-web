@@ -66,6 +66,12 @@ nvm alias default 4
 npm install -g npm@3
 ```
 
+## Login to NPM
+
+```
+npm login
+```
+
 ## Install grunt
 
 ```
