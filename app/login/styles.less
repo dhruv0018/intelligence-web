@@ -27,7 +27,7 @@
         margin-top: 5px;
         margin-bottom: 20px;
         font-weight: 500;
-        font-size: 35px;
+        font-size: 28px;
         text-transform: uppercase;
     }
 
@@ -67,19 +67,17 @@
         padding-right: 50px;
         border-right: thin solid @gray-border;
 
-        .icon-volleyball {
-            font-size: 60px;
-        }
-        .icon-football {
-            font-size: 60px;
-            margin-right: 20px;
-        }
-
         &.new-user {
 
             padding-right: 0;
             border-right: none;
         }
+    }
+
+    .icon-row > .icon {
+        font-size: 50px;
+        margin-right: 10px;
+        margin-left: 10px;
     }
 
     .oldLogin {
@@ -89,14 +87,6 @@
         padding-top: 30px;
         padding-left: 50px;
         text-align: center;
-
-        .icon {
-            font-size: 60px;
-
-            &.icon-basketball {
-                margin-right: 20px;
-            }
-        }
     }
 
     .app-links {
@@ -127,10 +117,40 @@
  * Responsive sizes.
  */
 
+@media only screen
+and (max-width: @screen-md) {
+    .login {
+        h1 {
+            font-size: 22px;
+        }
+
+        .icon-row > .icon {
+            font-size: 40px;
+        }
+    }
+}
+
+@media only screen
+and (max-width: @screen-sm) {
+    .login {
+        h1 {
+            font-size: 16px;
+        }
+
+        .icon-row > .icon {
+            font-size: 30px;
+        }
+
+        .password-reset,
+        .remember-me {
+            font-size: 14px;
+        }
+    }
+}
 
 /* Screens under 480px */
 @media only screen
-and (max-width: 479px) {
+and (max-width: @screen-xs) {
 
     .login {
 
@@ -168,10 +188,6 @@ and (max-width: 479px) {
                 width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
             }
 
-            .icon {
-                font-size: 30px;
-            }
-
             .button-signin {
 
                 width: 100%;
@@ -186,14 +202,6 @@ and (max-width: 479px) {
         .app-links {
             display: block;
 
-            .icon {
-                font-size: 30px;
-            }
-
-            .icon-football {
-                margin-right: 20px;
-            }
-
             p {
                 margin-top: 5px;
                 margin-bottom: 5px;
@@ -204,7 +212,7 @@ and (max-width: 479px) {
 
 /* Screens over 480px */
 @media only screen
-and (min-width: 480px) {
+and (min-width: @screen-xs) {
 
     .login {
         padding-top: 100px;
