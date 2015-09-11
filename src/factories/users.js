@@ -324,25 +324,25 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
              * @param {Integer} teamId - the teamId get role
-             * @returns {Object} the role object for the user. If no
+             * @returns {Array} the role object for the user. If no
              * role is defined, it will return `undefined`.
              * Gets the users role for a team.
              */
-            getRoleByTeamId: function(teamId) {
+            getRolesByTeamId: function(teamId) {
 
-                const roles = this.roles;
+                let rolesForTeam = [];
 
-                if (!roles) return undefined;
-
-                for (var i = 0; i < roles.length; i++) {
-
-                    if (roles[i].teamId === teamId) {
-
-                        return roles[i];
-                    }
+                if(this.hasNoRoles()) {
+                    return rolesForTeam;
                 }
 
-                return undefined;
+                this.roles.forEach( function (role) {
+                    if (role.teamId === teamId) {
+                        rolesForTeam.push(role);
+                    }
+                });
+
+                return rolesForTeam;
             },
 
             /**
