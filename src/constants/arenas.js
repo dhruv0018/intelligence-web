@@ -70,6 +70,13 @@ var ARENA_TYPES = {
         name: 'Ice Hockey',
         type: 'ICE_HOCKEY',
         orientation: 'landscape'
+    },
+
+    10: {
+        id: 10,
+        name: 'V1 Basketball',
+        type: 'BASKETBALL_V1',
+        orientation: 'landscape'
     }
 };
 
@@ -85,7 +92,8 @@ var ARENA_IDS = {
     6: 'LACROSSE',
     7: 'FOOTBALL',
     8: 'VOLLEYBALL',
-    9: 'ICE_HOCKEY'
+    9: 'ICE_HOCKEY',
+    10: 'BASKETBALL_V1'
 };
 
 IntelligenceWebClient.constant('ARENA_IDS', ARENA_IDS);
@@ -116,6 +124,15 @@ var ARENA_REGIONS = {
             id: 4,
             name: 'Behind the Arc',
             description: 'from behind the arc'
+        }
+    },
+
+    BASKETBALL_V1: {
+
+        'COURT': {
+            id: 17,
+            name: 'Court',
+            description: 'the court'
         }
     },
 
@@ -153,6 +170,7 @@ var ARENA_REGIONS = {
     },
 
     VOLLEYBALL: {
+
         'COURT': {
             id: 10,
             name: 'Court',
@@ -161,6 +179,7 @@ var ARENA_REGIONS = {
     },
 
     ICE_HOCKEY: {
+
         'BEHIND_THE_NET': {
             id: 11,
             name: 'Behind the net',
@@ -213,7 +232,8 @@ var ARENA_REGIONS_BY_ID = {
     13: ARENA_REGIONS.ICE_HOCKEY.SLOT,
     14: ARENA_REGIONS.ICE_HOCKEY.WING,
     15: ARENA_REGIONS.ICE_HOCKEY.BLUE_LINE,
-    16: ARENA_REGIONS.ICE_HOCKEY.OUTSIDE_THE_ZONE
+    16: ARENA_REGIONS.ICE_HOCKEY.OUTSIDE_THE_ZONE,
+    17: ARENA_REGIONS.BASKETBALL_V1.COURT
 };
 
 IntelligenceWebClient.constant('ARENA_REGIONS_BY_ID', ARENA_REGIONS_BY_ID);
