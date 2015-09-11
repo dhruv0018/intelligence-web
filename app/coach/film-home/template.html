@@ -26,15 +26,12 @@
 
         <h3>Team Roster</h3>
 
-        <div class="sidebar-athlete" ng-repeat="teamPlayer in teamPlayers | orderBy: sortPlayers track by $index" ng-if="teamPlayer.isActive">
-            <img ng-if="users[players[teamPlayer.id].userId].imageUrl" ng-src="{{users[players[teamPlayer.id].userId].imageUrl}}" width="40" height="40" alt="Avatar">
-            <profile-placeholder ng-if="!users[players[teamPlayer.id].userId].imageUrl" data-size="small"></profile-placeholder>
-
-            <div class="sidebar-athlete-info">
-                <span ng-show="teamPlayer.jerseyNumber">#{{teamPlayer.jerseyNumber}}</span>
-                <span>{{players[teamPlayer.id].firstName[0] + '.'}} {{players[teamPlayer.id].lastName}}</span>
-            </div>
-        </div>
+        <krossover-athlete ng-repeat="teamPlayer in teamPlayers | orderBy: sortPlayers track by $index"
+                           athlete="players[teamPlayer.id]"
+                           team="team"
+                           roster-id="roster.id"
+                           editable="false"
+                           ng-if="teamPlayer.isActive"></krossover-athlete>
     </aside>
 
     <main class="content-full">
