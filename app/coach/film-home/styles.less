@@ -2,16 +2,23 @@
 
 .film-home {
 
+    // TODO: Move lots of the most-common styles to new theme for 'select-tabs' to reuse
     .filter-bar {
 
-        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
         border-bottom: 1px solid @gray-border;
         background-color: @gray-lightest;
         padding: 20px;
         line-height: normal;
 
-        ul {
-            border: none;
+        .filters-select-tabs {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 5px;
         }
 
         h3 {
@@ -25,12 +32,11 @@
             .btn;
             background-color: @gray-lighter;
             font-weight: 400;
-            margin-left: 5px;
-            margin-right: 5px;
+            margin: 3px 5px;
             border-radius: 4px;
             padding-top: 4px;
             padding-bottom: 4px;
-            font-size: 16px;
+            font-size: @font-size-base;
             text-transform: capitalize;
             &.active,
             &:active,
@@ -47,32 +53,17 @@
             }
         }
 
-        .film-home-tabs {
-
-            .pull-left;
-        }
-
         .film-search {
-
-            .pull-right;
 
             .film-search-input {
                 .form-control;
-                .pull-left;
-                display: inline;
                 width: 250px;
-                margin-left: 5px;
-                margin-right: 5px;
+                margin: 0px 5px;
             }
 
             .btn-film-search {
                 .btn-filter;
-                .pull-right;
-                display: inline;
-                padding-top: 6px;
-                padding-bottom: 6px;
-                padding-left: 20px;
-                padding-right: 20px;
+                padding: 6px 20px;
                 border: 1px solid rgb(221,221,221);
             }
         }

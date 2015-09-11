@@ -79,6 +79,7 @@
 
                     <a
                         class="download control-button"
+                        ng-if="!isPublicUser"
                         ng-href="{{videoPlayer.sources[0].src}}"
                         tooltip="Download"
                         download
@@ -92,6 +93,7 @@
                     ></select-media-src>
 
                     <vg-fullscreen-button
+                        ng-hide="videoPlayer.fullscreenEnabled && videoPlayer.fullscreenElement !== videoPlayer.videogularElement"
                         krossover-blur-on-select
                         tooltip="Toggle Fullscreen"
                     ></vg-fullscreen-button>
