@@ -179,8 +179,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
             },
             getByRelatedRole:function(userId, teamId) {
 
-                var self = this;
-
                 userId = userId || session.getCurrentUserId();
                 teamId = teamId || session.getCurrentTeamId();
 
@@ -188,14 +186,15 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (session.currentUser.is(ROLES.COACH)) {
 
-                    reels = reels.concat(self.getByUploaderRole(userId, teamId));
-                    reels = reels.concat(self.getByUploaderTeamId(teamId));
-                    reels = reels.concat(self.getBySharedWithTeamId(teamId));
+                    reels = reels.concat(
+                            this.getByUploaderRole(userId, teamId),
+                            this.getByUploaderTeamId(teamId),
+                            this.getBySharedWithTeamId(teamId));
                 }
 
                 else if (session.currentUser.is(ROLES.ATHLETE)) {
 
-                    reels = reels.concat(self.getByUploaderUserId(userId));
+                    reels = reels.concat(this.getByUploaderUserId(userId));
 
                     reels = reels.filter(function(reel) {
 
@@ -203,12 +202,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     });
                 }
 
-                reels = reels.concat(self.getBySharedWithUserId(userId));
-                reels = reels.concat(self.getBySharedWithTeamId(teamId));
+                reels = reels.concat(this.getBySharedWithUserId(userId));
+                reels = reels.concat(this.getBySharedWithTeamId(teamId));
 
-                var reelIds = utilities.unique(self.getIds(reels));
+                var reelIds = utilities.unique(this.getIds(reels));
 
-                return self.getList(reelIds);
+                return this.getList(reelIds);
             },
 
             addPlays: function(playIds) {
@@ -251,27 +250,25 @@ IntelligenceWebClient.factory('ReelsFactory', [
              */
             shareWithTeam: function(team, isTelestrationsShared = false) {
 
-                const self = this;
-
                 if (!team) throw new Error('No team to share with');
 
-                self.shares = self.shares || [];
+                this.shares = this.shares || [];
 
-                self.sharedWithTeams = self.sharedWithTeams || {};
+                this.sharedWithTeams = this.sharedWithTeams || {};
 
-                if (self.isSharedWithTeam(team)) return;
+                if (this.isSharedWithTeam(team)) return;
 
                 const share = {
                     userId: session.currentUser.id,
-                    reelId: self.id,
+                    reelId: this.id,
                     sharedWithTeamId: team.id,
                     createdAt: moment.utc().toDate(),
                     isTelestrationsShared: isTelestrationsShared
                 };
 
-                self.sharedWithTeams[team.id] = share;
+                this.sharedWithTeams[team.id] = share;
 
-                self.shares.push(share);
+                this.shares.push(share);
             },
 
             /**
@@ -281,21 +278,19 @@ IntelligenceWebClient.factory('ReelsFactory', [
              */
             stopSharing: function(share) {
 
-                const self = this;
-
                 if (!share) throw new Error('No share to remove');
 
-                if (!self.shares || !self.shares.length) return;
+                if (!this.shares || !this.shares.length) return;
 
-                for (var index = 0; index < self.shares.length; index++) {
-                    if ((self.shares[index].sharedWithUserId === share.sharedWithUserId) &&
-                            (self.shares[index].sharedWithTeamId === share.sharedWithTeamId)) {
-                        self.shares.splice(index, 1);
+                for (var index = 0; index < this.shares.length; index++) {
+                    if ((this.shares[index].sharedWithUserId === share.sharedWithUserId) &&
+                            (this.shares[index].sharedWithTeamId === share.sharedWithTeamId)) {
+                        this.shares.splice(index, 1);
                         if (share.sharedWithUserId) {
-                            delete self.sharedWithUsers[share.sharedWithUserId];
+                            delete this.sharedWithUsers[share.sharedWithUserId];
                         }
                         if (share.sharedWithTeamId) {
-                            delete self.sharedWithTeams[share.sharedWithTeamId];
+                            delete this.sharedWithTeams[share.sharedWithTeamId];
                         }
                         return;
                     }
@@ -320,13 +315,11 @@ IntelligenceWebClient.factory('ReelsFactory', [
              * @return {Object}
              */
             getShareByTeam: function(team) {
-                const self = this;
-
-                if (!self.sharedWithTeams) throw new Error('sharedWithTeams not defined');
+                if (!this.sharedWithTeams) throw new Error('sharedWithTeams not defined');
 
                 if (!team) throw new Error('No team to get share from');
 
-                return self.getShareByTeamId(team.id);
+                return this.getShareByTeamId(team.id);
             },
             getShareByUserId: function(userId) {
                 var self = this;
@@ -343,11 +336,9 @@ IntelligenceWebClient.factory('ReelsFactory', [
              * @return {Object}
              */
             getShareByTeamId: function(teamId) {
-                var self = this;
+                if (!this.sharedWithTeams) throw new Error('sharedWithTeams not defined');
 
-                if (!self.sharedWithTeams) throw new Error('sharedWithTeams not defined');
-
-                return self.sharedWithTeams[teamId];
+                return this.sharedWithTeams[teamId];
             },
             isSharedWithUser: function(user) {
                 var self = this;
@@ -365,13 +356,11 @@ IntelligenceWebClient.factory('ReelsFactory', [
              * @return {boolean}
              */
             isSharedWithTeam: function(team) {
-                var self = this;
-
                 if (!team) return false;
 
-                if (!self.sharedWithTeams) return false;
+                if (!this.sharedWithTeams) return false;
 
-                return angular.isDefined(self.getShareByTeam(team));
+                return angular.isDefined(this.getShareByTeam(team));
             },
             isSharedWithUserId: function(userId) {
                 var self = this;
@@ -389,13 +378,11 @@ IntelligenceWebClient.factory('ReelsFactory', [
              * @return {boolean}
              */
             isSharedWithTeamId: function(teamId) {
-                const self = this;
-
                 if (!teamId) return false;
 
-                if (!self.sharedWithTeams) return false;
+                if (!this.sharedWithTeams) return false;
 
-                return angular.isDefined(self.getShareByTeamId(teamId));
+                return angular.isDefined(this.getShareByTeamId(teamId));
             },
             isTelestrationsSharedWithUser: function(user) {
                 var self = this;
@@ -414,9 +401,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return self.isTelestrationsSharedWithTeam('isTelestrationsShared', team);
             },
             isTelestrationsSharedPublicly: function() {
-                var self = this;
-
-                return self.isFeatureSharedPublicly('isTelestrationsShared');
+                return this.isFeatureSharedPublicly('isTelestrationsShared');
             },
             getUserShares: function() {
                 var self = this;
@@ -437,17 +422,9 @@ IntelligenceWebClient.factory('ReelsFactory', [
              * @return {Array}
              */
             getTeamShares: function() {
-                const self = this;
+                if (!this.sharedWithTeams) throw new Error('sharedWithTeams not defined');
 
-                if (!self.sharedWithTeams) throw new Error('sharedWithTeams not defined');
-
-                let sharesArray = [];
-
-                angular.forEach(self.sharedWithTeams, function(share, index) {
-                    sharesArray.push(share);
-                });
-
-                return sharesArray;
+                return self.sharedWithTeams.map(share => angular.copy(share));
             },
             togglePublicSharing: function(isTelestrationsShared = false) {
                 var self = this;
@@ -517,14 +494,13 @@ IntelligenceWebClient.factory('ReelsFactory', [
              * @return {boolean}
              */
             isFeatureSharedWithTeam: function(featureAttribute, team) {
-                const self = this;
 
                 if (!featureAttribute) throw new Error('Missing \'featureAttribute\' parameter');
                 if (typeof featureAttribute !== 'string') throw new Error('featureAttribute parameter must be a string');
 
-                const teamShare = self.getShareByTeam(team);
+                const teamShare = this.getShareByTeam(team);
 
-                if (angular.isDefined(teamShare) && teamShare[featureAttribute] === true) return true;
+                return angular.isDefined(teamShare) && teamShare[featureAttribute];
             },
             toggleTeamShare: function(teamId, isTelestrationsShared = false) {
                 var self = this;
