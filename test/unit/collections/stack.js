@@ -54,15 +54,19 @@ describe('Stack', () => {
 
     it('should have a "top" method that returns the object at the top of the stack without removing it.', () => {
 
-        expect(sampleStack.top()).to.equal(srcArray[srcArray.length - 1]);
+        let data = sampleStack.list.data;
+
+        expect(sampleStack.top()).to.equal(data[data.length - 1]);
     });
 
     it('should have an "push" method that adds an element to the top of the stack', () => {
 
+        let data = sampleStack.list.data;
+
         expect(sampleStack.size).to.equal(13);
         sampleStack.push(4);
         expect(sampleStack.size).to.equal(14);
-        expect(sampleStack.list.data[sampleStack.list.data.length - 1]).to.equal(4);
+        expect(data[data.length - 1]).to.equal(4);
     });
 
     it('should have an "pop" method that removes an element to the top of the stack', () => {
