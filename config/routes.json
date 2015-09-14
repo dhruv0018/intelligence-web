@@ -568,6 +568,20 @@
         "*": true
     },
 
+    "Embed": {
+
+        "*": true
+    },
+
+    "Embed.Restricted": {
+        "*": true
+    },
+
+    "ShortEmbed": {
+
+        "*": true
+    },
+
     "UpdatedTermsAndConditions": {
         "*": true
     },
