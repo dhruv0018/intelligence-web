@@ -3,7 +3,7 @@
     <aside class="sidebar">
 
         <!-- ROSTER DIRECTIVE -->
-        <player-information data-user="athlete.user" data-players="athlete.players"></player-information>
+        <player-information></player-information>
 
     </aside>
 
@@ -13,10 +13,10 @@
         <header class="filter-bar">
             <ul class="nav nav-tabs">
                 <li><h3>Filter Film:</h3></li>
-                <film-home-tabs data-ng-model="filmsList"></film-home-tabs>
+                <film-home-tabs ng-model="filmsList"></film-home-tabs>
 
                 <form class="film-search">
-                    <input id="film-search-cta" type="text" class="film-search-input" data-ng-model="query" placeholder="Search for film"/>
+                    <input id="film-search-cta" type="text" class="film-search-input" ng-model="query" placeholder="Search for film"/>
                 </form>
 
             </ul>
@@ -26,7 +26,7 @@
         <!-- NG-REPEAT FILM DIRECTIVES -->
 
         <div ng-show="filteredFilmsList.length > 0 " class="films-area">
-            <krossover-film data-ng-repeat="film in filteredFilmsList = (filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate)" data-film="film"></krossover-film>
+            <krossover-film ng-repeat="film in filteredFilmsList = (filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate)" film="film"></krossover-film>
         </div>
     </main>
 

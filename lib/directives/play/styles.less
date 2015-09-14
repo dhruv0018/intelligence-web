@@ -12,6 +12,11 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    background-color: white;
+
+    .icon-play-circle {
+        background-color: white;
+    }
 
     &:hover,
     &.active {
@@ -20,6 +25,10 @@
 
         .playHeadingContainer .playHeading h4 {
             color: black;
+        }
+
+        .icon-play-circle {
+            background-color: @gray-lightest;
         }
     }
 
@@ -33,6 +42,10 @@
 
     &.play-selected {
         background-color: @play-selected-bg;
+
+        .icon-play-circle {
+            background-color: @play-selected-bg;
+        }
     }
 
     a.accordion-toggle {
@@ -57,6 +70,14 @@
             display: none;
         }
     }
+
+    .no-checkbox > .event {
+        margin-left: 14px;
+    }
+
+    .no-play-button > .event::after {
+        display: none;
+    }
 }
 
 .play__reel {
@@ -67,5 +88,13 @@
 
     &.edit-mode {
         cursor: move;
+    }
+}
+
+.item {
+
+    .value {
+
+        font-weight: 500;
     }
 }

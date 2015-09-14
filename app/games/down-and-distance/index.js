@@ -156,7 +156,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
                     value: 'long'
                 }
             ],
-            'weight': [
+            'strength': [
                 {
                     name: 'Any',
                     value: undefined
@@ -231,7 +231,7 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
             gameId: $scope.game.id,
             teamId: $scope.teamId,
             distance: $scope.options.distance[0].value,
-            strength: $scope.options.weight[0].value,
+            strength: $scope.options.strength[0].value,
             redZone: $scope.options.redZone[0].value,
             hash: $scope.options.hash[0].value,
             down: $scope.options.down[0].value,
