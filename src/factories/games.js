@@ -274,13 +274,12 @@ IntelligenceWebClient.factory('GamesFactory', [
             */
             isAllowedToView: function() {
 
-                let self = this;
-                //Check if user has permissions to view reel
-                let isAllowed = self.isSharedWithPublic() ||
-                                self.isSharedWithUserId(session.getCurrentUserId()) ||
-                                ((session.currentUser.is(ROLES.COACH)) && self.isSharedWithTeamId(session.getCurrentTeamId()));
+                //Check if user has permissions to view game
+                return this.isSharedWithPublic() ||
+                        this.uploaderUserId === session.getCurrentUserId() ||
+                        (currentUser.is(ROLES.COACH) && this.uploaderTeamId === session.getCurrentTeamId()) ||
+                        this.isSharedWithCurrentUser(session.currentUser);
 
-                return isAllowed;
             },
 
             isPlayerOnOpposingTeam: function(playerId) {
@@ -1225,9 +1224,21 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.getShareByTeamId(team.id);
             },
 
+            /**
+             * get game sharing by logged in user
+             * @return {Object}
+             */
             getShareByCurrentUser: function() {
 
-                return this.getShareByUser(session.getCurrentUser());
+                if (this.isSharedWithUser(session.getCurrentUser())) {
+                    return this.getShareByUser(session.getCurrentUser());
+                }
+
+                const teamId = session.getCurrentTeamId();
+                if ((session.currentUser.is(ROLES.COACH)) && this.isSharedWithTeamId(teamId)) {
+                    return this.getShareByTeamId(teamId);
+                }
+
             },
 
             getShareByUserId: function(userId) {
@@ -1273,10 +1284,27 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return angular.isDefined(this.getShareByTeam(team));
             },
 
+            /**
+             * check reel shared with loggedin user
+             * @return {boolean}
+             */
             isSharedWithCurrentUser: function() {
 
-                return this.isSharedWithUser(session.getCurrentUser());
+                return this.isSharedWithUser(session.getCurrentUser()) ||
+                        ((session.currentUser.is(ROLES.COACH)) && this.isSharedWithTeamId(session.getCurrentTeamId()));
+
             },
+
+            /**
+             * check reel shared with loggedin user
+             * @return {boolean}
+             */
+            isBreakdownSharedWithCurrentUser: function() {
+
+                return this.isSharedWithCurrentUser() && this.getShareByCurrentUser().isBreakdownShared;
+
+            },
+
             isSharedWithUserId: function(userId) {
                 var self = this;
 
@@ -1322,6 +1350,22 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return self.sharedWithTeams.map(share => angular.copy(share));
             },
+
+            /**
+             * get all shares excluding the public share
+             * @return {Array}
+             */
+            getNonPublicShares: function() {
+                let sharesArray = [];
+                const self = this;
+                self.shares.forEach(function(share) {
+                    if (!self.isPublicShare(share)) {
+                        sharesArray.push(share);
+                    }
+                });
+                return sharesArray;
+            },
+
             togglePublicSharing: function(isTelestrationsShared = false) {
                 var self = this;
 
@@ -1353,6 +1397,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return self.publicShare;
             },
+
+            /**
+             * check if the share is public share object
+             * @param {Object} share
+             * @return {boolean}
+             */
+            isPublicShare: function(share) {
+                return share === this.getPublicShare();
+            },
+
             isFeatureSharedPublicly: function(featureAttribute) {
                 var self = this;
 

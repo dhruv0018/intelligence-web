@@ -83,7 +83,11 @@
 	        	<form>
 	        	    <span>Start typing the name of the user you want to share with.</span>
 	        		<role-typeahead id="share-film-others-name-field" ng-model="user" filter="filter"></role-typeahead>
-	        		<button type="submit" class="btn btn-primary" ng-disabled="!user.id || film.isSharedWithUser(user) || (user.id === currentUser.id && user.team.id === team.id) || (!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE))" ng-click="shareSubmit(user); user = null">Add</button>
+	        		<button type="submit" class="btn btn-primary"
+	        		ng-disabled="!user.id || film.isSharedWithUser(user) ||
+	        		 (user.id === currentUser.id && user.team.id === team.id) ||
+	        		 (!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE))"
+	        		ng-click="shareSubmit(user); user = null">Add</button>
 	        	</form>
 	        	<div class="how-to-search">
 	                <p ng-show="isGame && currentUser.is(ROLES.COACH)" class="public-breakdown-information">
@@ -93,13 +97,12 @@
             </div>
         	<div ng-show="film.shares.length" class="shared-with-table">
         		<div class="shared-with-header">Shared with:</div>
-        		<div class="shared-with" ng-repeat="share in film.shares" ng-hide="!isGame && team.isMember(share.sharedWithUserId) && users.get(share.sharedWithUserId).is(ROLES.ATHLETE)">
+        		<div class="shared-with" ng-repeat="share in film.getNonPublicShares()" ng-hide="!isGame && team.isMember(share.sharedWithUserId) && users.get(share.sharedWithUserId).is(ROLES.ATHLETE) && (!film.isPublicShare(share))">
         			<strong ng-if="share.sharedWithUserId" ng-class="{'user-for-game': isGame}">{{usersMap[share.sharedWithUserId].firstName}} {{usersMap[share.sharedWithUserId].lastName}} </strong>
         			<strong ng-if="share.sharedWithTeamId" ng-class="{'user-for-game': isGame}">Coaching staff, {{teamsMap[share.sharedWithTeamId].name}}</strong>
                     <span class="pull-right">
-                        <select id="share-film-others-options-cta" ng-model="share.isBreakdownShared" ng-change="film.save()" ng-show="isGame">
-                            <option id="share-film-others-raw-film-only-cta" value="false">Sharing raw film only</option>
-                            <option id="share-film-others-raw-film-and-breakdown-cta" value="true">Sharing raw film and breakdown</option>
+                        <select id="share-film-others-options-cta" ng-model="share.isBreakdownShared" ng-change="film.save()" ng-show="isGame"
+                            ng-options="sharingBreakdownOption.value as sharingBreakdownOption.label for sharingBreakdownOption in sharingBreakdownOptions" >
                         </select>
                         <span ng-show="!isGame">Sharing reel</span>
                     	<i class="icon icon-remove" ng-click="shareRevoke(share)"></i>

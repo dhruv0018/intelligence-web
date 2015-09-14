@@ -165,17 +165,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
             */
             isAllowedToView: function() {
 
-                let self = this;
-                let currentUser = session.getCurrentUser();
-
                 //Check if user has permissions to view reel
-                let isAllowed = self.isSharedWithPublic() ||
-                                self.uploaderUserId === session.getCurrentUserId() ||
-                                (currentUser.is(ROLES.COACH) && self.uploaderTeamId === session.getCurrentTeamId()) ||
-                                self.isSharedWithUser(session.getCurrentUser()) ||
-                                ((session.currentUser.is(ROLES.COACH)) && self.isSharedWithTeamId(session.getCurrentTeamId()));
+                return this.isSharedWithPublic() ||
+                        this.uploaderUserId === session.getCurrentUserId() ||
+                        (currentUser.is(ROLES.COACH) && this.uploaderTeamId === session.getCurrentTeamId()) ||
+                        this.isSharedWithCurrentUser(session.currentUser);
 
-                return isAllowed;
             },
             getByRelatedRole:function(userId, teamId) {
 
@@ -362,6 +357,17 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return angular.isDefined(this.getShareByTeam(team));
             },
+
+            /**
+             * check reel shared with loggedin user
+             * @return {boolean}
+             */
+            isSharedWithCurrentUser: function() {
+
+                return this.isSharedWithUser(session.getCurrentUser()) ||
+                        ((session.currentUser.is(ROLES.COACH)) && self.isSharedWithTeamId(session.getCurrentTeamId()));
+            },
+
             isSharedWithUserId: function(userId) {
                 var self = this;
 
@@ -426,6 +432,22 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return self.sharedWithTeams.map(share => angular.copy(share));
             },
+
+            /**
+             * get all shares excluding the public share
+             * @return {Array}
+             */
+            getNonPublicShares: function() {
+                let sharesArray = [];
+                const self = this;
+                self.shares.forEach(function(share) {
+                    if (!self.isPublicShare(share)) {
+                        sharesArray.push(share);
+                    }
+                });
+                return sharesArray;
+            },
+
             togglePublicSharing: function(isTelestrationsShared = false) {
                 var self = this;
 
@@ -467,6 +489,16 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (angular.isDefined(publicShare)) return true;
             },
+
+            /**
+             * check if the share is public share object
+             * @param {Object} share
+             * @return {boolean}
+             */
+            isPublicShare: function(share) {
+                return share === this.getPublicShare();
+            },
+
             isFeatureSharedPublicly: function(featureAttribute) {
                 var self = this;
 
