@@ -88,11 +88,11 @@
 	        		 (!isGame && team.isMember(user.id) && user.is(ROLES.ATHLETE))"
 	        		ng-click="shareSubmit(user); user = null">Add</button>
 	        	</form>
-	        	<div class="how-to-search">
-	                <p ng-show="isGame && currentUser.is(ROLES.COACH)" class="public-breakdown-information">
-	                    Please note that if you share a breakdown with the public, the breakdown will automatically be available for all users you select below.
-	                </p>
-	            </div>
+            </div>
+            <div class="how-to-search">
+	            <p ng-show="isGame && currentUser.is(ROLES.COACH)" class="public-breakdown-information">
+	                Please note that if you share a breakdown with the public, the breakdown will automatically be available for all users you select below.
+	            </p>
             </div>
         	<div ng-show="film.shares.length" class="shared-with-table">
         		<div class="shared-with-header">Shared with:</div>
