@@ -229,7 +229,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     reelId: self.id,
                     sharedWithUserId: user.id,
                     createdAt: moment.utc().toDate(),
-                    isTelestrationsShared: isTelestrationsShared
+                    isTelestrationsShared
                 };
 
                 self.sharedWithUsers[user.id] = share;
@@ -258,7 +258,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                     reelId: this.id,
                     sharedWithTeamId: team.id,
                     createdAt: moment.utc().toDate(),
-                    isTelestrationsShared: isTelestrationsShared
+                    isTelestrationsShared
                 };
 
                 this.sharedWithTeams[team.id] = share;
@@ -465,7 +465,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                         reelId: self.id,
                         sharedWithUserId: null,
                         createdAt: moment.utc().toDate(),
-                        isTelestrationsShared: isTelestrationsShared
+                        isTelestrationsShared
                     };
 
                     self.shares.push(share);
@@ -554,7 +554,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                         reelId: self.id,
                         sharedWithTeamId: teamId,
                         createdAt: moment.utc().toDate(),
-                        isTelestrationsShared: isTelestrationsShared
+                        isTelestrationsShared
                     };
 
                     self.shares.push(share);

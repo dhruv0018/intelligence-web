@@ -1281,7 +1281,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (!this.sharedWithTeams) return false;
 
-                return angular.isDefined(this.getShareByTeam(team));
+                return !!this.getShareByTeam(team);
             },
 
             /**
