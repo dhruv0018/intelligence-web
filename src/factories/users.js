@@ -332,15 +332,9 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 let rolesForTeam = [];
 
-                if(this.hasNoRoles()) {
-                    return rolesForTeam;
+                if(!this.hasNoRoles()) {
+                    rolesForTeam = this.roles.filter(role => (role.teamId === teamId));
                 }
-
-                this.roles.forEach( function (role) {
-                    if (role.teamId === teamId) {
-                        rolesForTeam.push(role);
-                    }
-                });
 
                 return rolesForTeam;
             },

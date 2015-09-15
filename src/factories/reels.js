@@ -438,14 +438,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
              * @return {Array}
              */
             getNonPublicShares: function() {
-                let sharesArray = [];
-                const self = this;
-                self.shares.forEach(function(share) {
-                    if (!self.isPublicShare(share)) {
-                        sharesArray.push(share);
-                    }
-                });
-                return sharesArray;
+                return this.shares.filter(share => !this.isPublicShare(share));
             },
 
             togglePublicSharing: function(isTelestrationsShared = false) {
