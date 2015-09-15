@@ -58,9 +58,11 @@ class KrossoverEvent extends Entity {
 
             let variableValue;
 
-            if (event && event.variableValues) {
+            // few tag variable are not mandatory they have tagVariable.isRequired as false
+            if (event && event.variableValues && !!event.variableValues[tagVariable.id]) {
 
                 variableValue = event.variableValues[tagVariable.id];
+
             } else {
 
                 variableValue = {value: undefined};
