@@ -7,8 +7,6 @@ import EmbedController from './controller.js';
 import template from './template.html.js';
 import restricted from './restricted.html.js';
 
-const templateUrl = './template.html';
-const restrictedUrl = './restricted.html';
 /**
  * Embed module.
  * @module Embed
@@ -19,16 +17,6 @@ const Embed = angular.module('Embed', [
 ]);
 
 Embed.factory('EmbedDataDependencies', EmbedDataDependencies);
-
-/* Cache the template file */
-Embed.run([
-    '$templateCache',
-    function run ($templateCache) {
-
-        $templateCache.put(templateUrl, template);
-        $templateCache.put(restrictedUrl, restricted);
-    }
-]);
 
 /**
  * Embed state router.
@@ -60,7 +48,7 @@ Embed.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: restrictedUrl
+                    template: restricted
                 }
             }
         };
@@ -71,7 +59,7 @@ Embed.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl,
+                    template,
                     controller: EmbedController
                 }
             },
