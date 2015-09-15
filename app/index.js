@@ -33,6 +33,6 @@ var App = angular.module('App', [
     'Games',
     'Clips',
     'Reel',
-    'Styleguide',
-    'Embed'
+    'Embed',
+    'Styleguide'
 ]);
