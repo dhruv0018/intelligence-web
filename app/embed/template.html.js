@@ -8,9 +8,6 @@ export default `
                     class="embed-video-container"
                     poster-image="posterImage"
                     video="video"
-                    cue-points="cuePoints"
-                    telestrations="telestrationsEntity"
-                    telestrations-permissions="telestrationsPermissions"
                     play-id="currentPlayId"
                 >
                 </video-player>
