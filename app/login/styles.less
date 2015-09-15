@@ -117,10 +117,35 @@
  * Responsive sizes.
  */
 
+@media only screen
+and (max-width: @screen-md) {
+    .login {
+        h1 {
+            font-size: 22px;
+        }
+
+        .icon-row > .icon {
+            font-size: 40px;
+        }
+    }
+}
+
+@media only screen
+and (max-width: @screen-sm) {
+    .login {
+        h1 {
+            font-size: 16px;
+        }
+
+        .icon-row > .icon {
+            font-size: 30px;
+        }
+    }
+}
 
 /* Screens under 480px */
 @media only screen
-and (max-width: 479px) {
+and (max-width: @screen-xs) {
 
     .login {
 
@@ -169,10 +194,6 @@ and (max-width: 479px) {
             }
         }
 
-        .icon-row > .icon {
-            font-size: 30px;
-        }
-
         .app-links {
             display: block;
 
@@ -186,7 +207,7 @@ and (max-width: 479px) {
 
 /* Screens over 480px */
 @media only screen
-and (min-width: 480px) {
+and (min-width: @screen-xs) {
 
     .login {
         padding-top: 100px;
