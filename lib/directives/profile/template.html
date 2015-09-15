@@ -8,8 +8,7 @@
             <a data-ng-if="player.firstName && player.lastName" data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
                 <span class="info">
                     <span class="jerseyNumber" ng-show="rosterEntry.playerInfo.jerseyNumber">#{{rosterEntry.playerInfo.jerseyNumber}}</span>
-                    {{player.firstName[0]}}.
-                    {{player.lastName}}
+                    {{player.shortName}}
                 </span>
             </a>
             <span data-ng-if="!player.firstName && !player.lastName">Saving Player</span>

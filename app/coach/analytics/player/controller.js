@@ -74,7 +74,7 @@ function PlayerAnalyticsController(
             let jerseyNumber = team.roster.playerInfo[player.id].jerseyNumber;
             player.extendedName = '#' + jerseyNumber + ' ' + player.firstName[0] + '. ' + player.lastName;
         } else {
-            player.extendedName = player.firstName[0] + '. ' + player.lastName;
+            player.extendedName = player.shortName;
         }
     });
 
