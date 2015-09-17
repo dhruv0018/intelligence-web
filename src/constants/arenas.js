@@ -6,9 +6,14 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 // This map is keyed by arena id's, usually off of the league object
-
 var ARENA_TYPES = {
 
+    /**
+     * FIXME:
+     * Refactor to use semantic  ID's
+     * e.g. BASKETBALL_HS
+     * See GAME_STATUSES for format
+     */
     1: {
         id: 1,
         name: 'High School Basketball',
