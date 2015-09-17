@@ -1,7 +1,5 @@
 <div class="krossover-arena" ng-class="{'highlight-regions': highlightRegions}">
 
-    <ng-transclude></ng-transclude>
-
     <!-- Football -->
     <krossover-arena-football-field
         ng-if="type.indexOf('FOOTBALL') >= 0"
@@ -34,5 +32,7 @@
         ng-if="type.indexOf('ICE_HOCKEY') >= 0"
         ng-model="region"
     ></ice-hockey-arena>
+
+    <ng-transclude></ng-transclude>
 
 </div>
