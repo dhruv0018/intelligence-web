@@ -26,7 +26,7 @@
 
         <h3>Team Roster</h3>
 
-        <krossover-athlete ng-repeat="teamPlayer in teamPlayers | orderBy: sortPlayers track by $index"
+        <krossover-athlete ng-repeat="teamPlayer in teamPlayers | orderBy: getPlayerJerseysAsNumbers track by $index"
                            athlete="players[teamPlayer.id]"
                            team="team"
                            roster-id="roster.id"

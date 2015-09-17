@@ -61,7 +61,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
         //ui
         $scope.filteredFilmsList = $scope.filmsList;
 
-        $scope.sortPlayers = function(playerInfo) {
+        $scope.getPlayerJerseysAsNumbers = function(playerInfo) {
             return Number(playerInfo.jerseyNumber);
         };
     }
