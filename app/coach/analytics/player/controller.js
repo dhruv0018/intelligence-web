@@ -72,7 +72,7 @@ function PlayerAnalyticsController(
     $scope.players.forEach(player => {
         if (team.roster.playerInfo[player.id].jerseyNumber) {
             let jerseyNumber = team.roster.playerInfo[player.id].jerseyNumber;
-            player.extendedName = '#' + jerseyNumber + ' ' + player.firstName[0] + '. ' + player.lastName;
+            player.extendedName = '#' + jerseyNumber + ' ' + player.shortName;
         } else {
             player.extendedName = player.shortName;
         }
