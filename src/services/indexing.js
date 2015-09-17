@@ -13,7 +13,6 @@ IntelligenceWebClient.factory('IndexingService', [
     function(plays, EVENT, config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter, utils) {
 
         /*Stack used to keep track of tags when clicking the back command*/
-        this.tagStack = new Stack();
 
         var IndexingService = {
 
@@ -23,7 +22,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.showScript = false;
                 this.isIndexing = false;
                 this.eventSelected = false;
-                this.tagStack.clear();
+                this.tagStack = new Stack();
 
                 game.currentPeriod = 0;
                 game.indexedScore = 0;
