@@ -1,4 +1,5 @@
 import KrossoverEvent from '../entities/event/index';
+import Stack from '../collections/stack.js';
 
 var pkg = require('../../package.json');
 
@@ -11,6 +12,9 @@ IntelligenceWebClient.factory('IndexingService', [
     'PlaysFactory', 'EVENT', 'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter', 'Utilities',
     function(plays, EVENT, config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter, utils) {
 
+        /*Stack used to keep track of tags when clicking the back command*/
+        this.tagStack = new Stack();
+
         var IndexingService = {
 
             reset: function(tagset, game, plays) {
@@ -19,6 +23,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.showScript = false;
                 this.isIndexing = false;
                 this.eventSelected = false;
+                this.tagStack.clear();
 
                 game.currentPeriod = 0;
                 game.indexedScore = 0;
@@ -81,8 +86,20 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Add event to the current play. */
                 playManager.addEvent(eventManager.current);
 
-                this.showTags = false;
-                this.showScript = true;
+                /*Push onto the stack the new set of tags*/
+                let indexingTags = tagsManager.current;
+                this.tagStack.push({tags:indexingTags});
+
+                if(tag.isGroup) {
+                    this.next();
+                    this.isIndexing = true;
+                    this.showTags = true;
+                    this.showScript = false;
+                    videoPlayer.pause();
+                } else {
+                    this.showTags = false;
+                    this.showScript = true;
+                }
             },
 
             /**
@@ -164,6 +181,15 @@ IntelligenceWebClient.factory('IndexingService', [
             },
 
             /**
+            * Calls next then clears the tag stack since the previous tags do not
+            * need to be kept anymore to transverse backwards
+            */
+            returnFromNext: function() {
+                this.next();
+                this.tagStack.clear();
+            },
+
+            /**
             * Advances to next set of tags.
             */
             next: function() {
@@ -229,10 +255,21 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* If the tags are showing. */
                 else if (this.showTags) {
                     /* Drop back into not this state. */
-                    this.showTags = false;
-                    this.showScript = false;
-                    this.isIndexing = false;
-                    videoPlayer.play();
+
+                    if(!this.tagStack.isEmpty()) {
+
+                        /* If tag stack is not empty, pop the last set of tags
+                        and replace the current set of tags with the popped tags */
+                        let indexingTags = this.tagStack.pop();
+                        tagsManager.current = indexingTags.tags;
+                    } else {
+
+                        this.showTags = false;
+                        this.showScript = false;
+                        this.isIndexing = false;
+                        this.tagStack.clear();
+                        videoPlayer.play();
+                    }
                 }
 
                 else if (this.showScript) {
