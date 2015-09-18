@@ -105,8 +105,12 @@ function TagsetsFactory (
 
             if (tag.children && tag.children.length) {
 
-                return tag.children.map(childId => new KrossoverTag(tags[childId]))
-                .concat(this.getFloatTags());
+                if(!tag.isGroup) {
+                    return tag.children.map(childId => new KrossoverTag(tags[childId]))
+                    .concat(this.getFloatTags());
+                } else {
+                    return tag.children.map(childId => new KrossoverTag(tags[childId]));
+                }
             } else {
 
                 return this.getStartTags();
