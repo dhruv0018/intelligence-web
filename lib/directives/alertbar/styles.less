@@ -6,6 +6,14 @@
     text-align: center;
     font-weight: 400;
     z-index: 999;
+
+    @media only screen
+    and (max-width: @screen-sm) {
+        line-height: 20px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
 }
 
 .alert-super-danger {
