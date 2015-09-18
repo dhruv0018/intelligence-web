@@ -58,9 +58,13 @@ class KrossoverEvent extends Entity {
 
             let variableValue;
 
-            if (event && event.variableValues) {
+            //TODO: move event && event.variableValues out of forEach, not moved as this could be a patch update.
+
+            //variableValues, need not have all tagVariable,
+            if (event && event.variableValues && event.variableValues[tagVariable.id]) {
 
                 variableValue = event.variableValues[tagVariable.id];
+
             } else {
 
                 variableValue = {value: undefined};
