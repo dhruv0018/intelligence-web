@@ -1,0 +1,66 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Tag Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "indexerScript": {
+            "type": "string"
+        },
+        "userScript": {
+            "type": "string"
+        },
+        "shortcutKey": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "isStart": {
+            "type": "boolean"
+        },
+        "isEnd": {
+            "type": "boolean"
+        },
+        "tagSetId": {
+            "type": "integer"
+        },
+        "children": {
+            "type": "array",
+            "items": {
+                "type": "integer"
+            },
+            "uniqueItems": true
+        },
+        "tagVariables": {
+            "type": "array",
+            "items": {
+                "$ref": "tagVariable"
+            }
+        },
+        "pointsAssigned": {
+            "type": ["null", "integer"]
+        },
+        "assignThisTeam": {
+            "type": "boolean"
+        },
+        "isPeriodTag": {
+            "type": "boolean"
+        },
+        "summaryPriority": {
+            "type": ["null", "integer"]
+        },
+        "summaryScript": {
+            "type": "string"
+        },
+        "buffer": {
+            "type": ["null", "integer"]
+        },
+    },
+    "additionalProperties": false
+}
