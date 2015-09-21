@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Formation Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "numberPlayers": {
+            "type": "integer"
+        },
+        "variableId": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false
+}
