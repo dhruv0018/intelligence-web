@@ -74,7 +74,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
                 // TODO: Move to Play entity constructor
                 /* Instantiate Video entity */
-                play.clip = play.clip ? new Video(play.clip) : {};
+                play.clip = play.clip ? new Video(play.clip) : null;
 
                 return play;
             },

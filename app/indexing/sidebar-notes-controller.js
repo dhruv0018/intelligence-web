@@ -20,7 +20,7 @@ Indexing.controller('Indexing.Sidebar.Notes.Controller', [
         var Mousetrap = window.Mousetrap;
 
         $scope.noteValues = ['Camera did not follow play', 'Jersey not visible', 'Gap in film', 'Scoreboard shot', 'Other'];
-
+        $scope.otherNoteValue = '';
         $scope.selectedNoteText = $scope.noteValues[0];
         $scope.currentTimestamp = 0;
 
