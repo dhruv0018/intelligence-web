@@ -19,10 +19,15 @@ require('../build/build');
 import Reel from '../app/reel/index.js';
 import Indexer from '../app/indexer/index.js';
 import Styleguide from '../app/styleguide/index.js';
+
+import FieldComponent from '../lib/directives/field/index';
 import IndexingBlock from '../lib/directives/indexing-block/index';
 import DynamicTables from '../lib/directives/dynamic-tables/index';
+import { IndexerFields, UserFields } from '../lib/directives/fields';
+import Play from '../lib/directives/play/index';
 import SelectMediaSrc from '../lib/directives/video-player/select-media-src/index';
 import ArenaChart from '../lib/directives/arena-chart/index';
+import BreakdownDialog from '../lib/dialogs/breakdown-dialog/index';
 
 /* App dependencies */
 require('./config');

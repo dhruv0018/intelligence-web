@@ -4,6 +4,21 @@ xy-coordinates {
     height: 100%;
     width: 100%;
     display: block;
+
+    // TODO: Convert to spinal/kebab case
+    &.ICE_HOCKEY {
+
+        .coordinate-marker-icon {
+
+            border: 1px solid @brand-blue;
+            background-color: rgba(11, 66, 91, 0.2);
+
+            &::after {
+
+                color: @brand-blue;
+            }
+        }
+    }
 }
 
 .xy-coordinates {
@@ -24,16 +39,16 @@ xy-coordinates {
         width: @icon-size;
         top: -@icon-size / 2; // center icon
         left: -@icon-size / 2; // center icon
-        border: 1px solid @brand-blue;
+        border: 1px solid white;
         border-radius: 10px;
-        background-color: rgba(11, 66, 91, 0.2);
+        background-color: fade(white, 20%);
 
         &::after {
             content: ".";
             position: relative;
             left: 8px;
             top: -6px;
-            color: @brand-blue;
+            color: white;
         }
     }
 }

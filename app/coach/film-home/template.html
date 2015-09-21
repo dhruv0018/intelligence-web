@@ -39,14 +39,19 @@
 
         <!-- Search and filter bar -->
         <header class="filter-bar">
-            <ul class="nav nav-tabs">
-                <li><h3>Filter Film:</h3></li>
-                <film-home-tabs data-ng-model="filmsList"></film-home-tabs>
-                <form class="film-search">
-                    <input type="text" id="film-search-cta" class="film-search-input" data-ng-model="query" placeholder="Search for film"/>
-                </form>
 
-            </ul>
+            <div class="filters-select-tabs">
+
+                <h3>Filter Film:</h3>
+
+                <film-home-tabs data-ng-model="filmsList"></film-home-tabs>
+
+            </div>
+
+            <form class="film-search">
+                <input type="text" id="film-search-cta" class="film-search-input" data-ng-model="query" placeholder="Search for film"/>
+            </form>
+
         </header>
 
         <no-results ng-if="filteredFilmsList.length === 0"></no-results>
@@ -58,4 +63,3 @@
     </main>
 
 </section>
-
