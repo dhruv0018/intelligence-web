@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Tag Schema",
+    "title": "Tag Variable Schema",
     "type": "object",
     "properties": {
         "id": {
