@@ -63,6 +63,13 @@ var ARENA_TYPES = {
         name: 'Volleyball',
         type: 'VOLLEYBALL',
         orientation: 'portrait'
+    },
+
+    9: {
+        id: 9,
+        name: 'Ice Hockey',
+        type: 'ICE_HOCKEY',
+        orientation: 'landscape'
     }
 };
 
@@ -77,7 +84,8 @@ var ARENA_IDS = {
     5: 'LACROSSE',
     6: 'LACROSSE',
     7: 'FOOTBALL',
-    8: 'VOLLEYBALL'
+    8: 'VOLLEYBALL',
+    9: 'ICE_HOCKEY'
 };
 
 IntelligenceWebClient.constant('ARENA_IDS', ARENA_IDS);
@@ -139,7 +147,7 @@ var ARENA_REGIONS = {
 
         'PERIMETER': {
             id: 9,
-            name: 'PERIMETER',
+            name: 'Perimeter',
             description: 'from the perimeter'
         }
     },
@@ -150,62 +158,62 @@ var ARENA_REGIONS = {
             name: 'Court',
             description: 'the court'
         }
+    },
+
+    ICE_HOCKEY: {
+        'BEHIND_THE_NET': {
+            id: 11,
+            name: 'Behind the net',
+            description: 'from behind the net'
+        },
+        'AROUND_THE_NET': {
+            id: 12,
+            name: 'Around the net',
+            description: 'around the net'
+        },
+        'SLOT': {
+            id: 13,
+            name: 'Slot',
+            description: 'from the slot'
+        },
+        'WING': {
+            id: 14,
+            name: 'Wing',
+            description: 'from the wing'
+        },
+        'BLUE_LINE': {
+            id: 15,
+            name: 'Blue line',
+            description: 'from the blue line'
+        },
+        'OUTSIDE_THE_ZONE': {
+            id: 16,
+            name: 'Outside the zone',
+            description: 'from outside the zone'
+        }
     }
 };
 
 IntelligenceWebClient.constant('ARENA_REGIONS', ARENA_REGIONS);
 
 var ARENA_REGIONS_BY_ID = {
-    1: {
-        id: 1,
-        name: 'Around the Rim',
-        description: 'around the rim'
-    },
-    2: {
-        id: 2,
-        name: 'Inside the Paint',
-        description: 'from inside the paint'
-    },
-    3: {
-        id: 3,
-        name: 'Mid-Range',
-        description: 'at mid-range'
-    },
-    4: {
-        id: 4,
-        name: 'Behind the Arc',
-        description: 'from behind the arc'
-    },
-    5: {
-        id: 5,
-        name: 'Hole',
-        description: 'from the hole'
-    },
-    6: {
-        id: 6,
-        name: 'Slot',
-        description: 'from the slot'
-    },
-    7: {
-        id: 7,
-        name: 'Porch',
-        description: 'from the porch'
-    },
-    8: {
-        id: 8,
-        name: 'Flanks',
-        description: 'from the flanks'
-    },
-    9: {
-        id: 9,
-        name: 'PERIMETER',
-        description: 'from the perimeter'
-    },
-    10: {
-        id: 10,
-        name: 'Court',
-        description: 'the court'
-    }
+
+    1: ARENA_REGIONS.BASKETBALL.AROUND_THE_RIM,
+    2: ARENA_REGIONS.BASKETBALL.INSIDE_THE_PAINT,
+    3: ARENA_REGIONS.BASKETBALL.MID_RANGE,
+    4: ARENA_REGIONS.BASKETBALL.MID_RANGE,
+    5: ARENA_REGIONS.LACROSSE.HOLE,
+    6: ARENA_REGIONS.LACROSSE.SLOT,
+    7: ARENA_REGIONS.LACROSSE.PORCH,
+    8: ARENA_REGIONS.LACROSSE.FLANKS,
+    9: ARENA_REGIONS.LACROSSE.PERIMETER,
+    10: ARENA_REGIONS.VOLLEYBALL.COURT,
+    11: ARENA_REGIONS.ICE_HOCKEY.BEHIND_THE_NET,
+    12: ARENA_REGIONS.ICE_HOCKEY.AROUND_THE_NET,
+    13: ARENA_REGIONS.ICE_HOCKEY.SLOT,
+    14: ARENA_REGIONS.ICE_HOCKEY.WING,
+    15: ARENA_REGIONS.ICE_HOCKEY.BLUE_LINE,
+    16: ARENA_REGIONS.ICE_HOCKEY.OUTSIDE_THE_ZONE
 };
 
 IntelligenceWebClient.constant('ARENA_REGIONS_BY_ID', ARENA_REGIONS_BY_ID);
