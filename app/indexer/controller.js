@@ -4,34 +4,28 @@ const moment = require('moment');
 
 IndexerGamesController.$inject = [
     '$scope',
-    '$state',
     '$interval',
     'config',
-    'GAME_TYPES',
     'TeamsFactory',
     'LeaguesFactory',
     'GamesFactory',
     'SportsFactory',
     'UsersFactory',
     'SessionService',
-    'Indexer.Games.Data',
     'INDEXER_GROUPS',
     'GAME_STATUSES'
 ];
 
 function IndexerGamesController(
     $scope,
-    $state,
     $interval,
     config,
-    GAME_TYPES,
     teams,
     leagues,
     games,
     sports,
     users,
     session,
-    data,
     INDEXER_GROUPS,
     GAME_STATUSES
 ) {
@@ -42,11 +36,12 @@ function IndexerGamesController(
     $scope.GAME_STATUSES = GAME_STATUSES;
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
-    $scope.teams = teams.getCollection();
-    $scope.users = users.getCollection();
     $scope.userId = session.getCurrentUserId();
+    $scope.teams = teams.getMap();
+    $scope.users = users.getMap();
     $scope.footballFAQ = config.links.indexerFAQ.football.uri;
     $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
+    $scope.options = {scope: $scope};
 
     switch (userLocation) {
         case INDEXER_GROUPS.US_MARKETPLACE:
@@ -64,21 +59,27 @@ function IndexerGamesController(
     $scope.games = games.getList({ assignedUserId: $scope.userId });
     $scope.currentUser = session.getCurrentUser();
 
+    /*Checks if the indexer has qa privileges*/
+    const currentRole = session.getCurrentRole();
+    $scope.indexerQuality = currentRole.indexerQuality;
+
     $scope.games.forEach(game => game.timeRemaining = game.assignmentTimeRemaining());
 
     $scope.getSportName = function(teamId) {
+
         const team = $scope.teams[teamId];
+
         if(team && team.leagueId){
-            const gameLeagueId = team.leagueId;
-            const gameSportId = $scope.leagues[gameLeagueId].sportId;
-            return $scope.sports[gameSportId].name;
+
+            return team.getSport().name;
         }
     };
 
+    $scope.getLatestAssignmentDate = (game) => game.userAssignment().timeAssigned;
+
     let refreshGames = function() {
 
-        $scope.games.forEach(game => {
-
+        $scope.gamesAvailable.forEach(function(game) {
             if (game.timeRemaining) {
 
                 game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();

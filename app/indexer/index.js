@@ -1,6 +1,7 @@
 /* Component dependencies */
 import IndexerGame from './indexer-game/';
-import IndexerGames from './indexer-games/';
+import IndexerGamesAssigned from './indexer-games-assigned/';
+import IndexerGamesAvailable from './indexer-games-available/';
 import IndexerHistory from './indexer-history/';
 
 /* Fetch angular from the browser scope */
@@ -12,7 +13,8 @@ const angular = window.angular;
  */
 const Indexer = angular.module('Indexer', [
     'IndexerGame',
-    'IndexerGames',
+    'IndexerGamesAssigned',
+    'IndexerGamesAvailable',
     'IndexerHistory'
 ]);
 

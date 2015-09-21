@@ -399,6 +399,18 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return teamIds;
             },
+            /**
+            * @class User
+            * @method
+            * @returns {Boolean} the indexerquality for the user.
+            * Gets the user's indexerquality for the current role
+            */
+            getIndexerQuality: function(user) {
+
+                user = user || this;
+                return user.getCurrentRole().indexerQuality;
+
+            },
 
             /**
              * @class User
@@ -532,6 +544,18 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 /* Assume all other roles do not have access. */
                 return false;
+            },
+
+            /**
+             * Determines if the an indexer can pickup games
+             * @return true if the user can pickup games
+             */
+            canPickupGames: function() {
+
+                let session = $injector.get('SessionService');
+                const currentRole = session.getCurrentRole();
+                return !!currentRole.indexerQuality;
+
             },
 
             // TODO: This method should be removed
