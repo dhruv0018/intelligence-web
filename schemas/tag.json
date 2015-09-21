@@ -60,7 +60,7 @@
         },
         "buffer": {
             "type": ["null", "integer"]
-        },
+        }
     },
     "additionalProperties": false
 }
