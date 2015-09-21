@@ -265,6 +265,8 @@ module.exports = function(grunt) {
                         'lib/directives/indexing-block/styles.less',
                         'lib/directives/dynamic-tables/styles.less',
                         'lib/directives/video-player/select-media-src/styles.less',
+                        'lib/directives/arena-chart/styles.less',
+                        'lib/dialogs/breakdown-dialog/styles.less',
                         'lib/directives/field/**/*.less',
                         'app/reel/*.less',
                         'app/indexer/**/*.less',
