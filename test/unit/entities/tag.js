@@ -29,6 +29,7 @@ describe('Tag Entity', () => {
     it('should have public API', () => {
 
         expect(KrossoverTag).to.respondTo('mapScriptTypes');
+        expect(KrossoverTag).to.respondTo('unMapScriptTypes');
         expect(KrossoverTag).to.respondTo('toJSON');
     });
 
