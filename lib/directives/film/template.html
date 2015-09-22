@@ -19,10 +19,14 @@
 
     <div class="film-info-footer">
 
-        <div class="user-info">
+        <div class="user-info" data-ng-show="!isGame || isShared || !film.isCopied()">
             <span data-ng-show="!isShared">Uploaded</span>
             <span data-ng-show="isShared">Shared</span>
             by {{uploaderName}}
+        </div>
+        
+        <div class="user-info" data-ng-show="isGame && !isShared && film.isCopied()">
+            Produced by Krossover
         </div>
 
         <a data-ng-attr-id="{{filmShareElemId}}"

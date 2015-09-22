@@ -1343,6 +1343,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 return teamId === self.uploaderTeamId;
+            },
+            
+            /**
+             * Determine if the game is copied
+             * @returns {boolean}
+             */
+            isCopied: function () {
+                return this.copiedFromGameId !== null;
             }
         };
 
