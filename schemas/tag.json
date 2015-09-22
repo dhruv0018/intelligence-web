@@ -41,7 +41,8 @@
             "type": "array",
             "items": {
                 "$ref": "tagVariable"
-            }
+            },
+            "uniqueItems": true
         },
         "pointsAssigned": {
             "type": ["null", "integer"]
@@ -56,7 +57,7 @@
             "type": ["null", "integer"]
         },
         "summaryScript": {
-            "type": "string"
+            "type": ["null", "string"]
         },
         "buffer": {
             "type": ["null", "integer"]
