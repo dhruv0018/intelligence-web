@@ -3,10 +3,28 @@
 @controls-height: 60px;
 @fullscreen-side-margin: @controls-height * 16 / 9;
 
+.video-player-size(@width, @media-height) {
+
+    videogular, vg-media {
+        width: @width;
+    }
+
+    vg-media {
+        height: @media-height;
+    }
+
+    videogular {
+        height: calc(@media-height + @controls-height);
+    }
+}
+
 video-player {
 
     width: 100%;
     display: flex;
+
+    // Default video player size
+    .video-player-size(320px, 180px);
 
     .video-player {
         width: 100%;
@@ -26,12 +44,6 @@ video-player {
     videogular:fullscreen {
         width: 100% !important;
         height: 100% !important;
-    }
-
-    videgular.fullscreen {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
     }
 
     :fullscreen,

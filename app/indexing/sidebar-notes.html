@@ -1,17 +1,23 @@
 
 <div class="notes">
-	<div class="note-choice">
+    <div class="note-choice">
 
-		<div class="timestamp">Time stamp: {{currentTimestamp|secondsToTime}} </div>
+        <div class="timestamp">Time stamp: {{currentTimestamp|secondsToTime}} </div>
 
-		<select data-ng-model="selectedNoteText">
-			<option data-ng-repeat="noteText in noteValues" value="{{noteText}}">{{noteText}}</option>
-		</select>
-	    <textarea data-ng-focus="clearKeyListeners()" data-ng-blur="unclearKeyListeners()" data-ng-show="selectedNoteText === noteValues[noteValues.length-1]" data-ng-model="otherNoteValue"></textarea>
-	    <button class="save-note" data-ng-disabled="game.isSaving" data-ng-click="saveIndexingNote()">{{(savingNotes) ? 'Saving...' : 'Save Note'}}</button>
+        <select ng-model="selectedNoteText">
+            <option ng-repeat="noteText in noteValues" value="{{noteText}}">{{noteText}}</option>
+        </select>
+        <textarea ng-focus="clearKeyListeners()"
+                  ng-blur="unclearKeyListeners()"
+                  placeholder="Please fill in your note."
+                  ng-show="selectedNoteText === noteValues[noteValues.length-1]"
+                  ng-model="otherNoteValue"></textarea>
+        <button class="save-note"
+            ng-disabled="game.isSaving || selectedNoteText === 'Other' && otherNoteValue.length === 0"
+            ng-click="saveIndexingNote()">
+            {{(savingNotes) ? 'Saving...' : 'Save Note'}}
+        </button>
     </div>
-
     <krossover-notes-list data-game="game"></krossover-notes-list>
 
 </div>
-
