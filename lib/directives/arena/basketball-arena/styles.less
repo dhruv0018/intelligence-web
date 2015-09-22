@@ -14,6 +14,7 @@
     }
 }
 
+// FIXME: reduce LESS nesting
 .krossover-arena {
 
     &.highlight-regions {
@@ -27,4 +28,11 @@
             }
         }
     }
+}
+
+// Selector for all .basketball-INSERT_LEAGE-arena elements
+div[class^="basketball"] div[class$="arena"] {
+
+    height: 100%;
+    width: 100%;
 }
