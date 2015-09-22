@@ -17,7 +17,7 @@ describe('Static Field', () => {
 
     beforeEach(() => {
 
-        let staticData = Object.assign({}, sampleData);
+        let staticData = angular.copy(sampleData);
         staticField    = new StaticField(staticData);
     });
 
