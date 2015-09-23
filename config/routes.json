@@ -613,5 +613,9 @@
 
     "Styleguide.Custom": {
         "*": true
+    },
+
+    "Styleguide.Video": {
+        "*": true
     }
 }
