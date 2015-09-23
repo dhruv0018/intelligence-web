@@ -79,7 +79,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 angular.augment(game, self);
                 game.isSaving = false;
-                game.video = game.video ? new Video(game.video) : {};
+                game.video = game.video ? new Video(game.video) : null;
                 game.notes = game.notes || {};
                 game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
@@ -1344,7 +1344,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return teamId === self.uploaderTeamId;
             },
-            
+
             /**
              * Determine if the game is copied
              * @returns {boolean}
