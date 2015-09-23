@@ -125,6 +125,14 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return copy;
             },
 
+            /**
+             * @param {Integer} type
+             * @returns {String}
+             */
+            getRoleNameByRoleType: function(typeId) {
+                return ROLES[ROLE_ID[typeId]].type.name;
+            },
+
             isAthleteRecruit: function(user = this) {
 
                 return user.is(user.currentRole, ROLES.ATHLETE) &&
@@ -710,12 +718,35 @@ IntelligenceWebClient.factory('UsersFactory', [
                 var self = this;
                 return self.activeRoles(role).length >= 1;
             },
-            typeahead: function(filter) {
-                var self = this;
 
-                var model = $injector.get(self.model);
+            /**
+             * @param {Object} filter
+             * @returns {Array} Array of user, team, school and role
+             */
+            typeahead: function(filter) {
+                const self = this;
+                let model = $injector.get(self.model);
 
                 return model.typeahead(filter).$promise.then(function(users) {
+                    return users.map(function(user) {
+                        let teams    = $injector.get('TeamsFactory');
+                        let schools  = $injector.get('SchoolsFactory');
+                        user.team    = teams.extend(user.team);
+                        user.school  = schools.extend(user.school);
+                        return self.extend(user);
+                    });
+                });
+            },
+
+            /**
+             * @param {Object} filter
+             * @returns {Array} Array of user, team, school and role
+             */
+            roleTypeahead: function(filter) {
+                const self = this;
+                let model = $injector.get(self.model);
+
+                return model.roleTypeahead(filter).$promise.then(function(users) {
                     return users.map(function(user) {
                         let teams    = $injector.get('TeamsFactory');
                         let schools  = $injector.get('SchoolsFactory');

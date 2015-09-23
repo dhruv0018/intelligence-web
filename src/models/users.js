@@ -35,6 +35,21 @@ IntelligenceWebClient.factory('UsersResource', [
                             });
                         }
                     }
+                },
+                roleTypeahead: { method: 'GET', url: config.api.uri + 'service/user-role-typeahead', isArray: true,
+                    //transforms the resource into an array of user objects with extra properties used by the user typeahead
+                    transformResponse: function(data) {
+                        if (data != 'No users found') {
+                            var aggregateResources = JSON.parse(data);
+                            return aggregateResources.map(function(resource) {
+                                var key = 'user';
+                                resource[key].school = resource.school;
+                                resource[key].team   = resource.team;
+                                resource[key].role   = resource.role;
+                                return resource[key];
+                            });
+                        }
+                    }
                 }
             }
         );
