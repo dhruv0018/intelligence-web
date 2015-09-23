@@ -70,7 +70,7 @@ class KrossoverTag extends Entity {
      * Unmaps scripts back to string from array.
      *
      * @method unMapScriptTypes
-     * @returns {string}
+     * @returns {string|undefined} - script as string or undefined if no script
      */
     unMapScriptTypes (scriptType) {
 
