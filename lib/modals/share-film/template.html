@@ -105,9 +105,7 @@
         			<strong ng-if="share.sharedWithUserId" ng-class="{'user-for-game': isGame}">{{usersMap[share.sharedWithUserId].firstName}} {{usersMap[share.sharedWithUserId].lastName}} </strong>
         			<strong ng-if="share.sharedWithTeamId" ng-class="{'user-for-game': isGame}">Coaching staff, {{teamsMap[share.sharedWithTeamId].name}}</strong>
                     <span class="pull-right">
-                        <select id="share-film-others-options-cta" ng-model="share.isBreakdownShared" ng-change="film.save()" ng-show="isGame"
-                            ng-options="sharingBreakdownOption.value as sharingBreakdownOption.label for sharingBreakdownOption in sharingBreakdownOptions" >
-                        </select>
+                        <select id="share-film-others-options-cta" ng-model="share.isBreakdownShared" ng-change="film.save()" ng-show="isGame" ng-options="shareVideoOption.value as shareVideoOption.name for shareVideoOption in shareVideoOptions"></select>
                         <span ng-show="!isGame">Sharing reel</span>
                     	<i class="icon icon-remove" ng-click="shareRevoke(share)"></i>
                     </span>
