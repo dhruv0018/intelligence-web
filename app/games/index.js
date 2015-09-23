@@ -220,6 +220,7 @@ function GamesController(
     let isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
     let isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
     let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
+    let isDelivered = game.isDelivered();
 
     /* Scope */
 
@@ -265,26 +266,25 @@ function GamesController(
 
         // game information
         $scope.gameStates.push({name: 'Games.Info'});
+    }
 
-        // statistics related states
-        if (game.isDelivered()) {
+    // statistics related states
+    if (isTeamUploadersTeam && isDelivered && sport.hasStatistics) {
 
-            if (sport.hasStatistics) {
+        $scope.gameStates.push({name: 'Games.Stats'});
+    }
 
-                $scope.gameStates.push({name: 'Games.Stats'});
-            }
-
-            // sport specific states
-            switch (sport.id) {
-                case SPORTS.BASKETBALL.id:
-                    if (features.isEnabled('ArenaChart')) {
-                        $scope.gameStates.push({name: 'Games.ArenaChart'});
-                    }
-                    break;
-                case SPORTS.FOOTBALL.id:
-                    $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
-                    break;
-            }
+    if (isTeamUploadersTeam && isCoach && isDelivered) {
+        // sport specific states
+        switch (sport.id) {
+            case SPORTS.BASKETBALL.id:
+                if (features.isEnabled('ArenaChart')) {
+                    $scope.gameStates.push({name: 'Games.ArenaChart'});
+                }
+                break;
+            case SPORTS.FOOTBALL.id:
+                $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                break;
         }
     }
 
@@ -293,7 +293,7 @@ function GamesController(
 
         $scope.gameStates.unshift({name: 'Games.RawFilm'});
 
-        if (game.isDelivered()) {
+        if (isDelivered) {
 
             $scope.gameStates.unshift({name: 'Games.Breakdown'});
 

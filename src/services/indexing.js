@@ -10,7 +10,6 @@ var IntelligenceWebClient = angular.module(pkg.name);
 IntelligenceWebClient.factory('IndexingService', [
     'PlaysFactory', 'EVENT', 'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter', 'Utilities',
     function(plays, EVENT, config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter, utils) {
-
         var IndexingService = {
 
             reset: function(tagset, game, plays) {
@@ -50,6 +49,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     this.showScript = false;
                     this.eventSelected = false;
                     videoPlayer.pause();
+                    this.indexingStartedTime = videoPlayer.currentTime;
                 }
             },
 
@@ -67,7 +67,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
 
                 /* Get current time from the video. */
-                var time = videoPlayer.currentTime;
+                let time = this.indexingStartedTime;
 
                 /* Get tag. */
                 let tag = tagsets.getTag(tagId);
