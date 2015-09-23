@@ -13,7 +13,7 @@ const srcPlay = {
     startTime: 1052.4299316406
 };
 
-describe.only('PlayList', () => {
+describe('PlayList', () => {
 
     const classMethods = [
         'next',
