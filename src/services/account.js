@@ -96,7 +96,7 @@ function AccountService (
             /* If the user is an indexer. */
             else if (user.is(ROLES.INDEXER)) {
 
-                return $state.go('IndexerGames', null, { reload: reload });
+                return $state.go('IndexerGamesAssigned', null, { reload: reload });
             }
 
             /* If the user is a coach. */
