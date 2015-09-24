@@ -1,6 +1,6 @@
 import Entity from './entity';
 import template from './event/template';
-import KrossoverEvent from './event/index';
+import KrossoverEvent from './event';
 
 const schema = require('../../schemas/play.json');
 

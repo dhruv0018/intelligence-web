@@ -1,6 +1,6 @@
 var pkg = require('../../../package.json');
 
-import Features from './index';
+import Features from './';
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;

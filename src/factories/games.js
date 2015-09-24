@@ -12,8 +12,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q, playTelestrationEntity, rawTelestrationEntity) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, teams, users, $q, playTelestrationEntity, rawTelestrationEntity) {
 
         var GamesFactory = {
 
@@ -227,6 +227,22 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return self.getList(gameIds);
             },
+
+            getHeadCoachName: function() {
+
+                if (!this.uploaderTeamId) throw new Error('No uploader team id');
+                let uploaderTeamId = this.uploaderTeamId;
+
+                let team = teams.get(uploaderTeamId);
+                if (!team) throw new Error('Team does not exist');
+
+                let headCoachRole = team.getHeadCoachRole();
+                let user = users.get(headCoachRole.userId);
+                if (!user) throw new Error('User does not exist');
+
+                return user.name;
+            },
+
 
             saveNotes: function() {
 
@@ -553,6 +569,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments = self.indexerAssignments || [];
 
                     deadline = new Date(deadline).toISOString();
+
                     var timeAssigned = new Date().toISOString();
 
                     var assignment = {
@@ -785,7 +802,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var now = moment.utc();
                 var deadline = moment.utc(assignment.deadline);
-                var timeRemaining = moment.duration(deadline.subtract(now));
+                var timeRemaining = moment.duration(deadline.diff(now));
 
                 return timeRemaining.asMilliseconds();
             },
@@ -1051,6 +1068,18 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return timeRemaining.asMilliseconds();
             },
+            getDeadlineToReturnGame: function(uploaderTeam) {
+
+                if (!this.submittedAt) return 0;
+
+                let submittedAt = moment.utc(this.submittedAt);
+
+                if (!submittedAt.isValid()) return 0;
+
+                let turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
+
+                return submittedAt.add(turnaroundTime).format();
+            },
             setAside: function() {
                 var self = this;
                 self.status = GAME_STATUSES.SET_ASIDE.id;
@@ -1080,18 +1109,18 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             },
             findLastIndexerAssignment: function() {
-                var self = this;
+                let self = this;
 
                 if (!self.indexerAssignments) {
                     throw new Error('no indexer assignments');
                 }
 
-                var index = self.indexerAssignments.length - 1;
+                let index = self.indexerAssignments.length;
 
-                //iterate backwards through the assignments looking for the first indexer assignment
-                for (index; index >= 0; index--) {
-                    if (!self.indexerAssignments[index].isQa) {
-                        return self.indexerAssignments[index];
+                //iterate through the assignments looking for the first indexer assignment
+                for (let i=0; i < index; i++) {
+                    if (!self.indexerAssignments[i].isQa) {
+                        return self.indexerAssignments[i];
                     }
                 }
 

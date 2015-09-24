@@ -89,8 +89,8 @@
 
             <td class="time-left">
                 <span class="late" ng-if="game.remainingTime < 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
-                <span class="none" ng-if="game.remainingTime === 0">None</span>
-                <span class="togo" ng-if="game.remainingTime > 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
+                <span ng-if="game.remainingTime === 0">None</span>
+                <span ng-if="game.remainingTime > 0">{{ game.remainingTime | millisecondsAsHours | hoursAsClock }}</span>
             </td>
 
             <td>

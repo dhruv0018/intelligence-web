@@ -1,4 +1,4 @@
-import KrossoverEvent from '../entities/event/index';
+import KrossoverEvent from '../entities/event';
 
 var pkg = require('../../package.json');
 
@@ -115,6 +115,9 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* If the event is an end-and-start event. */
                 if (event.isEndAndStart) {
 
+                    /* Get the game ID. */
+                    let gameId = playManager.gameId;
+
                     /* Get the tagId of the event. */
                     var tagId = event.tagId;
 
@@ -127,11 +130,11 @@ IntelligenceWebClient.factory('IndexingService', [
                     /* Get the next set of tags based on the child tag. */
                     tagsManager.nextTags(childId);
 
-                    /* Set the current event. */
-                    eventManager.current = event;
+                    /* Get corresponding start tag. */
+                    let startTag = tagsets.getTag(childId);
 
-                    /* Set the tag ID for the current event to the child ID. */
-                    eventManager.current.tagId = childId;
+                    /* Set the current event. */
+                    eventManager.current = new KrossoverEvent(event.toJSON(), startTag, event.time, gameId);
 
                     /* Add event to the current play. */
                     playManager.addEvent(eventManager.current);
