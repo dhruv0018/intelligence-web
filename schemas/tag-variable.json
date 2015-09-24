@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "Tag Variable Schema",
+    "description": "Represents the different fields that make up an event.",
     "type": "object",
     "properties": {
         "id": {
@@ -10,23 +11,29 @@
             "type": "string"
         },
         "type": {
-            "type": "string"
+            "type": "string",
+            "description": "The kind of feild, e.g., GAP, YARD, etc."
         },
         "isRequired": {
             "type": "boolean"
         },
         "options": {
             "type": "array",
+            "description": "The choice of values for a particular field, e.g., periods.",
             "items": {
                 "type": "string"
-            }
+            },
+            "uniqueItems": true
         },
         "formations": {
             "type": "array",
+            "description": "Represents how the players in the offensive team who are eligible to catch orrun with the football line up before a play.",
             "items": {
                 "$ref": "formation"
-            }
+            },
+            "uniqueItems": true
         }
     },
+    "required": ["id", "name", "type", "isRequired", "options", "formations"],
     "additionalProperties": false
 }
