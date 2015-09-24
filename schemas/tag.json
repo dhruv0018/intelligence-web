@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "Tag Schema",
+    "description": "Represents an event to be indexed.",
     "type": "object",
     "properties": {
         "id": {
@@ -10,58 +11,92 @@
             "type": "string"
         },
         "indexerScript": {
-            "type": "string"
+            "type": "string",
+            "description": "A string representing the entire event with static text and placeholders to be replaced with Tag Variables."
         },
         "userScript": {
-            "type": "string"
+            "type": ["null", "string"]
         },
         "shortcutKey": {
-            "type": "string"
+            "type": "string",
+            "description": "The key or key combination that indexers use to select tags instead of clicking on buttons."
         },
         "description": {
-            "type": "string"
+            "type": "string",
+            "description": "A description of the tag."
         },
         "isStart": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this tag is the first event in a play."
         },
         "isEnd": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this tag is the last event in a play."
         },
         "tagSetId": {
-            "type": "integer"
+            "type": "integer",
+            "description": "The tagset this tag belongs to."
         },
         "children": {
             "type": "array",
+            "description": "The tags that are allowed to follow this one.",
             "items": {
                 "type": "integer"
             },
+            "minItems": 0,
             "uniqueItems": true
         },
         "tagVariables": {
             "type": "array",
+            "description": "Represents the different fields that make up an event.",
             "items": {
                 "$ref": "tagVariable"
             },
             "uniqueItems": true
         },
         "pointsAssigned": {
-            "type": ["null", "integer"]
+            "type": ["null", "integer"],
+            "description": "The amout added to the team's score for this event."
         },
         "assignThisTeam": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether to assign points to this team or the opposing."
         },
         "isPeriodTag": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "If this event indicates the start/end of a new period, quarter, etc."
         },
         "summaryPriority": {
-            "type": ["null", "integer"]
+            "type": ["null", "integer"],
+            "description": "Weighted value that indentifies which events are more indicative of what the play consisted of when formulating a play summary."
         },
         "summaryScript": {
-            "type": ["null", "string"]
+            "type": ["null", "string"],
+            "description": "The copy used for this event in the play summary."
         },
         "buffer": {
-            "type": ["null", "integer"]
-        }
+            "type": ["null", "integer"],
+            "description": "Adjust the value of the start and end times for the play. Can be negative or positive value."
+        },
+        "required": [
+            "id",
+            "name",
+            "indexerScript",
+            "userScript",
+            "shortcutKey",
+            "description",
+            "isStart",
+            "isEnd",
+            "tagSetId",
+            "children",
+            "tagVariables",
+            "pointsAssigned",
+            "assignThisTeam",
+            "isPeriodTag",
+            "summaryPriority",
+            "summaryScript",
+            "buffer"
+        ]
     },
     "additionalProperties": false
 }
