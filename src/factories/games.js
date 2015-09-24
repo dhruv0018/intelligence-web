@@ -45,8 +45,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                     copy.shares.push(copy.publicShare);
                 }
 
-                copy.shares.forEach(function(share) {
-                    copy.isBreakdownShared = JSON.parse(share.isBreakdownShared);
+                copy.shares.forEach(function (share) {
+
+                    share.isBreakdownShared = JSON.parse(share.isBreakdownShared);
                 });
 
                 // Unextend any children objects
@@ -78,13 +79,13 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 angular.augment(game, self);
                 game.isSaving = false;
-                game.video = game.video ? new Video(game.video) : {};
+                game.video = game.video ? new Video(game.video) : null;
                 game.notes = game.notes || {};
                 game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
-                game.primaryJerseyColor = game.primaryJerseyColor || '#000';
-                game.opposingJerseyColor = game.opposingJerseyColor || '#000';
+                game.primaryJerseyColor = game.primaryJerseyColor || '#FFFFFF';
+                game.opposingPrimaryJerseyColor = game.opposingPrimaryJerseyColor || '#000000';
 
                 //TODO remove when the back end makes notes always a object
                 if (angular.isArray(game.notes)) {

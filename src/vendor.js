@@ -5,7 +5,7 @@ require('angular-material/angular-material');
 require('angular-aria/angular-aria');
 require('angular-animate/angular-animate');
 require('angular-material-icons/angular-material-icons');
-require('angular-bootstrap/ui-bootstrap-tpls');
+require('@krossover/angular-bootstrap/dist/ui-bootstrap-tpls');
 require('angular-ui-unique/unique');
 require('angular-ui-showhide/showhide');
 require('angular-ui-validate/validate');
