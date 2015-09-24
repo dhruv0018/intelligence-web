@@ -5,7 +5,6 @@ import StyleguideTypography from './typography';
 import StyleguideButtons from './buttons';
 import StyleguideForms from './forms';
 import StyleguideCustom from './custom';
-import StyleguideVideo from './video';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
@@ -22,8 +21,7 @@ const Styleguide = angular.module('Styleguide', [
     'Styleguide.Typography',
     'Styleguide.Buttons',
     'Styleguide.Forms',
-    'Styleguide.Custom',
-    'Styleguide.Video'
+    'Styleguide.Custom'
 ]);
 
 Styleguide.config(StyleguideState);

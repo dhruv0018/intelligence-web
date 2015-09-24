@@ -14,7 +14,6 @@ export default `
                     <li ui-sref-active="active"><a href ui-sref="Styleguide.Forms">Forms</a></li>
                     <li ui-sref-active="active"><a href ui-sref="Styleguide.Dialogs">Dialogs</a></li>
                     <li ui-sref-active="active"><a href ui-sref="Styleguide.Custom">Custom Components</a></li>
-                    <li ui-sref-active="active"><a href ui-sref="Styleguide.Video">Video Player</a></li>
                 </ul>
 
             </nav>
