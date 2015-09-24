@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "Formation Schema",
+    "description": "Represents how the players in the offensive team who are eligible to catch orrun with the football line up before a play.",
     "type": "object",
     "properties": {
         "id": {
@@ -10,11 +11,16 @@
             "type": "string"
         },
         "numberPlayers": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of players in formation",
+            "minimum": 1,
         },
         "variableId": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Corres",
+            "minimum": 0
         }
     },
+    "required": ["id", "name", "numberPlayers", "variableId"],
     "additionalProperties": false
 }
