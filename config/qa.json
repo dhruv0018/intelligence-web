@@ -16,7 +16,7 @@
         "state": "xyz"
     },
     "api": {
-        "uri": "http://v2-qa.krossover.com/intelligence-api/v1/"
+        "uri": "https://v2-qa.krossover.com/intelligence-api/v1/"
     },
     "kvs": {
     },
@@ -28,7 +28,7 @@
             "uri": "http://www.krossover.com/get-started"
         },
         "intelligence": {
-            "uri": "https://v2-qa.krossover.com"
+            "uri": "http://v2-qa.krossover.com"
         },
         "support": {
             "uri": "http://support.krossover.com"
