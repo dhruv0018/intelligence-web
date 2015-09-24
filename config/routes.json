@@ -578,6 +578,10 @@
         "*": true
     },
 
+    "Embed.Deleted": {
+        "*": true
+    },
+
     "ShortEmbed": {
 
         "*": true

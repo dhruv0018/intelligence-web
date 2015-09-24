@@ -6,6 +6,7 @@ import EmbedController from './controller.js';
 
 import template from './template.html.js';
 import restricted from './restricted.html.js';
+import deleted from './deleted.html.js';
 
 /**
  * Embed module.
@@ -53,6 +54,17 @@ Embed.config([
             }
         };
 
+        const embedDeleted = {
+            name: 'Embed.Deleted',
+            url: 'embed/',
+            parent: 'base',
+            views: {
+                'main@root': {
+                    template: deleted
+                }
+            }
+        };
+
         const embedState = {
             name: 'Embed',
             url: '/embed/:id',
@@ -79,19 +91,18 @@ Embed.config([
                 '$state', '$stateParams', 'AccountService', 'ReelsFactory', 'SessionService',
                 function onEnterEmbedState ($state, $stateParams, account, reels, session) {
 
-                    let currentUser = session.getCurrentUser();
                     let reelId = Number($stateParams.id);
                     let reel = reels.get(reelId);
 
                     if (reel.isDeleted) {
 
-                        account.gotoUsersHomeState();
+                        $state.go('Embed.Deleted');
                     }
 
                     /*Check if user has permissions to view reel*/
                     if (!reel.isAllowedToView()) {
 
-                        $state.go('Embed.Restricted', { id: reelId });
+                        $state.go('Embed.Restricted');
                     }
 
                 }
@@ -107,6 +118,7 @@ Embed.config([
 
         $stateProvider.state(shortEmbedState);
         $stateProvider.state(embedRestricted);
+        $stateProvider.state(embedDeleted);
         $stateProvider.state(embedState);
     }
 ]);
