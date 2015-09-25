@@ -1323,7 +1323,12 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return teamId === self.uploaderTeamId;
             },
 
-            getMaxprepsDownloadLink: function(team){
+            /**
+             * get the maxpreps download link for the team
+             * @param team {Object}
+             * @return {String}
+             */
+            getMaxprepsDownloadLinkByTeam: function(team){
                 if (!this.id) throw new Error('Game must be saved before getting maxpreps');
 
                 return config.api.uri + 'games/' + this.id + '/max-preps?teamId='+ team.id;

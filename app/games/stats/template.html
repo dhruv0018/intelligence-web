@@ -3,11 +3,9 @@
 	<dynamic-tables tables="stats"></dynamic-tables>
 
 
-	<div class="bottom-links">
-		<!--<a href><i class="icon-book"></i> Glossary</a>
-		<a href= class="middlelink"><i class="icon-download"></i> Download as Excel</a> -->
+	<div class="bottom-links" ng-if="isMaxprepsAvailable">
 		<span ng-repeat="team in teams" ng-if="isMaxprepsAvailable">
-		  <a ng-href="{{game.getMaxprepsDownloadLink(team)}}" download><i class="icon-download"></i> Download {{team.name}} Max Preps</a>
+		  <a class="middlelink" ng-href="{{game.getMaxprepsDownloadLinkByTeam(team)}}" download><i class="icon-download"></i> Download {{team.name}} Max Preps</a>
 		</span>
 	</div>
 
