@@ -5,7 +5,7 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-var STATE_NAMES = {
+const STATE_NAMES = {
 
     'Games.RawFilm': {
         display: 'Raw',
@@ -44,3 +44,12 @@ var STATE_NAMES = {
 };
 
 IntelligenceWebClient.constant('STATE_NAMES', STATE_NAMES);
+
+const STATES = {
+
+    INDEXER_GAMES_ASSIGNED: 'IndexerGamesAssigned',
+    INDEXER_GAMES: 'IndexerGames'
+
+};
+
+IntelligenceWebClient.constant('STATES', STATES);
