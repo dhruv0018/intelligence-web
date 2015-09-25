@@ -4,13 +4,17 @@ var angular = window.angular;
 EmbedDataDependencies.$inject = [
     'ReelsFactory',
     'GamesFactory',
-    'PlaysFactory'
+    'TeamsFactory',
+    'PlaysFactory',
+    'LeaguesFactory'
 ];
 
 function EmbedDataDependencies (
     reels,
     games,
-    plays
+    teams,
+    plays,
+    leagues
 ) {
 
     class EmbedData {
@@ -18,8 +22,10 @@ function EmbedDataDependencies (
         constructor (reelId) {
 
             /* Load data. */
+            this.leagues = leagues.load();
             this.reel = reels.load(reelId);
             this.games = games.load({reelId: reelId});
+            this.teams = teams.load({reelId: reelId});
             this.plays = plays.load({reelId: reelId});
         }
     }
