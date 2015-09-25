@@ -88,8 +88,8 @@ Embed.config([
                 ]
             },
             onEnter: [
-                '$state', '$stateParams', 'AccountService', 'ReelsFactory', 'SessionService',
-                function onEnterEmbedState ($state, $stateParams, account, reels, session) {
+                '$state', '$stateParams', 'ReelsFactory', 'SessionService',
+                function onEnterEmbedState ($state, $stateParams, reels, session) {
 
                     let reelId = Number($stateParams.id);
                     let reel = reels.get(reelId);

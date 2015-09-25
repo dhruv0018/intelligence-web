@@ -33,7 +33,7 @@ function EmbedController(
 
     let reelId = Number($stateParams.id);
     let reel = reelsFactory.get(reelId);
-    let plays = reel.plays.map(mapPlays);
+    let plays = reel.plays.map(playId => playsFactory.get(playId));
     let play = plays[0];
     let game = gamesFactory.get(plays[0].gameId);
     $scope.reel = reel;
@@ -48,13 +48,6 @@ function EmbedController(
     $scope.posterImage = {
         url: game.video.thumbnail
     };
-
-    function mapPlays (playId, index) {
-
-        let play = playsFactory.get(playId);
-
-        return play;
-    }
 }
 
 export default EmbedController;
