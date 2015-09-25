@@ -8,173 +8,61 @@
 
             <div class="form-group">
 
-                <select
-                 class="form-control"
-                 name="sport"
-                 ng-model="filter.sport"
-                 ng-options="sport.id as sport.name for sport in sportsList"
-                >
-
+                <select class="form-control" name="sport" ng-model="filter.sport" ng-options="sport.id as sport.name for sport in sportsList">
                     <option value="">Pick a Sport</option>
-
                 </select>
 
             </div>
 
             <div class="form-group">
 
-                <select
-                 class="form-control"
-                 name="status"
-                 ng-model="filter.status"
-                 ng-options="status.id as status.name for (key, status) in GAME_STATUSES"
-                >
-
+                <select class="form-control" name="status" ng-model="filter.status" ng-options="status.id as status.name for (key, status) in GAME_STATUSES">
                     <option value="">Status</option>
-
                 </select>
 
             </div>
 
             <div class="form-group">
-
-                <input
-                 class="form-control"
-                 name="id"
-                 placeholder="Game ID"
-                 ng-model="filter.gameId"
-                 type="text"
-                >
-
+                <input class="form-control" name="id" placeholder="Game ID" ng-model="filter.gameId" type="text">
             </div>
 
             <div class="form-group">
 
-                <input
-                 class="form-control"
-                 name="team"
-                 placeholder="Team Name"
-                 ng-model="filter.team"
-                 type="text"
-                >
-
+                <input class="form-control" name="team" placeholder="Team Name" ng-model="filter.team" type="text">
             </div>
 
             <div class="form-group">
-
-                <input
-                 class="form-control"
-                 name="coach-firstname"
-                 placeholder="Coach First Name"
-                 ng-model="filter.coachFirstName"
-                 type="text"
-                >
-
+                <input class="form-control" name="coach-firstname" placeholder="Coach First Name" ng-model="filter.coachFirstName" type="text">
             </div>
 
             <div class="form-group">
-
-                <input
-                 class="form-control"
-                 name="coach-lastname"
-                 placeholder="Coach Last Name"
-                 ng-model="filter.coachLastName"
-                 type="text"
-                >
-
+                <input class="form-control" name="coach-lastname" placeholder="Coach Last Name" ng-model="filter.coachLastName" type="text">
             </div>
 
             <div class="form-group">
-
-                <input
-                 class="form-control"
-                 name="indexer-firstname"
-                 placeholder="Indexer First Name"
-                 ng-model="filter.indexerFirstName"
-                 type="text"
-                >
-
+                <input class="form-control" name="indexer-firstname" placeholder="Indexer First Name" ng-model="filter.indexerFirstName" type="text">
             </div>
 
             <div class="form-group">
-
-                <input
-                 class="form-control"
-                 name="indexer-lastname"
-                 placeholder="Indexer Last Name"
-                 ng-model="filter.indexerLastName"
-                 type="text"
-                >
-
+                <input class="form-control" name="indexer-lastname" placeholder="Indexer Last Name" ng-model="filter.indexerLastName" type="text">
             </div>
 
             <div class="form-group">
-
-                <input
-                 class="form-control"
-                 name="assurer-firstname"
-                 placeholder="QA First Name"
-                 ng-model="filter.qaFirstName"
-                 type="text"
-                >
-
+                <input class="form-control" name="assurer-firstname" placeholder="QA First Name" ng-model="filter.qaFirstName" type="text">
             </div>
 
             <div class="form-group">
-
-                <input
-                 class="form-control"
-                 name="assurer-lastname"
-                 placeholder="QA Last Name"
-                 ng-model="filter.qaLastName"
-                 type="text"
-                >
-
+                <input class="form-control" name="assurer-lastname" placeholder="QA Last Name" ng-model="filter.qaLastName" type="text">
             </div>
 
-            <button
-             id="search-queue-cta"
-             class="btn-search"
-             ng-show="sidebar"
-             ng-disabled="searching"
-             type="submit"
-            >
-
-                <i class="icon icon-search"></i>
-
-            </button>
+            <button id="search-queue-cta" class="btn-search" ng-show="sidebar" ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
 
         </form>
 
-        <button
-         class="btn-search"
-         ng-hide="sidebar"
-         ng-click="sidebar=!sidebar"
-        >
+        <button class="btn-search" ng-hide="sidebar" ng-click="sidebar=!sidebar"><i class="icon icon-search"></i></button>
 
-            <i class="icon icon-search"></i>
-
-        </button>
-
-        <button
-         class="btn-toggle-sidebar"
-         ng-show="sidebar"
-         ng-click="sidebar = false"
-        >
-
-            <i class="icon icon-chevron-left"></i>
-
-        </button>
-
-        <button
-         class="btn-toggle-sidebar"
-         ng-hide="sidebar"
-         ng-click="sidebar = true"
-        >
-
-            <i class="icon icon-chevron-right"></i>
-
-        </button>
+        <button class="btn-toggle-sidebar" ng-show="sidebar" ng-click="sidebar = false"><i class="icon icon-chevron-left"></i></button>
+        <button class="btn-toggle-sidebar" ng-hide="sidebar" ng-click="sidebar = true"><i class="icon icon-chevron-right"></i></button>
 
     </aside>
 
