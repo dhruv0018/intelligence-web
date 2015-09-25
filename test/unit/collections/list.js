@@ -32,7 +32,9 @@ describe('List', () => {
         'get',
         'add',
         'remove',
-        'isEmpty'
+        'isEmpty',
+        'next',
+        'previous'
     ];
 
     let srcArrayCopy;
@@ -405,5 +407,43 @@ describe('List', () => {
     it('should restore the original Array on JSON.stringify calls', () => {
 
         expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(srcArrayCopy));
+    });
+
+    it('should be able to retrieve the next item when it exists', () => {
+        let firstItem = sampleList.first;
+        let nextItem = sampleList.next();
+        expect(nextItem).to.not.be.null;
+    });
+
+    it('should return null when there is no following item', () => {
+        let firstItem = sampleList.last;
+        let nextItem = sampleList.next();
+        expect(nextItem).to.be.null;
+    });
+
+    it('should be able to retrieve the previous item when it exists', () => {
+        let lastItem = sampleList.last;
+        let previousItem = sampleList.previous();
+        expect(previousItem).to.not.be.null;
+    });
+
+    it('should return null when there is no previous item', () => {
+        let lastItem = sampleList.first;
+        let previousItem = sampleList.previous();
+        expect(previousItem).to.be.null;
+    });
+
+    it('should be forwardly iterable', () => {
+        let firstItem = sampleList.first;
+        while(sampleList.next()) {
+            expect(sampleList.current).to.not.be.null;
+        }
+    });
+
+    it('should be backwardly iterable', () => {
+        let lastItem = sampleList.last;
+        while(sampleList.previous()) {
+            expect(sampleList.current).to.not.be.null;
+        }
     });
 });

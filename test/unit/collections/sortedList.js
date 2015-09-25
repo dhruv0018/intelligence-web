@@ -107,4 +107,26 @@ describe('SortedList', () => {
         expect(sampleList.get(2)).to.deep.equal(srcArray[2]);
         expect(sampleList.get(3)).to.deep.equal(sampleElem);
     });
+
+    it('should be able to access elements in sequential order for numerically sorted lists', () => {
+        sampleList   = new SortedList(srcArrayCopy, 'qux');
+        let firstItem = sampleList.first;
+        let previousItem = firstItem;
+        while (sampleList.next()) {
+            let item = sampleList.current;
+            expect(item.qux).to.be.at.least(previousItem.qux);
+            previousItem = sampleList.current;
+        }
+    });
+
+    it('should be able to access elements in reverse sequential order for numerically sorted lists', () => {
+        sampleList   = new SortedList(srcArrayCopy, 'qux');
+        let lastItem = sampleList.last;
+        let previousItem = lastItem;
+        while (sampleList.previous()) {
+            let item = sampleList.current;
+            expect(item.qux).to.be.at.most(previousItem.qux);
+            previousItem = sampleList.current;
+        }
+    });
 });
