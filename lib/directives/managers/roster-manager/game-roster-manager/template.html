@@ -2,46 +2,46 @@
 
     <form class="table-manager form-team-active" name="formTeamActive" role="form" novalidate>
         <div class="table-responsive">
-            <table data-ng-class="{'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}" class="table table-striped">
+            <table ng-class="{'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}" class="table table-striped">
 
                 <thead>
                     <tr>
-                        <th data-ng-if="team.isCustomerTeam">Picture</th>
+                        <th ng-if="team.isCustomerTeam">Picture</th>
                         <th>Jersey Number</th>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <th data-ng-if="positionset.positions && positionset.positions.length > 0">Position</th>
-                        <th data-ng-if="team.isCustomerTeam">Did Not Play</th>
+                        <th ng-if="positionset.positions && positionset.positions.length > 0">Position</th>
+                        <th ng-if="team.isCustomerTeam">Did Not Play</th>
                     </tr>
                 </thead>
             </table>
 
 
-            <krossover-athlete  data-ng-repeat="rosterEntry in playerRosterEntries| activeStatus: filtering | filter: isUnknown track by $index"
-                                data-athlete="rosterEntry.player"
-                                data-roster="game.rosters[team.id]"
-                                data-roster-entry="rosterEntry"
-                                data-player-entries="playerRosterEntries"
-                                data-positionset="positionset"
-                                data-game="game"
-                                data-team="team"
-                                data-editable="editable"></krossover-athlete>
+            <krossover-athlete  ng-repeat="rosterEntry in playerRosterEntries| activeStatus: filtering | filter: isUnknown track by $index"
+                                athlete="rosterEntry.player"
+                                roster="game.rosters[team.id]"
+                                roster-entry="rosterEntry"
+                                player-entries="playerRosterEntries"
+                                positionset="positionset"
+                                game="game"
+                                team="team"
+                                editable="editable"></krossover-athlete>
 
             <div class="controls">
-                <button data-ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
+                <button ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
                         class="add-player btn btn-default pull-left"
                         id="game-roster-add-new-player-cta"
-                        data-ng-click="addNewPlayer()">
+                        ng-click="addNewPlayer()">
                     Add New Player
                     <i class="icon icon-plus"></i>
                 </button>
 
                 <a class="excel-upload"
-                   data-ng-hide="!game.rosters[team.id].id || team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
+                   ng-hide="!game.rosters[team.id].id || team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
                    href
                    id="upload-game-roster-excel-cta"
-                   data-open-modal="ExcelUpload.Modal"
-                   data-modal-options="options">
+                   open-modal="ExcelUpload.Modal"
+                   modal-options="options">
                     Upload Roster via Excel
                 </a>
             </div>

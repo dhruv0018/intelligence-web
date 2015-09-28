@@ -23,6 +23,11 @@
     "reels": {
         "turnedOn": true
     },
+    "hours": {
+        "qaPickup": {
+            "deadlinePassed" : 6
+        }
+    },
     "links": {
         "signup": {
             "uri": "http://www.krossover.com/get-started"
