@@ -1,4 +1,4 @@
-import EventList from '../../../src/collections/EventList';
+import EventList from '../../../src/collections/eventList';
 
 const srcArray = [
     {
