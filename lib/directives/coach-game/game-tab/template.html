@@ -8,26 +8,26 @@
                 <header class="box-header col-md-12">
 
                     <h3 class="box-title">{{team.name}} Roster</h3>
-                    <button id="roster-next-tab-top-cta" class="btn-submit-continue" data-ng-click="activateNextTab()">Next</button>
+                    <button id="roster-next-tab-top-cta" class="btn-submit-continue" ng-click="activateNextTab()">Next</button>
 
                 </header>
 
                 <div class="box-body col-md-12">
 
-                    <p class="roster-edit-alert" data-ng-if="game.isDelivered() || game.isBeingBrokenDown()"><i class="icon icon-warning"></i> You may not edit your game rosters since the game is being indexed or has been delivered</p>
+                    <p class="roster-edit-alert" ng-if="game.isDelivered() || game.isBeingBrokenDown()"><i class="icon icon-warning"></i> You may not edit your game rosters since the game is being indexed or has been delivered</p>
 
                     <form>
 
                         <div class="table-responsive">
                             <game-roster-manager
-                                               data-roster-template-url="config.links.rosterTemplates.opposingTeamRoster.uri"
-                                               data-roster-id="rosterId"
-                                               data-team="team"
-                                               data-game="game"
-                                               data-filtering="filtering"
-                                               data-editable="true"
-                                               data-roster="roster"
-                                               data-positionset="positionset"></game-roster-manager>
+                                               roster-template-url="config.links.rosterTemplates.opposingTeamRoster.uri"
+                                               roster-id="rosterId"
+                                               team="team"
+                                               game="game"
+                                               filtering="filtering"
+                                               editable="true"
+                                               roster="roster"
+                                               positionset="positionset"></game-roster-manager>
                         </div>
 
                     </form>
@@ -38,7 +38,7 @@
 
         </div>
 
-        <button id="roster-next-tab-bottom-cta" class="btn-submit-continue" data-ng-click="activateNextTab()">Next</button>
+        <button id="roster-next-tab-bottom-cta" class="btn-submit-continue" ng-click="activateNextTab()">Next</button>
 
     </div>
 

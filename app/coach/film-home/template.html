@@ -3,22 +3,22 @@
     <aside class="sidebar">
 
         <!-- TEAM DIRECTIVE -->
-        <krossover-team-info data-team="team"></krossover-team-info>
+        <krossover-team-info team="team"></krossover-team-info>
         <hr>
 
         <krossover-role
-                data-ng-if="role.type.id === ROLES.HEAD_COACH.type.id && role.teamId == team.id"
-                data-ng-repeat="role in headCoach.roles"
-                data-user="headCoach"
-                data-role="role">
+                ng-if="role.type.id === ROLES.HEAD_COACH.type.id && role.teamId == team.id"
+                ng-repeat="role in headCoach.roles"
+                user="headCoach"
+                role="role">
         </krossover-role>
 
-        <div data-ng-repeat="assistantCoach in assistantCoaches">
+        <div ng-repeat="assistantCoach in assistantCoaches">
 
-            <krossover-role data-ng-repeat="role in assistantCoach.roles"
-                  data-ng-if="role.type.id === ROLES.ASSISTANT_COACH.type.id && role.teamId === team.id && !role.tenureEnd"
-                  data-user="assistantCoach"
-                  data-role="role">
+            <krossover-role ng-repeat="role in assistantCoach.roles"
+                  ng-if="role.type.id === ROLES.ASSISTANT_COACH.type.id && role.teamId === team.id && !role.tenureEnd"
+                  user="assistantCoach"
+                  role="role">
             </krossover-role>
         </div>
 
@@ -26,12 +26,12 @@
 
         <h3>Team Roster</h3>
 
-        <krossover-athlete data-ng-repeat="(playerId, rosterEntry) in team.roster.playerInfo"
-                           data-athlete="players[playerId]"
-                           data-team="team"
-                           data-roster-id="roster.id"
-                           data-editable="false"
-                           data-ng-if="rosterEntry.isActive"></krossover-athlete>
+        <krossover-athlete ng-repeat="teamPlayer in teamPlayers | orderBy: getPlayerJerseysAsNumbers track by $index"
+                           athlete="players[teamPlayer.id]"
+                           team="team"
+                           roster-id="roster.id"
+                           editable="false"
+                           ng-if="teamPlayer.isActive"></krossover-athlete>
     </aside>
 
     <main class="content-full">
@@ -43,12 +43,12 @@
 
                 <h3>Filter Film:</h3>
 
-                <film-home-tabs data-ng-model="filmsList"></film-home-tabs>
+                <film-home-tabs ng-model="filmsList"></film-home-tabs>
 
             </div>
 
             <form class="film-search">
-                <input type="text" id="film-search-cta" class="film-search-input" data-ng-model="query" placeholder="Search for film"/>
+                <input type="text" id="film-search-cta" class="film-search-input" ng-model="query" placeholder="Search for film"/>
             </form>
 
         </header>
@@ -57,7 +57,7 @@
         <!-- NG-REPEAT FILM DIRECTIVES -->
 
         <div ng-show="filteredFilmsList.length > 0 " class="films-area">
-            <krossover-film data-ng-repeat="film in filteredFilmsList = (filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate)" data-film="film"></krossover-film>
+            <krossover-film ng-repeat="film in filteredFilmsList = (filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate)" film="film"></krossover-film>
         </div>
     </main>
 
