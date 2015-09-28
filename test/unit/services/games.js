@@ -1167,4 +1167,148 @@ describe('GamesFactory', function() {
             game.sharedWithUsers = backupSharedWithLookupTable;
         });
     });
+
+    describe('getName', function() {
+
+        let GamesFactory;
+
+        beforeEach(angular.mock.module($provide => {
+
+            $provide.service('TeamsFactory', function () {
+
+                const team = {
+                    "1":{
+                        id: 1,
+                        roles: [
+                            {
+                            id: 1,
+                            userId: 1,
+                            type: 3,
+                            teamId: 1,
+                            tenureEnd: null
+                            }
+                        ],
+                        getHeadCoachRole: () => { return {userId: 1}; }
+                    },
+                    "2":{
+                        id: 2,
+                        roles: [
+                            {
+                            id: 2,
+                            userId: null,
+                            type: 3,
+                            teamId: 2,
+                            tenureEnd: null
+                            }
+                        ],
+                        getHeadCoachRole: () => { return {userId: null}; }
+                    }
+                };
+
+                this.get = function(id) {
+
+                        return team[id];
+                };
+            });
+        }));
+
+        beforeEach(angular.mock.module($provide => {
+
+            $provide.service('UsersFactory', function () {
+
+                const user = {
+                    "1":{
+                        id: 1,
+                        firstName: "Test",
+                        lastName: "Person",
+                        name: "Test Person"
+                    }
+                };
+
+                this.get = function(id) {
+
+                    return user[id];
+                };
+
+                /*
+                  Another part of the app attempts to call this method when the
+                  intelligence-web-client module spins up
+                */
+                this.create = function() {
+                    return true;
+                };
+            });
+        }));
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(_GamesFactory_) {
+
+                GamesFactory = _GamesFactory_;
+
+            }
+        ]));
+
+        it('should return the name of the head coach', ()=> {
+
+                GamesFactory.uploaderTeamId = 1;
+                expect(GamesFactory.getHeadCoachName()).to.be.a('string');
+                expect(GamesFactory.getHeadCoachName()).to.equal('Test Person');
+        });
+
+        it('should throw an errow if no uploader team id', ()=> {
+
+                GamesFactory.uploaderTeamId = null;
+                expect(() => GamesFactory.getHeadCoachName()).to.throw(Error);
+        });
+
+        it('should throw an errow if team does not exist', ()=> {
+
+                GamesFactory.uploaderTeamId = 3;
+                expect(() => GamesFactory.getHeadCoachName()).to.throw(Error);
+        });
+
+        it('should throw an errow if user does not exist', ()=> {
+
+                GamesFactory.uploaderTeamId = 2;
+                expect(() => GamesFactory.getHeadCoachName()).to.throw(Error);
+        });
+    });
+
+    describe('getDeadlineToReturnGame', function() {
+
+        let GamesFactory;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(_GamesFactory_) {
+
+                GamesFactory = _GamesFactory_;
+
+            }
+        ]));
+
+        it('should return the deadline to return a game', ()=> {
+                GamesFactory.submittedAt = '2015-09-04T16:02:59+00:00';
+
+                const uploaderTeam = {
+                    getMaxTurnaroundTime: () => 48
+                };
+
+                expect(GamesFactory.getDeadlineToReturnGame(uploaderTeam)).to.be.a('string');
+                expect(GamesFactory.getDeadlineToReturnGame(uploaderTeam)).to.equal('2015-09-06T16:02:59+00:00');
+        });
+
+        it('should return zero if no submitted at timestamp', ()=> {
+                GamesFactory.submittedAt = null;
+
+                const uploaderTeam = {
+                    getMaxTurnaroundTime: () => 48
+                };
+
+                expect(GamesFactory.getDeadlineToReturnGame(uploaderTeam)).to.equal(0);
+        });
+
+    });
+
 });
