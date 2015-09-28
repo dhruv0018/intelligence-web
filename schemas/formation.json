@@ -17,7 +17,7 @@
         },
         "variableId": {
             "type": "integer",
-            "description": "Corres",
+            "description": "Back reference from the database to the tag variable.",
             "minimum": 0
         }
     },
