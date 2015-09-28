@@ -249,7 +249,12 @@
         "Indexer": true
     },
 
-    "IndexerGames": {
+    "IndexerGamesAssigned": {
+
+        "Indexer": true
+    },
+
+    "IndexerGamesAvailable": {
 
         "Indexer": true
     },
@@ -536,7 +541,8 @@
 
     "Games.Stats": {
         "Head Coach": true,
-        "Assistant Coach": true
+        "Assistant Coach": true,
+        "Athlete": true
     },
 
     "Games.Formations": {
@@ -593,6 +599,10 @@
     },
 
     "Styleguide.Forms": {
+        "*": true
+    },
+
+    "Styleguide.Custom": {
         "*": true
     }
 }
