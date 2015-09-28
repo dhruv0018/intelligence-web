@@ -130,7 +130,8 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @returns {String}
              */
             getRoleNameByRoleType: function(typeId) {
-                return ROLES[ROLE_ID[typeId]].type.name;
+                let role = ROLES[ROLE_ID[typeId]];
+                return (role) ? role.type.name : null;
             },
 
             isAthleteRecruit: function(user = this) {
