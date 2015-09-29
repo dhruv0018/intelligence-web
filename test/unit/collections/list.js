@@ -1,4 +1,5 @@
 import List from '../../../src/collections/list';
+import Iterator from '../../../src/collections/iterator';
 
 const srcArray = [
     1,
@@ -33,8 +34,7 @@ describe('List', () => {
         'add',
         'remove',
         'isEmpty',
-        'next',
-        'previous'
+        'iterator'
     ];
 
     let srcArrayCopy;
@@ -409,41 +409,9 @@ describe('List', () => {
         expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(srcArrayCopy));
     });
 
-    it('should be able to retrieve the next item when it exists', () => {
-        let firstItem = sampleList.first;
-        let nextItem = sampleList.next();
-        expect(nextItem).to.not.be.null;
+    it('should return an iterator from the iterator method', () => {
+        let iter = sampleList.iterator();
+        expect(iter instanceof Iterator).to.be.true;
     });
 
-    it('should return null when there is no following item', () => {
-        let firstItem = sampleList.last;
-        let nextItem = sampleList.next();
-        expect(nextItem).to.be.null;
-    });
-
-    it('should be able to retrieve the previous item when it exists', () => {
-        let lastItem = sampleList.last;
-        let previousItem = sampleList.previous();
-        expect(previousItem).to.not.be.null;
-    });
-
-    it('should return null when there is no previous item', () => {
-        let lastItem = sampleList.first;
-        let previousItem = sampleList.previous();
-        expect(previousItem).to.be.null;
-    });
-
-    it('should be forwardly iterable', () => {
-        let firstItem = sampleList.first;
-        while(sampleList.next()) {
-            expect(sampleList.current).to.not.be.null;
-        }
-    });
-
-    it('should be backwardly iterable', () => {
-        let lastItem = sampleList.last;
-        while(sampleList.previous()) {
-            expect(sampleList.current).to.not.be.null;
-        }
-    });
 });
