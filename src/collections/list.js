@@ -182,6 +182,12 @@ class List {
         return !this.data.length;
     }
 
+    /**
+     * Returns an iterator for the list
+     *
+     * @method iterator
+     * @returns {Iterator}
+     */
     iterator() {
         return new Iterator(this.data);
     }
