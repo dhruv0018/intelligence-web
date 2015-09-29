@@ -64,10 +64,14 @@ describe('Iterator', () => {
     it('should be backwardly iterable', () => {
         let lastItem = srcArrayCopy[srcArrayCopy.length - 1];
         iter.current = lastItem;
+        let totalSteps = 0;
         while(iter.hasPrev()) {
             expect(iter.current.value).to.not.be.null;
             iter.prev();
+            totalSteps++;
         }
+        expect(totalSteps).to.equal(srcArrayCopy.length - 1);
+        expect(iter.current.value).to.equal(1);
     });
 
 });

@@ -29,7 +29,7 @@ class Iterator {
     }
 
     hasPrev() {
-        return this.index >= 0;
+        return this.index > 0;
     }
 }
 
