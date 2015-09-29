@@ -9,7 +9,7 @@ import Iterator from './iterator';
 class List {
 
     /**
-     * Instantaties List as a new array
+     * Instantiates List as a new array
      *
      * @constructs List
      * @param {Array} [array] - Array to use as backing data store

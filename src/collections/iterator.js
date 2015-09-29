@@ -5,7 +5,7 @@
  */
 class Iterator {
     /**
-     * Instantaties Iterator for array based datastructures
+     * Instantiates Iterator for array based datastructures
      *
      * @constructs Iterator
      * @param {Array} [backingStore] - Array to use as backing data store
