@@ -1194,7 +1194,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     sharedWithTeamId: team.id,
                     createdAt: moment.utc().toDate(),
                     isBreakdownShared: false,
-                    isTelestrationsShared: isTelestrationsShared
+                    isTelestrationsShared
                 };
 
                 this.sharedWithTeams[team.id] = share;
@@ -1260,12 +1260,13 @@ IntelligenceWebClient.factory('GamesFactory', [
              */
             getShareByCurrentUser: function() {
 
-                if (this.isSharedWithUser(session.getCurrentUser())) {
-                    return this.getShareByUser(session.getCurrentUser());
+                let currentUser = session.getCurrentUser();
+                if (this.isSharedWithUser(currentUser)) {
+                    return this.getShareByUser(currentUser);
                 }
 
                 const teamId = session.getCurrentTeamId();
-                if ((session.currentUser.is(ROLES.COACH)) && this.isSharedWithTeamId(teamId)) {
+                if ((currentUser.is(ROLES.COACH)) && this.isSharedWithTeamId(teamId)) {
                     return this.getShareByTeamId(teamId);
                 }
 
@@ -1320,8 +1321,9 @@ IntelligenceWebClient.factory('GamesFactory', [
              */
             isSharedWithCurrentUser: function() {
 
-                return this.isSharedWithUser(session.getCurrentUser()) ||
-                        ((session.currentUser.is(ROLES.COACH)) && this.isSharedWithTeamId(session.getCurrentTeamId()));
+                let currentUser = session.getCurrentUser();
+                return this.isSharedWithUser(currentUser) ||
+                        ((currentUser.is(ROLES.COACH)) && this.isSharedWithTeamId(session.getCurrentTeamId()));
 
             },
 
@@ -1378,7 +1380,11 @@ IntelligenceWebClient.factory('GamesFactory', [
             getTeamShares: function() {
                 if (!this.sharedWithTeams) throw new Error('sharedWithTeams not defined');
 
-                return self.sharedWithTeams.map(share => angular.copy(share));
+                let sharesArray = [];
+                angular.forEach(this.sharedWithTeams, function(share, index) {
+                    sharesArray.push(share);
+                });
+                return sharesArray;
             },
 
             /**
@@ -1462,7 +1468,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 const teamShare = this.getShareByTeam(team);
 
-                return angular.isDefined(teamShare) && teamShare[featureAttribute];
+                return !!(angular.isDefined(teamShare) && teamShare[featureAttribute]);
             },
             isTelestrationsSharedWithUser: function(user) {
                 var self = this;

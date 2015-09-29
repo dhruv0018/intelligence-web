@@ -1,6 +1,9 @@
+chai.config.truncateThreshold = 0;
 var assert = chai.assert;
 var expect = chai.expect;
 var should = chai.should();
+
+var moment = require('moment');
 
 describe('GamesFactory', function() {
 
@@ -1311,4 +1314,639 @@ describe('GamesFactory', function() {
 
     });
 
+    describe('getBySharedWithUserId', function() {
+        it('should return empty if there are no games shared', inject(['GamesFactory',
+                                                                        function(GamesFactory) {
+            sinon.stub(GamesFactory,'getList').returns([]);
+            let games = GamesFactory.getBySharedWithUserId(1);
+            assert(GamesFactory.getList.should.have.been.called);
+            expect(games).to.be.an('array');
+            expect(games).to.be.empty;
+        }]));
+
+        it('should return empty if there are no games shared with userId', inject(['GamesFactory',
+                                                                                    function(GamesFactory) {
+            let game1 = GamesFactory.extend({id:1, shares:[{sharedWithUserId : 1}]});
+            let game2 = GamesFactory.extend({id:2, shares:[{sharedWithUserId : 2}]});
+            let games = [game1, game2];
+            sinon.stub(GamesFactory,'getList').returns(games);
+            let sharedGames = GamesFactory.getBySharedWithUserId(3);
+            assert(GamesFactory.getList.should.have.been.called);
+            expect(sharedGames).to.be.an('array');
+            expect(sharedGames).to.be.empty;
+        }]));
+
+        it('should return games that are shared with userId', inject(['GamesFactory',
+                                                                        function(GamesFactory) {
+            let game1 = GamesFactory.extend({id:1, shares:[{sharedWithUserId : 1}]});
+            let game2 = GamesFactory.extend({id:2, shares:[{sharedWithUserId : 2}]});
+            let games = [game1, game2];
+            sinon.stub(GamesFactory,'getList').returns(games);
+            let sharedGames = GamesFactory.getBySharedWithUserId(1);
+            assert(GamesFactory.getList.should.have.been.called);
+            expect(sharedGames).to.be.an('array');
+            expect(sharedGames).to.eql([game1]);
+        }]));
+    });
+
+    describe('getBySharedWithTeamId', function() {
+        it('should return empty if there are no games shared', inject(['GamesFactory',
+                                                                        function(GamesFactory) {
+            sinon.stub(GamesFactory,'getList').returns([]);
+            let sharedGames = GamesFactory.getBySharedWithTeamId(1);
+            assert(GamesFactory.getList.should.have.been.called);
+            expect(sharedGames).to.be.an('array');
+            expect(sharedGames).to.be.empty;
+        }]));
+
+        it('should return empty if there are no games shared with teamId', inject(['GamesFactory',
+                                                                                    function(GamesFactory) {
+            let game1 = GamesFactory.extend({id:1, shares:[{sharedWithTeamId : 1}]});
+            let game2 = GamesFactory.extend({id:2, shares:[{sharedWithTeamId : 2}]});
+            let games = [game1, game2];
+            sinon.stub(GamesFactory,'getList').returns(games);
+            let sharedGames = GamesFactory.getBySharedWithTeamId(3);
+            assert(GamesFactory.getList.should.have.been.called);
+            expect(sharedGames).to.be.an('array');
+            expect(sharedGames).to.be.empty;
+        }]));
+
+        it('should return games that are shared with teamId', inject(['GamesFactory',
+                                                                        function(GamesFactory) {
+            let game1 = GamesFactory.extend({id:1, shares:[{sharedWithTeamId : 1}]});
+            let game2 = GamesFactory.extend({id:2, shares:[{sharedWithTeamId : 2}]});
+            let games = [game1, game2];
+            sinon.stub(GamesFactory,'getList').returns(games);
+            let sharedGames = GamesFactory.getBySharedWithTeamId(1);
+            assert(GamesFactory.getList.should.have.been.called);
+            expect(sharedGames).to.be.an('array');
+            expect(sharedGames).to.eql([game1]);
+        }]));
+    });
+
+    describe('getByRelatedRole', function() {
+        let GamesFactory;
+        it('should return games using the set params, for coach', inject(['GamesFactory', 'UsersFactory', 'ROLES', 'SessionService',
+                                                                                    function(GamesFactory, UsersFactory, ROLES, session) {
+            let userId = 20;
+            let teamId = 27;
+            let gamesList;
+            sinon.stub(session,'getCurrentUserId');
+            sinon.stub(session,'getCurrentTeamId');
+            sinon.stub(GamesFactory,'getByUploaderRole').withArgs(userId, teamId).returns([{id:1}]);
+            sinon.stub(GamesFactory,'getByUploaderTeamId').withArgs(teamId).returns([{id:2}]);
+            sinon.stub(GamesFactory,'getBySharedWithTeamId').withArgs(teamId).returns([{id:3}]);
+            sinon.stub(GamesFactory,'getBySharedWithUserId').withArgs(userId).returns([{id:3}]);
+            let uniqueExpectedGames = [{id:1},{id:2},{id:3}];
+            sinon.stub(GamesFactory,'getList').withArgs([1,2,3]).returns(uniqueExpectedGames);
+            ROLES.COACH.type.id.forEach(type=>{
+                session.currentUser = UsersFactory.extend({ id: 2, roles : [{type}]});
+                gamesList = GamesFactory.getByRelatedRole(userId, teamId);
+                assert(session.getCurrentUserId.should.have.not.been.called);
+                assert(session.getCurrentTeamId.should.have.not.been.called);
+                assert(GamesFactory.getByUploaderRole.should.have.been.called);
+                assert(GamesFactory.getByUploaderTeamId.should.have.been.called);
+                assert(GamesFactory.getBySharedWithTeamId.should.have.been.called);
+                assert(GamesFactory.getBySharedWithUserId.should.have.been.called);
+                expect(gamesList).to.be.an('array');
+                expect(gamesList).to.equal(uniqueExpectedGames);
+            })
+        }]));
+
+        it('should return games using the session params, for coach', inject(['GamesFactory', 'UsersFactory', 'ROLES', 'SessionService',
+                                                                            function(GamesFactory, UsersFactory, ROLES, session) {
+            let userId = 20;
+            let teamId = 27;
+            let gamesList;
+            sinon.stub(session,'getCurrentUserId').returns(userId);
+            sinon.stub(session,'getCurrentTeamId').returns(teamId);
+            sinon.stub(GamesFactory,'getByUploaderRole').withArgs(userId, teamId).returns([{id:1}]);
+            sinon.stub(GamesFactory,'getByUploaderTeamId').withArgs(teamId).returns([{id:2}]);
+            sinon.stub(GamesFactory,'getBySharedWithTeamId').withArgs(teamId).returns([{id:3}]);
+            sinon.stub(GamesFactory,'getBySharedWithUserId').withArgs(userId).returns([{id:3}]);
+            let uniqueExpectedGames = [{id:1},{id:2},{id:3}];
+            sinon.stub(GamesFactory,'getList').withArgs([1,2,3]).returns(uniqueExpectedGames);
+            ROLES.COACH.type.id.forEach(type=>{
+                session.currentUser = UsersFactory.extend({ id: userId, roles : [{type}]});
+                gamesList = GamesFactory.getByRelatedRole();
+                assert(session.getCurrentUserId.should.have.been.called);
+                assert(session.getCurrentTeamId.should.have.been.called);
+                assert(GamesFactory.getByUploaderRole.should.have.been.called);
+                assert(GamesFactory.getByUploaderTeamId.should.have.been.called);
+                assert(GamesFactory.getBySharedWithTeamId.should.have.been.called);
+                assert(GamesFactory.getBySharedWithUserId.should.have.been.called);
+                expect(gamesList).to.be.an('array');
+                expect(gamesList).to.equal(uniqueExpectedGames);
+            })
+        }]));
+
+        it('should return games using the set params, for athelete', inject(['GamesFactory', 'UsersFactory', 'ROLE_TYPE', 'SessionService',
+                                                                            function(GamesFactory, UsersFactory, ROLE_TYPE, session) {
+            let userId = 20;
+            let teamId = 27;
+            sinon.stub(session,'getCurrentUserId');
+            sinon.stub(session,'getCurrentTeamId');
+            sinon.stub(GamesFactory,'getByUploaderUserId').withArgs(userId).returns([{id:1}]);
+            sinon.stub(GamesFactory,'getByUploaderTeamId').withArgs(teamId).returns([{id:2}]);
+            sinon.stub(GamesFactory,'getBySharedWithUserId').withArgs(userId).returns([{id:2}]);
+            let uniqueExpectedGames = [{id:1},{id:2}];
+            sinon.stub(GamesFactory,'getList').withArgs([1,2]).returns(uniqueExpectedGames);
+            session.currentUser = UsersFactory.extend({ id: 2, roles : [{type : ROLE_TYPE.ATHLETE}]});
+            let gamesList = GamesFactory.getByRelatedRole(userId, teamId);
+            assert(session.getCurrentUserId.should.have.not.been.called);
+            assert(session.getCurrentTeamId.should.have.not.been.called);
+            assert(GamesFactory.getByUploaderUserId.should.have.been.called);
+            assert(GamesFactory.getByUploaderTeamId.should.have.been.called);
+            expect(gamesList).to.be.an('array');
+            expect(gamesList).to.equal(uniqueExpectedGames);
+        }]));
+
+        it('should return games using the session, for athelete', inject(['GamesFactory', 'UsersFactory', 'ROLE_TYPE', 'SessionService',
+                                                                            function(GamesFactory, UsersFactory, ROLE_TYPE, session) {
+            let userId = 20;
+            let teamId = 27;
+            sinon.stub(session,'getCurrentUserId').returns(userId);
+            sinon.stub(session,'getCurrentTeamId').returns(teamId);
+            sinon.stub(GamesFactory,'getByUploaderUserId').withArgs(userId).returns([{id:1}]);
+            sinon.stub(GamesFactory,'getByUploaderTeamId').withArgs(teamId).returns([{id:2}]);
+            sinon.stub(GamesFactory,'getBySharedWithUserId').withArgs(userId).returns([{id:2}]);
+            let uniqueExpectedGames = [{id:1},{id:2}];
+            sinon.stub(GamesFactory,'getList').withArgs([1,2]).returns(uniqueExpectedGames);
+            session.currentUser = UsersFactory.extend({ id: userId, roles : [{type : ROLE_TYPE.ATHLETE}]});
+            let gamesList = GamesFactory.getByRelatedRole();
+            assert(session.getCurrentUserId.should.have.been.called);
+            assert(session.getCurrentTeamId.should.have.been.called);
+            assert(GamesFactory.getByUploaderUserId.should.have.been.called);
+            assert(GamesFactory.getByUploaderTeamId.should.have.been.called);
+            expect(gamesList).to.be.an('array');
+            expect(gamesList).to.equal(uniqueExpectedGames);
+        }]));
+
+    });
+
+    describe('shareWithTeam', ()=> {
+        it("Should throw error when there is no team", inject(['GamesFactory',
+                                                                function(GamesFactory) {
+                expect(()=>GamesFactory.shareWithTeam()).to.throw(Error);
+        }]));
+
+        it("Should not reshare when its already shared", inject(['GamesFactory',
+                                                                function(GamesFactory) {
+                let initialShares = [{sharedWithTeamId:1}];
+                let game = GamesFactory.extend({id:2, shares:initialShares});
+                let initialTeamShares = game.sharedWithTeams;
+                sinon.stub(game,'isSharedWithTeam').returns(true);
+                game.shareWithTeam({id:1})
+                expect(game.shares).to.eql(initialShares);
+                expect(game.sharedWithTeams).to.eql(initialTeamShares);
+        }]));
+
+        it("Should share with team, without telestration", inject(['GamesFactory', 'SessionService',
+                                                                function(GamesFactory, session) {
+                session.currentUser = {id: 1};
+                let initialShares = [{sharedWithTeamId:2}];
+                let game = GamesFactory.extend({id:3, shares:initialShares});
+                let initialTeamShares = game.sharedWithTeams;
+                let team = {id:4}
+                const newShare = {
+                        userId: session.currentUser.id,
+                        gameId: game.id,
+                        sharedWithTeamId: team.id,
+                        createdAt: moment.utc().toDate(),
+                        isBreakdownShared: false,
+                        isTelestrationsShared: false
+                    };
+                sinon.stub(game,'isSharedWithTeam').returns(false);
+                game.shareWithTeam(team);
+                assert(game.isSharedWithTeam.should.have.been.called);
+                let expectedShares = initialShares;
+                expectedShares.push(newShare);
+                let expectedTeamShares = initialTeamShares;
+                expectedTeamShares[newShare.sharedWithTeamId] = newShare;
+                expect(game.shares).to.eql(expectedShares);
+                expect(game.sharedWithTeams).to.eql(expectedTeamShares);
+        }]));
+
+        it("Should share with team, with telestration", inject(['GamesFactory', 'SessionService',
+                                                                                        function(GamesFactory, session) {
+                session.currentUser = {id: 1};
+                let initialShares = [{sharedWithTeamId:2}];
+                let game = GamesFactory.extend({id:3, shares:initialShares});
+                let initialTeamShares = game.sharedWithTeams;
+                let team = {id:4}
+                const newShare = {
+                        userId: session.currentUser.id,
+                        gameId: game.id,
+                        sharedWithTeamId: team.id,
+                        createdAt: moment.utc().toDate(),
+                        isBreakdownShared: false,
+                        isTelestrationsShared: true
+                    };
+                sinon.stub(game,'isSharedWithTeam').returns(false);
+                game.shareWithTeam(team, true);
+                assert(game.isSharedWithTeam.should.have.been.called);
+                let expectedShares = initialShares;
+                expectedShares.push(newShare);
+                let expectedTeamShares = initialTeamShares;
+                expectedTeamShares[newShare.sharedWithTeamId] = newShare;
+                expect(game.shares).to.eql(expectedShares);
+                expect(game.sharedWithTeams).to.eql(expectedTeamShares);
+        }]));
+    });
+
+    describe('stopSharing', ()=> {
+        it("Should throw error when there is no share is requested", inject(['GamesFactory',
+                                                                function(GamesFactory) {
+                expect(()=>GamesFactory.stopSharing()).to.throw(Error);
+        }]));
+
+        it("Should exit without failing when there are no sharing on the game", inject(['GamesFactory',
+                                                                function(GamesFactory) {
+                let game = GamesFactory.extend({id:3, shares:[]});
+                let initialUserShares = game.sharedWithUsers;
+                let initialTeamShares = game.sharedWithTeams;
+                game.stopSharing({id:1});
+                expect(game.shares).to.eql([]);
+                expect(game.sharedWithUsers).to.eql(initialUserShares);
+                expect(game.sharedWithTeams).to.eql(initialTeamShares);
+        }]));
+        it("Should exit without failing when the sharing is not found", inject(['GamesFactory',
+                                                                function(GamesFactory) {
+                let game = GamesFactory.extend({id:3, shares:[{sharedWithUserId:1},{sharedWithTeamId:1}]});
+                let initialUserShares = game.sharedWithUsers;
+                let initialTeamShares = game.sharedWithTeams;
+                game.stopSharing({id:1});
+                expect(game.shares).to.eql([{sharedWithUserId:1},{sharedWithTeamId:1}]);
+                expect(game.sharedWithUsers).to.eql(initialUserShares);
+                expect(game.sharedWithTeams).to.eql(initialTeamShares);
+        }]));
+        it("Should remove the share when the user sharing is found", inject(['GamesFactory',
+                                                                function(GamesFactory) {
+                let game = GamesFactory.extend({id:3, shares:[{sharedWithUserId:1},{sharedWithTeamId:1}]});
+                let initialUserShares = game.sharedWithUsers;
+                let initialTeamShares = game.sharedWithTeams;
+                game.stopSharing({sharedWithUserId:1});
+                expect(game.shares).to.eql([{sharedWithTeamId:1}]);
+                expect(game.sharedWithUsers).to.eql({});
+                expect(game.sharedWithTeams).to.eql(initialTeamShares);
+        }]));
+        it("Should remove the share when the team sharing is found", inject(['GamesFactory',
+                                                                function(GamesFactory) {
+                let game = GamesFactory.extend({id:3, shares:[{sharedWithUserId:1},{sharedWithTeamId:1}]});
+                let initialUserShares = game.sharedWithUsers;
+                let initialTeamShares = game.sharedWithTeams;
+                game.stopSharing({sharedWithTeamId:1});
+                expect(game.shares).to.eql([{sharedWithUserId:1}]);
+                expect(game.sharedWithUsers).to.eql(initialUserShares);
+                expect(game.sharedWithTeams).to.eql({});
+        }]));
+    });
+
+    describe('getShareByTeam', ()=> {
+        it("Should throw error when there is no team to find", inject(['GamesFactory',
+                                                                function(GamesFactory) {
+                expect(()=>GamesFactory.getShareByTeam()).to.throw(Error);
+        }]));
+
+        it("Should return share by team", inject(['GamesFactory',
+                                                                function(GamesFactory) {
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:4}]});
+                sinon.stub(game,'getShareByTeamId').returns({sharedWithTeamId:4});
+                expect(game.getShareByTeam({id:1})).to.eql({sharedWithTeamId:4});
+                assert(game.getShareByTeamId.should.have.been.called);
+        }]));
+    });
+
+    describe('getShareByCurrentUser', ()=> {
+        it("Should return user share when shared with user", inject(['GamesFactory', 'SessionService',
+                                                                function(GamesFactory, session) {
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithUserId:4}]});
+                let user = {id:4};
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(game,'isSharedWithUser').withArgs(user).returns(true);
+                sinon.stub(game,'getShareByUser').withArgs(user).returns({sharedWithUserId:user.id});
+                expect(game.getShareByCurrentUser()).to.eql({sharedWithUserId:user.id});
+                assert(session.getCurrentUser.should.have.been.called);
+                assert(game.isSharedWithUser.should.have.been.called);
+                assert(game.getShareByUser.should.have.been.called);
+        }]));
+
+        it("Should return team share when user is coach", inject(['GamesFactory', 'UsersFactory', 'SessionService', 'ROLES',
+                                                                function(GamesFactory, UsersFactory, session, ROLES) {
+                let teamId = 6;
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:teamId}]});
+                let callbackGetUser = sinon.stub(session,'getCurrentUser');
+                let callbackIsSharedWithUser = sinon.stub(game,'isSharedWithUser');
+                sinon.stub(session,'getCurrentTeamId').returns(teamId);
+                sinon.stub(game,'isSharedWithTeamId').withArgs(teamId).returns(true);
+                sinon.stub(game,'getShareByTeamId').withArgs(teamId).returns({sharedWithTeamId:teamId});
+                ROLES.COACH.type.id.forEach(type=>{
+                    let user = UsersFactory.extend({ id: 2, roles : [{type}]});
+                    callbackGetUser.returns(user);
+                    callbackIsSharedWithUser.withArgs(user).returns(false);
+                    expect(game.getShareByCurrentUser()).to.eql({sharedWithTeamId:teamId});
+                    assert(session.getCurrentUser.should.have.been.called);
+                    assert(game.isSharedWithUser.should.have.been.called);
+                    assert(session.getCurrentTeamId.should.have.been.called);
+                    assert(game.isSharedWithTeamId.should.have.been.called);
+                    assert(game.getShareByTeamId.should.have.been.called);
+                });
+        }]));
+
+        it("Should return undefined when the game is not shared with current user", inject(['GamesFactory', 'UsersFactory', 'SessionService', 'ROLE_TYPE',
+                                                                function(GamesFactory, UsersFactory, session, ROLE_TYPE) {
+            let teamId = 6;
+            let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:teamId}]});
+            let user = UsersFactory.extend({ id: 2, roles : [{type : ROLE_TYPE.HEAD_COACH}]});
+            sinon.stub(session,'getCurrentUser').returns(user);
+            sinon.stub(game,'isSharedWithUser').withArgs(user).returns(false);
+            sinon.stub(session,'getCurrentTeamId').returns(teamId);
+            sinon.stub(game,'isSharedWithTeamId').withArgs(teamId).returns(false);
+            expect(game.getShareByCurrentUser()).to.be.undefined;
+            assert(session.getCurrentUser.should.have.been.called);
+            assert(game.isSharedWithUser.should.have.been.called);
+            assert(session.getCurrentTeamId.should.have.been.called);
+            assert(game.isSharedWithTeamId.should.have.been.called);
+        }]));
+    });
+
+    describe('getShareByTeamId', ()=> {
+        it("Should throw error when team sharing are not defined on the game", inject(['GamesFactory',
+                                                                function(game) {
+                let teamId = 6;
+                expect(()=>game.getShareByTeamId(teamId)).to.throw(Error);
+        }]));
+
+        it("Should return the share when found", inject(['GamesFactory', function(GamesFactory) {
+                let teamId = 6;
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:teamId}]});
+                expect(game.getShareByTeamId(teamId)).to.eql({sharedWithTeamId:teamId});
+        }]));
+
+        it("Should return undefined when not found", inject(['GamesFactory', function(GamesFactory) {
+            let teamId = 6;
+            let game = GamesFactory.extend({id:2, shares:[]});
+            expect(game.getShareByTeamId(teamId)).to.be.undefined;
+        }]));
+    });
+
+    describe('isSharedWithTeam', ()=> {
+        it("Should return false when there is no team", inject(['GamesFactory',
+                                                                function(game) {
+                expect(game.isSharedWithTeam()).to.be.false;
+        }]));
+
+        it("Should return false when there is no team shares", inject(['GamesFactory', function(game) {
+                let team = {id:6};
+                expect(game.isSharedWithTeam(team)).to.be.false;
+        }]));
+
+        it("Should return false when it is not shared with the team", inject(['GamesFactory', function(GamesFactory) {
+            let team = {id:6};
+            let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:7}]});
+            expect(game.isSharedWithTeam(team)).to.be.false;
+        }]));
+
+        it("Should return true when it is shared with the team", inject(['GamesFactory', function(GamesFactory) {
+            let team = {id:6};
+            let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:team.id}]});
+            expect(game.isSharedWithTeam(team)).to.be.true;
+        }]));
+    });
+
+    describe('isSharedWithCurrentUser', ()=> {
+        it("Should return false, when user is not a coach and the it is not shared with the user", inject(['GamesFactory', 'UsersFactory', 'SessionService', 'ROLE_TYPE',
+                                                                function(GamesFactory, UsersFactory, session, ROLE_TYPE) {
+                let user = UsersFactory.extend({id:2, roles:[{type:ROLE_TYPE.ATHLETE}]});
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:7}]});
+                let teamId = 7;
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(game,'isSharedWithUser').withArgs(user).returns(false);
+                sinon.stub(session,'getCurrentTeamId').returns(teamId);
+                sinon.stub(game,'isSharedWithTeamId').withArgs(teamId).returns(false);
+                expect(game.isSharedWithCurrentUser()).to.be.false;
+                assert(session.getCurrentUser.should.have.been.called);
+                assert(game.isSharedWithUser.should.have.been.called);
+                assert(session.getCurrentTeamId.should.have.not.been.called);
+                assert(game.isSharedWithTeamId.should.have.not.been.called);
+        }]));
+
+        it("Should return true, when user is not a coach and the it is shared with the user", inject(['GamesFactory', 'UsersFactory', 'SessionService', 'ROLE_TYPE',
+                                                                                                    function(GamesFactory, UsersFactory, session, ROLE_TYPE) {
+                let user = UsersFactory.extend({id:2, roles:[{type:ROLE_TYPE.ATHLETE}]});
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithUserId:2}]});
+                let teamId = 7;
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(game,'isSharedWithUser').withArgs(user).returns(true);
+                sinon.stub(session,'getCurrentTeamId').returns(teamId);
+                sinon.stub(game,'isSharedWithTeamId').withArgs(teamId).returns(false);
+                expect(game.isSharedWithCurrentUser()).to.be.true;
+                assert(session.getCurrentUser.should.have.been.called);
+                assert(game.isSharedWithUser.should.have.been.called);
+                assert(session.getCurrentTeamId.should.have.not.been.called);
+                assert(game.isSharedWithTeamId.should.have.not.been.called);
+        }]));
+
+        it("Should return false, when user is a coach and the it is not shared with the user and team", inject(['GamesFactory', 'UsersFactory', 'SessionService', 'ROLES',
+                                                                                                            function(GamesFactory, UsersFactory, session, ROLES) {
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:7}]});
+                let teamId = 7;
+                let callbackGetCurrentUser = sinon.stub(session,'getCurrentUser');
+                let callbackIsSharedWithUser = sinon.stub(game,'isSharedWithUser');
+                sinon.stub(session,'getCurrentTeamId').returns(teamId);
+                sinon.stub(game,'isSharedWithTeamId').withArgs(teamId).returns(false);
+                ROLES.COACH.type.id.forEach(type => {
+                    let user = UsersFactory.extend({id:2, roles:[{type}]});
+                    callbackGetCurrentUser.returns(user);
+                    callbackIsSharedWithUser.withArgs(user).returns(false);
+                    expect(game.isSharedWithCurrentUser()).to.be.false;
+                    assert(session.getCurrentUser.should.have.been.called);
+                    assert(game.isSharedWithUser.should.have.been.called);
+                    assert(session.getCurrentTeamId.should.have.been.called);
+                    assert(game.isSharedWithTeamId.should.have.been.called);
+                });
+        }]));
+
+        it("Should return true, when user is a coach and the it is shared with the user", inject(['GamesFactory', 'UsersFactory', 'SessionService', 'ROLES',
+                                                                                                    function(GamesFactory, UsersFactory, session, ROLES) {
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:7}]});
+                let teamId = 7;
+                let callbackGetCurrentUser = sinon.stub(session,'getCurrentUser');
+                let callbackIsSharedWithUser = sinon.stub(game,'isSharedWithUser');
+                sinon.stub(session,'getCurrentTeamId').returns(teamId);
+                sinon.stub(game,'isSharedWithTeamId').withArgs(teamId).returns(false);
+                ROLES.COACH.type.id.forEach(type => {
+                    let user = UsersFactory.extend({id:2, roles:[{type}]});
+                    callbackGetCurrentUser.returns(user);
+                    callbackIsSharedWithUser.withArgs(user).returns(true);
+                    expect(game.isSharedWithCurrentUser()).to.be.true;
+                    assert(session.getCurrentUser.should.have.been.called);
+                    assert(game.isSharedWithUser.should.have.been.called);
+                    assert(session.getCurrentTeamId.should.have.not.been.called);
+                    assert(game.isSharedWithTeamId.should.have.not.been.called);
+                });
+        }]));
+
+        it("Should return true, when user is a coach and the it is not shared with the user, but shared with team", inject(['GamesFactory', 'UsersFactory', 'SessionService', 'ROLES',
+                                                                                                    function(GamesFactory, UsersFactory, session, ROLES) {
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:7}]});
+                let teamId = 7;
+                let callbackGetCurrentUser = sinon.stub(session,'getCurrentUser');
+                let callbackIsSharedWithUser = sinon.stub(game,'isSharedWithUser');
+                sinon.stub(session,'getCurrentTeamId').returns(teamId);
+                sinon.stub(game,'isSharedWithTeamId').withArgs(teamId).returns(true);
+                ROLES.COACH.type.id.forEach(type => {
+                    let user = UsersFactory.extend({id:2, roles:[{type}]});
+                    callbackGetCurrentUser.returns(user);
+                    callbackIsSharedWithUser.withArgs(user).returns(false);
+                    expect(game.isSharedWithCurrentUser()).to.be.true;
+                    assert(session.getCurrentUser.should.have.been.called);
+                    assert(game.isSharedWithUser.should.have.been.called);
+                    assert(session.getCurrentTeamId.should.have.been.called);
+                    assert(game.isSharedWithTeamId.should.have.been.called);
+                });
+        }]));
+    });
+
+    describe('isBreakdownSharedWithCurrentUser', ()=> {
+        it("Should return false, when the game is not shared with current user", inject(['GamesFactory', function(GamesFactory) {
+                sinon.stub(GamesFactory,'isSharedWithCurrentUser').returns(false);
+                sinon.stub(GamesFactory,'getShareByCurrentUser');
+                expect(GamesFactory.isBreakdownSharedWithCurrentUser()).to.be.false;
+                assert(GamesFactory.isSharedWithCurrentUser.should.have.been.called);
+                assert(GamesFactory.getShareByCurrentUser.should.have.not.been.called);
+        }]));
+
+        it("Should return false, when the game breakdown is not shared with current user", inject(['GamesFactory', function(GamesFactory) {
+                sinon.stub(GamesFactory,'isSharedWithCurrentUser').returns(true);
+                sinon.stub(GamesFactory,'getShareByCurrentUser').returns({isBreakdownShared:false});
+                expect(GamesFactory.isBreakdownSharedWithCurrentUser()).to.be.false;
+                assert(GamesFactory.isSharedWithCurrentUser.should.have.been.called);
+                assert(GamesFactory.getShareByCurrentUser.should.have.been.called);
+        }]));
+
+        it("Should return true, when the game breakdown is shared with current user", inject(['GamesFactory', function(GamesFactory) {
+                sinon.stub(GamesFactory,'isSharedWithCurrentUser').returns(true);
+                sinon.stub(GamesFactory,'getShareByCurrentUser').returns({isBreakdownShared:true});
+                expect(GamesFactory.isBreakdownSharedWithCurrentUser()).to.be.true;
+                assert(GamesFactory.isSharedWithCurrentUser.should.have.been.called);
+                assert(GamesFactory.getShareByCurrentUser.should.have.been.called);
+        }]));
+    });
+
+    describe('isSharedWithTeamId', ()=> {
+        it("Should return false, when there is no teamId", inject(['GamesFactory', function(GamesFactory) {
+                expect(GamesFactory.isSharedWithTeamId()).to.be.false;
+        }]));
+
+        it("Should return false, when it is not shared with any team", inject(['GamesFactory', function(GamesFactory) {
+                let teamId = 6;
+                expect(GamesFactory.isSharedWithTeamId(teamId)).to.be.false;
+        }]));
+
+        it("Should return false, when it is not shared with teamId", inject(['GamesFactory', function(GamesFactory) {
+                let teamId = 6;
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:7}]});
+                sinon.stub(game,'getShareByTeamId').withArgs(teamId).returns(undefined);
+                expect(game.isSharedWithTeamId(teamId)).to.be.false;
+                assert(game.getShareByTeamId.should.have.been.called);
+        }]));
+
+        it("Should return true, when it is shared with teamId", inject(['GamesFactory', function(GamesFactory) {
+                let teamId = 6;
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:6}]});
+                sinon.stub(game,'getShareByTeamId').withArgs(teamId).returns({sharedWithTeamId:6});
+                expect(game.isSharedWithTeamId(teamId)).to.be.true;
+                assert(game.getShareByTeamId.should.have.been.called);
+        }]));
+    });
+
+    describe('getTeamShares', ()=> {
+        it("Should throw error when team shares are not available on the game", inject(['GamesFactory', function(GamesFactory) {
+                expect(()=>GamesFactory.getTeamShares()).to.throw(Error);
+        }]));
+
+        it("Should get the team shares", inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:2, shares:[{sharedWithTeamId:7}]});
+                expect(game.getTeamShares()).to.eql([{sharedWithTeamId:7}]);
+        }]));
+    });
+
+    describe('getNonPublicShares', ()=> {
+        it("Should return only non public shares", inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
+                expect(game.getNonPublicShares()).to.eql([{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}]);
+        }]));
+    });
+
+    describe('isPublicShare', ()=> {
+        it("Should return false when if the share is not non public", inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
+                expect(game.isPublicShare({id:1, sharedWithTeamId:6})).to.be.false;
+        }]));
+
+        it("Should return true when the share is public", inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
+                expect(game.isPublicShare(game.publicShare)).to.be.true;
+        }]));
+    });
+
+    describe('isFeatureSharedWithTeam', ()=> {
+        it("Should throw error is the feature attribute is missing", inject(['GamesFactory', function(GamesFactory) {
+                expect(()=>GamesFactory.isFeatureSharedWithTeam()).to.throw(Error);
+        }]));
+
+        it("Should throw error if the feature is invalid attribute", inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
+                expect(()=>GamesFactory.isFeatureSharedWithTeam(1)).to.throw(Error);
+        }]));
+
+        it("Should return false when the game is not shared with the team", inject(['GamesFactory', function(GamesFactory) {
+            let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
+            let team = {id:6};
+            sinon.stub(game,'getShareByTeam').withArgs(team).returns(undefined);
+            expect(game.isFeatureSharedWithTeam('feature1', team)).to.be.false;
+            assert(game.getShareByTeam.should.have.been.called);
+        }]));
+
+        it("Should return false when the game is shared, but the feature is not available", inject(['GamesFactory', function(GamesFactory) {
+            let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
+            let team = {id:6};
+            sinon.stub(game,'getShareByTeam').withArgs(team).returns({id:1, sharedWithTeamId:6});
+            expect(game.isFeatureSharedWithTeam('feature1', team)).to.be.false;
+            assert(game.getShareByTeam.should.have.been.called);
+        }]));
+
+        it("Should return false when the game is shared, but the feature is not shared", inject(['GamesFactory', function(GamesFactory) {
+            let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
+            let team = {id:6};
+            sinon.stub(game,'getShareByTeam').withArgs(team).returns({id:1, sharedWithTeamId:6, 'feature1':false});
+            expect(game.isFeatureSharedWithTeam('feature1', team)).to.be.false;
+            assert(game.getShareByTeam.should.have.been.called);
+        }]));
+
+        it("Should return true when the game is shared with the feature", inject(['GamesFactory', function(GamesFactory) {
+            let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
+            let team = {id:6};
+            sinon.stub(game,'getShareByTeam').withArgs(team).returns({id:1, sharedWithTeamId:6, 'feature1':true});
+            expect(game.isFeatureSharedWithTeam('feature1', team)).to.be.true;
+            assert(game.getShareByTeam.should.have.been.called);
+        }]));
+    });
+
+    describe('isTelestrationsSharedWithTeam', ()=> {
+        it("Should return true when shared", inject(['GamesFactory', function(GamesFactory) {
+                let user = {id:9};
+                sinon.stub(GamesFactory,'isFeatureSharedWithTeam').withArgs('isTelestrationsShared',user).returns(true);
+                expect(GamesFactory.isTelestrationsSharedWithTeam(user)).to.be.true;
+                assert(GamesFactory.isFeatureSharedWithTeam.should.have.been.called);
+        }]));
+
+        it("Should return false when not shared", inject(['GamesFactory', function(GamesFactory) {
+                let user = {id:9};
+                sinon.stub(GamesFactory,'isFeatureSharedWithTeam').withArgs('isTelestrationsShared',user).returns(false);
+                expect(GamesFactory.isTelestrationsSharedWithTeam(user)).to.be.false;
+                assert(GamesFactory.isFeatureSharedWithTeam.should.have.been.called);
+        }]));
+    });
 });
