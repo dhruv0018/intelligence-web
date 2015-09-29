@@ -30,10 +30,15 @@ describe('Iterator', () => {
     });
 
     it('should be forwardly iterable', () => {
+        let totalSteps = 0;
         while (iter.hasNext()) {
             expect(iter.current.value).to.not.be.null;
             iter.next();
+            totalSteps++;
         }
+        expect(totalSteps).to.equal(srcArrayCopy.length - 1);
+        expect(iter.current.value).to.equal(3);
+        expect(iter.current.done).to.be.true;
     });
 
     it('should return null when there is no following item', () => {

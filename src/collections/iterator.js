@@ -25,7 +25,7 @@ class Iterator {
         this.index = this.backingStore.indexOf(item);
     }
     hasNext() {
-        return this.index < this.backingStore.length;
+        return this.index + 1 < this.backingStore.length;
     }
 
     hasPrev() {
