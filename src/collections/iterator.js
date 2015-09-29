@@ -44,7 +44,7 @@ class Iterator {
      * @returns {Object}
      */
     get current() {
-        let value = this.backingStore[this.index] ? this.backingStore[this.index] : null;
+        let value = this.backingStore[this.index] || null;
         return {
             value,
             done: !this.hasNext()
