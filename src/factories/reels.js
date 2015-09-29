@@ -165,11 +165,12 @@ IntelligenceWebClient.factory('ReelsFactory', [
             */
             isAllowedToView: function() {
 
-                //Check if user has permissions to view reel
-                return this.isSharedWithPublic() ||
+                let currentUser = session.getCurrentUser();
+                //Check if user has permissions to view game
+                return  this.isSharedWithPublic() ||
                         this.uploaderUserId === session.getCurrentUserId() ||
-                        (currentUser.is(ROLES.COACH) && this.uploaderTeamId === session.getCurrentTeamId()) ||
-                        this.isSharedWithCurrentUser(session.currentUser);
+                        ((currentUser.is(ROLES.COACH)) && (this.uploaderTeamId === session.getCurrentTeamId())) ||
+                        this.isSharedWithCurrentUser(currentUser);
 
             },
             getByRelatedRole:function(userId, teamId) {
@@ -363,9 +364,9 @@ IntelligenceWebClient.factory('ReelsFactory', [
              * @return {boolean}
              */
             isSharedWithCurrentUser: function() {
-
-                return this.isSharedWithUser(session.getCurrentUser()) ||
-                        ((session.currentUser.is(ROLES.COACH)) && self.isSharedWithTeamId(session.getCurrentTeamId()));
+                let currentUser = session.getCurrentUser();
+                return this.isSharedWithUser(currentUser) ||
+                        (currentUser.is(ROLES.COACH) && this.isSharedWithTeamId(session.getCurrentTeamId()));
             },
 
             isSharedWithUserId: function(userId) {
@@ -404,7 +405,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
             isTelestrationsSharedWithTeam: function(team) {
                 const self = this;
 
-                return self.isTelestrationsSharedWithTeam('isTelestrationsShared', team);
+                return self.isFeatureSharedWithTeam('isTelestrationsShared', team);
             },
             isTelestrationsSharedPublicly: function() {
                 return this.isFeatureSharedPublicly('isTelestrationsShared');
@@ -430,7 +431,11 @@ IntelligenceWebClient.factory('ReelsFactory', [
             getTeamShares: function() {
                 if (!this.sharedWithTeams) throw new Error('sharedWithTeams not defined');
 
-                return self.sharedWithTeams.map(share => angular.copy(share));
+                let sharesArray = [];
+                angular.forEach(this.sharedWithTeams, function(share, index) {
+                    sharesArray.push(share);
+                });
+                return sharesArray;
             },
 
             /**
@@ -525,7 +530,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 const teamShare = this.getShareByTeam(team);
 
-                return angular.isDefined(teamShare) && teamShare[featureAttribute];
+                return !!(angular.isDefined(teamShare) && teamShare[featureAttribute]);
             },
             toggleTeamShare: function(teamId, isTelestrationsShared = false) {
                 var self = this;

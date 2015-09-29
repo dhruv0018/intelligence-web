@@ -290,12 +290,12 @@ IntelligenceWebClient.factory('GamesFactory', [
             * Check if the user is allowed to view a given game.
             */
             isAllowedToView: function() {
-
+                let currentUser = session.getCurrentUser();
                 //Check if user has permissions to view game
-                return this.isSharedWithPublic() ||
+                return  this.isSharedWithPublic() ||
                         this.uploaderUserId === session.getCurrentUserId() ||
-                        (currentUser.is(ROLES.COACH) && this.uploaderTeamId === session.getCurrentTeamId()) ||
-                        this.isSharedWithCurrentUser(session.currentUser);
+                        this.uploaderTeamId === session.getCurrentTeamId() ||
+                        this.isSharedWithCurrentUser(currentUser);
 
             },
 
