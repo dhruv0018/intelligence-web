@@ -55,11 +55,16 @@ class Iterator {
     }
 
     /**
-     * Getter for setting the current item
+     * Setter for the current item
      * @param {Object} item    - item which new index will be based on
      */
     set current(item) {
-        this.index = this.data.indexOf(item);
+        let index = this.data.indexOf(item);
+        if (index < 0) {
+            console.error('you are attempting to set an item which does not exist in the array');
+        } else {
+            this.index = index;
+        }
     }
 
     /**
