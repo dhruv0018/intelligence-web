@@ -1,22 +1,22 @@
 /**
- * Creates a Iterator
+ * Creates an Iterator
  * @class Iterator
- * @classdesc Takes an array as a backing store and abstracts state tracking
+ * @classdesc Takes an array as data and abstracts state tracking
  */
 class Iterator {
     /**
      * Instantiates Iterator for array based datastructures
      *
      * @constructs Iterator
-     * @param {Array} [backingStore] - Array to use as backing data store
+     * @param {Array} [data] - Array to use as data store
      */
-    constructor(backingStore) {
+    constructor(data) {
         this.index = 0;
-        this.backingStore = backingStore;
+        this.data = data;
     }
 
     /**
-     * Returns the next item in the backingStore and advances the index position.
+     * Returns the next item in the data and advances the index position.
      *
      * @method next
      * @returns {Object}
@@ -27,7 +27,7 @@ class Iterator {
     }
 
     /**
-     * Returns the previous item in the backingStore and moves the index backwards.
+     * Returns the previous item in the data and moves the index backwards.
      *
      * @method previous
      * @returns {Object}
@@ -44,7 +44,7 @@ class Iterator {
      * @returns {Object}
      */
     get current() {
-        let value = this.backingStore[this.index] || null;
+        let value = this.data[this.index] || null;
         return {
             value,
             done: !this.hasNext()
@@ -56,7 +56,7 @@ class Iterator {
      * @param {Object} item    - item which new index will be based on
      */
     set current(item) {
-        this.index = this.backingStore.indexOf(item);
+        this.index = this.data.indexOf(item);
     }
 
     /**
@@ -66,7 +66,7 @@ class Iterator {
      * @returns {Boolean}
      */
     hasNext() {
-        return this.index + 1 < this.backingStore.length;
+        return this.index + 1 < this.data.length;
     }
 
     /**
