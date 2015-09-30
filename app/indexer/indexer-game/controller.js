@@ -22,7 +22,8 @@ IndexerGameController.$inject = [
     'TeamsFactory',
     'GamesFactory',
     'UsersFactory',
-    'EMAIL_REQUEST_TYPES'
+    'EMAIL_REQUEST_TYPES',
+    'STATES'
 ];
 
 function IndexerGameController(
@@ -45,7 +46,8 @@ function IndexerGameController(
     teams,
     games,
     users,
-    EMAIL_REQUEST_TYPES
+    EMAIL_REQUEST_TYPES,
+    STATES
 ) {
 
     const gameId = Number($stateParams.id);
@@ -91,7 +93,7 @@ function IndexerGameController(
 
         $scope.game.assignToIndexer(previousAssignment.userId, newDeadline);
         $scope.game.save();
-        $state.go('IndexerGames');
+        $state.go(STATES.INDEXER_GAMES_ASSIGNED);
     };
 
     $scope.setAside = function() {
@@ -106,7 +108,7 @@ function IndexerGameController(
             $scope.game.setAside();
             $scope.game.save();
             users.resendEmail(EMAIL_REQUEST_TYPES.SET_ASIDE_EMAIL, {roleType: roleId, gameId: gameId}, userId);
-            $state.go('IndexerGames');
+            $state.go(STATES.INDEXER_GAMES);
         });
     };
 
