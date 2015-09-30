@@ -25,7 +25,7 @@ class Iterator {
      * @returns {Object}
      */
     next() {
-        this.index++;
+        if (this.hasNext()) this.index++;
         return this.current;
     }
 
@@ -36,7 +36,7 @@ class Iterator {
      * @returns {Object}
      */
     prev() {
-        this.index--;
+        if (this.hasPrev()) this.index--;
         return this.current;
     }
 
