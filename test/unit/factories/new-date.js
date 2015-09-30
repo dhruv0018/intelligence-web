@@ -41,11 +41,11 @@ describe('NewDate Factory', () => {
 
         it('return tomorrow at midnight if no existing date is passed in', inject(NewDate => {
 
-            let startDate  = NewDate.generatePlanStartDate();
-            let todaysDate = new Date();
+            let startDate   = NewDate.generatePlanStartDate();
+            let controlDate = momentTimezone(undefined, 'America/New_York').add(1, 'days');
 
-            expect(startDate.getMonth()).to.equal(todaysDate.getMonth());
-            expect(startDate.getDate()).to.equal(todaysDate.getDate() + 1);
+            expect(startDate.getMonth()).to.equal(controlDate.month());
+            expect(startDate.getDate()).to.equal(controlDate.date());
             expect(startDate.getHours()).to.equal(0);
             expect(startDate.getMinutes()).to.equal(0);
             expect(startDate.getSeconds()).to.equal(0);
