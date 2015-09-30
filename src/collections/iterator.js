@@ -11,8 +11,11 @@ class Iterator {
      * @param {Array} [data] - Array to use as data store
      */
     constructor(data) {
-        this.index = 0;
+        if ( !(data instanceof Array) ) {
+            throw Error('You must pass in an array or subclass of array');
+        }
         this.data = data;
+        this.index = 0;
     }
 
     /**
