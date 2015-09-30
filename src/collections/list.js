@@ -22,6 +22,15 @@ class List {
         }
 
         this.data = array;
+
+        //default iterator so you can use for of loops if you want to on lists
+        this[Symbol.iterator] = function*() {
+            let iterator = iterator || this.iterator();
+            while(iterator.hasNext()) {
+                yield iterator.next();
+                iterator.next();
+            }
+        };
     }
 
     /**

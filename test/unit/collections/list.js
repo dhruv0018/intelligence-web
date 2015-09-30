@@ -414,4 +414,12 @@ describe('List', () => {
         expect(iter instanceof Iterator).to.be.true;
     });
 
+    it('should be able to use the for of notation', ()=> {
+        for (let item of sampleList) {
+            expect(item).to.exist;
+            expect(item).to.include.keys('value');
+            expect(item).to.include.keys('done');
+        }
+    });
+
 });
