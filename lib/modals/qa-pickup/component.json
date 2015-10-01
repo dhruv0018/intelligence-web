@@ -1,0 +1,15 @@
+{
+    "name": "qa-pickup",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "dependencies": {
+        "moment/moment": "2.9.0"
+    }
+}
