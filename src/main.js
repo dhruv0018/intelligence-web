@@ -165,6 +165,7 @@ require('./managers/storage');
 require('./managers/playerlist');
 require('./managers/playlist');
 require('./mediators/event');
+import uploadManager from './managers/upload/upload';
 
 require('./directives/alert');
 require('./directives/match');
