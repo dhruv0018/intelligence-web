@@ -32,39 +32,115 @@ describe('NewDate Factory', () => {
 
     describe('generatePlanStartDate method', () => {
 
-        it('return a Date', inject(NewDate => {
+        let newStartDate;
+        let existingStartDate;
 
-            let startDate = NewDate.generatePlanStartDate();
+        beforeEach(inject(NewDate => {
 
-            expect(startDate).to.be.an.instanceof(Date);
+            newStartDate      = NewDate.generatePlanStartDate();
+            existingStartDate = NewDate.generatePlanStartDate('2014-08-01T04:00:00+00:00');
         }));
 
-        it('return tomorrow at midnight if no existing date is passed in', inject(NewDate => {
+        it('return a Date', inject(NewDate => {
 
-            let startDate   = NewDate.generatePlanStartDate();
+            expect(newStartDate).to.be.an.instanceof(Date);
+            expect(existingStartDate).to.be.an.instanceof(Date);
+        }));
+
+        it('return tomorrow\'s Date if no existing date', inject(NewDate => {
+
             let controlDate = momentTimezone(undefined, 'America/New_York').add(1, 'days');
 
-            expect(startDate.getMonth()).to.equal(controlDate.month());
-            expect(startDate.getDate()).to.equal(controlDate.date());
-            expect(startDate.getHours()).to.equal(0);
-            expect(startDate.getMinutes()).to.equal(0);
-            expect(startDate.getSeconds()).to.equal(0);
-            expect(startDate.getMilliseconds()).to.equal(0);
+            /* FIXME: Although this works, we should find a better way to get a
+             * 'control date' to test against. Aside from the time, the date
+             * above is calculated almost exactly as it is in the factory (using
+             * moment.js). The challenge here is to determine the month and day
+             * two days out that avoids excessive calculation that shouldn't be
+             * in the unit tests. */
+            expect(newStartDate.getMonth()).to.equal(controlDate.month());
+            expect(newStartDate.getDate()).to.equal(controlDate.date());
+        }));
+
+        it('return tomorrow\'s Date at midnight if no existing date', inject(NewDate => {
+
+            expect(newStartDate.getHours()).to.equal(0);
+        }));
+
+        it('return tomorrow\'s Date at the top of the hour if no existing date', inject(NewDate => {
+
+            expect(newStartDate.getMinutes()).to.equal(0);
+        }));
+
+        it('return tomorrow\'s Date with zero seconds if no existing date', inject(NewDate => {
+
+            expect(newStartDate.getSeconds()).to.equal(0);
+        }));
+
+        it('return tomorrow\'s Date with zero milliseconds if no existing date', inject(NewDate => {
+
+            expect(newStartDate.getMilliseconds()).to.equal(0);
+        }));
+
+        it('should return a Date from existing date strings', inject(NewDate => {
+
+            expect(existingStartDate).to.be.an.instanceof(Date);
+        }));
+
+        it('should return a Date from existing date strings with the same year', inject(NewDate => {
+
+            expect(existingStartDate.getFullYear()).to.equal(2014);
+        }));
+
+        it('should return a Date from existing date strings with the same month', inject(NewDate => {
+
+            expect(existingStartDate.getMonth()).to.equal(7);
+        }));
+
+        it('should return a Date from existing date strings with the same day', inject(NewDate => {
+
+            expect(existingStartDate.getDate()).to.equal(1);
+        }));
+
+        it('should return a Date from existing date strings with the same hours', inject(NewDate => {
+
+            expect(existingStartDate.getHours()).to.equal(0);
+        }));
+
+        it('should return a Date from existing date strings with the same minutes', inject(NewDate => {
+
+            expect(existingStartDate.getMinutes()).to.equal(0);
+        }));
+
+        it('should return a Date from existing date strings with the same seconds', inject(NewDate => {
+
+            expect(existingStartDate.getSeconds()).to.equal(0);
+        }));
+
+        it('should return a Date from existing date strings with the same timezone', inject(NewDate => {
+
+            expect(existingStartDate.getTimezoneOffset()).to.equal(240);
         }));
     });
 
     describe('generatePlanEndDate method', () => {
 
-        it('return a Date', inject(NewDate => {
+        let newEndDate;
+        let existingEndDate;
 
-            let endDate = NewDate.generatePlanEndDate();
+        beforeEach(inject(NewDate => {
 
-            expect(endDate).to.be.an.instanceof(Date);
+            newEndDate        = NewDate.generatePlanEndDate();
+            existingEndDate   = NewDate.generatePlanEndDate('2014-08-02T03:59:59+00:00');
         }));
 
-        it('return the day after tomorrow, just before midnight if no existing date is passed in', inject(NewDate => {
+        it('return a Date', inject(NewDate => {
 
-            let endDate     = NewDate.generatePlanEndDate();
+            expect(newEndDate).to.be.an.instanceof(Date);
+            expect(existingEndDate).to.be.an.instanceof(Date);
+        }));
+
+        it('return the day after tomorrow, just before midnight if no existing date', inject(NewDate => {
+
             let controlDate = momentTimezone(undefined, 'America/New_York').add(2, 'days');
 
             /* FIXME: Although this works, we should find a better way to get a
@@ -73,12 +149,68 @@ describe('NewDate Factory', () => {
              * moment.js). The challenge here is to determine the month and day
              * two days out that avoids excessive calculation that shouldn't be
              * in the unit tests. */
-            expect(endDate.getMonth()).to.equal(controlDate.month());
-            expect(endDate.getDate()).to.equal(controlDate.date());
-            expect(endDate.getHours()).to.equal(23);
-            expect(endDate.getMinutes()).to.equal(59);
-            expect(endDate.getSeconds()).to.equal(59);
-            expect(endDate.getMilliseconds()).to.equal(999);
+            expect(newEndDate.getMonth()).to.equal(controlDate.month());
+            expect(newEndDate.getDate()).to.equal(controlDate.date());
+        }));
+
+        it('return a Date at 11 pm if no existing date', inject(NewDate => {
+
+            expect(newEndDate.getHours()).to.equal(23);
+        }));
+
+        it('return a Date at 59 minutes if no existing date', inject(NewDate => {
+
+            expect(newEndDate.getMinutes()).to.equal(59);
+        }));
+
+        it('return a Date at 59 seconds if no existing date', inject(NewDate => {
+
+            expect(newEndDate.getSeconds()).to.equal(59);
+        }));
+
+        it('return a Date at 999 milliseconds if no existing date', inject(NewDate => {
+
+            expect(newEndDate.getMilliseconds()).to.equal(999);
+        }));
+
+        it('should return a Date from existing date strings', inject(NewDate => {
+
+            expect(existingEndDate).to.be.an.instanceof(Date);
+        }));
+
+        it('should return a Date from existing date strings with the same year', inject(NewDate => {
+
+            expect(existingEndDate.getFullYear()).to.equal(2014);
+        }));
+
+        it('should return a Date from existing date strings with the same month', inject(NewDate => {
+
+            expect(existingEndDate.getMonth()).to.equal(7);
+        }));
+
+        it('should return a Date from existing date strings with the same day', inject(NewDate => {
+
+            expect(existingEndDate.getDate()).to.equal(1);
+        }));
+
+        it('should return a Date from existing date strings with the same hours', inject(NewDate => {
+
+            expect(existingEndDate.getHours()).to.equal(23);
+        }));
+
+        it('should return a Date from existing date strings with the same minutes', inject(NewDate => {
+
+            expect(existingEndDate.getMinutes()).to.equal(59);
+        }));
+
+        it('should return a Date from existing date strings with the same seconds', inject(NewDate => {
+
+            expect(existingEndDate.getSeconds()).to.equal(59);
+        }));
+
+        it('should return a Date from existing date strings with the same timezone', inject(NewDate => {
+
+            expect(existingEndDate.getTimezoneOffset()).to.equal(240);
         }));
     });
 });
