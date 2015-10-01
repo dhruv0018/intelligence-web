@@ -37,7 +37,6 @@ GamesStats.config([
                             var Data = {
                                 user: users.load(game.uploaderUserId),
                                 team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId]),
-                                game
                             };
 
                             var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
@@ -65,10 +64,6 @@ GamesStats.config([
                                 return stats;
                             });
 
-                            Data.teams = Data.team.then(function() {
-                                return [teams.get(game.teamId), teams.get(game.opposingTeamId)];
-                            });
-
                             return $q.all(Data);
                         });
                     }
@@ -82,11 +77,11 @@ GamesStats.config([
 ]);
 
 GamesStats.controller('GamesStats.controller', [
-    '$scope', '$state', '$stateParams', 'Games.Stats.Data',
-    function controller($scope, $state, $stateParams, data) {
-
+    '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'GamesFactory', 'TeamsFactory',
+    function controller($scope, $state, $stateParams, data, games, teams) {
+        let gameId = Number($stateParams.id);
         $scope.stats               = data.stats;
-        $scope.teams               = data.teams;
-        $scope.game                = data.game;
+        $scope.game                = games.get(gameId);
+        $scope.teams               = [teams.get($scope.game.teamId), teams.get($scope.game.opposingTeamId)];
     }
 ]);
