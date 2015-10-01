@@ -27,8 +27,11 @@ class List {
         this[Symbol.iterator] = function*() {
             let iterator = this.iterator();
             while(iterator.hasNext()) {
-                yield iterator.next();
+                let item = iterator.current;
+                iterator.next();
+                yield item;
             }
+            yield iterator.current;
         };
     }
 
