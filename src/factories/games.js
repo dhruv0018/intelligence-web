@@ -295,7 +295,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return  this.isSharedWithPublic() ||
                         this.uploaderUserId === session.getCurrentUserId() ||
                         this.uploaderTeamId === session.getCurrentTeamId() ||
-                        this.isSharedWithCurrentUser(currentUser);
+                        this.isSharedWithCurrentUser();
 
             },
 

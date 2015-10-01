@@ -170,7 +170,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 return  this.isSharedWithPublic() ||
                         this.uploaderUserId === session.getCurrentUserId() ||
                         ((currentUser.is(ROLES.COACH)) && (this.uploaderTeamId === session.getCurrentTeamId())) ||
-                        this.isSharedWithCurrentUser(currentUser);
+                        this.isSharedWithCurrentUser();
 
             },
             getByRelatedRole:function(userId, teamId) {
