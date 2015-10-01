@@ -1,4 +1,5 @@
 import Video from '../../../src/entities/video';
+import {VIDEO_STATUSES} from '../../../src/constants/videos'
 import videoData from './sample-data/video';
 
 const assert = chai.assert;
@@ -113,10 +114,108 @@ describe('Video Entity', () => {
         expect(copy).to.contain.keys(ownProperties);
     });
 
-    it('should respond to "isComplete"', () => {
+    describe('isComplete', () => {
 
-        expect(video).to.respondTo('isComplete');
-        expect(video.isComplete()).to.be.a('boolean');
+        let video;
+
+        beforeEach(function prepData() {
+
+            video = new Video({guid:"1234", status: VIDEO_STATUSES.COMPLETE.id});
+        });
+
+        it('should exist', () => {
+            expect(video).to.respondTo('isComplete');
+        });
+
+        it('should return true if upload status is set to video status, COMPLETE', () => {
+
+            video.status = VIDEO_STATUSES.COMPLETE.id;
+            expect(video.isComplete()).to.equal(true);
+        });
+
+        it('should return false if upload status is not set to video status, COMPLETE', () => {
+
+            video.status = VIDEO_STATUSES.INCOMPLETE.id;
+            expect(video.isComplete()).to.equal(false);
+        });
+    });
+
+    describe('isUploaded', () => {
+
+        let video;
+
+        beforeEach(function prepData() {
+
+            video = new Video({guid:"1234", status: VIDEO_STATUSES.UPLOADED.id});
+        });
+
+        it('should exist', () => {
+            expect(video).to.respondTo('isUploaded');
+        });
+
+        it('should return true if upload status is set to video status, UPLOADED', () => {
+
+            video.status = VIDEO_STATUSES.UPLOADED.id;
+            expect(video.isUploaded()).to.equal(true);
+        });
+
+        it('should return false if upload status is not set to video status, UPLOADED', () => {
+
+            video.status = VIDEO_STATUSES.COMPLETE.id;
+            expect(video.isUploaded()).to.equal(false);
+        });
+    });
+
+    describe('isFailed', () => {
+
+        let video;
+
+        beforeEach(function prepData() {
+
+            video = new Video({guid:"1234", status: VIDEO_STATUSES.FAILED.id});
+        });
+
+        it('should exist', () => {
+            expect(video).to.respondTo('isFailed');
+        });
+
+        it('should return true if upload status is set to video status, FAILED', () => {
+
+            video.status = VIDEO_STATUSES.FAILED.id;
+            expect(video.isFailed()).to.equal(true);
+        });
+
+        it('should return false if upload status is not set to video status, FAILED', () => {
+
+            video.status = VIDEO_STATUSES.COMPLETE.id;
+            expect(video.isFailed()).to.equal(false);
+        });
+    });
+
+    describe('isIncomplete', () => {
+
+        let video;
+
+        beforeEach(function prepData() {
+
+            video = new Video({guid:"1234", status: VIDEO_STATUSES.INCOMPLETE.id});
+        });
+
+        it('should exist', () => {
+            expect(video).to.respondTo('isIncomplete');
+        });
+
+        it('should return true if upload status is set to video status, INCOMPLETE', () => {
+
+            video.status = VIDEO_STATUSES.INCOMPLETE.id;
+            expect(video.isIncomplete()).to.equal(true);
+        });
+
+        it('should return false if upload status is not set to video status, INCOMPLETE', () => {
+
+            video.status = VIDEO_STATUSES.COMPLETE.id;
+            expect(video.isIncomplete()).to.equal(false);
+        });
     });
 
     it('should respond to "transcodeProfiles" via getter', () => {

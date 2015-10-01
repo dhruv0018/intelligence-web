@@ -205,14 +205,46 @@ class Video extends Entity {
         return this.transcodeProfiles.map(transcodeProfile => transcodeProfile.resourceUrl);
     }
 
+    /* status based functions */
+
     /**
-     * Business logic for status complete
+     * Business logic for status INCOMPLETE
+     * @method isIncomplete
+     * @returns {Boolean} isIncomplete [true] if video is incomplete
+     */
+    isIncomplete(video = this) {
+
+        return video.status === VIDEO_STATUSES.INCOMPLETE.id;
+    }
+
+    /**
+     * Business logic for status UPLOADED
+     * @method isUploaded
+     * @returns {Boolean} isUploaded [true] if video is uploaded
+     */
+    isUploaded(video = this) {
+
+        return video.status === VIDEO_STATUSES.UPLOADED.id;
+    }
+
+    /**
+     * Business logic for status COMPLETE
      * @method isComplete
      * @returns {Boolean} isComplete [true] if video is complete
      */
     isComplete(video = this) {
 
         return video.status === VIDEO_STATUSES.COMPLETE.id;
+    }
+
+    /**
+     * Business logic for status FAILED
+     * @method isFailed
+     * @returns {Boolean} isFailed [true] if video is failed
+     */
+    isFailed(video = this) {
+
+        return video.status === VIDEO_STATUSES.FAILED.id;
     }
 }
 
