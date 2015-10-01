@@ -15,8 +15,7 @@ const VIEWS = {
                 GAME_STATUSES.READY_FOR_INDEXING.id,
                 GAME_STATUSES.INDEXING.id,
                 GAME_STATUSES.READY_FOR_QA.id,
-                GAME_STATUSES.QAING.id,
-                GAME_STATUSES.SET_ASIDE.id
+                GAME_STATUSES.QAING.id
             ],
             videoStatus: VIDEO_STATUSES.COMPLETE.id
         },
