@@ -1,3 +1,5 @@
+import Iterator from './iterator';
+
 /**
  * Creates a List
  * @class List
@@ -7,7 +9,7 @@
 class List {
 
     /**
-     * Instantaties List as a new array
+     * Instantiates List as a new array
      *
      * @constructs List
      * @param {Array} [array] - Array to use as backing data store
@@ -20,7 +22,15 @@ class List {
         }
 
         this.data = array;
-        this.index = 0;
+
+        //default iterator so you can use for of loops if you want to on lists
+        this[Symbol.iterator] = function*() {
+            let iterator = iterator || this.iterator();
+            while(iterator.hasNext()) {
+                yield iterator.next();
+                iterator.next();
+            }
+        };
     }
 
     /**
@@ -91,8 +101,7 @@ class List {
 
                 throw new Error('Invoked List.get without passing a index');
         }
-        this.index = index;
-        return this.current;
+        return this.data[index];
     }
 
     /**
@@ -101,8 +110,7 @@ class List {
      * @type {}
      */
     get first () {
-        this.index = 0;
-        return this.current;
+        return this.data[0];
     }
 
     /**
@@ -111,46 +119,7 @@ class List {
      * @type {}
      */
     get last () {
-        this.index = this.data.length - 1;
-        return this.current;
-    }
-
-    /**
-     * Finds the previous object relative to a item passed in
-     *
-     * @method previous
-     * @returns {Object |null}
-     */
-    previous() {
-        if (this.index < 0) {
-            return null;
-        }
-        this.index = this.index - 1;
-        return this.current ? this.current : null;
-    }
-
-    /**
-     * Finds the next object relative to a item passed in
-     *
-     * @method next
-     * @returns {Object |null}
-     */
-    next() {
-        if (this.index > this.data.length)  {
-            return null;
-        }
-        this.index = this.index + 1;
-        return this.current ? this.current : null;
-    }
-
-    /**
-    * Returns the item at the current index
-    *
-    * @method current
-    * @returns {Object |null}
-    */
-    get current() {
-        return this.data[this.index];
+        return this.data[this.data.length - 1];
     }
 
     /**
@@ -220,6 +189,16 @@ class List {
     isEmpty () {
 
         return !this.data.length;
+    }
+
+    /**
+     * Returns an iterator for the list
+     *
+     * @method iterator
+     * @returns {Iterator}
+     */
+    iterator() {
+        return new Iterator(this.data);
     }
 }
 
