@@ -9,10 +9,6 @@ const srcArray = [
     }
 ];
 
-const srcPlay = {
-    startTime: 1052.4299316406
-};
-
 describe('PlayList', () => {
     let srcArrayCopy;
     let sampleList;
@@ -30,10 +26,9 @@ describe('PlayList', () => {
     it('should be sorted by startTime', () => {
         let index = 0;
         let startTime = 0;
-        while(sampleList.next()) {
-            let play = sampleList.current;
-            expect(play.startTime).to.be.at.least(startTime);
-            startTime = play.startTime;
+        for(let play of sampleList) {
+            expect(play.value.startTime).to.be.at.least(startTime);
+            startTime = play.value.startTime;
         }
     });
 });
