@@ -111,7 +111,7 @@ class Video extends Entity {
         this.status = this.status || VIDEO_STATUSES.INCOMPLETE.id;
 
         // Instantiate transcodeProfile entities
-        if (this.isComplete() && this.videoTranscodeProfiles) {
+        if (this.videoTranscodeProfiles) {
 
             // NOTE: Adding videoTranscodeProfilesByBitrate FIXES A BACKEND BUG
             // WHERE DUPLICATE TRANSCODE PROFILES ARE PRESENT AND REMOVES THEM
