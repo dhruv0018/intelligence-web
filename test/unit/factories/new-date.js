@@ -120,6 +120,30 @@ describe('NewDate Factory', () => {
 
             expect(existingStartDate.getTimezoneOffset()).to.equal(240);
         }));
+
+        it('should throw an error if existing date is an invalid string', inject(NewDate => {
+
+            expect(() => NewDate.generatePlanStartDate('Not a real date')).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate('')).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate(' ')).to.throw(Error);
+        }));
+
+        it('should throw an error if existing date is an invalid array', inject(NewDate => {
+
+            expect(() => NewDate.generatePlanStartDate(['not', 'a', 'real', 'date'])).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate([])).to.throw(Error);
+        }));
+
+        it('should throw an error if existing date is an invalid object', inject(NewDate => {
+
+            expect(() => NewDate.generatePlanStartDate({'not': 'a', 'real': 'date'})).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate({})).to.throw(Error);
+        }));
+
+        it('should throw an error if existing date is a function', inject(NewDate => {
+
+            expect(() => NewDate.generatePlanStartDate(function () {})).to.throw(Error);
+        }));
     });
 
     describe('generatePlanEndDate method', () => {
