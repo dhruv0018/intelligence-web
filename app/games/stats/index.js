@@ -82,12 +82,11 @@ GamesStats.config([
 ]);
 
 GamesStats.controller('GamesStats.controller', [
-    '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'SPORTS',
-    function controller($scope, $state, $stateParams, data, SPORTS) {
+    '$scope', '$state', '$stateParams', 'Games.Stats.Data',
+    function controller($scope, $state, $stateParams, data) {
 
         $scope.stats               = data.stats;
         $scope.teams               = data.teams;
         $scope.game                = data.game;
-        $scope.isMaxprepsAvailable = (SPORTS.BASKETBALL.id == data.league.sportId);
     }
 ]);

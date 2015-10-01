@@ -1330,8 +1330,8 @@ IntelligenceWebClient.factory('GamesFactory', [
              */
             getMaxprepsDownloadLinkByTeam: function(team){
                 if (!this.id) throw new Error('Game must be saved before getting maxpreps');
-
-                return config.api.uri + 'games/' + this.id + '/max-preps?teamId='+ team.id;
+                let tokenService = $injector.get('TokensService');
+                return config.api.uri + 'games/' + this.id + '/max-preps?teamId='+ team.id + '&access_token=' + tokenService.getAccessToken();
             }
         };
 
