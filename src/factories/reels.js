@@ -199,7 +199,6 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
 
                 reels = reels.concat(this.getBySharedWithUserId(userId));
-                reels = reels.concat(this.getBySharedWithTeamId(teamId));
 
                 var reelIds = utilities.unique(this.getIds(reels));
 
