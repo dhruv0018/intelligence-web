@@ -1,42 +1,61 @@
 <div class="krossover-thumbnail">
 
-    <div data-ng-if="isGame"
-         data-ng-show="userIsCoachOnUploaderTeam && film.isBeingBrokenDown()"
+    <!-- Game Film -->
+    <div ng-if="isGame"
+         ng-show="userIsCoachOnUploaderTeam && film.isBeingBrokenDown()"
          class="breakdown-status">
         <i class="icon icon-bar-chart-o"></i>
         Breakdown In Progress
     </div>
-    <a data-ng-attr-id="{{'film-game-' + film.id + '-cta'}}" data-ng-if="isGame" data-ui-sref="Games({id:film.id})">
-        <div data-ng-if="thumbnail.length > 0" class="has-thumbnail">
-            <img class="img-responsive" data-ng-src="{{thumbnail}}" alt="thumbnail">
+
+    <a ng-if="isGame"
+        ng-attr-id="{{'film-game-' + film.id + '-cta'}}"
+        ui-sref="Games({id:film.id})">
+
+        <div ng-if="thumbnail.length" class="has-thumbnail">
+            <img class="img-responsive" ng-src="{{thumbnail}}" alt="thumbnail">
             <i class="icon icon-play"></i>
             <i class="icon icon-circle"></i>
         </div>
-        <div data-ng-if="thumbnail.length === 0" class="no-thumbnail" data-ng-class="{'temp-thumbnail':!film.isProcessing() && !film.isUploading() && !film.isVideoTranscodeFailed()}">
-            <i data-ng-if="!film.isProcessing() && !film.isUploading() && !film.isVideoTranscodeFailed()" class="icon icon-logo"></i>
-            <div data-ng-if="film.flow && film.flow.isUploading()" class="film-status">
+
+        <div ng-if="!thumbnail.length" class="no-thumbnail">
+
+            <i ng-if="film.isVideoTranscodeComplete()" class="icon icon-logo"></i>
+
+            <div ng-if="film.isUploading()" class="film-status">
                 <i class="icon icon-upload status-uploading"></i>
             </div>
-            <div data-ng-if="film.isProcessing() && !film.flow || (film.flow && !film.flow.isUploading())" class="film-status">
+            <div ng-if="film.isUploading()">This film is currently being uploaded.</div>
+
+            <div ng-if="film.isProcessing()" class="film-status">
                 <i class="icon icon-tasks status-processing"></i>
             </div>
-            <div data-ng-if="film.isVideoTranscodeFailed()" class="film-status">
+            <div ng-if="film.isProcessing()">Your video is still processing.</div>
+
+            <div ng-if="film.isVideoTranscodeFailed()" class="film-status">
                 <i class="icon icon-warning status-failed"></i>
             </div>
-            <div data-ng-if="film.isProcessing() && !film.flow || (film.flow && !film.flow.isUploading())">Your video is still processing.</div>
-            <div data-ng-if="film.flow && film.flow.isUploading()">This film is currently being uploaded.</div>
-            <div data-ng-if="film.isVideoTranscodeFailed()"><strong>There is an issue with this film.</strong><br/>Please contact support@krossover.com</div>
+            <div ng-if="film.isVideoTranscodeFailed()"><strong>There is an issue with this film.</strong><br/>Please contact support@krossover.com</div>
+
         </div>
+
     </a>
-    <a data-ng-attr-id="{{'film-reel-' + film.id + '-cta'}}" data-ui-sref="Reel({id:film.id})" data-ng-if="!isGame">
-        <div data-ng-if="thumbnail.length > 0" class="has-thumbnail">
+
+    <!-- Reel Film -->
+    <a ng-if="!isGame"
+        ng-attr-id="{{'film-reel-' + film.id + '-cta'}}"
+        ui-sref="Reel({id:film.id})">
+
+        <div ng-if="thumbnail.length" class="has-thumbnail">
             <img class="img-responsive" src="{{thumbnail}}" alt="thumbnail">
             <i class="icon icon-play"></i>
             <i class="icon icon-circle"></i>
         </div>
-        <div data-ng-if="thumbnail.length === 0" class="reel-thumbnail">
+
+        <div ng-if="!thumbnail.length" class="reel-thumbnail">
             <div class="icon-krossover-symbol-circle"></div>
         </div>
+
     </a>
 
 </div>

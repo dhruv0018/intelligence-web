@@ -1132,26 +1132,19 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.status === GAME_STATUSES.FINALIZED.id;
             },
             isShared: function() {
-                var self = this;
                 return self.status === GAME_STATUSES.NOT_INDEXED.id;
             },
             isVideoTranscodeComplete: function() {
-                var self = this;
-                return self.video.status === VIDEO_STATUSES.COMPLETE.id;
+                return this.video.isComplete();
             },
             isUploading: function() {
-                var self = this;
-                //return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
-                return false;
+                return this.video.isIncomplete();
             },
             isProcessing: function() {
-                var self = this;
-                //return self.video.status === VIDEO_STATUSES.UPLOADED.id;
-                return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
+                return this.video.isUploaded();
             },
             isVideoTranscodeFailed: function() {
-                var self = this;
-                return self.video.status === VIDEO_STATUSES.FAILED.id;
+                return this.video.isFailed();
             },
             isBeingBrokenDown: function() {
                 var self = this;
