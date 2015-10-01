@@ -77,25 +77,11 @@ Coach.service('Coach.Data.Dependencies', [
                 return games.load({ relatedUserId: userId });
             },
 
-            get gamesSharedWithTeam() {
-
-                var teamId = session.getCurrentTeamId();
-
-                return games.load({ sharedWithTeamId: teamId });
-            },
-
             get reels() {
 
                 var userId = session.currentUser.id;
 
                 return reels.load({ relatedUserId: userId });
-            },
-
-            get reelsSharedWithTeam() {
-
-                var teamId = session.getCurrentTeamId();
-
-                return reels.load({ sharedWithTeamId: teamId });
             },
 
             get players() {
