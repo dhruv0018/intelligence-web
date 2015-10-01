@@ -20,17 +20,26 @@ IntelligenceWebClient.factory('NewDate', function() {
         },
         generatePlanStartDate: function (existingDate) {
 
-            /* Get tomorrow's date at midnight */
-            let start = momentTimezone.tz(existingDate, 'America/New_York');
+            let planStartDate;
 
-            if (!existingDate) {
+            if (existingDate !== undefined) {
 
-                start
+                /* Attempt to create Date object from exisiting date */
+                planStartDate = momentTimezone.tz(existingDate, moment.ISO_8601, 'America/New_York');
+            } else {
+
+                /* Get tomorrow's date at midnight */
+                planStartDate = momentTimezone.tz('America/New_York')
                     .startOf('day')
                     .add(1, 'day');
             }
 
-            return start.toDate();
+            if (!planStartDate.isValid()) {
+
+                throw new Error(`NewDate Factory: Attempt to generate plan start date with invalid value (${existingDate})`);
+            }
+
+            return planStartDate.toDate();
         },
         generatePlanEndDate: function (existingDate) {
 
