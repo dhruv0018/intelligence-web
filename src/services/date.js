@@ -43,18 +43,26 @@ IntelligenceWebClient.factory('NewDate', function() {
         },
         generatePlanEndDate: function (existingDate) {
 
-            /* Get The day after tomorrow just before midnight */
-            let end = momentTimezone.tz(existingDate, 'America/New_York');
+            let planEndDate;
 
-            if (!existingDate) {
+            if (existingDate !== undefined) {
 
-                end
+                planEndDate = momentTimezone.tz(existingDate, moment.ISO_8601, 'America/New_York');
+            } else {
+
+                /* Get The day after tomorrow just before midnight */
+                planEndDate = momentTimezone.tz('America/New_York')
                     .startOf('day')
                     .add(3, 'day')
                     .subtract(1, 'milliseconds');
             }
 
-            return end.toDate();
+            if (!planEndDate.isValid()) {
+
+                throw new Error(`NewDate Factory: Attempt to generate plan end date with invalid value (${existingDate})`);
+            }
+
+            return planEndDate.toDate();
         }
     };
 });
