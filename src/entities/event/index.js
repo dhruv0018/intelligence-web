@@ -24,7 +24,6 @@ class KrossoverEvent extends Entity {
             throw new Error('KrossoverEvent cannot be instantiated with no parameters!');
         }
 
-        /* Use tag to setup event */
         super(tag);
 
         this.tagId = tag.id;
@@ -56,9 +55,9 @@ class KrossoverEvent extends Entity {
 
             let variableValue;
 
-            //TODO: move event && event.variableValues out of forEach, not moved as this could be a patch update.
+            // TODO: move event && event.variableValues out of forEach, not moved as this could be a patch update.
 
-            //variableValues, need not have all tagVariable,
+            // variableValues, need not have all tagVariable,
             if (event && event.variableValues && event.variableValues[tagVariable.id]) {
 
                 variableValue = event.variableValues[tagVariable.id];
@@ -68,12 +67,12 @@ class KrossoverEvent extends Entity {
                 variableValue = {value: undefined};
             }
 
-            let rawField           = Object.assign({}, tagVariable);
+            let rawField = Object.assign({}, tagVariable);
 
             if (event) {
 
                 rawField.eventId = event.id;
-                rawField.playId = event.playId;
+                rawField.playId  = event.playId;
             }
 
             rawField.gameId        = gameId;
