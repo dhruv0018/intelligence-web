@@ -24,8 +24,6 @@ class KrossoverEvent extends Entity {
             throw new Error('KrossoverEvent cannot be instantiated with no parameters!');
         }
 
-        this.schema = schema;
-
         /* Use tag to setup event */
         super(tag);
 
@@ -40,7 +38,7 @@ class KrossoverEvent extends Entity {
             /* Validate event JSON */
             /* TODO: Re-enable this at some point. Right now, far too many
              * events are failing validtion and polluting the console. */
-            // let validation = this.validate(event);
+            // let validation = this.validate(event, schema);
             //
             // if (validation.errors.length) {
             //
