@@ -36,7 +36,7 @@ class Iterator {
      * @returns {Object}
      */
     previous() {
-        if (this.hasPrev()) this.index--;
+        if (this.hasPrevious()) this.index--;
         return this.current;
     }
 
@@ -80,10 +80,10 @@ class Iterator {
     /**
      * Returns if there is another item before the current item
      *
-     * @method hasPrev
+     * @method hasPrevious
      * @returns {Boolean}
      */
-    hasPrev() {
+    hasPrevious() {
         return this.index > 0;
     }
 }

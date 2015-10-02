@@ -12,7 +12,7 @@ describe('Iterator', () => {
         'next',
         'previous',
         'hasNext',
-        'hasPrev'
+        'hasPrevious'
     ];
 
     let srcArrayCopy;
@@ -54,7 +54,7 @@ describe('Iterator', () => {
         let lastItem = srcArrayCopy[srcArrayCopy.length - 1];
         iter.current = lastItem;
         let totalSteps = 0;
-        while(iter.hasPrev()) {
+        while(iter.hasPrevious()) {
             expect(iter.current.value).to.not.be.null;
             iter.previous();
             totalSteps++;
