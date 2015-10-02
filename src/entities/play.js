@@ -23,12 +23,10 @@ class KrossoverPlay extends Entity {
             throw new Error('Invoking KrossoverPlay.constructor without KrossoverPlay or play JSON');
         }
 
-        this.schema = schema;
-
         /* Validate event JSON */
         /* TODO: Re-enable this at some point. Right now, far too many
          * plays are failing validtion and polluting the console. */
-        // let validation = this.validate(play);
+        // let validation = this.validate(play, schema);
         //
         // if (validation.errors.length) {
         //
