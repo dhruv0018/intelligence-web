@@ -1,3 +1,4 @@
+import Video from '../entities/video';
 import Entity from './entity';
 import template from './event/template';
 import KrossoverEvent from './event';
@@ -17,9 +18,9 @@ class KrossoverPlay extends Entity {
      */
     constructor (play, tagsets) {
 
-        if (!arguments.length) {
+        if (!play) {
 
-            throw new Error('Invoking KrossoverPlay.constructor without passing a JSON object');
+            throw new Error('Invoking KrossoverPlay.constructor without KrossoverPlay or play JSON');
         }
 
         this.schema = schema;
@@ -36,28 +37,28 @@ class KrossoverPlay extends Entity {
 
         super(play);
 
-        /* If play has no events, set it to an empty array */
         this.events               = play.events || [];
-
         this.period               = play.period || 0;
-
         this.indexedScore         = play.indexedScore || 0;
         this.opposingIndexedScore = play.opposingIndexedScore || 0;
-
-        /* If play has no custom tags, set it to an empty array */
         this.customTagIds         = play.customTagIds || [];
-
-        /* Indicates if the play has visible events; set by the events. */
         this.hasVisibleEvents     = false;
-
-        /* Play possesion; filled in by the events. */
         this.possessionTeamId     = play.possessionTeamId || null;
+
+        if (!play.clip instanceof Video) {
+
+            this.clip = play.clip ? new Video(play.clip) : null;
+        }
 
         this.events = this.events.map(event => {
 
-            let tag = tagsets.getTag(event.tagId);
+            if (!(event instanceof KrossoverEvent)) {
 
-            return new KrossoverEvent(event, tag, event.time, this.gameId);
+                let tag = tagsets.getTag(event.tagId);
+                event = new KrossoverEvent(event, tag, event.time, this.gameId);
+            }
+
+            return event;
         });
     }
 
