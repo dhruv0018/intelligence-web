@@ -10,7 +10,7 @@ describe('Iterator', () => {
 
     const classMethods = [
         'next',
-        'prev',
+        'previous',
         'hasNext',
         'hasPrev'
     ];
@@ -45,7 +45,7 @@ describe('Iterator', () => {
     it('should be able to retrieve the previous item when it exists', () => {
         let lastItem = srcArrayCopy[srcArrayCopy.length - 1];
         iter.current = lastItem;
-        let previous = iter.prev();
+        let previous = iter.previous();
         expect(previous.value).to.equal(2);
         expect(previous.done).to.be.false;
     });
@@ -56,7 +56,7 @@ describe('Iterator', () => {
         let totalSteps = 0;
         while(iter.hasPrev()) {
             expect(iter.current.value).to.not.be.null;
-            iter.prev();
+            iter.previous();
             totalSteps++;
         }
         expect(totalSteps).to.equal(srcArrayCopy.length - 1);
