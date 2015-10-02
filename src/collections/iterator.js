@@ -11,7 +11,7 @@ class Iterator {
      * @param {Array} [data] - Array to use as data store
      */
     constructor(data) {
-        if ( !(data instanceof Array) ) {
+        if (!Array.isArray(data)) {
             throw Error('You must pass in an array or subclass of array');
         }
         this.data = data;
@@ -35,8 +35,8 @@ class Iterator {
      * @method previous
      * @returns {Object}
      */
-    prev() {
-        if (this.hasPrev()) this.index--;
+    previous() {
+        if (this.hasPrevious()) this.index--;
         return this.current;
     }
 
@@ -80,10 +80,10 @@ class Iterator {
     /**
      * Returns if there is another item before the current item
      *
-     * @method hasPrev
+     * @method hasPrevious
      * @returns {Boolean}
      */
-    hasPrev() {
+    hasPrevious() {
         return this.index > 0;
     }
 }
