@@ -1,5 +1,5 @@
 <div class="krossover-uploader">
     <form>
-        <button id="{{id}}" class="btn-upload">{{uploadLabel}} <i class="icon icon-upload-alt"></i><input id="upload-files-input" type="file" onchange="angular.element(this).scope().onUpload({files: this.files})"></button>
+        <button id="{{id}}" class="btn-upload">{{uploadLabel}} <i class="icon icon-upload-alt"></i><input id="upload-files-input" type="file" on-file-change="onUpload"></button>
     </form>
 </div>

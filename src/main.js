@@ -36,6 +36,7 @@ require('./app');
 
 require('./features');
 
+require('./compile');
 require('./utilities');
 require('./indexeddb');
 require('./flow');
