@@ -12,10 +12,11 @@ class KrossoverEvent extends Entity {
 
     /**
      * @constructs KrossoverEvent
-     * @param {Object} event     - Event JSON
+     *
+     * @param {Object|KrossoverEvent} event - Event JSON or KrossoverEvent
      * @param {KrossoverTag} tag - An instantiated KrossoverTag tag
-     * @param {Number} time      - The time
-     * @param {Number} gameId    - The game ID
+     * @param {Number} time - The time
+     * @param {Number} gameId - The game ID
      */
     constructor (event, tag, time, gameId) {
 
