@@ -7,7 +7,7 @@ class EventList extends SortedList {
      *
      * @constructs EventList
      * @param {Array} [array]        - Array to use as backing store
-     * @param {String} sortProperty  - Property to sort array by
+     * @param {String} [sortProperty]  - Property to sort array by
      * @param {Boolean} [descending] - Sort array descending/ascending
      */
     constructor(array, sortProperty = 'time', descending = true) {
