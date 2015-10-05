@@ -54,8 +54,7 @@
                 <li data-ng-repeat="team in teams">
 
                     <a data-ui-sref="team({ id: team.id } )">{{team.name}}</a>
-
-                    <span>&nbsp;({{leagues.get(team.leagueId).name}})</span>
+                    <span>&nbsp;({{teamLeagues.get(team.id).name}})</span>
                 </li>
 
             </ul>
