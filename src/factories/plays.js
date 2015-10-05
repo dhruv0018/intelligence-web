@@ -42,7 +42,10 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             extend: function (play) {
 
-                return this.instantiate(play);
+                play = new KrossoverPlay(play, tagsets);
+                angular.augment(play, this);
+
+                return play;
             },
 
             unextend: function (play) {
@@ -50,20 +53,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 play = play || this;
 
                 return play.toJSON();
-            },
-
-            /**
-             * FIXME:
-             * Rename to method 'create'. Must resolve any issues
-             * where BaseFactory.create is invoked, as renaming
-             * will overrride BaseFactory.create
-             */
-            instantiate: function (play) {
-
-                play = new KrossoverPlay(play, tagsets);
-                angular.augment(play, this);
-
-                return play;
             },
 
             filterPlays: function(filterId, resources, success, error) {
