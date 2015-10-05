@@ -45,7 +45,7 @@
 
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
 
         <h3>Teams</h3>
 
@@ -55,6 +55,7 @@
 
                     <a data-ui-sref="team({ id: team.id } )">{{team.name}}</a>
 
+                    <span>&nbsp;({{leagues.get(team.leagueId).name}})</span>
                 </li>
 
             </ul>

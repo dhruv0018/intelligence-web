@@ -96,8 +96,8 @@ Schools.config([
  * @type {Controller}
  */
 Schools.controller('SchoolController', [
-    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'SchoolsFactory', 'TeamsFactory',
-    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, schools, teams) {
+    '$rootScope', '$scope', '$state', '$stateParams', 'SCHOOL_TYPES', 'SchoolsFactory', 'TeamsFactory', 'LeaguesFactory',
+    function controller($rootScope, $scope, $state, $stateParams, SCHOOL_TYPES, schools, teams, leagues) {
 
         $scope.SCHOOL_TYPES = SCHOOL_TYPES;
 
@@ -111,6 +111,8 @@ Schools.controller('SchoolController', [
 
         $scope.school = $scope.school || {};
         $scope.teams = $scope.teams || [];
+
+        $scope.leagues = leagues;
 
         $scope.save = function(school) {
             schools.save(school).then(function() {
