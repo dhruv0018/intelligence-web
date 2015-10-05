@@ -15,11 +15,11 @@ describe('Tag Entity', () => {
 
     beforeEach(angular.mock.module('intelligence-web-client'));
 
-    beforeEach(inject(TagsetsFactory => {
+    beforeEach(() => {
 
         sampleTag = angular.copy(srcTag);
         tag       = new KrossoverTag(sampleTag);
-    }));
+    });
 
     it('should exist', () => {
 
