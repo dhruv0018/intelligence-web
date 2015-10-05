@@ -50,7 +50,7 @@ IntelligenceWebClient.factory('Error.Interceptor', [
                         alerts.add({
 
                             type: 'warning',
-                            message: response.data.userMessage || 'Bad Request'
+                            message: response.data.userMessage
                         });
 
                         break;
