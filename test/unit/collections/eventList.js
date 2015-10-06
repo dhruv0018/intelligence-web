@@ -76,6 +76,29 @@ describe.only('EventList', () => {
         });
     });
 
+    describe('previous', () => {
+
+        it('should return previous element relative to the current event if nothing passed in', () => {
+            sampleList.current = sampleList.last;
+            let previous = sampleList.previous();
+            expect(previous).to.equal(sampleList.get(1));
+        });
+
+        it('should be return previous event relative to the passed in event', () => {
+            let event = sampleList.get(2);
+            let previous = sampleList.previous(event);
+            expect(previous).to.equal(sampleList.get(1));
+        });
+
+        it('should not advance the state if the advanceState flag set to false', () =>{
+            let event = sampleList.get(2);
+            sampleList.current = event;
+            let previous = sampleList.previous(event, false);
+            expect(previous).to.equal(sampleList.get(1));
+            expect(sampleList.current).to.equal(sampleList.get(2));
+        });
+    });
+
     describe('upperBoundingTime', ()=> {
 
         it('should return the time of the next event when there is one', () => {

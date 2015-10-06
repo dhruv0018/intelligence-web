@@ -61,6 +61,20 @@ class EventList extends SortedList {
         iterator.current = event;
         return iterator.next().value;
     }
+
+    /**
+     * Returns the previous event relative to either the current event or an arbitrary event.
+     *
+     * @method previous
+     * @param {Event} [event] - the event which you want to find out what follows (defaulted to current event)
+     * @param {Boolean} [advanceState] - determines if the list should advance the internal list iterator or use a disposable iterator
+     * @returns {Event}
+     */
+    previous(event = this.current, advanceState = true) {
+        let iterator = advanceState ? this.eventIterator : this.iterator();
+        iterator.current = event;
+        return iterator.previous().value;
+    }
 }
 
 export default EventList;
