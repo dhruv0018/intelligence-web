@@ -27,7 +27,6 @@ describe.only('EventList', () => {
     });
 
     it('should be sorted by time', () => {
-        let index = 0;
         let time = 0;
         for (let event of sampleList) {
             expect(event.value.time).to.be.at.least(time);
@@ -38,12 +37,12 @@ describe.only('EventList', () => {
     describe('current', () => {
 
         it('should be able to get an event', () => {
-            expect(sampleList.current).to.equal(srcArrayCopy[0]);
+            expect(sampleList.current).to.equal(sampleList.first);
         });
 
         it('should be able to set an event', () => {
-            sampleList.current = srcArrayCopy[1];
-            expect(sampleList.current.time).to.equal(srcArrayCopy[1].time);
+            sampleList.current = sampleList.last;
+            expect(sampleList.current).to.equal(sampleList.get(2));
         });
     });
 
@@ -51,28 +50,23 @@ describe.only('EventList', () => {
 
         it('should return next element relative to the current event if nothing passed in', () => {
             let next = sampleList.next();
-            let expectedEvent = {
-                time: 3052.4299316406
-            };
+            let expectedEvent = sampleList.get(1);
             expect(next.time).to.equal(expectedEvent.time);
         });
 
         it('should be return next event relative to the passed in event', () => {
-            let event = srcArrayCopy[2];
+            let event = sampleList.get(2);
             let next = sampleList.next(event);
-            let expectedEvent = {
-                time: 4252.4299316406
-            };
-            expect(next.time).to.equal(expectedEvent.time);
+            let expectedEvent = sampleList.last;
+            expect(next).to.equal(expectedEvent);
         });
 
         it('should not advance the state if the advanceState flag set to false', () =>{
-            let event = srcArrayCopy[2];
+            let event = sampleList.first;
+            sampleList.current = event;
             let next = sampleList.next(event, false);
-            let expectedEvent = {
-                time: 2914.5400390625
-            };
-            expect(sampleList.current.time).to.equal(expectedEvent.time);
+            expect(next).to.equal(sampleList.get(1));
+            expect(sampleList.current).to.equal(sampleList.first);
         });
     });
 
@@ -102,13 +96,14 @@ describe.only('EventList', () => {
     describe('upperBoundingTime', ()=> {
 
         it('should return the time of the next event when there is one', () => {
+            sampleList.current = sampleList.get(1);
             let upperBoundingTime = sampleList.upperBoundingTime();
-            let expectedTime = 3052.4299316406;
+            let expectedTime = sampleList.get(2).time;
             expect(upperBoundingTime).to.equal(expectedTime);
         });
 
         it('should return null if there is no next event', () => {
-            let event = srcArrayCopy[2];
+            let event = sampleList.last;
             sampleList.current = event;
             let upperBoundingTime = sampleList.upperBoundingTime(event);
             let expectedTime = null;
