@@ -29,11 +29,23 @@ IntelligenceWebClient.factory('UsersResource', [
                             var aggregateResources = JSON.parse(data);
                             return aggregateResources.map(function(resource) {
                                 var key = 'user';
-                                resource[key].teamName = resource.team.name;
-                                resource[key].teamId = resource.team.id;
-                                resource[key].leagueId = resource.team.leagueId;
-                                resource[key].schoolName = resource.school.name;
-                                resource[key].schoolId = resource.school.id;
+                                resource[key].school = resource.school;
+                                resource[key].team   = resource.team;
+                                return resource[key];
+                            });
+                        }
+                    }
+                },
+                roleTypeahead: { method: 'GET', url: config.api.uri + 'service/user-role-typeahead', isArray: true,
+                    //transforms the resource into an array of user objects with extra properties used by the user typeahead
+                    transformResponse: function(data) {
+                        if (data != 'No users found') {
+                            var aggregateResources = JSON.parse(data);
+                            return aggregateResources.map(function(resource) {
+                                var key = 'user';
+                                resource[key].school = resource.school;
+                                resource[key].team   = resource.team;
+                                resource[key].role   = resource.role;
                                 return resource[key];
                             });
                         }
