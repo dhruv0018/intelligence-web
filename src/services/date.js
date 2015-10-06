@@ -52,14 +52,14 @@ IntelligenceWebClient.factory('NewDate', function() {
 
             if (ISODateString !== undefined) {
 
-                planEndDate = createDateFromISOString(ISODateString);
+                planEndDate = createDateFromISOString(ISODateString)
+                    .endOf('day');
             } else {
 
                 /* Get The day after tomorrow just before midnight */
                 planEndDate = momentTimezone.tz('America/New_York')
-                    .startOf('day')
-                    .add(3, 'day')
-                    .subtract(1, 'milliseconds');
+                    .endOf('day')
+                    .add(2, 'day');
             }
 
             if (!planEndDate.isValid()) {
