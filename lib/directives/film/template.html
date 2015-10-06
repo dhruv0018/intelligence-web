@@ -19,14 +19,14 @@
 
     <div class="film-info-footer">
 
-        <div class="user-info" data-ng-show="!isGame || isShared || !film.isCopied()">
+        <div class="user-info" data-ng-show="!film.isCopied()">
             <span ng-show="!isShared && isGame">Uploaded</span>
             <span ng-show="!isShared && !isGame">Created</span>
             <span ng-show="isShared">Shared</span>
             by {{uploaderName}}
         </div>
 
-        <div class="user-info" data-ng-show="isGame && !isShared && film.isCopied()">
+        <div class="user-info" data-ng-show="film.isCopied()">
             Produced by Krossover
         </div>
 

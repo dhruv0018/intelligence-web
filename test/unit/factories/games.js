@@ -2039,7 +2039,17 @@ describe('GamesFactory', function() {
                     assert(session.getCurrentTeamId.should.have.been.called);
                     assert(game.isSharedWithCurrentUser.should.have.been.called);
         }]));
+    });
 
+    describe('isCopied', ()=> {
+        it("Should return false, when there is no copiedFromGameId is null", inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:1,copiedFromGameId:null});
+                expect(game.isCopied()).to.be.false;
+        }]));
 
+        it("Should return true, when there copiedFromGameId is not null", inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:1,copiedFromGameId:12344});
+                expect(game.isCopied()).to.be.true;
+        }]));
     });
 });
