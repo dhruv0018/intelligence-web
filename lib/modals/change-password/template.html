@@ -10,27 +10,21 @@
 
             <form class="form-change-password" name="changePasswordForm" role="form" novalidate>
 
-                <div class="errors">
-                    <span class="error" data-ng-show="changePasswordForm.newPassword.$error.minlength || changePasswordForm.newPasswordVerify.$error.minlength">Passwords must be at least four characters.</span>
-                    <span class="error" data-ng-show="changePasswordForm.newPasswordVerify.$error.validator">Your passwords do not match.</span>
-                    <span class="error" data-ng-show="changePasswordForm.currentPassword.$error.password" data-ng-hide="changePasswordForm.currentPassword.$pristine || changePasswordForm.currentPassword.$error.minlength">Your current password is incorrect.</span>
-                </div>
-
                 <div class="form-group">
 
-                    <input class="form-control" name="newPassword" type="password" placeholder="New Password" data-ng-model="newPassword" data-ng-minlength="4" data-ng-trim="false" required>
+                    <input class="form-control" name="newPassword" type="password" placeholder="New Password" data-ng-model="newPassword" data-ng-minlength="4" data-ng-trim="false" data-errors="{ minlength: 'Passwords must be at least four characters long.'}" required>
 
                 </div>
 
                 <div class="form-group">
 
-                    <input class="form-control" name="newPasswordVerify" type="password" placeholder="Verify New Password" data-ng-model="newPasswordVerify" data-ng-minlength="4" data-ng-trim="false" data-ui-validate=" 'newPassword == $value' " data-ui-validate-watch=" 'newPassword' " required>
+                    <input class="form-control" name="newPasswordVerify" type="password" placeholder="Verify New Password" data-ng-model="newPasswordVerify" data-ng-minlength="4" data-ng-trim="false" data-ui-validate=" 'newPassword == $value' " data-ui-validate-watch=" 'newPassword' " data-errors="{ validator: 'Your passwords do not match.', minlength: 'Passwords must be at least four characters long.'}" required>
 
                 </div>
 
                 <div class="form-group">
 
-                    <input class="form-control" name="currentPassword" type="password" placeholder="Current Password" data-ng-model="currentPassword" data-ng-minlength="4" data-krossover-verify-password required>
+                    <input class="form-control" name="currentPassword" type="password" placeholder="Current Password" data-ng-model="currentPassword" data-ng-minlength="4" data-krossover-verify-password data-errors="{ password: 'Your current password is incorrect.'}" required>
 
                 </div>
 
