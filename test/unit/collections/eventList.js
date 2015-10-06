@@ -43,7 +43,7 @@ describe.only('EventList', () => {
 
         it('should be able to set an event', () => {
             sampleList.current = srcArrayCopy[1];
-            expect(sampleList.current).to.equal(srcArrayCopy[1]);
+            expect(sampleList.current.time).to.equal(srcArrayCopy[1].time);
         });
     });
 
@@ -66,13 +66,30 @@ describe.only('EventList', () => {
             expect(next.time).to.equal(expectedEvent.time);
         });
 
-        it('should not advance the advanceState set to false', () =>{
+        it('should not advance the state if the advanceState flag set to false', () =>{
             let event = srcArrayCopy[2];
             let next = sampleList.next(event, false);
             let expectedEvent = {
                 time: 2914.5400390625
             };
             expect(sampleList.current.time).to.equal(expectedEvent.time);
+        });
+    });
+
+    describe('upperBoundingTime', ()=> {
+
+        it('should return the time of the next event when there is one', () => {
+            let upperBoundingTime = sampleList.upperBoundingTime();
+            let expectedTime = 3052.4299316406;
+            expect(upperBoundingTime).to.equal(expectedTime);
+        });
+
+        it('should return null if there is no next event', () => {
+            let event = srcArrayCopy[2];
+            sampleList.current = event;
+            let upperBoundingTime = sampleList.upperBoundingTime(event);
+            let expectedTime = null;
+            expect(upperBoundingTime).to.be.null;
         });
     });
 

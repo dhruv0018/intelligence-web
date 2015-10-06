@@ -12,18 +12,38 @@ class EventList extends SortedList {
      */
     constructor(array, sortProperty = 'time', descending = true) {
         super(array, sortProperty, descending);
+
+        //persistant state tracking iterator
         this.eventIterator = this.iterator();
     }
 
-    // upperBoundingTime(event = this.current) {
-    //     let next = this.next(event, false);
-    //     console.log(next);
-    // }
+    /**
+     * Returns the event time of the following event or null if there is no following event
+     *
+     * @method upperBoundingTime
+     * @returns {Integer || null}
+     */
+    upperBoundingTime(event = this.current) {
+        let next = this.next(event, false);
+        return next.time === event.time ? null : next.time;
+    }
 
+    /**
+     * Get the current event from the internal iterator
+     *
+     * @method current
+     * @returns {Event}
+     */
     get current(){
         return this.eventIterator.current.value;
     }
 
+    /**
+     * Sets the current event in the internal iterator
+     *
+     * @method current
+     * @returns {Event}
+     */
     set current(event) {
         this.eventIterator.current = event;
     }
@@ -34,7 +54,7 @@ class EventList extends SortedList {
      * @method next
      * @param {Event} [event] - the event which you want to find out what follows (defaulted to current event)
      * @param {Boolean} [advanceState] - determines if the list should advance the internal list iterator or use a disposable iterator
-     * @returns {Object}
+     * @returns {Event}
      */
     next(event = this.current, advanceState = true) {
         let iterator = advanceState ? this.eventIterator : this.iterator();
