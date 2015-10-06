@@ -220,9 +220,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 else if (session.currentUser.is(ROLES.ATHLETE)) {
-                    games = games.concat(
-                            this.getByUploaderUserId(userId),
-                            this.getByUploaderTeamId(teamId));
+
+                    const user = session.getCurrentUser();
+                    const roles = user.roleType[ROLES.ATHLETE];
+
+                    games = games.concat(this.getByUploaderUserId(userId));
+
+                    roles.forEach(role => {
+                        games = games.concat(this.getByUploaderTeamId(role.teamId));
+                    });
                 }
 
                 games = games.concat(this.getBySharedWithUserId(userId));
