@@ -29,6 +29,17 @@ class EventList extends SortedList {
     }
 
     /**
+     * Returns the event time of the preceeding event or null if there is no preceeding event
+     *
+     * @method lowerBoundingTime
+     * @returns {Integer || null}
+     */
+    lowerBoundingTime(event = this.current) {
+        let previous = this.previous(event, false);
+        return previous.time === event.time ? null : previous.time;
+    }
+
+    /**
      * Get the current event from the internal iterator
      *
      * @method current

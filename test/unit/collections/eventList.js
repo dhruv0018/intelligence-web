@@ -127,4 +127,24 @@ describe.only('EventList', () => {
         });
     });
 
+    describe('lowerBoundingTime', ()=> {
+
+        it('should return the time of the previous event when there is one', () => {
+            let index = sampleList.length - 1;
+            let previousIndex = index - 1;
+            sampleList.current = sampleList.get(index);
+            let lowerBoundingTime = sampleList.lowerBoundingTime();
+            let expectedTime = sampleList.get(previousIndex).time;
+            expect(lowerBoundingTime).to.equal(expectedTime);
+        });
+
+        it('should return null if there is no previous event', () => {
+            let event = sampleList.first;
+            sampleList.current = event;
+            let lowerBoundingTime = sampleList.lowerBoundingTime(event);
+            let expectedTime = null;
+            expect(lowerBoundingTime).to.be.null;
+        });
+    });
+
 });
