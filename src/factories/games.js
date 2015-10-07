@@ -222,12 +222,13 @@ IntelligenceWebClient.factory('GamesFactory', [
                 else if (session.currentUser.is(ROLES.ATHLETE)) {
 
                     const user = session.getCurrentUser();
-                    const roles = user.roleType[ROLES.ATHLETE];
 
                     games = games.concat(this.getByUploaderUserId(userId));
 
-                    roles.forEach(role => {
-                        games = games.concat(this.getByUploaderTeamId(role.teamId));
+                    user.roles.forEach(role => {
+                        if (role.type.id === ROLES.ATHLETE.type.id) {
+                            games = games.concat(this.getByUploaderTeamId(role.teamId));
+                        }
                     });
                 }
 
