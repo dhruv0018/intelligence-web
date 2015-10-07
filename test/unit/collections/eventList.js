@@ -42,63 +42,79 @@ describe.only('EventList', () => {
 
         it('should be able to set an event', () => {
             sampleList.current = sampleList.last;
-            expect(sampleList.current).to.equal(sampleList.get(2));
+            expect(sampleList.current).to.equal(sampleList.get(sampleList.length - 1));
         });
     });
 
     describe('next', () => {
 
         it('should return next element relative to the current event if nothing passed in', () => {
+            let nextIndex = 1;
             let next = sampleList.next();
-            let expectedEvent = sampleList.get(1);
+            let expectedEvent = sampleList.get(nextIndex);
             expect(next.time).to.equal(expectedEvent.time);
         });
 
         it('should be return next event relative to the passed in event', () => {
-            let event = sampleList.get(2);
+            let index = 1;
+            let nextIndex = index + 1;
+
+            let event = sampleList.get(index);
             let next = sampleList.next(event);
-            let expectedEvent = sampleList.last;
+            let expectedEvent = sampleList.get(nextIndex);
             expect(next).to.equal(expectedEvent);
         });
 
         it('should not advance the state if the advanceState flag set to false', () =>{
-            let event = sampleList.first;
+            let index = 1;
+            let nextIndex = index + 1;
+
+            let event = sampleList.get(index);
             sampleList.current = event;
+
             let next = sampleList.next(event, false);
-            expect(next).to.equal(sampleList.get(1));
-            expect(sampleList.current).to.equal(sampleList.first);
+            expect(next).to.equal(sampleList.get(nextIndex));
+            expect(sampleList.current).to.equal(event);
         });
     });
 
     describe('previous', () => {
 
         it('should return previous element relative to the current event if nothing passed in', () => {
-            sampleList.current = sampleList.last;
+            let index = sampleList.length - 1;
+            let previousIndex = index - 1;
+            sampleList.current = sampleList.get(index);
             let previous = sampleList.previous();
-            expect(previous).to.equal(sampleList.get(1));
+            expect(previous).to.equal(sampleList.get(previousIndex));
         });
 
         it('should be return previous event relative to the passed in event', () => {
-            let event = sampleList.get(2);
+            let index = 2;
+            let previousIndex = index - 1;
+            let event = sampleList.get(index);
             let previous = sampleList.previous(event);
-            expect(previous).to.equal(sampleList.get(1));
+            expect(previous).to.equal(sampleList.get(previousIndex));
         });
 
         it('should not advance the state if the advanceState flag set to false', () =>{
-            let event = sampleList.get(2);
+            let index = 2;
+            let previousIndex = index - 1;
+            let event = sampleList.get(index);
             sampleList.current = event;
             let previous = sampleList.previous(event, false);
-            expect(previous).to.equal(sampleList.get(1));
-            expect(sampleList.current).to.equal(sampleList.get(2));
+            expect(previous).to.equal(sampleList.get(previousIndex));
+            expect(sampleList.current).to.equal(sampleList.get(index));
         });
     });
 
     describe('upperBoundingTime', ()=> {
 
         it('should return the time of the next event when there is one', () => {
-            sampleList.current = sampleList.get(1);
+            let index = 1;
+            let nextIndex = index + 1;
+            sampleList.current = sampleList.get(index);
             let upperBoundingTime = sampleList.upperBoundingTime();
-            let expectedTime = sampleList.get(2).time;
+            let expectedTime = sampleList.get(nextIndex).time;
             expect(upperBoundingTime).to.equal(expectedTime);
         });
 
