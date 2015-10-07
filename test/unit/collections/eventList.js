@@ -12,7 +12,7 @@ const srcArray = [
     }
 ];
 
-describe.only('EventList', () => {
+describe('EventList', () => {
     let srcArrayCopy;
     let sampleList;
 
