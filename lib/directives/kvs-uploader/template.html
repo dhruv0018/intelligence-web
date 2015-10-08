@@ -7,7 +7,7 @@
 
                 <div class="col-md-11">
 
-                    <button id="choose-files-cta" class="choose-files" data-ng-hide="film.flow.files.length" data-flow-btn>
+                    <button id="choose-files-cta" class="choose-files" ng-hide="film.flow.files.length" ng-click="clearAlerts()" data-flow-btn>
 
                         <i class="icon icon-upload"></i>
                         <h1>Choose files to upload…</h1>
@@ -32,11 +32,23 @@
 
                     </table>
 
-                    <button id="choose-files-continue-cta" class="btn-choose-files" data-ng-show="film.flow.files.length" data-flow-btn>
+                    <button id="choose-files-continue-cta" class="btn-choose-files" ng-show="film.flow.files.length" ng-click="clearAlerts()" data-flow-btn>
 
                         <i class="icon icon-upload"></i> Choose files to upload…
 
                     </button>
+
+                    <div id="unsupported-file-alerts-cta" class="unsupported-file-alerts">
+                        <div ng-if="alerts.length > 0">
+                            <span>One or more files is not a supported media type:</span>
+                            <div class="unsupported-files">
+                                <div ng-repeat="alert in alerts">
+                                    {{alert}}
+                                </div>
+                            </div>
+                            <p>Please try again.</p>
+                        </div>
+                    </div>
 
                     <button id="start-uploading-cta" class="btn-upload-start" data-ng-click="upload()">
 
