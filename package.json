@@ -1,6 +1,6 @@
 {
   "name": "intelligence-web-client",
-  "version": "2.20.0",
+  "version": "2.20.1",
   "description": "Krossover Intelligence Web Client",
   "author": "Jason Morganson <jason@krossover.com>",
   "private": true,
@@ -24,7 +24,6 @@
     "angular-ui-unique": "angular-ui/ui-utils#unique-0.1.1",
     "angular-ui-showhide": "angular-ui/ui-utils#showhide-0.1.1",
     "angular-ui-validate": "angular-ui/ui-utils#validate-0.1.1",
-    "angular-multiselect": "amitava82/angular-multiselect",
     "svg-morpheus": "alexk111/svg-morpheus#v0.1.8",
     "flow": "flowjs/ng-flow#v2.5.1",
     "flowjs": "flowjs/flow.js#v2.6.2",
@@ -135,9 +134,10 @@
     "time-grunt": "1.1.0",
     "traceur": "0.0.86",
     "tv4": "1.1.12",
+    "angular-multiselect": "1.0.0",
     "@krossover/fit-element": "0.2.0",
     "@krossover/krossover-checkbox": "^0.2.0",
-    "@krossover/krossover-multiselect": "0.1.2",
+    "@krossover/krossover-multiselect": "0.1.4",
     "@krossover/pills": "0.1.0"
   },
   "main": "./src/main.js",
