@@ -64,6 +64,52 @@ describe('Iterator', () => {
         expect(iter.current.done).to.be.false;
     });
 
+    describe('hasNext', () => {
+        it('should return false if you are on the last item', () =>{
+            let lastItem = srcArrayCopy[srcArrayCopy.length - 1];
+            iter.current = lastItem;
+            let hasNext = iter.hasNext();
+            expect(hasNext).to.be.false;
+        });
+
+        it('should return true if there are more items to access', () => {
+            let firstItem = srcArrayCopy[0];
+            iter.current = firstItem;
+            let hasNext = iter.hasNext();
+            expect(hasNext).to.be.true;
+        });
+
+        it('should be able to take an arbitary index', ()=> {
+            let hasNextFromFirst = iter.hasNext(0);
+            expect(hasNextFromFirst).to.be.true;
+            let hasNextFromLast = iter.hasNext(srcArrayCopy.length - 1);
+            expect(hasNextFromLast).to.be.false;
+        });
+    });
+
+    describe('hasPrevious', () => {
+        it('should return false if you are on the first item', () =>{
+            let firstItem = srcArrayCopy[0];
+            iter.current = firstItem;
+            let hasPrevious = iter.hasPrevious();
+            expect(hasPrevious).to.be.false;
+        });
+
+        it('should return true if there are previous items to access', () => {
+            let lastItem = srcArrayCopy[srcArrayCopy.length - 1];
+            iter.current = lastItem;
+            let hasPrevious = iter.hasPrevious();
+            expect(hasPrevious).to.be.true;
+        });
+
+        it('should be able to take an arbitary index', ()=> {
+            let hasPreviousFromFirst = iter.hasPrevious(0);
+            expect(hasPreviousFromFirst).to.be.false
+            let hasPreviousFromLast = iter.hasPrevious(srcArrayCopy.length - 1);
+            expect(hasPreviousFromLast).to.be.true;
+        });
+    });
+
     describe('readPrevious', () => {
         it("should get the previous item without advancing the state of the iterator", () =>{
             let lastItem = srcArrayCopy[srcArrayCopy.length - 1];
