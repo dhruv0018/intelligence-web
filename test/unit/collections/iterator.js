@@ -64,4 +64,16 @@ describe('Iterator', () => {
         expect(iter.current.done).to.be.false;
     });
 
+    describe('readPrevious', () => {
+        it("should get the previous item without advancing the state of the iterator", () =>{
+            let lastItem = srcArrayCopy[srcArrayCopy.length - 1];
+            iter.current = lastItem;
+            let previousItem = iter.readPrevious();
+            expect(previousItem.value).to.equal(2);
+            expect(previousItem.done).to.be.false;
+            expect(iter.current.value).to.equal(lastItem);
+            expect(iter.current.done).to.be.true;
+        });
+    });
+
 });

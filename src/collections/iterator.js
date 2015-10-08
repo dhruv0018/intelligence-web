@@ -73,19 +73,38 @@ class Iterator {
      * @method hasNext
      * @returns {Boolean}
      */
-    hasNext() {
-        return this.index + 1 < this.data.length;
+    hasNext(index = this.index) {
+        return index + 1 < this.data.length;
     }
 
     /**
      * Returns if there is another item before the current item
      *
      * @method hasPrevious
+     * @param index
      * @returns {Boolean}
      */
-    hasPrevious() {
-        return this.index > 0;
+    hasPrevious(index = this.index) {
+        return index > 0;
     }
+
+    /**
+     * Returns previous item without changing the iterator or current element, if it's the first element
+     *
+     * @method readPrevious
+     * @returns {Object}
+     */
+    readPrevious() {
+        let index = this.index - 1;
+        if (!this.hasPrevious(index)) {
+            return this.current;
+        }
+        return {
+            value: this.data[index] || null,
+            done: !this.hasNext(index)
+        };
+    }
+
 }
 
 export default Iterator;
