@@ -67,6 +67,21 @@ function PlayerAnalyticsController(
         seasonId: league.seasons[0].id,
         gameType: ''
     };
+
+    // Set filter criteria to jersey number, first initial, last name
+    $scope.players.forEach(player => {
+        if (team.roster.playerInfo[player.id].jerseyNumber) {
+            let jerseyNumber = team.roster.playerInfo[player.id].jerseyNumber;
+            player.extendedName = '#' + jerseyNumber + ' ' + player.shortName;
+        } else {
+            player.extendedName = player.shortName;
+        }
+    });
+
+    // Sort players by jersey number
+    $scope.players.sort((a, b) => {
+        return Number(team.roster.playerInfo[a.id].jerseyNumber) - Number(team.roster.playerInfo[b.id].jerseyNumber);
+    });
 }
 
 export default PlayerAnalyticsController;

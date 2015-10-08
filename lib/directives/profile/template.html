@@ -7,9 +7,8 @@
         <div class="description">
             <a data-ng-if="player.firstName && player.lastName" data-open-modal="AthleteInfo.Modal" data-modal-options="options" data-ng-click="options.targetAthlete = player" href>
                 <span class="info">
-                    <span class="jerseyNumber">{{rosterEntry.playerInfo.jerseyNumber}}</span>
-                    {{player.firstName}}
-                    {{player.lastName[0]}}.
+                    <span class="jerseyNumber" ng-show="rosterEntry.playerInfo.jerseyNumber">#{{rosterEntry.playerInfo.jerseyNumber}}</span>
+                    {{player.shortName}}
                 </span>
             </a>
             <span data-ng-if="!player.firstName && !player.lastName">Saving Player</span>
@@ -40,7 +39,7 @@
         <div class="description">
             <a data-open-modal="AssistantInfo.Modal" data-modal-options="options" data-ng-click="options.targetAssistant = assistant" href>
                 {{assistant.firstName}}
-                {{assistant.lastName[0]}}.
+                {{assistant.lastName}}
             </a>
             <p data-ng-repeat="role in assistant.roles" data-ng-if="role.type.id === ROLE_TYPE.ASSISTANT_COACH && role.teamId === team.id">
                 Tenure: {{role.tenureStart | date: 'mediumDate'}} to

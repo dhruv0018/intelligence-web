@@ -13,10 +13,10 @@ describe('Base Entity', () => {
 
     beforeEach(angular.mock.module('intelligence-web-client'));
 
-    beforeEach(inject(TagsetsFactory => {
+    beforeEach(() => {
 
         entity = new Entity();
-    }));
+    });
 
     it('should exist', () => {
 

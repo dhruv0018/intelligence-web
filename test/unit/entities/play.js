@@ -175,16 +175,16 @@ describe('Play Entity', () => {
         expect(play.summaryScript).to.be.a.string;
     });
 
-    it('should have called toJSON on a JSON.stringify call', inject(TagsetsFactory => {
+    it('should have called toJSON on a JSON.stringify call', () => {
 
         play.toJSON = sinon.spy();
 
         JSON.stringify(play);
 
         assert(play.toJSON.should.have.been.called);
-    }));
+    });
 
-    it('should restore the original JSON on JSON.stringify calls', inject(TagsetsFactory => {
+    it('should restore the original JSON on JSON.stringify calls', () => {
 
         play = play.toJSON();
 
@@ -204,5 +204,5 @@ describe('Play Entity', () => {
         expect(play.createdAt).to.equal(playJSON.createdAt);
         expect(play.updatedAt).to.equal(playJSON.updatedAt);
         expect(play.customTagIds).to.deep.equal(playJSON.customTagIds);
-    }));
+    });
 });

@@ -211,7 +211,7 @@ function GamesController(
     let currentUser = session.getCurrentUser();
     let sport = SPORTS[SPORT_IDS[league.sportId]];
     let transcodeCompleted = game.isVideoTranscodeComplete();
-    let breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isSharedWithUser(currentUser) && game.getShareByUser(currentUser).isBreakdownShared;
+    let breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isBreakdownSharedWithCurrentUser();
     let uploader = users.get(game.uploaderUserId);
     let uploaderIsCoach = uploader.is(ROLES.COACH);
     let isUploader = game.isUploader(currentUser.id);

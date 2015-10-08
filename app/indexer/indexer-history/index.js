@@ -27,8 +27,8 @@ IndexerHistory.config([
                 resolve: {
                     'Indexer.Games.Data': [
                         '$q', 'IndexerDataDependencies',
-                        function($q, IndexingGamesData) {
-                            let data = new IndexingGamesData();
+                        function($q, IndexerHistoryData) {
+                            let data = new IndexerHistoryData();
                             return $q.all(data);
                         }
                     ]
