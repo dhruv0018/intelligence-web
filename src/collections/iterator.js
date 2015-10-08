@@ -105,6 +105,23 @@ class Iterator {
         };
     }
 
+    /**
+     * Returns next item without changing the iterator or current element, if it's the last element
+     *
+     * @method readNext
+     * @returns {Object}
+     */
+    readNext() {
+        let index = this.index + 1;
+        if (!this.hasNext(index)) {
+            return this.current;
+        }
+        return {
+            value: this.data[index] || null,
+            done: !this.hasNext(index)
+        };
+    }
+
 }
 
 export default Iterator;

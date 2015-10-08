@@ -164,4 +164,16 @@ describe('Iterator', () => {
         });
     });
 
+    describe('readNext', () => {
+        it('should get the next item without advancing the state of the iterator', () =>{
+            let firstItem = srcArrayCopy[0];
+            iter.current = firstItem;
+            let nextItem = iter.readNext();
+            expect(nextItem.value).to.equal(2);
+            expect(nextItem.done).to.be.false;
+            expect(iter.current.value).to.equal(firstItem);
+            expect(iter.current.done).to.be.false;
+        });
+    });
+
 });
