@@ -34,76 +34,10 @@ describe('EventList', () => {
         }
     });
 
-    describe('current', () => {
-
-        it('should be able to get an event', () => {
-            expect(sampleList.current).to.equal(sampleList.first);
-        });
-
-        it('should be able to set an event', () => {
-            sampleList.current = sampleList.last;
-            expect(sampleList.current).to.equal(sampleList.get(sampleList.length - 1));
-        });
-    });
-
-    describe('next', () => {
-
-        it('should return next element relative to the current event if nothing passed in', () => {
-            let nextIndex = 1;
-            let next = sampleList.next();
-            let expectedEvent = sampleList.get(nextIndex);
-            expect(next.time).to.equal(expectedEvent.time);
-        });
-
-        it('should be return next event relative to the passed in event', () => {
-            let index = 1;
-            let nextIndex = index + 1;
-
-            let event = sampleList.get(index);
-            let next = sampleList.next(event);
-            let expectedEvent = sampleList.get(nextIndex);
-            expect(next).to.equal(expectedEvent);
-        });
-
-        it('should not advance the state if the advanceState flag set to false', () =>{
-            let index = 1;
-            let nextIndex = index + 1;
-
-            let event = sampleList.get(index);
-            sampleList.current = event;
-
-            let next = sampleList.next(event, false);
-            expect(next).to.equal(sampleList.get(nextIndex));
-            expect(sampleList.current).to.equal(event);
-        });
-    });
-
-    describe('previous', () => {
-
-        it('should return previous element relative to the current event if nothing passed in', () => {
-            let index = sampleList.length - 1;
-            let previousIndex = index - 1;
-            sampleList.current = sampleList.get(index);
-            let previous = sampleList.previous();
-            expect(previous).to.equal(sampleList.get(previousIndex));
-        });
-
-        it('should be return previous event relative to the passed in event', () => {
-            let index = 2;
-            let previousIndex = index - 1;
-            let event = sampleList.get(index);
-            let previous = sampleList.previous(event);
-            expect(previous).to.equal(sampleList.get(previousIndex));
-        });
-
-        it('should not advance the state if the advanceState flag set to false', () =>{
-            let index = 2;
-            let previousIndex = index - 1;
-            let event = sampleList.get(index);
-            sampleList.current = event;
-            let previous = sampleList.previous(event, false);
-            expect(previous).to.equal(sampleList.get(previousIndex));
-            expect(sampleList.current).to.equal(sampleList.get(index));
+    describe('eventIterator', () => {
+        it('should exist', () => {
+            let iter = sampleList.eventIterator;
+            expect(iter).to.not.be.null;
         });
     });
 
@@ -112,7 +46,7 @@ describe('EventList', () => {
         it('should return the time of the next event when there is one', () => {
             let index = 1;
             let nextIndex = index + 1;
-            sampleList.current = sampleList.get(index);
+            sampleList.eventIterator.current = sampleList.get(index);
             let upperBoundingTime = sampleList.upperBoundingTime();
             let expectedTime = sampleList.get(nextIndex).time;
             expect(upperBoundingTime).to.equal(expectedTime);
@@ -120,8 +54,8 @@ describe('EventList', () => {
 
         it('should return null if there is no next event', () => {
             let event = sampleList.last;
-            sampleList.current = event;
-            let upperBoundingTime = sampleList.upperBoundingTime(event);
+            sampleList.eventIterator.current = event;
+            let upperBoundingTime = sampleList.upperBoundingTime();
             let expectedTime = null;
             expect(upperBoundingTime).to.be.null;
         });
@@ -132,7 +66,7 @@ describe('EventList', () => {
         it('should return the time of the previous event when there is one', () => {
             let index = sampleList.length - 1;
             let previousIndex = index - 1;
-            sampleList.current = sampleList.get(index);
+            sampleList.eventIterator.current = sampleList.get(index);
             let lowerBoundingTime = sampleList.lowerBoundingTime();
             let expectedTime = sampleList.get(previousIndex).time;
             expect(lowerBoundingTime).to.equal(expectedTime);
@@ -140,8 +74,8 @@ describe('EventList', () => {
 
         it('should return null if there is no previous event', () => {
             let event = sampleList.first;
-            sampleList.current = event;
-            let lowerBoundingTime = sampleList.lowerBoundingTime(event);
+            sampleList.eventIterator.current = event;
+            let lowerBoundingTime = sampleList.lowerBoundingTime();
             let expectedTime = null;
             expect(lowerBoundingTime).to.be.null;
         });

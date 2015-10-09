@@ -14,7 +14,7 @@ class EventList extends SortedList {
         super(array, sortProperty, descending);
 
         //persistant state tracking iterator
-        this.eventIterator = this.iterator();
+        this.statefulIterator = this.iterator();
     }
 
     /**
@@ -23,9 +23,14 @@ class EventList extends SortedList {
      * @method upperBoundingTime
      * @returns {Integer || null}
      */
-    upperBoundingTime(event = this.current) {
-        let next = this.next(event, false);
-        return next.time === event.time ? null : next.time;
+    upperBoundingTime() {
+        let current = this.eventIterator.current.value;
+        let next = this.eventIterator.readNext().value;
+        let time = null;
+        if (next && next.time) {
+            time = next.time === current.time ? null : next.time;
+        }
+        return time;
     }
 
     /**
@@ -34,57 +39,24 @@ class EventList extends SortedList {
      * @method lowerBoundingTime
      * @returns {Integer || null}
      */
-    lowerBoundingTime(event = this.current) {
-        let previous = this.previous(event, false);
-        return previous.time === event.time ? null : previous.time;
+    lowerBoundingTime() {
+        let current = this.eventIterator.current.value;
+        let previous = this.eventIterator.readPrevious().value;
+        let time = null;
+        if (previous && previous.time) {
+            time = previous.time === current.time ? null : previous.time;
+        }
+        return time;
     }
 
     /**
-     * Get the current event from the internal iterator
+     * Returns the internal iterator
      *
-     * @method current
-     * @returns {Event}
+     * @method eventIterator
+     * @returns {Iterator}
      */
-    get current(){
-        return this.eventIterator.current.value;
-    }
-
-    /**
-     * Sets the current event in the internal iterator
-     *
-     * @method current
-     * @returns {Event}
-     */
-    set current(event) {
-        this.eventIterator.current = event;
-    }
-
-    /**
-     * Returns the next event relative to either the current event or an arbitrary event.
-     *
-     * @method next
-     * @param {Event} [event] - the event which you want to find out what follows (defaulted to current event)
-     * @param {Boolean} [advanceState] - determines if the list should advance the internal list iterator or use a disposable iterator
-     * @returns {Event}
-     */
-    next(event = this.current, advanceState = true) {
-        let iterator = advanceState ? this.eventIterator : this.iterator();
-        iterator.current = event;
-        return iterator.next().value;
-    }
-
-    /**
-     * Returns the previous event relative to either the current event or an arbitrary event.
-     *
-     * @method previous
-     * @param {Event} [event] - the event which you want to find out what follows (defaulted to current event)
-     * @param {Boolean} [advanceState] - determines if the list should advance the internal list iterator or use a disposable iterator
-     * @returns {Event}
-     */
-    previous(event = this.current, advanceState = true) {
-        let iterator = advanceState ? this.eventIterator : this.iterator();
-        iterator.current = event;
-        return iterator.previous().value;
+    get eventIterator() {
+        return this.statefulIterator;
     }
 }
 
