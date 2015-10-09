@@ -89,16 +89,13 @@ class Iterator {
     }
 
     /**
-     * Returns previous item without changing the iterator or current element, if it's the first element
+     * Returns previous item without changing the iterator
      *
      * @method readPrevious
      * @returns {Object}
      */
     readPrevious() {
         let index = this.index - 1;
-        if (!this.hasPrevious(index)) {
-            return this.current;
-        }
         return {
             value: this.data[index] || null,
             done: !this.hasNext(index)
@@ -106,16 +103,13 @@ class Iterator {
     }
 
     /**
-     * Returns next item without changing the iterator or current element, if it's the last element
+     * Returns next item without changing the iterator
      *
      * @method readNext
      * @returns {Object}
      */
     readNext() {
         let index = this.index + 1;
-        if (!this.hasNext(index)) {
-            return this.current;
-        }
         return {
             value: this.data[index] || null,
             done: !this.hasNext(index)
