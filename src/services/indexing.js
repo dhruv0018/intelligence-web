@@ -82,8 +82,11 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Create new event. */
                 eventManager.current = new KrossoverEvent(null, tag, time, game.id);
 
-                /* Add event to the current play. */
-                playManager.addEvent(eventManager.current);
+                if (!tag.isGroup) {
+
+                    /* Add event to the current play. */
+                    playManager.addEvent(eventManager.current);
+                }
 
                 /*Push onto the stack the new set of tags*/
                 let indexingTags = tagsManager.current;
