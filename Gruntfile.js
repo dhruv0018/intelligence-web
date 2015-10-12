@@ -270,6 +270,7 @@ module.exports = function(grunt) {
                         'lib/directives/field/**/*.less',
                         'app/reel/*.less',
                         'app/indexer/**/*.less',
+                        'app/analytics/styles.less',
                         'app/styleguide/**/*.less',
                         'lib/directives/arena-chart/styles.less'
                     ]

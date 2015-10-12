@@ -19,6 +19,7 @@ require('../build/build');
 import Reel from '../app/reel';
 import Indexer from '../app/indexer';
 import Styleguide from '../app/styleguide';
+import Analytics from '../app/analytics';
 
 import FieldComponent from '../lib/directives/field';
 import IndexingBlock from '../lib/directives/indexing-block';
