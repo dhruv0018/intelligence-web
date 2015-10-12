@@ -75,7 +75,7 @@ class Iterator {
      */
     hasNext(index = this.index) {
         let nextIndex = index + 1;
-        if (nextIndex > this.data.length) {
+        if (nextIndex > this.data.length || nextIndex < -1) {
             return false;
         }
         return nextIndex < this.data.length;
@@ -89,7 +89,7 @@ class Iterator {
      * @returns {Boolean}
      */
     hasPrevious(index = this.index) {
-        if (index < 0) {
+        if (index < 0 || index > this.data.length) {
             return false;
         }
         return index > 0;
