@@ -18,6 +18,7 @@ export default `
                 type="selectedArenaType"
             ></krossover-arena>
 
+            <krossover-event-adjuster></krossover-event-adjuster>
         </div>
 
     </div>
