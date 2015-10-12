@@ -28,7 +28,7 @@ class EventList extends SortedList {
         let next = this.statefulIterator.readNext().value;
         let time = null;
         if (next && next.time) {
-            time = next.time === current.time ? null : next.time;
+            time = next.time;
         }
         return time;
     }
@@ -44,7 +44,7 @@ class EventList extends SortedList {
         let previous = this.statefulIterator.readPrevious().value;
         let time = null;
         if (previous && previous.time) {
-            time = previous.time === current.time ? null : previous.time;
+            time = previous.time;
         }
         return time;
     }
