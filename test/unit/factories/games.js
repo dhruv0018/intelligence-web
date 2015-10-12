@@ -1450,7 +1450,7 @@ describe('GamesFactory', function() {
             sinon.stub(GamesFactory,'getBySharedWithUserId').withArgs(userId).returns([{id:2}]);
             let uniqueExpectedGames = [{id:1},{id:2}];
             sinon.stub(GamesFactory,'getList').withArgs([1,2]).returns(uniqueExpectedGames);
-            session.currentUser = UsersFactory.extend({ id: 2, roles : [{type : ROLE_TYPE.ATHLETE}]});
+            session.currentUser = UsersFactory.extend({ id: userId, roles : [{type : ROLE_TYPE.ATHLETE, teamId}]});
             let gamesList = GamesFactory.getByRelatedRole(userId, teamId);
             assert(session.getCurrentUserId.should.have.not.been.called);
             assert(session.getCurrentTeamId.should.have.not.been.called);
@@ -1471,7 +1471,7 @@ describe('GamesFactory', function() {
             sinon.stub(GamesFactory,'getBySharedWithUserId').withArgs(userId).returns([{id:2}]);
             let uniqueExpectedGames = [{id:1},{id:2}];
             sinon.stub(GamesFactory,'getList').withArgs([1,2]).returns(uniqueExpectedGames);
-            session.currentUser = UsersFactory.extend({ id: userId, roles : [{type : ROLE_TYPE.ATHLETE}]});
+            session.currentUser = UsersFactory.extend({ id: userId, roles : [{type : ROLE_TYPE.ATHLETE, teamId}]});
             let gamesList = GamesFactory.getByRelatedRole();
             assert(session.getCurrentUserId.should.have.been.called);
             assert(session.getCurrentTeamId.should.have.been.called);

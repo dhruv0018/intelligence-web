@@ -220,9 +220,16 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 else if (session.currentUser.is(ROLES.ATHLETE)) {
-                    games = games.concat(
-                            this.getByUploaderUserId(userId),
-                            this.getByUploaderTeamId(teamId));
+
+                    const user = session.getCurrentUser();
+
+                    games = games.concat(this.getByUploaderUserId(userId));
+
+                    user.roles.forEach(role => {
+                        if (role.type.id === ROLES.ATHLETE.type.id) {
+                            games = games.concat(this.getByUploaderTeamId(role.teamId));
+                        }
+                    });
                 }
 
                 games = games.concat(this.getBySharedWithUserId(userId));
