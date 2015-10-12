@@ -964,6 +964,28 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return model.getFormationReport({ id: self.id });
             },
 
+            /**
+             * copy a game to team
+             * @param {Integer} teamId - the team ID of the team for which the
+             * game should be copied.
+             */
+            copy: function(teamId) {
+
+                let self = this;
+
+                if (!self.id) throw new Error('Game must exist to copy');
+
+                const copyCriteria = {
+                    teamId : teamId,
+                    gameId : self.id
+                };
+
+                let Resource = $injector.get(self.model);
+                let copyResource = new Resource(copyCriteria);
+
+                return $q.when(copyResource.$copy());
+            },
+
             getDownAndDistanceReport: function(report) {
 
                 /* TODO: the only thing used from parameter is gameId */
@@ -1515,6 +1537,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 return teamId === self.uploaderTeamId;
+            },
+
+            /**
+             * Determine if the game is copied
+             * @returns {boolean}
+             */
+            isCopied: function () {
+                return this.copiedFromGameId !== null;
             }
         };
 
