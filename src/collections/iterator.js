@@ -74,7 +74,11 @@ class Iterator {
      * @returns {Boolean}
      */
     hasNext(index = this.index) {
-        return index + 1 < this.data.length;
+        let nextIndex = index + 1;
+        if (nextIndex > this.data.length) {
+            return false;
+        }
+        return nextIndex < this.data.length;
     }
 
     /**
@@ -85,6 +89,9 @@ class Iterator {
      * @returns {Boolean}
      */
     hasPrevious(index = this.index) {
+        if (index < 0) {
+            return false;
+        }
         return index > 0;
     }
 
