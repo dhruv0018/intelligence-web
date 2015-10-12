@@ -20,5 +20,19 @@ export default `
 
         </div>
 
+        <div class="video">
+
+            <h3>Video Player With Clips Navigation</h3>
+
+            <div class="video-container">
+
+                <video-player></video-player>
+
+                <clips-navigation></clips-navigation>
+
+            </div>
+
+        </div>
+
     </div>
 `;
