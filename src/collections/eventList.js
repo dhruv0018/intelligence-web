@@ -24,8 +24,8 @@ class EventList extends SortedList {
      * @returns {Integer || null}
      */
     upperBoundingTime() {
-        let current = this.eventIterator.current.value;
-        let next = this.eventIterator.readNext().value;
+        let current = this.statefulIterator.current.value;
+        let next = this.statefulIterator.readNext().value;
         let time = null;
         if (next && next.time) {
             time = next.time === current.time ? null : next.time;
@@ -40,8 +40,8 @@ class EventList extends SortedList {
      * @returns {Integer || null}
      */
     lowerBoundingTime() {
-        let current = this.eventIterator.current.value;
-        let previous = this.eventIterator.readPrevious().value;
+        let current = this.statefulIterator.current.value;
+        let previous = this.statefulIterator.readPrevious().value;
         let time = null;
         if (previous && previous.time) {
             time = previous.time === current.time ? null : previous.time;
