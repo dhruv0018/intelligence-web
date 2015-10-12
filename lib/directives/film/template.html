@@ -2,14 +2,14 @@
 
 
     <film-info
-        title="filmTitle"
+        film-title="filmTitle"
         film="film"
         ng-if="isGame"
         ui-sref="Games({id:film.id})">
     </film-info>
 
     <film-info
-        title="filmTitle"
+        film-title="filmTitle"
         film="film"
         ng-if="!isGame"
         ui-sref="Reel({id:film.id})">
