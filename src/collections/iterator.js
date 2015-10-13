@@ -89,10 +89,7 @@ class Iterator {
      * @returns {Boolean}
      */
     hasPrevious(index = this.index) {
-        if (index < 0 || index > this.data.length) {
-            return false;
-        }
-        return index > 0;
+        return index > 0 && index <= this.data.length;
     }
 
     /**
