@@ -41,7 +41,7 @@ class StaticField extends Field {
      */
     toJSON () {
 
-        throw Error('Cannot convert Static class to JSON!');
+        return this.value.name;
     }
 }
 
