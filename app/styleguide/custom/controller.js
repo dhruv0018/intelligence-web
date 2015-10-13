@@ -12,20 +12,20 @@ class StyleguideCustomController {
         //Event Time Adjustments
         $scope.events = [
             {
-                time: 3800
+                time: 10.5
             },
             {
-                time: 3700
+                time: 20
             },
             {
-                time: 3599
+                time: 30.5
             }
         ];
 
         //mock game
         $scope.game = {
             video: {
-                duration: 4000
+                duration: 40
             }
         };
     }
