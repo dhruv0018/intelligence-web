@@ -34,11 +34,23 @@ function TagsetsFactory (
             angular.extend(tagset, this);
 
             let tags = {};
+            let endAndStartTags = [];
 
             tagset.tags.forEach(tag => {
 
+                if (tag.isEnd && tag.children.length === 1) {
+
+                    endAndStartTags.push(tag.children[0]);
+                }
+
                 tags[tag.id] = tag;
                 indexedTags[tag.id] = new KrossoverTag(tag);
+            });
+
+            endAndStartTags.forEach(tagId => {
+
+                tags[tagId].isEndAndStart = true;
+                indexedTags[tagId].isEndAndStart = true;
             });
 
             tagset.tags = tags;
@@ -56,6 +68,12 @@ function TagsetsFactory (
             Object.keys(copy.tags).forEach(tagKey => {
 
                 let tag = copy.tags[tagKey];
+
+                if (tag.isEndAndStart) {
+
+                    delete tag.isEndAndStart;
+                }
+
                 tags.push(tag.toJSON());
             });
 
@@ -124,7 +142,7 @@ function TagsetsFactory (
             let tags = this.tags;
             let tag = new KrossoverTag(tags[tagId]);
 
-            return tag.isStart;
+            return tag.isStart && !tag.isEndAndStart;
         },
 
         isFloatTag: function (tagId) {
