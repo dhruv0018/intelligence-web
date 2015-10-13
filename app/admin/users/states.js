@@ -49,8 +49,8 @@ Users.config([
                 },
                 resolve: {
                     'Admin.Users.Data': [
-                        '$q', '$stateParams', 'UsersFactory', 'SchoolsFactory', 'Admin.Users.Data.Dependencies',
-                        function($q, $stateParams, users, schools, data) {
+                        '$q', '$stateParams', 'TeamsFactory', 'UsersFactory', 'SchoolsFactory', 'Admin.Users.Data.Dependencies',
+                        function($q, $stateParams, teams, users, schools, data) {
 
                             var user;
                             var userId = Number($stateParams.id);
@@ -68,9 +68,11 @@ Users.config([
                                 }
                             }
 
+                            let relatedteams = teams.load({relatedUserId: userId});
+
                             let relatedSchools = schools.load({relatedUserId: userId});
 
-                            return $q.all([user, relatedSchools, data]);
+                            return $q.all([user, relatedteams, relatedSchools, data]);
                         }
                     ]
                 },
