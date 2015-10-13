@@ -28,7 +28,7 @@ export default `
                     </select>
                 </div>
 
-                <div class="analytics-option">
+                <div class="analytics-option" ng-hide="currentUserIsAthlete">
                     <span>Player:&nbsp;</span>
                     <search-dropdown
                         options="players"

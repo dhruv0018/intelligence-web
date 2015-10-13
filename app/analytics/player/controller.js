@@ -7,7 +7,8 @@ PlayerAnalyticsController.$inject = [
     'TeamsFactory',
     'PlayersFactory',
     'LeaguesFactory',
-    'GAME_TYPES'
+    'GAME_TYPES',
+    'ROLES'
 ];
 
 /**
@@ -19,17 +20,21 @@ function PlayerAnalyticsController(
     teams,
     players,
     leagues,
-    GAME_TYPES
+    GAME_TYPES,
+    ROLES
 ) {
 
     const team = teams.get(session.getCurrentTeamId());
     const league = leagues.get(team.leagueId);
     const seasons = league.seasons;
+    let currentUser = session.getCurrentUser();
+
+    $scope.currentUserIsAthlete = currentUser.is(ROLES.ATHLETE);
 
     const generateStats = function (selectedPlayer) {
         $scope.loadingTables = true;
         $scope.player = selectedPlayer || $scope.player;
-
+        console.log($scope.player);
         // If a player has been selected
         if ($scope.player) {
 
@@ -77,6 +82,12 @@ function PlayerAnalyticsController(
             player.extendedName = player.shortName;
         }
     });
+
+    // If current user is an athlete, generate their stats
+    if ($scope.currentUserIsAthlete) {
+        $scope.player = $scope.players.filter(player => player.userId === currentUser.id);
+        generateStats($scope.player);
+    }
 
     // Sort players by jersey number
     $scope.players.sort((a, b) => {
