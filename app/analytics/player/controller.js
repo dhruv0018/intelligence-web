@@ -26,7 +26,7 @@ function PlayerAnalyticsController(
 
     const team = teams.get(session.getCurrentTeamId());
     const league = leagues.get(team.leagueId);
-    const seasons = league.seasons;
+    const seasons = league.seasons.reverse();
     let currentUser = session.getCurrentUser();
 
     $scope.currentUserIsAthlete = currentUser.is(ROLES.ATHLETE);
