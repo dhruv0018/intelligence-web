@@ -29,6 +29,15 @@ TeamAnalytics.config([
                     template,
                     controller: TeamAnalyticsController
                 }
+            },
+            resolve: {
+                'Analytics.Team.Data': [
+                    '$q', 'AnalyticsDataDependencies',
+                    function($q, AnalyticsTeamData) {
+                        let data = new AnalyticsTeamData();
+                        return $q.all(data);
+                    }
+                ]
             }
         });
     }

@@ -6,7 +6,8 @@ AnalyticsDataDependencies.$inject = [
     'SessionService',
     'UsersFactory',
     'TeamsFactory',
-    'LeaguesFactory'
+    'LeaguesFactory',
+    'PlayersFactory'
 ];
 
 function AnalyticsDataDependencies (
@@ -14,7 +15,8 @@ function AnalyticsDataDependencies (
     session,
     users,
     teams,
-    leagues
+    leagues,
+    players
 ) {
 
     class AnalyticsData {
@@ -24,10 +26,11 @@ function AnalyticsDataDependencies (
             this.userId = session.getCurrentUserId();
             this.leagues = leagues.load();
             this.users = users.load({ relatedUserId: this.userId });
-            this.teams = teams.load({ relatedUserId: this.userId });
 
-            this.teams.then(function(relatedTeams) {
+            let relatedTeams = teams.load({ relatedUserId: this.userId });
 
+            this.teams = relatedTeams;
+            this.players = relatedTeams.then(function(relatedTeams) {
                 let rosters = [];
                 let teamIds = session.currentUser.getTeamIds();
 
@@ -43,8 +46,9 @@ function AnalyticsDataDependencies (
                     rosters.push(players.load({ rosterId: team.roster.id }));
                 });
 
-                this.players = $q.all(rosters);
+                return $q.all(rosters);
             });
+
         }
     }
 

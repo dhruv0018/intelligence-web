@@ -29,6 +29,15 @@ PlayerAnalytics.config([
                     template,
                     controller: PlayerAnalyticsController
                 }
+            },
+            resolve: {
+                'Analytics.Player.Data': [
+                    '$q', 'AnalyticsDataDependencies',
+                    function($q, AnalyticsPlayerData) {
+                        let data = new AnalyticsPlayerData();
+                        return $q.all(data);
+                    }
+                ]
             }
         });
     }
