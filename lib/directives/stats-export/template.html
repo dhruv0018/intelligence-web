@@ -1,0 +1,13 @@
+<span class="stats-export dropdown" dropdown is-open="status.isopen" ng-hide="sportId === 3">
+    <a class="dropdown-toggle" dropdown-toggle><i class="icon icon-file-text"></i>Export</a>
+    <div class="export-dropdown-menu dropdown-menu" ng-click="$event.stopPropagation()" ng-class="{'export-are-selected': selectedTags.length}">
+        <div class="dropdown-option">
+            <a class="coming-soon">Excel - All Game Stats (coming soon)</a>
+        </div>
+        <span ng-repeat="team in teams">
+            <div class="dropdown-option">
+                <a ng-href="{{game.getMaxprepsDownloadLinkByTeam(team)}}" download>MaxPreps - All Stats {{team.name}}</a>
+            </div>
+		</span>
+    </div>
+</span>
