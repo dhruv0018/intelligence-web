@@ -67,6 +67,30 @@ class KrossoverTag extends Entity {
     }
 
     /**
+     * Unmaps scripts back to string from array.
+     *
+     * @method unMapScriptTypes
+     * @returns {string|undefined} - script as string or undefined if no script
+     */
+    unMapScriptTypes (scriptType) {
+
+        if (this[scriptType]) {
+
+            return this[scriptType].map(item => {
+
+                if (item.type === 'STATIC') {
+
+                    return item.toJSON();
+                } else {
+
+                    return item;
+                }
+            })
+            .join('');
+        }
+    }
+
+    /**
      * Transforms the data back into the format excpected by the server:
      * convert tag variables back to array; change scripts back to string.
      *
@@ -75,9 +99,26 @@ class KrossoverTag extends Entity {
      */
     toJSON () {
 
-        // TODO: Implement this one day when the server is updated
+        return {
 
-        throw new Error('Cannot call toJSON on a Tag Entity; nothing to send to server!');
+            id             : this.id,
+            name           : this.name,
+            shortcutKey    : this.shortcutKey,
+            description    : this.description,
+            isStart        : this.isStart,
+            isEnd          : this.isEnd,
+            tagSetId       : this.tagSetId,
+            children       : this.children,
+            pointsAssigned : this.pointsAssigned,
+            assignThisTeam : this.assignThisTeam,
+            isPeriodTag    : this.isPeriodTag,
+            summaryPriority: this.summaryPriority,
+            buffer         : this.buffer,
+            tagVariables   : this.tagVariables,
+            userScript     : this.unMapScriptTypes('userScript'),
+            indexerScript  : this.unMapScriptTypes('indexerScript'),
+            summaryScript  : this.unMapScriptTypes('summaryScript')
+        };
     }
 }
 

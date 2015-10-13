@@ -16,9 +16,10 @@ require('./extensions');
 /* Components */
 require('../build/build');
 
-import Reel from '../app/reel';
-import Indexer from '../app/indexer';
-import Styleguide from '../app/styleguide';
+import Reel from '../app/reel/index.js';
+import Embed from '../app/embed/index.js';
+import Indexer from '../app/indexer/index.js';
+import Styleguide from '../app/styleguide/index.js';
 
 import FieldComponent from '../lib/directives/field';
 import IndexingBlock from '../lib/directives/indexing-block';
