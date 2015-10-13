@@ -268,6 +268,7 @@ module.exports = function(grunt) {
                         'lib/directives/arena-chart/styles.less',
                         'lib/dialogs/breakdown-dialog/styles.less',
                         'lib/directives/field/**/*.less',
+                        'lib/directives/admin-role/styles.less',
                         'app/reel/*.less',
                         'app/indexer/**/*.less',
                         'app/styleguide/**/*.less',

@@ -28,6 +28,7 @@ import Play from '../lib/directives/play';
 import SelectMediaSrc from '../lib/directives/video-player/select-media-src';
 import ArenaChart from '../lib/directives/arena-chart';
 import BreakdownDialog from '../lib/dialogs/breakdown-dialog';
+import AdminRole from '../lib/directives/admin-role';
 
 /* App dependencies */
 require('./config');
