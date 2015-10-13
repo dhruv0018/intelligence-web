@@ -37,7 +37,7 @@ describe('EventList', () => {
     describe('eventIterator', () => {
         it('should exist', () => {
             let iter = sampleList.eventIterator;
-            expect(iter).to.not.be.null;
+            expect(iter).to.exist;
         });
     });
 
@@ -56,7 +56,6 @@ describe('EventList', () => {
             let event = sampleList.last;
             sampleList.eventIterator.current = event;
             let upperBoundingTime = sampleList.upperBoundingTime();
-            let expectedTime = null;
             expect(upperBoundingTime).to.be.null;
         });
     });
@@ -76,7 +75,6 @@ describe('EventList', () => {
             let event = sampleList.first;
             sampleList.eventIterator.current = event;
             let lowerBoundingTime = sampleList.lowerBoundingTime();
-            let expectedTime = null;
             expect(lowerBoundingTime).to.be.null;
         });
     });
