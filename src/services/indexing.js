@@ -191,11 +191,12 @@ IntelligenceWebClient.factory('IndexingService', [
             },
 
             /**
-            * Calls next then clears the tag stack since the previous tags do not
-            * need to be kept anymore to transverse backwards
+            * Clears any previous sets of tags stored while traversing
+            * group tags. Prevents any backwared traversal until new
+            * tags are selected
             */
-            returnFromNext: function() {
-                this.next();
+            clearTags: function() {
+
                 this.tagStack.clear();
             },
 
