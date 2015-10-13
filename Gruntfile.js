@@ -271,8 +271,7 @@ module.exports = function(grunt) {
                         'app/reel/*.less',
                         'app/indexer/**/*.less',
                         'app/styleguide/**/*.less',
-                        'lib/directives/arena-chart/styles.less',
-                        'node_modules/@krossover/krossover-tags/src/styles.less'
+                        'lib/directives/arena-chart/styles.less'
                     ]
                 }
             }
