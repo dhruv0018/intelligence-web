@@ -34,7 +34,7 @@ function PlayerAnalyticsController(
     const generateStats = function (selectedPlayer) {
         $scope.loadingTables = true;
         $scope.player = selectedPlayer || $scope.player;
-        console.log($scope.player);
+
         // If a player has been selected
         if ($scope.player) {
 
@@ -85,8 +85,12 @@ function PlayerAnalyticsController(
 
     // If current user is an athlete, generate their stats
     if ($scope.currentUserIsAthlete) {
-        $scope.player = $scope.players.filter(player => player.userId === currentUser.id);
-        generateStats($scope.player);
+        let athletePlayers = $scope.players.filter(player => player.userId === currentUser.id);
+
+        if ($scope.players.length) {
+            $scope.player = athletePlayers[0];
+            generateStats($scope.player);
+        }
     }
 
     // Sort players by jersey number
