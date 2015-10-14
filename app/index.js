@@ -34,5 +34,6 @@ var App = angular.module('App', [
     'Clips',
     'Reel',
     'Analytics',
+    'Embed',
     'Styleguide'
 ]);
