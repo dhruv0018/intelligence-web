@@ -6,11 +6,18 @@ const angular = window.angular;
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
-class UploadManager {
+/*
+ * @class UploadManager
+ *
+ * The upload manager is responsible for creating and keeping track
+ * of the current UploadModels {UploadModel}. It handles the adding, and
+ * removal of the UploadModels. While this service is primarily used for
+ * getting an UploadModel based on a unique id, it can also be used to
+ * get high level metrics or information on the UploadModels it has,
+ * such as number of running uploads.
+ */
 
-    /*
-     * Uploads contains uploadModels keyed by id
-     */
+class UploadManager {
 
     constructor() {
 
@@ -19,25 +26,6 @@ class UploadManager {
 
         this.onBeforeUnload = this.onBeforeUnload.bind(this);
         window.onbeforeunload = this.onBeforeUnload;
-    }
-
-    onBeforeUnload() {
-
-        if (this.hasRunningUploads()) {
-            return 'Video still uploading! Are you sure you want to close the page and cancel the upload?';
-        }
-    }
-
-    /**
-     * Returns an uploadModel
-     * @param {number} id A unique id identifying the UploadModel
-     */
-    get(id) {
-
-        if (!id) throw new Error(`Missing required parameter 'id'`);
-        if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
-
-        return this.uploads[id];
     }
 
     /**
@@ -72,57 +60,43 @@ class UploadManager {
     }
 
     /**
-     * Returns true or false if the UploadModel with the 'id' is uploading
-     * @param {number} id A unique id identifying an UploadModel
-     * @returns {boolean}
+     * Returns an uploadModel
+     * @param {number} id A unique id identifying the UploadModel
      */
-    isUploading(id) {
+    get(id) {
 
         if (!id) throw new Error(`Missing required parameter 'id'`);
         if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
 
-        let uploadModel = this.get(id);
-
-        if (!uploadModel) return false;
-
-        // Note technicall
-        return uploadModel.progress() > 0;
+        return this.uploads[id];
     }
 
     /**
-     * Returns the progress of an UploadModel
-     * @param {number} id A unique id.
-     * @returns {boolean}
+     * @returns number of the UploadModel that are presently uploading
      */
-    progress(id) {
+    countRunningUploads() {
 
-        if (!id) throw new Error(`Missing required parameter 'id'`);
-        if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
+        let runningUploads = Object.keys(this.uploads).filter((id) => {
+            return this.progress(Number.parseInt(id, 10)) > 0;
+        });
 
-        let uploadModel = this.get(id);
-
-        if (!uploadModel) return 0;
-
-        return uploadModel.progress();
+        return runningUploads.length;
     }
 
     /**
-     * Cancels and removes an UploadModel from the UploadManager
-     * @param {number} id A unique id.
+     * How many uploads are present in the UploadManager with a progress above 0.
      */
-    cancel(id) {
+    hasRunningUploads() {
 
-        if (!id) throw new Error(`Missing required parameter 'id'`);
-        if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
-
-        let uploadModel = this.get(id);
-
-        if (uploadModel) {
-
-            uploadModel.cancel();
-            delete this.uploads[id];
-        }
+        return Object.keys(this.uploads).some((id) => {
+            return this.progress(Number.parseInt(id, 10)) > 0;
+        });
     }
+
+
+    /**************************************************************************
+     * PRIVATE FUNCTIONS
+     *************************************************************************/
 
     /**
      * Adds an UploadModel to the UploadManager
@@ -150,15 +124,20 @@ class UploadManager {
     }
 
     /**
-     * Remove is an alias for cancel()
-     * @param {number} id A unique id.
+     * Remove the UploadModel with 'id'
+     * @param {number} id A unique id to identifying the UploadModel
      */
     remove(id) {
 
         if (!id) throw new Error(`Missing required parameter 'id'`);
         if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
 
-        this.cancel(id);
+        let uploadModel = this.get(id);
+
+        if (uploadModel) {
+
+            delete this.uploads[id];
+        }
     }
 
     /**
@@ -201,22 +180,11 @@ class UploadManager {
         this.remove(id);
     }
 
-    /**
-     * @returns number of the UploadModels present
-     */
-    countRunningUploads() {
+    onBeforeUnload() {
 
-        return Object.keys(this.uploads).length;
-    }
-
-    /**
-     * How many uploads are present in the UploadManager with a progress above 0.
-     */
-    hasRunningUploads() {
-
-        return Object.keys(this.uploads).some((id) => {
-            return this.progress(Number.parseInt(id, 10)) > 0;
-        });
+        if (this.hasRunningUploads()) {
+            return 'Video still uploading! Are you sure you want to close the page and cancel the upload?';
+        }
     }
 }
 

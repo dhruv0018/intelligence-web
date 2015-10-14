@@ -11,11 +11,27 @@ class UploadModel {
             error: []
         };
 
+        this.isComplete = false;
+
         this.complete = this.complete.bind(this);
         this.error = this.error.bind(this);
         this.uploaderServiceInstance.on('complete', this.complete);
         this.uploaderServiceInstance.on('error', this.error);
 
+    }
+
+    get isComplete() {
+
+        return this.isComplete;
+    }
+
+    /**
+     * Returns true or false if the UploadModel is uploading
+     * @returns {boolean}
+     */
+    isUploading() {
+
+        return this.progress() > 0 && this.progress() < 1;
     }
 
     /**
@@ -56,6 +72,8 @@ class UploadModel {
      * Calls all of the complete callback events
      */
     complete(result) {
+
+        this.isComplete = true;
 
         if (this.progress() > 0) {
             this.callbacks.complete.forEach((callback) => {
