@@ -2,7 +2,7 @@
 
     <!-- TODO: refactor upload status styles -->
 
-    <div class="uploading" data-ng-if="game.video.isIncomplete()">
+    <div class="uploading" data-ng-if="uploadModel.isUploading()">
 
         <!-- TODO: Refactor template logic -->
         <h1 data-ng-if="game.isRegular() && (game.status === null || !isDefined(game.status))">You’re uploading a regular game…</h1>
@@ -14,15 +14,16 @@
 
     </div>
 
-    <div class="error" data-ng-if="game.video.isFailed()">
+    <!-- The upload could have failed (i.e. internet outage) or the video could have failed processing on the server -->
+    <div class="error" data-ng-if="uploadModel.isFailed() || game.video.isFailed()">
         <h1>There was a problem with your upload!</h1>
         <h2>Please delete this game and try to submit your game again.</h2>
     </div>
 
-    <div class="uploaded" data-ng-if="game.video.isUploaded() || game.video.isComplete()">
+    <div class="uploaded" data-ng-if="uploadModel.isUploaded() || game.video.isUploaded() || game.video.isComplete()">
 
         <!-- TODO: Refactor template logic -->
-        <h1 ng-if="game.video.isUploaded()">Your upload is complete and is being processed!</h1>
+        <h1 ng-if="uploadModel.isUploaded() || game.video.isUploaded()">Your upload is complete and is being processed!</h1>
         <h1 ng-if="game.video.isComplete()">Your video has been processed.</h1>
 
         <h2 data-ng-hide="game.rosters && game.rosters[game.teamId].id" data-ng-if="game.status === null || !isDefined(game.status)">Complete the rest of the game information.</h2>
