@@ -5,11 +5,24 @@
 
     .base-modal;
 
+    .modal-content {
+
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
     .modal {
 
         &-body {
 
+            color: @brand-blue;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
         }
 
         &-header {
@@ -26,17 +39,32 @@
         }
     }
 
-    .icon {
+    .icon-row {
 
-        &-volleyball,
-        &-football {
+        color: @brand-blue;
+        font-size: 50px;
+
+        // TODO: Tablet sizes
+        .mobile({
 
             font-size: 30px;
-        }
+        });
 
-        &-football {
+        & > .icon {
 
-            margin-right: 20px;
+            margin-right: 10px;
+            margin-left: 10px;
         }
+    }
+
+    .icon-krossover-logo {
+
+        @icon-width: 275px;
+        width: @icon-width;
+        max-width: 100%;
+        height: @icon-width * 0.18;
+        margin: 0 auto 20px;
+        background-size: contain;
+        background-position: center center;
     }
 }
