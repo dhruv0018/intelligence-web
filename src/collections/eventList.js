@@ -21,7 +21,7 @@ class EventList extends SortedList {
      * Returns the event time of the following event or null if there is no following event
      *
      * @method upperBoundingTime
-     * @returns {Integer || null}
+     * @returns {Integer | null}
      */
     upperBoundingTime() {
         let current = this.statefulIterator.current.value;
@@ -37,7 +37,7 @@ class EventList extends SortedList {
      * Returns the event time of the preceeding event or null if there is no preceeding event
      *
      * @method lowerBoundingTime
-     * @returns {Integer || null}
+     * @returns {Integer | null}
      */
     lowerBoundingTime() {
         let current = this.statefulIterator.current.value;

@@ -48,9 +48,9 @@ describe('Iterator', () => {
         it('should be able to retrieve the next item', () => {
             let item = srcArrayCopy[0];
             iter.current = item;
-            let previous = iter.next();
-            expect(previous.value).to.equal(2);
-            expect(previous.done).to.be.false;
+            let next = iter.next();
+            expect(next.value).to.equal(2);
+            expect(next.done).to.be.false;
         });
 
         it('should return the current item if you have reached the last item', () => {
