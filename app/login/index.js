@@ -296,8 +296,7 @@ LoginController.$inject = [
     'UsersFactory',
     'AnalyticsService',
     'TermsDialog.Service',
-    'EMAIL_REQUEST_TYPES',
-    'MOBILE_APP_URLS'
+    'EMAIL_REQUEST_TYPES'
 ];
 
 function LoginController(
@@ -315,12 +314,10 @@ function LoginController(
     users,
     analytics,
     TermsDialog,
-    EMAIL_REQUEST_TYPES,
-    MOBILE_APP_URLS
+    EMAIL_REQUEST_TYPES
 ) {
 
-    $scope.config          = config;
-    $scope.MOBILE_APP_URLS = MOBILE_APP_URLS;
+    $scope.config = config;
 
     let currentUser = session.retrieveCurrentUser();
 
