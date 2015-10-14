@@ -17,7 +17,13 @@ export default `
             <krossover-arena
                 type="selectedArenaType"
             ></krossover-arena>
+        </div>
+        <div>
+            <h3>Indexing</h3>
 
+            <h4>Krossover Event Adjuster</h4>
+
+            <krossover-event-adjuster video="game.video" events="events" event="events[1]"></krossover-event-adjuster>
         </div>
 
         <div class="video">
