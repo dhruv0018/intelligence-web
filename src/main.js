@@ -21,6 +21,7 @@ import Embed from '../app/embed/index.js';
 import Indexer from '../app/indexer/index.js';
 import Styleguide from '../app/styleguide/index.js';
 
+import AppDownloads from '../lib/directives/app-downloads';
 import FieldComponent from '../lib/directives/field';
 import IndexingBlock from '../lib/directives/indexing-block';
 import DynamicTables from '../lib/directives/dynamic-tables';
