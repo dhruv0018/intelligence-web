@@ -6,6 +6,18 @@
         color: @brand-danger;
     }
 
+    &__app-downloads {
+
+        display: none;
+
+        .mobile({
+
+            text-align: center;
+            padding: 20px;
+            display: block;
+        });
+    }
+
     position: relative;
     color: @brand-blue;
     letter-spacing: normal;
@@ -87,12 +99,6 @@
         padding-top: 30px;
         padding-left: 50px;
         text-align: center;
-    }
-
-    .app-links {
-        margin: auto;
-        text-align: center;
-        margin-bottom: 30px;
     }
 
     .temp-warning {
@@ -198,15 +204,6 @@ and (max-width: @screen-xs) {
                 .text-center;
             }
         }
-
-        .app-links {
-            display: block;
-
-            p {
-                margin-top: 5px;
-                margin-bottom: 5px;
-            }
-        }
     }
 }
 
@@ -216,9 +213,5 @@ and (min-width: @screen-xs) {
 
     .login {
         padding-top: 100px;
-    }
-
-    .app-links {
-        display: none;
     }
 }
