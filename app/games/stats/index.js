@@ -36,7 +36,7 @@ GamesStats.config([
 
                             var Data = {
                                 user: users.load(game.uploaderUserId),
-                                team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId]),
+                                team: teams.load([game.uploaderTeamId, game.teamId, game.opposingTeamId])
                             };
 
                             var teamPlayersFilter = { rosterId: game.getRoster(game.teamId).id };
