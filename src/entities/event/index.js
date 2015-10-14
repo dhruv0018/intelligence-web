@@ -106,7 +106,7 @@ class KrossoverEvent extends Entity {
 
         if (this.indexerFields) {
 
-            return template(this, this.indexerFields.toString());
+            return template(this, this.indexerFields.toString(), true);
         }
     }
 

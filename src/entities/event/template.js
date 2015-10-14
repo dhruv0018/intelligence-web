@@ -7,9 +7,9 @@
  * @returns {String} - HTML string
  */
 
-export default (event, scriptHtmlString) => {
+export default (event, scriptHtmlString, renderTime = false) => {
     return `
-    <span class="event-time">{{event.time | time: true}}</span>
+    <div ng-if="${renderTime}" class="event-time">{{event.time | time: true}}</div>
     <button
         class="item btn-select-event"
         krossover-event-highlighting
