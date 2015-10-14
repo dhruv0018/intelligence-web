@@ -38,15 +38,15 @@ export default `
                         ng-model="player"
                     ></search-dropdown>
                 </div>
-                <!--TODO: generate list of opponents
-                <div class="analytics-option">
-                    <span>Opponent</span>
-                    <select>
-                        <option>All</option>
-                        <option>Other team</option>
-                        <option>Another team</option>
-                    </select>
-                </div>-->
+                <div class="analytics-option" ng-if="currentUserIsAthlete && teams.length > 1">
+                    <span>Team:&nbsp;</span>
+                    <select
+                        id="analytics-team-cta"
+                        ng-options="teamOption as teamOption.name for teamOption in teams"
+                        ng-model="team"
+                        ng-change="changeTeam(team)"
+                    ></select>
+                </div>
             </div>
 
             <div

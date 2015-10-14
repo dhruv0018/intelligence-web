@@ -30,6 +30,7 @@ function PlayerAnalyticsController(
     let currentUser = session.getCurrentUser();
 
     $scope.currentUserIsAthlete = currentUser.is(ROLES.ATHLETE);
+    $scope.team = team;
 
     const generateStats = function (selectedPlayer) {
         $scope.loadingTables = true;
@@ -73,30 +74,49 @@ function PlayerAnalyticsController(
         gameType: ''
     };
 
-    // Set filter criteria to jersey number, first initial, last name
-    $scope.players.forEach(player => {
-        if (team.roster.playerInfo[player.id].jerseyNumber) {
-            let jerseyNumber = team.roster.playerInfo[player.id].jerseyNumber;
-            player.extendedName = '#' + jerseyNumber + ' ' + player.shortName;
-        } else {
-            player.extendedName = player.shortName;
-        }
-    });
+    if (!$scope.currentUserIsAthlete) {
+        // Set filter criteria to jersey number, first initial, last name
+        $scope.players.forEach(player => {
+            if (team.roster.playerInfo[player.id].jerseyNumber) {
+                let jerseyNumber = team.roster.playerInfo[player.id].jerseyNumber;
+                player.extendedName = '#' + jerseyNumber + ' ' + player.shortName;
+            } else {
+                player.extendedName = player.shortName;
+            }
+        });
+
+        // Sort players by jersey number
+        $scope.players.sort((a, b) => {
+            return Number(team.roster.playerInfo[a.id].jerseyNumber) - Number(team.roster.playerInfo[b.id].jerseyNumber);
+        });
+    }
 
     // If current user is an athlete, generate their stats
     if ($scope.currentUserIsAthlete) {
+        let athleteRoles = currentUser.roles.filter(role => role.type.id === ROLES.ATHLETE.type.id);
+
+        $scope.teams = athleteRoles.map(role => {
+            return teams.get(role.teamId);
+        });
+
+        generateStatsForAthlete();
+    }
+
+    $scope.changeTeam = function changeTeam(newTeam) {
+        // Get list of players for new team
+        $scope.players = players.getList({rosterId: newTeam.roster.id});
+        generateStatsForAthlete();
+    };
+
+    function generateStatsForAthlete() {
+        // Get players for this user, expected to be an array with one player object
         let athletePlayers = $scope.players.filter(player => player.userId === currentUser.id);
 
-        if ($scope.players.length) {
+        if (athletePlayers.length) {
             $scope.player = athletePlayers[0];
             generateStats($scope.player);
         }
     }
-
-    // Sort players by jersey number
-    $scope.players.sort((a, b) => {
-        return Number(team.roster.playerInfo[a.id].jerseyNumber) - Number(team.roster.playerInfo[b.id].jerseyNumber);
-    });
 }
 
 export default PlayerAnalyticsController;
