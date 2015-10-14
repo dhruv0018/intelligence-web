@@ -6,6 +6,13 @@
     min-height: 100%;
     background-color: @content-bg;
 
+    .game-info-uploading-controls {
+        &.ng-hide {
+            .fadeOut;
+            animation-duration: 0.25s;
+        }
+    }
+
     .breakdown-status {
         position: absolute;
         left: 100px;

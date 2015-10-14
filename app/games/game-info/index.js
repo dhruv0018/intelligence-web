@@ -97,7 +97,7 @@ GamesInfoController.$inject = [
     'LeaguesFactory',
     'PlayersFactory',
     'Games.Info.Data',
-    'uploadManager'
+    'GamesUploadManager'
 ];
 
 function GamesInfoController (
@@ -111,11 +111,11 @@ function GamesInfoController (
     leagues,
     players,
     Data,
-    uploadManager
+    gamesUploadManager
 ) {
 
     $scope.game = games.get($stateParams.id);
-    $scope.game.flow = uploadManager.get($scope.game.id);
+    $scope.gamesUploadManager = gamesUploadManager;
     $scope.returnedDate = ($scope.game.isDelivered() && angular.isObject($scope.game.currentAssignment())) ? new Date($scope.game.currentAssignment().timeFinished) : null;
     $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
 
@@ -125,5 +125,4 @@ function GamesInfoController (
     //Player List
     $scope.teamPlayerList = ($scope.game.rosters && $scope.game.teamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.teamId].id }) : [];
     $scope.opposingPlayerList = ($scope.game.rosters && $scope.game.opposingTeamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.opposingTeamId].id }) : [];
-
 }

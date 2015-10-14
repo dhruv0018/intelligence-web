@@ -1,20 +1,26 @@
 <div class="games-game-info">
     <div class="breakdown-status">
-        <span class="broken-down" data-ng-if="game.isDelivered()">This game was broken down <span data-ng-if="returnedDate"> and returned on {{ returnedDate | date:'mediumDate' }}</span></span>
-        <span class="breaking-down" data-ng-if="game.status > GAME_STATUSES['READY_FOR_INDEXING'].id && !game.isDelivered()">
+        <span class="broken-down" ng-if="game.isDelivered()">This game was broken down <span ng-if="returnedDate"> and returned on {{ returnedDate | date:'mediumDate' }}</span></span>
+        <span class="breaking-down" ng-if="game.status > GAME_STATUSES['READY_FOR_INDEXING'].id && !game.isDelivered()">
             This game is currently being broken down.
         </span>
     </div>
 
     <div class="info-container">
-        <uploading-controls data-ng-if="game.flow"
-                            data-film="game"
-                            data-redirect-state="add-film"
-                            data-flow="game.flow"></uploading-controls>
-        <upload-status data-flow="game.flow" data-game="game"></upload-status>
 
-        <krossover-coach-game data-game="game"
-                              data-league="league"
-                              data-remaining-breakdowns="remainingBreakdowns"></krossover-coach-game>
+        <uploading-controls
+            class="game-info-uploading-controls animated"
+            ng-hide="!gamesUploadManager.isUploading(game.id)"
+            film="game"
+            redirect-state="add-film"
+        ></uploading-controls>
+
+        <upload-status game="game"></upload-status>
+
+        <krossover-coach-game
+            game="game"
+            league="league"
+            remaining-breakdowns="remainingBreakdowns">
+        </krossover-coach-game>
 	</div>
 </div>

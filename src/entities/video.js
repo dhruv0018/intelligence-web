@@ -99,11 +99,14 @@ class Video extends Entity {
         }
 
         // TODO: Validate video to schema. Fails when methods/properties are added to video in this class that need to be removed or be allowed.
-        let validation = this.validate(video);
+        if (video.id) {
 
-        if (validation.errors.length) {
+            let validation = this.validate(video);
 
-            console.error(validation.errors.shift());
+            if (validation.errors.length) {
+
+                console.error(validation.errors.shift());
+            }
         }
 
         super(video);
@@ -206,6 +209,36 @@ class Video extends Entity {
     }
 
     /* status based functions */
+
+    /**
+     * Allow client to safely set a video to UPLOADED
+     * @method setStatusToUploaded
+     */
+    setStatusToUploaded(video = this) {
+
+        // NOTE: only set to UPLOADED status if the previous status was INCOMPLETE
+        if (video.isIncomplete()) {
+            video.status = VIDEO_STATUSES.UPLOADED.id;
+        } else {
+            console.error(`Cannot set video status to UPLOADED if status is ${video.status}`);
+        }
+
+    }
+
+    /**
+     * Allow client to safely set a video to FAILED
+     * @method setStatusToFailed
+     */
+    setStatusToFailed(video = this) {
+
+        // NOTE: only set to FAILED status if the previous status was INCOMPLETE
+        if (video.isIncomplete()) {
+            video.status = VIDEO_STATUSES.FAILED.id;
+        } else {
+            console.error(`Cannot set video status to UPLOADED if status is ${video.status}`);
+        }
+
+    }
 
     /**
      * Business logic for status INCOMPLETE

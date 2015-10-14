@@ -36,7 +36,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 // remove attributes that are circular
                 delete copy.$promise;
-                delete copy.flow;
 
                 // copy share attributes that rely on game functions.
                 // TODO: This sharing copying should not have to be done. It should model reels implementation.
@@ -435,7 +434,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                if (!self.isVideoTranscodeComplete()) return false;
+                if (!self.video.isComplete()) return false;
 
                 /* If the game is in the "Indexing, not started" status, it can
                  * be assigned to an indexer. */
@@ -463,7 +462,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                if (!self.isVideoTranscodeComplete()) return false;
+                if (!self.video.isComplete()) return false;
 
                 /* If the game is in the "QA, not started" status, it can
                  * be assigned to QA. */
@@ -1109,18 +1108,6 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
             isShared: function() {
                 return self.status === GAME_STATUSES.NOT_INDEXED.id;
-            },
-            isVideoTranscodeComplete: function() {
-                return this.video.isComplete();
-            },
-            isUploading: function() {
-                return this.video.isIncomplete();
-            },
-            isProcessing: function() {
-                return this.video.isUploaded();
-            },
-            isVideoTranscodeFailed: function() {
-                return this.video.isFailed();
             },
             isBeingBrokenDown: function() {
                 var self = this;
