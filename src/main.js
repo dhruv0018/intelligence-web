@@ -168,7 +168,6 @@ require('./managers/playerlist');
 require('./managers/playlist');
 require('./mediators/event');
 import uploadManager from './managers/upload/upload';
-import gamesUploadManager from './managers/upload/gamesUpload';
 
 require('./directives/alert');
 require('./directives/match');
