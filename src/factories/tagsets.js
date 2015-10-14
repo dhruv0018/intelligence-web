@@ -127,7 +127,7 @@ function TagsetsFactory (
 
                 if (!tag.isGroup) {
 
-                    nextTags.concat(this.getFloatTags);
+                    nextTags = nextTags.concat(this.getFloatTags());
                 }
 
                 return nextTags;
