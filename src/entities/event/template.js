@@ -9,6 +9,7 @@
 
 export default (event, scriptHtmlString) => {
     return `
+    <span class="event-time">{{event.time | time: true}}</span>
     <button
         class="item btn-select-event"
         krossover-event-highlighting
