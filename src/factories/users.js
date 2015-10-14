@@ -180,15 +180,22 @@ IntelligenceWebClient.factory('UsersFactory', [
             * Saves user and updates currentUser in session
             */
             save: function() {
-                var self = this;
+
                 var session = $injector.get('SessionService');
 
-                if (self.id === session.getCurrentUserId()) {
+                // If user has roles but no default role, set it to first active role
+                if (this.roles) {
+                    if (this.roles.length && !this.getDefaultRole()) {
+                        this.setDefaultRole(this.activeRoles()[0]);
+                    }
+                }
+
+                if (this.id === session.getCurrentUserId()) {
                     session.storeCurrentUser();
                 }
 
                 //TODO use normal save()
-                return self.baseSave();
+                return this.baseSave();
             },
 
             /**
@@ -201,8 +208,6 @@ IntelligenceWebClient.factory('UsersFactory', [
              * this user will be used.
              */
             addRole: function(user, role, team) {
-
-                var self = this;
 
                 if (!role) {
 
@@ -258,6 +263,11 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 /* If the tenure end of the role has alread been set. */
                 if (user.roles[userRoleIndex].tenureEnd) return;
+
+                // If this role was the default role, set isDefault to false
+                if (user.getDefaultRole().id === user.roles[userRoleIndex].id) {
+                    user.roles[userRoleIndex].isDefault = false;
+                }
 
                 /* Record the tenure end date of the role. */
                 user.roles[userRoleIndex].tenureEnd = new Date();
