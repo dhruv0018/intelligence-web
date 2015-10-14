@@ -112,7 +112,7 @@ class UploadModel {
      * @returns {number} Between 0 and 1 (inclusive)
      */
     progress() {
-        
+
         return this.uploaderServiceInstance.progress();
     }
 }

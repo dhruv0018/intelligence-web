@@ -137,7 +137,7 @@ class UploadManager {
         if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
         if (!(uploadModel instanceof UploadModel)) throw new Error(`uploadModel is not an instanceof 'uploadModel'`);
 
-        if (this.count() < this.MAX_UPLOADS) {
+        if (this.countRunningUploads() < this.MAX_UPLOADS) {
 
             this.uploads[id] = uploadModel;
 
@@ -199,6 +199,14 @@ class UploadManager {
         }
 
         this.remove(id);
+    }
+
+    /**
+     * @returns number of the UploadModels present
+     */
+    countRunningUploads() {
+
+        return Object.keys(this.uploads).length;
     }
 
     /**
