@@ -49,8 +49,8 @@ function TagsetsFactory (
 
             endAndStartTags.forEach(tagId => {
 
-                tags[tagId].isEndAndStart = true;
-                indexedTags[tagId].isEndAndStart = true;
+                tags[tagId].isStartOfEndAndStart = true;
+                indexedTags[tagId].isStartOfEndAndStart = true;
             });
 
             tagset.tags = tags;
@@ -69,9 +69,9 @@ function TagsetsFactory (
 
                 let tag = copy.tags[tagKey];
 
-                if (tag.isEndAndStart) {
+                if (tag.isStartOfEndAndStart) {
 
-                    delete tag.isEndAndStart;
+                    delete tag.isStartOfEndAndStart;
                 }
 
                 tags.push(tag.toJSON());
@@ -142,7 +142,7 @@ function TagsetsFactory (
             let tags = this.tags;
             let tag = new KrossoverTag(tags[tagId]);
 
-            return tag.isStart && !tag.isEndAndStart;
+            return tag.isStart && !tag.isStartOfEndAndStart;
         },
 
         isFloatTag: function (tagId) {
