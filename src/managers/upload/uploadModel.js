@@ -1,4 +1,10 @@
 
+const NOT_STARTED = 0;
+const UPLOADING = 1;
+const UPLOADED = 2;
+const CANCELLED = 3;
+const FAILED = 4;
+
 class UploadModel {
 
     constructor(uploaderServiceInstance) {
@@ -11,7 +17,7 @@ class UploadModel {
             error: []
         };
 
-        this.isComplete = false;
+        this.status = NOT_STARTED;
 
         this.complete = this.complete.bind(this);
         this.error = this.error.bind(this);
@@ -20,9 +26,29 @@ class UploadModel {
 
     }
 
-    get isComplete() {
+    isNotStarted() {
 
-        return this.isComplete;
+        return this.status === NOT_STARTED;
+    }
+
+    isUploaded() {
+
+        return this.status === UPLOADED;
+    }
+
+    isUploading() {
+
+        return this.status === UPLOADING;
+    }
+
+    isUploaded() {
+
+        return this.status === CANCELLED;
+    }
+
+    isFailed() {
+
+        return this.status === FAILED;
     }
 
     /**
@@ -68,39 +94,12 @@ class UploadModel {
         this.uploaderServiceInstance.off('error', this.error);
     }
 
-    /**
-     * Calls all of the complete callback events
-     */
-    complete(result) {
-
-        this.isComplete = true;
-
-        if (this.progress() > 0) {
-            this.callbacks.complete.forEach((callback) => {
-                callback();
-            });
-        } else {
-            this.callbacks.error.forEach((callback) => {
-                callback();
-            });
-        }
-    }
-
-    /**
-     * Calls all of the error callback events
-     */
-    error() {
-
-        this.callbacks.error.forEach((callback) => {
-            callback();
-        });
-    }
-
     /*
      * Starts uploading 'files'
      */
     upload() {
 
+        this.status = UPLOADING;
         this.uploaderServiceInstance.upload();
     }
 
@@ -132,6 +131,41 @@ class UploadModel {
     progress() {
 
         return this.uploaderServiceInstance.progress();
+    }
+
+    /**
+     * Calls all of the complete callback events and updates status
+     */
+    complete(result) {
+
+        if (this.progress() === 1) {
+
+            this.status = UPLOADED;
+
+            this.callbacks.complete.forEach((callback) => {
+                callback();
+            });
+
+        } else {
+
+            this.status = CANCELLED;
+
+            this.callbacks.error.forEach((callback) => {
+                callback();
+            });
+        }
+    }
+
+    /**
+     * Calls all of the error callback events
+     */
+    error() {
+
+        this.status = FAILED;
+
+        this.callbacks.error.forEach((callback) => {
+            callback();
+        });
     }
 }
 
