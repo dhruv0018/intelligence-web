@@ -81,7 +81,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.isSaving = false;
                 game.video = game.video ? new Video(game.video) : null;
                 game.notes = game.notes || {};
-                game.isHomeGame = game.isHomeGame || false;
+                game.isHomeGame = (game.isHomeGame || game.isHomeGame === null) ? true : false;
                 game.isDeleted = game.isDeleted || false;
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
                 game.primaryJerseyColor = game.primaryJerseyColor || '#FFFFFF';
