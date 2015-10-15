@@ -63,7 +63,15 @@ describe('NewDate Factory', () => {
 
         it('return tomorrow\'s Date at midnight if no existing date', inject(NewDate => {
 
-            expect(newStartDate.getHours()).to.equal(0);
+            let hours = newStartDate.toISOString()
+                .split('T')[1]
+                .split(':')[0];
+
+            console.log('newStartDate.toISOString()', newStartDate.toISOString());
+            console.log('newStartDate.getHours()', newStartDate.getHours());
+            console.log('newStartDate.getUTCHours()', newStartDate.getUTCHours());
+
+            expect(Number.parseInt(hours)).to.equal(4);
         }));
 
         it('return tomorrow\'s Date at the top of the hour if no existing date', inject(NewDate => {
