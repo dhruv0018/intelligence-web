@@ -90,7 +90,7 @@
 
                 </td>
 
-                <td class="athlete-column" ng-if="isUserTeam" ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
+                <td class="athlete-column" ng-if="team.isCustomerTeam" ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
                     <i id="{{idHook}}-toggle-activation-off-cta" class="icon icon-check-square-o" ng-show="!rosterEntry.playerInfo.isActive"></i>
                     <i id="{{idHook}}-toggle-activation-on-cta" class="icon icon-check-empty" ng-show="rosterEntry.playerInfo.isActive"></i>
                 </td>
