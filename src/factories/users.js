@@ -181,13 +181,12 @@ IntelligenceWebClient.factory('UsersFactory', [
             */
             save: function() {
 
-                var session = $injector.get('SessionService');
+                let session = $injector.get('SessionService');
 
-                // If user has roles but no default role, set it to first active role
-                if (this.roles) {
-                    if (this.roles.length && !this.getDefaultRole()) {
-                        this.setDefaultRole(this.activeRoles()[0]);
-                    }
+                // If user has active roles but no default role, set it to first active role
+                if (this.activeRoles().length && !this.getDefaultRole()) {
+                    let activeRole = this.activeRoles()[0];
+                    this.setDefaultRole(activeRole);
                 }
 
                 if (this.id === session.getCurrentUserId()) {
