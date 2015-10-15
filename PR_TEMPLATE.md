@@ -1,29 +1,33 @@
-## Information
+## Information ##
 * **Opened:** MM/DD/YY
 * **URL:** http://branch.v2-qa.krossover.com/intelligence/login
 
-## Requirements
+## Requirements ##
 * [//Card title](//Card URL)
 
-## Description of Changes
+## Description of Changes ##
 * //change
 * //change
 
-## Notes
+## Testing ##
+1. //testing step
+2. //testing step
+
+## Notes ##
 * //note
 * //note
 
-## Visual
+## Visual ##
 // Upload image file here
 
-## Potential Regressions
+## Potential Regressions ##
 * //regression
 * //regression
 
-## Issues
+## Issues ##
 * [ ] //issue
 * [ ] //issue
 
-## Action Items
+## Action Items ##
 * [ ] //action item
 * [ ] //action item
