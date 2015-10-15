@@ -7,13 +7,14 @@
  * @returns {String} - HTML string
  */
 
-export default (event, scriptHtmlString, renderTime = false) => {
+export default (event, scriptHtmlString, isIndexer = false) => {
     return `
-    <div ng-if="${renderTime}" class="event-time">{{event.time | time: true}}</div>
+    <div ng-if="${isIndexer}" class="event-time">{{event.time | time: true}}</div>
     <button
         class="item btn-select-event"
         krossover-event-highlighting
         ng-click="selectEvent();"
+        ng-class="{'indexer': ${isIndexer}}"
     >
 
         ${scriptHtmlString}

@@ -69,13 +69,21 @@
         &.playHide {
             display: none;
         }
+
+        &.no-checkbox.no-play-button.indexer {
+            overflow: hidden;
+        }
     }
 
     .no-checkbox > .event {
         margin-left: 14px;
     }
 
-    .no-play-button > .event::after {
+    .event.indexer {
+        margin-left: 60px;
+    }
+
+    .no-play-button > krossover-.event::after {
         display: none;
     }
 }
