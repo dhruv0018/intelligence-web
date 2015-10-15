@@ -318,6 +318,7 @@ function LoginController(
 ) {
 
     $scope.config = config;
+    $scope.DEVICE = $rootScope.DEVICE;
 
     let currentUser = session.retrieveCurrentUser();
 
