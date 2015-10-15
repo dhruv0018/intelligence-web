@@ -52,6 +52,32 @@ class YardField extends Field {
     }
 
     /**
+     * Generates an HTML string of the field.
+     *
+     * @method toString
+     * @param {Boolean} format
+     * @returns {String} HTML of the field
+     */
+    toString (format) {
+
+        const value = format ? this.formatValueName(this.value.name) : this.value.name;
+        return `<span class="value">${value}</span>`;
+    }
+
+    /**
+     * Helper method to format yard field value to 0-50 range
+     * @method formatValueName
+     * @param {String | Integer} name
+     * @returns {Integer} formattedName
+     */
+    formatValueName(name) {
+
+        const maxYards = 100; // FIXME: Should use config
+        const yards = parseInt(name);
+        return (yards > maxYards/2) ? (maxYards - yards) : yards;
+    }
+
+    /**
      * Reverts the class instance to JSON suitable for the server.
      *
      * @method toJSON
