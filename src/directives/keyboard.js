@@ -32,12 +32,16 @@ IntelligenceWebClient.directive('keybinding', [
                 }
             });
 
-            element.on('$destroy', function() {
-
-                var keybinding = parseKeybinding(attributes.keybinding);
-
-                Mousetrap.unbind(keybinding);
-            });
+            /*
+             * FIXME:
+             * Causes bindings to be over written when tag shortcut keys overlap
+             */
+            // element.on('$destroy', function() {
+            //
+            //     var keybinding = parseKeybinding(attributes.keybinding);
+            //
+            //     Mousetrap.unbind(keybinding);
+            // });
         }
 
         var parseKeybinding = function(keybinding) {
