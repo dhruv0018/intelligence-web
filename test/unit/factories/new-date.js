@@ -63,15 +63,8 @@ describe('NewDate Factory', () => {
 
         it('return tomorrow\'s Date at midnight if no existing date', inject(NewDate => {
 
-            let hours = newStartDate.toISOString()
-                .split('T')[1]
-                .split(':')[0];
-
-            console.log('newStartDate.toISOString()', newStartDate.toISOString());
-            console.log('newStartDate.getHours()', newStartDate.getHours());
-            console.log('newStartDate.getUTCHours()', newStartDate.getUTCHours());
-
-            expect(Number.parseInt(hours)).to.equal(4);
+            /* Midnight in UTC time is 4am */
+            expect(newStartDate.getUTCHours()).to.equal(4);
         }));
 
         it('return tomorrow\'s Date at the top of the hour if no existing date', inject(NewDate => {
@@ -111,7 +104,8 @@ describe('NewDate Factory', () => {
 
         it('should return a Date from existing date strings with the same hours', inject(NewDate => {
 
-            expect(existingStartDate.getHours()).to.equal(0);
+            /* Midnight in UTC time is 4am */
+            expect(existingStartDate.getUTCHours()).to.equal(4);
         }));
 
         it('should return a Date from existing date strings with the same minutes', inject(NewDate => {
@@ -187,7 +181,8 @@ describe('NewDate Factory', () => {
 
         it('return a Date at 11 pm if no existing date', inject(NewDate => {
 
-            expect(newEndDate.getHours()).to.equal(23);
+            /* 11pm in UTC time is 4am */
+            expect(newEndDate.getUTCHours()).to.equal(3);
         }));
 
         it('return a Date at 59 minutes if no existing date', inject(NewDate => {
@@ -227,7 +222,8 @@ describe('NewDate Factory', () => {
 
         it('should return a Date from existing date strings with the same hours', inject(NewDate => {
 
-            expect(existingEndDate.getHours()).to.equal(23);
+            /* 11pm in UTC time is 4am */
+            expect(existingEndDate.getUTCHours()).to.equal(3);
         }));
 
         it('should return a Date from existing date strings with the same minutes', inject(NewDate => {
