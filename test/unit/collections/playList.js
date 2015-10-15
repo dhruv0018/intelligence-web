@@ -27,7 +27,6 @@ describe('PlayList', () => {
     });
 
     it('should be sorted by startTime', () => {
-        let index = 0;
         let startTime = 0;
         for(let play of sampleList) {
             expect(play.value.startTime).to.be.at.least(startTime);
