@@ -1,4 +1,5 @@
 import List from '../../../src/collections/list';
+import Iterator from '../../../src/collections/iterator';
 
 const srcArray = [
     1,
@@ -32,7 +33,8 @@ describe('List', () => {
         'get',
         'add',
         'remove',
-        'isEmpty'
+        'isEmpty',
+        'iterator'
     ];
 
     let srcArrayCopy;
@@ -406,4 +408,18 @@ describe('List', () => {
 
         expect(JSON.stringify(sampleList)).to.equal(JSON.stringify(srcArrayCopy));
     });
+
+    it('should return an iterator from the iterator method', () => {
+        let iter = sampleList.iterator();
+        expect(iter instanceof Iterator).to.be.true;
+    });
+
+    it('should be able to use the for of notation', ()=> {
+        for (let item of sampleList) {
+            expect(item).to.exist;
+            expect(item).to.include.keys('value');
+            expect(item).to.include.keys('done');
+        }
+    });
+
 });

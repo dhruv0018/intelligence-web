@@ -50,14 +50,19 @@ function HighlightsController (
         // Check if user is on their own profile
         $scope.isCurrentUser = $scope.athlete.id === session.getCurrentUserId();
 
-        if ($scope.featuredReel) {
+        getPlaysArray();
 
-            // Populate the array with play objects from playIds
-            $scope.playsArray = $scope.featuredReel.plays.map(function(playId) {
-                return plays.get(playId);
-            });
+        function getPlaysArray() {
+            if ($scope.featuredReel) {
 
-            $scope.video = $scope.playsArray[0].clip;
+                // Populate the array with play objects from playIds
+                $scope.playsArray = $scope.featuredReel.plays.map(function(playId) {
+                    return plays.get(playId);
+                });
+
+                // Replace current video
+                $scope.video = $scope.playsArray[0].clip;
+            }
         }
 
         $scope.manageReels = function() {
@@ -69,12 +74,7 @@ function HighlightsController (
                 $scope.athlete = users.get($stateParams.id);
                 $scope.profileReels = utils.getSortedArrayByIds(reels, $scope.athlete.profile.reelIds);
                 $scope.featuredReel = $scope.profileReels[0];
-                if ($scope.featuredReel) {
-                    plays.query({reelId: $scope.featuredReel.id}).then(featuredPlays => {
-                        $scope.playsArray = featuredPlays;
-                        $scope.video = $scope.playsArray[0].clip;
-                    });
-                }
+                plays.query({reelId: $scope.featuredReel.id}).then(getPlaysArray);
             });
         };
 }

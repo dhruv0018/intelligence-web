@@ -574,6 +574,24 @@
         "*": true
     },
 
+    "Embed": {
+
+        "*": true
+    },
+
+    "Embed.Restricted": {
+        "*": true
+    },
+
+    "Embed.Deleted": {
+        "*": true
+    },
+
+    "ShortEmbed": {
+
+        "*": true
+    },
+
     "UpdatedTermsAndConditions": {
         "*": true
     },
