@@ -9,8 +9,11 @@
 
                     <button id="choose-files-cta" class="choose-files" ng-hide="film.flow.files.length" ng-click="clearAlerts()" data-flow-btn>
 
-                        <i class="icon icon-upload"></i>
-                        <h1>Choose files to upload…</h1>
+                            <i class="icon icon-upload"></i>
+                            <div class="upload-text">
+                                <h1>Choose files to upload…</h1>
+                                <p class="drag-drop">Or drag and drop files here</p>
+                            </div>
 
                     </button>
 
@@ -42,7 +45,7 @@
                         <div ng-if="alerts.length > 0">
                             <span>One or more files is not a supported media type:</span>
                             <div class="unsupported-files">
-                                <div ng-repeat="alert in alerts">
+                                <div ng-repeat="alert in alerts" class="unsupported-file">
                                     {{alert}}
                                 </div>
                             </div>
