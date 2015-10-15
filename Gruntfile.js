@@ -270,6 +270,7 @@ module.exports = function(grunt) {
                         'lib/dialogs/breakdown-dialog/styles.less',
                         'lib/directives/field/**/*.less',
                         'app/reel/*.less',
+                        'app/embed/*.less',
                         'app/indexer/**/*.less',
                         'app/styleguide/**/*.less',
                         'lib/directives/arena-chart/styles.less'

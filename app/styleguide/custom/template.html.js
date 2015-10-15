@@ -26,5 +26,19 @@ export default `
             <krossover-event-adjuster plays="plays" play="plays[1]" video="game.video" events="plays[1].events" event="plays[1].events[0]"></krossover-event-adjuster>
         </div>
 
+        <div class="video">
+
+            <h3>Video Player With Clips Navigation</h3>
+
+            <div class="video-container">
+
+                <video-player></video-player>
+
+                <clips-navigation></clips-navigation>
+
+            </div>
+
+        </div>
+
     </div>
 `;
