@@ -93,11 +93,11 @@ function PlayerAnalyticsController(
 
     // If current user is an athlete, generate their stats
     if ($scope.currentUserIsAthlete) {
-        let athleteRoles = currentUser.roles.filter(role => role.type.id === ROLES.ATHLETE.type.id);
+        let activeRoles = currentUser.activeRoles();
+        let athleteRoles = activeRoles.filter(role => currentUser.is(role, ROLES.ATHLETE));
 
-        $scope.teams = athleteRoles.map(role => {
-            return teams.get(role.teamId);
-        });
+        // Get teams this athlete plays for
+        $scope.teams = athleteRoles.map(role => teams.get(role.teamId));
 
         generateStatsForAthlete();
     }

@@ -38,7 +38,7 @@ function AnalyticsDataDependencies (
 
                 .filter(function(team) {
 
-                    return ~teamIds.indexOf(team.id);
+                    return !teamIds.indexOf(team.id);
                 })
 
                 .forEach(function(team) {
