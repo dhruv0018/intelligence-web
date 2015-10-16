@@ -50,7 +50,10 @@
                 <data-krossover-uploader data-id="choose-roster-cta" data-ng-show="!files" data-upload-label="Upload Roster" data-on-upload="uploadFile(files)"></data-krossover-uploader>
             </li>
             <li>
-                <button class="btn btn-primary" id="start-roster-upload-cta" data-ng-click="uploadRoster()">Start Roster Upload</button>
+                <button class="btn btn-primary" id="start-roster-upload-cta" data-ng-click="uploadRoster()"  ng-disabled="isUploading">
+                    Start Roster Upload
+                    <krossover-spinner ng-show="isUploading" size="'15px'"></krossover-spinner>
+                </button>
             </li>
         </ul>
 

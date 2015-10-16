@@ -23,6 +23,11 @@
     "reels": {
         "turnedOn": true
     },
+    "hours": {
+        "qaPickup": {
+            "deadlinePassed" : 6
+        }
+    },
     "links": {
         "signup": {
             "uri": "http://www.krossover.com/get-started"
@@ -65,10 +70,10 @@
         },
         "indexerFAQ": {
             "football": {
-                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/krossover-football-formations-07-27-2015.pdf"
+                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/dev/krossover-football-formations.pdf"
             },
             "volleyball": {
-                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/Krossover-volleyball-rotation-position.pdf"
+                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/dev/Krossover-volleyball-rotation-position.pdf"
             }
         },
         "addFilmHelp": {
@@ -96,5 +101,12 @@
         }
     },
     "defaultVideoId": 2,
-    "termsDate": "2015-08-12T16:30:00.551Z"
+    "termsDate": "2015-08-12T16:30:00.551Z",
+    "indexingV1Date": "2015-09-01T00:00:00.551Z",
+    "yardFormatLeagueIdsWhitelist": [
+        3,
+        4,
+        38
+    ],
+    "maxYardsFormat": 100
 }

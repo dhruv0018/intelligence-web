@@ -1,4 +1,4 @@
-import KrossoverEvent from '../entities/event.js';
+import KrossoverEvent from '../entities/event';
 
 var pkg = require('../../package.json');
 
@@ -13,8 +13,32 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {service}
  */
 IntelligenceWebClient.service('PlaysManager', [
-    '$injector', 'Utilities', 'FIELD_TYPE', 'AlertsService', 'TagsManager', 'PlayManager', 'EventManager', 'PlaysFactory', 'GamesFactory', 'TagsetsFactory',
-    function service($injector, utilities, FIELD_TYPE, alerts, tagsManager, playManager, eventManager, plays, games, tagsets) {
+    '$injector',
+    'Utilities',
+    'FIELD_TYPE',
+    'AlertsService',
+    'TagsManager',
+    'PlayManager',
+    'EventManager',
+    'PlaysFactory',
+    'GamesFactory',
+    'TagsetsFactory',
+    'PlaylistEventEmitter',
+    'EVENT',
+    function service(
+        $injector,
+        utilities,
+        FIELD_TYPE,
+        alerts,
+        tagsManager,
+        playManager,
+        eventManager,
+        plays,
+        games,
+        tagsets,
+        playlistEventEmitter,
+        EVENT
+    ) {
 
         var period;
         var indexing;
@@ -119,7 +143,7 @@ IntelligenceWebClient.service('PlaysManager', [
 
                 playManager.clear();
                 tagsManager.reset();
-                eventManager.current = new KrossoverEvent();
+                eventManager.current = null;
             }
 
             this.calculatePlays();
@@ -136,12 +160,14 @@ IntelligenceWebClient.service('PlaysManager', [
 
             this.plays.sort(utilities.compareStartTimes);
             this.plays.forEach(calculatePlay);
+
+            playlistEventEmitter.emit(EVENT.PLAYLIST.PLAYS.CALCULATE, this.plays);
         };
 
         function calculatePlay (play, index) {
 
             /* Record the order of the play in the playlist. */
-            play.number = index;
+            play.number = index + 1;
 
             /* Sort the events by time. */
             play.events.sort(utilities.compareTimes);
@@ -169,28 +195,28 @@ IntelligenceWebClient.service('PlaysManager', [
             /* Look at the first position script field. */
             /* TODO: Clear up once fields are indexed by position and not the
              * tag variable ID. */
-            let tagVariables = event.tagVariables;
-            if (!tagVariables) return;
-            let fields = event.variableValues;
-            let firstTagVariable = tagVariables[1];
-            if (!firstTagVariable) return;
-            let firstTagVariableId = firstTagVariable.id;
-            let field = fields[firstTagVariableId];
+            if (!event.fields) return;
 
+            let firstField = event.fields[1];
+            if (!firstField) return;
+            let firstFieldId = firstField.index;
+            let field = event.fields[firstFieldId];
             /* If the field value is defined. */
-            if (angular.isDefined(field.value)) {
+            if (angular.isDefined(field) && angular.isDefined(field.value)) {
 
                 /* If its a team field. */
-                if (field.type === FIELD_TYPE.TEAM) {
-
-                    /* The field value is a teamId. */
-                    teamId = field.value;
-                }
+                teamId = field.value.teamId;
 
                 /* If its a player field. */
-                else if (field.type === FIELD_TYPE.PLAYER) {
+                if (!teamId) {
 
-                    teamId = game.isPlayerOnTeam(field.value) ? game.teamId : game.opposingTeamId;
+                    let playerId = field.value.playerId;
+                    teamId = playerId && game.isPlayerOnTeam(playerId) ? game.teamId : game.opposingTeamId;
+
+                    if (!teamId) {
+
+                        console.warn('WARNING: Missing `teamId` in Field!', field);
+                    }
                 }
 
                 /* Consider the first team to take possession in a play to have

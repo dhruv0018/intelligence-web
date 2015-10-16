@@ -1,16 +1,35 @@
+import KrossoverPlay from '../entities/play';
+import KrossoverEvent from '../entities/event';
 import Video from '../entities/video';
-import KrossoverEvent from '../entities/event.js';
 
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('PlaysFactory', [
-    '$injector', 'config', '$sce', 'VIDEO_STATUSES', 'PlaysResource', 'BaseFactory', 'TagsetsFactory', 'Utilities', 'CUEPOINT_CONSTANTS',
-    function($injector, config, $sce, VIDEO_STATUSES, PlaysResource, BaseFactory, tagsets, utils, CUEPOINT_CONSTANTS) {
+    '$injector',
+    'config',
+    '$sce',
+    'VIDEO_STATUSES',
+    'PlaysResource',
+    'BaseFactory',
+    'TagsetsFactory',
+    'Utilities',
+    'CUEPOINT_CONSTANTS',
+    function(
+        $injector,
+        config,
+        $sce,
+        VIDEO_STATUSES,
+        PlaysResource,
+        BaseFactory,
+        tagsets,
+        utils,
+        CUEPOINT_CONSTANTS
+    ) {
 
         var PlaysFactory = {
 
@@ -22,81 +41,42 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             storage: 'PlaysStorage',
 
-            extend: function(play) {
+            extend: function (play) {
 
-                var self = this;
-
-                angular.extend(play, self);
-
-                play.events = play.events || [];
-
-                play.period = play.period || 0;
-
-                play.indexedScore = play.indexedScore || 0;
-                play.opposingIndexedScore = play.opposingIndexedScore || 0;
-
-                /* If play has no custom tags, set it to an empty array */
-                play.customTagIds = play.customTagIds || [];
-
-                /* Indicates if the play has visible events; set by the events. */
-                play.hasVisibleEvents = false;
-
-                /* Play possesion; filled in by the events. */
-                play.possessionTeamId = play.possessionTeamId || null;
-
-                play.events = play.events.map(constructEvent);
-
-                function constructEvent (event) {
-
-                    let tag = tagsets.getTag(event.tagId);
-
-                    /* NOTE: Not all browsers support more than 6 decimals for video times */
-                    let safeEventTime = utils.toFixedFloat(event.time);
-
-                    return new KrossoverEvent(event, tag, safeEventTime);
-                }
-
-                play.clip = play.clip ? new Video(play.clip) : {};
-
-                return play;
+                return this.instantiate(play);
             },
 
-            unextend: function(play) {
+            unextend: function (play) {
 
-                var self = this;
+                play = play || this;
 
-                play = play || self;
+                return play.toJSON();
+            },
 
-                var copy = angular.copy(play);
+            /**
+             * FIXME:
+             * Rename to method 'create'. Must resolve any issues
+             * where BaseFactory.create is invoked, as renaming
+             * will overrride BaseFactory.create
+             */
+            instantiate: function (play) {
 
-                delete copy.PAGE_SIZE;
-                delete copy.description;
-                delete copy.model;
-                delete copy.storage;
+                const playIsEntity = play instanceof KrossoverPlay;
+                const eventsAreEntities =
+                    play.events &&
+                    play.events[0] instanceof KrossoverEvent;
 
-                delete copy.hasVisibleEvents;
-                delete copy.isFiltered;
+                if (!(playIsEntity || eventsAreEntities)) {
 
-                copy.events = copy.events.map(unextendEvent);
-
-                function unextendEvent (event) {
-
-                    delete event.activeEventVariableIndex;
-
-                    Object.keys(event.variableValues).forEach(key => {
-
-                        let variableValue = event.variableValues[key];
-
-                        event.variableValues[key] = {
-                            type: variableValue.type,
-                            value: variableValue.value
-                        };
-                    });
-
-                    return event;
+                    play = new KrossoverPlay(play, tagsets);
+                    angular.extend(play, this);
                 }
 
-                return copy;
+                // TODO: Move to Play entity constructor
+                /* Instantiate Video entity */
+                play.clip = play.clip ? new Video(play.clip) : null;
+
+                return play;
             },
 
             filterPlays: function(filterId, resources, success, error) {

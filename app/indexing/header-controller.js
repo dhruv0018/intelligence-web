@@ -14,8 +14,40 @@ var Indexing = angular.module('Indexing');
  * @type {Controller}
  */
 Indexing.controller('Indexing.Header.Controller', [
-    '$window', '$scope', '$state', '$stateParams', '$modal', 'GAME_STATUSES', 'SessionService', 'IndexingService', 'Indexing.Sidebar', 'Indexing.Data', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'PlaysManager',
-    function controller($window, $scope, $state, $stateParams, $modal, GAME_STATUSES, session, indexing, sidebar, data, leagues, teams, games, playsManager) {
+    '$window',
+    '$scope',
+    '$state',
+    '$stateParams',
+    '$modal',
+    'GAME_STATUSES',
+    'SessionService',
+    'IndexingService',
+    'Indexing.Sidebar',
+    'Indexing.Data',
+    'LeaguesFactory',
+    'TeamsFactory',
+    'GamesFactory',
+    'PlaysManager',
+    'PlaylistEventEmitter',
+    'EVENT',
+    function controller(
+        $window,
+        $scope,
+        $state,
+        $stateParams,
+        $modal,
+        GAME_STATUSES,
+        session,
+        indexing,
+        sidebar,
+        data,
+        leagues,
+        teams,
+        games,
+        playsManager,
+        playlistEventEmitter,
+        EVENT
+    ) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
 
@@ -33,28 +65,23 @@ Indexing.controller('Indexing.Header.Controller', [
 
         $scope.playsManager = playsManager;
 
-        const watchLastPlayIndexedScore = $scope.$watch('playsManager.plays[playsManager.plays.length-1].indexedScore', function onLastPlayIndexedScoreChange (indexedScore) {
 
-            if (angular.isDefined(indexedScore)) {
+        playlistEventEmitter.on(EVENT.PLAYLIST.PLAYS.CALCULATE, onCalculatePlays);
 
-                $scope.game.indexedScore = indexedScore;
-            }
-        });
+        function onCalculatePlays (plays) {
 
-        const watchLastPlayOpposingIndexedScore = $scope.$watch('playsManager.plays[playsManager.plays.length-1].opposingIndexedScore', function onLastPlayOpposingIndexedScoreChange (opposingIndexedScore) {
+            const lastPlayIndex = plays.length - 1;
+            const lastPlay = plays[lastPlayIndex];
 
-            if (angular.isDefined(opposingIndexedScore)) {
-
-                $scope.game.opposingIndexedScore = opposingIndexedScore;
-            }
-        });
+            $scope.game.indexedScore = lastPlay ? lastPlay.indexedScore : 0;
+            $scope.game.opposingIndexedScore = lastPlay ? lastPlay.opposingIndexedScore : 0;
+        }
 
         $scope.$on('$destroy', onDestroy);
 
         function onDestroy () {
 
-            watchLastPlayIndexedScore();
-            watchLastPlayOpposingIndexedScore();
+            playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAYS.CALCULATE, onCalculatePlays);
 
             $scope.game.save();
         }
@@ -64,7 +91,7 @@ Indexing.controller('Indexing.Header.Controller', [
             indexing.isIndexing = false;
             $scope.game.finishAssignment(userId);
             $scope.game.save();
-            $state.go('IndexerGames');
+            $state.go('IndexerGamesAssigned');
         };
 
         $scope.sendToTeam = function() {
@@ -86,7 +113,7 @@ Indexing.controller('Indexing.Header.Controller', [
                         scope: $scope
                     }).result.then(function() {
                         $scope.game.save();
-                        $state.go('IndexerGames');
+                        $state.go('IndexerGamesAssigned');
                     });
                 });
             });

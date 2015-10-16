@@ -20,6 +20,12 @@ const MOBILE_APP_URLS = {
     }
 };
 
-IntelligenceWebClient.constant('MOBILE_APP_URLS', MOBILE_APP_URLS);
+// TODO: This constant refers to a session storage key. There should be a place
+// that collects all web storage keys in once place. The others are currently
+// in token.js.
+const MOBILE_APP_PROMPT_SHOWN = 'MOBILE_APP_PROMPT_SHOWN';
 
-export {MOBILE_APP_URLS};
+IntelligenceWebClient.constant('MOBILE_APP_URLS', MOBILE_APP_URLS);
+IntelligenceWebClient.constant('MOBILE_APP_PROMPT_SHOWN', MOBILE_APP_PROMPT_SHOWN);
+
+export {MOBILE_APP_URLS, MOBILE_APP_PROMPT_SHOWN};

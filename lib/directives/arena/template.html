@@ -1,17 +1,38 @@
 <div class="krossover-arena" ng-class="{'highlight-regions': highlightRegions}">
 
-    <ng-transclude></ng-transclude>
-
     <!-- Football -->
-    <krossover-arena-football-field data-ng-if="type === 'FOOTBALL'" chart="chart" redzone="redzone" plays="plays"></krossover-arena-football-field>
+    <krossover-arena-football-field
+        ng-if="type.indexOf('FOOTBALL') >= 0"
+        chart="chart"
+        redzone="redzone"
+        plays="plays"
+    ></krossover-arena-football-field>
 
     <!-- Basketball -->
-    <basketball-arena data-ng-if="type.indexOf('BASKETBALL') >= 0" data-ng-model="region"></basketball-arena>
+    <basketball-arena
+        ng-if="type.indexOf('BASKETBALL') >= 0"
+        type="type"
+        ng-model="region"
+        game="game"
+    ></basketball-arena>
 
     <!-- Lacrosse -->
-    <lacrosse-arena data-ng-if="type.indexOf('LACROSSE') >= 0" data-ng-model="region"></lacrosse-arena>
+    <lacrosse-arena
+        ng-if="type.indexOf('LACROSSE') >= 0"
+        ng-model="region"
+    ></lacrosse-arena>
 
     <!-- Volleyball -->
-    <volleyball-arena data-ng-if="type.indexOf('VOLLEYBALL') >= 0" data-ng-model="region"></volleyball-arena>
+    <volleyball-arena
+        ng-if="type.indexOf('VOLLEYBALL') >= 0"
+        ng-model="region"
+    ></volleyball-arena>
+
+    <ice-hockey-arena
+        ng-if="type.indexOf('ICE_HOCKEY') >= 0"
+        ng-model="region"
+    ></ice-hockey-arena>
+
+    <ng-transclude></ng-transclude>
 
 </div>

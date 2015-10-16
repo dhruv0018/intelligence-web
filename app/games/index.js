@@ -122,14 +122,14 @@ Games.config([
                         return games.load(gameId).then(function() {
 
                             let game = games.get(gameId);
+                            const currentUserId = session.getCurrentUserId();
 
                             let Data = {
                                 leagues: leagues.load(),
 
-                                reels: reels.load({ relatedUserId: session.getCurrentUserId() }),
+                                positionsets: positionsets.load(),
 
-                                positionsets: positionsets.load()
-
+                                reels: reels.load({ relatedUserId: currentUserId })
                             };
 
                             //Load custom tags
@@ -211,7 +211,7 @@ function GamesController(
     let currentUser = session.getCurrentUser();
     let sport = SPORTS[SPORT_IDS[league.sportId]];
     let transcodeCompleted = game.isVideoTranscodeComplete();
-    let breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isSharedWithUser(currentUser) && game.getShareByUser(currentUser).isBreakdownShared;
+    let breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isBreakdownSharedWithCurrentUser();
     let uploader = users.get(game.uploaderUserId);
     let uploaderIsCoach = uploader.is(ROLES.COACH);
     let isUploader = game.isUploader(currentUser.id);
@@ -220,6 +220,7 @@ function GamesController(
     let isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
     let isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
     let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
+    let isDelivered = game.isDelivered();
 
     /* Scope */
 
@@ -265,26 +266,25 @@ function GamesController(
 
         // game information
         $scope.gameStates.push({name: 'Games.Info'});
+    }
 
-        // statistics related states
-        if (game.isDelivered()) {
+    // statistics related states
+    if (isTeamUploadersTeam && isDelivered && sport.hasStatistics) {
 
-            if (sport.hasStatistics) {
+        $scope.gameStates.push({name: 'Games.Stats'});
+    }
 
-                $scope.gameStates.push({name: 'Games.Stats'});
-            }
-
-            // sport specific states
-            switch (sport.id) {
-                case SPORTS.BASKETBALL.id:
-                    if (features.isEnabled('ArenaChart')) {
-                        $scope.gameStates.push({name: 'Games.ArenaChart'});
-                    }
-                    break;
-                case SPORTS.FOOTBALL.id:
-                    $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
-                    break;
-            }
+    if (isTeamUploadersTeam && isCoach && isDelivered) {
+        // sport specific states
+        switch (sport.id) {
+            case SPORTS.BASKETBALL.id:
+                if (features.isEnabled('ArenaChart')) {
+                    $scope.gameStates.push({name: 'Games.ArenaChart'});
+                }
+                break;
+            case SPORTS.FOOTBALL.id:
+                $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                break;
         }
     }
 
@@ -293,7 +293,7 @@ function GamesController(
 
         $scope.gameStates.unshift({name: 'Games.RawFilm'});
 
-        if (game.isDelivered()) {
+        if (isDelivered) {
 
             $scope.gameStates.unshift({name: 'Games.Breakdown'});
 

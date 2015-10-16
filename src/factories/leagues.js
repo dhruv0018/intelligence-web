@@ -9,7 +9,11 @@ var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('LeaguesFactory', [
     'BaseFactory',
-    function(BaseFactory) {
+    'config',
+    function(
+        BaseFactory,
+        config
+    ) {
 
         var LeaguesFactory = {
 
@@ -17,7 +21,17 @@ IntelligenceWebClient.factory('LeaguesFactory', [
 
             model: 'LeaguesResource',
 
-            storage: 'LeaguesStorage'
+            storage: 'LeaguesStorage',
+
+            getLeaguesBySportId: function(sportId) {
+                let allLeagues = this.getList();
+                return allLeagues.filter(league => league.sportId === sportId);
+            },
+
+            belongsToYardFormatWhitelist(league = this) {
+
+                return config.yardFormatLeagueIdsWhitelist.indexOf(league.id) >= 0;
+            }
         };
 
         angular.augment(LeaguesFactory, BaseFactory);

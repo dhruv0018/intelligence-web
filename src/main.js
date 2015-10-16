@@ -17,12 +17,18 @@ require('./extensions');
 require('../build/build');
 
 import Reel from '../app/reel/index.js';
+import Embed from '../app/embed/index.js';
 import Indexer from '../app/indexer/index.js';
 import Styleguide from '../app/styleguide/index.js';
-import IndexingBlock from '../lib/directives/indexing-block/index';
-import DynamicTables from '../lib/directives/dynamic-tables/index';
-import SelectMediaSrc from '../lib/directives/video-player/select-media-src/index';
-import ArenaChart from '../lib/directives/arena-chart/index';
+
+import FieldComponent from '../lib/directives/field';
+import IndexingBlock from '../lib/directives/indexing-block';
+import DynamicTables from '../lib/directives/dynamic-tables';
+import { IndexerFields, UserFields } from '../lib/directives/fields';
+import Play from '../lib/directives/play';
+import SelectMediaSrc from '../lib/directives/video-player/select-media-src';
+import ArenaChart from '../lib/directives/arena-chart';
+import BreakdownDialog from '../lib/dialogs/breakdown-dialog';
 
 /* App dependencies */
 require('./config');
@@ -31,6 +37,7 @@ require('./app');
 
 require('./features');
 
+require('./compile');
 require('./utilities');
 require('./indexeddb');
 require('./flow');
@@ -62,7 +69,7 @@ require('./services/date');
 require('./services/detectDevice');
 require('./services/analytics');
 import './services/performance-timer/angular-index';
-import './services/performance-timer/index';
+import './services/performance-timer';
 
 require('./constants/users');
 require('./constants/games');
@@ -183,5 +190,5 @@ import CustomTagsEvent from './events/customtags';
 
 require('./bootstrap');
 
-import * as Brokers from './brokers/index';
-import * as Entities from './entities/index';
+import * as Brokers from './brokers';
+import * as Entities from './entities';

@@ -91,7 +91,6 @@ GamesInfoController.$inject = [
     '$state',
     '$stateParams',
     '$modal',
-    'AlertsService',
     'SessionService',
     'GamesFactory',
     'TeamsFactory',
@@ -106,7 +105,6 @@ function GamesInfoController (
     $state,
     $stateParams,
     $modal,
-    alerts,
     session,
     games,
     teams,
@@ -118,7 +116,6 @@ function GamesInfoController (
 
     $scope.game = games.get($stateParams.id);
     $scope.game.flow = uploadManager.get($scope.game.id);
-    $scope.returnedDate = ($scope.game.isDelivered() && angular.isObject($scope.game.currentAssignment())) ? new Date($scope.game.currentAssignment().timeFinished) : null;
     $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
 
     //TODO special case to remove
@@ -128,15 +125,4 @@ function GamesInfoController (
     $scope.teamPlayerList = ($scope.game.rosters && $scope.game.teamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.teamId].id }) : [];
     $scope.opposingPlayerList = ($scope.game.rosters && $scope.game.opposingTeamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.opposingTeamId].id }) : [];
 
-    if ($scope.game.isProcessing()) {
-        alerts.add({
-            type: 'warning',
-            message: 'Your video is still processing. You may still edit the Game Information for this film.'
-        });
-    } else if ($scope.game.isUploading()) {
-        alerts.add({
-            type: 'warning',
-            message: 'This film is currently uploading. You may still edit the Game Information for this film.'
-        });
-    }
 }

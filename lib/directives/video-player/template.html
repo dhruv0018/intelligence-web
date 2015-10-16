@@ -92,6 +92,7 @@
                     ></select-media-src>
 
                     <vg-fullscreen-button
+                        ng-hide="videoPlayer.fullscreenEnabled && videoPlayer.fullscreenElement !== videoPlayer.videogularElement"
                         krossover-blur-on-select
                         tooltip="Toggle Fullscreen"
                     ></vg-fullscreen-button>

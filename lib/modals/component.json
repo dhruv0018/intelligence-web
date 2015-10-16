@@ -9,7 +9,6 @@
         "delete-game",
         "add-reel",
         "select-indexer",
-        "film-breakdown",
         "share-film",
         "excel-upload",
         "basic-modals",
@@ -17,9 +16,12 @@
         "change-password",
         "admin-management",
         "kvs-uploader-interface",
+        "game-copy",
+        "qa-pickup",
         "manage-profile-reels",
         "add-profile-team",
-        "profile-onboarding"
+        "profile-onboarding",
+        "basic-edit-profile"
     ],
     "scripts": [
         "index.js"

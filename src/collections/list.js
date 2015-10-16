@@ -1,3 +1,5 @@
+import Iterator from './iterator';
+
 /**
  * Creates a List
  * @class List
@@ -7,7 +9,7 @@
 class List {
 
     /**
-     * Instantaties List as a new array
+     * Instantiates List as a new array
      *
      * @constructs List
      * @param {Array} [array] - Array to use as backing data store
@@ -20,6 +22,17 @@ class List {
         }
 
         this.data = array;
+
+        //default iterator so you can use for of loops if you want to on lists
+        this[Symbol.iterator] = function*() {
+            let iterator = this.iterator();
+            while(iterator.hasNext()) {
+                let item = iterator.current;
+                iterator.next();
+                yield item;
+            }
+            yield iterator.current;
+        };
     }
 
     /**
@@ -90,7 +103,6 @@ class List {
 
                 throw new Error('Invoked List.get without passing a index');
         }
-
         return this.data[index];
     }
 
@@ -100,7 +112,6 @@ class List {
      * @type {}
      */
     get first () {
-
         return this.data[0];
     }
 
@@ -110,7 +121,6 @@ class List {
      * @type {}
      */
     get last () {
-
         return this.data[this.data.length - 1];
     }
 
@@ -163,7 +173,7 @@ class List {
         let removed = [];
 
         while (this.includes(item)) {
-
+            //FIXME Im not actually sure that this method will work correctly if there are duplicate primitives in the list
             let itemIndex = this.data.indexOf(item);
 
             removed = removed.concat(this.data.splice(itemIndex, 1));
@@ -181,6 +191,16 @@ class List {
     isEmpty () {
 
         return !this.data.length;
+    }
+
+    /**
+     * Returns an iterator for the list
+     *
+     * @method iterator
+     * @returns {Iterator}
+     */
+    iterator() {
+        return new Iterator(this.data);
     }
 }
 
