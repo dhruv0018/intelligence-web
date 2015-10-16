@@ -31,6 +31,7 @@ class KrossoverEvent extends Entity {
 
         this.tagId = tag.id;
         this.time  = time;
+        this.gameId = gameId;
 
         delete this.id;
 
@@ -85,6 +86,8 @@ class KrossoverEvent extends Entity {
         });
 
         delete this.tagVariables;
+
+        this.formatYardField = false;
     }
 
     /**
@@ -129,7 +132,7 @@ class KrossoverEvent extends Entity {
 
         if (this.summaryFields) {
 
-            return this.summaryFields.toString();
+            return this.summaryFields.toString(this.formatYardField);
         }
     }
 
@@ -152,7 +155,7 @@ class KrossoverEvent extends Entity {
 
         if (this.userFields) {
 
-            return template(this, this.userFields.toString());
+            return template(this, this.userFields.toString(this.formatYardField));
         }
     }
 
@@ -189,12 +192,10 @@ class KrossoverEvent extends Entity {
             }
         });
 
-        scriptFields.toString = () => {
+        scriptFields.toString = (format) => {
 
-            return scriptFields.map(field => {
-
-                return field.toString();
-            })
+            return scriptFields
+            .map(field => field.toString(format))
             .join('');
         };
 
