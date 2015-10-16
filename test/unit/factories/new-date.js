@@ -57,8 +57,8 @@ describe('NewDate Factory', () => {
              * moment.js). The challenge here is to determine the month and day
              * two days out that avoids excessive calculation that shouldn't be
              * in the unit tests. */
-            expect(newStartDate.getMonth()).to.equal(controlDate.month());
-            expect(newStartDate.getDate()).to.equal(controlDate.date());
+            expect(newStartDate.getUTCMonth()).to.equal(controlDate.utc().month());
+            expect(newStartDate.getUTCDate()).to.equal(controlDate.utc().date());
         }));
 
         it('return tomorrow\'s Date at midnight if no existing date', inject(NewDate => {
@@ -118,11 +118,6 @@ describe('NewDate Factory', () => {
             expect(existingStartDate.getSeconds()).to.equal(0);
         }));
 
-        it('should return a Date from existing date strings with the same timezone', inject(NewDate => {
-
-            expect(existingStartDate.getTimezoneOffset()).to.equal(240);
-        }));
-
         it('should throw an error if existing date is an invalid string', inject(NewDate => {
 
             expect(() => NewDate.generatePlanStartDate('Not a real date')).to.throw(Error);
@@ -175,8 +170,8 @@ describe('NewDate Factory', () => {
              * moment.js). The challenge here is to determine the month and day
              * two days out that avoids excessive calculation that shouldn't be
              * in the unit tests. */
-            expect(newEndDate.getMonth()).to.equal(controlDate.month());
-            expect(newEndDate.getDate()).to.equal(controlDate.date());
+            expect(newEndDate.getUTCMonth()).to.equal(controlDate.utc().month());
+            expect(newEndDate.getUTCDate()).to.equal(controlDate.utc().date());
         }));
 
         it('return a Date at 11 pm if no existing date', inject(NewDate => {
@@ -234,11 +229,6 @@ describe('NewDate Factory', () => {
         it('should return a Date from existing date strings with the same seconds', inject(NewDate => {
 
             expect(existingEndDate.getSeconds()).to.equal(59);
-        }));
-
-        it('should return a Date from existing date strings with the same timezone', inject(NewDate => {
-
-            expect(existingEndDate.getTimezoneOffset()).to.equal(240);
         }));
 
         it('should throw an error if existing date is an invalid string', inject(NewDate => {
