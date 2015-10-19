@@ -40,7 +40,7 @@ describe('PlayList', () => {
             let index = sampleList.length - 1;
             let previousIndex = index - 1;
             sampleList.playIterator.current = sampleList.get(index);
-            let lowerBoundingTime = sampleList.lowerBoundingTime();
+            let lowerBoundingTime = sampleList.lowerBoundingTime;
             let expectedTime = sampleList.get(previousIndex).startTime;
             expect(lowerBoundingTime).to.equal(expectedTime);
         });
@@ -48,7 +48,7 @@ describe('PlayList', () => {
         it('should return null if there is no previous play', () => {
             let play = sampleList.first;
             sampleList.playIterator.current = play;
-            let lowerBoundingTime = sampleList.lowerBoundingTime();
+            let lowerBoundingTime = sampleList.lowerBoundingTime;
             expect(lowerBoundingTime).to.be.null;
         });
     });
