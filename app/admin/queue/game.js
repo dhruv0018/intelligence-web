@@ -117,8 +117,8 @@ Game.config([
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory',
-    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal, users, sports, leagues, teams, games) {
+    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'RevertToIndexing.Modal',
+    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal, users, sports, leagues, teams, games, RevertToIndexingModal) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -128,6 +128,7 @@ Game.controller('GameController', [
         $scope.DeleteGameModal = DeleteGameModal;
         $scope.RawFilmModal = RawFilmModal;
         $scope.SelectIndexerModal = SelectIndexerModal;
+        $scope.RevertToIndexingModal = RevertToIndexingModal;
 
         var gameId = $stateParams.id;
 
