@@ -9,4 +9,3 @@ describe('Angular.js', function() {
         expect(angular).to.not.be.undefined;
     });
 });
-
