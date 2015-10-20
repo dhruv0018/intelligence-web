@@ -45,6 +45,8 @@ class UploadManager {
 
         if (!result) {
 
+            // could not add the new upload model
+            uploadModel.cleanup();
             return null;
 
         } else {
@@ -113,6 +115,7 @@ class UploadManager {
 
         if (this.countRunningUploads() < this.MAX_UPLOADS) {
 
+            // will replace an existing upload model
             this.uploads[id] = uploadModel;
 
             return true;
