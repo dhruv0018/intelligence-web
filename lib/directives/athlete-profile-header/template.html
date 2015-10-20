@@ -5,10 +5,12 @@
 
         <h2 hide-gt-sm>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
-        <a ng-if="auth.isLoggedIn && session.getCurrentUserId() === athlete.profile.userId"
-           ui-sref="Athlete.Profile.EditProfile.BasicInfo"
-           hide
-           show-gt-md>
+        <a
+            id="edit-profile-cta"
+            ng-if="auth.isLoggedIn && session.getCurrentUserId() === athlete.profile.userId"
+            ui-sref="Athlete.Profile.EditProfile.BasicInfo"
+            hide
+            show-gt-md>
             <md-button class="md-raised edit-profile-button">Edit Profile</md-button>
         </a>
 
@@ -21,10 +23,10 @@
 
         <p hide show-gt-sm ng-if="athlete.profile.about">{{athlete.profile.about}}</p>
         <p hide show-gt-sm ng-if="!athlete.profile.about && isCurrentUser">
-            <a
-             class="empty-attribute"
-             ui-sref="Athlete.Profile.EditProfile.BasicInfo"
-            ><i class="icon icon-plus"></i> Add About Me</a></p>
+            <a id="add-about-me-cta" class="empty-attribute" ui-sref="Athlete.Profile.EditProfile.BasicInfo">
+                <i class="icon icon-plus"></i> Add About Me
+            </a>
+        </p>
 
         <ul class="athlete-attributes"
             layout="column"
@@ -35,10 +37,9 @@
                     {{sports[athlete.profile.primarySportId].name}}
                 </span>
                 <span ng-if="!athlete.profile.primarySportId">
-                    <a
-                     class="empty-attribute"
-                     ui-sref="Athlete.Profile.EditProfile.BasicInfo"
-                    ><i class="icon icon-plus"></i> Add Sport</a>
+                    <a id="add-sport-cta" class="empty-attribute" ui-sref="Athlete.Profile.EditProfile.BasicInfo">
+                        <i class="icon icon-plus"></i> Add Sport
+                    </a>
                 </span>
             </li>
             <li class="athlete-attribute" ng-if="athlete.profile.primaryPosition || isCurrentUser">
@@ -46,10 +47,9 @@
                     {{athlete.profile.primaryPosition}}
                 </span>
                 <span ng-if="!athlete.profile.primaryPosition">
-                    <a
-                     class="empty-attribute"
-                     ui-sref="Athlete.Profile.EditProfile.BasicInfo"
-                    ><i class="icon icon-plus"></i> Add Position</a>
+                    <a id="add-position-cta" class="empty-attribute" ui-sref="Athlete.Profile.EditProfile.BasicInfo">
+                        <i class="icon icon-plus"></i> Add Position
+                    </a>
                 </span>
             </li>
             <li class="athlete-attribute" ng-if="athlete.profile.hometown || isCurrentUser">
@@ -57,10 +57,9 @@
                     From {{athlete.profile.hometown}}
                 </span>
                 <span ng-if="!athlete.profile.hometown">
-                    <a
-                     class="empty-attribute"
-                     ui-sref="Athlete.Profile.EditProfile.BasicInfo"
-                    ><i class="icon icon-plus"></i> Add Hometown</a>
+                    <a id="add-hometown-cta" class="empty-attribute" ui-sref="Athlete.Profile.EditProfile.BasicInfo">
+                        <i class="icon icon-plus"></i> Add Hometown
+                    </a>
                 </span>
             </li>
             <li class="athlete-attribute" ng-if="athlete.profile.highSchoolGraduationYear || isCurrentUser">
@@ -68,10 +67,9 @@
                     HS Class of {{athlete.profile.highSchoolGraduationYear}}
                 </span>
                 <span ng-if="!athlete.profile.highSchoolGraduationYear">
-                    <a
-                     class="empty-attribute"
-                     ui-sref="Athlete.Profile.EditProfile.Academics"
-                    ><i class="icon icon-plus"></i> Add Class Year</a>
+                    <a id="add-class-year-cta" class="empty-attribute" ui-sref="Athlete.Profile.EditProfile.Academics">
+                        <i class="icon icon-plus"></i> Add Class Year
+                    </a>
                 </span>
             </li>
 
