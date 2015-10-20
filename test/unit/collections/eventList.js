@@ -47,7 +47,7 @@ describe('EventList', () => {
             let index = 1;
             let nextIndex = index + 1;
             sampleList.eventIterator.current = sampleList.get(index);
-            let upperBoundingTime = sampleList.upperBoundingTime();
+            let upperBoundingTime = sampleList.upperBoundingTime;
             let expectedTime = sampleList.get(nextIndex).time;
             expect(upperBoundingTime).to.equal(expectedTime);
         });
@@ -55,7 +55,7 @@ describe('EventList', () => {
         it('should return null if there is no next event', () => {
             let event = sampleList.last;
             sampleList.eventIterator.current = event;
-            let upperBoundingTime = sampleList.upperBoundingTime();
+            let upperBoundingTime = sampleList.upperBoundingTime;
             expect(upperBoundingTime).to.be.null;
         });
     });
@@ -66,7 +66,7 @@ describe('EventList', () => {
             let index = sampleList.length - 1;
             let previousIndex = index - 1;
             sampleList.eventIterator.current = sampleList.get(index);
-            let lowerBoundingTime = sampleList.lowerBoundingTime();
+            let lowerBoundingTime = sampleList.lowerBoundingTime;
             let expectedTime = sampleList.get(previousIndex).time;
             expect(lowerBoundingTime).to.equal(expectedTime);
         });
@@ -74,7 +74,7 @@ describe('EventList', () => {
         it('should return null if there is no previous event', () => {
             let event = sampleList.first;
             sampleList.eventIterator.current = event;
-            let lowerBoundingTime = sampleList.lowerBoundingTime();
+            let lowerBoundingTime = sampleList.lowerBoundingTime;
             expect(lowerBoundingTime).to.be.null;
         });
     });
