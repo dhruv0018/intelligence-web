@@ -1,8 +1,8 @@
 <div class="uploading-controls">
     <header>
         <div class="upload-progress">
-            <button id="cancel-uploading-cta" class="cancel-upload" ng-disabled="!uploadModel.isUploading()" ng-click="cancel()"><i class="icon icon-remove"></i> Cancel</button>
-            <x-progressbar class="progressbar progress-striped" ng-class="{ active: uploadModel.isUploading() }" type="{{getProgressBarType()}}" max="1" value="uploadModel.progress()"></x-progressbar>
+            <button id="cancel-uploading-cta" class="cancel-upload" ng-disabled="!isUploading()" ng-click="cancel()"><i class="icon icon-remove"></i> Cancel</button>
+            <x-progressbar class="progressbar progress-striped" ng-class="{ active: isUploading() }" type="{{getProgressBarType()}}" max="1" value="getUploadProgress()"></x-progressbar>
         </div>
     </header>
 </div>
