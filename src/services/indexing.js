@@ -91,7 +91,8 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /*Push onto the stack the new set of tags*/
                 let indexingTags = tagsManager.current;
-                this.tagStack.push({tags:indexingTags});
+                this.tagStack.clear();
+                this.tagStack.push({ tags:indexingTags });
 
                 if(tag.isGroup) {
                     this.next();
@@ -161,8 +162,16 @@ IntelligenceWebClient.factory('IndexingService', [
                         gameId
                     );
 
-                    /* Add event to the current play. */
-                    playManager.addEvent(eventManager.current);
+                    if (!tag.isGroup) {
+
+                        /* Add event to the current play. */
+                        playManager.addEvent(eventManager.current);
+                    }
+
+                    /*Push onto the stack the new set of tags*/
+                    let indexingTags = tagsManager.current;
+                    this.tagStack.clear();
+                    this.tagStack.push({ tags:indexingTags });
                 }
 
                 this.showTags = false;
