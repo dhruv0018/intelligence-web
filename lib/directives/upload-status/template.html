@@ -2,12 +2,14 @@
 
     <!-- TODO: refactor upload status styles -->
 
+    <!-- Only can be uploading if the model is present -->
     <div class="uploading" data-ng-if="uploadModel.isUploading()">
 
         <!-- TODO: Refactor template logic -->
         <h1 data-ng-if="game.isRegular() && (game.status === null || !isDefined(game.status))">You’re uploading a regular game…</h1>
         <h1 data-ng-if="game.isNonRegular() && (game.status === null || !isDefined(game.status))">You’re uploading a scouting/scrimmage game…</h1>
 
+        <!-- TODO: Refactor game status template logic out of here-->
         <h2 data-ng-hide="game.rosters && game.rosters[game.teamId].id" data-ng-if="game.status === null || !isDefined(game.status)">Complete the rest of the game information.</h2>
         <h2 data-ng-if="game.status === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game will be submitted for breakdown once the upload is complete.</h2>
         <h2 data-ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game will be available for sharing once the upload is complete.</h2>
@@ -20,12 +22,23 @@
         <h2>Please delete this game and try to submit your game again.</h2>
     </div>
 
-    <div class="uploaded" data-ng-if="uploadModel.isUploaded() || game.video.isUploaded() || game.video.isComplete()">
+    <!-- The video is uploaded if the uploadModel says it was uploaded or if the video has the uploaded state  -->
+    <div class="uploaded" data-ng-if="uploadModel.isUploaded() || game.video.isUploaded()">
 
-        <!-- TODO: Refactor template logic -->
         <h1 ng-if="uploadModel.isUploaded() || game.video.isUploaded()">Your upload is complete and is being processed!</h1>
+
+        <!-- TODO: Refactor game status template logic out of here-->
+        <h2 data-ng-hide="game.rosters && game.rosters[game.teamId].id" data-ng-if="game.status === null || !isDefined(game.status)">Complete the rest of the game information.</h2>
+        <h2 data-ng-if="game.status === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game has been submitted for breakdown.</h2>
+        <h2 data-ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game is available for sharing.</h2>
+    </div>
+
+    <!--  The complete status is independent of the upload model by this point -->
+    <div class="uploaded" data-ng-if="game.video.isComplete()">
+
         <h1 ng-if="game.video.isComplete()">Your video has been processed.</h1>
 
+        <!-- TODO: Refactor game status template logic out of here-->
         <h2 data-ng-hide="game.rosters && game.rosters[game.teamId].id" data-ng-if="game.status === null || !isDefined(game.status)">Complete the rest of the game information.</h2>
         <h2 data-ng-if="game.status === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game has been submitted for breakdown.</h2>
         <h2 data-ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game is available for sharing.</h2>
