@@ -54,6 +54,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     this.showScript = false;
                     this.eventSelected = false;
                     videoPlayer.pause();
+                    this.indexingStartedTime = videoPlayer.currentTime;
                 }
             },
 
@@ -71,7 +72,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 }
 
                 /* Get current time from the video. */
-                var time = videoPlayer.currentTime;
+                let time = this.indexingStartedTime;
 
                 /* Get tag. */
                 let tag = tagsets.getTag(tagId);
