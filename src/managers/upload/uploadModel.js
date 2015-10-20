@@ -52,15 +52,6 @@ class UploadModel {
     }
 
     /**
-     * Returns true or false if the UploadModel is uploading
-     * @returns {boolean}
-     */
-    isUploading() {
-
-        return this.progress() > 0 && this.progress() < 1;
-    }
-
-    /**
      * Adds a callback to an array of callbacks that will be called when
      * the upload completes.
      * @param {function} callback
