@@ -135,6 +135,8 @@ class UploadModel {
 
     /**
      * Calls all of the complete callback events and updates status
+     * The uploader instance currently calls the complete method even
+     * when the upload was cancelled.
      */
     complete(result) {
 
