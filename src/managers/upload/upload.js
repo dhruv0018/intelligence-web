@@ -36,8 +36,8 @@ class UploadManager {
      */
     makeUploadModel(id, uploaderServiceInstance) {
 
-        if (!id) throw new Error(`Missing required parameter 'id'`);
-        if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
+        if (!id) console.error(`Missing required parameter 'id'`);
+        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
 
         let uploadModel = new UploadModel(uploaderServiceInstance);
 
@@ -65,8 +65,8 @@ class UploadManager {
      */
     get(id) {
 
-        if (!id) throw new Error(`Missing required parameter 'id'`);
-        if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
+        if (!id) console.error(`Missing required parameter 'id'`);
+        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
 
         return this.uploads[id];
     }
@@ -106,10 +106,10 @@ class UploadManager {
      */
     add(id, uploadModel) {
 
-        if (!id) throw new Error(`Missing required parameter 'id'`);
-        if (!uploadModel) throw new Error(`Missing required parameter 'uploadModel'`);
-        if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
-        if (!(uploadModel instanceof UploadModel)) throw new Error(`uploadModel is not an instanceof 'uploadModel'`);
+        if (!id) console.error(`Missing required parameter 'id'`);
+        if (!uploadModel) console.error(`Missing required parameter 'uploadModel'`);
+        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
+        if (!(uploadModel instanceof UploadModel)) console.error(`uploadModel is not an instanceof 'uploadModel'`);
 
         if (this.countRunningUploads() < this.MAX_UPLOADS) {
 
@@ -129,8 +129,8 @@ class UploadManager {
      */
     remove(id) {
 
-        if (!id) throw new Error(`Missing required parameter 'id'`);
-        if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
+        if (!id) console.error(`Missing required parameter 'id'`);
+        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
 
         let uploadModel = this.get(id);
 
@@ -147,8 +147,8 @@ class UploadManager {
      */
     onUploadModelComplete(id) {
 
-        if (!id) throw new Error(`Missing required parameter 'id'`);
-        if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
+        if (!id) console.error(`Missing required parameter 'id'`);
+        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
 
         let uploadModel = this.get(id);
 
@@ -167,8 +167,8 @@ class UploadManager {
      */
     onUploadModelError(id) {
 
-        if (!id) throw new Error(`Missing required parameter 'id'`);
-        if (!Number.isInteger(id)) throw new Error(`id '${id}' is not an integer`);
+        if (!id) console.error(`Missing required parameter 'id'`);
+        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
 
         let uploadModel = this.get(id);
 
