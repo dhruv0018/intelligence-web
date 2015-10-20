@@ -325,6 +325,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.isIndexing = true;
                 this.showTags = false;
                 this.showScript = true;
+                /* Snap video back to time of current event. */
+                videoPlayer.seekTime(event.time);
             }
         };
 
