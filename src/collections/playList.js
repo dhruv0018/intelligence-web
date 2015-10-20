@@ -19,10 +19,9 @@ class PlayList extends SortedList {
     /**
      * Returns the start time of the preceeding play or null if there is no preceeding play
      *
-     * @method lowerBoundingTime
-     * @returns {Integer | null}
+     * @type {Number | null}
      */
-    lowerBoundingTime() {
+    get lowerBoundingTime() {
         let current = this.statefulIterator.current.value;
         let previous = this.statefulIterator.readPrevious().value;
         let time = null;
