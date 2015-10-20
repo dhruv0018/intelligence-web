@@ -150,12 +150,21 @@ class UploadModel {
 
         } else {
 
-            this.status = CANCELLED;
-
-            this.callbacks.error.forEach((callback) => {
-                callback();
-            });
+            // if the progress isn't 1 but was complete, it was cancelled
+            cancelled();
         }
+    }
+
+    /**
+     * Calls all of the error callback events
+     */
+    cancelled() {
+
+        this.status = CANCELLED;
+
+        this.callbacks.error.forEach((callback) => {
+            callback();
+        });
     }
 
     /**
