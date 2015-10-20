@@ -91,7 +91,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                 /*Push onto the stack the new set of tags*/
                 let indexingTags = tagsManager.current;
-                this.tagStack.clear();
                 this.tagStack.push({ tags:indexingTags });
 
                 if(tag.isGroup) {
