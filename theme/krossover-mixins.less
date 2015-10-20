@@ -95,6 +95,16 @@
     }
 }
 
+// Phone screens (less than 480px wide)
+.phone (@rules; @maxWidth: @screen-xs - 1) {
+
+    @media only screen
+    and (max-width: @maxWidth) {
+
+        @rules();
+    }
+}
+
 // Desktop screens (1024px and up)
 .desktop (@rules; @minWidth: @screen-lg) {
 
