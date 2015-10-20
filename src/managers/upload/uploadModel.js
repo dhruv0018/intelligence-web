@@ -41,7 +41,7 @@ class UploadModel {
         return this.status === UPLOADING;
     }
 
-    isUploaded() {
+    isCancelled() {
 
         return this.status === CANCELLED;
     }
