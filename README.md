@@ -17,7 +17,7 @@ https://docs.google.com/document/d/1Nx-BRUx-r_y3z_Qg_5OtMCq3fJYyjItXDdt5c-LKL5w/
 ## Clone this repository
 
 ```
-git clone https://bitbucket.org/krossoverintelligence/intelligence-web-client
+git clone https://github.com/krossoverintelligence/intelligence-web.git
 ```
 
 ## Install NVM, the Node Version Manager
@@ -165,4 +165,3 @@ To package the production build up and version it for distribution use:
 ```
 This will create a versioned zip file in the ```dist``` directory. The
 version coresponds to the version number in the package.json file.
-
