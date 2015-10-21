@@ -1466,7 +1466,7 @@ describe('GamesFactory', function() {
             sinon.stub(GamesFactory,'getBySharedWithUserId').withArgs(userId).returns([{id:2}]);
             let uniqueExpectedGames = [{id:1},{id:2}];
             sinon.stub(GamesFactory,'getList').withArgs([1,2]).returns(uniqueExpectedGames);
-            session.currentUser = UsersFactory.extend({ id: 2, roles : [{type : ROLE_TYPE.ATHLETE}]});
+            session.currentUser = UsersFactory.extend({ id: userId, roles : [{type : ROLE_TYPE.ATHLETE, teamId}]});
             let gamesList = GamesFactory.getByRelatedRole(userId, teamId);
             assert(session.getCurrentUserId.should.have.not.been.called);
             assert(session.getCurrentTeamId.should.have.not.been.called);
@@ -1487,7 +1487,7 @@ describe('GamesFactory', function() {
             sinon.stub(GamesFactory,'getBySharedWithUserId').withArgs(userId).returns([{id:2}]);
             let uniqueExpectedGames = [{id:1},{id:2}];
             sinon.stub(GamesFactory,'getList').withArgs([1,2]).returns(uniqueExpectedGames);
-            session.currentUser = UsersFactory.extend({ id: userId, roles : [{type : ROLE_TYPE.ATHLETE}]});
+            session.currentUser = UsersFactory.extend({ id: userId, roles : [{type : ROLE_TYPE.ATHLETE, teamId}]});
             let gamesList = GamesFactory.getByRelatedRole();
             assert(session.getCurrentUserId.should.have.been.called);
             assert(session.getCurrentTeamId.should.have.been.called);
@@ -2055,7 +2055,17 @@ describe('GamesFactory', function() {
                     assert(session.getCurrentTeamId.should.have.been.called);
                     assert(game.isSharedWithCurrentUser.should.have.been.called);
         }]));
+    });
 
+    describe('isCopied', ()=> {
+        it("Should return false, when there is no copiedFromGameId is null", inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:1,copiedFromGameId:null});
+                expect(game.isCopied()).to.be.false;
+        }]));
 
+        it("Should return true, when there copiedFromGameId is not null", inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:1,copiedFromGameId:12344});
+                expect(game.isCopied()).to.be.true;
+        }]));
     });
 });
