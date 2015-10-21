@@ -271,6 +271,7 @@ module.exports = function(grunt) {
                         'app/reel/*.less',
                         'app/embed/*.less',
                         'app/indexer/**/*.less',
+                        'app/analytics/styles.less',
                         'app/styleguide/**/*.less',
                         'lib/directives/arena-chart/styles.less'
                     ]
