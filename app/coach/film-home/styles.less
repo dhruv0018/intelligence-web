@@ -82,8 +82,18 @@
         text-transform: capitalize;
         overflow-y: auto;
 
-        .krossover-athlete {
+        @media only screen
+        and (max-width: @md-screen-md) {
+            display: none;
+        }
+
+        .sidebar-athlete {
             padding-left: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
         }
 
         .role-title{

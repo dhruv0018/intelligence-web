@@ -42,6 +42,8 @@
 
         td.athlete-column {
             border: none;
+            vertical-align: middle;
+
             input {
                 border-radius: @border-radius-small;
                 border: 1px solid @gray-border;
@@ -51,5 +53,23 @@
                 line-height: 50px;
             }
         }
+    }
+
+    .profile-image-container {
+        width: 35px;
+        height: 35px;
+        border: thin solid @gray-border;
+        border-radius: @border-radius-small;
+        overflow: hidden;
+        vertical-align: middle;
+
+        img {
+            max-width: 100%;
+            vertical-align: top;
+        }
+    }
+
+    .placeholder-picture {
+        vertical-align: middle;
     }
 }

@@ -120,6 +120,7 @@ Indexing.config([
                                     game: game,
                                     plays: plays.load({ gameId: gameId }),
                                     players: players,
+                                    team: teams.load(game.uploaderTeamId),
                                     teamPlayers: players.load({ rosterId: teamRoster.id }),
                                     opposingTeamPlayers: players.load({ rosterId: opposingTeamRoster.id })
                                 };
@@ -141,7 +142,7 @@ Indexing.config([
                         playerlist.fill(game);
                         if (!game.isAssignedToUser(userId)) {
 
-                            $state.go('IndexerGames');
+                            $state.go('IndexerGamesAssigned');
                         }
 
                         else if (game.canBeIndexed() || game.canBeQAed()) {

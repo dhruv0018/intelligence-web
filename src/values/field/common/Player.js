@@ -129,6 +129,7 @@ function toString(field) {
     let value = field.value;
     let jerseyColor = value.jerseyColor;
     let name = value.name;
+    //FIXME find out a way to use color-shape directive here
     return `
     <span class="value">
 

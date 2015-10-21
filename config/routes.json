@@ -249,7 +249,12 @@
         "Indexer": true
     },
 
-    "IndexerGames": {
+    "IndexerGamesAssigned": {
+
+        "Indexer": true
+    },
+
+    "IndexerGamesAvailable": {
 
         "Indexer": true
     },
@@ -565,6 +570,24 @@
     },
 
     "ShortClips": {
+
+        "*": true
+    },
+
+    "Embed": {
+
+        "*": true
+    },
+
+    "Embed.Restricted": {
+        "*": true
+    },
+
+    "Embed.Deleted": {
+        "*": true
+    },
+
+    "ShortEmbed": {
 
         "*": true
     },

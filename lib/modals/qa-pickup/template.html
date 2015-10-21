@@ -1,0 +1,59 @@
+<div class="qa-pickup">
+    <div ng-show="!successfulPickup && !gameAlreadyTaken">
+        <header class="modal-header">
+
+            <h3 class="modal-title">
+                <span>Confirm Pick Up Game to QA</span>
+            </h3>
+
+        </header>
+
+        <div class="modal-body">
+            <div>Game {{game.id}}: {{ team.name }} vs {{ opposingTeam.name }}, {{ sport.name | capitalizeFirstLetter}}</div>
+            <div ng-if="game.timeRemaining > 0">{{ game.timeRemaining | millisecondsAsDaysHoursMinutes }} Left to QA</div>
+            <div ng-if="game.timeRemaining <= 0">6H 00M Left to QA</div>
+        </div>
+
+        <footer class="modal-footer">
+
+            <div class="buttons">
+
+                <button class="qa-pickup-buttons" ng-click="$dismiss()">Cancel</button>
+                <button class="qa-pickup-buttons" type="submit" ng-click="pickUpGame(true)">Pick up and go to game</button>
+                <button class="qa-pickup-buttons" type="submit" ng-click="pickUpGame(false)">Pick up to QA</button>
+
+            </div>
+
+        </footer>
+    </div>
+
+    <div ng-show="successfulPickup && !gameAlreadyTaken" class="pickup-success">
+        <header class="modal-header no-border">
+            <a class="pull-right" ng-click="$dismiss()">
+                <i class="icon icon-remove"></i>
+            </a>
+        </header>
+        <div class="modal-body">
+            <div class="success-icon">
+                <i class="icon icon-check-circle"></i>
+            </div>
+            <p>Game successfully picked up</p>
+        </div>
+    </div>
+
+    <div ng-show="!successfulPickup && gameAlreadyTaken">
+
+        <div class="modal-body">
+            <div>
+                <p>
+                    This game has already been picked up.
+                </p>
+                <p>
+                    Click Refresh to see an updated list of available games.
+                </p>
+            </div>
+            <button class="qa-pickup-buttons" ng-click="refreshGames()">Refresh</button>
+        </div>
+
+    </div>
+</div>

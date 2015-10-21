@@ -12,8 +12,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, $q, playTelestrationEntity, rawTelestrationEntity) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, teams, users, $q, playTelestrationEntity, rawTelestrationEntity) {
 
         var GamesFactory = {
 
@@ -103,6 +103,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 /* build lookup table of shares by userId shared with */
                 game.shares = game.shares || [];
                 game.sharedWithUsers = game.sharedWithUsers || {};
+                game.sharedWithTeams = game.sharedWithTeams || {};
 
                 //Sort indexer assignments by time assigned
                 if(game.indexerAssignments && game.indexerAssignments.length > 1) {
@@ -114,6 +115,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                     angular.forEach(game.shares, function(share, index) {
                         if (share.sharedWithUserId) {
                             game.sharedWithUsers[share.sharedWithUserId] = share;
+                        } else if (share.sharedWithTeamId) {
+                            game.sharedWithTeams[share.sharedWithTeamId] = share;
                         } else if (!share.sharedWithUserId && !share.sharedWithTeamId) {
                             game.publicShare = share;
                             game.shares.splice(index, 1);
@@ -190,43 +193,67 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             getBySharedWithUserId: function(userId) {
 
-                var self = this;
+                let games = this.getList();
 
-                var games = self.getList();
+                return games.filter(game => game.isSharedWithUserId(userId));
 
-                return games.filter(function(game) {
+            },
 
-                    return game.isSharedWithUserId(userId);
-                });
+            getBySharedWithTeamId: function(teamId) {
+
+                let games = this.getList();
+
+                return games.filter(game => game.isSharedWithTeamId(teamId));
             },
 
             getByRelatedRole: function(userId, teamId) {
-
-                var self = this;
 
                 userId = userId || session.getCurrentUserId();
                 teamId = teamId || session.getCurrentTeamId();
 
                 var games = [];
-
                 if (session.currentUser.is(ROLES.COACH)) {
-
-                    games = games.concat(self.getByUploaderRole(userId, teamId));
-                    games = games.concat(self.getByUploaderTeamId(teamId));
+                    games = games.concat(
+                            this.getByUploaderRole(userId, teamId),
+                            this.getByUploaderTeamId(teamId),
+                            this.getBySharedWithTeamId(teamId));
                 }
 
                 else if (session.currentUser.is(ROLES.ATHLETE)) {
 
-                    games = games.concat(self.getByUploaderUserId(userId));
-                    games = games.concat(self.getByUploaderTeamId(teamId));
+                    const user = session.getCurrentUser();
+
+                    games = games.concat(this.getByUploaderUserId(userId));
+
+                    user.roles.forEach(role => {
+                        if (role.type.id === ROLES.ATHLETE.type.id) {
+                            games = games.concat(this.getByUploaderTeamId(role.teamId));
+                        }
+                    });
                 }
 
-                games = games.concat(self.getBySharedWithUserId(userId));
+                games = games.concat(this.getBySharedWithUserId(userId));
 
-                var gameIds = utilities.unique(self.getIds(games));
+                const gameIds = utilities.unique(this.getIds(games));
 
-                return self.getList(gameIds);
+                return this.getList(gameIds);
             },
+
+            getHeadCoachName: function() {
+
+                if (!this.uploaderTeamId) throw new Error('No uploader team id');
+                let uploaderTeamId = this.uploaderTeamId;
+
+                let team = teams.get(uploaderTeamId);
+                if (!team) throw new Error('Team does not exist');
+
+                let headCoachRole = team.getHeadCoachRole();
+                let user = users.get(headCoachRole.userId);
+                if (!user) throw new Error('User does not exist');
+
+                return user.name;
+            },
+
 
             saveNotes: function() {
 
@@ -270,41 +297,13 @@ IntelligenceWebClient.factory('GamesFactory', [
             * Check if the user is allowed to view a given game.
             */
             isAllowedToView: function() {
+                let currentUser = session.getCurrentUser();
+                //Check if user has permissions to view game
+                return  this.isSharedWithPublic() ||
+                        this.uploaderUserId === session.getCurrentUserId() ||
+                        this.uploaderTeamId === session.getCurrentTeamId() ||
+                        this.isSharedWithCurrentUser();
 
-                let self = this;
-
-                //Check if user has permissions to view reel
-                let isAllowed = self.isSharedWithPublic() ||
-                                self.uploaderUserId === session.getCurrentUserId() ||
-                                self.uploaderTeamId === session.getCurrentTeamId() ||
-                                self.isSharedWithUser(session.getCurrentUser()) ||
-                                self.isSharedWithTeam();
-
-                return isAllowed;
-            },
-
-            /**
-            * @class Games
-            * @method
-            * @returns {Integer} returns the team id that the game
-            * is shared with.
-            * Checks if the game is shared with a team.
-            */
-
-            /** FIXME: We should consider consolidating this
-             *  function with the one is reels factory.
-             */
-            isSharedWithTeam: function() {
-
-                let self = this;
-
-                if (!self.shares) return false;
-
-                return self.shares.map(function(share) {
-                    return share.sharedWithTeamId;
-                }).some(function(sharedWithTeamId) {
-                    return sharedWithTeamId;
-                });
             },
 
             isPlayerOnOpposingTeam: function(playerId) {
@@ -553,6 +552,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     self.indexerAssignments = self.indexerAssignments || [];
 
                     deadline = new Date(deadline).toISOString();
+
                     var timeAssigned = new Date().toISOString();
 
                     var assignment = {
@@ -785,7 +785,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var now = moment.utc();
                 var deadline = moment.utc(assignment.deadline);
-                var timeRemaining = moment.duration(deadline.subtract(now));
+                var timeRemaining = moment.duration(deadline.diff(now));
 
                 return timeRemaining.asMilliseconds();
             },
@@ -964,6 +964,28 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return model.getFormationReport({ id: self.id });
             },
 
+            /**
+             * copy a game to team
+             * @param {Integer} teamId - the team ID of the team for which the
+             * game should be copied.
+             */
+            copy: function(teamId) {
+
+                let self = this;
+
+                if (!self.id) throw new Error('Game must exist to copy');
+
+                const copyCriteria = {
+                    teamId : teamId,
+                    gameId : self.id
+                };
+
+                let Resource = $injector.get(self.model);
+                let copyResource = new Resource(copyCriteria);
+
+                return $q.when(copyResource.$copy());
+            },
+
             getDownAndDistanceReport: function(report) {
 
                 /* TODO: the only thing used from parameter is gameId */
@@ -1051,6 +1073,18 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return timeRemaining.asMilliseconds();
             },
+            getDeadlineToReturnGame: function(uploaderTeam) {
+
+                if (!this.submittedAt) return 0;
+
+                let submittedAt = moment.utc(this.submittedAt);
+
+                if (!submittedAt.isValid()) return 0;
+
+                let turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
+
+                return submittedAt.add(turnaroundTime).format();
+            },
             setAside: function() {
                 var self = this;
                 self.status = GAME_STATUSES.SET_ASIDE.id;
@@ -1080,18 +1114,18 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             },
             findLastIndexerAssignment: function() {
-                var self = this;
+                let self = this;
 
                 if (!self.indexerAssignments) {
                     throw new Error('no indexer assignments');
                 }
 
-                var index = self.indexerAssignments.length - 1;
+                let index = self.indexerAssignments.length;
 
-                //iterate backwards through the assignments looking for the first indexer assignment
-                for (index; index >= 0; index--) {
-                    if (!self.indexerAssignments[index].isQa) {
-                        return self.indexerAssignments[index];
+                //iterate through the assignments looking for the first indexer assignment
+                for (let i=0; i < index; i++) {
+                    if (!self.indexerAssignments[i].isQa) {
+                        return self.indexerAssignments[i];
                     }
                 }
 
@@ -1140,6 +1174,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return isBeingBrokenDown;
             },
+
             shareWithUser: function(user, isTelestrationsShared = false) {
 
                 var self = this;
@@ -1165,22 +1200,63 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 self.shares.push(share);
             },
-            stopSharingWithUser: function(user) {
 
-                var self = this;
+            /**
+             * share game with team
+             * @param {Object} team - team to be shared with
+             * @param {boolean} [isTelestrationsShared]
+             * @throws {Error} if the team is not avaliable to share.
+             */
+            shareWithTeam: function(team, isTelestrationsShared = false) {
 
-                if (!user) throw new Error('No user to remove');
+                if (!team) throw new Error('No team to share with');
 
-                if (!self.shares || !self.shares.length) return;
+                this.shares = this.shares || [];
 
-                for (var index = 0; index < self.shares.length; index++) {
-                    if (self.shares[index].sharedWithUserId === user.id) {
-                        self.shares.splice(index, 1);
-                        delete self.sharedWithUsers[user.id];
+                this.sharedWithTeams = this.sharedWithTeams || {};
+
+                if (this.isSharedWithTeam(team)) return;
+
+                const share = {
+                    userId: session.currentUser.id,
+                    gameId: this.id,
+                    sharedWithTeamId: team.id,
+                    createdAt: moment.utc().toDate(),
+                    isBreakdownShared: false,
+                    isTelestrationsShared
+                };
+
+                this.sharedWithTeams[team.id] = share;
+
+                this.shares.push(share);
+            },
+
+            /**
+             * stop sharing game
+             * @param {Object} share - shared with object
+             * @throws {Error} if the share object is not avaliable.
+             */
+            stopSharing: function(share) {
+
+                if (!share) throw new Error('No share to remove');
+
+                if (!this.shares || !this.shares.length) return;
+
+                for (var index = 0; index < this.shares.length; index++) {
+                    if ((this.shares[index].sharedWithUserId === share.sharedWithUserId) &&
+                            (this.shares[index].sharedWithTeamId === share.sharedWithTeamId)) {
+                        this.shares.splice(index, 1);
+                        if (share.sharedWithUserId) {
+                            delete this.sharedWithUsers[share.sharedWithUserId];
+                        }
+                        if (share.sharedWithTeamId) {
+                            delete this.sharedWithTeams[share.sharedWithTeamId];
+                        }
                         return;
                     }
                 }
             },
+
             getShareByUser: function(user) {
                 var self = this;
 
@@ -1193,9 +1269,36 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.getShareByUserId(userId);
             },
 
+            /**
+             * get game sharing by team
+             * @param {Object} team - shared with team
+             * @throws {Error} if the sharedWithTeams or team objects are not avaliable.
+             * @return {Object}
+             */
+            getShareByTeam: function(team) {
+                if (!this.sharedWithTeams) throw new Error('sharedWithTeams not defined');
+
+                if (!team) throw new Error('No team to get share from');
+
+                return this.getShareByTeamId(team.id);
+            },
+
+            /**
+             * get game sharing by logged in user
+             * @return {Object}
+             */
             getShareByCurrentUser: function() {
 
-                return this.getShareByUser(session.getCurrentUser());
+                let currentUser = session.getCurrentUser();
+                if (this.isSharedWithUser(currentUser)) {
+                    return this.getShareByUser(currentUser);
+                }
+
+                const teamId = session.getCurrentTeamId();
+                if ((currentUser.is(ROLES.COACH)) && this.isSharedWithTeamId(teamId)) {
+                    return this.getShareByTeamId(teamId);
+                }
+
             },
 
             getShareByUserId: function(userId) {
@@ -1205,6 +1308,19 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return self.sharedWithUsers[userId];
             },
+
+            /**
+             * get game sharing by teamId
+             * @param {Integer} teamId - shared with team
+             * @throws {Error} if the sharedWithTeams are not avaliable.
+             * @return {Object}
+             */
+            getShareByTeamId: function(teamId) {
+                if (!this.sharedWithTeams) throw new Error('sharedWithTeams not defined');
+
+                return this.sharedWithTeams[teamId];
+            },
+
             isSharedWithUser: function(user) {
                 var self = this;
 
@@ -1215,10 +1331,41 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return angular.isDefined(self.getShareByUser(user));
             },
 
+            /**
+             * check game shared with team
+             * @param {Object} team - shared with team
+             * @return {boolean}
+             */
+            isSharedWithTeam: function(team) {
+                if (!team) return false;
+
+                if (!this.sharedWithTeams) return false;
+
+                return !!this.getShareByTeam(team);
+            },
+
+            /**
+             * check reel shared with loggedin user
+             * @return {boolean}
+             */
             isSharedWithCurrentUser: function() {
 
-                return this.isSharedWithUser(session.getCurrentUser());
+                let currentUser = session.getCurrentUser();
+                return this.isSharedWithUser(currentUser) ||
+                        ((currentUser.is(ROLES.COACH)) && this.isSharedWithTeamId(session.getCurrentTeamId()));
+
             },
+
+            /**
+             * check reel shared with loggedin user
+             * @return {boolean}
+             */
+            isBreakdownSharedWithCurrentUser: function() {
+
+                return this.isSharedWithCurrentUser() && this.getShareByCurrentUser().isBreakdownShared;
+
+            },
+
             isSharedWithUserId: function(userId) {
                 var self = this;
 
@@ -1227,6 +1374,19 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!self.sharedWithUsers) return false;
 
                 return angular.isDefined(self.getShareByUserId(userId));
+            },
+
+            /**
+             * check game shared with teamId
+             * @param {Integer} teamId - shared with team
+             * @return {boolean}
+             */
+            isSharedWithTeamId: function(teamId) {
+                if (!teamId) return false;
+
+                if (!this.sharedWithTeams) return false;
+
+                return angular.isDefined(this.getShareByTeamId(teamId));
             },
             getUserShares: function() {
                 var self = this;
@@ -1241,6 +1401,29 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return sharesArray;
             },
+
+            /**
+             * get team shares of game
+             * @return {Array}
+             */
+            getTeamShares: function() {
+                if (!this.sharedWithTeams) throw new Error('sharedWithTeams not defined');
+
+                let sharesArray = [];
+                angular.forEach(this.sharedWithTeams, function(share, index) {
+                    sharesArray.push(share);
+                });
+                return sharesArray;
+            },
+
+            /**
+             * get all shares excluding the public share
+             * @return {Array}
+             */
+            getNonPublicShares: function() {
+                return this.shares.filter(share => !this.isPublicShare(share));
+            },
+
             togglePublicSharing: function(isTelestrationsShared = false) {
                 var self = this;
 
@@ -1272,6 +1455,16 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return self.publicShare;
             },
+
+            /**
+             * check if the share is public share object
+             * @param {Object} share
+             * @return {boolean}
+             */
+            isPublicShare: function(share) {
+                return share === this.getPublicShare();
+            },
+
             isFeatureSharedPublicly: function(featureAttribute) {
                 var self = this;
 
@@ -1292,10 +1485,33 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (angular.isDefined(userShare) && userShare[featureAttribute] === true) return true;
             },
+
+            /**
+             * check a feature of game is shared with team
+             * @param {Object} team - shared with team
+             * @return {boolean}
+             */
+            isFeatureSharedWithTeam: function(featureAttribute, team) {
+                if (!featureAttribute) throw new Error('Missing \'featureAttribute\' parameter');
+                if (typeof featureAttribute !== 'string') throw new Error('featureAttribute parameter must be a string');
+
+                const teamShare = this.getShareByTeam(team);
+
+                return !!(angular.isDefined(teamShare) && teamShare[featureAttribute]);
+            },
             isTelestrationsSharedWithUser: function(user) {
                 var self = this;
 
                 return self.isFeatureSharedWithUser('isTelestrationsShared', user);
+            },
+
+            /**
+             * check teletration for game are shared with team
+             * @param {Object} team - shared with team
+             * @return {boolean}
+             */
+            isTelestrationsSharedWithTeam: function(team) {
+                return this.isFeatureSharedWithTeam('isTelestrationsShared', team);
             },
             isTelestrationsSharedPublicly: function() {
                 var self = this;
@@ -1321,6 +1537,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 return teamId === self.uploaderTeamId;
+            },
+
+            /**
+             * Determine if the game is copied
+             * @returns {boolean}
+             */
+            isCopied: function () {
+                return this.copiedFromGameId !== null;
             }
         };
 

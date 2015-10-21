@@ -1,12 +1,14 @@
 <div class="krossover-athlete">
     <div class="sidebar-athlete" ng-if="!editable">
         <div class="athelete-profile-picture">
-            <img ng-if="athlete.picture.url" ng-src="{{athlete.picture.url}}" width="40" height="40" alt="Avatar">
-            <profile-placeholder ng-if="!player.picture.url" data-size="small"></profile-placeholder>
+            <div ng-if="users[athlete.userId].imageUrl" class="profile-image-container">
+                <img ng-src="{{users[athlete.userId].imageUrl}}" alt="Avatar">
+            </div>
+            <profile-placeholder ng-if="!users[athlete.userId].imageUrl" data-size="small"></profile-placeholder>
         </div>
         <div class="athlete-profile-details">
-            <span class="athlete-information">
-            	{{team.roster.playerInfo[athlete.id].jerseyNumber}}
+            <span class="athlete-information" ng-show="team.roster.playerInfo[athlete.id].jerseyNumber">
+            	#{{team.roster.playerInfo[athlete.id].jerseyNumber}}
             </span> <span class="athlete-information">
             	{{athlete.firstName[0] + '.'}} {{athlete.lastName}}
             </span>  <br/>
@@ -23,7 +25,10 @@
 
                 <td class="athlete-column" ng-if="team.isCustomerTeam">
 
-                    <profile-placeholder data-size="small"></profile-placeholder>
+                    <div ng-if="users[athlete.userId].imageUrl" class="profile-image-container">
+                        <img ng-src="{{users[athlete.userId].imageUrl}}" alt="Avatar">
+                    </div>
+                    <profile-placeholder ng-if="!users[athlete.userId].imageUrl" data-size="small"></profile-placeholder>
 
                 </td>
 
@@ -91,7 +96,7 @@
 
                 </td>
 
-                <td class="athlete-column" ng-if="isUserTeam" ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
+                <td class="athlete-column" ng-if="team.isCustomerTeam" ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
                     <i id="{{idHook}}-toggle-activation-off-cta" class="icon icon-check-square-o" ng-show="!rosterEntry.playerInfo.isActive"></i>
                     <i id="{{idHook}}-toggle-activation-on-cta" class="icon icon-check-empty" ng-show="rosterEntry.playerInfo.isActive"></i>
                 </td>

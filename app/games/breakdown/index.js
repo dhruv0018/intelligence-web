@@ -242,6 +242,8 @@ function GamesBreakdownController (
                 playManager.current = play;
             }
 
+            $scope.currentVideo = play.clip;
+
             // Set telestrations
             $scope.telestrationsEntity = $scope.game.playTelestrations;
             $scope.currentPlayId = play.id;

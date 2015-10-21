@@ -92,6 +92,11 @@
         text-transform: capitalize;
         overflow-y: auto;
 
+        @media only screen
+        and (max-width: @md-screen-md) {
+            display: none;
+        }
+
         .krossover-athlete {
             padding-left: 10px;
         }

@@ -2,7 +2,7 @@
 var angular = window.angular;
 
 var GamesDownAndDistance = angular.module('Games.DownAndDistance', [
-    'ui.multiselect'
+    'am.multiselect'
 ]);
 
 GamesDownAndDistance.run([
