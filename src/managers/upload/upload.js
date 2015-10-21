@@ -151,7 +151,6 @@ class UploadManager {
 
     /**
      * A callback for handling the complete event from an UploadModel.
-     * The UploadModel with 'id' is removed when the upload completes.
      * @param {number|string} id A unique id specifying the UploadModel
      */
     onUploadModelComplete(id) {
@@ -166,13 +165,10 @@ class UploadManager {
 
             uploadModel.cleanup();
         }
-
-        this.remove(id);
     }
 
     /**
      * A callback for handling the error event from an UploadModel.
-     * The UploadModel with 'id' is removed when the upload has an error.
      * @param {number|string} id A unique id specifying the UploadModel
      */
     onUploadModelError(id) {
@@ -187,8 +183,6 @@ class UploadManager {
 
             uploadModel.cleanup();
         }
-
-        this.remove(id);
     }
 
     onBeforeUnload() {

@@ -10,7 +10,7 @@
 
         <uploading-controls
             class="game-info-uploading-controls animated"
-            ng-hide="!uploadManager.get(game.id)"
+            ng-show="GameUploadStateService.isUploading(game)"
             film="game"
             redirect-state="add-film"
         ></uploading-controls>

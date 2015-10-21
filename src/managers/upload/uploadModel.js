@@ -142,7 +142,7 @@ class UploadModel {
         } else {
 
             // if the progress isn't 1 but was complete, it was cancelled
-            cancelled();
+            this.cancelled();
         }
     }
 
