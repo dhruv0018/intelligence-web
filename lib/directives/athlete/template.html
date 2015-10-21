@@ -13,8 +13,8 @@
             	{{athlete.firstName[0] + '.'}} {{athlete.lastName}}
             </span>  <br/>
             <span class="athlete-last-access text-transform-none" ng-if="athlete.userId && users[athlete.userId].lastAccessed">Last signed in — {{users[athlete.userId].lastAccessed | date: 'mediumDate' }}</span>
-            <span class="athlete-last-access text-transform-none" ng-if="athlete.userId && !users[athlete.userId].lastAccessed">Has not yet signed in</span>
-            <span class="athlete-last-access text-transform-none" ng-if="!athlete.userId">Has not activated account</span>
+            <span class="athlete-last-access text-transform-none" ng-if="athlete.userId && !users[athlete.userId].lastAccessed">Has not activated account</span>
+            <span class="athlete-last-access text-transform-none" ng-if="!athlete.userId">No email or account available</span>
         </div>
     </div>
     <form name="athleteForm" ng-if="editable && !athlete.isUnknown">
