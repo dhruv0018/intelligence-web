@@ -82,7 +82,7 @@ class UploadManager {
 
         let runningUploads = Object.keys(this.uploads).filter((id) => {
             let uploadModel = this.get(id);
-            return uploadModel && uploadModel.progress(Number.parseInt(id, 10)) > 0;
+            return uploadModel && uploadModel.isUploading();
         });
 
         return runningUploads.length;
@@ -95,7 +95,7 @@ class UploadManager {
 
         return Object.keys(this.uploads).some((id) => {
             let uploadModel = this.get(id);
-            return uploadModel && uploadModel.progress(Number.parseInt(id, 10)) > 0;
+            return uploadModel && uploadModel.isUploading();
         });
     }
 
