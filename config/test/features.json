@@ -1,4 +1,10 @@
 {
+    "IndexerFlags": {
+
+        "Admin": false,
+        "Indexer": false
+    },
+
     "CustomTags": {
 
         "Head Coach": true,
