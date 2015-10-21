@@ -552,7 +552,8 @@
 
     "Games.ArenaChart": {
         "Head Coach": true,
-        "Assistant Coach": true
+        "Assistant Coach": true,
+        "Athlete": true
     },
 
     "ShortGames": {
