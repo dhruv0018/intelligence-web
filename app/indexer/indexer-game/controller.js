@@ -4,6 +4,7 @@ const moment = require('moment');
 
 IndexerGameController.$inject = [
     '$scope',
+    'config',
     '$state',
     '$stateParams',
     '$modal',
@@ -28,6 +29,7 @@ IndexerGameController.$inject = [
 
 function IndexerGameController(
     $scope,
+    config,
     $state,
     $stateParams,
     $modal,
@@ -49,6 +51,8 @@ function IndexerGameController(
     EMAIL_REQUEST_TYPES,
     STATES
 ) {
+
+    $scope.config = config;
 
     const gameId = Number($stateParams.id);
 
