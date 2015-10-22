@@ -18,7 +18,7 @@
 
         <p
             class="mobile-login-info"
-            ng-if="DEVICE.ANDROID || DEVICE.IOS"
+            ng-if="isMobile && !newUser && !resetPassword"
         >Lacrosse users sign in below</p>
 
         <div class="new-login" ng-class="{'new-user': newUser}">
