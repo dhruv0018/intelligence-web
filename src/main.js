@@ -70,8 +70,9 @@ require('./services/detectDevice');
 require('./services/analytics');
 import './services/performance-timer/angular-index';
 import './services/performance-timer';
-require('./services/upload/gameUploadStateService');
-require('./services/upload/uploadStateService');
+require('./services/fileUpload/fileUpload');
+require('./services/fileUpload/gameUploadStateService');
+require('./services/fileUpload/uploadStateService');
 
 require('./constants/users');
 require('./constants/games');
@@ -169,7 +170,6 @@ require('./managers/storage');
 require('./managers/playerlist');
 require('./managers/playlist');
 require('./mediators/event');
-import FileUploadService from './managers/upload/upload';
 
 require('./directives/alert');
 require('./directives/match');
