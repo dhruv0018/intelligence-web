@@ -15,7 +15,7 @@ function gameVideoStatusService(
     FileUploadService
 ) {
 
-    class GameVideoStatusService extends UploadStateService {
+    class GameVideoStatusService {
 
         static isFailed(game) {
 
@@ -30,7 +30,7 @@ function gameVideoStatusService(
             } else {
 
                 // NOTE: The failure could come from server or client-side
-                return super.isFailed(game) ||
+                return UploadStateService.isFailed(game) ||
                     game.video.isFailed();
             }
         }
@@ -41,7 +41,7 @@ function gameVideoStatusService(
              * The video has uploaded if the upload model says so or the Video
              * thinks that it has. During this time, the video will be processed/transcoded
              */
-            return super.isUploaded(game) || game.video.isUploaded();
+            return UploadStateService.isUploaded(game) || game.video.isUploaded();
         }
 
         static isProcessed(game) {
