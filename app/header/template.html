@@ -46,12 +46,14 @@
         <!-- Athlete Menu -->
         <menu class="dropdown-menu" data-ng-if="currentUser.is(ATHLETE)">
             <li id="mobile-menu-athlete-film-home-cta" data-ui-sref-active="active"><a data-ui-sref="Athlete.FilmHome">Film Home</a></li>
+            <li id="mobile-menu-athlete-analytics-cta" data-ui-sref-active="active"><a data-ui-sref="PlayerAnalytics">Analytics</a></li>
             <li
                 ng-if="config.athleteProfile.isEnabled"
                 ng-show="currentUserIsAthleteRecruit"
                 class="ng-hide"
-                ui-sref-active="active"
-            ><a id="mobile-menu-athlete-profile-cta" data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a></li>
+                ui-sref-active="active">
+                <a id="mobile-menu-athlete-profile-cta" data-ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a>
+            </li>
         </menu>
 
     </div>
@@ -97,19 +99,19 @@
     <menu class="nav navbar-nav" ng-if="currentUser.is(COACH)">
 
         <li data-ui-sref-active="active"><a id="menu-coach-film-home-cta" data-ui-sref="Coach.FilmHome">Film Home</a></li>
-        <li ng-if="SPORTS[SPORT_IDS[league.sportId]].hasAnalytics" id="menu-coach-analytics-cta" class="header-dropdown" ng-class="{active: $state.includes('Coach.Analytics')}">
+        <li ng-if="SPORTS[SPORT_IDS[league.sportId]].hasAnalytics" id="menu-coach-analytics-cta" class="header-dropdown" ng-class="{active: $state.includes('Analytics')}">
             <a class="dropdown-toggle" dropdown-toggle>Analytics</a>
             <ul class="dropdown-menu">
                 <li feature="TeamAnalytics">
                     <a
                         id="menu-coach-analytics-team-cta"
-                        ui-sref="Coach.Analytics.Team"
+                        ui-sref="TeamAnalytics"
                     >Team Analytics</a>
                 </li>
                 <li feature="PlayerAnalytics">
                     <a
                         id="menu-coach-analytics-player-cta"
-                        ui-sref="Coach.Analytics.Player"
+                        ui-sref="PlayerAnalytics"
                     >Player Analytics</a>
                 </li>
             </ul>
@@ -130,6 +132,7 @@
     <!-- Athlete menu -->
     <menu class="nav navbar-nav" data-ng-if="currentUser.is(ATHLETE)">
         <li data-ui-sref-active="active"><a id="menu-athlete-film-home-cta" data-ui-sref="Athlete.FilmHome">Film Home</a></li>
+        <li id="menu-athlete-analytics-cta" data-ui-sref-active="active"><a data-ui-sref="PlayerAnalytics">Analytics</a></li>
         <li
             ng-if="config.athleteProfile.isEnabled"
             ng-show="currentUserIsAthleteRecruit"
