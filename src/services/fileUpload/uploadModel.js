@@ -1,9 +1,13 @@
 
-const NOT_STARTED = 0;
-const UPLOADING = 1;
-const UPLOADED = 2;
-const CANCELLED = 3;
-const FAILED = 4;
+const UPLOAD_STATUSES = {
+    NOT_STARTED: 0,
+    UPLOADING: 1,
+    UPLOADED: 2,
+    CANCELLED: 3,
+    FAILED: 4
+};
+
+
 
 /**
  * @class UploadModel
@@ -23,7 +27,7 @@ class UploadModel {
             error: []
         };
 
-        this.status = NOT_STARTED;
+        this.status = UPLOAD_STATUSES.NOT_STARTED;
 
         this.complete = this.complete.bind(this);
         this.error = this.error.bind(this);
@@ -34,27 +38,27 @@ class UploadModel {
 
     isNotStarted() {
 
-        return this.status === NOT_STARTED;
+        return this.status === UPLOAD_STATUSES.NOT_STARTED;
     }
 
     isUploaded() {
 
-        return this.status === UPLOADED;
+        return this.status === UPLOAD_STATUSES.UPLOADED;
     }
 
     isUploading() {
 
-        return this.status === UPLOADING;
+        return this.status === UPLOAD_STATUSES.UPLOADING;
     }
 
     isCancelled() {
 
-        return this.status === CANCELLED;
+        return this.status === UPLOAD_STATUSES.CANCELLED;
     }
 
     isFailed() {
 
-        return this.status === FAILED;
+        return this.status === UPLOAD_STATUSES.FAILED;
     }
 
     /**
@@ -96,7 +100,7 @@ class UploadModel {
      */
     upload() {
 
-        this.status = UPLOADING;
+        this.status = UPLOAD_STATUSES.UPLOADING;
         this.uploaderServiceInstance.upload();
     }
 
@@ -139,7 +143,7 @@ class UploadModel {
 
         if (this.progress() === 1) {
 
-            this.status = UPLOADED;
+            this.status = UPLOAD_STATUSES.UPLOADED;
 
             this.callbacks.complete.forEach((callback) => {
                 callback();
@@ -157,7 +161,7 @@ class UploadModel {
      */
     cancelled() {
 
-        this.status = CANCELLED;
+        this.status = UPLOAD_STATUSES.CANCELLED;
 
         this.callbacks.error.forEach((callback) => {
             callback();
@@ -169,7 +173,7 @@ class UploadModel {
      */
     error() {
 
-        this.status = FAILED;
+        this.status = UPLOAD_STATUSES.FAILED;
 
         this.callbacks.error.forEach((callback) => {
             callback();
