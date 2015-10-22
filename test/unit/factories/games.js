@@ -67,13 +67,15 @@ describe('GamesFactory', function() {
             'config',
             config => {
 
-                expect(game.getFlagsUrl(null)).to.equal(`${config.api.uri}flags?id=${game.id}`);
-                expect(game.getFlagsUrl("foobarbaz")).to.equal(`${config.api.uri}flags?id=${game.id}`);
-                expect(game.getFlagsUrl(5678)).to.equal(`${config.api.uri}flags?id=${game.id}`);
-                expect(game.getFlagsUrl({})).to.equal(`${config.api.uri}flags?id=${game.id}`);
-                expect(game.getFlagsUrl(true)).to.equal(`${config.api.uri}flags?id=${game.id}`);
-                expect(game.getFlagsUrl(undefined)).to.equal(`${config.api.uri}flags?id=${game.id}`);
-                expect(game.getFlagsUrl(Symbol())).to.equal(`${config.api.uri}flags?id=${game.id}`);
+                const flagsUrl = `${config.api.uri}flags?id=${game.id}`;
+
+                expect(game.getFlagsUrl(null)).to.equal(flagsUrl);
+                expect(game.getFlagsUrl("foobarbaz")).to.equal(flagsUrl);
+                expect(game.getFlagsUrl(5678)).to.equal(flagsUrl);
+                expect(game.getFlagsUrl({})).to.equal(flagsUrl);
+                expect(game.getFlagsUrl(true)).to.equal(flagsUrl);
+                expect(game.getFlagsUrl(undefined)).to.equal(flagsUrl);
+                expect(game.getFlagsUrl(Symbol())).to.equal(flagsUrl);
         }]));
     });
 
