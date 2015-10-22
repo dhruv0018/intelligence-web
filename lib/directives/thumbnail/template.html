@@ -12,7 +12,7 @@
         ng-attr-id="{{'film-game-' + film.id + '-cta'}}"
         ui-sref="Games({id:film.id})">
 
-        <div ng-if="GameUploadStateService.isProcessed(film) && thumbnail.length" class="has-thumbnail">
+        <div ng-if="GameVideoStatusService.isProcessed(film) && thumbnail.length" class="has-thumbnail">
             <img class="img-responsive" ng-src="{{thumbnail}}" alt="thumbnail">
             <i class="icon icon-play"></i>
             <i class="icon icon-circle"></i>
@@ -20,22 +20,22 @@
 
         <div ng-if="!thumbnail.length" class="no-thumbnail">
 
-            <i ng-if="GameUploadStateService.isProcessing(film)" class="icon icon-krossover-symbol-circle"></i>
+            <i ng-if="GameVideoStatusService.isProcessing(film)" class="icon icon-krossover-symbol-circle"></i>
 
-            <div ng-if="GameUploadStateService.isUploading(film)" class="film-status">
+            <div ng-if="GameVideoStatusService.isUploading(film)" class="film-status">
                 <i class="icon icon-upload status-uploading"></i>
             </div>
-            <div ng-if="GameUploadStateService.isUploading(film)">This film is currently being uploaded.</div>
+            <div ng-if="GameVideoStatusService.isUploading(film)">This film is currently being uploaded.</div>
 
-            <div ng-if="GameUploadStateService.isUploaded(film)" class="film-status">
+            <div ng-if="GameVideoStatusService.isUploaded(film)" class="film-status">
                 <i class="icon icon-tasks status-processing"></i>
             </div>
-            <div ng-if="GameUploadStateService.isUploaded(film)">Your video is still processing.</div>
+            <div ng-if="GameVideoStatusService.isUploaded(film)">Your video is still processing.</div>
 
-            <div ng-if="GameUploadStateService.isFailed(film)" class="film-status">
+            <div ng-if="GameVideoStatusService.isFailed(film)" class="film-status">
                 <i class="icon icon-warning status-failed"></i>
             </div>
-            <div ng-if="GameUploadStateService.isFailed(film)"><strong>There is an issue with this film.</strong><br/>Please contact support@krossover.com</div>
+            <div ng-if="GameVideoStatusService.isFailed(film)"><strong>There is an issue with this film.</strong><br/>Please contact support@krossover.com</div>
 
         </div>
 

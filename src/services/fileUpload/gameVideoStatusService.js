@@ -5,17 +5,17 @@ const angular = window.angular;
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
-GameUploadStateServiceFactory.$inject = [
+gameVideoStatusService.$inject = [
     'UploadStateService',
     'FileUploadService'
 ];
 
-function GameUploadStateServiceFactory(
+function gameVideoStatusService(
     UploadStateService,
     FileUploadService
 ) {
 
-    class GameUploadStateService extends UploadStateService {
+    class GameVideoStatusService extends UploadStateService {
 
         static isFailed(game) {
 
@@ -50,7 +50,7 @@ function GameUploadStateServiceFactory(
         }
     }
 
-    return GameUploadStateService;
+    return GameVideoStatusService;
 }
 
-IntelligenceWebClient.factory('GameUploadStateService', GameUploadStateServiceFactory);
+IntelligenceWebClient.factory('GameVideoStatusService', gameVideoStatusService);

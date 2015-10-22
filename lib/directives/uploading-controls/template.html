@@ -1,8 +1,8 @@
 <div class="uploading-controls">
     <header>
         <div class="upload-progress">
-            <button id="cancel-uploading-cta" class="cancel-upload" ng-disabled="!GameUploadStateService.isUploading(film)" ng-click="cancel()"><i class="icon icon-remove"></i> Cancel</button>
-            <x-progressbar class="progressbar progress-striped" ng-class="{ active: GameUploadStateService.isUploading(film) }" type="{{getProgressBarType()}}" max="1" value="GameUploadStateService.getProgress(film)"></x-progressbar>
+            <button id="cancel-uploading-cta" class="cancel-upload" ng-disabled="!GameVideoStatusService.isUploading(film)" ng-click="cancel()"><i class="icon icon-remove"></i> Cancel</button>
+            <x-progressbar class="progressbar progress-striped" ng-class="{ active: GameVideoStatusService.isUploading(film) }" type="{{getProgressBarType()}}" max="1" value="GameVideoStatusService.getProgress(film)"></x-progressbar>
         </div>
     </header>
 </div>
