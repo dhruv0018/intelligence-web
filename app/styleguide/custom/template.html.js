@@ -23,7 +23,7 @@ export default `
 
             <h4>Krossover Event Adjuster</h4>
 
-            <krossover-event-adjuster plays="plays" play="plays[1]" video="game.video" events="plays[1].events" event="plays[1].events[0]"></krossover-event-adjuster>
+            <krossover-event-adjuster plays="plays" play="plays[1]" video="game.video" events="plays[1].events" event="plays[1].events[1]"></krossover-event-adjuster>
         </div>
 
         <div class="video">
