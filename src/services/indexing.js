@@ -250,9 +250,12 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Get the next set of tags. */
                 tagsManager.nextTags(tagId);
 
-                /* Snap video back to time of current event. */
-                videoPlayer.seekTime(eventManager.current.time);
-                videoPlayer.play();
+                if (!eventManager.current.isGroup) {
+
+                    /* Snap video back to time of current event. */
+                    videoPlayer.seekTime(eventManager.current.time);
+                    videoPlayer.play();
+                }
             },
 
             /**
