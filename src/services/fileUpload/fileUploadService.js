@@ -1,5 +1,5 @@
 const pkg = require('../../../package.json');
-import FileUpload from './fileUpload';
+import FileUpload from './fileUploadModel';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
