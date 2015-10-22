@@ -16,7 +16,7 @@
             reel="film"
         ></publish-user-profile-reel>
 
-        <stats-export ng-if="state.current.name === 'Games.Stats' && !isReel" teams="teams" game="game"></stats-export>
+        <stats-export ng-if="state.current.name === 'Games.Stats' && isGame" teams="teams" game="game"></stats-export>
 
         <a
          id="reels-share-cta"
