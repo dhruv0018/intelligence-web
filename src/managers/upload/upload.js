@@ -34,7 +34,7 @@ class UploadManager {
      * @param {object} uploaderServiceInstance An instance dealing with uploading files that can be used in the uploadModel
      * @returns {UploadModel} UploadModel if succesfull or null if the UploadModel could not be created/added
      */
-    makeUploadModel(id, uploaderServiceInstance) {
+    getUploadModel(id, uploaderServiceInstance) {
 
         if (!id) console.error(`Missing required parameter 'id'`);
         id = Number.parseInt(id, 10);
