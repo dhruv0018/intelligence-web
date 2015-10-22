@@ -168,7 +168,10 @@ export default `
 
             <ul>
 
-                <li feature="IndexerFlags">
+                <li
+                    feature="IndexerFlags"
+                    ng-if="isBasketballGame"
+                >
                     <i class="icon icon-flag"></i>
                     <a
                         class="btn btn-link flags"
