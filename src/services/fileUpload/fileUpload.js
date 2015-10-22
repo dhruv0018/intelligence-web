@@ -1,5 +1,5 @@
 const pkg = require('../../../package.json');
-import UploadModel from './uploadModel';
+import FileUpload from './fileUpload';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
@@ -9,10 +9,10 @@ const IntelligenceWebClient = angular.module(pkg.name);
 /**
  * @class FileUploadService
  * @description The FileUploadService is responsible for creating and keeping track
- * of the current UploadModels {UploadModel}. It handles the adding, and
- * removal of the UploadModels. While this service is primarily used for
- * getting an UploadModel based on a unique id, it can also be used to
- * get high level metrics or information on the UploadModels it has,
+ * of the current FileUploads {FileUpload}. It handles the adding, and
+ * removal of the FileUploads. While this service is primarily used for
+ * getting an FileUpload based on a unique id, it can also be used to
+ * get high level metrics or information on the FileUploads it has,
  * such as number of running uploads.
  */
 
@@ -29,41 +29,41 @@ class FileUploadService {
 
     /**
      * Creates an upload model and adds it to the FileUploadService
-     * @param {number|string} id A unique id identifying the UploadModel
-     * @param {object} uploaderServiceInstance An instance dealing with uploading files that can be used in the uploadModel
-     * @returns {UploadModel} UploadModel if succesfull or null if the UploadModel could not be created/added
+     * @param {number|string} id A unique id identifying the FileUpload
+     * @param {object} uploaderServiceInstance An instance dealing with uploading files that can be used in the fileUpload
+     * @returns {FileUpload} FileUpload if succesfull or null if the FileUpload could not be created/added
      */
-    getUploadModel(id, uploaderServiceInstance) {
+    getFileUpload(id, uploaderServiceInstance) {
 
         if (!id) console.error(`Missing required parameter 'id'`);
         id = Number.parseInt(id, 10);
         if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
 
-        let uploadModel = new UploadModel(uploaderServiceInstance);
+        let fileUpload = new FileUpload(uploaderServiceInstance);
 
-        let result = this.add(id, uploadModel);
+        let result = this.add(id, fileUpload);
 
         if (!result) {
 
             // could not add the new upload model
-            uploadModel.cleanup();
+            fileUpload.cleanup();
             return null;
 
         } else {
 
-            let boundUploadComplete = this.onUploadModelComplete.bind(this, id);
-            let boundUploadError = this.onUploadModelError.bind(this, id);
+            let boundUploadComplete = this.onFileUploadComplete.bind(this, id);
+            let boundUploadError = this.onFileUploadError.bind(this, id);
 
-            uploadModel.onComplete(boundUploadComplete);
-            uploadModel.onError(boundUploadError);
+            fileUpload.onComplete(boundUploadComplete);
+            fileUpload.onError(boundUploadError);
 
-            return uploadModel;
+            return fileUpload;
         }
     }
 
     /**
-     * Returns an uploadModel
-     * @param {number|string} id A unique id identifying the UploadModel
+     * Returns an fileUpload
+     * @param {number|string} id A unique id identifying the FileUpload
      */
     get(id) {
 
@@ -75,13 +75,13 @@ class FileUploadService {
     }
 
     /**
-     * @returns number of the UploadModel that are presently uploading
+     * @returns number of the FileUpload that are presently uploading
      */
     countRunningUploads() {
 
         let runningUploads = Object.keys(this.uploads).filter((id) => {
-            let uploadModel = this.get(id);
-            return uploadModel && uploadModel.isUploading();
+            let fileUpload = this.get(id);
+            return fileUpload && fileUpload.isUploading();
         });
 
         return runningUploads.length;
@@ -93,8 +93,8 @@ class FileUploadService {
     hasRunningUploads() {
 
         return Object.keys(this.uploads).some((id) => {
-            let uploadModel = this.get(id);
-            return uploadModel && uploadModel.isUploading();
+            let fileUpload = this.get(id);
+            return fileUpload && fileUpload.isUploading();
         });
     }
 
@@ -104,23 +104,23 @@ class FileUploadService {
      *************************************************************************/
 
     /**
-     * Adds an UploadModel to the FileUploadService
+     * Adds an FileUpload to the FileUploadService
      * @param {number|string} id A unique id.
-     * @param {UploadModel} uploadModel
+     * @param {FileUpload} fileUpload
      * @returns {boolean} true if successful, false otherwise
      */
-    add(id, uploadModel) {
+    add(id, fileUpload) {
 
         if (!id) console.error(`Missing required parameter 'id'`);
-        if (!uploadModel) console.error(`Missing required parameter 'uploadModel'`);
+        if (!fileUpload) console.error(`Missing required parameter 'fileUpload'`);
         id = Number.parseInt(id, 10);
         if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
-        if (!(uploadModel instanceof UploadModel)) console.error(`uploadModel is not an instanceof 'uploadModel'`);
+        if (!(fileUpload instanceof FileUpload)) console.error(`fileUpload is not an instanceof 'fileUpload'`);
 
         if (this.countRunningUploads() < this.MAX_UPLOADS) {
 
             // will replace an existing upload model
-            this.uploads[id] = uploadModel;
+            this.uploads[id] = fileUpload;
 
             return true;
 
@@ -131,8 +131,8 @@ class FileUploadService {
     }
 
     /**
-     * Remove the UploadModel with 'id'
-     * @param {number|string} id A unique id to identifying the UploadModel
+     * Remove the FileUpload with 'id'
+     * @param {number|string} id A unique id to identifying the FileUpload
      */
     remove(id) {
 
@@ -140,47 +140,47 @@ class FileUploadService {
         id = Number.parseInt(id, 10);
         if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
 
-        let uploadModel = this.get(id);
+        let fileUpload = this.get(id);
 
-        if (uploadModel) {
+        if (fileUpload) {
 
             delete this.uploads[id];
         }
     }
 
     /**
-     * A callback for handling the complete event from an UploadModel.
-     * @param {number|string} id A unique id specifying the UploadModel
+     * A callback for handling the complete event from an FileUpload.
+     * @param {number|string} id A unique id specifying the FileUpload
      */
-    onUploadModelComplete(id) {
+    onFileUploadComplete(id) {
 
         if (!id) console.error(`Missing required parameter 'id'`);
         id = Number.parseInt(id, 10);
         if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
 
-        let uploadModel = this.get(id);
+        let fileUpload = this.get(id);
 
-        if (uploadModel) {
+        if (fileUpload) {
 
-            uploadModel.cleanup();
+            fileUpload.cleanup();
         }
     }
 
     /**
-     * A callback for handling the error event from an UploadModel.
-     * @param {number|string} id A unique id specifying the UploadModel
+     * A callback for handling the error event from an FileUpload.
+     * @param {number|string} id A unique id specifying the FileUpload
      */
-    onUploadModelError(id) {
+    onFileUploadError(id) {
 
         if (!id) console.error(`Missing required parameter 'id'`);
         id = Number.parseInt(id, 10);
         if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
 
-        let uploadModel = this.get(id);
+        let fileUpload = this.get(id);
 
-        if (uploadModel) {
+        if (fileUpload) {
 
-            uploadModel.cleanup();
+            fileUpload.cleanup();
         }
     }
 

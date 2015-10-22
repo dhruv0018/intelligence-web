@@ -10,12 +10,12 @@ const UPLOAD_STATUSES = {
 
 
 /**
- * @class UploadModel
- * @description The UploadModel encapsulates any 3rd party File Uploading Utility.
+ * @class FileUpload
+ * @description The FileUpload encapsulates any 3rd party File Uploading Utility.
  * It provides helper functions for determining the state of an upload and changing
  * the state such as 'cancel', 'upload', etc.
  */
-class UploadModel {
+class FileUpload {
 
     constructor(uploaderServiceInstance) {
 
@@ -181,4 +181,4 @@ class UploadModel {
     }
 }
 
-export default UploadModel;
+export default FileUpload;

@@ -19,11 +19,11 @@ function GameUploadStateServiceFactory(
 
         static isFailed(game) {
 
-            let uploadModel = FileUploadService.get(game.id);
+            let fileUpload = FileUploadService.get(game.id);
 
             // NOTE: The upload surely isFailed if there is no upload in progress,
             // but the server thinks that there is still (e.g. if user refreshses during upload)
-            if (!uploadModel) {
+            if (!fileUpload) {
 
                 return game.video.isIncomplete();
 
