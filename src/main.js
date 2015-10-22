@@ -70,7 +70,7 @@ require('./services/detectDevice');
 require('./services/analytics');
 import './services/performance-timer/angular-index';
 import './services/performance-timer';
-require('./services/fileUpload/fileUpload');
+require('./services/fileUpload/fileUploadService');
 require('./services/fileUpload/gameVideoStatusService');
 require('./services/fileUpload/uploadStateService');
 
