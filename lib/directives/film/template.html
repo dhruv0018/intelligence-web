@@ -31,7 +31,7 @@
         </div>
 
         <a ng-attr-id="{{filmShareElemId}}"
-           ng-if="!film.video.isFailed() &&
+           ng-if="film.video.isComplete() &&
                        (isUploader || isCoachOnUploaderTeam)"
            ng-click="ShareFilmModal.open(film)"
            class="share-game">
