@@ -5,6 +5,12 @@ const UPLOADED = 2;
 const CANCELLED = 3;
 const FAILED = 4;
 
+/**
+ * @class UploadModel
+ * @description The UploadModel encapsulates any 3rd party File Uploading Utility.
+ * It provides helper functions for determining the state of an upload and changing
+ * the state such as 'cancel', 'upload', etc.
+ */
 class UploadModel {
 
     constructor(uploaderServiceInstance) {
