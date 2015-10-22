@@ -176,7 +176,7 @@ export default `
                     <a
                         class="btn btn-link flags"
                         target="_blank"
-                        href="{{game.getFlagsUrl()}}"
+                        ng-href="{{game.getFlagsUrl()}}"
                     >&nbsp;View Flags</a>
                 </li>
                 <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon icon-play-circle"></i> View raw film</button></li>
