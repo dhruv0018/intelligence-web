@@ -1,7 +1,6 @@
 <div class="upload-status">
 
-    <!-- Only can be uploading if the model is present -->
-    <div class="uploading" ng-if="GameVideoStatusService.isUploading(game)">
+    <div class="uploading" ng-if="game.video.isIncomplete()">
 
         <!-- TODO: Refactor template logic -->
         <h1 ng-if="game.isRegular() && (game.status === null || !isDefined(game.status))">You’re uploading a regular game…</h1>
@@ -14,14 +13,12 @@
 
     </div>
 
-    <!-- The upload could have failed (i.e. internet outage) or the video could have failed processing on the server
-        OR the user could have refreshed the page during upload -->
-    <div class="error" ng-if="GameVideoStatusService.isFailed(game)">
+    <div class="error" ng-if="game.video.isFailed()">
         <h1>There was a problem with your upload!</h1>
         <h2>Please delete this game and try to submit your game again.</h2>
     </div>
 
-    <div class="uploaded" ng-if="GameVideoStatusService.isUploaded(game)">
+    <div class="uploaded" ng-if="game.video.isUploaded()">
 
         <h1>Your upload is complete and is being processed!</h1>
 
@@ -31,8 +28,7 @@
         <h2 ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game is available for sharing.</h2>
     </div>
 
-    <!--  The complete status is independent of the upload model by this point -->
-    <div class="uploaded" ng-if="GameVideoStatusService.isProcessed(game)">
+    <div class="uploaded" ng-if="game.video.isComplete()">
 
         <h1>Your video has been processed.</h1>
 

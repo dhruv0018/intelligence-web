@@ -122,6 +122,7 @@ class FileUpload {
      */
     cancel() {
 
+        this.status = UPLOAD_STATUSES.CANCELLED;
         this.uploaderServiceInstance.cancel();
     }
 
@@ -129,7 +130,7 @@ class FileUpload {
      * Gets the progress of an upload
      * @returns {number} Between 0 and 1 (inclusive)
      */
-    progress() {
+    getProgress() {
 
         return this.uploaderServiceInstance.progress();
     }
@@ -141,7 +142,7 @@ class FileUpload {
      */
     complete(result) {
 
-        if (this.progress() === 1) {
+        if (this.getProgress() === 1) {
 
             this.status = UPLOAD_STATUSES.UPLOADED;
 
@@ -160,8 +161,6 @@ class FileUpload {
      * Calls all of the error callback events
      */
     cancelled() {
-
-        this.status = UPLOAD_STATUSES.CANCELLED;
 
         this.callbacks.error.forEach((callback) => {
             callback();

@@ -96,8 +96,7 @@ GamesInfoController.$inject = [
     'TeamsFactory',
     'LeaguesFactory',
     'PlayersFactory',
-    'Games.Info.Data',
-    'GameVideoStatusService'
+    'Games.Info.Data'
 ];
 
 function GamesInfoController (
@@ -110,13 +109,11 @@ function GamesInfoController (
     teams,
     leagues,
     players,
-    Data,
-    GameVideoStatusService
+    Data
 ) {
 
     $scope.game = games.get($stateParams.id);
 
-    $scope.GameVideoStatusService = GameVideoStatusService;
     $scope.returnedDate = ($scope.game.isDelivered() && angular.isObject($scope.game.currentAssignment())) ? new Date($scope.game.currentAssignment().timeFinished) : null;
 
     $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);

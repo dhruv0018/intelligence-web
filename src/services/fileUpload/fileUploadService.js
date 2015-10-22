@@ -11,7 +11,7 @@ const IntelligenceWebClient = angular.module(pkg.name);
  * @description The FileUploadService is responsible for creating and keeping track
  * of the current FileUploads {FileUpload}. It handles the adding, and
  * removal of the FileUploads. While this service is primarily used for
- * getting an FileUpload based on a unique id, it can also be used to
+ * getting an FileUpload based on a unique guid, it can also be used to
  * get high level metrics or information on the FileUploads it has,
  * such as number of running uploads.
  */
@@ -29,19 +29,18 @@ class FileUploadService {
 
     /**
      * Creates an upload model and adds it to the FileUploadService
-     * @param {number|string} id A unique id identifying the FileUpload
+     * @param {string} guid A unique guid identifying the FileUpload
      * @param {object} uploaderServiceInstance An instance dealing with uploading files that can be used in the fileUpload
      * @returns {FileUpload} FileUpload if succesfull or null if the FileUpload could not be created/added
      */
-    getFileUpload(id, uploaderServiceInstance) {
+    getFileUpload(guid, uploaderServiceInstance) {
 
-        if (!id) console.error(`Missing required parameter 'id'`);
-        id = Number.parseInt(id, 10);
-        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
+        if (!guid) console.error(`Missing required parameter 'guid'`);
+        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
 
         let fileUpload = new FileUpload(uploaderServiceInstance);
 
-        let result = this.add(id, fileUpload);
+        let result = this.add(guid, fileUpload);
 
         if (!result) {
 
@@ -51,8 +50,8 @@ class FileUploadService {
 
         } else {
 
-            let boundUploadComplete = this.onFileUploadComplete.bind(this, id);
-            let boundUploadError = this.onFileUploadError.bind(this, id);
+            let boundUploadComplete = this.onFileUploadComplete.bind(this, guid);
+            let boundUploadError = this.onFileUploadError.bind(this, guid);
 
             fileUpload.onComplete(boundUploadComplete);
             fileUpload.onError(boundUploadError);
@@ -63,15 +62,14 @@ class FileUploadService {
 
     /**
      * Returns an fileUpload
-     * @param {number|string} id A unique id identifying the FileUpload
+     * @param {string} guid A unique guid identifying the FileUpload
      */
-    get(id) {
+    get(guid) {
 
-        if (!id) console.error(`Missing required parameter 'id'`);
-        id = Number.parseInt(id, 10);
-        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
+        if (!guid) console.error(`Missing required parameter 'guid'`);
+        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
 
-        return this.uploads[id];
+        return this.uploads[guid];
     }
 
     /**
@@ -79,8 +77,8 @@ class FileUploadService {
      */
     countRunningUploads() {
 
-        let runningUploads = Object.keys(this.uploads).filter((id) => {
-            let fileUpload = this.get(id);
+        let runningUploads = Object.keys(this.uploads).filter((guid) => {
+            let fileUpload = this.get(guid);
             return fileUpload && fileUpload.isUploading();
         });
 
@@ -92,8 +90,8 @@ class FileUploadService {
      */
     hasRunningUploads() {
 
-        return Object.keys(this.uploads).some((id) => {
-            let fileUpload = this.get(id);
+        return Object.keys(this.uploads).some((guid) => {
+            let fileUpload = this.get(guid);
             return fileUpload && fileUpload.isUploading();
         });
     }
@@ -105,22 +103,22 @@ class FileUploadService {
 
     /**
      * Adds an FileUpload to the FileUploadService
-     * @param {number|string} id A unique id.
+     * @param {string} guid A unique guid.
      * @param {FileUpload} fileUpload
      * @returns {boolean} true if successful, false otherwise
      */
-    add(id, fileUpload) {
+    add(guid, fileUpload) {
 
-        if (!id) console.error(`Missing required parameter 'id'`);
+        if (!guid) console.error(`Missing required parameter 'guid'`);
+        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
         if (!fileUpload) console.error(`Missing required parameter 'fileUpload'`);
-        id = Number.parseInt(id, 10);
-        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
+
         if (!(fileUpload instanceof FileUpload)) console.error(`fileUpload is not an instanceof 'fileUpload'`);
 
         if (this.countRunningUploads() < this.MAX_UPLOADS) {
 
             // will replace an existing upload model
-            this.uploads[id] = fileUpload;
+            this.uploads[guid] = fileUpload;
 
             return true;
 
@@ -131,34 +129,32 @@ class FileUploadService {
     }
 
     /**
-     * Remove the FileUpload with 'id'
-     * @param {number|string} id A unique id to identifying the FileUpload
+     * Remove the FileUpload with 'guid'
+     * @param {string} guid A unique guid to identifying the FileUpload
      */
-    remove(id) {
+    remove(guid) {
 
-        if (!id) console.error(`Missing required parameter 'id'`);
-        id = Number.parseInt(id, 10);
-        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
+        if (!guid) console.error(`Missing required parameter 'guid'`);
+        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
 
-        let fileUpload = this.get(id);
+        let fileUpload = this.get(guid);
 
         if (fileUpload) {
 
-            delete this.uploads[id];
+            delete this.uploads[guid];
         }
     }
 
     /**
      * A callback for handling the complete event from an FileUpload.
-     * @param {number|string} id A unique id specifying the FileUpload
+     * @param {string} guid A unique guid specifying the FileUpload
      */
-    onFileUploadComplete(id) {
+    onFileUploadComplete(guid) {
 
-        if (!id) console.error(`Missing required parameter 'id'`);
-        id = Number.parseInt(id, 10);
-        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
+        if (!guid) console.error(`Missing required parameter 'guid'`);
+        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
 
-        let fileUpload = this.get(id);
+        let fileUpload = this.get(guid);
 
         if (fileUpload) {
 
@@ -168,15 +164,14 @@ class FileUploadService {
 
     /**
      * A callback for handling the error event from an FileUpload.
-     * @param {number|string} id A unique id specifying the FileUpload
+     * @param {string} guid A unique guid specifying the FileUpload
      */
-    onFileUploadError(id) {
+    onFileUploadError(guid) {
 
-        if (!id) console.error(`Missing required parameter 'id'`);
-        id = Number.parseInt(id, 10);
-        if (!Number.isInteger(id)) console.error(`id '${id}' is not an integer`);
+        if (!guid) console.error(`Missing required parameter 'guid'`);
+        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
 
-        let fileUpload = this.get(id);
+        let fileUpload = this.get(guid);
 
         if (fileUpload) {
 
