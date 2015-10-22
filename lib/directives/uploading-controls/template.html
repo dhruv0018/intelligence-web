@@ -2,7 +2,7 @@
     <header>
         <div class="upload-progress">
             <button id="cancel-uploading-cta" class="cancel-upload" ng-disabled="!game.video.isIncomplete()" ng-click="cancel()"><i class="icon icon-remove"></i> Cancel</button>
-            <x-progressbar class="progressbar progress-striped" ng-class="{ active: game.video.isIncomplete() }" type="{{getProgressBarType()}}" max="1" value="FileUploadService.get(game.video.guid).getProgress()"></x-progressbar>
+            <x-progressbar class="progressbar progress-striped" ng-class="{ active: game.video.isIncomplete() }" type="{{getProgressBarType()}}" max="1" value="FileUploadService.getFileUpload(game.video.guid).getProgress()"></x-progressbar>
         </div>
     </header>
 </div>

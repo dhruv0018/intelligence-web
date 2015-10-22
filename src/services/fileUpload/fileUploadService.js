@@ -20,7 +20,7 @@ class FileUploadService {
 
     constructor() {
 
-        this.uploads = {};
+        this.fileUploads = {};
         this.MAX_UPLOADS = 100;
 
         this.onBeforeUnload = this.onBeforeUnload.bind(this);
@@ -28,27 +28,28 @@ class FileUploadService {
     }
 
     /**
-     * Creates an upload model and adds it to the FileUploadService
+     * Will get an existing or new FileUpload model
      * @param {string} guid A unique guid identifying the FileUpload
      * @param {object} uploaderServiceInstance An instance dealing with uploading files that can be used in the fileUpload
-     * @returns {FileUpload} FileUpload if succesfull or null if the FileUpload could not be created/added
+     * @returns {FileUpload} FileUpload if successful or null if the FileUpload could not be retrieved
      */
     getFileUpload(guid, uploaderServiceInstance) {
 
         if (!guid) console.error(`Missing required parameter 'guid'`);
         if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
 
-        let fileUpload = new FileUpload(uploaderServiceInstance);
+        // Get a file upload from memory
+        if (!uploaderServiceInstance) {
 
-        let result = this.add(guid, fileUpload);
+            return this.fileUploads[guid];
+        }
 
-        if (!result) {
+        // Create new file upload if not too many concurrent uploads
+        if (this.countRunningUploads() < this.MAX_UPLOADS) {
 
-            // could not add the new upload model
-            fileUpload.cleanup();
-            return null;
+            let fileUpload = new FileUpload(uploaderServiceInstance);
 
-        } else {
+            this.fileUploads[guid] = fileUpload;
 
             let boundUploadComplete = this.onFileUploadComplete.bind(this, guid);
             let boundUploadError = this.onFileUploadError.bind(this, guid);
@@ -61,24 +62,12 @@ class FileUploadService {
     }
 
     /**
-     * Returns an fileUpload
-     * @param {string} guid A unique guid identifying the FileUpload
-     */
-    get(guid) {
-
-        if (!guid) console.error(`Missing required parameter 'guid'`);
-        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
-
-        return this.uploads[guid];
-    }
-
-    /**
      * @returns number of the FileUpload that are presently uploading
      */
     countRunningUploads() {
 
-        let runningUploads = Object.keys(this.uploads).filter((guid) => {
-            let fileUpload = this.get(guid);
+        let runningUploads = Object.keys(this.fileUploads).filter((guid) => {
+            let fileUpload = this.fileUploads[guid];
             return fileUpload && fileUpload.isUploading();
         });
 
@@ -90,8 +79,8 @@ class FileUploadService {
      */
     hasRunningUploads() {
 
-        return Object.keys(this.uploads).some((guid) => {
-            let fileUpload = this.get(guid);
+        return Object.keys(this.fileUploads).some((guid) => {
+            let fileUpload = this.fileUploads[guid];
             return fileUpload && fileUpload.isUploading();
         });
     }
@@ -102,33 +91,6 @@ class FileUploadService {
      *************************************************************************/
 
     /**
-     * Adds an FileUpload to the FileUploadService
-     * @param {string} guid A unique guid.
-     * @param {FileUpload} fileUpload
-     * @returns {boolean} true if successful, false otherwise
-     */
-    add(guid, fileUpload) {
-
-        if (!guid) console.error(`Missing required parameter 'guid'`);
-        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
-        if (!fileUpload) console.error(`Missing required parameter 'fileUpload'`);
-
-        if (!(fileUpload instanceof FileUpload)) console.error(`fileUpload is not an instanceof 'fileUpload'`);
-
-        if (this.countRunningUploads() < this.MAX_UPLOADS) {
-
-            // will replace an existing upload model
-            this.uploads[guid] = fileUpload;
-
-            return true;
-
-        } else {
-
-            return false;
-        }
-    }
-
-    /**
      * Remove the FileUpload with 'guid'
      * @param {string} guid A unique guid to identifying the FileUpload
      */
@@ -137,11 +99,11 @@ class FileUploadService {
         if (!guid) console.error(`Missing required parameter 'guid'`);
         if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
 
-        let fileUpload = this.get(guid);
+        let fileUpload = this.fileUploads[guid];
 
         if (fileUpload) {
 
-            delete this.uploads[guid];
+            delete this.fileUploads[guid];
         }
     }
 
@@ -154,7 +116,7 @@ class FileUploadService {
         if (!guid) console.error(`Missing required parameter 'guid'`);
         if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
 
-        let fileUpload = this.get(guid);
+        let fileUpload = this.fileUploads[guid];
 
         if (fileUpload) {
 
@@ -171,7 +133,7 @@ class FileUploadService {
         if (!guid) console.error(`Missing required parameter 'guid'`);
         if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
 
-        let fileUpload = this.get(guid);
+        let fileUpload = this.fileUploads[guid];
 
         if (fileUpload) {
 

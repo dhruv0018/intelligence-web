@@ -230,7 +230,7 @@ function video(
          */
         isIncomplete(video = this) {
 
-            let fileUpload = FileUploadService.get(video.guid);
+            let fileUpload = FileUploadService.getFileUpload(video.guid);
 
             return !!(fileUpload && fileUpload.isUploading());
 
@@ -249,7 +249,7 @@ function video(
          */
         isUploaded(video = this) {
 
-            let fileUpload = FileUploadService.get(video.guid);
+            let fileUpload = FileUploadService.getFileUpload(video.guid);
 
             return (fileUpload && fileUpload.isUploaded())
                 || video.status === VIDEO_STATUSES.UPLOADED.id;
@@ -279,7 +279,7 @@ function video(
          */
         isFailed(video = this) {
 
-            let fileUpload = FileUploadService.get(video.guid);
+            let fileUpload = FileUploadService.getFileUpload(video.guid);
 
             // NOTE: The upload surely isFailed if there is no upload in progress,
             // but the server thinks that there is still (e.g. if user refreshses during upload)
