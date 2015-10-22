@@ -6,10 +6,9 @@ const angular = window.angular;
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
-/*
+/**
  * @class FileUploadService
- *
- * The FileUploadService is responsible for creating and keeping track
+ * @description The FileUploadService is responsible for creating and keeping track
  * of the current UploadModels {UploadModel}. It handles the adding, and
  * removal of the UploadModels. While this service is primarily used for
  * getting an UploadModel based on a unique id, it can also be used to
