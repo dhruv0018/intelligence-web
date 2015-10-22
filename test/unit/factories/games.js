@@ -60,7 +60,7 @@ describe('GamesFactory', function() {
             'config',
             config => {
 
-                expect(game.getFlagsUrl()).to.equal(`${config.api.uri}flags?id=${game.id}`);
+                game.getFlagsUrl().endsWith(`flags?id=1234`).should.be.true;
         }]));
     });
 
