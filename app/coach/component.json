@@ -7,8 +7,7 @@
         "film-home",
         "coach-team",
         "add-film",
-        "team-info",
-        "analytics"
+        "team-info"
     ],
     "scripts": [
         "index.js"

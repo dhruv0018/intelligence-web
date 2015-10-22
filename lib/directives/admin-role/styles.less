@@ -1,0 +1,40 @@
+@import (reference) "main.less";
+
+.admin-user-role {
+    display: block;
+    padding: 10px;
+    width: 500px;
+
+    role-icon {
+        .pull-left;
+        margin-right: 20px;
+    }
+
+    .role-description {
+        .pull-left;
+        color: #09425a;
+
+        .role-info {
+            font-size: 18px;
+            letter-spacing: 0;
+            .capitalize;
+        }
+
+        .qa-status-toggle {
+
+            display: flex;
+            align-items: center;
+
+            label {
+                display: block;
+                margin-right: 10px;
+                font-weight: normal;
+            }
+
+            md-switch {
+
+                margin: 0 5px; // Overrride Angular Material
+            }
+        }
+    }
+}

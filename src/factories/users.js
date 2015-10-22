@@ -180,15 +180,21 @@ IntelligenceWebClient.factory('UsersFactory', [
             * Saves user and updates currentUser in session
             */
             save: function() {
-                var self = this;
-                var session = $injector.get('SessionService');
 
-                if (self.id === session.getCurrentUserId()) {
+                let session = $injector.get('SessionService');
+
+                // If user has active roles but no default role, set it to first active role
+                if (this.activeRoles().length && !this.getDefaultRole()) {
+                    let activeRole = this.activeRoles()[0];
+                    this.setDefaultRole(activeRole);
+                }
+
+                if (this.id === session.getCurrentUserId()) {
                     session.storeCurrentUser();
                 }
 
                 //TODO use normal save()
-                return self.baseSave();
+                return this.baseSave();
             },
 
             /**
@@ -201,8 +207,6 @@ IntelligenceWebClient.factory('UsersFactory', [
              * this user will be used.
              */
             addRole: function(user, role, team) {
-
-                var self = this;
 
                 if (!role) {
 
@@ -238,8 +242,8 @@ IntelligenceWebClient.factory('UsersFactory', [
              * this user will be used.
              */
             removeRole: function(user, role) {
-
-                var self = this;
+                // TODO: remove need for passing user in as argument
+                let self = this;
 
                 if (!role) {
 
@@ -251,16 +255,22 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!user.roles) return;
 
                 /* Find the index of the role in the users roles. */
-                var userRoleIndex = user.roles.indexOf(role);
+                let userRoleIndex = user.roles.indexOf(role);
 
                 /* If the role was not found in the users roles. */
                 if (!~userRoleIndex) return;
 
                 /* If the tenure end of the role has alread been set. */
-                if (user.roles[userRoleIndex].tenureEnd) return;
+                if (role.tenureEnd) return;
+
+                // If this role was the default role, set isDefault to false
+                let defaultRole = user.getDefaultRole();
+                if (role === defaultRole) {
+                    role.isDefault = false;
+                }
 
                 /* Record the tenure end date of the role. */
-                user.roles[userRoleIndex].tenureEnd = new Date();
+                role.tenureEnd = new Date();
             },
 
             /**
