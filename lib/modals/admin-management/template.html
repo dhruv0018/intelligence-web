@@ -24,7 +24,7 @@
         </div>
 
         <span ng-if="game.status === GAME_STATUSES.FINALIZED.id">
-            <a open-modal="RevertToIndexing.Modal" modal-options="game">Revert to indexing </a> <br />
+            <a ng-click="revertToIndexing()">Revert to indexing </a> <br />
             <a open-modal="CopyGame.Modal" modal-options="game">Copy Game</a> <br />
         </span>
 

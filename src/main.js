@@ -29,7 +29,7 @@ import Play from '../lib/directives/play';
 import SelectMediaSrc from '../lib/directives/video-player/select-media-src';
 import ArenaChart from '../lib/directives/arena-chart';
 import BreakdownDialog from '../lib/dialogs/breakdown-dialog';
-import RevertToIndexing from '../lib/modals/revert-indexing';
+import RevertGameStatus from '../lib/modals/revert-game-status';
 
 /* App dependencies */
 require('./config');
