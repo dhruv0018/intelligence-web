@@ -7,9 +7,9 @@ const angular = window.angular;
 const IntelligenceWebClient = angular.module(pkg.name);
 
 /*
- * @class UploadManager
+ * @class FileUploadService
  *
- * The upload manager is responsible for creating and keeping track
+ * The FileUploadService is responsible for creating and keeping track
  * of the current UploadModels {UploadModel}. It handles the adding, and
  * removal of the UploadModels. While this service is primarily used for
  * getting an UploadModel based on a unique id, it can also be used to
@@ -17,7 +17,7 @@ const IntelligenceWebClient = angular.module(pkg.name);
  * such as number of running uploads.
  */
 
-class UploadManager {
+class FileUploadService {
 
     constructor() {
 
@@ -29,7 +29,7 @@ class UploadManager {
     }
 
     /**
-     * Creates an upload model and adds it to the UploadManager
+     * Creates an upload model and adds it to the FileUploadService
      * @param {number|string} id A unique id identifying the UploadModel
      * @param {object} uploaderServiceInstance An instance dealing with uploading files that can be used in the uploadModel
      * @returns {UploadModel} UploadModel if succesfull or null if the UploadModel could not be created/added
@@ -89,7 +89,7 @@ class UploadManager {
     }
 
     /**
-     * How many uploads are present in the UploadManager with a progress above 0.
+     * How many uploads are present in the FileUploadService with a progress above 0.
      */
     hasRunningUploads() {
 
@@ -105,7 +105,7 @@ class UploadManager {
      *************************************************************************/
 
     /**
-     * Adds an UploadModel to the UploadManager
+     * Adds an UploadModel to the FileUploadService
      * @param {number|string} id A unique id.
      * @param {UploadModel} uploadModel
      * @returns {boolean} true if successful, false otherwise
@@ -196,9 +196,9 @@ class UploadManager {
 
 /**
  * @module IntelligenceWebClient
- * @name uploadManager
+ * @name FileUploadService
  * @type {service}
  */
 
-export default UploadManager;
-IntelligenceWebClient.service('UploadManager', UploadManager);
+export default FileUploadService;
+IntelligenceWebClient.service('FileUploadService', FileUploadService);

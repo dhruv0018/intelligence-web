@@ -7,19 +7,19 @@ const IntelligenceWebClient = angular.module(pkg.name);
 
 GameUploadStateServiceFactory.$inject = [
     'UploadStateService',
-    'UploadManager'
+    'FileUploadService'
 ];
 
 function GameUploadStateServiceFactory(
     UploadStateService,
-    UploadManager
+    FileUploadService
 ) {
 
     class GameUploadStateService extends UploadStateService {
 
         static isFailed(game) {
 
-            let uploadModel = UploadManager.get(game.id);
+            let uploadModel = FileUploadService.get(game.id);
 
             // NOTE: The upload surely isFailed if there is no upload in progress,
             // but the server thinks that there is still (e.g. if user refreshses during upload)
