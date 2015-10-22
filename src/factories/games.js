@@ -1540,6 +1540,14 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             /**
+             * @returns {String} flagsUrl
+             */
+            getFlagsUrl: function getFlagsUrl() {
+
+                return `${config.api.uri}flags?id=${this.id}`;
+            },
+
+            /**
              * Determine if the game is copied
              * @returns {boolean}
              */

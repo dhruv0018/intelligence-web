@@ -173,7 +173,7 @@ export default `
                     <a
                         class="btn btn-link flags"
                         target="_blank"
-                        href="{{config.api.uri.concat('flags?id=', game.id)}}"
+                        href="{{game.getFlagsUrl()}}"
                     >&nbsp;View Flags</a>
                 </li>
                 <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon icon-play-circle"></i> View raw film</button></li>

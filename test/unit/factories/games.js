@@ -31,7 +31,51 @@ describe('GamesFactory', function() {
         expect(GamesFactory).to.respondTo('canBeAssignedToQa');
         expect(GamesFactory).to.respondTo('assignToIndexer');
         expect(GamesFactory).to.respondTo('assignToQa');
+        expect(GamesFactory).to.respondTo('getFlagsUrl');
     }));
+
+    describe('getFlagsUrl', () => {
+
+        let gameJSON;
+        let game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            games => {
+
+                gameJSON = {
+                    id: 1234
+                };
+
+                game = games.extend(gameJSON);
+            }
+        ]));
+
+        it('should return a string', () => {
+
+            expect(game.getFlagsUrl()).to.be.a('string');
+        });
+
+        it('should return the correct URL', inject([
+            'config',
+            config => {
+
+                expect(game.getFlagsUrl()).to.equal(`${config.api.uri}flags?id=${game.id}`);
+        }]));
+
+        it('should ignore unecessary parameters', inject([
+            'config',
+            config => {
+
+                expect(game.getFlagsUrl(null)).to.equal(`${config.api.uri}flags?id=${game.id}`);
+                expect(game.getFlagsUrl("foobarbaz")).to.equal(`${config.api.uri}flags?id=${game.id}`);
+                expect(game.getFlagsUrl(5678)).to.equal(`${config.api.uri}flags?id=${game.id}`);
+                expect(game.getFlagsUrl({})).to.equal(`${config.api.uri}flags?id=${game.id}`);
+                expect(game.getFlagsUrl(true)).to.equal(`${config.api.uri}flags?id=${game.id}`);
+                expect(game.getFlagsUrl(undefined)).to.equal(`${config.api.uri}flags?id=${game.id}`);
+                expect(game.getFlagsUrl(Symbol())).to.equal(`${config.api.uri}flags?id=${game.id}`);
+        }]));
+    });
 
     describe('canBeAssignedToIndexer', function() {
 
