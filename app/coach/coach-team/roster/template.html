@@ -4,7 +4,7 @@
 
         <h1>Team Roster</h1>
 
-        <select data-ng-model="displayFilter" data-ng-init="displayFilter = filtering[0]" data-ng-options="filter.type for filter in filtering">{{filter.type}}</select>
+        <select id="active-roster-toggle-cta" data-ng-model="displayFilter" data-ng-init="displayFilter = filtering[0]" data-ng-options="filter.type for filter in filtering">{{filter.type}}</select>
     </header>
 
     <data-team-roster-manager data-filtering="displayFilter.type" data-type="interface" data-roster-template-url="config.links.rosterTemplates.teamRoster.uri"

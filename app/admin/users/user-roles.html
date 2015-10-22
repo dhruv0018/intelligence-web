@@ -27,10 +27,10 @@
         class="role role-details list-group-item"
         ng-repeat="role in user.roles | filter:{tenureEnd:null}"
     >
-        <x-krossover-role
+        <admin-role
             user="user"
             role="role"
-        ></x-krossover-role>
+        ></admin-role>
 
         <div
             class="role-options"
@@ -42,23 +42,6 @@
                 id="remove-user-role-cta"
                 ng-click="users.removeRole(user, role)"
             >Remove</md-button>
-
-            <div
-                class="qa-status-toggle"
-                ng-show="role.type.id === ROLES.INDEXER.type.id"
-            >
-
-                <label>QA Privileges</label>
-
-                <!-- TODO: Remove Angular Material -->
-                <md-switch
-                    id="qa-privileges-on-off-cta"
-                    ng-model="role.indexerQuality"
-                    ng-true-value="1"
-                    ng-false-value="0"
-                    class="md-switch-green"
-                ></md-switch>
-            </div>
         </div>
 
     </li>
