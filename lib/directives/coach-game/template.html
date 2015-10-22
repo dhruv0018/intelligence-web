@@ -4,7 +4,7 @@
         data-active="gameTabs.confirm.active"
         data-disabled="gameTabs.confirm.disabled"
         id="instructions-cta"
-        data-heading="Instructions">
+        data-heading="4. Film Settings">
 
         <krossover-coach-game-instructions data-ng-if="game.rosters[game.teamId]"
                                            data-tabs="gameTabs"
@@ -19,7 +19,7 @@
         data-active="gameTabs.opposing.active"
         data-disabled="gameTabs.opposing.disabled"
         id="opposing-team-info-cta"
-        data-heading="{{ teams[game.opposingTeamId].name || 'Opposing Team' }}">
+        data-heading="3. {{ teams[game.opposingTeamId].name || 'Opposing Team' }}">
 
         <game-tab data-ng-if="game.rosters[game.opposingTeamId]"
                   data-next-tab="gameTabs.confirm"
@@ -40,7 +40,7 @@
            data-active="gameTabs.team.active"
            data-disabled="gameTabs.team.disabled"
            id="team-info-cta"
-           data-heading="{{ teams[game.teamId].name || 'Team' }}">
+           data-heading="2. {{ teams[game.teamId].name || 'Team' }}">
 
         <game-tab data-ng-if="game.rosters[game.teamId]" data-next-tab="gameTabs.opposing"
                   data-tabs="gameTabs"
@@ -59,7 +59,7 @@
         id="coach-game-basic-info-cta"
         data-active="gameTabs.info.active"
         id="basic-game-info-cta"
-        data-heading="Basic Game Info">
+        data-heading="1. Basic Game Info">
 
         <krossover-coach-game-info data-tabs="gameTabs"
                                    data-league="league"
