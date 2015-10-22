@@ -17,17 +17,17 @@ class PlayList extends SortedList {
         this.statefulIterator = this.iterator();
     }
     /**
-     * Returns the start time of the preceeding play or null if there is no preceeding play
+     * Returns the first event time of the preceeding play or null if there is no preceeding play or events
      *
-     * @method lowerBoundingTime
-     * @returns {Integer | null}
+     * @type {Number | null}
      */
-    lowerBoundingTime() {
+    get lowerBoundingTime() {
         let current = this.statefulIterator.current.value;
         let previous = this.statefulIterator.readPrevious().value;
         let time = null;
-        if (previous && previous.startTime) {
-            time = previous.startTime;
+        let firstEvent = previous && previous.events ? previous.events[0] : null;
+        if (firstEvent && firstEvent.time) {
+            time = firstEvent.time;
         }
         return time;
     }

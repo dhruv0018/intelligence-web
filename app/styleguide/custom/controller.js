@@ -9,19 +9,19 @@ class StyleguideCustomController {
         $scope.selectedArenaId = '1';
         $scope.selectedArenaType = ARENA_TYPES[$scope.selectedArenaId].type;
 
-
+        //TODO find a way to use the sample data in the test folder for this at a later date
         $scope.plays = [
             {
                 startTime: 5.5,
                 events: [
                     {
-                        time: 5.5
-                    },
-                    {
                         time: 7
                     },
                     {
                         time: 8
+                    },
+                    {
+                        time: 9
                     }
                 ]
             },
