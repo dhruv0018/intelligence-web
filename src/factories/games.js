@@ -1562,6 +1562,21 @@ IntelligenceWebClient.factory('GamesFactory', [
                             tokenService.getAccessToken();
 
                 return url;
+            },
+            /**
+             * get the csv stats download link
+             * @return {String}
+             */
+            getCSVDownloadLink: function(){
+                if (!this.id) throw new Error('Game must be saved before getting csv');
+                let tokenService = $injector.get('TokensService');
+                let url =  config.api.uri +
+                            'games/' +
+                            this.id +
+                            '/stats-csv?access_token=' +
+                            tokenService.getAccessToken();
+
+                return url;
             }
         };
 

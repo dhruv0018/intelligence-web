@@ -5,6 +5,9 @@
         <div class="dropdown-option">
             <a class="coming-soon">Excel - All Game Stats (coming soon)</a>
         </div>
+        <div class="dropdown-option">
+            <a ng-href="{{game.getCSVDownloadLink()}}" download>CSV - All Game Stats</a>
+        </div>
         <span ng-repeat="team in teams">
             <div class="dropdown-option">
                 <a ng-href="{{game.getMaxprepsDownloadLinkByTeam(team)}}" download>MaxPreps - All Stats {{team.name}}</a>
