@@ -130,6 +130,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 playsManager.calculatePlays();
                 playManager.clear();
                 tagsManager.reset();
+                this.tagStack.clear();
                 eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
@@ -169,7 +170,6 @@ IntelligenceWebClient.factory('IndexingService', [
 
                     /*Push onto the stack the new set of tags*/
                     let indexingTags = tagsManager.current;
-                    this.tagStack.clear();
                     this.tagStack.push({ tags:indexingTags });
                 }
 
