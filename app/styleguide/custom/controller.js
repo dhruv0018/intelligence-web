@@ -15,13 +15,13 @@ class StyleguideCustomController {
                 startTime: 5.5,
                 events: [
                     {
-                        time: 5.5
-                    },
-                    {
                         time: 7
                     },
                     {
                         time: 8
+                    },
+                    {
+                        time: 9
                     }
                 ]
             },
