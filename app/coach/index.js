@@ -3,7 +3,6 @@ require('film-home');
 require('coach-team');
 require('add-film');
 require('team-info');
-require('analytics');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -15,7 +14,6 @@ var angular = window.angular;
 
 var Coach = angular.module('Coach', [
     'Coach.FilmHome',
-    'Coach.Analytics',
     'Coach.Team',
     'Coach.Team.Info',
     'add-film'
