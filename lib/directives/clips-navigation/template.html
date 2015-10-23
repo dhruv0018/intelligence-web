@@ -7,7 +7,7 @@
     </div>
 
     <div class="clip-info">
-        Clip&nbsp;{{clipIndex}}/{{clipTotal}}
+        <select class="clip-select" ng-model="currentPlay" ng-options="play as play.name for play in plays" ng-change="goToPlay(currentPlay)"></select>
     </div>
 
     <div ng-class="{disabled: !nextPlay}"
