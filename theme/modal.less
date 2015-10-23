@@ -154,7 +154,7 @@ md-backdrop.md-opaque.md-default-theme {
 /* On mobile, make the modal dialog full screen */
 md-dialog.md-default-theme {
 
-    .phone({
+    @full-screen-modal: {
 
         display: block;
         top: @mobile-pad;
@@ -166,5 +166,9 @@ md-dialog.md-default-theme {
         max-height: calc(~"100% - @{mobile-pad} - @{mobile-pad}");
         min-width: 0;
         min-height: 0;
-    });
+        overflow-y: auto;
+    };
+
+    .phone(@full-screen-modal);
+    .phone-landscape(@full-screen-modal);
 }
