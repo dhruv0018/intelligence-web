@@ -96,10 +96,20 @@
 }
 
 // Phone screens (less than 480px wide)
-.phone (@rules; @maxWidth: @screen-xs - 1) {
+.phone (@rules; @maxWidth: @screen-phone - 1) {
 
     @media only screen
     and (max-width: @maxWidth) {
+
+        @rules();
+    }
+}
+
+// Phone screens (less than 480px wide)
+.phone-landscape (@rules; @maxHeight: @screen-phone - 1) {
+
+    @media only screen
+    and (max-height: @maxHeight) {
 
         @rules();
     }
