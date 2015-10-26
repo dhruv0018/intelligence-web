@@ -46,7 +46,7 @@ krossover-event {
         border-left: 2px solid @gray-dark;
     }
 
-    &:first-child::after {
+    &:not(.indexer):first-child::after {
         content: "";
         position: absolute;
         bottom: ~"calc(100% - 7px)";
