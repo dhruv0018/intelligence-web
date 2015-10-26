@@ -6,12 +6,11 @@
         <h2 hide-gt-sm>{{athlete.firstName}}&nbsp;{{athlete.lastName}}</h2>
 
         <a
-            id="edit-profile-cta"
             ng-if="auth.isLoggedIn && session.getCurrentUserId() === athlete.profile.userId"
             ui-sref="Athlete.Profile.EditProfile.BasicInfo"
             hide
             show-gt-md>
-            <md-button class="md-raised edit-profile-button">Edit Profile</md-button>
+            <md-button id="edit-profile-cta" class="md-raised edit-profile-button">Edit Profile</md-button>
         </a>
 
         <dropdown-toggle-button toggled-element="secondaryInfoElem" hide-gt-sm></dropdown-toggle-button>
