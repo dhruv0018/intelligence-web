@@ -195,7 +195,7 @@
 
             <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon icon-play-circle"></i> View raw film</button></li>
             <li><button class="btn btn-link" data-feedback-modal><i class="icon icon-pencil"></i> Add coach's feedback</button></li>
-            <li ng-if="game.status === GAME_STATUSES.FINALIZED.id"><button class="btn btn-link" ng-click="RevertGameStatusModal.open(game, GAME_STATUSES.READY_FOR_INDEXING)">Revert Game to Indexing</button></li>
+            <li ng-if="game.status === GAME_STATUSES.FINALIZED.id"><button class="btn btn-link" ng-click="RevertGameStatusModal.open(game, GAME_STATUSES.READY_FOR_INDEXING)">Revert to Indexing</button></li>
             <li><button class="btn btn-link" data-ng-click="DeleteGameModal.open(game)"><i class="icon icon-remove"></i> Delete game</button></li>
 
         </ul>
