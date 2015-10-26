@@ -28,7 +28,7 @@ class FileUploadService {
     }
 
     /**
-     * Will get an existing or new FileUpload model
+     * Will get an existing or new FileUpload model if an 'uploaderServiceInstance' is provided.
      * @param {string} guid A unique guid identifying the FileUpload
      * @param {object} uploaderServiceInstance An instance dealing with uploading files that can be used in the fileUpload
      * @returns {FileUpload} FileUpload if successful or null if the FileUpload could not be retrieved
@@ -36,7 +36,7 @@ class FileUploadService {
     getFileUpload(guid, uploaderServiceInstance) {
 
         if (!guid) console.error(`Missing required parameter 'guid'`);
-        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
+        if (typeof guid !== 'string') console.error(`'guid' must be a string`);
 
         // Get a file upload from memory
         if (!uploaderServiceInstance) {
@@ -97,14 +97,9 @@ class FileUploadService {
     remove(guid) {
 
         if (!guid) console.error(`Missing required parameter 'guid'`);
-        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
+        if (typeof guid !== 'string') console.error(`'guid' must be a string`);
 
-        let fileUpload = this.fileUploads[guid];
-
-        if (fileUpload) {
-
-            delete this.fileUploads[guid];
-        }
+        delete this.fileUploads[guid];
     }
 
     /**
@@ -114,7 +109,7 @@ class FileUploadService {
     onFileUploadComplete(guid) {
 
         if (!guid) console.error(`Missing required parameter 'guid'`);
-        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
+        if (typeof guid !== 'string') console.error(`'guid' must be a string`);
 
         let fileUpload = this.fileUploads[guid];
 
@@ -131,7 +126,7 @@ class FileUploadService {
     onFileUploadError(guid) {
 
         if (!guid) console.error(`Missing required parameter 'guid'`);
-        if (typeof guid !== 'string') throw new Error(`'guid' must be a string`);
+        if (typeof guid !== 'string') console.error(`'guid' must be a string`);
 
         let fileUpload = this.fileUploads[guid];
 
