@@ -97,7 +97,7 @@ describe('NewDate Factory', () => {
             expect(existingStartDate.getMonth()).to.equal(7);
         }));
 
-        it('should return a Date from existing date strings with the same day', inject(NewDate => {
+        it('should return a Date from existing start date strings with the same day', inject(NewDate => {
 
             expect(existingStartDate.getDate()).to.equal(1);
         }));
@@ -211,7 +211,7 @@ describe('NewDate Factory', () => {
             expect(existingEndDate.getMonth()).to.equal(7);
         }));
 
-        it('should return a Date from existing date strings with the same day', inject(NewDate => {
+        it('should return a Date from existing end date strings with the same day', inject(NewDate => {
 
             expect(existingEndDate.getDate()).to.equal(1);
         }));
