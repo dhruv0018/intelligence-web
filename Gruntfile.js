@@ -269,9 +269,11 @@ module.exports = function(grunt) {
                         'lib/directives/event-adjuster/styles.less',
                         'lib/dialogs/breakdown-dialog/styles.less',
                         'lib/directives/field/**/*.less',
+                        'lib/directives/admin-role/styles.less',
                         'app/reel/*.less',
                         'app/embed/*.less',
                         'app/indexer/**/*.less',
+                        'app/analytics/styles.less',
                         'app/styleguide/**/*.less',
                         'lib/directives/arena-chart/styles.less'
                     ]
