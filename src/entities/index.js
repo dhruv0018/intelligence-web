@@ -4,4 +4,4 @@ import TranscodeProfile from './transcodeProfile';
 
 export { Event, Subscription, TranscodeProfile };
 
-require('./video');
+import video from './video';

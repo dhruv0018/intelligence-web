@@ -310,4 +310,5 @@ function video(
  * @module Video
  * @exports entities/video
  */
+export default video;
 IntelligenceWebClient.factory('Video', video);
