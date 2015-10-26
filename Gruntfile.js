@@ -2,7 +2,6 @@
 
 'use strict';
 
-var less = require('component-builder-less');
 var es6ify = require('es6ify').configure(/^(?!.*node_modules)+.+\.js$/);
 
 module.exports = function(grunt) {
@@ -55,9 +54,7 @@ module.exports = function(grunt) {
             },
             less: {
                 src: [
-                    'app/**/*.less',
-                    'lib/**/*.less',
-                    'theme/**/*.less'
+                    'theme/main.less'
                 ]
             },
             js: {
@@ -249,57 +246,12 @@ module.exports = function(grunt) {
             options: {
                 paths: [
                     'build/temp-less',
-                    'theme',
                     'node_modules/bootstrap/less'
                 ]
             },
             theme: {
                 files: {
-                    'build/theme.css': ['theme/**/*.less']
-                }
-            },
-            components: {
-                files: {
-                    'build/components.css': [
-                        'lib/features/self-editor/*.less',
-                        'lib/features/self-editor/self-editing-playlist/*.less',
-                        'lib/features/self-editor/self-editing-controls/*.less',
-                        'lib/features/self-editor/self-edited-play/*.less',
-                        'lib/features/self-editor/self-edited-play-footer/*.less',
-                        'lib/directives/admin-queue-games/*.less',
-                        'lib/directives/admin-queue-pagination/*.less',
-                        'lib/directives/app-downloads/*.less',
-                        'lib/directives/fields/indexer-fields/*.less',
-                        'lib/directives/fields/user-fields/*.less',
-                        'lib/directives/play/play-header/styles.less',
-                        'lib/directives/play/play-footer/styles.less',
-                        'lib/directives/play/styles.less',
-                        'lib/directives/indexing-block/styles.less',
-                        'lib/directives/dynamic-tables/styles.less',
-                        'lib/directives/video-player/select-media-src/styles.less',
-                        'lib/directives/arena-chart/styles.less',
-                        'lib/directives/priority-select/*.less',
-                        'lib/directives/label-select/*.less',
-                        'lib/directives/priority-label-legend/*.less',
-                        'lib/directives/team-label-icon/*.less',
-                        'lib/directives/priority-label-icon/*.less',
-                        'lib/directives/event-adjuster/styles.less',
-                        'lib/directives/wsc-link/styles.less',
-                        'lib/dialogs/breakdown-dialog/styles.less',
-                        'lib/directives/field/**/*.less',
-                        'lib/directives/admin-role/styles.less',
-                        'lib/directives/custom-tags-filter/*.less',
-                        'lib/directives/plays-filter/*.less',
-                        'app/games/**/*.less',
-                        'app/reel/*.less',
-                        'app/embed/*.less',
-                        'app/indexer/**/*.less',
-                        'app/analytics/styles.less',
-                        'app/styleguide/**/*.less',
-                        'lib/directives/arena-chart/styles.less',
-                        'lib/directives/admin-resource-save/styles.less',
-                        'lib/directives/go-to-as/styles.less'
-                    ]
+                    'build/theme.css': ['theme/main.less']
                 }
             }
         },
@@ -351,25 +303,6 @@ module.exports = function(grunt) {
                 },
                 src: '.',
                 dest: './build/assets'
-            },
-            styles: {
-                options: {
-                    scripts: false,
-                    styles: true,
-                    files: false,
-                    prefix: 'assets/',
-                    stylePlugins: function(builder) {
-                        builder.use('styles', less({
-                            paths: [
-                                'build/temp-less',
-                                'theme',
-                                'node_modules/bootstrap/less'
-                            ]
-                        }));
-                    }
-                },
-                src: '.',
-                dest: './build'
             },
             dev: {
                 options: {
@@ -667,15 +600,15 @@ module.exports = function(grunt) {
             },
             css: {
                 files: ['app/**/*.css', 'lib/**/*.css'],
-                tasks: ['newer:csslint', 'componentbuild:styles', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['csslint', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             less: {
                 files: ['app/**/*.less', 'lib/**/*.less'],
-                tasks: ['componentbuild:styles', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['less:theme', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             theme: {
                 files: ['theme/**/*.less'],
-                tasks: ['newer:less:theme', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['less:theme', 'concat:unprefixed', 'autoprefixer', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             js: {
                 files: ['src/**/*.js'],
@@ -768,7 +701,6 @@ module.exports = function(grunt) {
         'componentbuild:dev',
         'browserify:dev',
         'copy:theme-vendor',
-        'componentbuild:styles',
         'less',
         'copy:svg',
         'grunticon',
@@ -790,7 +722,6 @@ module.exports = function(grunt) {
         'browserify:prod',
         'ngAnnotate',
         'copy:theme-vendor',
-        'componentbuild:styles',
         'less',
         'svgmin',
         'grunticon',
@@ -815,7 +746,6 @@ module.exports = function(grunt) {
         'browserify:prod',
         'ngAnnotate',
         'copy:theme-vendor',
-        'componentbuild:styles',
         'less',
         'svgmin',
         'grunticon',
@@ -867,7 +797,6 @@ module.exports = function(grunt) {
         'ngAnnotate',
         'uglify',
         'copy:theme-vendor',
-        'componentbuild:styles',
         'less',
         'svgmin',
         'grunticon',
