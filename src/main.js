@@ -32,6 +32,7 @@ import ArenaChart from '../lib/directives/arena-chart';
 import BreakdownDialog from '../lib/dialogs/breakdown-dialog';
 import AdminRole from '../lib/directives/admin-role';
 import EventAdjuster from '../lib/directives/event-adjuster';
+import SelectOnClick from '../lib/directives/select-on-click';
 
 /* App dependencies */
 require('./config');
