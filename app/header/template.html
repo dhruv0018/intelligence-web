@@ -155,25 +155,27 @@
 
             <ul class="dropdown-menu">
 
-                <div ng-repeat="roleType in currentUser.roleTypes track by $index">
-                    <li ng-if="roleType[0].type.id !== ATHLETE.type.id" ng-repeat="role in roleType">
+                <div class="dropdown-roles-container">
+                    <div ng-repeat="roleType in currentUser.roleTypes track by $index">
+                        <li ng-if="roleType[0].type.id !== ATHLETE.type.id" ng-repeat="role in roleType">
 
-                        <a ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(role)">
+                            <a ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(role)">
 
-                            <x-krossover-role user="currentUser" role="role"></x-krossover-role>
+                                <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
-                        </a>
+                            </a>
 
-                    </li>
-                    <li ng-if="roleType[0].type.id === ATHLETE.type.id">
+                        </li>
+                        <li ng-if="roleType[0].type.id === ATHLETE.type.id">
 
-                        <a ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(roleType[0])">
+                            <a ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(roleType[0])">
 
-                            <x-krossover-role user="currentUser" role="roleType[0]"></x-krossover-role>
+                                <x-krossover-role user="currentUser" role="roleType[0]"></x-krossover-role>
 
-                        </a>
+                            </a>
 
-                    </li>
+                        </li>
+                    </div>
                 </div>
 
                 <footer>
