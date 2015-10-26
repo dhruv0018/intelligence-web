@@ -162,14 +162,15 @@ describe('NewDate Factory', () => {
 
         it('return the day after tomorrow, just before midnight if no existing date', inject(NewDate => {
 
-            let controlDate = momentTimezone(undefined, 'America/New_York').add(2, 'days');
+            let controlDate = momentTimezone(undefined, 'America/New_York')
+                .endOf('day')
+                .add(2, 'days');
 
-            /* FIXME: Although this works, we should find a better way to get a
-             * 'control date' to test against. Aside from the time, the date
-             * above is calculated almost exactly as it is in the factory (using
-             * moment.js). The challenge here is to determine the month and day
-             * two days out that avoids excessive calculation that shouldn't be
-             * in the unit tests. */
+            /* FIXME: The control date does exactly what the tested method does
+             * (the momentTimezone part at least), so this test has questionable
+             * value. But, it does however test the logic in the method that
+             * determines how the date is created and that the correct date is
+             * returned. Find a better way to do this. */
             expect(newEndDate.getUTCMonth()).to.equal(controlDate.utc().month());
             expect(newEndDate.getUTCDate()).to.equal(controlDate.utc().date());
         }));
