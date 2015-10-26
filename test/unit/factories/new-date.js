@@ -49,74 +49,30 @@ describe('NewDate Factory', () => {
 
         it('return tomorrow\'s Date if no existing date', inject(NewDate => {
 
-            let controlDate = momentTimezone(undefined, 'America/New_York').add(1, 'days');
+            /* FIXME: The control date does exactly what the tested method does
+             * (the momentTimezone part at least), so this test has questionable
+             * value. But, it does however test the logic in the method that
+             * determines how the date is created and that the correct date is
+             * returned. Find a better way to do this. */
 
-            /* FIXME: Although this works, we should find a better way to get a
-             * 'control date' to test against. Aside from the time, the date
-             * above is calculated almost exactly as it is in the factory (using
-             * moment.js). The challenge here is to determine the month and day
-             * two days out that avoids excessive calculation that shouldn't be
-             * in the unit tests. */
-            expect(newStartDate.getUTCMonth()).to.equal(controlDate.utc().month());
-            expect(newStartDate.getUTCDate()).to.equal(controlDate.utc().date());
+            let controlDate = momentTimezone.tz(undefined, 'America/New_York')
+                .startOf('day')
+                .add(1, 'days');
+
+            let newStartDateISOString = newStartDate.toISOString();
+            let controlDateISOString = controlDate.toDate().toISOString();
+
+            expect(newStartDateISOString).to.equal(controlDateISOString);
         }));
 
-        it('return tomorrow\'s Date at midnight if no existing date', inject(NewDate => {
+        it('return that day at midnight if existing date', () => {
 
-            /* Midnight in UTC time is 4am */
-            expect(newStartDate.getUTCHours()).to.equal(4);
-        }));
+            let controlDateISOString = momentTimezone.tz('2014-08-01T04:00:00+00:00', 'America/New_York')
+                .toISOString();
+            let existingStartDateISOString = existingStartDate.toISOString();
 
-        it('return tomorrow\'s Date at the top of the hour if no existing date', inject(NewDate => {
-
-            expect(newStartDate.getMinutes()).to.equal(0);
-        }));
-
-        it('return tomorrow\'s Date with zero seconds if no existing date', inject(NewDate => {
-
-            expect(newStartDate.getSeconds()).to.equal(0);
-        }));
-
-        it('return tomorrow\'s Date with zero milliseconds if no existing date', inject(NewDate => {
-
-            expect(newStartDate.getMilliseconds()).to.equal(0);
-        }));
-
-        it('should return a Date from existing date strings', inject(NewDate => {
-
-            expect(existingStartDate).to.be.an.instanceof(Date);
-        }));
-
-        it('should return a Date from existing date strings with the same year', inject(NewDate => {
-
-            expect(existingStartDate.getFullYear()).to.equal(2014);
-        }));
-
-        it('should return a Date from existing date strings with the same month', inject(NewDate => {
-
-            expect(existingStartDate.getMonth()).to.equal(7);
-        }));
-
-        it('should return a Date from existing start date strings with the same day', inject(NewDate => {
-
-            expect(existingStartDate.getDate()).to.equal(1);
-        }));
-
-        it('should return a Date from existing date strings with the same hours', inject(NewDate => {
-
-            /* Midnight in UTC time is 4am */
-            expect(existingStartDate.getUTCHours()).to.equal(4);
-        }));
-
-        it('should return a Date from existing date strings with the same minutes', inject(NewDate => {
-
-            expect(existingStartDate.getMinutes()).to.equal(0);
-        }));
-
-        it('should return a Date from existing date strings with the same seconds', inject(NewDate => {
-
-            expect(existingStartDate.getSeconds()).to.equal(0);
-        }));
+            expect(existingStartDateISOString).to.equal(controlDateISOString);
+        });
 
         it('should throw an error if existing date is an invalid string', inject(NewDate => {
 
@@ -150,8 +106,8 @@ describe('NewDate Factory', () => {
 
         beforeEach(inject(NewDate => {
 
-            newEndDate        = NewDate.generatePlanEndDate();
-            existingEndDate   = NewDate.generatePlanEndDate('2014-08-02T03:59:59+00:00');
+            newEndDate = NewDate.generatePlanEndDate();
+            existingEndDate = NewDate.generatePlanEndDate('2014-08-02T03:59:59+00:00');
         }));
 
         it('return a Date', inject(NewDate => {
@@ -160,77 +116,38 @@ describe('NewDate Factory', () => {
             expect(existingEndDate).to.be.an.instanceof(Date);
         }));
 
-        it('return the day after tomorrow, just before midnight if no existing date', inject(NewDate => {
-
-            let controlDate = momentTimezone(undefined, 'America/New_York')
-                .endOf('day')
-                .add(2, 'days');
+        it('return the day after tomorrow, just before midnight if no existing date', () => {
 
             /* FIXME: The control date does exactly what the tested method does
              * (the momentTimezone part at least), so this test has questionable
              * value. But, it does however test the logic in the method that
              * determines how the date is created and that the correct date is
              * returned. Find a better way to do this. */
-            expect(newEndDate.getUTCMonth()).to.equal(controlDate.utc().month());
-            expect(newEndDate.getUTCDate()).to.equal(controlDate.utc().date());
-        }));
 
-        it('return a Date at 11 pm if no existing date', inject(NewDate => {
+            let controlDate = momentTimezone.tz(undefined, 'America/New_York')
+                .endOf('day')
+                .add(2, 'days');
 
-            /* 11pm in UTC time is 4am */
-            expect(newEndDate.getUTCHours()).to.equal(3);
-        }));
+            let newEndDateISOString = newEndDate.toISOString();
+            let controlDateISOString = controlDate.toDate().toISOString();
 
-        it('return a Date at 59 minutes if no existing date', inject(NewDate => {
+            expect(newEndDateISOString).to.equal(controlDateISOString);
+        });
 
-            expect(newEndDate.getMinutes()).to.equal(59);
-        }));
+        it('return the same day, just before midnight if existing date', () => {
 
-        it('return a Date at 59 seconds if no existing date', inject(NewDate => {
+            /* FIXME: The control date does exactly what the tested method does
+             * (the momentTimezone part at least), so this test has questionable
+             * value. But, it does however test the logic in the method that
+             * determines how the date is created and that the correct date is
+             * returned. Find a better way to do this. */
 
-            expect(newEndDate.getSeconds()).to.equal(59);
-        }));
+            let controlDateISOString = momentTimezone.tz('2014-08-02T03:59:59.999Z', 'America/New_York')
+                .toISOString();
+            let existingEndDateISOString = existingEndDate.toISOString();
 
-        it('return a Date at 999 milliseconds if no existing date', inject(NewDate => {
-
-            expect(newEndDate.getMilliseconds()).to.equal(999);
-        }));
-
-        it('should return a Date from existing date strings', inject(NewDate => {
-
-            expect(existingEndDate).to.be.an.instanceof(Date);
-        }));
-
-        it('should return a Date from existing date strings with the same year', inject(NewDate => {
-
-            expect(existingEndDate.getFullYear()).to.equal(2014);
-        }));
-
-        it('should return a Date from existing date strings with the same month', inject(NewDate => {
-
-            expect(existingEndDate.getMonth()).to.equal(7);
-        }));
-
-        it('should return a Date from existing end date strings with the same day', inject(NewDate => {
-
-            expect(existingEndDate.getDate()).to.equal(1);
-        }));
-
-        it('should return a Date from existing date strings with the same hours', inject(NewDate => {
-
-            /* 11pm in UTC time is 4am */
-            expect(existingEndDate.getUTCHours()).to.equal(3);
-        }));
-
-        it('should return a Date from existing date strings with the same minutes', inject(NewDate => {
-
-            expect(existingEndDate.getMinutes()).to.equal(59);
-        }));
-
-        it('should return a Date from existing date strings with the same seconds', inject(NewDate => {
-
-            expect(existingEndDate.getSeconds()).to.equal(59);
-        }));
+            expect(existingEndDateISOString).to.equal(controlDateISOString);
+        });
 
         it('should throw an error if existing date is an invalid string', inject(NewDate => {
 
