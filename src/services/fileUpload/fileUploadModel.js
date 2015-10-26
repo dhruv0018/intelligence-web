@@ -17,6 +17,10 @@ const UPLOAD_STATUSES = {
  */
 class FileUpload {
 
+    /**
+     * Takes an uploaderServiceInstance (e.g. Flow/Evaporate instance)
+     * @param {object} uploaderServiceInstance
+     */
     constructor(uploaderServiceInstance) {
 
         this.uploaderServiceInstance = uploaderServiceInstance;
