@@ -44,7 +44,7 @@
                 Once the roster is in the excel file, select it <br/>
 
                 <div data-ng-show="files" class="files-list shaded">
-                    {{files[0].name}} <data-krossover-uploader data-id="pick-file-again-cta" data-ng-show="files" data-upload-label="Pick Again" data-on-upload="uploadFile(files)"></data-krossover-uploader>
+                    {{files[0].name}} <data-krossover-uploader id="excel-upload-pick-again-cta" data-id="pick-file-again-cta" data-ng-show="files" data-upload-label="Pick Again" data-on-upload="uploadFile(files)"></data-krossover-uploader>
                 </div>
 
                 <data-krossover-uploader data-id="choose-roster-cta" data-ng-show="!files" data-upload-label="Upload Roster" data-on-upload="uploadFile(files)"></data-krossover-uploader>

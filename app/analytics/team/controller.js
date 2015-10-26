@@ -22,7 +22,7 @@ function TeamAnalyticsController(
 
     const team = teams.get(session.getCurrentTeamId());
     const league = leagues.get(team.leagueId);
-    const seasons = league.seasons;
+    const seasons = league.seasons.reverse();
 
     const generateStats = function () {
         $scope.loadingTables = true;
