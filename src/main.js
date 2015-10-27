@@ -16,9 +16,11 @@ require('./extensions');
 /* Components */
 require('../build/build');
 
-import Reel from '../app/reel';
-import Indexer from '../app/indexer';
-import Styleguide from '../app/styleguide';
+import Reel from '../app/reel/index.js';
+import Embed from '../app/embed/index.js';
+import Indexer from '../app/indexer/index.js';
+import Styleguide from '../app/styleguide/index.js';
+import Analytics from '../app/analytics/index.js';
 
 import FieldComponent from '../lib/directives/field';
 import IndexingBlock from '../lib/directives/indexing-block';
@@ -28,6 +30,8 @@ import Play from '../lib/directives/play';
 import SelectMediaSrc from '../lib/directives/video-player/select-media-src';
 import ArenaChart from '../lib/directives/arena-chart';
 import BreakdownDialog from '../lib/dialogs/breakdown-dialog';
+import AdminRole from '../lib/directives/admin-role';
+import EventAdjuster from '../lib/directives/event-adjuster';
 
 /* App dependencies */
 require('./config');

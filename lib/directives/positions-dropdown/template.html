@@ -1,11 +1,11 @@
 <div class="positions-dropdown">
 
-    <x-multiselect
+    <am-multiselect
         data-ng-model="selectedPositions"
         data-options="position.id as position.description + ' (' + position.name + ')' for position in positions"
         data-multiple="true"
         data-template-url="positions-dropdown/positions-dropdown.html"
     >
-    </x-multiselect>
+    </am-multiselect>
 
 </div>

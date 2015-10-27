@@ -1,5 +1,5 @@
 {
-    "name": "roles",
+    "name": "game-copy",
     "templates": [
         "template.html"
     ],

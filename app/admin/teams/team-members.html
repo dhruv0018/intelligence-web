@@ -30,7 +30,7 @@
         <tr class="member" data-ng-repeat="role in team.roles | filter:onlyCurrentRoles | orderBy:team.roles.type.name">
 
             <td>{{role.type.name}}</td>
-            <td><a data-ui-sref="user({ id: role.userId })">{{team.members[role.userId].firstName}} {{team.members[role.userId].lastName}}</a></td>
+            <td><a data-ui-sref="user-roles({ id: role.userId })">{{team.members[role.userId].firstName}} {{team.members[role.userId].lastName}}</a></td>
             <td><a href data-ng-click="team.removeRole(role)">remove</a></td>
 
         </tr>
@@ -48,7 +48,7 @@
         <tr class="member" data-ng-repeat="role in team.roles | filter:onlyPastRoles | orderBy:team.roles.type.name">
 
             <td>{{role.type.name}}</td>
-            <td><a data-ui-sref="user({ id: role.userId })">{{team.members[role.userId].firstName}} {{team.members[role.userId].lastName}}</a></td>
+            <td><a data-ui-sref="user-roles({ id: role.userId })">{{team.members[role.userId].firstName}} {{team.members[role.userId].lastName}}</a></td>
 
         </tr>
 
@@ -59,4 +59,3 @@
 <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(team)">Save</button>
 
 <a class="pull-right" href data-ui-sref="teams">Cancel</a>
-

@@ -11,7 +11,7 @@
         </h3>
         <h3 class="modal-title last-accessed" ng-if="athlete.firstName && users[athlete.userId].lastAccessed">{{users[athlete.userId].lastAccessed | date: 'mediumDate'}}</h3>
 
-        <i class="icon icon-remove" ng-click="$dismiss()"></i>
+        <i id="dismiss-athlete-info-modal-cta" class="icon icon-remove" ng-click="$dismiss()"></i>
 
     </header>
 
@@ -20,7 +20,7 @@
             <div class="status col-md-12">
                 <div class="inactive" data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-hide="sendingEmail">
                     <strong>This player has not yet activated their account with Krossover.</strong> Once they activate their account you will no longer be able to edit their name and email address.
-                    <a data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-click="resendInvite(athlete.userId, team.id)">Resend Invitation</a>
+                    <a id="resend-invite-cta" data-ng-if="athlete.userId && !users[athlete.userId].lastAccessed" data-ng-click="resendInvite(athlete.userId, team.id)">Resend Invitation</a>
                 </div>
                 <div class="resending-invite" data-ng-show="sendingEmail">
                     <krossover-spinner ng-show="!confirmSent" size="15px"></krossover-spinner>
@@ -50,10 +50,10 @@
                                 </tr>
                             </thead>
                             <tr>
-                                <td><input type="text" class="name" placeholder="First Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.firstName" required></td>
-                                <td><input type="text" class="name" placeholder="Last Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.lastName" required></td>
+                                <td><input id="enter-player-first-name-cta" type="text" class="name" placeholder="First Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.firstName" required></td>
+                                <td><input id="enter-player-last-name-cta" type="text" class="name" placeholder="Last Name" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="athlete.lastName" required></td>
                                 <td data-ng-if="athlete.description === 'players'">
-                                    <input placeholder="#" size="3" type="text" data-ng-model="playerInfo.jerseyNumber" required>
+                                    <input id="enter-player-jersey-number-cta" placeholder="#" size="3" type="text" data-ng-model="playerInfo.jerseyNumber" required>
                                 </td>
                             </tr>
                         </table>
@@ -80,8 +80,8 @@
                         <div class="col-md-6">
                             <strong>Player's Email</strong>
                             <br/>
-                            <input type="text" data-ng-if="!athlete.userId" data-ng-model="user.email" placeholder="Email Address">
-                            <input type="text" data-ng-if="athlete.userId" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="users[athlete.userId].email" placeholder="Email Address">
+                            <input id="enter-player-email-cta" type="text" data-ng-if="!athlete.userId" data-ng-model="user.email" placeholder="Email Address">
+                            <input id="edit-player-email-cta" type="text" data-ng-if="athlete.userId" data-ng-disabled="users[athlete.userId].lastAccessed" data-ng-model="users[athlete.userId].email" placeholder="Email Address">
                         </div>
                         <div ng-hide="true" class="col-md-6">
                             <strong>Allow player to edit event details</strong>
@@ -93,6 +93,7 @@
                     <div class="col-md-6">
                         <input type="submit" data-ng-if="athlete.description !== 'players'" class="btn btn-primary" value="Save" data-ng-click="savePlayer()">
                         <input type="submit"
+                               id="submit-player-info-cta"
                                data-ng-if="athlete.description === 'players'"
                                class="btn btn-primary"
                                data-ng-disabled="athleteForm.$invalid"
@@ -101,8 +102,8 @@
                     </div>
                     <div data-ng-if="athlete.description === 'players'" class="remove col-md-6">
                         <a class="pull-right" href data-ng-click="togglePlayer()">
-                            <span data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === true"><i class="icon icon-remove"></i> Remove from current roster</span>
-                            <span data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === false"><i class="icon icon-add"></i> Add player to current roster</span>
+                            <span id="remove-player-from-roster-cta" data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === true"><i class="icon icon-remove"></i> Remove from current roster</span>
+                            <span id="add-player-to-roster-cta" data-ng-if="athlete.id && team.roster.playerInfo[athlete.id].isActive === false"><i class="icon icon-add"></i> Add player to current roster</span>
                         </a>
                     </div>
                 </div>

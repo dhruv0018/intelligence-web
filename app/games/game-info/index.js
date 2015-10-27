@@ -16,7 +16,7 @@ GamesInfo.config([
 
         var gameInfo = {
             name: 'Games.Info',
-            url: '/information',
+            url: '/information?isHomeGame',
             parent: 'Games',
             views: {
                 'gameView@Games': {
@@ -116,7 +116,6 @@ function GamesInfoController (
 
     $scope.game = games.get($stateParams.id);
     $scope.game.flow = uploadManager.get($scope.game.id);
-    $scope.returnedDate = ($scope.game.isDelivered() && angular.isObject($scope.game.currentAssignment())) ? new Date($scope.game.currentAssignment().timeFinished) : null;
     $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
 
     //TODO special case to remove
