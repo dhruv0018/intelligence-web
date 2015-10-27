@@ -151,6 +151,8 @@ function $KrossoverPlay (
                 opposingIndexedScore: this.opposingIndexedScore,
                 customTagIds: this.customTagIds,
                 hasVisibleEvents: this.hasVisibleEvents,
+                createdAt: this.createdAt,
+                updatedAt: this.updatedAt,
                 possessionTeamId: this.possessionTeamId
             };
 
