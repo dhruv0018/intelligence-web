@@ -16,7 +16,7 @@ GamesInfo.config([
 
         var gameInfo = {
             name: 'Games.Info',
-            url: '/information',
+            url: '/information?isHomeGame',
             parent: 'Games',
             views: {
                 'gameView@Games': {
