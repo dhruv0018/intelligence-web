@@ -251,7 +251,7 @@ function video(
 
             let fileUpload = FileUploadService.getFileUpload(video.guid);
 
-            return (fileUpload && fileUpload.isUploaded()) ||
+            return (fileUpload && fileUpload.isUploaded() && !video.isComplete()) ||
                 video.status === VIDEO_STATUSES.UPLOADED.id;
 
             // FIXME: The video 'status'' SHOULD be sufficient for determining
