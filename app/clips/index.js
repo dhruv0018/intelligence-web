@@ -58,15 +58,15 @@ Clips.config([
                 }
             },
             onEnter: [
-                '$state', '$timeout', '$stateParams', 'SessionService', 'ReelsFactory', 'GamesFactory',
-                function($state, $timeout, $stateParams, session, reels, games) {
+                '$state', '$timeout', '$stateParams', 'SessionService', 'ReelsFactory', 'GamesFactory', 'ROLES', 'ROLE_TYPE',
+                function($state, $timeout, $stateParams, session, reels, games, ROLES, ROLE_TYPE) {
 
                     let playId = Number($stateParams.id);
+                    let currentUser = session.getCurrentUser();
 
                     if($stateParams.reel) {
 
                         let reel = reels.get($stateParams.reel);
-                        let currentUser = session.getCurrentUser();
 
                         /*Check if user has permissions to view reel*/
                         if (!reel.isAllowedToView()) {
@@ -80,9 +80,20 @@ Clips.config([
                     } else if($stateParams.game) {
 
                         let game = games.get($stateParams.game);
+                        let teamIds = [];
+
+                        // Get all teams user is athlete on
+                        if (currentUser.is(ROLES.ATHLETE)) {
+                            let athleteRoles = currentUser.roleTypes[ROLE_TYPE.ATHLETE];
+                            athleteRoles.forEach(athleteRole => {
+                                teamIds.push(athleteRole.teamId);
+                            });
+                        } else {
+                            teamIds.push(session.getCurrentTeamId());
+                        }
 
                         /*Check if user has permissions to view game*/
-                        if (!game.isAllowedToView()) {
+                        if (!game.isAllowedToView(teamIds, currentUser.id)) {
 
                             //Without timeout, the read property '@' is null
                             //when using $state in onEnter

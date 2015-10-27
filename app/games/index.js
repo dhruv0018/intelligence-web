@@ -66,14 +66,25 @@ Games.config([
             url: '/games/:id',
             parent: 'base',
             onEnter: [
-                '$state', '$stateParams', 'SessionService', 'GamesFactory',
-                function($state, $stateParams, session, games) {
+                '$state', '$stateParams', 'SessionService', 'GamesFactory', 'ROLES', 'ROLE_TYPE',
+                function($state, $stateParams, session, games, ROLES, ROLE_TYPE) {
 
                     let currentUser = session.currentUser;
                     let gameId = Number($stateParams.id);
                     let game = games.get(gameId);
+                    let teamIds = [];
 
-                    if (!game.isAllowedToView()) {
+                    // Get all teams user is an athlete on
+                    if (currentUser.is(ROLES.ATHLETE)) {
+                        let athleteRoles = currentUser.roleTypes[ROLE_TYPE.ATHLETE];
+                        athleteRoles.forEach(athleteRole => {
+                            teamIds.push(athleteRole.teamId);
+                        });
+                    } else {
+                        teamIds.push(session.getCurrentTeamId());
+                    }
+                    console.log(game.isAllowedToView(teamIds, currentUser.id));
+                    if (!game.isAllowedToView(teamIds, currentUser.id)) {
                         $state.go('Games.Restricted', { id: gameId });
                     }
                 }
