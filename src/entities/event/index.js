@@ -28,7 +28,7 @@ class KrossoverEvent extends Entity {
         super(tag);
 
         this.tagId = tag.id;
-        this.time  = time;
+        this.time = time;
         this.gameId = gameId;
 
         delete this.id;
@@ -46,7 +46,7 @@ class KrossoverEvent extends Entity {
             //     console.warn(validation.errors.shift());
             // }
 
-            this.id     = event.id;
+            this.id = event.id;
             this.playId = event.playId;
         }
 
@@ -74,12 +74,12 @@ class KrossoverEvent extends Entity {
             if (event) {
 
                 rawField.eventId = event.id;
-                rawField.playId  = event.playId;
+                rawField.playId = event.playId;
             }
 
-            rawField.gameId        = gameId;
-            rawField.index         = index + 1;
-            rawField.value         = variableValue.value;
+            rawField.gameId = gameId;
+            rawField.index = index + 1;
+            rawField.value = variableValue.value;
             this.fields[index + 1] = FieldFactory.createField(rawField, variableValue.type);
         });
 
@@ -230,7 +230,10 @@ class KrossoverEvent extends Entity {
      */
     get isFloat () {
 
-        return this.isStart === false && this.isEnd === false && this.children && this.children.length === 0;
+        return this.isStart === false &&
+            this.isEnd === false &&
+            this.children &&
+            this.children.length === 0;
     }
 
     /**
@@ -259,10 +262,10 @@ class KrossoverEvent extends Entity {
 
         let copy = {
 
-            id            : this.id,
-            time          : this.time,
-            tagId         : this.tagId,
-            playId        : this.playId,
+            id: this.id,
+            time: this.time,
+            tagId: this.tagId,
+            playId: this.playId,
             variableValues: {},
         };
 
