@@ -439,7 +439,6 @@ describe('Event Entity', () => {
     it('should be able to accept a KrossoverEvent as a constructor parameter', () => {
 
         let eventFromEvent = new KrossoverEvent(sampleEvent, tag, srcEvent.time, gameId);
-        let sampleEventJSON = sampleEvent.toJSON();
 
         expect(sampleEvent.toJSON()).to.deep.equal(eventFromEvent.toJSON());
     });
