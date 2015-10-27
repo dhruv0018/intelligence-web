@@ -35,13 +35,13 @@ class KrossoverPlay extends Entity {
 
         super(play);
 
-        this.events               = play.events || [];
-        this.period               = play.period || 0;
-        this.indexedScore         = play.indexedScore || 0;
+        this.events = play.events || [];
+        this.period = play.period || 0;
+        this.indexedScore = play.indexedScore || 0;
         this.opposingIndexedScore = play.opposingIndexedScore || 0;
-        this.customTagIds         = play.customTagIds || [];
-        this.hasVisibleEvents     = false;
-        this.possessionTeamId     = play.possessionTeamId || null;
+        this.customTagIds = play.customTagIds || [];
+        this.hasVisibleEvents = false;
+        this.possessionTeamId = play.possessionTeamId || null;
 
         if (!play.clip instanceof Video) {
 
