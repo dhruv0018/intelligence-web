@@ -1,4 +1,4 @@
-import KrossoverPlay from '../../../src/entities/play';
+import $KrossoverPlay from '../../../src/entities/play/entity';
 import KrossoverTag from '../../../src/entities/tag';
 import playJSON from './sample-data/play';
 import tagData22 from './sample-data/tag-22';
@@ -36,26 +36,27 @@ describe('Play Entity', () => {
         });
     }));
 
-    beforeEach(inject(TagsetsFactory => {
+
+    beforeEach(inject($KrossoverPlay => {
 
         samplePlay = angular.copy(playJSON);
-        play       = new KrossoverPlay(samplePlay, TagsetsFactory);
+        play       = new $KrossoverPlay(samplePlay);
     }));
 
-    it('should exist', () => {
+    it('should exist', inject($KrossoverPlay => {
 
-        expect(KrossoverPlay).to.exist;
-    });
+        expect($KrossoverPlay).to.exist;
+    }));
 
-    it('should throw an Error if constructor is called without parameters.', () => {
+    it('should throw an Error if constructor is called without parameters.', inject($KrossoverPlay => {
 
-        expect(() => new KrossoverPlay()).to.throw(Error);
-    });
+        expect(() => new $KrossoverPlay()).to.throw(Error);
+    }));
 
-    it('should have public API', () => {
+    it('should have public API', inject($KrossoverPlay => {
 
-        expect(KrossoverPlay).to.respondTo('toJSON');
-    });
+        expect($KrossoverPlay).to.respondTo('toJSON');
+    }));
 
     it('should have a property "id"', () => {
 
@@ -95,7 +96,7 @@ describe('Play Entity', () => {
     it('should have a property "clip"', () => {
 
         expect(play).to.contain.keys('clip');
-        expect(play.clip).to.deep.equal(playJSON.clip);
+        expect(play.clip.toJSON()).to.deep.equal(playJSON.clip);
     });
 
     it('should have a property "shares"', () => {
@@ -205,4 +206,6 @@ describe('Play Entity', () => {
         expect(play.updatedAt).to.equal(playJSON.updatedAt);
         expect(play.customTagIds).to.deep.equal(playJSON.customTagIds);
     });
+
+    // TODO: Test KrossoverPlayFactory.
 });
