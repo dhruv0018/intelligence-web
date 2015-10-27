@@ -14,6 +14,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
     '$sce',
     'VIDEO_STATUSES',
     'PlaysResource',
+    'KrossoverPlayFactory',
     'BaseFactory',
     'TagsetsFactory',
     'Utilities',
@@ -24,6 +25,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
         $sce,
         VIDEO_STATUSES,
         PlaysResource,
+        KrossoverPlay,
         BaseFactory,
         tagsets,
         utils,
@@ -42,7 +44,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             extend: function (play) {
 
-                play = new KrossoverPlay(play, tagsets);
+                play = KrossoverPlay.create(play);
                 angular.augment(play, this);
 
                 return play;
