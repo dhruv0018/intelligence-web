@@ -17,15 +17,17 @@ describe('Event Entity', () => {
     let sampleEvent;
     let sampleEmptyEvent;
     let srcEvent;
+    let gameId;
+    let tag;
 
     beforeEach(angular.mock.module('intelligence-web-client'));
 
     beforeEach(() => {
 
-        srcEvent         = angular.copy(srcJSON.events[0]);
-        let gameId       = srcJSON.gameId;
-        let tag          = new KrossoverTag(angular.copy(srcTag));
-        sampleEvent      = new KrossoverEvent(angular.copy(srcEvent), tag, srcEvent.time, gameId);
+        srcEvent = angular.copy(srcJSON.events[0]);
+        gameId = srcJSON.gameId;
+        tag = new KrossoverTag(angular.copy(srcTag));
+        sampleEvent = new KrossoverEvent(angular.copy(srcEvent), tag, srcEvent.time, gameId);
         sampleEmptyEvent = new KrossoverEvent(null, tag, srcEvent.time, gameId);
     });
 
@@ -432,5 +434,13 @@ describe('Event Entity', () => {
 
         /* Instantiated without event JSON */
         expect(() => sampleEvent.toJSON()).to.throw(Error);
+    });
+
+    it('should be able to accept a KrossoverEvent as a constructor parameter', () => {
+
+        let eventFromEvent = new KrossoverEvent(sampleEvent, tag, srcEvent.time, gameId);
+        let sampleEventJSON = sampleEvent.toJSON();
+
+        expect(sampleEvent.toJSON()).to.deep.equal(eventFromEvent.toJSON());
     });
 });
