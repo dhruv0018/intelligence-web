@@ -174,9 +174,14 @@ class TranscodeProfile extends Entity {
      */
     toJSON () {
 
-        let copy = Object.assign({}, this);
+        let copy = {
 
-        delete copy.transcodeProfileId;
+            id: this.id,
+            videoId: this.videoId,
+            transcodeProfile: this.transcodeProfile,
+            status: this.status,
+            videoUrl: this.videoUrl
+        };
 
         return copy;
     }
