@@ -33,21 +33,31 @@ class KrossoverEvent extends Entity {
 
         delete this.id;
 
-        /* If we have an event, fill in the details */
+        /* Existing events, JSON or KrossoverEvent. */
         if (event) {
 
             /* Validate event JSON */
             /* TODO: Re-enable this at some point. Right now, far too many
              * events are failing validtion and polluting the console. */
-            // let validation = this.validate(event, schema);
+            // if (event instanceof KrossoverEvent) {
             //
-            // if (validation.errors.length) {
+            //     if (!event.isValid) {
             //
-            //     console.warn(validation.errors.shift());
+            //         console.warn('KrossoverEvent: invalid KrossoverEvent passed to constructor!');
+            //     }
+            // } else {
+            //
+            //     let validation = this.validate(event, schema);
+            //
+            //     if (validation.errors.length) {
+            //
+            //         console.warn(validation.errors.shift());
+            //     }
             // }
 
             this.id = event.id;
             this.playId = event.playId;
+            this.variableValues = event.variableValues;
         }
 
         this.fields = {};
@@ -57,12 +67,12 @@ class KrossoverEvent extends Entity {
 
             let variableValue;
 
-            // TODO: move event && event.variableValues out of forEach, not moved as this could be a patch update.
+            if (
+                this.variableValues &&
+                this.variableValues[tagVariable.id]
+            ) {
 
-            // variableValues, need not have all tagVariable,
-            if (event && event.variableValues && event.variableValues[tagVariable.id]) {
-
-                variableValue = event.variableValues[tagVariable.id];
+                variableValue = this.variableValues[tagVariable.id];
 
             } else {
 
