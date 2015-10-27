@@ -1952,92 +1952,77 @@ describe('GamesFactory', function() {
     describe('isAllowedToView', ()=> {
         it("Should return false when its not shared publicly, and not shared with user or team, and user doesnt belong to uploader team",
             inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
-                let teamId = 7;
+                let teamIds = [7];
                 let user = UsersFactory.extend({id:9});
                 let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:11});
                 sinon.stub(game,'isSharedWithPublic').returns(false);
                 sinon.stub(session,'getCurrentUser').returns(user);
                 sinon.stub(session,'getCurrentUserId').returns(user.id);
-                sinon.stub(session,'getCurrentTeamId').returns(teamId);
+                sinon.stub(session,'getCurrentTeamId').returns(teamIds[0]);
                 sinon.stub(game,'isSharedWithCurrentUser').returns(false);
-                expect(game.isAllowedToView()).to.be.false;
+                expect(game.isAllowedToView(teamIds, user.id)).to.be.false;
                 assert(game.isSharedWithPublic.should.have.been.called);
-                assert(session.getCurrentUser.should.have.been.called);
-                assert(session.getCurrentUserId.should.have.been.called);
-                assert(session.getCurrentTeamId.should.have.been.called);
                 assert(game.isSharedWithCurrentUser.should.have.been.called);
         }]));
 
         it("Should return true when its shared publicly",
-                inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
-                    let teamId = 7;
-                    let user = UsersFactory.extend({id:9});
-                    let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:11});
-                    sinon.stub(game,'isSharedWithPublic').returns(true);
-                    sinon.stub(session,'getCurrentUser').returns(user);
-                    sinon.stub(session,'getCurrentUserId').returns(user.id);
-                    sinon.stub(session,'getCurrentTeamId').returns(teamId);
-                    sinon.stub(game,'isSharedWithCurrentUser').returns(false);
-                    expect(game.isAllowedToView()).to.be.true;
-                    assert(session.getCurrentUser.should.have.been.called);
-                    assert(game.isSharedWithPublic.should.have.been.called);
-                    assert(session.getCurrentUserId.should.have.not.been.called);
-                    assert(session.getCurrentTeamId.should.have.not.been.called);
-                    assert(game.isSharedWithCurrentUser.should.have.not.been.called);
+            inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
+                let teamIds = [7];
+                let user = UsersFactory.extend({id:9});
+                let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:11});
+                sinon.stub(game,'isSharedWithPublic').returns(true);
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(session,'getCurrentUserId').returns(user.id);
+                sinon.stub(session,'getCurrentTeamId').returns(teamIds[0]);
+                sinon.stub(game,'isSharedWithCurrentUser').returns(false);
+                expect(game.isAllowedToView(teamIds, user.id)).to.be.true;
+                assert(game.isSharedWithPublic.should.have.been.called);
+                assert(game.isSharedWithCurrentUser.should.have.not.been.called);
         }]));
 
         it("Should return true when its uploaded by the current user",
-                inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
-                    let teamId = 7;
-                    let user = UsersFactory.extend({id:9});
-                    let game = GamesFactory.extend({id:2, uploaderUserId:user.id, uploaderTeamId:11});
-                    sinon.stub(game,'isSharedWithPublic').returns(false);
-                    sinon.stub(session,'getCurrentUser').returns(user);
-                    sinon.stub(session,'getCurrentUserId').returns(user.id);
-                    sinon.stub(session,'getCurrentTeamId').returns(teamId);
-                    sinon.stub(game,'isSharedWithCurrentUser').returns(false);
-                    expect(game.isAllowedToView()).to.be.true;
-                    assert(session.getCurrentUser.should.have.been.called);
-                    assert(game.isSharedWithPublic.should.have.been.called);
-                    assert(session.getCurrentUserId.should.have.been.called);
-                    assert(session.getCurrentTeamId.should.have.not.been.called);
-                    assert(game.isSharedWithCurrentUser.should.have.not.been.called);
+            inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
+                let teamIds = [7];
+                let user = UsersFactory.extend({id:9});
+                let game = GamesFactory.extend({id:2, uploaderUserId:user.id, uploaderTeamId:11});
+                sinon.stub(game,'isSharedWithPublic').returns(false);
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(session,'getCurrentUserId').returns(user.id);
+                sinon.stub(session,'getCurrentTeamId').returns(teamIds[0]);
+                sinon.stub(game,'isSharedWithCurrentUser').returns(false);
+                expect(game.isAllowedToView(teamIds, user.id)).to.be.true;
+                assert(game.isSharedWithPublic.should.have.been.called);
+                assert(game.isSharedWithCurrentUser.should.have.not.been.called);
         }]));
 
         it("Should return true when its uploaded by the current user's team",
-                inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
-                    let teamId = 7;
-                    let user = UsersFactory.extend({id:9});
-                    let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:teamId});
-                    sinon.stub(game,'isSharedWithPublic').returns(false);
-                    sinon.stub(session,'getCurrentUser').returns(user);
-                    sinon.stub(session,'getCurrentUserId').returns(user.id);
-                    sinon.stub(session,'getCurrentTeamId').returns(teamId);
-                    sinon.stub(game,'isSharedWithCurrentUser').returns(false);
-                    expect(game.isAllowedToView()).to.be.true;
-                    assert(session.getCurrentUser.should.have.been.called);
-                    assert(game.isSharedWithPublic.should.have.been.called);
-                    assert(session.getCurrentUserId.should.have.been.called);
-                    assert(session.getCurrentTeamId.should.have.been.called);
-                    assert(game.isSharedWithCurrentUser.should.have.not.been.called);
+            inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
+                let teamIds = [7];
+                let user = UsersFactory.extend({id:9});
+                let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:teamIds[0]});
+                sinon.stub(game,'isSharedWithPublic').returns(false);
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(session,'getCurrentUserId').returns(user.id);
+                sinon.stub(session,'getCurrentTeamId').returns(teamIds[0]);
+                sinon.stub(game,'isSharedWithCurrentUser').returns(false);
+                expect(game.isAllowedToView(teamIds, user.id)).to.be.true;
+                assert(game.isSharedWithPublic.should.have.been.called);
+                assert(game.isSharedWithCurrentUser.should.have.not.been.called);
         }]));
 
         it("Should return true when its shared with the current user",
-                inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
-                    let teamId = 7;
-                    let user = UsersFactory.extend({id:9});
-                    let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:11});
-                    sinon.stub(game,'isSharedWithPublic').returns(false);
-                    sinon.stub(session,'getCurrentUser').returns(user);
-                    sinon.stub(session,'getCurrentUserId').returns(user.id);
-                    sinon.stub(session,'getCurrentTeamId').returns(teamId);
-                    sinon.stub(game,'isSharedWithCurrentUser').returns(true);
-                    expect(game.isAllowedToView()).to.be.true;
-                    assert(session.getCurrentUser.should.have.been.called);
-                    assert(game.isSharedWithPublic.should.have.been.called);
-                    assert(session.getCurrentUserId.should.have.been.called);
-                    assert(session.getCurrentTeamId.should.have.been.called);
-                    assert(game.isSharedWithCurrentUser.should.have.been.called);
+            inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
+                let teamIds = [7];
+                let user = UsersFactory.extend({id:9});
+                let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:11});
+                sinon.stub(game,'isSharedWithPublic').returns(false);
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(session,'getCurrentUserId').returns(user.id);
+                sinon.stub(session,'getCurrentTeamId').returns(teamIds[0]);
+                sinon.stub(game,'isSharedWithCurrentUser').returns(true);
+                expect(game.isAllowedToView(teamIds, user.id)).to.be.true;
+                assert(game.isSharedWithPublic.should.have.been.called);
+                assert(game.isSharedWithCurrentUser.should.have.been.called);
         }]));
     });
 
