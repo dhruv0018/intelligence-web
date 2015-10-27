@@ -36,11 +36,10 @@ describe('Play Entity', () => {
         });
     }));
 
-
     beforeEach(inject($KrossoverPlay => {
 
         samplePlay = angular.copy(playJSON);
-        play       = new $KrossoverPlay(samplePlay);
+        play = new $KrossoverPlay(samplePlay);
     }));
 
     it('should exist', inject($KrossoverPlay => {
@@ -207,5 +206,44 @@ describe('Play Entity', () => {
         expect(play.customTagIds).to.deep.equal(playJSON.customTagIds);
     });
 
-    // TODO: Test KrossoverPlayFactory.
+    // TODO: Test if KrossoverPlay can accept a KrossovePlay as play
+});
+
+describe('KrossoverPlayFactory', () => {
+
+    beforeEach(angular.mock.module('intelligence-web-client'));
+
+    beforeEach(angular.mock.module($provide => {
+
+        $provide.service('TagsetsFactory', function () {
+
+            this.getTag = (tagId) => {
+
+                let tag = angular.copy(srcTags[tagId]);
+
+                if (!tag) throw new Error(`Tag ${tagId} not found`);
+
+                return new KrossoverTag(tag);
+            };
+        });
+    }));
+
+    it('should exist', inject(KrossoverPlayFactory => {
+
+        expect(KrossoverPlayFactory).to.exist;
+    }));
+
+    it('should have public API', inject(KrossoverPlayFactory => {
+
+        expect(KrossoverPlayFactory).to.respondTo('create');
+    }));
+
+    it('should return a KrossoverPlay when calling `create`', inject((KrossoverPlayFactory, $KrossoverPlay) => {
+
+        let samplePlay = angular.copy(playJSON);
+        let play = KrossoverPlayFactory.create(samplePlay);
+        let KrossoverPlay = $KrossoverPlay;
+
+        expect(play).to.be.instanceof(KrossoverPlay);
+    }));
 });
