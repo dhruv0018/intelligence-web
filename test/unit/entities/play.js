@@ -1,4 +1,3 @@
-import $KrossoverPlay from '../../../src/entities/play/entity';
 import KrossoverTag from '../../../src/entities/tag';
 import playJSON from './sample-data/play';
 import tagData22 from './sample-data/tag-22';
@@ -206,7 +205,12 @@ describe('Play Entity', () => {
         expect(play.customTagIds).to.deep.equal(playJSON.customTagIds);
     });
 
-    // TODO: Test if KrossoverPlay can accept a KrossovePlay as play
+    it('should be able to accept a KrossoverPlay as a constructor parameter', inject($KrossoverPlay => {
+
+        let playFromPlay = new $KrossoverPlay(play);
+
+        expect(play.toJSON()).to.deep.equal(playFromPlay.toJSON());
+    }));
 });
 
 describe('KrossoverPlayFactory', () => {
