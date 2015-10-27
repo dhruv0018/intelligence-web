@@ -144,11 +144,20 @@ class Video extends Entity {
      */
     toJSON () {
 
-        let copy = Object.assign({}, this);
+        let copy = {
 
-        if (copy.transcodeProfiles) {
+            id: this.id,
+            guid: this.guid,
+            status: this.status,
+            videoTranscodeProfiles: this.transcodeProfiles,
+            duration: this.duration,
+            thumbnail: this.thumbnail
+        };
 
-            copy.videoTranscodeProfiles = copy.videoTranscodeProfiles.map(transcodeProfile => JSON.stringify(transcodeProfile));
+        if (copy.videoTranscodeProfiles) {
+
+            copy.videoTranscodeProfiles = copy.videoTranscodeProfiles
+                .map(transcodeProfile => transcodeProfile.toJSON());
         }
 
         return copy;
