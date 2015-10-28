@@ -79,32 +79,43 @@ describe('NewDate Factory', () => {
         it('should throw an error if existing date is a Boolean', inject(NewDate => {
 
             expect(() => NewDate.generatePlanStartDate(false)).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate(false)).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
             expect(() => NewDate.generatePlanStartDate(true)).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate(false)).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
         }));
 
         it('should throw an error if existing date is an invalid string', inject(NewDate => {
 
             expect(() => NewDate.generatePlanStartDate('2014 22')).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate('2014 22')).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
             expect(() => NewDate.generatePlanStartDate('Not a real date')).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate('Not a real date')).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
             expect(() => NewDate.generatePlanStartDate('')).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate('')).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
             expect(() => NewDate.generatePlanStartDate(' ')).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate(' ')).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
         }));
 
         it('should throw an error if existing date is an invalid array', inject(NewDate => {
 
             expect(() => NewDate.generatePlanStartDate(['not', 'a', 'real', 'date'])).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate(['not', 'a', 'real', 'date'])).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
             expect(() => NewDate.generatePlanStartDate([])).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate([])).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
         }));
 
         it('should throw an error if existing date is an invalid object', inject(NewDate => {
 
             expect(() => NewDate.generatePlanStartDate({'not': 'a', 'real': 'date'})).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate({'not': 'a', 'real': 'date'})).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
             expect(() => NewDate.generatePlanStartDate({})).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate({})).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
         }));
 
         it('should throw an error if existing date is a function', inject(NewDate => {
 
             expect(() => NewDate.generatePlanStartDate(function () {})).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate(function () {})).to.throw(/NewDate Factory: Attempt to generate plan start date with invalid value \(/);
         }));
     });
 
@@ -161,32 +172,43 @@ describe('NewDate Factory', () => {
         it('should throw an error if existing date is a Boolean', inject(NewDate => {
 
             expect(() => NewDate.generatePlanEndDate(false)).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate(false)).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
             expect(() => NewDate.generatePlanEndDate(true)).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate(true)).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
         }));
 
         it('should throw an error if existing date is an invalid string', inject(NewDate => {
 
             expect(() => NewDate.generatePlanEndDate('2014 22')).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate('2014 22')).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
             expect(() => NewDate.generatePlanEndDate('Not a real date')).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate('Not a real date')).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
             expect(() => NewDate.generatePlanEndDate('')).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate('')).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
             expect(() => NewDate.generatePlanEndDate(' ')).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate(' ')).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
         }));
 
         it('should throw an error if existing date is an invalid array', inject(NewDate => {
 
             expect(() => NewDate.generatePlanEndDate(['not', 'a', 'real', 'date'])).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate(['not', 'a', 'real', 'date'])).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
             expect(() => NewDate.generatePlanEndDate([])).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate([])).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
         }));
 
         it('should throw an error if existing date is an invalid object', inject(NewDate => {
 
             expect(() => NewDate.generatePlanEndDate({'not': 'a', 'real': 'date'})).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate({'not': 'a', 'real': 'date'})).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
             expect(() => NewDate.generatePlanEndDate({})).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate({})).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
         }));
 
         it('should throw an error if existing date is a function', inject(NewDate => {
 
             expect(() => NewDate.generatePlanEndDate(function () {})).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate(function () {})).to.throw(/NewDate Factory: Attempt to generate plan end date with invalid value \(/);
         }));
     });
 });
