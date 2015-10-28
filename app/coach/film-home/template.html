@@ -40,15 +40,12 @@
         <!-- Search and filter bar -->
         <header class="filter-bar">
 
-            <div class="filters-select-tabs">
+            <h3>Filter Film:</h3>
 
-                <h3>Filter Film:</h3>
-
-                <film-home-tabs ng-model="filmsList"></film-home-tabs>
-
-            </div>
+            <film-home-tabs ng-model="filmsList"></film-home-tabs>
 
             <form class="film-search">
+                <i class="icon icon-search"></i>
                 <input type="text" id="film-search-cta" class="film-search-input" ng-model="query" placeholder="Search for film"/>
             </form>
 
