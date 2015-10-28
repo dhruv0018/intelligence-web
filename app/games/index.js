@@ -74,16 +74,14 @@ Games.config([
                     let game = games.get(gameId);
                     let teamIds = [];
 
-                    // Get all teams user is an athlete on
+                    // Get all teams user is athlete on
                     if (currentUser.is(ROLES.ATHLETE)) {
                         let athleteRoles = currentUser.roleTypes[ROLE_TYPE.ATHLETE];
-                        athleteRoles.forEach(athleteRole => {
-                            teamIds.push(athleteRole.teamId);
-                        });
+                        teamIds = athleteRoles.map(role => role.teamId);
                     } else {
-                        teamIds.push(session.getCurrentTeamId());
+                        teamIds = [session.getCurrentTeamId()];
                     }
-                    console.log(game.isAllowedToView(teamIds, currentUser.id));
+
                     if (!game.isAllowedToView(teamIds, currentUser.id)) {
                         $state.go('Games.Restricted', { id: gameId });
                     }

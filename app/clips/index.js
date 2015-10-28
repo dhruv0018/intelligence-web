@@ -85,11 +85,9 @@ Clips.config([
                         // Get all teams user is athlete on
                         if (currentUser.is(ROLES.ATHLETE)) {
                             let athleteRoles = currentUser.roleTypes[ROLE_TYPE.ATHLETE];
-                            athleteRoles.forEach(athleteRole => {
-                                teamIds.push(athleteRole.teamId);
-                            });
+                            teamIds = athleteRoles.map(role => role.teamId);
                         } else {
-                            teamIds.push(session.getCurrentTeamId());
+                            teamIds = [session.getCurrentTeamId()];
                         }
 
                         /*Check if user has permissions to view game*/

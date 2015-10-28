@@ -300,12 +300,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 teamIds = teamIds || [session.getCurrentTeamId()];
                 userId = userId || session.getCurrentUserId();
 
-                let isUserOnUploaderTeam = false;
-
                 //Check multiple teams in case user is athlete
-                teamIds.forEach(teamId => {
-                    if (teamId === this.uploaderTeamId) isUserOnUploaderTeam = true;
-                });
+                let isUserOnUploaderTeam = teamIds.some(teamId => teamId === this.uploaderTeamId);
 
                 //Check if user has permissions to view game
                 return  this.isSharedWithPublic() ||
