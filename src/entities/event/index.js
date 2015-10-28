@@ -270,19 +270,21 @@ class KrossoverEvent extends Entity {
             console.error('Cannot convert event to JSON without valid field data!');
         }
 
-        let copy = {
+        let copy = {};
+        let eventProperties = Object.keys(schema.properties);
 
-            id: this.id,
-            time: this.time,
-            tagId: this.tagId,
-            playId: this.playId,
-            variableValues: {},
-        };
+        for (let property of eventProperties) {
 
-        Object.keys(this.fields).forEach(key => {
+            copy[property] = this[property];
+        }
 
-            copy.variableValues[this.fields[key].id] = this.fields[key].toJSON();
-        });
+        let fieldKeys = Object.keys(this.fields);
+
+        for (let key of fieldKeys) {
+
+            let field = this.fields[key];
+            copy.variableValues[field.id] = field.toJSON();
+        }
 
         return copy;
     }
