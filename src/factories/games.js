@@ -1537,13 +1537,30 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return teamId === self.uploaderTeamId;
             },
-
             /**
-             * Determine if the game is copied
-             * @returns {boolean}
-             */
+            * Determine if the game is copied
+            * @returns {boolean}
+            */
             isCopied: function () {
                 return this.copiedFromGameId !== null;
+            },
+            /**
+             * get the maxpreps download link for the team
+             * @param team {Object}
+             * @return {String}
+             */
+            getMaxprepsDownloadLinkByTeam: function(team){
+                if (!this.id) throw new Error('Game must be saved before getting maxpreps');
+                let tokenService = $injector.get('TokensService');
+                let url =  config.api.uri +
+                            'games/' +
+                            this.id +
+                            '/max-preps?teamId=' +
+                            team.id +
+                            '&access_token=' +
+                            tokenService.getAccessToken();
+
+                return url;
             }
         };
 

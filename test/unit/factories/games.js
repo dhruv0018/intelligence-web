@@ -2052,4 +2052,17 @@ describe('GamesFactory', function() {
                 expect(game.isCopied()).to.be.true;
         }]));
     });
+
+    describe('getMaxprepsDownloadLinkByTeam', ()=> {
+        it("Should frame the maxpreps download link",
+            inject(['GamesFactory', 'TokensService', 'config', function(GamesFactory, TokensService, config) {
+                let team = {id:10};
+                let game = GamesFactory.extend({id:12});
+                config.api.uri = 'http://dummyurl/';
+                sinon.stub(TokensService,'getAccessToken').returns('dummytoken');
+                let expectedUrl = 'http://dummyurl/games/12/max-preps?teamId=10&access_token=dummytoken';
+                expect(game.getMaxprepsDownloadLinkByTeam(team)).to.equal(expectedUrl);
+                assert(TokensService.getAccessToken.should.have.been.called);
+        }]));
+    });
 });
