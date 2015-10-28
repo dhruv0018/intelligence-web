@@ -3,6 +3,7 @@ const angular = window.angular;
 
 PlayerAnalyticsController.$inject = [
     '$scope',
+    '$filter',
     'SessionService',
     'TeamsFactory',
     'PlayersFactory',
@@ -16,6 +17,7 @@ PlayerAnalyticsController.$inject = [
  */
 function PlayerAnalyticsController(
     $scope,
+    $filter,
     session,
     teams,
     players,
@@ -26,7 +28,10 @@ function PlayerAnalyticsController(
 
     const team = teams.get(session.getCurrentTeamId());
     const league = leagues.get(team.leagueId);
-    const seasons = league.seasons.reverse();
+    const seasons = league.seasons.sort((a, b) => {
+        return $filter('date')(b.startDate, 'yyyy') - $filter('date')(a.startDate, 'yyyy');
+    });
+
     let currentUser = session.getCurrentUser();
 
     $scope.currentUserIsAthlete = currentUser.is(ROLES.ATHLETE);

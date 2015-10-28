@@ -3,6 +3,7 @@ const angular = window.angular;
 
 TeamAnalyticsController.$inject = [
     '$scope',
+    '$filter',
     'SessionService',
     'LeaguesFactory',
     'TeamsFactory',
@@ -14,6 +15,7 @@ TeamAnalyticsController.$inject = [
  */
 function TeamAnalyticsController(
     $scope,
+    $filter,
     session,
     leagues,
     teams,
@@ -22,7 +24,9 @@ function TeamAnalyticsController(
 
     const team = teams.get(session.getCurrentTeamId());
     const league = leagues.get(team.leagueId);
-    const seasons = league.seasons.reverse();
+    const seasons = league.seasons.sort((a, b) => {
+        return $filter('date')(b.startDate, 'yyyy') - $filter('date')(a.startDate, 'yyyy');
+    });
 
     const generateStats = function () {
         $scope.loadingTables = true;
