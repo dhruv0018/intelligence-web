@@ -134,7 +134,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     let startTag = tagsets.getTag(childId);
 
                     /* Set the current event. */
-                    eventManager.current = new KrossoverEvent(event.toJSON(), startTag, event.time, gameId);
+                    eventManager.current = new KrossoverEvent(event, startTag, event.time, gameId);
 
                     /* Add event to the current play. */
                     playManager.addEvent(eventManager.current);
