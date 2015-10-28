@@ -4,6 +4,8 @@ const assert  = chai.assert;
 const expect  = chai.expect;
 const should  = chai.should();
 
+const TIME_ZONE = 'America/New_York';
+
 describe('NewDate Factory', () => {
 
     beforeEach(angular.mock.module('intelligence-web-client'));
@@ -55,7 +57,7 @@ describe('NewDate Factory', () => {
              * determines how the date is created and that the correct date is
              * returned. Find a better way to do this. */
 
-            let controlDate = momentTimezone.tz(undefined, 'America/New_York')
+            let controlDate = momentTimezone.tz(undefined, TIME_ZONE)
                 .startOf('day')
                 .add(1, 'days');
 
@@ -67,7 +69,7 @@ describe('NewDate Factory', () => {
 
         it('should return that day at midnight if existing date', () => {
 
-            let controlDateISOString = momentTimezone.tz('2014-08-01T04:00:00+00:00', 'America/New_York')
+            let controlDateISOString = momentTimezone.tz('2014-08-01T04:00:00+00:00', TIME_ZONE)
                 .toISOString();
             let existingStartDateISOString = existingStartDate.toISOString();
 
@@ -131,7 +133,7 @@ describe('NewDate Factory', () => {
              * determines how the date is created and that the correct date is
              * returned. Find a better way to do this. */
 
-            let controlDate = momentTimezone.tz(undefined, 'America/New_York')
+            let controlDate = momentTimezone.tz(undefined, TIME_ZONE)
                 .endOf('day')
                 .add(2, 'days');
 
@@ -149,7 +151,7 @@ describe('NewDate Factory', () => {
              * determines how the date is created and that the correct date is
              * returned. Find a better way to do this. */
 
-            let controlDateISOString = momentTimezone.tz('2014-08-02T03:59:59.999Z', 'America/New_York')
+            let controlDateISOString = momentTimezone.tz('2014-08-02T03:59:59.999Z', TIME_ZONE)
                 .toISOString();
             let existingEndDateISOString = existingEndDate.toISOString();
 
