@@ -208,6 +208,8 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             addRole: function(user, role, team) {
 
+                let self = this;
+
                 if (!role) {
 
                     role = user;
