@@ -125,6 +125,15 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return copy;
             },
 
+            /**
+             * @param {Integer} type
+             * @returns {String}
+             */
+            getRoleNameByRoleType: function(typeId) {
+                let role = ROLES[ROLE_ID[typeId]];
+                return (role) ? role.type.name : null;
+            },
+
             isAthleteRecruit: function(user = this) {
 
                 return user.is(user.currentRole, ROLES.ATHLETE) &&
@@ -171,15 +180,21 @@ IntelligenceWebClient.factory('UsersFactory', [
             * Saves user and updates currentUser in session
             */
             save: function() {
-                var self = this;
-                var session = $injector.get('SessionService');
 
-                if (self.id === session.getCurrentUserId()) {
+                let session = $injector.get('SessionService');
+
+                // If user has active roles but no default role, set it to first active role
+                if (this.activeRoles().length && !this.getDefaultRole()) {
+                    let activeRole = this.activeRoles()[0];
+                    this.setDefaultRole(activeRole);
+                }
+
+                if (this.id === session.getCurrentUserId()) {
                     session.storeCurrentUser();
                 }
 
                 //TODO use normal save()
-                return self.baseSave();
+                return this.baseSave();
             },
 
             /**
@@ -193,7 +208,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             addRole: function(user, role, team) {
 
-                var self = this;
+                let self = this;
 
                 if (!role) {
 
@@ -229,8 +244,8 @@ IntelligenceWebClient.factory('UsersFactory', [
              * this user will be used.
              */
             removeRole: function(user, role) {
-
-                var self = this;
+                // TODO: remove need for passing user in as argument
+                let self = this;
 
                 if (!role) {
 
@@ -242,16 +257,22 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!user.roles) return;
 
                 /* Find the index of the role in the users roles. */
-                var userRoleIndex = user.roles.indexOf(role);
+                let userRoleIndex = user.roles.indexOf(role);
 
                 /* If the role was not found in the users roles. */
                 if (!~userRoleIndex) return;
 
                 /* If the tenure end of the role has alread been set. */
-                if (user.roles[userRoleIndex].tenureEnd) return;
+                if (role.tenureEnd) return;
+
+                // If this role was the default role, set isDefault to false
+                let defaultRole = user.getDefaultRole();
+                if (role === defaultRole) {
+                    role.isDefault = false;
+                }
 
                 /* Record the tenure end date of the role. */
-                user.roles[userRoleIndex].tenureEnd = new Date();
+                role.tenureEnd = new Date();
             },
 
             /**
@@ -321,6 +342,24 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return undefined;
             },
+
+            /**
+             * @param {Integer} teamId - the teamId get role
+             * @returns {Array} the role object for the user. If no
+             * role is defined, it will return `undefined`.
+             * Gets the users role for a team.
+             */
+            getRolesByTeamId: function(teamId) {
+
+                let rolesForTeam = [];
+
+                if(!this.hasNoRoles()) {
+                    rolesForTeam = this.roles.filter(role => (role.teamId === teamId));
+                }
+
+                return rolesForTeam;
+            },
+
             /**
             * @class User
             * @method
@@ -716,13 +755,40 @@ IntelligenceWebClient.factory('UsersFactory', [
                 var self = this;
                 return self.activeRoles(role).length >= 1;
             },
-            typeahead: function(filter) {
-                var self = this;
 
-                var model = $injector.get(self.model);
+            /**
+             * @param {Object} filter
+             * @returns {Array} Array of user, team, school and role
+             */
+            typeahead: function(filter) {
+                const self = this;
+                let model = $injector.get(self.model);
 
                 return model.typeahead(filter).$promise.then(function(users) {
                     return users.map(function(user) {
+                        let teams    = $injector.get('TeamsFactory');
+                        let schools  = $injector.get('SchoolsFactory');
+                        user.team    = teams.extend(user.team);
+                        user.school  = schools.extend(user.school);
+                        return self.extend(user);
+                    });
+                });
+            },
+
+            /**
+             * @param {Object} filter
+             * @returns {Array} Array of user, team, school and role
+             */
+            roleTypeahead: function(filter) {
+                const self = this;
+                let model = $injector.get(self.model);
+
+                return model.roleTypeahead(filter).$promise.then(function(users) {
+                    return users.map(function(user) {
+                        let teams    = $injector.get('TeamsFactory');
+                        let schools  = $injector.get('SchoolsFactory');
+                        user.team    = teams.extend(user.team);
+                        user.school  = schools.extend(user.school);
                         return self.extend(user);
                     });
                 });

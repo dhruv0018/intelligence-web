@@ -17,7 +17,7 @@ describe('Static Field', () => {
 
     beforeEach(() => {
 
-        let staticData = Object.assign({}, sampleData);
+        let staticData = angular.copy(sampleData);
         staticField    = new StaticField(staticData);
     });
 
@@ -40,6 +40,9 @@ describe('Static Field', () => {
 
     it('should have a toJSON method that returns the original value.', () => {
 
-        expect(() => staticField.toJSON()).to.throw(Error);
+        let staticJSON = staticField.toJSON();
+
+        expect(staticJSON).to.be.a.string;
+        expect(staticJSON).to.equal(sampleData.value);
     });
 });

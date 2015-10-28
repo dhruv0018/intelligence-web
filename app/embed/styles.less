@@ -1,0 +1,37 @@
+@import (reference) "main.less";
+
+.embed-player-area {
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: @gray-lightest;
+    overflow: hidden;
+
+    * {
+
+        min-height: 0px;
+        min-width: 0px;
+    }
+
+    .embed-body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        background-color: @gray-lightest;
+    }
+
+    .video-player {
+        .download {
+            display: none;
+        }
+    }
+
+    clips-navigation {
+        margin-top: 10px;
+        width: 100%;
+    }
+}

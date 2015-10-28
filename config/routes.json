@@ -281,24 +281,6 @@
         "Assistant Coach": true
     },
 
-    "Coach.Analytics": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "Coach.Analytics.Team": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "Coach.Analytics.Player": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
     "Coach.GameArea": {
 
         "Head Coach": true,
@@ -574,6 +556,24 @@
         "*": true
     },
 
+    "Embed": {
+
+        "*": true
+    },
+
+    "Embed.Restricted": {
+        "*": true
+    },
+
+    "Embed.Deleted": {
+        "*": true
+    },
+
+    "ShortEmbed": {
+
+        "*": true
+    },
+
     "UpdatedTermsAndConditions": {
         "*": true
     },
@@ -604,5 +604,25 @@
 
     "Styleguide.Custom": {
         "*": true
-    }
+    },
+
+    "Analytics": {
+
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
+    },
+
+    "TeamAnalytics": {
+
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
+    "PlayerAnalytics": {
+
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
+    },
 }
