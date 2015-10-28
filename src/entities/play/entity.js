@@ -136,6 +136,9 @@ function $KrossoverPlay (
          */
         toJSON () {
 
+            /* TODO: Construct this from the JSON schema. Currently, the schemas
+             * is not up to date. Also, see `events` and `clip` where direct
+             * assignment isn't suitable. */
             let copy = {
 
                 id: this.id,
