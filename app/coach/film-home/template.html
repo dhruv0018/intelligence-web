@@ -28,6 +28,7 @@
 
         <krossover-athlete ng-repeat="teamPlayer in teamPlayers | orderBy: getPlayerJerseysAsNumbers track by $index"
                            athlete="players[teamPlayer.id]"
+                           users="users"
                            team="team"
                            roster-id="roster.id"
                            editable="false"
