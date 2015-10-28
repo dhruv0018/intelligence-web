@@ -22,7 +22,7 @@ describe('NewDate Factory', () => {
 
     describe('generateNow method', () => {
 
-        it('return a Date', inject(NewDate => {
+        it('should return a Date', inject(NewDate => {
 
             let now = NewDate.generateNow();
 
@@ -41,13 +41,13 @@ describe('NewDate Factory', () => {
             existingStartDate = NewDate.generatePlanStartDate('2014-08-01T04:00:00+00:00');
         }));
 
-        it('return a Date', inject(NewDate => {
+        it('should return a Date', inject(NewDate => {
 
             expect(newStartDate).to.be.an.instanceof(Date);
             expect(existingStartDate).to.be.an.instanceof(Date);
         }));
 
-        it('return tomorrow\'s Date if no existing date', inject(NewDate => {
+        it('should return tomorrow\'s Date if no existing date', inject(NewDate => {
 
             /* FIXME: The control date does exactly what the tested method does
              * (the momentTimezone part at least), so this test has questionable
@@ -65,7 +65,7 @@ describe('NewDate Factory', () => {
             expect(newStartDateISOString).to.equal(controlDateISOString);
         }));
 
-        it('return that day at midnight if existing date', () => {
+        it('should return that day at midnight if existing date', () => {
 
             let controlDateISOString = momentTimezone.tz('2014-08-01T04:00:00+00:00', 'America/New_York')
                 .toISOString();
@@ -110,13 +110,13 @@ describe('NewDate Factory', () => {
             existingEndDate = NewDate.generatePlanEndDate('2014-08-02T03:59:59+00:00');
         }));
 
-        it('return a Date', inject(NewDate => {
+        it('should return a Date', inject(NewDate => {
 
             expect(newEndDate).to.be.an.instanceof(Date);
             expect(existingEndDate).to.be.an.instanceof(Date);
         }));
 
-        it('return the day after tomorrow, just before midnight if no existing date', () => {
+        it('should return the day after tomorrow, just before midnight if no existing date', () => {
 
             /* FIXME: The control date does exactly what the tested method does
              * (the momentTimezone part at least), so this test has questionable
@@ -134,7 +134,7 @@ describe('NewDate Factory', () => {
             expect(newEndDateISOString).to.equal(controlDateISOString);
         });
 
-        it('return the same day, just before midnight if existing date', () => {
+        it('should return the same day, just before midnight if existing date', () => {
 
             /* FIXME: The control date does exactly what the tested method does
              * (the momentTimezone part at least), so this test has questionable
