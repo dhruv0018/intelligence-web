@@ -67,7 +67,7 @@ describe('NewDate Factory', () => {
             expect(newStartDateISOString).to.equal(controlDateISOString);
         }));
 
-        it('should return that day at midnight if existing date', () => {
+        it('should return a Date at midnight of the existing date passed in', () => {
 
             let controlDateISOString = momentTimezone.tz('2014-08-01T04:00:00+00:00', TIME_ZONE)
                 .toISOString();
