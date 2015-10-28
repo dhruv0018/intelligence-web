@@ -1,8 +1,8 @@
 {
     "IndexerFlags": {
 
-        "Admin": false,
-        "Indexer": false
+        "Admin": true,
+        "Indexer": true
     },
 
     "CustomTags": {
