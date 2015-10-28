@@ -5,12 +5,22 @@
     position: relative;
     min-height: 100%;
     background-color: @content-bg;
+    @uploading-controls-height: 106px;
+
+    &.game-info-uploading-controls-displayed {
+        height: calc(~"100% - @{uploading-controls-height}");
+    }
 
     .game-info-uploading-controls {
+        height: @uploading-controls-height;
         &.ng-hide {
             .fadeOut;
             animation-duration: 0.25s;
         }
+    }
+
+    krossover-coach-game {
+        height: 100%;
     }
 
     .breakdown-status {
