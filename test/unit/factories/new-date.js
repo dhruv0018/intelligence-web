@@ -74,8 +74,15 @@ describe('NewDate Factory', () => {
             expect(existingStartDateISOString).to.equal(controlDateISOString);
         });
 
+        it('should throw an error if existing date is a Boolean', inject(NewDate => {
+
+            expect(() => NewDate.generatePlanStartDate(false)).to.throw(Error);
+            expect(() => NewDate.generatePlanStartDate(true)).to.throw(Error);
+        }));
+
         it('should throw an error if existing date is an invalid string', inject(NewDate => {
 
+            expect(() => NewDate.generatePlanStartDate('2014 22')).to.throw(Error);
             expect(() => NewDate.generatePlanStartDate('Not a real date')).to.throw(Error);
             expect(() => NewDate.generatePlanStartDate('')).to.throw(Error);
             expect(() => NewDate.generatePlanStartDate(' ')).to.throw(Error);
@@ -149,8 +156,15 @@ describe('NewDate Factory', () => {
             expect(existingEndDateISOString).to.equal(controlDateISOString);
         });
 
+        it('should throw an error if existing date is a Boolean', inject(NewDate => {
+
+            expect(() => NewDate.generatePlanEndDate(false)).to.throw(Error);
+            expect(() => NewDate.generatePlanEndDate(true)).to.throw(Error);
+        }));
+
         it('should throw an error if existing date is an invalid string', inject(NewDate => {
 
+            expect(() => NewDate.generatePlanEndDate('2014 22')).to.throw(Error);
             expect(() => NewDate.generatePlanEndDate('Not a real date')).to.throw(Error);
             expect(() => NewDate.generatePlanEndDate('')).to.throw(Error);
             expect(() => NewDate.generatePlanEndDate(' ')).to.throw(Error);
