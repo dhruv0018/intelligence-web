@@ -212,24 +212,57 @@ function QueueController (
     $scope.search = function(filter) {
 
         $scope.searching = true;
+        let updateQueue = (games) => {
+            $scope.queue = games;
+        };
+
+        //TODO should belong to indexing game model
+        //leaving this open to potentially getting other info from the team besides head coach id
+        let extractUserIdsFromTeams = (teams) => {
+            let headCoachIds = teams.map(team => {
+                let headCoachRole = team.getHeadCoachRole();
+                return headCoachRole ? headCoachRole.userId : null;
+            }).filter(id => id !== null);
+            return headCoachIds;
+        };
+
+        //TODO this should belong to an indexing game model
+        let extractUserIdsFromGame = (game) => {
+            //indexer related ids
+            let userIds = game.indexerAssignments.map(assignment => assignment.userId);
+            userIds.push(game.uploaderUserId);
+            return userIds;
+        };
+
+        //TODO this should belong to an indexing game model
+        let extractTeamIdsFromGame = (game) => {
+            let teamIds = [game.teamId, game.opposingTeamId, game.uploaderTeamId];
+            console.log(teamIds);
+            return teamIds;
+        };
+
+        let removeSpinner = () => {
+            $scope.noResults = false;
+            $scope.searching = false;
+            //Notify Angular to start digest cycle
+            $scope.$digest();
+        };
 
         /* If search by ID is used, just pull the single game. */
+        //FIXME this entire section of code is very dirty, we should invest time into separating this search component
+        //into a directive and cleaning up this code.
         if (filter.gameId) {
 
             games.fetch(filter.gameId,
 
                 function success(game) {
-
+                    let teamIds = extractTeamIdsFromGame(game);
+                    let userIdsFromGame = extractUserIdsFromGame(game);
                     /* Get the team names */
-                    teams.load([game.teamId, game.opposingTeamId]).then(
-                        function updateQueue() {
-                            $scope.queue = [];
-                            $scope.queue[0] = game;
-                    }).finally(function removeSpinner() {
-                        $scope.noResults = false;
-                        $scope.searching = false;
-                        //Notify Angular to start digest cycle
-                        $scope.$digest();
+                    teams.load(teamIds).then((teams) => {
+                        let userIdsFromTeam = extractUserIdsFromTeams(teams);
+                        let userIds = userIdsFromGame.concat(userIdsFromTeam);
+                        users.load(userIds).then(() => updateQueue([game])).finally(removeSpinner);
                     });
                 },
 
