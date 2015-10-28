@@ -217,9 +217,8 @@ Indexing.config([
                 onExit: [
                     function() {
 
-                        Mousetrap.unbind('left');
-                        Mousetrap.unbind('right');
-                        Mousetrap.unbind('shift+backspace');
+                        // Unbind all Mousetrap handlers
+                        Mousetrap.reset();
                     }
                 ]
             });

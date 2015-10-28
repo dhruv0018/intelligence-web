@@ -38,4 +38,5 @@ require('@krossover/krossover-checkbox');
 require('@krossover/krossover-multiselect');
 require('@krossover/pills');
 require('@krossover/krossover-blur-on-select');
+require('@krossover/krossover-tags');
 require('@krossover/on-file-change');
