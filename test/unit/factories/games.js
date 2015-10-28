@@ -31,7 +31,38 @@ describe('GamesFactory', function() {
         expect(GamesFactory).to.respondTo('canBeAssignedToQa');
         expect(GamesFactory).to.respondTo('assignToIndexer');
         expect(GamesFactory).to.respondTo('assignToQa');
+        expect(GamesFactory).to.respondTo('getFlagsUrl');
     }));
+
+    describe('getFlagsUrl', () => {
+
+        let gameJSON;
+        let game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            games => {
+
+                gameJSON = {
+                    id: 1234
+                };
+
+                game = games.extend(gameJSON);
+            }
+        ]));
+
+        it('should return a string', () => {
+
+            expect(game.getFlagsUrl()).to.be.a('string');
+        });
+
+        it('should return the correct URL', inject([
+            'config',
+            config => {
+
+                game.getFlagsUrl().endsWith(`flags?id=1234`).should.be.true;
+        }]));
+    });
 
     describe('canBeAssignedToIndexer', function() {
 

@@ -1537,10 +1537,19 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 return teamId === self.uploaderTeamId;
             },
+
             /**
-            * Determine if the game is copied
-            * @returns {boolean}
-            */
+             * @returns {String} flagsUrl
+             */
+            getFlagsUrl: function getFlagsUrl() {
+
+                return `${config.api.uri}flags?id=${this.id}`;
+            },
+
+            /**
+             * Determine if the game is copied
+             * @returns {boolean}
+             */
             isCopied: function () {
                 return this.copiedFromGameId !== null;
             },
