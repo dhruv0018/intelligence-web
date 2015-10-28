@@ -144,6 +144,10 @@ class Video extends Entity {
      */
     toJSON () {
 
+        /* TODO: Construct this from the JSON schema. Currently, the schemas
+         * is not up to date. The challenge here is to figure out a way to do it
+         * when certain properties (like `videoTranscodeProfiles`) are not named
+         * the same in the schema as they are in the entity instance. */
         let copy = {
 
             id: this.id,
