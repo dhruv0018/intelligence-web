@@ -174,14 +174,13 @@ class TranscodeProfile extends Entity {
      */
     toJSON () {
 
-        let copy = {
+        let copy = {};
+        let properties = Object.keys(schema.properties);
 
-            id: this.id,
-            videoId: this.videoId,
-            transcodeProfile: this.transcodeProfile,
-            status: this.status,
-            videoUrl: this.videoUrl
-        };
+        for (let property of properties) {
+
+            copy[property] = this[property];
+        }
 
         return copy;
     }
