@@ -19,6 +19,7 @@ Users.controller('Users.User.Info.Controller', [
 
         $scope.users = users;
         $scope.passwordRequest = EMAIL_REQUEST_TYPES.FORGOTTEN_PASSWORD;
+        $scope.sendingEmail = false;
 
         $scope.isLockDisabled = function() {
 
@@ -36,6 +37,25 @@ Users.controller('Users.User.Info.Controller', [
 
             /* For other users, assume the lock button is enabled. */
             else return false;
+        };
+
+        $scope.resetPassword = () => {
+            $scope.sendingEmail = true;
+
+            let onSend = () => {
+                const user = $scope.user;
+                const message = `A password reset email has been sent to ${user.firstName} ${user.lastName} (${user.email})`;
+                const type = 'success';
+                alerts.add({type, message});
+            };
+
+            let onFinish = () => {
+                $scope.sendingEmail = false;
+            };
+
+            users.resendEmail($scope.passwordRequest, null, $scope.user.email)
+            .then(onSend)
+            .finally(onFinish);
         };
 
         /* Watch the users lock status. */
