@@ -139,7 +139,7 @@ class FileUploadService {
     onBeforeUnload() {
 
         if (this.hasRunningUploads()) {
-            return 'Video still uploading! Are you sure you want to close the page and cancel the upload?';
+            return 'Video still uploading! Your upload will be canceled if you reload this page.';
         }
     }
 }
