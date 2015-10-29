@@ -74,8 +74,9 @@ Games.config([
                     let game = games.get(gameId);
                     let teamIds = [];
 
-                    // Get all teams user is athlete on
+                    // TODO: make user factory function to handle this
                     if (currentUser.is(ROLES.ATHLETE)) {
+                        // Get all teams user is athlete on
                         let athleteRoles = currentUser.roleTypes[ROLE_TYPE.ATHLETE];
                         teamIds = athleteRoles.map(role => role.teamId);
                     } else {

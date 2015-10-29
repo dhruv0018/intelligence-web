@@ -297,9 +297,6 @@ IntelligenceWebClient.factory('GamesFactory', [
             */
             isAllowedToView: function(teamIds, userId) {
 
-                teamIds = teamIds || [session.getCurrentTeamId()];
-                userId = userId || session.getCurrentUserId();
-
                 //Check multiple teams in case user is athlete
                 let isUserOnUploaderTeam = teamIds.some(teamId => teamId === this.uploaderTeamId);
 
