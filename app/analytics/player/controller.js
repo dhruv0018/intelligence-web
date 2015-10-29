@@ -1,5 +1,6 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const moment = require('moment');
 
 PlayerAnalyticsController.$inject = [
     '$scope',
@@ -28,9 +29,7 @@ function PlayerAnalyticsController(
 
     const team = teams.get(session.getCurrentTeamId());
     const league = leagues.get(team.leagueId);
-    const seasons = league.seasons.sort((a, b) => {
-        return $filter('date')(b.startDate, 'yyyy') - $filter('date')(a.startDate, 'yyyy');
-    });
+    const seasons = league.seasons.sort((a, b) => moment(b.startDate).diff(a.startDate));
 
     let currentUser = session.getCurrentUser();
 
