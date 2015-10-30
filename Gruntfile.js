@@ -257,6 +257,7 @@ module.exports = function(grunt) {
             components: {
                 files: {
                     'build/components.css': [
+                        'lib/directives/app-downloads/*.less',
                         'lib/directives/fields/indexer-fields/*.less',
                         'lib/directives/fields/user-fields/*.less',
                         'lib/directives/play/play-header/styles.less',

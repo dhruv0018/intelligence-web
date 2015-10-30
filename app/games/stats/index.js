@@ -77,9 +77,11 @@ GamesStats.config([
 ]);
 
 GamesStats.controller('GamesStats.controller', [
-    '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'SPORTS',
-    function controller($scope, $state, $stateParams, data, SPORTS) {
-
-        $scope.stats = data.stats;
+    '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'GamesFactory', 'TeamsFactory',
+    function controller($scope, $state, $stateParams, data, games, teams) {
+        let gameId = Number($stateParams.id);
+        $scope.stats               = data.stats;
+        $scope.game                = games.get(gameId);
+        $scope.teams               = [teams.get($scope.game.teamId), teams.get($scope.game.opposingTeamId)];
     }
 ]);
