@@ -17,6 +17,7 @@ IndexerGameController.$inject = [
     'Indexer.Game.Data',
     'BasicModals',
     'SportsFactory',
+    'SPORTS',
     'LeaguesFactory',
     'SchoolsFactory',
     'TeamsFactory',
@@ -41,6 +42,7 @@ function IndexerGameController(
     data,
     basicModal,
     sports,
+    SPORTS,
     leagues,
     schools,
     teams,
@@ -69,7 +71,9 @@ function IndexerGameController(
     const league = leagues.get($scope.team.leagueId);
     const headCoachRole = $scope.team.getHeadCoachRole();
 
-    $scope.sport = sports.get(league.sportId);
+    const sport = sports.get(league.sportId);
+    $scope.sport = sport;
+    $scope.isBasketballGame = sport.id === SPORTS.BASKETBALL.id;
 
     if ($scope.team.schoolId) {
         $scope.school = schools.get($scope.team.schoolId);
