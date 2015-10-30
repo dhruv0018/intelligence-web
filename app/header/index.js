@@ -139,8 +139,10 @@ function HeaderController(
     $scope.currentUserIsAthleteRecruit = currentUser.isAthleteRecruit();
     $scope.canPickupGame = currentUser.canPickupGames();
 
+    //TODO: Create a getRolesOneAthlete that gets one athlete role
     let userRoles = currentUser.getRoles();
     let athleteIncluded = false;
+
     // NOTE: Only get one athlete role for display in the dropdown, since all athlete roles are treated as one
     // Get all other roles as normal
     $scope.dropdownUserRoles = userRoles.filter(function(role) {

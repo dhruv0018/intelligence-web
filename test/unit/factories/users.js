@@ -129,7 +129,7 @@ describe('UsersFactory', function() {
             }).to.throw(Error);
         });
 
-        it('should return an empty array if no roles are found', function() {
+        it('should return undefined if no roles are found', function() {
 
             let user = {
                 roles: []
@@ -142,7 +142,7 @@ describe('UsersFactory', function() {
             expect(userRoleForTeam).to.be.undefined;
         });
 
-        it(`should not return a role if a role is found that only matches ROLE and not the team`, function() {
+        it(`should return undefined if a role is found that only matches ROLE and not the team`, function() {
 
             let user = {
                 roles: [
@@ -160,7 +160,7 @@ describe('UsersFactory', function() {
             expect(userRoleForTeam).to.be.undefined;
         });
 
-        it(`should not return a role if a role is found that only matches the team and not the ROLE`, function() {
+        it(`should return undefined if a role is found that only matches the team and not the ROLE`, function() {
 
             let user = {
                 roles: [
