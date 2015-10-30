@@ -32,6 +32,7 @@ import ArenaChart from '../lib/directives/arena-chart';
 import BreakdownDialog from '../lib/dialogs/breakdown-dialog';
 import AdminRole from '../lib/directives/admin-role';
 import EventAdjuster from '../lib/directives/event-adjuster';
+import AdminResourceSave from '../lib/directives/admin-resource-save';
 
 /* App dependencies */
 require('./config');
