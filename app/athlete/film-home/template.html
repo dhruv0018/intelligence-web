@@ -11,15 +11,14 @@
 
         <!-- Search and filter bar -->
         <header class="filter-bar">
-            <ul class="nav nav-tabs">
-                <li><h3>Filter Film:</h3></li>
-                <film-home-tabs ng-model="filmsList"></film-home-tabs>
+            <h3>Filter Film:</h3>
 
-                <form class="film-search">
-                    <input id="film-search-cta" type="text" class="film-search-input" ng-model="query" placeholder="Search for film"/>
-                </form>
+            <film-home-tabs ng-model="filmsList"></film-home-tabs>
 
-            </ul>
+            <form class="film-search">
+                <i class="icon icon-search"></i>
+                <input id="film-search-cta" class="film-search-input" type="text" ng-model="query" placeholder="Search for film"/>
+            </form>
         </header>
 
         <no-results ng-if="filteredFilmsList.length === 0"></no-results>
