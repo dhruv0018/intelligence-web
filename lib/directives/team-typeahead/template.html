@@ -11,6 +11,5 @@
            data-typeahead-input-formatter="$model.name"
            data-typeahead-on-select="getId($item)"
            data-typeahead="team as team.name for team in findTeams() | filter: {result: $viewValue}">
-    <div ng-if="noResults" class="no-results">No Results Found</div>
+    <div ng-show="team && team.length && team.length >= 3 && results === 0" class="no-results">No Results Found</div>
 </div>
-
