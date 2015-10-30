@@ -274,7 +274,7 @@ function GamesController(
         $scope.gameStates.push({name: 'Games.Stats'});
     }
 
-    if (isTeamUploadersTeam && isCoach && isDelivered) {
+    if (isTeamUploadersTeam && isDelivered) {
         // sport specific states
         switch (sport.id) {
             case SPORTS.BASKETBALL.id:
@@ -283,7 +283,9 @@ function GamesController(
                 }
                 break;
             case SPORTS.FOOTBALL.id:
-                $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                if (isCoach) {
+                    $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                }
                 break;
         }
     }
