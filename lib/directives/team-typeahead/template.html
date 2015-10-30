@@ -8,8 +8,9 @@
            typeahead-min-length="3"
            typeahead-template-url="team-typeahead-dropdown.html"
            typeahead-input-formatter="$model.name"
+           typeahead-no-results="noResults"
            typeahead-on-select="getId($item)"
            typeahead="team as team.name for team in findTeams() | filter: {result: $viewValue}">
     <krossover-spinner ng-if="loading" size="25px"></krossover-spinner>
+    <span ng-show="team && team.length && team.length >= 3 && results === 0">No Results Found</span>
 </div>
-
