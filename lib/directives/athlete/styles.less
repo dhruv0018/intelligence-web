@@ -7,20 +7,30 @@
         opacity:.5;
     }
 
-    a {
-        margin-left: 5px;
-        text-decoration: none;
-        color: @gray-dark;
-
-        &:hover {
-            color: @gray-dark;
-            text-decoration: none;
-        }
-    }
-
-    div {
+    .athelete-profile-picture, .athlete-profile-details {
         display: inline-block;
-        margin-right: 5px;
+        margin-bottom: 5px;
+        margin-right: 10px;
+        line-height: @headings-line-height;
+
+        .athlete-information, .athlete-last-access {
+            display: inline-block;
+            margin-right: 5px;
+            color: @gray-dark;
+        }
+
+        .athlete-information {
+            font-weight: @headings-font-weight;
+        }
+
+        .athlete-last-access {
+            font-size: @font-size-small;
+            margin-top: 5px;
+        }
+
+        .text-transform-none {
+            text-transform : none;
+        }
     }
 
     .sidebar-athlete {

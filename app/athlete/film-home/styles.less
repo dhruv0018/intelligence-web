@@ -10,10 +10,6 @@
         padding: 20px;
         line-height: normal;
 
-        ul {
-            border: none;
-        }
-
         h3 {
             color: @brand-blue;
             font-size: 16px;
@@ -54,16 +50,24 @@
 
         .film-search {
 
+            margin-left: auto;
+            position: relative;
 
-            .pull-right;
+            .icon-search {
+                position: absolute;
+                left: 11px;
+                top: 9px;
+                color: @gray-light;
+            }
 
             .film-search-input {
                 .form-control;
-                .pull-left;
                 display: inline;
                 width: 250px;
-                margin-left: 5px;
-                margin-right: 5px;
+                margin: 0px 5px;
+                border: thin solid @gray-border;
+                border-radius: 5px;
+                padding-left: 22px;
             }
 
             .btn-film-search {
