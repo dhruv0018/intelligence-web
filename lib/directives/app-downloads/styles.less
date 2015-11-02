@@ -1,0 +1,33 @@
+@import (reference) "main.less";
+
+.app-download-cta {
+
+    .btn;
+    .btn-primary;
+    .btn-lg;
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: @font-size-base;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+
+    &:last-of-type {
+
+        margin-bottom: 0;
+    }
+
+    &--athlete {
+
+        .button-variant(white; @brand-blue; @brand-blue);
+    }
+}
+
+.other-app-platform-links {
+
+    border: 1px solid @gray-lighter;
+    padding: @padding-small-vertical @padding-small-horizontal;
+    font-size: @font-size-small;
+    line-height: @line-height-base;
+    margin: 20px 0 0;
+}
