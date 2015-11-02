@@ -64,6 +64,11 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 var self = this;
 
+                if (!id) {
+                    console.error(`parameter 'id' is undefined`);
+                    return null;
+                }
+
                 var storage = $injector.get(self.storage);
 
                 return storage.get(id);
