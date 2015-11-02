@@ -147,7 +147,7 @@ function $KrossoverPlay (
                 events: this.events.map(event => event.toJSON()),
                 gameId: this.gameId,
                 flags: this.flags,
-                clip: this.clip.toJSON(),
+                clip: this.clip instanceof Video ? this.clip.toJSON() : this.clip,
                 shares: this.shares,
                 period: this.period,
                 indexedScore: this.indexedScore,
