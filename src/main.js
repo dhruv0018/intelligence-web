@@ -33,6 +33,9 @@ import ArenaChart from '../lib/directives/arena-chart';
 import BreakdownDialog from '../lib/dialogs/breakdown-dialog';
 import AdminRole from '../lib/directives/admin-role';
 import EventAdjuster from '../lib/directives/event-adjuster';
+import KrossoverPrioritySelect from '../lib/directives/priority-select';
+import KrossoverLabelSelect from '../lib/directives/label-select';
+import KrossoverTeamLabelIcon from '../lib/directives/team-label-icon';
 
 /* App dependencies */
 require('./config');
