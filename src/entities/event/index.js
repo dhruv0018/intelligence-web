@@ -278,6 +278,8 @@ class KrossoverEvent extends Entity {
             copy[property] = this[property];
         }
 
+        if (!copy.variableValues) copy.variableValues = {};
+
         let fieldKeys = Object.keys(this.fields);
 
         for (let key of fieldKeys) {
