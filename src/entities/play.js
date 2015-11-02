@@ -102,6 +102,28 @@ class KrossoverPlay extends Entity {
     }
 
     /**
+     * Getter returns a string of the summary name for the play.
+     *
+     * @readonly
+     * @type {String}
+     */
+    get summaryName () {
+
+        let summaryEvents = this.events.map(event => {
+
+            if (event.summaryFields) {
+
+                return event;
+            }
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.summaryPriority - a.summaryPriority)
+        .slice(0, 2);
+
+        return summaryEvents[0].name;
+    }
+
+    /**
      * Getter returns an HTML string of the user script for the play.
      *
      * @readonly
