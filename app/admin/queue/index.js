@@ -186,6 +186,11 @@ function QueueController (
     $scope.usersList = users.getList();
     $scope.games = games.getList(VIEWS.QUEUE.GAME);
 
+    //initial filter
+    $scope.filter = {
+        'status[]': 0
+    };
+
     //initially show everything
     $scope.queue = $scope.games;
 
