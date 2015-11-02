@@ -9,9 +9,6 @@ Krossover Intelligence product.
 ### master branch
 [ ![Codeship Status for krossoverintelligence/intelligence-web-client](https://www.codeship.io/projects/976f2ba0-6b3e-0131-6c18-16513a5a3791/status?branch=master)](https://www.codeship.io/projects/12988)
 
-### QA branch
-[ ![Codeship Status for krossoverintelligence/intelligence-web-client](https://www.codeship.io/projects/976f2ba0-6b3e-0131-6c18-16513a5a3791/status?branch=qa)](https://www.codeship.io/projects/12988)
-
 # Getting Started with the web client
 
 Also available online:
@@ -20,7 +17,7 @@ https://docs.google.com/document/d/1Nx-BRUx-r_y3z_Qg_5OtMCq3fJYyjItXDdt5c-LKL5w/
 ## Clone this repository
 
 ```
-git clone https://bitbucket.org/krossoverintelligence/intelligence-web-client
+git clone https://github.com/krossoverintelligence/intelligence-web.git
 ```
 
 ## Install NVM, the Node Version Manager
@@ -168,4 +165,3 @@ To package the production build up and version it for distribution use:
 ```
 This will create a versioned zip file in the ```dist``` directory. The
 version coresponds to the version number in the package.json file.
-

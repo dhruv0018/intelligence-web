@@ -1,15 +1,21 @@
 <div class="krossover-athlete">
     <div class="sidebar-athlete" ng-if="!editable">
-
-        <div ng-if="users[athlete.userId].imageUrl" class="profile-image-container">
-            <img ng-src="{{users[athlete.userId].imageUrl}}" alt="Avatar">
+        <div class="athelete-profile-picture">
+            <div ng-if="users[athlete.userId].imageUrl" class="profile-image-container">
+                <img ng-src="{{users[athlete.userId].imageUrl}}" alt="Avatar">
+            </div>
+            <profile-placeholder ng-if="!users[athlete.userId].imageUrl" data-size="small"></profile-placeholder>
         </div>
-        <profile-placeholder ng-if="!users[athlete.userId].imageUrl" data-size="small"></profile-placeholder>
-
-        <a>
-            <div ng-show="team.roster.playerInfo[athlete.id].jerseyNumber">#{{team.roster.playerInfo[athlete.id].jerseyNumber}}</div>
-            <div>{{athlete.firstName[0] + '.'}} {{athlete.lastName}}</div>
-        </a>
+        <div class="athlete-profile-details">
+            <span class="athlete-information" ng-show="team.roster.playerInfo[athlete.id].jerseyNumber">
+            	#{{team.roster.playerInfo[athlete.id].jerseyNumber}}
+            </span> <span class="athlete-information">
+            	{{athlete.firstName[0] + '.'}} {{athlete.lastName}}
+            </span>  <br/>
+            <span class="athlete-last-access text-transform-none" ng-if="athlete.userId && users[athlete.userId].lastAccessed">Last signed in — {{users[athlete.userId].lastAccessed | date: 'mediumDate' }}</span>
+            <span class="athlete-last-access text-transform-none" ng-if="athlete.userId && !users[athlete.userId].lastAccessed">Has not activated account</span>
+            <span class="athlete-last-access text-transform-none" ng-if="!athlete.userId">No email or account available</span>
+        </div>
     </div>
     <form name="athleteForm" ng-if="editable && !athlete.isUnknown">
         <table ng-class="{'deselected': !rosterEntry.playerInfo.isActive,
