@@ -25,6 +25,10 @@ export default `
                 <label>Date Input</label>
                 <input class="form-control" type="date"/>
             </div>
+
+            <krossover-priority-select></krossover-priority-select>
+
+            <krossover-label-select></krossover-label-select>
         </form>
 
     </div>
