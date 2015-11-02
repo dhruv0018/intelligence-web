@@ -1,4 +1,5 @@
-import KrossoverEvent from '../entities/event';
+import KrossoverEvent from '../entities/event/index';
+import Stack from '../collections/stack.js';
 
 var pkg = require('../../package.json');
 
@@ -10,6 +11,9 @@ var IntelligenceWebClient = angular.module(pkg.name);
 IntelligenceWebClient.factory('IndexingService', [
     'PlaysFactory', 'EVENT', 'config', 'TagsetsFactory', 'TagsManager', 'PlaysManager', 'PlayManager', 'EventManager', 'VideoPlayer', 'PlaylistEventEmitter', 'Utilities',
     function(plays, EVENT, config, tagsets, tagsManager, playsManager, playManager, eventManager, videoPlayer, playlistEventEmitter, utils) {
+
+        /*Stack used to keep track of tags when clicking the back command*/
+
         var IndexingService = {
 
             reset: function(tagset, game, plays) {
@@ -18,6 +22,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.showScript = false;
                 this.isIndexing = false;
                 this.eventSelected = false;
+                this.tagStack = new Stack();
 
                 game.currentPeriod = 0;
                 game.indexedScore = 0;
@@ -78,11 +83,26 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Create new event. */
                 eventManager.current = new KrossoverEvent(null, tag, time, game.id);
 
-                /* Add event to the current play. */
-                playManager.addEvent(eventManager.current);
+                if (!tag.isGroup) {
 
-                this.showTags = false;
-                this.showScript = true;
+                    /* Add event to the current play. */
+                    playManager.addEvent(eventManager.current);
+                }
+
+                /*Push onto the stack the new set of tags*/
+                let indexingTags = tagsManager.current;
+                this.tagStack.push({ tags:indexingTags });
+
+                if(tag.isGroup) {
+                    this.next();
+                    this.isIndexing = true;
+                    this.showTags = true;
+                    this.showScript = false;
+                    videoPlayer.pause();
+                } else {
+                    this.showTags = false;
+                    this.showScript = true;
+                }
             },
 
             /**
@@ -110,6 +130,7 @@ IntelligenceWebClient.factory('IndexingService', [
                 playsManager.calculatePlays();
                 playManager.clear();
                 tagsManager.reset();
+                this.tagStack.clear();
                 eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
@@ -136,8 +157,15 @@ IntelligenceWebClient.factory('IndexingService', [
                     /* Set the current event. */
                     eventManager.current = new KrossoverEvent(event, startTag, event.time, gameId);
 
-                    /* Add event to the current play. */
-                    playManager.addEvent(eventManager.current);
+                    if (!tag.isGroup) {
+
+                        /* Add event to the current play. */
+                        playManager.addEvent(eventManager.current);
+                    }
+
+                    /*Push onto the stack the new set of tags*/
+                    let indexingTags = tagsManager.current;
+                    this.tagStack.push({ tags:indexingTags });
                 }
 
                 this.showTags = false;
@@ -164,6 +192,16 @@ IntelligenceWebClient.factory('IndexingService', [
                     return eventManager.current.isValid;
                 }
 
+            },
+
+            /**
+            * Clears any previous sets of tags stored while traversing
+            * group tags. Prevents any backwared traversal until new
+            * tags are selected
+            */
+            clearTags: function() {
+
+                this.tagStack.clear();
             },
 
             /**
@@ -207,9 +245,12 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Get the next set of tags. */
                 tagsManager.nextTags(tagId);
 
-                /* Snap video back to time of current event. */
-                videoPlayer.seekTime(eventManager.current.time);
-                videoPlayer.play();
+                if (!eventManager.current.isGroup) {
+
+                    /* Snap video back to time of current event. */
+                    videoPlayer.seekTime(eventManager.current.time);
+                    videoPlayer.play();
+                }
             },
 
             /**
@@ -232,10 +273,21 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* If the tags are showing. */
                 else if (this.showTags) {
                     /* Drop back into not this state. */
-                    this.showTags = false;
-                    this.showScript = false;
-                    this.isIndexing = false;
-                    videoPlayer.play();
+
+                    if(!this.tagStack.isEmpty()) {
+
+                        /* If tag stack is not empty, pop the last set of tags
+                        and replace the current set of tags with the popped tags */
+                        let indexingTags = this.tagStack.pop();
+                        tagsManager.current = indexingTags.tags;
+                    } else {
+
+                        this.showTags = false;
+                        this.showScript = false;
+                        this.isIndexing = false;
+                        this.tagStack.clear();
+                        videoPlayer.play();
+                    }
                 }
 
                 else if (this.showScript) {
@@ -270,6 +322,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 this.isIndexing = true;
                 this.showTags = false;
                 this.showScript = true;
+                /* Snap video back to time of current event. */
+                videoPlayer.seekTime(event.time);
             }
         };
 
