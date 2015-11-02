@@ -7,7 +7,7 @@
     </div>
 
     <div class="clip-info">
-        <select class="clip-select" ng-model="currentPlay" ng-options="play as play.name for play in plays" ng-change="goToPlay(currentPlay)"></select>
+        <select class="clip-select" ng-model="currentPlay" ng-options="play as play.clipsNavDisplay for play in plays" ng-change="goToPlay(currentPlay)"></select>
     </div>
 
     <div ng-class="{disabled: !nextPlay}"
