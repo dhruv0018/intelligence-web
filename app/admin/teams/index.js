@@ -376,6 +376,7 @@ TeamController.$inject = [
     'LeaguesFactory',
     'SchoolsFactory',
     'TeamsFactory',
+    'PRIORITIES',
     'UsersFactory'
 ];
 
@@ -392,9 +393,11 @@ function TeamController (
     leagues,
     schoolsFactory,
     teams,
+    PRIORITIES,
     users
 ) {
 
+    $scope.PRIORITIES = PRIORITIES;
     $scope.ROLES = ROLES;
     $scope.HEAD_COACH = ROLES.HEAD_COACH;
 

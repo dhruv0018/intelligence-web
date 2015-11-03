@@ -46,6 +46,21 @@
 
     <div class="form-group">
 
+        <h3>Priority</h3>
+        <krossover-priority-select
+            ng-init="team.priority = team.priority || PRIORITIES.NORMAL.id"
+            priority="team.priority"
+        ></krossover-priority-select>
+    </div>
+
+    <div class="form-group">
+
+        <h3>Team Label</h3>
+        <krossover-label-select
+            priority="team.label"
+        ></krossover-label-select>
+    </div>
+
         <input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text">
 
         <input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text">
