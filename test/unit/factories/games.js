@@ -31,7 +31,38 @@ describe('GamesFactory', function() {
         expect(GamesFactory).to.respondTo('canBeAssignedToQa');
         expect(GamesFactory).to.respondTo('assignToIndexer');
         expect(GamesFactory).to.respondTo('assignToQa');
+        expect(GamesFactory).to.respondTo('getFlagsUrl');
     }));
+
+    describe('getFlagsUrl', () => {
+
+        let gameJSON;
+        let game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            games => {
+
+                gameJSON = {
+                    id: 1234
+                };
+
+                game = games.extend(gameJSON);
+            }
+        ]));
+
+        it('should return a string', () => {
+
+            expect(game.getFlagsUrl()).to.be.a('string');
+        });
+
+        it('should return the correct URL', inject([
+            'config',
+            config => {
+
+                game.getFlagsUrl().endsWith(`flags?id=1234`).should.be.true;
+        }]));
+    });
 
     describe('canBeAssignedToIndexer', function() {
 
@@ -2037,6 +2068,19 @@ describe('GamesFactory', function() {
         it("Should return true, when there copiedFromGameId is not null", inject(['GamesFactory', function(GamesFactory) {
                 let game = GamesFactory.extend({id:1,copiedFromGameId:12344});
                 expect(game.isCopied()).to.be.true;
+        }]));
+    });
+
+    describe('getMaxprepsDownloadLinkByTeam', ()=> {
+        it("Should frame the maxpreps download link",
+            inject(['GamesFactory', 'TokensService', 'config', function(GamesFactory, TokensService, config) {
+                let team = {id:10};
+                let game = GamesFactory.extend({id:12});
+                config.api.uri = 'http://dummyurl/';
+                sinon.stub(TokensService,'getAccessToken').returns('dummytoken');
+                let expectedUrl = 'http://dummyurl/games/12/max-preps?teamId=10&access_token=dummytoken';
+                expect(game.getMaxprepsDownloadLinkByTeam(team)).to.equal(expectedUrl);
+                assert(TokensService.getAccessToken.should.have.been.called);
         }]));
     });
 });

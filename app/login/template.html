@@ -6,6 +6,21 @@
     <div class="icon icon-krossover-logo"></div>
     <div class="login-container">
 
+        <!-- Mobile App Download Messaging -->
+        <section
+            class="login__app-downloads"
+            ng-if="!newUser && !resetPassword"
+        >
+
+            <app-downloads></app-downloads>
+
+        </section>
+
+        <p
+            class="mobile-login-info"
+            ng-if="isMobile && !newUser && !resetPassword"
+        >Lacrosse users sign in below</p>
+
         <div class="new-login" ng-class="{'new-user': newUser}">
             <main ui-view="main"></main>
         </div>
@@ -77,21 +92,6 @@
 
         </div>
 
-        <div ng-if="!newUser && !resetPassword" class="app-links">
-
-            <div class="icon-row">
-                <i class="icon icon-basketball"></i>
-                <i class="icon icon-football"></i>
-                <i class="icon icon-volleyball"></i>
-            </div>
-
-            <h1>Basketball + Football + Volleyball</h1>
-
-            <a ng-href="{{MOBILE_APP_URLS.COACH.IOS}}}"><i class="icon icon-mobile-phone"></i> Coaches, please download our iOS app!</a>
-            <p>Athletes iOS app coming soon!</p>
-            <p>Android app coming soon for coaches and athletes!</p>
-
-        </div>
     </div>
 </section>
 

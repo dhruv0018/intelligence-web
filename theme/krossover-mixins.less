@@ -95,6 +95,26 @@
     }
 }
 
+// Phone screens (less than 480px wide)
+.phone (@rules; @maxWidth: @screen-phone - 1) {
+
+    @media only screen
+    and (max-width: @maxWidth) {
+
+        @rules();
+    }
+}
+
+// Phone screens (less than 480px wide)
+.phone-landscape (@rules; @maxHeight: @screen-phone - 1) {
+
+    @media only screen
+    and (max-height: @maxHeight) {
+
+        @rules();
+    }
+}
+
 // Desktop screens (1024px and up)
 .desktop (@rules; @minWidth: @screen-lg) {
 
