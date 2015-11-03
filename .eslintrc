@@ -57,7 +57,6 @@
         "no-mixed-requires": [1, true],
         "no-path-concat": true,
 
-        "consistent-this": [2, "self"],
         "no-nested-ternary": true,
         "no-lonely-if": true,
 

@@ -179,11 +179,50 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     });
                 }
             },
-            addRole: function(user, role) {
-                var self = this;
-                role.userId = user.id;
-                role.teamId = self.id;
-                self.roles.push(role);
+
+            /**
+             * @class Team
+             * @method addRole
+             * @description Adds a role of type ROLE to the team. Will not add the role if
+             * it already exists for the user on the team
+             * @param {Object} user - the user to add the role to
+             * @param {Object} ROLE - a ROLE object defining the role type to create and add
+             */
+            addRole: function(user, ROLE) {
+
+                if (!user) throw new Error(`Missing parameter 'user'`);
+                if (!ROLE) throw new Error(`Missing parameter 'ROLE'`);
+
+                // assign to team since this method is only used on instances of a Team
+                let team = this;
+
+                let existingRole = team.getRoleByUserId(user.id);
+
+                // Role exists for this user, do not add the same role again to team
+                if (existingRole) return;
+
+                // create new role from ROLE
+                let newRole = angular.copy(ROLE);
+
+                newRole.userId = user.id;
+                newRole.teamId = team.id;
+                team.roles.push(newRole);
+            },
+
+            /**
+             * @class Team
+             * @description Get a team role by user id
+             * @param {number} userId
+             * @returns {object|undefined} role The role on the team if it exists,
+             */
+            getRoleByUserId: function(userId) {
+
+                if (!userId) throw new Error(`Missing parameter 'userId'`);
+
+                // assign to team since this method is only used on instances of a Team
+                let team = this;
+
+                return team.roles.find((role) => role.userId === userId);
             },
 
             isMember: function(userId) {

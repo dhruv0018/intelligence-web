@@ -187,34 +187,48 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
              * @class User
-             * @method
+             * @method addRole
+             * @description Adds the given ROLE to the user. The team will be added to the role
+             * if specified
              * @param {Object} user - the user to add the role to
-             * @param {Object} role - a role object to add
+             * @param {Object} ROLE - a ROLE object defining the role type to create and add
              * @param {Object} team - a team object to draw the teamId from
-             * Adds the given role to the given user. If no user is specified,
-             * this user will be used.
+             * @return {Object} the role that was added
              */
-            addRole: function(user, role, team) {
 
-                let self = this;
+            addRole: function(ROLE, team) {
 
-                if (!role) {
+                let user = this;
 
-                    role = user;
-                    user = self;
+                let existingRole;
+
+                // Check if user has the ROLE already
+                if (team) {
+                    // If a team is specified, they should only have one role of type ROLE per team
+                    existingRole = user.getUserRoleForTeam(ROLE, team);
+                } else {
+                    existingRole = user.getRoles(ROLE);
                 }
 
-                role = angular.copy(role);
-                role.userId = user.id;
-                role.tenureEnd = null;
-                role.tenureStart = new Date();
+                // NOTE: This role has been found. Make sure it is active, but don't add it again
+                if (existingRole) {
+                    user.activateRole(existingRole);
+                }
+
+                let newRole = angular.copy(ROLE);
+                newRole.userId = user.id;
 
                 if (team) {
-                    role.teamId = team.id;
+                    newRole.teamId = team.id;
                 }
 
+                user.activateRole(newRole);
+
+                // FIXME: Why add roles here? The user should have an empty array for 'roles' upon creation
                 user.roles = user.roles || [];
-                user.roles.unshift(role);
+                user.roles.unshift(newRole);
+
+                return newRole;
             },
 
             /**
@@ -255,6 +269,25 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 /* Record the tenure end date of the role. */
                 role.tenureEnd = new Date();
+            },
+
+            /**
+             * Given a role that exists on the user, activate it by
+             * setting a tenureStart if it does not exist, and setting tenureEnd to null
+             * @method activateRole
+             * @param {role} role The role to activate
+             */
+            activateRole: function(role) {
+
+                if (!role) {
+                    console.error(`expects role to not be null`);
+                    return;
+                }
+
+                if (!role.tenureStart) role.tenureStart = new Date();
+
+                // user is active if they do not have an ended tenure
+                role.tenureEnd = null;
             },
 
             /**
@@ -791,8 +824,10 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             },
             isActive: function(role) {
-                var self = this;
-                return self.activeRoles(role).length >= 1;
+
+                if (!role) throw new Error(`Missing parameter 'role'`);
+
+                return !role.tenureEnd;
             },
 
             /**
