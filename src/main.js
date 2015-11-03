@@ -107,8 +107,8 @@ require('./constants/telestrations');
 require('./constants/feature-flags');
 require('./constants/cue-points');
 require('./constants/transcodeProfiles');
-import './constants/priorities';
-import './constants/labels';
+import { PRIORITIES_IDS, PRIORITIES } from './constants/priorities';
+import { LABELS } from './constants/labels';
 
 
 require('./models/users');

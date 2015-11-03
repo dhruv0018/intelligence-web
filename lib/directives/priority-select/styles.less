@@ -2,13 +2,31 @@
 
 @size: 20px;
 
-.priority-select md-option::before {
+.pseudo-color(@color) {
 
-    content: "";
-    display: inline-block;
-    width: @size;
-    height: @size;
-    background-color: @brand-blue;
-    border: thin solid black;
-    margin-right: 8px;
+    &::before {
+
+        content: "";
+        display: inline-block;
+        width: @size;
+        height: @size;
+        background-color: @color;
+        border: thin solid black;
+        margin-right: 8px;
+    }
+}
+
+.highest-priority {
+
+    .pseudo-color(@priority-color-highest);
+}
+
+.high-priority {
+
+    .pseudo-color(@priority-color-high);
+}
+
+.normal-priority {
+
+    .pseudo-color(@priority-color-normal);
 }

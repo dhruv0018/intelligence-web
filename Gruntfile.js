@@ -267,6 +267,7 @@ module.exports = function(grunt) {
                         'lib/directives/dynamic-tables/styles.less',
                         'lib/directives/video-player/select-media-src/styles.less',
                         'lib/directives/arena-chart/styles.less',
+                        'lib/directives/priority-select/*.less',
                         'lib/directives/label-select/*.less',
                         'lib/directives/team-label-icon/*.less',
                         'lib/directives/event-adjuster/styles.less',
