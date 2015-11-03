@@ -33,4 +33,7 @@ const PRIORITIES = {
 IntelligenceWebClient.constant('PRIORITIES_IDS', PRIORITIES_IDS);
 IntelligenceWebClient.constant('PRIORITIES', PRIORITIES);
 
-export default { PRIORITIES_IDS, PRIORITIES };
+export default {
+    PRIORITIES_IDS,
+    PRIORITIES
+};
