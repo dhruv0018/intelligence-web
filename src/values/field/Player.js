@@ -37,6 +37,15 @@ class PlayerField extends Field {
     }
 
     /**
+     * TODO: Potentially temporary
+     * Renders placeholder text for the player field
+     * @type {String}
+     */
+    get placeholder() {
+        return this.value.name;
+    }
+
+    /**
      * Generates an HTML string of the field.
      *
      * @method toString
