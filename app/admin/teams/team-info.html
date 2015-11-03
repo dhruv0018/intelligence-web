@@ -1,6 +1,8 @@
 <form class="form-info" name="form" role="form">
 
     <div class="form-group">
+
+        <h3>Sport</h3>
         <select class="form-control" name="sport" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
             <option value="">Pick a Sport</option>
         </select>
@@ -10,6 +12,7 @@
 
     <div class="form-group">
 
+        <h3>League</h3>
         <select class="form-control" name="league" data-ng-model="team.leagueId" data-ng-options="league.id as league.name for league in leagues | filter:{'sportId':sportId}" data-ng-disabled="!sportId" required>
             <option value="">League Name</option>
         </select>
@@ -18,6 +21,7 @@
 
     <div class="form-group school-typeahead">
 
+        <h3>School</h3>
         <input class="form-control"
                id="school-name-cta"
                placeholder="School Name" data-ng-model="schoolName"
@@ -34,6 +38,7 @@
 
     <div class="form-group">
 
+        <h3>Team</h3>
         <input class="form-control" name="name" placeholder="Team Name" data-ng-model="team.name" type="text" required>
 
     </div>
@@ -61,20 +66,30 @@
         ></krossover-label-select>
     </div>
 
+    <div class="form-group">
+
+        <h3>Conference</h3>
         <input class="form-control" name="conference" placeholder="Conference" data-ng-model="school.conference" type="text">
 
+        <h3>Division</h3>
         <input class="form-control" name="division" placeholder="Division" data-ng-model="school.division" type="text">
 
+        <h3>Address 1</h3>
         <input class="form-control" name="address1" placeholder="Address 1" data-ng-model="team.address.street1" type="text">
 
+        <h3>Address 2</h3>
         <input class="form-control" name="address2" placeholder="Address 2" data-ng-model="team.address.street2" type="text">
 
+        <h3>City</h3>
         <input class="form-control" name="city" placeholder="City" data-ng-model="team.address.city" type="text" required>
 
-        <input class="form-control" name="country" placeholder="Country" data-ng-model="team.address.countryCode" type="text" required>
-
+        <h3>Region</h3>
         <input class="form-control" name="state" placeholder="State" data-ng-model="team.address.regionCode" type="text" required>
 
+        <h3>Country</h3>
+        <input class="form-control" name="country" placeholder="Country" data-ng-model="team.address.countryCode" type="text" required>
+
+        <h3>Postal Code</h3>
         <input class="form-control" name="postal" placeholder="Postal Code" data-ng-model="team.address.postalCode" type="text">
 
     </div>
