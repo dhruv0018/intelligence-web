@@ -2,6 +2,9 @@ export default `
 
     <div class="forms">
 
+        <H2>Forms</h2>
+
+        <!-- Boilerplate
         <form>
 
             <div class="form-group">
@@ -25,11 +28,27 @@ export default `
                 <label>Date Input</label>
                 <input class="form-control" type="date"/>
             </div>
-
-            <krossover-priority-select></krossover-priority-select>
-
-            <krossover-label-select></krossover-label-select>
         </form>
+        -->
 
+        <pre>team: {{ team }}</pre>
+
+        <h3>Team (&Game) Priority Select</h3>
+        <krossover-priority-select
+            priority="team.priority"
+        ></krossover-priority-select>
+
+        <h3>Team Label Select</h3>
+        <krossover-label-select
+            label="team.label"
+        ></krossover-label-select>
+
+        <h3>Team Labels</h3>
+        <div ng-repeat="label in LABELS">
+            <krossover-team-label-icon
+                label="label"
+            ></krossover-team-label-icon>
+            {{ label.name }}
+        </div>
     </div>
 `;
