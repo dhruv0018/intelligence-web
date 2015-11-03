@@ -205,7 +205,8 @@ IntelligenceWebClient.factory('UsersFactory', [
                 // Check if user has the ROLE already
                 if (team) {
                     // If a team is specified, they should only have one role of type ROLE per team
-                    existingRole = user.getRoleForTeam(ROLE, team);
+                    const ACTIVE_OR_INACTIVE = null;
+                    existingRole = user.getRoleForTeam(ROLE, team, ACTIVE_OR_INACTIVE);
                 } else {
                     existingRole = user.getRoles(ROLE);
                 }
@@ -272,9 +273,10 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
-             * Given a role that exists on the user, activate it by
-             * setting a tenureStart if it does not exist, and setting tenureEnd to null
+             * @class User
              * @method activateRole
+             * @description Given a role that exists on the user, activate it by
+             * setting a tenureStart if it does not exist, and setting tenureEnd to null
              * @param {role} role The role to activate
              */
             activateRole: function(role) {
@@ -359,23 +361,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
-             * @param {Integer} teamId - the teamId get role
-             * @returns {Array} the role object for the user. If no
-             * role is defined, it will return `undefined`.
-             * Gets the users role for a team.
-             */
-            getRolesByTeamId: function(teamId) {
-
-                let rolesForTeam = [];
-
-                if(!this.hasNoRoles()) {
-                    rolesForTeam = this.roles.filter(role => (role.teamId === teamId));
-                }
-
-                return rolesForTeam;
-            },
-
-            /**
             * @class User
             * @method
             * @param {Object} newDefaultRole - the role object to set the users
@@ -453,6 +438,103 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return teamIds;
             },
+
+            /**
+             * @class User
+             * @method getRoles
+             * @param {number} ROLE_TYPE - the role type of the User
+             * @param {boolean|null} active - if the role is active or inactive, null to return both
+             * @returns {Array} Array of user roles
+            **/
+            getRoles: function(ROLE_TYPE = null, team = null, active = true) {
+
+                let user = this;
+
+                if(!user.roles || !user.roles.length) return [];
+
+                // Get either active or inactive roles
+                let roles = user.roles.filter(role => {
+                    if (active === true) return user.isActive(role);
+                    else if (active === false) return !user.isActive(role);
+                    else return true;
+                });
+
+                if (team) {
+                    // filter by team
+                    roles = roles.filter(role => role.teamId === team.id);
+                }
+
+                // If no ROLE_TYPE provided, return all roles
+                if (!ROLE_TYPE) return roles;
+
+                // Return only roles by ROLE_TYPE if defined
+                return roles.filter(role => role.type.id === ROLE_TYPE);
+            },
+
+
+            /**
+             * @class User
+             * @method getRoleForTeam
+             * @description gets an active role object if the user has a role of type 'ROLE' for the 'team'
+             * @param {object} ROLE_TYPE - a ROLE_TYPE constant
+             * @param {object} team - a team object
+             * @param {boolean|null} active - if 'active' is true (DEFAULT), get active roles only, if false, get inactive roles only, and get both inactive/active roles if 'active' is null
+             * @returns {object|undefined} a role of type ROLE_TYPE for the team or undefined if not found
+             */
+            getRoleForTeam: function (ROLE_TYPE, team, active = true) {
+
+                let user = this;
+
+                if (!ROLE_TYPE) throw new Error(`missing required parameter 'ROLE_TYPE'`);
+                if (!team) throw new Error(`missing required parameter 'team'`);
+
+                let roles = user.getRoles(ROLE_TYPE, team, active);
+
+                if (roles) return roles[0];
+            },
+
+            /**
+             * @class User
+             * @method activeRoles
+             * @description returns all active roles for a user OR all active roles for a user of type 'ROLE'
+             * @param {Object} ROLE_TYPE optional ROLE_TYPE object
+             * @returns {Array} Array of roles
+             */
+            getActiveRoles: function(ROLE_TYPE) {
+
+                let user = this;
+
+                return user.getRoles(ROLE_TYPE, null, true);
+            },
+
+            /**
+             * @class User
+             * @method getInactiveRoles
+             * @description returns all inactive roles for a user OR all active roles for a user of type 'ROLE'
+             * @param {Object} ROLE_TYPE optional ROLE_TYPE object
+             * @returns {Array} Array of roles
+             */
+            getInactiveRoles: function(ROLE_TYPE) {
+
+                let user = this;
+
+                return user.getRoles(ROLE_TYPE, null, false);
+            },
+
+            /**
+             * @class User
+             * @method isActive
+             * @description a role is active if it has no defined 'tenureEnd' property
+             * @param {Object} optional role object
+             * @returns {boolean}
+             */
+            isActive: function(role) {
+
+                if (!role) throw new Error(`Missing parameter 'role'`);
+
+                return !role.tenureEnd;
+            },
+
             /**
             * @class User
             * @method
@@ -471,6 +553,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @method
              * @param {Object} role - the role object to check for the match.
              * @param {Object} match - the role object to match.
+             * @param {boolean|null} active - if the role is active (true) or not
              * @returns {Boolean} true if a match is found; false otherwise.
              * Checks if the given role matches the role given as match.
              * If only one parameter is given, its assumed to be match.
@@ -675,7 +758,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!email) return null;
 
                 // Does the assistant coach already exist in the system?
-                let fetchUserByEmail = users.fetch(email);
+                let fetchUserByEmail = this.fetch(email);
 
                 return fetchUserByEmail
                 .then(
@@ -691,39 +774,19 @@ IntelligenceWebClient.factory('UsersFactory', [
             /**
              * @class Users
              * @method
-             * @param {Object} role - the role object to check for the match.
+             * @param {Object} ROLE - the role object to check for the match.
              * @param {Object} team - the team object which is used to check if a role is associated with a team
              * @returns {Array} Array of users that fulfill the criteria of matching the role and team
              */
-            findByRole: function(role, team, active = true) {
-                var self = this;
-                var storage = $injector.get(self.storage);
+            findByRole: function(ROLE, team, active = true) {
 
-                if (!role) {
-                    throw new Error('failed to pass in role');
-                }
+                if (!ROLE) throw new Error(`Missing parameter 'role'`);
 
-                var vettedUsers = [];
+                let storage = $injector.get(this.storage);
 
-                var users = self.getList();
+                var users = this.getList();
 
-                users.forEach(function(user) {
-                    if (user.has(role, active)) {
-                        vettedUsers.push(user);
-                    }
-                });
-
-                if (team) {
-                    vettedUsers = vettedUsers.filter((user) => {
-                        var vettedRoles = user.getRoles(role.type.id, active).filter((role) => {
-                            return role.teamId === team.id;
-                        });
-
-                        return vettedRoles.length > 0;
-                    });
-                }
-
-                return vettedUsers;
+                return users.filter(user => user.getRoles(ROLE.type.id, team, active).length);
             },
 
             /**
@@ -829,103 +892,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                         teams.splice(index, 1);
                     }
                 });
-            },
-
-            /**
-             * @class User
-             * @method getRoles
-             * @param {number} ROLE_TYPE - the role type of the User
-             * @param {boolean|null} active - if the role is active or inactive, null to return both
-             * @returns {Array} Array of user roles
-            **/
-            getRoles: function(ROLE_TYPE = null, team = null, active = true) {
-
-                let user = this;
-
-                if(!user.roles || !user.roles.length) return [];
-
-                // Get either active or inactive roles
-                let roles = user.roles.filter(role => {
-                    if (active === true) return user.isActive(role);
-                    else if (active === false) return !user.isActive(role);
-                    else return true;
-                });
-
-                if (team) {
-                    // filter by team
-                    roles = roles.filter(role => {
-                        return someTeamRole.type.id === ROLE.type.id;
-                    });
-                }
-
-                // If no ROLE_TYPE provided, return all roles
-                if (!ROLE_TYPE) return roles;
-
-                // Return only roles by ROLE_TYPE if defined
-                return roles.filter(role => role.type.id === ROLE_TYPE);
-            },
-
-
-            /**
-             * @class User
-             * @method getRoleForTeam
-             * @description gets an active role object if the user has a role of type 'ROLE' for the 'team'
-             * @param {object} ROLE - a ROLE constant
-             * @param {object} team - a team object
-             * @returns {object|undefined} a role of type ROLE for the team or undefined if not found
-             */
-            getRoleForTeam: function (ROLE, team) {
-
-                let user = this;
-
-                if (!ROLE) throw new Error(`missing required parameter 'ROLE'`);
-                if (!team) throw new Error(`missing required parameter 'team'`);
-
-                let roles = user.getRoles(ROLE, team);
-
-                if (roles) return roles[0];
-            },
-
-            /**
-             * @class User
-             * @method activeRoles
-             * @description returns all active roles for a user OR all active roles for a user of type 'ROLE'
-             * @param {Object} ROLE optional ROLE object
-             * @returns {Array} Array of roles
-             */
-            getActiveRoles: function(ROLE) {
-
-                let user = this;
-
-                return user.getRoles(ROLE, null, true);
-            },
-
-            /**
-             * @class User
-             * @method getInactiveRoles
-             * @description returns all inactive roles for a user OR all active roles for a user of type 'ROLE'
-             * @param {Object} ROLE optional ROLE object
-             * @returns {Array} Array of roles
-             */
-            getInactiveRoles: function(ROLE) {
-
-                let user = this;
-
-                return user.getRoles(ROLE, null, false);
-            },
-
-            /**
-             * @class User
-             * @method isActive
-             * @description a role is active if it has no defined 'tenureEnd' property
-             * @param {Object} optional role object
-             * @returns {boolean}
-             */
-            isActive: function(role) {
-
-                if (!role) throw new Error(`Missing parameter 'role'`);
-
-                return !role.tenureEnd;
             }
         };
 
