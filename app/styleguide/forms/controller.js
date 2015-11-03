@@ -7,7 +7,7 @@ function StyleguideFormsController (
     $scope.team = {
 
         priority: PRIORITIES.HIGH.id,
-        label: LABELS.KL.id
+        label: null
     };
 
     $scope.LABELS = LABELS;
