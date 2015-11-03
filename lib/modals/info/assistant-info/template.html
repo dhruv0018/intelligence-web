@@ -64,7 +64,7 @@
                         <input type="submit" class="btn btn-primary" value="Save" data-ng-click="save()">
                     </div>
                     <div class="col-md-5" ng-show="assistantCoachRoleForTeam">
-                        <a class="pull-right remove" href data-ng-click="activateDeactivateRole()">
+                        <a class="pull-right remove" href data-ng-click="activateDeactivateAssistantRole(assistantCoachRoleForTeam)">
                             <span data-ng-if="!assistantCoachRoleForTeam.tenureEnd"><i class="icon icon-remove"></i> Remove from team</span>
                             <span data-ng-if="assistantCoachRoleForTeam.tenureEnd"><i class="icon icon-add"></i> Add to team</span>
                         </a>

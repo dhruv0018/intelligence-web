@@ -689,6 +689,31 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
+             * Users
+             * @method getUserByEmail
+             * @description Gets a user resource by email if found and return null if not found
+             * @param {string} email
+             * @returns {object|null}
+             */
+            getUserByEmail: function(email) {
+
+                if (!email) return null;
+
+                // Does the assistant coach already exist in the system?
+                let fetchUserByEmail = users.fetch(email);
+
+                return fetchUserByEmail
+                .then(
+                    function userFound(responseUser) {
+                        return responseUser;
+                    },
+                    function noUserFound() {
+                        return null;
+                    }
+                );
+            },
+
+            /**
              * @class User
              * @method getRoles
              * @param {number} ROLE_TYPE - the role type of the User
