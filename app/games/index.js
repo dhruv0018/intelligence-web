@@ -77,7 +77,7 @@ Games.config([
                     // TODO: make user factory function to handle this
                     if (currentUser.is(ROLES.ATHLETE)) {
                         // Get all teams user is athlete on
-                        let athleteRoles = currentUser.roleTypes[ROLE_TYPE.ATHLETE];
+                        let athleteRoles = currentUser.getRoles(ROLE_TYPE.ATHLETE);
                         teamIds = athleteRoles.map(role => role.teamId);
                     } else {
                         teamIds = [session.getCurrentTeamId()];
