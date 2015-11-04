@@ -8,6 +8,10 @@
 
     <h3>{{ team.name }} vs {{ opposingTeam.name }}</h3>
 
+    <krossover-priority-label-icon
+        priority="PRIORITIES[PRIORITIES_IDS[game.priority]]"
+    ></krossover-priority-label-icon>
+
     <krossover-team-label-icon
         ng-if="team.label"
         label="LABELS[LABELS_IDS[uploaderTeam.label]]"
