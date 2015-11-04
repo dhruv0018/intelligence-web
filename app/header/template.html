@@ -155,17 +155,19 @@
 
             <ul class="dropdown-menu">
 
-                <div ng-repeat="role in dropdownUserRoles track by $index">
+                <div class="dropdown-roles-container">
 
-                    <!-- Don't show current role in dropdown -->
-                    <li ng-if="role.id !== currentUser.getCurrentRole().id">
-                        <a ng-attr-id="{{'user-change-role-cta-' + role.type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(role)">
+                    <div ng-repeat="role in dropdownUserRoles track by $index">
 
-                            <x-krossover-role user="currentUser" role="role"></x-krossover-role>
+                        <!-- Don't show current role in dropdown -->
+                        <li ng-if="role.id !== currentUser.getCurrentRole().id">
+                            <a ng-attr-id="{{'user-change-role-cta-' + role.type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(role)">
 
-                        </a>
-                    </li>
+                                    <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
+                            </a>
+                        </li>
+                    </div>
                 </div>
 
                 <footer>
