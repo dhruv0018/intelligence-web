@@ -73,3 +73,150 @@
         text-align: center;
     }
 }
+
+// Admin and Indexer table styles
+
+@queue-list-font-size: 14px;
+@queue-list-padding: 6px;
+
+.queue-list {
+
+    width: 100%;
+
+    th {
+
+        color: black;
+        background: @gray-lighter;
+        font-size: @queue-list-font-size;
+        line-height: 16px;
+        padding: @queue-list-padding;
+    }
+
+    .priority-row (@row-color) {
+
+        background-color: @row-color;
+
+        &:nth-child(even) {
+
+            background-color: darken(@row-color, 4%);
+        }
+
+        &:hover {
+
+            background-color: darken(@row-color, 8%);
+        }
+    }
+
+    &__highest-priority {
+
+        .priority-row(@priority-color-highest);
+    }
+
+    &__high-priority {
+
+        .priority-row(@priority-color-high);
+    }
+
+    &__normal-priority {
+
+        .priority-row(@priority-color-normal);
+        background-color: transparent;
+    }
+
+    th,
+    td
+    {
+
+        border: none;
+        color: black;
+        vertical-align: middle;
+        font-size: @queue-list-font-size;
+        line-height: 16px;
+        padding: @queue-list-padding;
+        font-weight: 500;
+
+        &:first-child {
+
+            padding-left: 15px;
+        }
+    }
+
+    ul {
+
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+
+        list-style: none;
+    }
+
+    .game-id {
+
+        text-align: right;
+    }
+
+    .game-duration,
+    .time-left {
+
+        text-align: right;
+
+        .late {
+
+            color: @brand-danger;
+        }
+
+        .none {
+
+            color: @brand-warning;
+        }
+
+        .togo {
+
+            color: @brand-success;
+        }
+    }
+
+    // Base class for buttons used within the queue table
+    .queue-button {
+
+        .btn;
+        .btn-default;
+        padding: 4px 11px;
+        line-height: 1;
+    }
+
+    .select-indexer,
+    .select-qa,
+    .start-indexing,
+    .start-qa
+    {
+
+        .queue-button;
+        font-size: @queue-list-font-size;
+    }
+
+    .assignment {
+
+        .btn;
+        .btn-link;
+        font-weight: 500;
+        font-size: @queue-list-font-size;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .manage-button {
+
+        .queue-button;
+        font-size: 12px;
+
+        i {
+
+            // Ensure icon has no extra space around it
+            display: block;
+        }
+    }
+}
