@@ -30,7 +30,7 @@ const LABELS = {
         abbreviation: 'C1'
     },
 
-    4: {
+    'C2': {
         id: 4,
         name: 'Custom 2',
         abbreviation: 'C2'
