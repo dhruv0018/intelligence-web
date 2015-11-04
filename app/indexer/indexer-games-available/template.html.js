@@ -22,9 +22,14 @@ export default `
                         | gameIsDeleted: false
                         | gameIsReadyForQa
                         | gameNotIndexedByCurrentUser
-                        | orderBy: 'timeRemaining'
+                        | orderBy: ['-priority', 'timeRemaining']
                         | limitTo: 100
                         as filteredGames"
+                        ng-class="{
+                            'indexer-list__highest-priority': game.priority === 3,
+                            'indexer-list__high-priority': game.priority === 2,
+                            'indexer-list__normal-priority': game.priority === 1,
+                        }"
                     >
                         <td>{{game.id}}</td>
                         <!--TODO:Add as directive or factory method -->
