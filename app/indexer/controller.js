@@ -3,6 +3,7 @@ const angular = window.angular;
 const moment = require('moment');
 
 IndexerGamesController.$inject = [
+    'PRIORITIES',
     '$scope',
     '$interval',
     'config',
@@ -17,6 +18,7 @@ IndexerGamesController.$inject = [
 ];
 
 function IndexerGamesController(
+    PRIORITIES,
     $scope,
     $interval,
     config,
@@ -42,6 +44,7 @@ function IndexerGamesController(
     $scope.footballFAQ = config.links.indexerFAQ.football.uri;
     $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
     $scope.options = {scope: $scope};
+    $scope.PRIORITIES = PRIORITIES;
 
     switch (userLocation) {
         case INDEXER_GROUPS.US_MARKETPLACE:

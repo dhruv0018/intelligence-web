@@ -26,9 +26,9 @@ export default `
                         | limitTo: 100
                         as filteredGames"
                         ng-class="{
-                            'queue-list__highest-priority': game.priority === 3,
-                            'queue-list__high-priority': game.priority === 2,
-                            'queue-list__normal-priority': game.priority === 1,
+                            'queue-list__highest-priority': game.priority === PRIORITIES.HIGHEST.id,
+                            'queue-list__high-priority': game.priority === PRIORITIES.HIGH.id,
+                            'queue-list__normal-priority': game.priority === PRIORITIES.NORMAL.id,
                         }"
                     >
                         <td>{{game.id}}</td>
