@@ -83,6 +83,15 @@
 
     width: 100%;
 
+    th {
+
+        color: black;
+        background: @gray-lighter;
+        font-size: @queue-list-font-size;
+        line-height: 16px;
+        padding: @queue-list-padding;
+    }
+
     .priority-row (@row-color) {
 
         background-color: @row-color;
@@ -108,12 +117,15 @@
         .priority-row(@priority-color-high);
     }
 
-    &normal-priority {
+    &__normal-priority {
 
         .priority-row(@priority-color-normal);
+        background-color: transparent;
     }
 
-    td {
+    th,
+    td
+    {
 
         border: none;
         color: black;
@@ -189,6 +201,7 @@
 
         .btn;
         .btn-link;
+        font-weight: 500;
         font-size: @queue-list-font-size;
         border: none;
         padding: 0;
