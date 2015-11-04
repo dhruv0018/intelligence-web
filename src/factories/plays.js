@@ -1,5 +1,4 @@
 import KrossoverPlay from '../entities/play';
-import KrossoverEvent from '../entities/event';
 
 const pkg = require('../../package.json');
 
@@ -25,7 +24,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
         $sce,
         VIDEO_STATUSES,
         PlaysResource,
-        KrossoverPlay,
+        KrossoverPlayFactory,
         BaseFactory,
         tagsets,
         utils,
@@ -44,7 +43,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             extend: function (play) {
 
-                play = KrossoverPlay.create(play);
+                play = KrossoverPlayFactory.create(play);
                 angular.augment(play, this);
 
                 return play;
