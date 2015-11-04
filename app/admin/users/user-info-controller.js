@@ -40,8 +40,8 @@ Users.controller('Users.User.Info.Controller', [
         };
 
         $scope.resetPassword = () => {
+            alerts.clear();
             $scope.sendingEmail = true;
-
             let onSend = () => {
                 const user = $scope.user;
                 const message = `A password reset email has been sent to ${user.firstName} ${user.lastName} (${user.email})`;
