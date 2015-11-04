@@ -40,5 +40,11 @@ export default `
 
         </div>
 
+        <div id="priority-label-legend">
+
+            <h3>Priority-Label Legend</h3>
+            <priority-label-legend></priority-label-legend>
+        </div>
+
     </div>
 `;
