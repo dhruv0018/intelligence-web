@@ -13,6 +13,10 @@
 
                 <label>Name</label>
                 <input class="form-control" name="name" placeholder="Enter a name" data-ng-model="league.name" type="text" required />
+                <span class="name-instructions">
+                    Note: league name structure should be "[sport] - [league] [(region or league name)] - [gender]"<br>
+                    Examples: "Football - High School (US) - Boys" or "Basketball - Professional (WNBA) - Women"
+                </span>
 
                 <label>Gender</label>
                 <select class="form-control" name="gender" data-ng-model="league.gender" data-ng-options="gender for gender in genders" required>
