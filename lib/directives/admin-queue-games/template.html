@@ -2,13 +2,7 @@
 
     <tbody>
 
-        <tr
-            ng-repeat="game in queue | orderBy:'remainingTime'"
-            ng-class="{
-                'game-highest-priority': game.priority === PRIORITIES.HIGHEST.id,
-                'game-high-priority': game.priority === PRIORITIES.HIGH.id
-            }"
-        >
+        <tr ng-repeat="game in queue | orderBy:'remainingTime'">
 
             <td>{{sports[leagues[teams[game.teamId].leagueId].sportId].name}}</td>
 
