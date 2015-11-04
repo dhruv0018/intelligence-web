@@ -1,0 +1,24 @@
+@import (reference) "main.less";
+
+.priority-label-icon(@color) {
+
+    background-color: @color;
+}
+
+priority-label-icon {
+
+    .highest-priority-label-icon {
+
+        .priority-label-icon(@priority-color-highest);
+    }
+
+    .high-priority-label-icon {
+
+        .priority-label-icon(@priority-color-high);
+    }
+
+    .normal-priority-label-icon {
+
+        .priority-label-icon(@priority-color-normal);
+    }
+}

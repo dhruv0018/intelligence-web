@@ -37,6 +37,7 @@ import KrossoverPrioritySelect from '../lib/directives/priority-select';
 import KrossoverLabelSelect from '../lib/directives/label-select';
 import KrossoverTeamLabelIcon from '../lib/directives/team-label-icon';
 import PriorityLabelLegend from '../lib/directives/priority-label-legend';
+import PriorityLabelIcon from '../lib/directives/priority-label-icon';
 
 /* App dependencies */
 require('./config');

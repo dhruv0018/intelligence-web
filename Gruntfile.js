@@ -271,6 +271,7 @@ module.exports = function(grunt) {
                         'lib/directives/label-select/*.less',
                         'lib/directives/priority-label-legend/*.less',
                         'lib/directives/team-label-icon/*.less',
+                        'lib/directives/priority-label-icon/*.less',
                         'lib/directives/event-adjuster/styles.less',
                         'lib/dialogs/breakdown-dialog/styles.less',
                         'lib/directives/field/**/*.less',
