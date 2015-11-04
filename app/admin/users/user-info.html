@@ -50,7 +50,7 @@
         {{ user.isLocked ? "Unlock" : "Lock" }}
     </button>
 
-    <button class="btn btn-danger reset-password" data-ng-click="resetPassword()">
+    <button ng-disabled="sendingEmail" class="btn btn-danger reset-password" data-ng-click="resetPassword()">
         <span ng-show="!sendingEmail">Password Reset</span>
         <krossover-spinner ng-show="sendingEmail" size="10px"></krossover-spinner>
     </button>
