@@ -1,18 +1,19 @@
 @import (reference) "main.less";
 
-@size: 20px;
+@size: 16px;
 
 .pseudo-color(@color) {
 
     &::before {
 
         content: "";
-        display: inline-block;
         width: @size;
         height: @size;
-        background-color: @color;
-        border: thin solid black;
+        display: inline-block;
         margin-right: 8px;
+        border: thin solid black;
+        border-radius: 2px;
+        background-color: @color;
     }
 }
 
