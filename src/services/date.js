@@ -7,15 +7,14 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-
+/* TODO: Convert this factory into a static class; no need for Angular here. */
 IntelligenceWebClient.factory('NewDate', function() {
 
     momentTimezone.tz.add('America/New_York|EST EDT EWT EPT|50 40 40 40|01010101010101010101010101010101010101010101010102301010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-261t0 1nX0 11B0 1nX0 11B0 1qL0 1a10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 RB0 8x40 iv0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0');
 
-    function dateString(existingDate) {
-        var dateZeroTime = (existingDate) ? new Date(existingDate) : new Date();
-        var dateStringVal = dateZeroTime.getFullYear() + '-' + (dateZeroTime.getMonth() + 1) + '-' + dateZeroTime.getDate();
-        return dateStringVal;
+    function createDateFromISOString (ISODateString) {
+
+        return momentTimezone.tz(ISODateString, moment.ISO_8601, 'America/New_York');
     }
 
     return {
@@ -24,17 +23,51 @@ IntelligenceWebClient.factory('NewDate', function() {
         generateNow: function() {
             return new Date();
         },
-        generatePlanStartDate: function(existingDate) {
-            var dateStringStartTime = dateString(existingDate) + ' ' + '00:00:00';
+        generatePlanStartDate: function (ISODateString) {
 
-            var start = moment.utc(momentTimezone.tz(dateStringStartTime, 'America/New_York').format()).format();
-            return new Date(start);
+            let planStartDate;
+
+            if (ISODateString !== undefined) {
+
+                /* Attempt to create Date object from exisiting date */
+                planStartDate = createDateFromISOString(ISODateString);
+            } else {
+
+                /* Get tomorrow's date at midnight */
+                planStartDate = momentTimezone.tz('America/New_York')
+                    .startOf('day')
+                    .add(1, 'day');
+            }
+
+            if (!planStartDate.isValid()) {
+
+                throw new Error(`NewDate Factory: Attempt to generate plan start date with invalid value (${ISODateString})`);
+            }
+
+            return planStartDate.toDate();
         },
-        generatePlanEndDate: function(existingDate) {
-            var dateStringEndTime = dateString(existingDate) + ' ' + '23:59:59';
+        generatePlanEndDate: function (ISODateString) {
 
-            var end = moment.utc(momentTimezone.tz(dateStringEndTime, 'America/New_York').format()).format();
-            return new Date(end);
+            let planEndDate;
+
+            if (ISODateString !== undefined) {
+
+                planEndDate = createDateFromISOString(ISODateString)
+                    .endOf('day');
+            } else {
+
+                /* Get The day after tomorrow just before midnight */
+                planEndDate = momentTimezone.tz('America/New_York')
+                    .endOf('day')
+                    .add(2, 'day');
+            }
+
+            if (!planEndDate.isValid()) {
+
+                throw new Error(`NewDate Factory: Attempt to generate plan end date with invalid value (${ISODateString})`);
+            }
+
+            return planEndDate.toDate();
         }
     };
 });

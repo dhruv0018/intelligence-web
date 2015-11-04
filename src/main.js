@@ -36,6 +36,7 @@ import EventAdjuster from '../lib/directives/event-adjuster';
 import KrossoverPrioritySelect from '../lib/directives/priority-select';
 import KrossoverLabelSelect from '../lib/directives/label-select';
 import KrossoverTeamLabelIcon from '../lib/directives/team-label-icon';
+import RevertGameStatus from '../lib/modals/revert-game-status';
 
 /* App dependencies */
 require('./config');

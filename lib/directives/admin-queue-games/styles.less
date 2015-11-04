@@ -12,6 +12,15 @@ admin-queue-games {
 
         width: 100%;
 
+        th {
+
+            color: black;
+            background: @gray-lighter;
+            font-size: @queue-list-font-size;
+            line-height: 16px;
+            padding: @queue-list-padding;
+        }
+
         td {
 
             border: none;
@@ -21,6 +30,12 @@ admin-queue-games {
             line-height: 16px;
             padding: @queue-list-padding;
             font-weight: 500;
+
+        }
+
+        th,
+        td
+        {
 
             &:first-child {
 

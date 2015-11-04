@@ -292,12 +292,15 @@ IntelligenceWebClient.factory('GamesFactory', [
             * or not.
             * Check if the user is allowed to view a given game.
             */
-            isAllowedToView: function() {
-                let currentUser = session.getCurrentUser();
+            isAllowedToView: function(teamIds, userId) {
+
+                //Check multiple teams in case user is athlete
+                let isUserOnUploaderTeam = teamIds.some(teamId => teamId === this.uploaderTeamId);
+
                 //Check if user has permissions to view game
                 return  this.isSharedWithPublic() ||
-                        this.uploaderUserId === session.getCurrentUserId() ||
-                        this.uploaderTeamId === session.getCurrentTeamId() ||
+                        this.uploaderUserId === userId ||
+                        isUserOnUploaderTeam ||
                         this.isSharedWithCurrentUser();
 
             },
