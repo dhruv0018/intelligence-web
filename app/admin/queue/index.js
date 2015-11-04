@@ -186,11 +186,6 @@ function QueueController (
     $scope.usersList = users.getList();
     $scope.games = games.getList(VIEWS.QUEUE.GAME);
 
-    //initial filter
-    $scope.filter = {
-        'status[]': 0
-    };
-
     //initially show everything
     $scope.queue = $scope.games;
 
@@ -215,6 +210,18 @@ function QueueController (
     });
 
     $scope.search = function(filter) {
+        let parsedFilter = {};
+
+        Object.keys(filter).forEach(key => {
+            let value = filter[key];
+            let isNull = value === null;
+            let isEmptyString = typeof value === 'string' && value.length === 0;
+
+            //strips out nulls and empty strings
+            if (isNull || isEmptyString) return;
+
+            parsedFilter[key] = value;
+        });
 
         $scope.searching = true;
         let updateQueue = (games) => {
@@ -276,10 +283,10 @@ function QueueController (
             $scope.$digest();
         };
 
-        if (filter.gameId) {
-            games.fetch(filter.gameId, success, error);
+        if (parsedFilter.gameId) {
+            games.fetch(parsedFilter.gameId, success, error);
         } else {
-            games.query(filter, success, error);
+            games.query(parsedFilter, success, error);
         }
     };
 }
