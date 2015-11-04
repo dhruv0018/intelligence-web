@@ -73,12 +73,12 @@ describe('GamesFactory', function() {
                     status: GAME_STATUSES.READY_FOR_INDEXING.id
                 };
 
-                game = games.extend(game);
-
                 [VIDEO_STATUSES.INCOMPLETE.id, VIDEO_STATUSES.UPLOADED.id, VIDEO_STATUSES.FAILED.id].forEach(function(videoStatus) {
                     game.video = {
                         status: videoStatus
                     };
+
+                    game = games.extend(game);
 
                     game.canBeAssignedToIndexer().should.be.false;
                 });
@@ -93,11 +93,11 @@ describe('GamesFactory', function() {
                     status: GAME_STATUSES.READY_FOR_INDEXING.id
                 };
 
-                game = games.extend(game);
-
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 game.canBeAssignedToIndexer().should.be.true;
 
@@ -199,12 +199,12 @@ describe('GamesFactory', function() {
                     status: GAME_STATUSES.READY_FOR_QA.id
                 };
 
-                game = games.extend(game);
-
                 [VIDEO_STATUSES.INCOMPLETE.id, VIDEO_STATUSES.UPLOADED.id, VIDEO_STATUSES.FAILED.id].forEach(function(videoStatus) {
                     game.video = {
                         status: videoStatus
                     };
+
+                    game = games.extend(game);
 
                     game.canBeAssignedToQa().should.be.false;
                 });
@@ -219,11 +219,11 @@ describe('GamesFactory', function() {
                     status: GAME_STATUSES.READY_FOR_QA.id
                 };
 
-                game = games.extend(game);
-
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 game.canBeAssignedToQa().should.be.true;
 
@@ -698,8 +698,8 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return false if the deadline has expired', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 var userId = 1;
                 var isQa = false;
@@ -710,6 +710,8 @@ describe('GamesFactory', function() {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
 
+                game = games.extend(game);
+
                 game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
                 game.assignToIndexer(userId, deadline);
@@ -718,8 +720,8 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return true if the deadline has not expired', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 var userId = 1;
                 var isQa = false;
@@ -729,6 +731,8 @@ describe('GamesFactory', function() {
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
@@ -738,8 +742,8 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return false when the game is not in the proper status', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 var userId = 1;
                 var isQa = false;
@@ -749,6 +753,8 @@ describe('GamesFactory', function() {
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
@@ -765,8 +771,8 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return true when the game is in the proper status', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 var userId = 1;
                 var isQa = false;
@@ -776,6 +782,8 @@ describe('GamesFactory', function() {
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
@@ -811,8 +819,8 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return false if the deadline has expired', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
@@ -822,6 +830,8 @@ describe('GamesFactory', function() {
                 var now = new Date();
                 var deadline = now.setMinutes(now.getMinutes() - 1);
 
+                game = games.extend(game);
+
                 game.status = GAME_STATUSES.READY_FOR_QA.id;
 
                 game.assignToQa(userId, deadline);
@@ -830,12 +840,14 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return true if the deadline has not expired', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 var userId = 1;
                 var now = new Date();
@@ -849,12 +861,14 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return false when the game is not in the proper status', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 var userId = 1;
                 var now = new Date();
@@ -877,12 +891,14 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return true when the game is in the proper status', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 var userId = 1;
                 var now = new Date();

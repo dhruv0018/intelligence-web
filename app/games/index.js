@@ -210,8 +210,8 @@ function GamesController(
     let league = leagues.get(team.leagueId);
     let currentUser = session.getCurrentUser();
     let sport = SPORTS[SPORT_IDS[league.sportId]];
-    let transcodeCompleted = game.isVideoTranscodeComplete();
     let breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isBreakdownSharedWithCurrentUser();
+    let transcodeCompleted = game.video.isComplete();
     let uploader = users.get(game.uploaderUserId);
     let uploaderIsCoach = uploader.is(ROLES.COACH);
     let isUploader = game.isUploader(currentUser.id);
