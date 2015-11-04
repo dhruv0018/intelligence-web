@@ -7,7 +7,7 @@ export default `
     <div class="game-indexer-content">
         <div ng-show="filteredGames.length > 0">
             <h3>Available Games to be QA\'d</h3>
-            <table class="table-striped table-hover indexer-list">
+            <table class="queue-list">
                 <thead>
                     <tr>
                         <th>Game ID</th>
@@ -26,9 +26,9 @@ export default `
                         | limitTo: 100
                         as filteredGames"
                         ng-class="{
-                            'indexer-list__highest-priority': game.priority === 3,
-                            'indexer-list__high-priority': game.priority === 2,
-                            'indexer-list__normal-priority': game.priority === 1,
+                            'queue-list__highest-priority': game.priority === 3,
+                            'queue-list__high-priority': game.priority === 2,
+                            'queue-list__normal-priority': game.priority === 1,
                         }"
                     >
                         <td>{{game.id}}</td>
@@ -42,7 +42,7 @@ export default `
                             <span class="togo" ng-if="game.timeRemaining > 0">{{ getRemainingTime(game) | millisecondsAsDaysHoursMinutes }}</span>
                         </td>
                         <td>
-                            <button id="pick-up-qa-cta" class="btn btn-default list-button" ng-click="qaPickup(game)">
+                            <button id="pick-up-qa-cta" class="queue-button" ng-click="qaPickup(game)">
                                 Pick Up to QA
                             </button>
                         </td>
