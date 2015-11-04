@@ -23,6 +23,7 @@ import Styleguide from '../app/styleguide/index.js';
 import Analytics from '../app/analytics/index.js';
 
 import AppDownloads from '../lib/directives/app-downloads';
+import AdminQueueGames from '../lib/directives/admin-queue-games';
 import FieldComponent from '../lib/directives/field';
 import IndexingBlock from '../lib/directives/indexing-block';
 import DynamicTables from '../lib/directives/dynamic-tables';
