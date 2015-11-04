@@ -36,7 +36,7 @@ export default `
         </div>
         <div ng-show="filteredGames.length > 0">
             <h3>Your Game Queue</h3>
-            <table class="table-striped table-hover indexer-list">
+            <table class="queue-list">
                 <thead>
                     <tr>
                         <th>Game ID</th>
@@ -54,8 +54,13 @@ export default `
                         | gameIsIndexingOrQaing
                         | gameHasCurrentUserAssignment
                         | gameCurrentUserAssignmentIsActive: true
-                        | orderBy: 'timeRemaining':true
+                        | orderBy: ['-priority', 'timeRemaining']
                         as filteredGames"
+                        ng-class="{
+                            'queue-list__highest-priority': game.priority === 3,
+                            'queue-list__high-priority': game.priority === 2,
+                            'queue-list__normal-priority': game.priority === 1,
+                        }"
                     >
                         <td>{{game.id}}</td>
                         <td><a id="select-indexer-game-cta-game-{{$index}}" ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
@@ -73,11 +78,11 @@ export default `
                                 <span ng-show="game.isAssignmentStarted()">QAing</span>
                             </span>
                         <td>
-                            <button id="enter-indexing-cta" class="btn btn-default" ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" ui-sref="indexing({ id: game.id })">
+                            <button id="enter-indexing-cta" class="start-indexing" ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" ui-sref="indexing({ id: game.id })">
                                 <span ng-hide="game.isAssignmentStarted()">Start Indexing</span>
                                 <span ng-show="game.isAssignmentStarted()">Resume Indexing</span>
                             </button>
-                            <button id="enter-qa-cta" class="btn btn-default" ng-show="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)" ui-sref="indexing({ id: game.id })">
+                            <button id="enter-qa-cta" class="start-qa" ng-show="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)" ui-sref="indexing({ id: game.id })">
                                 <span ng-hide="game.isAssignmentStarted()">Start QA</span>
                                 <span ng-show="game.isAssignmentStarted()">Resume QA</span>
                             </button>
