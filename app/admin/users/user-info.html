@@ -52,7 +52,7 @@
 
     <button ng-disabled="sendingEmail" class="btn btn-danger reset-password" data-ng-click="resetPassword()">
         <span ng-show="!sendingEmail">Password Reset</span>
-        <krossover-spinner ng-show="sendingEmail" size="10px"></krossover-spinner>
+        <span class="icon icon-spinner spinner" ng-show="sendingEmail"></span>
     </button>
 
     <a class="pull-right" href data-ui-sref="users">Cancel</a>
