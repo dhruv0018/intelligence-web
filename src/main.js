@@ -36,6 +36,7 @@ import EventAdjuster from '../lib/directives/event-adjuster';
 import KrossoverPrioritySelect from '../lib/directives/priority-select';
 import KrossoverLabelSelect from '../lib/directives/label-select';
 import KrossoverTeamLabelIcon from '../lib/directives/team-label-icon';
+import PriorityLabelLegend from '../lib/directives/priority-label-legend';
 
 /* App dependencies */
 require('./config');
