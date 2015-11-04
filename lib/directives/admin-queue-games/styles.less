@@ -12,6 +12,39 @@ admin-queue-games {
 
         width: 100%;
 
+        tbody {
+
+            tr.highest-priority {
+
+                background-color: @priority-color-highest;
+
+                &:nth-child(odd) {
+
+                    background-color: darken(@priority-color-highest, 4%);
+                }
+
+                &:hover {
+
+                    background-color: darken(@priority-color-highest, 8%);
+                }
+            }
+
+            tr.high-priority {
+
+                background-color: @priority-color-high;
+
+                &:nth-child(odd) {
+
+                    background-color: darken(@priority-color-high, 4%);
+                }
+
+                &:hover {
+
+                    background-color: darken(@priority-color-high, 8%);
+                }
+            }
+        }
+
         td {
 
             border: none;
