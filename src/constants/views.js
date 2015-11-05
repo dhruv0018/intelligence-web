@@ -20,7 +20,8 @@ const VIEWS = {
                 ],
                 videoStatus: VIDEO_STATUSES.COMPLETE.id,
                 priority: 1,
-                orderBy: 'timeRemaining'
+                sortBy: 'deadline',
+                sortOrder: 'asc'
             },
             PRIORITY_2: {
                 'status[]': [
@@ -31,7 +32,8 @@ const VIEWS = {
                 ],
                 videoStatus: VIDEO_STATUSES.COMPLETE.id,
                 priority: 2,
-                orderBy: 'timeRemaining'
+                sortBy: 'deadline',
+                sortOrder: 'asc'
             },
             PRIORITY_3: {
                 'status[]': [
@@ -42,7 +44,8 @@ const VIEWS = {
                 ],
                 videoStatus: VIDEO_STATUSES.COMPLETE.id,
                 priority: 3,
-                orderBy: 'timeRemaining'
+                sortBy: 'deadline',
+                sortOrder: 'asc'
             }
         },
         USERS: {
