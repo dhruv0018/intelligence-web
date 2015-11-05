@@ -1,6 +1,5 @@
 import KrossoverPlay from '../entities/play';
 import KrossoverEvent from '../entities/event';
-import Video from '../entities/video';
 
 const pkg = require('../../package.json');
 
@@ -19,6 +18,7 @@ IntelligenceWebClient.factory('PlaysFactory', [
     'TagsetsFactory',
     'Utilities',
     'CUEPOINT_CONSTANTS',
+    'Video',
     function(
         $injector,
         config,
@@ -28,7 +28,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
         BaseFactory,
         tagsets,
         utils,
-        CUEPOINT_CONSTANTS
+        CUEPOINT_CONSTANTS,
+        Video
     ) {
 
         var PlaysFactory = {

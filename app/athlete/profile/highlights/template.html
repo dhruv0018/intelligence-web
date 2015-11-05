@@ -1,13 +1,13 @@
 <div class="highlights">
 
-    <button class="circle-button add-reels-button" ng-show="isCurrentUser" ng-click="manageReels()" hide show-gt-sm><i class="icon icon-plus"></i></button>
+    <button id="manage-profile-reels-cta" class="circle-button add-reels-button" ng-show="isCurrentUser" ng-click="manageReels()" hide show-gt-sm><i class="icon icon-plus"></i></button>
 
     <div class="athlete-info-container">
         <athlete-resume athlete="athlete"></athlete-resume>
 
         <div class="profile-link-container">
             Share this link:<br>
-            <span>{{config.links.intelligence.uri}}/intelligence/athlete/{{athlete.id}}/profile</span>
+            <span highlight-on-click>{{config.links.intelligence.uri}}/intelligence/athlete/{{athlete.id}}/profile</span>
         </div>
     </div>
 
@@ -18,7 +18,7 @@
 
             <div class="featured-reel-video">
                 <div class="featured-reel-header">
-                    <a ui-sref="Reel({id:featuredReel.id})" target="_blank">{{featuredReel.name}}</a>
+                    <a id="go-to-featured-reel-cta" ui-sref="Reel({id:featuredReel.id})" target="_blank">{{featuredReel.name}}</a>
                 </div>
                 <video-player video="video"></video-player>
             </div>
