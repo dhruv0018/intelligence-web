@@ -1,9 +1,10 @@
-<div class="games">
+<div class="games"
+    ng-class="{'film-header-hidden': !game.video.isComplete()}">
 
     <film-header
         data-game-states="gameStates"
         data-film="game"
-        data-ng-hide="game.flow">
+        data-ng-show="game.video.isComplete()">
     </film-header>
 
     <div class="games-content" data-ui-view="gameView"></div>

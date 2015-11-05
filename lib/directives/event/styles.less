@@ -4,6 +4,19 @@
 
 krossover-event {
 
+    /*TODO revisit using tablecell display for event*/
+    .event-time{
+        position:absolute;
+        left: -62px;
+        top: 5px;
+        width: 50px;
+        text-align: right;
+        font-size: @font-size-small;
+        &.active {
+            font-weight: bold;
+        }
+    }
+
     .list-group-item;
     position: relative;
     border: none;
@@ -33,7 +46,7 @@ krossover-event {
         border-left: 2px solid @gray-dark;
     }
 
-    &:first-child::after {
+    &:not(.indexer):first-child::after {
         content: "";
         position: absolute;
         bottom: ~"calc(100% - 7px)";
