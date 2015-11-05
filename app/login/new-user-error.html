@@ -5,7 +5,7 @@
         <h2>Something Went Wrong</h2>
 
         <p ng-if="newUser.resent">Sorry, the link is no longer valid. <span ng-if="newUser.email">An email has been sent to <strong>{{newUser.email}}</strong> with an updated link.</span></p>
-        <p ng-if="!newUser.resent && !newUser.activated">Sorry, there seems to be a problem with <strong>{{newUser.email}}</strong>. Please contact support.</p>
+        <p ng-if="!newUser.resent && !newUser.activated">Sorry, there seems to be a problem with <strong>{{newUser.email}}</strong>. Please contact <a href="mailto:support@krossover.com">support@krossover.com</a>.</p>
         <p ng-if="newUser.activated">Sorry, user with email <strong>{{newUser.email}}</strong> has already been activated.</p>
 
     </div>

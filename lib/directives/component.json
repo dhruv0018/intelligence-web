@@ -88,7 +88,8 @@
         "custom-tag-pills",
         "indexer-sidebar",
         "clips-navigation",
-        "telestrations"
+        "telestrations",
+        "stats-export"
     ],
     "scripts": [
         "index.js"

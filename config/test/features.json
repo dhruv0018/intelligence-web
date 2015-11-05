@@ -1,4 +1,10 @@
 {
+    "IndexerFlags": {
+
+        "Admin": true,
+        "Indexer": true
+    },
+
     "CustomTags": {
 
         "Head Coach": true,
@@ -8,7 +14,8 @@
     "ArenaChart": {
 
         "Head Coach": true,
-        "Assistant Coach": true
+        "Assistant Coach": true,
+        "Athlete": true
     },
 
     "PlayerAnalytics": {

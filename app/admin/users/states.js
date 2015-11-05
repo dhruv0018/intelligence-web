@@ -98,18 +98,6 @@ Users.config([
                     }
                 ]
             })
-
-            .state('user-info', {
-                url: '',
-                parent: 'user',
-                views: {
-                    'info@user': {
-                        templateUrl: 'users/user-info.html',
-                        controller: 'Users.User.Info.Controller'
-                    }
-                }
-            })
-
             .state('user-roles', {
                 url: '',
                 parent: 'user',
@@ -117,6 +105,16 @@ Users.config([
                     'roles@user': {
                         templateUrl: 'users/user-roles.html',
                         controller: 'Users.User.Roles.Controller'
+                    }
+                }
+            })
+            .state('user-info', {
+                url: '',
+                parent: 'user',
+                views: {
+                    'info@user': {
+                        templateUrl: 'users/user-info.html',
+                        controller: 'Users.User.Info.Controller'
                     }
                 }
             });

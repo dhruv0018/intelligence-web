@@ -1,6 +1,6 @@
 {
   "name": "intelligence-web-client",
-  "version": "2.23.2",
+  "version": "2.25.0",
   "description": "Krossover Intelligence Web Client",
   "author": "Jason Morganson <jason@krossover.com>",
   "private": true,
@@ -46,14 +46,20 @@
   },
   "devDependencies": {
     "@krossover/angular-bootstrap": "0.13.2",
+    "@krossover/fit-element": "0.2.0",
     "@krossover/krossover-blur-on-select": "0.1.0",
+    "@krossover/krossover-checkbox": "^0.2.0",
+    "@krossover/krossover-multiselect": "0.1.4",
+    "@krossover/krossover-tags": "~0.2.0",
     "@krossover/on-file-change": "0.0.2",
+    "@krossover/pills": "0.1.0",
     "angular": "1.3.15",
     "angular-animate": "1.3.15",
     "angular-aria": "1.3.15",
     "angular-material": "0.8.3",
     "angular-material-icons": "0.4.0",
     "angular-mocks": "1.3.15",
+    "angular-multiselect": "1.0.0",
     "angular-resource": "1.3.15",
     "angular-sanitize": "1.3.15",
     "angular-scenario": "1.3.15",
@@ -133,12 +139,7 @@
     "svg.js": "2.0.0",
     "time-grunt": "1.1.0",
     "traceur": "0.0.86",
-    "tv4": "1.1.12",
-    "angular-multiselect": "1.0.0",
-    "@krossover/fit-element": "0.2.0",
-    "@krossover/krossover-checkbox": "^0.2.0",
-    "@krossover/krossover-multiselect": "0.1.4",
-    "@krossover/pills": "0.1.0"
+    "tv4": "1.1.12"
   },
   "main": "./src/main.js",
   "scripts": {

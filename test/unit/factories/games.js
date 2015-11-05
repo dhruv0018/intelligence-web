@@ -31,7 +31,38 @@ describe('GamesFactory', function() {
         expect(GamesFactory).to.respondTo('canBeAssignedToQa');
         expect(GamesFactory).to.respondTo('assignToIndexer');
         expect(GamesFactory).to.respondTo('assignToQa');
+        expect(GamesFactory).to.respondTo('getFlagsUrl');
     }));
+
+    describe('getFlagsUrl', () => {
+
+        let gameJSON;
+        let game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            games => {
+
+                gameJSON = {
+                    id: 1234
+                };
+
+                game = games.extend(gameJSON);
+            }
+        ]));
+
+        it('should return a string', () => {
+
+            expect(game.getFlagsUrl()).to.be.a('string');
+        });
+
+        it('should return the correct URL', inject([
+            'config',
+            config => {
+
+                game.getFlagsUrl().endsWith(`flags?id=1234`).should.be.true;
+        }]));
+    });
 
     describe('canBeAssignedToIndexer', function() {
 
@@ -42,12 +73,12 @@ describe('GamesFactory', function() {
                     status: GAME_STATUSES.READY_FOR_INDEXING.id
                 };
 
-                game = games.extend(game);
-
                 [VIDEO_STATUSES.INCOMPLETE.id, VIDEO_STATUSES.UPLOADED.id, VIDEO_STATUSES.FAILED.id].forEach(function(videoStatus) {
                     game.video = {
                         status: videoStatus
                     };
+
+                    game = games.extend(game);
 
                     game.canBeAssignedToIndexer().should.be.false;
                 });
@@ -62,11 +93,11 @@ describe('GamesFactory', function() {
                     status: GAME_STATUSES.READY_FOR_INDEXING.id
                 };
 
-                game = games.extend(game);
-
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 game.canBeAssignedToIndexer().should.be.true;
 
@@ -168,12 +199,12 @@ describe('GamesFactory', function() {
                     status: GAME_STATUSES.READY_FOR_QA.id
                 };
 
-                game = games.extend(game);
-
                 [VIDEO_STATUSES.INCOMPLETE.id, VIDEO_STATUSES.UPLOADED.id, VIDEO_STATUSES.FAILED.id].forEach(function(videoStatus) {
                     game.video = {
                         status: videoStatus
                     };
+
+                    game = games.extend(game);
 
                     game.canBeAssignedToQa().should.be.false;
                 });
@@ -188,11 +219,11 @@ describe('GamesFactory', function() {
                     status: GAME_STATUSES.READY_FOR_QA.id
                 };
 
-                game = games.extend(game);
-
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 game.canBeAssignedToQa().should.be.true;
 
@@ -667,8 +698,8 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return false if the deadline has expired', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 var userId = 1;
                 var isQa = false;
@@ -679,6 +710,8 @@ describe('GamesFactory', function() {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
 
+                game = games.extend(game);
+
                 game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
                 game.assignToIndexer(userId, deadline);
@@ -687,8 +720,8 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return true if the deadline has not expired', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 var userId = 1;
                 var isQa = false;
@@ -698,6 +731,8 @@ describe('GamesFactory', function() {
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
@@ -707,8 +742,8 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return false when the game is not in the proper status', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 var userId = 1;
                 var isQa = false;
@@ -718,6 +753,8 @@ describe('GamesFactory', function() {
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
@@ -734,8 +771,8 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return true when the game is in the proper status', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 var userId = 1;
                 var isQa = false;
@@ -745,6 +782,8 @@ describe('GamesFactory', function() {
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 game.status = GAME_STATUSES.READY_FOR_INDEXING.id;
 
@@ -780,8 +819,8 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return false if the deadline has expired', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
@@ -791,6 +830,8 @@ describe('GamesFactory', function() {
                 var now = new Date();
                 var deadline = now.setMinutes(now.getMinutes() - 1);
 
+                game = games.extend(game);
+
                 game.status = GAME_STATUSES.READY_FOR_QA.id;
 
                 game.assignToQa(userId, deadline);
@@ -799,12 +840,14 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return true if the deadline has not expired', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 var userId = 1;
                 var now = new Date();
@@ -818,12 +861,14 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return false when the game is not in the proper status', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 var userId = 1;
                 var now = new Date();
@@ -846,12 +891,14 @@ describe('GamesFactory', function() {
             }]));
 
         it('should return true when the game is in the proper status', inject([
-            'GAME_STATUSES', 'VIDEO_STATUSES',
-            function(GAME_STATUSES, VIDEO_STATUSES) {
+            'GAME_STATUSES', 'VIDEO_STATUSES', 'GamesFactory',
+            function(GAME_STATUSES, VIDEO_STATUSES, games) {
 
                 game.video = {
                     status: VIDEO_STATUSES.COMPLETE.id
                 };
+
+                game = games.extend(game);
 
                 var userId = 1;
                 var now = new Date();
@@ -1950,95 +1997,82 @@ describe('GamesFactory', function() {
     });
 
     describe('isAllowedToView', ()=> {
-        it("Should return false when its not shared publicly, and not shared with user or team, and user doesnt belong to uploader team",
-            inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
-                let teamId = 7;
-                let user = UsersFactory.extend({id:9});
+
+        let GamesFactory;
+        let session;
+        let teamIds;
+        let user;
+
+        beforeEach(inject([
+            'GamesFactory', 'UsersFactory', 'SessionService',
+            function(_GamesFactory_, UsersFactory, _session_) {
+                GamesFactory = _GamesFactory_;
+                session = _session_;
+
+                teamIds = [7];
+                user = UsersFactory.extend({id:9});
+            }
+        ]));
+
+        it("Should return false when its not shared publicly, and not shared with user or team, and user doesnt belong to uploader team", ()=> {
                 let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:11});
                 sinon.stub(game,'isSharedWithPublic').returns(false);
                 sinon.stub(session,'getCurrentUser').returns(user);
                 sinon.stub(session,'getCurrentUserId').returns(user.id);
-                sinon.stub(session,'getCurrentTeamId').returns(teamId);
+                sinon.stub(session,'getCurrentTeamId').returns(teamIds[0]);
                 sinon.stub(game,'isSharedWithCurrentUser').returns(false);
-                expect(game.isAllowedToView()).to.be.false;
+                expect(game.isAllowedToView(teamIds, user.id)).to.be.false;
                 assert(game.isSharedWithPublic.should.have.been.called);
-                assert(session.getCurrentUser.should.have.been.called);
-                assert(session.getCurrentUserId.should.have.been.called);
-                assert(session.getCurrentTeamId.should.have.been.called);
                 assert(game.isSharedWithCurrentUser.should.have.been.called);
-        }]));
+        });
 
-        it("Should return true when its shared publicly",
-                inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
-                    let teamId = 7;
-                    let user = UsersFactory.extend({id:9});
-                    let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:11});
-                    sinon.stub(game,'isSharedWithPublic').returns(true);
-                    sinon.stub(session,'getCurrentUser').returns(user);
-                    sinon.stub(session,'getCurrentUserId').returns(user.id);
-                    sinon.stub(session,'getCurrentTeamId').returns(teamId);
-                    sinon.stub(game,'isSharedWithCurrentUser').returns(false);
-                    expect(game.isAllowedToView()).to.be.true;
-                    assert(session.getCurrentUser.should.have.been.called);
-                    assert(game.isSharedWithPublic.should.have.been.called);
-                    assert(session.getCurrentUserId.should.have.not.been.called);
-                    assert(session.getCurrentTeamId.should.have.not.been.called);
-                    assert(game.isSharedWithCurrentUser.should.have.not.been.called);
-        }]));
+        it("Should return true when its shared publicly", ()=> {
+                let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:11});
+                sinon.stub(game,'isSharedWithPublic').returns(true);
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(session,'getCurrentUserId').returns(user.id);
+                sinon.stub(session,'getCurrentTeamId').returns(teamIds[0]);
+                sinon.stub(game,'isSharedWithCurrentUser').returns(false);
+                expect(game.isAllowedToView(teamIds, user.id)).to.be.true;
+                assert(game.isSharedWithPublic.should.have.been.called);
+                assert(game.isSharedWithCurrentUser.should.have.not.been.called);
+        });
 
-        it("Should return true when its uploaded by the current user",
-                inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
-                    let teamId = 7;
-                    let user = UsersFactory.extend({id:9});
-                    let game = GamesFactory.extend({id:2, uploaderUserId:user.id, uploaderTeamId:11});
-                    sinon.stub(game,'isSharedWithPublic').returns(false);
-                    sinon.stub(session,'getCurrentUser').returns(user);
-                    sinon.stub(session,'getCurrentUserId').returns(user.id);
-                    sinon.stub(session,'getCurrentTeamId').returns(teamId);
-                    sinon.stub(game,'isSharedWithCurrentUser').returns(false);
-                    expect(game.isAllowedToView()).to.be.true;
-                    assert(session.getCurrentUser.should.have.been.called);
-                    assert(game.isSharedWithPublic.should.have.been.called);
-                    assert(session.getCurrentUserId.should.have.been.called);
-                    assert(session.getCurrentTeamId.should.have.not.been.called);
-                    assert(game.isSharedWithCurrentUser.should.have.not.been.called);
-        }]));
+        it("Should return true when its uploaded by the current user", ()=> {
+                let game = GamesFactory.extend({id:2, uploaderUserId:user.id, uploaderTeamId:11});
+                sinon.stub(game,'isSharedWithPublic').returns(false);
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(session,'getCurrentUserId').returns(user.id);
+                sinon.stub(session,'getCurrentTeamId').returns(teamIds[0]);
+                sinon.stub(game,'isSharedWithCurrentUser').returns(false);
+                expect(game.isAllowedToView(teamIds, user.id)).to.be.true;
+                assert(game.isSharedWithPublic.should.have.been.called);
+                assert(game.isSharedWithCurrentUser.should.have.not.been.called);
+        });
 
-        it("Should return true when its uploaded by the current user's team",
-                inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
-                    let teamId = 7;
-                    let user = UsersFactory.extend({id:9});
-                    let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:teamId});
-                    sinon.stub(game,'isSharedWithPublic').returns(false);
-                    sinon.stub(session,'getCurrentUser').returns(user);
-                    sinon.stub(session,'getCurrentUserId').returns(user.id);
-                    sinon.stub(session,'getCurrentTeamId').returns(teamId);
-                    sinon.stub(game,'isSharedWithCurrentUser').returns(false);
-                    expect(game.isAllowedToView()).to.be.true;
-                    assert(session.getCurrentUser.should.have.been.called);
-                    assert(game.isSharedWithPublic.should.have.been.called);
-                    assert(session.getCurrentUserId.should.have.been.called);
-                    assert(session.getCurrentTeamId.should.have.been.called);
-                    assert(game.isSharedWithCurrentUser.should.have.not.been.called);
-        }]));
+        it("Should return true when its uploaded by the current user's team", ()=> {
+                let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:teamIds[0]});
+                sinon.stub(game,'isSharedWithPublic').returns(false);
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(session,'getCurrentUserId').returns(user.id);
+                sinon.stub(session,'getCurrentTeamId').returns(teamIds[0]);
+                sinon.stub(game,'isSharedWithCurrentUser').returns(false);
+                expect(game.isAllowedToView(teamIds, user.id)).to.be.true;
+                assert(game.isSharedWithPublic.should.have.been.called);
+                assert(game.isSharedWithCurrentUser.should.have.not.been.called);
+        });
 
-        it("Should return true when its shared with the current user",
-                inject(['GamesFactory', 'UsersFactory', 'SessionService', function(GamesFactory, UsersFactory, session) {
-                    let teamId = 7;
-                    let user = UsersFactory.extend({id:9});
-                    let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:11});
-                    sinon.stub(game,'isSharedWithPublic').returns(false);
-                    sinon.stub(session,'getCurrentUser').returns(user);
-                    sinon.stub(session,'getCurrentUserId').returns(user.id);
-                    sinon.stub(session,'getCurrentTeamId').returns(teamId);
-                    sinon.stub(game,'isSharedWithCurrentUser').returns(true);
-                    expect(game.isAllowedToView()).to.be.true;
-                    assert(session.getCurrentUser.should.have.been.called);
-                    assert(game.isSharedWithPublic.should.have.been.called);
-                    assert(session.getCurrentUserId.should.have.been.called);
-                    assert(session.getCurrentTeamId.should.have.been.called);
-                    assert(game.isSharedWithCurrentUser.should.have.been.called);
-        }]));
+        it("Should return true when its shared with the current user", ()=> {
+                let game = GamesFactory.extend({id:2, uploaderUserId:10, uploaderTeamId:11});
+                sinon.stub(game,'isSharedWithPublic').returns(false);
+                sinon.stub(session,'getCurrentUser').returns(user);
+                sinon.stub(session,'getCurrentUserId').returns(user.id);
+                sinon.stub(session,'getCurrentTeamId').returns(teamIds[0]);
+                sinon.stub(game,'isSharedWithCurrentUser').returns(true);
+                expect(game.isAllowedToView(teamIds, user.id)).to.be.true;
+                assert(game.isSharedWithPublic.should.have.been.called);
+                assert(game.isSharedWithCurrentUser.should.have.been.called);
+        });
     });
 
     describe('isCopied', ()=> {
@@ -2050,6 +2084,19 @@ describe('GamesFactory', function() {
         it("Should return true, when there copiedFromGameId is not null", inject(['GamesFactory', function(GamesFactory) {
                 let game = GamesFactory.extend({id:1,copiedFromGameId:12344});
                 expect(game.isCopied()).to.be.true;
+        }]));
+    });
+
+    describe('getMaxprepsDownloadLinkByTeam', ()=> {
+        it("Should frame the maxpreps download link",
+            inject(['GamesFactory', 'TokensService', 'config', function(GamesFactory, TokensService, config) {
+                let team = {id:10};
+                let game = GamesFactory.extend({id:12});
+                config.api.uri = 'http://dummyurl/';
+                sinon.stub(TokensService,'getAccessToken').returns('dummytoken');
+                let expectedUrl = 'http://dummyurl/games/12/max-preps?teamId=10&access_token=dummytoken';
+                expect(game.getMaxprepsDownloadLinkByTeam(team)).to.equal(expectedUrl);
+                assert(TokensService.getAccessToken.should.have.been.called);
         }]));
     });
 });

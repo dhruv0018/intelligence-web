@@ -66,14 +66,24 @@ Games.config([
             url: '/games/:id',
             parent: 'base',
             onEnter: [
-                '$state', '$stateParams', 'SessionService', 'GamesFactory',
-                function($state, $stateParams, session, games) {
+                '$state', '$stateParams', 'SessionService', 'GamesFactory', 'ROLES', 'ROLE_TYPE',
+                function($state, $stateParams, session, games, ROLES, ROLE_TYPE) {
 
                     let currentUser = session.currentUser;
                     let gameId = Number($stateParams.id);
                     let game = games.get(gameId);
+                    let teamIds = [];
 
-                    if (!game.isAllowedToView()) {
+                    // TODO: make user factory function to handle this
+                    if (currentUser.is(ROLES.ATHLETE)) {
+                        // Get all teams user is athlete on
+                        let athleteRoles = currentUser.getRoles(ROLE_TYPE.ATHLETE);
+                        teamIds = athleteRoles.map(role => role.teamId);
+                    } else {
+                        teamIds = [session.getCurrentTeamId()];
+                    }
+
+                    if (!game.isAllowedToView(teamIds, currentUser.id)) {
                         $state.go('Games.Restricted', { id: gameId });
                     }
                 }
@@ -210,8 +220,8 @@ function GamesController(
     let league = leagues.get(team.leagueId);
     let currentUser = session.getCurrentUser();
     let sport = SPORTS[SPORT_IDS[league.sportId]];
-    let transcodeCompleted = game.isVideoTranscodeComplete();
     let breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isBreakdownSharedWithCurrentUser();
+    let transcodeCompleted = game.video.isComplete();
     let uploader = users.get(game.uploaderUserId);
     let uploaderIsCoach = uploader.is(ROLES.COACH);
     let isUploader = game.isUploader(currentUser.id);
@@ -274,7 +284,7 @@ function GamesController(
         $scope.gameStates.push({name: 'Games.Stats'});
     }
 
-    if (isTeamUploadersTeam && isCoach && isDelivered) {
+    if (isTeamUploadersTeam && isDelivered) {
         // sport specific states
         switch (sport.id) {
             case SPORTS.BASKETBALL.id:
@@ -283,7 +293,9 @@ function GamesController(
                 }
                 break;
             case SPORTS.FOOTBALL.id:
-                $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                if (isCoach) {
+                    $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
+                }
                 break;
         }
     }
