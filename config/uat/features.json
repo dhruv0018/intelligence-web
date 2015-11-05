@@ -32,5 +32,11 @@
         "Head Coach": true,
         "Assistant Coach": true,
         "Athlete": true
+    },
+
+    "WSCLink": {
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
     }
 }
