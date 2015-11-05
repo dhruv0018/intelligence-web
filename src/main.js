@@ -40,6 +40,8 @@ import KrossoverTeamLabelIcon from '../lib/directives/team-label-icon';
 import PriorityLabelLegend from '../lib/directives/priority-label-legend';
 import KrossoverPriorityLabelIcon from '../lib/directives/priority-label-icon';
 
+import RevertGameStatus from '../lib/modals/revert-game-status';
+
 /* App dependencies */
 require('./config');
 
@@ -80,6 +82,7 @@ require('./services/detectDevice');
 require('./services/analytics');
 import './services/performance-timer/angular-index';
 import './services/performance-timer';
+require('./services/fileUpload/fileUploadService');
 
 require('./constants/users');
 require('./constants/games');
