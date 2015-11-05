@@ -155,25 +155,19 @@
 
             <ul class="dropdown-menu">
 
-                <div ng-repeat="roleType in currentUser.roleTypes track by $index">
-                    <li ng-if="roleType[0].type.id !== ATHLETE.type.id" ng-repeat="role in roleType">
+                <div class="dropdown-roles-container">
 
-                        <a ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(role)">
+                    <div ng-repeat="role in dropdownUserRoles track by $index">
 
-                            <x-krossover-role user="currentUser" role="role"></x-krossover-role>
+                        <!-- Don't show current role in dropdown -->
+                        <li ng-if="role.id !== currentUser.getCurrentRole().id">
+                            <a ng-attr-id="{{'user-change-role-cta-' + role.type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(role)">
 
-                        </a>
+                                    <x-krossover-role user="currentUser" role="role"></x-krossover-role>
 
-                    </li>
-                    <li ng-if="roleType[0].type.id === ATHLETE.type.id">
-
-                        <a ng-attr-id="{{'user-change-role-cta-' + roleType[0].type.id + '-' + $index}}" href ng-click="account.changeCurrentUserRole(roleType[0])">
-
-                            <x-krossover-role user="currentUser" role="roleType[0]"></x-krossover-role>
-
-                        </a>
-
-                    </li>
+                            </a>
+                        </li>
+                    </div>
                 </div>
 
                 <footer>

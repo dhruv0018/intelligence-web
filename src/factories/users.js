@@ -26,12 +26,6 @@ IntelligenceWebClient.factory('UsersFactory', [
             extend: function(user) {
                 var self = this;
 
-
-                user.roleTypes = {};
-                Object.keys(ROLE_TYPE).forEach(function(roleType) {
-                    user.roleTypes[ROLE_TYPE[roleType]] = [];
-                });
-
                 /* Remove the user password from the model. If set it will
                  * be sent in a resource call. So only set it if the intent
                  * is to change the password. */
@@ -52,11 +46,6 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                         if (!role.type.name) {
                             role.type.name = ROLES[ROLE_ID[role.type.id]].type.name;
-                        }
-
-                        //active roles only
-                        if (!role.tenureEnd) {
-                            user.roleTypes[role.type.id].push(role);
                         }
                     });
                 }
@@ -116,7 +105,6 @@ IntelligenceWebClient.factory('UsersFactory', [
                 delete copy.name;
                 delete copy.defaultRole;
                 delete copy.currentRole;
-                delete copy.roleTypes;
 
                 angular.forEach(copy.roles, function(role) {
                     role.type = (role.type.id) ? role.type.id : role.type;
@@ -227,12 +215,6 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 user.roles = user.roles || [];
                 user.roles.unshift(role);
-
-                if (!user.roleTypes) {
-                    user.roleTypes = {};
-                }
-
-                user.roleTypes[role.type.id].push(role);
             },
 
             /**
@@ -461,7 +443,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              * If only one parameter is given, its assumed to be match.
              * If role is omitted then it will default to this users current.
              */
-            is: function(role, match) {
+            is: function(role, match, active = true) {
 
                 if (!match) {
 
@@ -474,7 +456,12 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (!role) return false;
                 if (!match) throw new Error('No role to match specified');
                 if (!role.type || !match.type) return false;
-                if (role.tenureEnd) return false;
+
+                if(active) {
+                    if (role.tenureEnd) return false;
+                } else {
+                    if (!role.tenureEnd) return false;
+                }
 
                 var roleIds = role.type.id;
                 var matchIds = match.type.id;
@@ -517,7 +504,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @returns {Boolean} true if a match is found; false otherwise.
              * Checks if any of the users roles for a match to the role given.
              */
-            has: function(matches) {
+            has: function(matches, active = true) {
 
                 var self = this;
                 var roles = self.roles;
@@ -534,7 +521,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                     /* Check all roles for match. */
                     return roles.some(function(role) {
 
-                        return self.is(role, match);
+                        return self.is(role, match, active);
                     });
                 });
             },
@@ -616,6 +603,31 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
              * @class User
+             * @method getUserRoleForTeam
+             * @param {object} ROLE - a ROLE constant
+             * @param {object} team - a team object
+             * @returns {object|undefined} a role of type ROLE for the team or undefined if not found
+             */
+            getUserRoleForTeam: function (ROLE, team) {
+
+                if (!ROLE) throw new Error(`missing required parameter 'ROLE'`);
+                if (!team) throw new Error(`missing required parameter 'team'`);
+
+                let rolesOnTeam = this.getRolesByTeamId(team.id);
+
+                if (rolesOnTeam && rolesOnTeam.length) {
+
+                    let userRoleForTeam = rolesOnTeam.find((someTeamRole) => {
+
+                        return someTeamRole.type.id === ROLE.type.id;
+                    });
+
+                    return userRoleForTeam;
+                }
+            },
+
+            /**
+             * @class User
              * @method updateTermsAcceptedDate
              * Record the date of Terms & Conditions acceptance.
              * @return {Promise} The date user last accepted terms
@@ -642,6 +654,33 @@ IntelligenceWebClient.factory('UsersFactory', [
                     params: params
                 }).$promise;
             },
+
+            /**
+             * @class User
+             * @method getRoles
+             * @param {number} ROLE_TYPE - the role type of the User
+             * @param {boolean|null} active - if the role is active or inactive, null to return both
+             * @returns {Array} Array of user roles
+            **/
+            getRoles: function(ROLE_TYPE = null, active = true) {
+
+                if(!this.roles) return [];
+
+                // Get either active or inactive roles
+                let activeOrInactiveRoles = this.roles.filter(role => {
+
+                    if (active === true) return !role.tenureEnd;
+                    else if (active === false) return role.tenureEnd;
+                    else return true;
+                });
+
+                // If no ROLE_TYPE provided, return all roles
+                if (!ROLE_TYPE) return activeOrInactiveRoles;
+
+                // Return only roles by ROLE_TYPE if defined
+                return activeOrInactiveRoles.filter(role => role.type.id === ROLE_TYPE);
+            },
+
             /**
              * @class User
              * @method
@@ -649,7 +688,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @param {Object} team - the team object which is used to check if a role is associated with a team
              * @returns {Array} Array of users that fulfill the criteria of matching the role and team
              */
-            findByRole: function(role, team) {
+            findByRole: function(role, team, active = true) {
                 var self = this;
                 var storage = $injector.get(self.storage);
 
@@ -662,14 +701,14 @@ IntelligenceWebClient.factory('UsersFactory', [
                 var users = self.getList();
 
                 users.forEach(function(user) {
-                    if (user.has(role)) {
+                    if (user.has(role, active)) {
                         vettedUsers.push(user);
                     }
                 });
 
                 if (team) {
-                    vettedUsers = vettedUsers.filter(function(user) {
-                        var vettedRoles = user.roleTypes[role.type.id].filter(function(role) {
+                    vettedUsers = vettedUsers.filter((user) => {
+                        var vettedRoles = user.getRoles(role.type.id, active).filter((role) => {
                             return role.teamId === team.id;
                         });
 

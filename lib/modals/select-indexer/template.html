@@ -13,7 +13,7 @@
     ></krossover-priority-label-icon>
 
     <krossover-team-label-icon
-        ng-if="team.label"
+        ng-if="uploaderTeam.label"
         label="LABELS[LABELS_IDS[uploaderTeam.label]]"
     ></krossover-team-label-icon>
 
@@ -31,8 +31,15 @@
     <footer class="modal-footer">
 
         <button class="btn-assign" data-ng-click="$dismiss()">Cancel</button>
-        <button class="btn-assign" data-ng-if="!isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToIndexer(indexer.id, selectionData.modifiedDeadline)">Assign Indexer</button>
-        <button class="btn-assign" data-ng-if="isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToQa(indexer.id, selectionData.modifiedDeadline)">Assign QA</button>
+        <button
+            class="btn-assign"
+            ng-disabled="assign.$invalid || assign.$pristine"
+            ng-click="
+                isQa ?
+                assignToQa(indexer.id, selectionData.modifiedDeadline) :
+                assignToIndexer(indexer.id, selectionData.modifiedDeadline)
+            "
+        >Assign {{ isQa ? 'QA' : 'Indexer' }}</button>
 
     </footer>
 

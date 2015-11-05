@@ -96,8 +96,7 @@ GamesInfoController.$inject = [
     'TeamsFactory',
     'LeaguesFactory',
     'PlayersFactory',
-    'Games.Info.Data',
-    'uploadManager'
+    'Games.Info.Data'
 ];
 
 function GamesInfoController (
@@ -110,12 +109,11 @@ function GamesInfoController (
     teams,
     leagues,
     players,
-    Data,
-    uploadManager
+    Data
 ) {
 
     $scope.game = games.get($stateParams.id);
-    $scope.game.flow = uploadManager.get($scope.game.id);
+
     $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
 
     //TODO special case to remove
@@ -124,5 +122,4 @@ function GamesInfoController (
     //Player List
     $scope.teamPlayerList = ($scope.game.rosters && $scope.game.teamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.teamId].id }) : [];
     $scope.opposingPlayerList = ($scope.game.rosters && $scope.game.opposingTeamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.opposingTeamId].id }) : [];
-
 }
