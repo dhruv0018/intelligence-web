@@ -271,6 +271,7 @@ module.exports = function(grunt) {
                         'lib/directives/label-select/*.less',
                         'lib/directives/team-label-icon/*.less',
                         'lib/directives/event-adjuster/styles.less',
+                        'lib/directives/wsc-link/styles.less',
                         'lib/dialogs/breakdown-dialog/styles.less',
                         'lib/directives/field/**/*.less',
                         'lib/directives/admin-role/styles.less',
