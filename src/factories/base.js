@@ -695,7 +695,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 if (resource.id) {
 
                     /* Save the resource. */
-                    resource.save();
+                    return resource.save();
                 }
             },
 

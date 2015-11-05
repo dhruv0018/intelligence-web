@@ -3,44 +3,44 @@
         <div class="form-block-full">
             <div class="form-block-third">
                 <h4>High School</h4>
-                <input type="text" maxlength="30" class="form-control" ng-model="athlete.profile.highSchool"/>
+                <input id="edit-profile-high-school-cta" type="text" maxlength="30" class="form-control" ng-model="athlete.profile.highSchool"/>
             </div>
             <div class="form-block-third">
                 <h4>Graduation Year</h4>
-                <input type="number" min="1" maxlength="4" class="form-control" ng-model="athlete.profile.highSchoolGraduationYear" placeholder="yyyy"/>
+                <input id="edit-profile-hs-graduation-cta" type="number" min="1" maxlength="4" class="form-control" ng-model="athlete.profile.highSchoolGraduationYear" placeholder="yyyy"/>
             </div>
         </div>
         <div class="form-block-full">
             <div class="form-block-third">
                 <h4>High School GPA</h4>
-                <input type="number" step="any" class="form-control" ng-model="athlete.profile.highSchoolGpa"/>
+                <input id="edit-profile-hs-gpa-cta" type="number" step="any" class="form-control" ng-model="athlete.profile.highSchoolGpa"/>
             </div>
             <div class="form-block-third">
                 <h4>SAT</h4>
-                <input type="number" min="600" max="2400" maxlength="4" class="form-control" ng-model="athlete.profile.satScore"/>
+                <input id="sat-cta" type="number" min="600" max="2400" maxlength="4" class="form-control" ng-model="athlete.profile.satScore"/>
             </div>
             <div class="form-block-third">
                 <h4>ACT</h4>
-                <input type="number" min="1" max="36" maxlength="2" class="form-control" ng-model="athlete.profile.actScore"/>
+                <input id="act-cta" type="number" min="1" max="36" maxlength="2" class="form-control" ng-model="athlete.profile.actScore"/>
             </div>
         </div>
         <div class="form-block-full">
             <div class="form-block-third">
                 <h4>College</h4>
-                <input type="text" maxlength="30" class="form-control" ng-model="athlete.profile.college"/>
+                <input id="edit-profile-college-cta" type="text" maxlength="30" class="form-control" ng-model="athlete.profile.college"/>
             </div>
             <div class="form-block-third">
                 <h4>Graduation Year</h4>
-                <input type="number" min="1" maxlength="4" class="form-control" ng-model="athlete.profile.collegeGraduationYear" placeholder="yyyy"/>
+                <input id="edit-profile-college-graduation-cta" type="number" min="1" maxlength="4" class="form-control" ng-model="athlete.profile.collegeGraduationYear" placeholder="yyyy"/>
             </div>
             <div class="form-block-third">
                 <h4>Intended Major</h4>
-                <input type="text" maxlength="30" class="form-control" ng-model="athlete.profile.intendedMajor"/>
+                <input id="intended-major-cta" type="text" maxlength="30" class="form-control" ng-model="athlete.profile.intendedMajor"/>
             </div>
         </div>
         <div class="button-row">
-            <save-button resource="athlete"></save-button>
-            <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
+            <save-button id="academics-save-cta" resource="athlete"></save-button>
+            <a id="academics-cancel-cta" href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
         </div>
     </form>
 </div>
