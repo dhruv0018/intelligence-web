@@ -12,7 +12,7 @@
                                  data-team="team"
                                  data-options="options"
                                  data-assistant="assistant"
-                                 data-ng-repeat="assistant in assistantCoaches | filter: filterType"></profile>
+                                 data-ng-repeat="assistant in assistantCoaches | filter: activeInactiveFilter() "></profile>
                     </div>
                 </div>
             </div>
