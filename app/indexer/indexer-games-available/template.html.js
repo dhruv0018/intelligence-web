@@ -12,6 +12,7 @@ export default `
                     <tr>
                         <th>Game ID</th>
                         <th>Game</th>
+                        <th>Team Label</th>
                         <th>Sport</th>
                         <th>Time Left</th>
                         <th>Action</th>
@@ -34,6 +35,12 @@ export default `
                         <td>{{game.id}}</td>
                         <!--TODO:Add as directive or factory method -->
                         <td>{{ teams[game.teamId].name }} vs {{ teams[game.opposingTeamId].name }}</td>
+                        <td>
+                            <krossover-team-label-icon
+                                ng-if="teams[game.uploaderTeamId].label"
+                                label="LABELS[LABELS_IDS[teams[game.uploaderTeamId].label]]"
+                            ></krossover-team-label-icon>
+                        </td>
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                         <!--TODO:Add as directive since it is used in the queue as well -->
                         <td class="time-left">
