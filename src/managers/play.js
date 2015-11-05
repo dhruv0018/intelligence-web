@@ -121,14 +121,7 @@ IntelligenceWebClient.service('PlayManager', [
             if (event.time < this.current.startTime) this.current.startTime = event.time;
             if (event.time > this.current.endTime) this.current.endTime = event.time;
 
-            /* Lookup tag buffer. */
-            var tagId = event.tagId;
-            var tag = this.tagset.tags[tagId];
-            var buffer = tag.buffer;
-
-            /* Adjust the play times by the tag buffer. */
-            if (buffer < 0) this.current.startTime += buffer;
-            if (buffer > 0) this.current.endTime += buffer;
+            this.updateTimesWithBuffer(event);
 
             /* Index of the event, based on acceding time order. */
             var index = 0;
@@ -144,6 +137,23 @@ IntelligenceWebClient.service('PlayManager', [
 
             /* Insert the event into the appropriate index. */
             this.current.events.splice(index, 0, event);
+        };
+
+        /**
+         * Adjusts the play start and end times relative to tag buffer
+         * @param {Event} Arbitrary event
+         */
+        this.updateTimesWithBuffer = event => {
+            if (event && event.tagId) {
+                /* Lookup tag buffer. */
+                var tagId = event.tagId;
+                var tag = this.tagset.tags[tagId];
+                var buffer = tag.buffer;
+
+                /* Adjust the play times by the tag buffer. */
+                if (buffer < 0) this.current.startTime += buffer;
+                if (buffer > 0) this.current.endTime += buffer;
+            }
         };
 
         /**
