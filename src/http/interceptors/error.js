@@ -47,7 +47,7 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                         ErrorReporter.reportError(new Error('Bad Request', response.data));
 
-                        if(response.data.userMessage) {
+                        if (response && response.data && response.data.userMessage) {
                             alerts.add({
 
                                 type: 'warning',
