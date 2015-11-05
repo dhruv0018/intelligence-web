@@ -41,7 +41,6 @@ export default `
                     <tr>
                         <th>Game ID</th>
                         <th>Game</th>
-                        <th>Team Label</th>
                         <th>Coach</th>
                         <th>Sport</th>
                         <th>Time Left</th>
@@ -64,9 +63,15 @@ export default `
                         }"
                     >
                         <td>{{game.id}}</td>
-                        <td><a id="select-indexer-game-cta-game-{{$index}}" ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
                         <td>
+                            <a
+                                id="select-indexer-game-cta-game-{{$index}}"
+                                ui-sref="IndexerGame({ id: game.id })"
+                            >
+                                {{ teams[game.teamId].name }} vs {{ teams[game.opposingTeamId].name }}
+                            </a>
                             <krossover-team-label-icon
+                                class="pull-right"
                                 ng-if="teams[game.uploaderTeamId].label"
                                 label="LABELS[LABELS_IDS[teams[game.uploaderTeamId].label]]"
                             ></krossover-team-label-icon>
