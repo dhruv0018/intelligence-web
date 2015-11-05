@@ -198,36 +198,34 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             addRole: function(ROLE, team) {
 
-                let user = this;
-
                 let existingRole;
 
                 // Check if user has the ROLE already
                 if (team) {
                     // If a team is specified, they should only have one role of type ROLE per team
                     const ACTIVE_OR_INACTIVE = null;
-                    existingRole = user.getRoleForTeam(ROLE, team, ACTIVE_OR_INACTIVE);
+                    existingRole = this.getRoleForTeam(ROLE, team, ACTIVE_OR_INACTIVE);
                 } else {
-                    existingRole = user.getRoles(ROLE);
+                    existingRole = this.getRoles(ROLE);
                 }
 
                 // NOTE: This role has been found. Make sure it is active, but don't add it again
                 if (existingRole) {
-                    user.activateRole(existingRole);
+                    this.activateRole(existingRole);
                 }
 
                 let newRole = angular.copy(ROLE);
-                newRole.userId = user.id;
+                newRole.userId = this.id;
 
                 if (team) {
                     newRole.teamId = team.id;
                 }
 
-                user.activateRole(newRole);
+                this.activateRole(newRole);
 
                 // FIXME: Why add roles here? The user should have an empty array for 'roles' upon creation
-                user.roles = user.roles || [];
-                user.roles.unshift(newRole);
+                this.roles = this.roles || [];
+                this.roles.unshift(newRole);
 
                 return newRole;
             },
@@ -448,14 +446,12 @@ IntelligenceWebClient.factory('UsersFactory', [
             **/
             getRoles: function(ROLE_TYPE = null, team = null, active = true) {
 
-                let user = this;
-
-                if(!user.roles || !user.roles.length) return [];
+                if(!this.roles || !this.roles.length) return [];
 
                 // Get either active or inactive roles
-                let roles = user.roles.filter(role => {
-                    if (active === true) return user.isActive(role);
-                    else if (active === false) return !user.isActive(role);
+                let roles = this.roles.filter(role => {
+                    if (active === true) return this.isActive(role);
+                    else if (active === false) return !this.isActive(role);
                     else return true;
                 });
 
@@ -483,12 +479,10 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             getRoleForTeam: function (ROLE_TYPE, team, active = true) {
 
-                let user = this;
-
                 if (!ROLE_TYPE) throw new Error(`missing required parameter 'ROLE_TYPE'`);
                 if (!team) throw new Error(`missing required parameter 'team'`);
 
-                let roles = user.getRoles(ROLE_TYPE, team, active);
+                let roles = this.getRoles(ROLE_TYPE, team, active);
 
                 if (roles) return roles[0];
             },
@@ -502,9 +496,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             getActiveRoles: function(ROLE_TYPE) {
 
-                let user = this;
-
-                return user.getRoles(ROLE_TYPE, null, true);
+                return this.getRoles(ROLE_TYPE, null, true);
             },
 
             /**
@@ -516,9 +508,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             getInactiveRoles: function(ROLE_TYPE) {
 
-                let user = this;
-
-                return user.getRoles(ROLE_TYPE, null, false);
+                return this.getRoles(ROLE_TYPE, null, false);
             },
 
             /**

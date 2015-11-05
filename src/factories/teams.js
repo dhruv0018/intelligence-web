@@ -193,10 +193,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 if (!user) throw new Error(`Missing parameter 'user'`);
                 if (!ROLE) throw new Error(`Missing parameter 'ROLE'`);
 
-                // assign to team since this method is only used on instances of a Team
-                let team = this;
-
-                let existingRole = team.getRoleByUserId(user.id);
+                let existingRole = this.getRoleByUserId(user.id);
 
                 // Role exists for this user, do not add the same role again to team
                 if (existingRole) return;
@@ -205,8 +202,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 let newRole = angular.copy(ROLE);
 
                 newRole.userId = user.id;
-                newRole.teamId = team.id;
-                team.roles.push(newRole);
+                newRole.teamId = this.id;
+                this.roles.push(newRole);
             },
 
             /**
@@ -219,10 +216,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 if (!userId) throw new Error(`Missing parameter 'userId'`);
 
-                // assign to team since this method is only used on instances of a Team
-                let team = this;
-
-                return team.roles.find((role) => role.userId === userId);
+                return this.roles.find((role) => role.userId === userId);
             },
 
             isMember: function(userId) {
