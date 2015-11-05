@@ -189,13 +189,13 @@ function QueueController (
     $scope.teamsList = teams.getList();
     $scope.usersList = users.getList();
 
-    $scope.priority1Games = games.getList(VIEWS.QUEUE.GAME.PRIORITY_1);
-    $scope.priority2Games = games.getList(VIEWS.QUEUE.GAME.PRIORITY_2);
-    $scope.priority3Games = games.getList(VIEWS.QUEUE.GAME.PRIORITY_3);
+    let priority3Games = games.getList(VIEWS.QUEUE.GAME.PRIORITY_3).slice(0, 20);
+    let priority2Games = games.getList(VIEWS.QUEUE.GAME.PRIORITY_2).slice(0, 20);
+    let priority1Games = games.getList(VIEWS.QUEUE.GAME.PRIORITY_1).slice(0, 20);
 
-    $scope.games = $scope.priority3Games
-        .concat($scope.priority2Games)
-        .concat($scope.priority1Games);
+    $scope.games = priority3Games
+        .concat(priority2Games)
+        .concat(priority1Games);
 
     //initially show everything
     $scope.queue = $scope.games;
