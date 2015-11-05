@@ -1,4 +1,5 @@
 import template from './template.html';
+import controller from './controller';
 
 /**
  * Styleguide Forms state config.
@@ -13,7 +14,8 @@ function StyleguideFormsState ($stateProvider) {
 
     const views = {
         'content@Styleguide': {
-            template
+            template,
+            controller
         }
     };
 

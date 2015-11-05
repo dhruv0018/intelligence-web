@@ -34,6 +34,10 @@ import BreakdownDialog from '../lib/dialogs/breakdown-dialog';
 import AdminRole from '../lib/directives/admin-role';
 import EventAdjuster from '../lib/directives/event-adjuster';
 import HighlightOnClick from '../lib/directives/highlight-on-click';
+import KrossoverPrioritySelect from '../lib/directives/priority-select';
+import KrossoverLabelSelect from '../lib/directives/label-select';
+import KrossoverTeamLabelIcon from '../lib/directives/team-label-icon';
+import RevertGameStatus from '../lib/modals/revert-game-status';
 
 /* App dependencies */
 require('./config');
@@ -75,6 +79,7 @@ require('./services/detectDevice');
 require('./services/analytics');
 import './services/performance-timer/angular-index';
 import './services/performance-timer';
+require('./services/fileUpload/fileUploadService');
 
 require('./constants/users');
 require('./constants/games');
@@ -105,6 +110,8 @@ require('./constants/telestrations');
 require('./constants/feature-flags');
 require('./constants/cue-points');
 require('./constants/transcodeProfiles');
+import { PRIORITIES_IDS, PRIORITIES } from './constants/priorities';
+import { LABELS_IDS, LABELS } from './constants/labels';
 
 
 require('./models/users');
