@@ -14,6 +14,8 @@ IndexerGamesController.$inject = [
     'UsersFactory',
     'SessionService',
     'INDEXER_GROUPS',
+    'LABELS',
+    'LABELS_IDS',
     'GAME_STATUSES'
 ];
 
@@ -29,12 +31,16 @@ function IndexerGamesController(
     users,
     session,
     INDEXER_GROUPS,
+    LABELS,
+    LABELS_IDS,
     GAME_STATUSES
 ) {
 
     const ONE_MINUTE = 60000;
     const userLocation = session.getCurrentRole().indexerGroupId;
 
+    $scope.LABELS = LABELS;
+    $scope.LABELS_IDS = LABELS_IDS;
     $scope.GAME_STATUSES = GAME_STATUSES;
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
