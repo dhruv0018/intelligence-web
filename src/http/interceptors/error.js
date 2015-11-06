@@ -47,12 +47,13 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                         ErrorReporter.reportError(new Error('Bad Request', response.data));
 
-                        alerts.add({
+                        if (response && response.data && response.data.userMessage) {
+                            alerts.add({
 
-                            type: 'warning',
-                            message: response.data.userMessage
-                        });
-
+                                type: 'warning',
+                                message: response.data.userMessage
+                            });
+                        }
                         break;
 
                     case 401: /* Not Authorized */
