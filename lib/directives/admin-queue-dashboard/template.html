@@ -65,7 +65,7 @@
                     'normal-priority': priority.id === PRIORITIES.NORMAL.id
                 }"
                 ng-value="priority.id"
-                ng-repeat="priority in PRIORITY_LIST | orderBy: '-value'"
+                ng-repeat="priority in PRIORITIES | orderObjectBy : 'value' : true"
             >
                 {{ priority.name }}:
                 <a
@@ -79,7 +79,7 @@
         <h4>Label</h4>
         <div class="general-status-info">
             <div
-                ng-repeat="label in LABELS"
+                ng-repeat="label in LABELS | orderObjectBy : 'index'"
                 class="filter"
             >
                 <krossover-team-label-icon
