@@ -377,7 +377,8 @@ TeamController.$inject = [
     'SchoolsFactory',
     'TeamsFactory',
     'PRIORITIES',
-    'UsersFactory'
+    'UsersFactory',
+    'EMAILS'
 ];
 
 function TeamController (
@@ -394,7 +395,8 @@ function TeamController (
     schoolsFactory,
     teams,
     PRIORITIES,
-    users
+    users,
+    EMAILS
 ) {
 
     $scope.PRIORITIES = PRIORITIES;
@@ -406,6 +408,8 @@ function TeamController (
 
     $scope.leagues = leagues.getList();
     $scope.indexedLeagues = leagues.getCollection();
+
+    $scope.EMAILS = EMAILS;
 
     var team;
     $scope.schoolName = '';
