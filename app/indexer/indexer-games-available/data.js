@@ -35,9 +35,9 @@ function IndexerDataDependencies (
             this.users = users.load(VIEWS.QUEUE.USERS);
             this.teams = teams.load(VIEWS.QUEUE.TEAMS);
             this.games = [
-                games.load(VIEWS.QUEUE.GAME.PRIORITY_1),
-                games.load(VIEWS.QUEUE.GAME.PRIORITY_2),
-                games.load(VIEWS.QUEUE.GAME.PRIORITY_3)
+                games.load(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_1),
+                games.load(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_2),
+                games.load(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_3)
             ];
             /*TODO: schools should use /schools?relatedUserId*/
 

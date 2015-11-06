@@ -46,6 +46,27 @@ const VIEWS = {
                 priority: 3,
                 sortBy: 'deadline',
                 sortOrder: 'asc'
+            },
+            READY_FOR_QA_PRIORITY_1: {
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                priority: 1,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
+            },
+            READY_FOR_QA_PRIORITY_2: {
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                priority: 2,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
+            },
+            READY_FOR_QA_PRIORITY_3: {
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                priority: 3,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
             }
         },
         USERS: {
