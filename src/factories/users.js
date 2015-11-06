@@ -193,7 +193,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @param {Object} user - the user to add the role to
              * @param {Object} ROLE - a ROLE object defining the role type to create and add
              * @param {Object} team - a team object to draw the teamId from
-             * @return {Object} the role that was added
+             * @return {Object|null} the role that was added or null if the role was already added
              */
 
             addRole: function(ROLE, team) {
@@ -204,14 +204,15 @@ IntelligenceWebClient.factory('UsersFactory', [
                 if (team) {
                     // If a team is specified, they should only have one role of type ROLE per team
                     const ACTIVE_OR_INACTIVE = null;
-                    existingRole = this.getRoleForTeam(ROLE, team, ACTIVE_OR_INACTIVE);
+                    existingRole = this.getRoleForTeam(ROLE.type.id, team, ACTIVE_OR_INACTIVE);
                 } else {
-                    existingRole = this.getRoles(ROLE);
+                    existingRole = this.getRoles(ROLE.type.id);
                 }
 
                 // NOTE: This role has been found. Make sure it is active, but don't add it again
                 if (existingRole) {
                     this.activateRole(existingRole);
+                    return null;
                 }
 
                 let newRole = angular.copy(ROLE);
