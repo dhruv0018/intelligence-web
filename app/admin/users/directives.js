@@ -55,7 +55,7 @@ Users.directive('krossoverNewRole', [
                     $scope.newRoles.splice($scope.newRoles.indexOf(newRole), 1);
 
                     /* Add role to the user roles array. */
-                    users.addRole($scope.user, newRole);
+                    users.addRole(newRole);
 
                     element.remove();
                 };

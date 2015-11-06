@@ -503,7 +503,7 @@ function TeamController (
         var newCoachRole = ROLES.HEAD_COACH;
         newCoachRole.userId = coach.id;
         newCoachRole.teamId = $scope.team.id;
-        coach.addRole(newCoachRole);
+        coach.addRole(newCoachRole, $scope.team);
         coach.save();
         $scope.team.roles = $scope.team.roles || [];
         $scope.team.roles.push(newCoachRole);
