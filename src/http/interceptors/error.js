@@ -17,6 +17,8 @@ IntelligenceWebClient.factory('Error.Interceptor', [
             /* Intercept responses with status codes that indicate errors. */
             responseError: function(response) {
 
+                if (!response || !response.config) return $q.reject(response);
+
                 var data = response.config.data;
                 var method = response.config.method;
                 var description = '';
