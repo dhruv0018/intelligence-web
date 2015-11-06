@@ -50,9 +50,9 @@ function IndexerGamesController(
     $scope.teams = teams.getCollection();
     $scope.users = users.getCollection();
 
-    $scope.games = games.getList(VIEWS.QUEUE.GAME.PRIORITY_3)
-        .concat(games.getList(VIEWS.QUEUE.GAME.PRIORITY_2))
-        .concat(games.getList(VIEWS.QUEUE.GAME.PRIORITY_1));
+    $scope.games = games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_3)
+        .concat(games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_2))
+        .concat(games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_1));
 
     $scope.currentUser = session.getCurrentUser();
     $scope.options = {scope: $scope};
