@@ -11,7 +11,7 @@
         <div class="modal-body">
             <div>Game {{game.id}}: {{ team.name }} vs {{ opposingTeam.name }}, {{ sport.name | capitalizeFirstLetter}}</div>
             <div ng-if="game.timeRemaining > 0">{{ game.timeRemaining | millisecondsAsDaysHoursMinutes }} Left to QA</div>
-            <div ng-if="game.timeRemaining <= 0">6H 00M Left to QA</div>
+            <div ng-if="game.timeRemaining <= 0">{{assignmentHours}}H 00M Left to QA</div>
         </div>
 
         <footer class="modal-footer">
