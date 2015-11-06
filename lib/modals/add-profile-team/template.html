@@ -3,13 +3,14 @@
     <header class="modal-header">
         <h3 class="modal-title" ng-hide="editingExistingTeam">Add a team to your Profile</h3>
         <h3 class="modal-title" ng-show="editingExistingTeam">Edit a team on your Profile</h3>
-        <i class="icon icon-remove" ng-click="$dismiss()"></i>
+        <i id="add-profile-team-dismiss-cta" class="icon icon-remove" ng-click="$dismiss()"></i>
 
     </header>
 
     <div class="modal-body">
         <form name="addTeamForm">
             <input
+                    id="profile-team-name-cta"
                     class="form-control"
                     type="text"
                     ng-model="profileTeam.name"
@@ -21,36 +22,36 @@
             <div class="team-dates-row">
                 <div class="team-dates-field">
                     <span>Presently on team?</span>
-                    <check-box checked="hideEndYear" ng-click="disableEndYear()"></check-box>
+                    <check-box id="profile-team-presently-on-cta" checked="hideEndYear" ng-click="disableEndYear()"></check-box>
                 </div>
                 <div class="team-dates-field">
                     <span>Starting:</span>
-                    <select class="form-control" name="startYear" ng-model="profileTeam.startYear" ng-options="date as date for date in dates" required>
+                    <select id="profile-team-start-year-cta" class="form-control" name="startYear" ng-model="profileTeam.startYear" ng-options="date as date for date in dates" required>
                         <option value="">Pick Year</option>
                     </select>
                 </div>
                 <div class="team-dates-field">
                     <span>Ending:</span>
                     <span class="invalid-date-warning" ng-show="!hideEndYear && profileTeam.endYear < profileTeam.startYear">End date must follow start date</span>
-                    <select class="form-control" name="endYear" ng-disabled="hideEndYear" ng-model="profileTeam.endYear" ng-options="date as date for date in dates" ng-required="!hideEndYear" ng-class="{'ng-invalid': !hideEndYear && profileTeam.endYear < profileTeam.startYear}">
+                    <select id="profile-team-end-year-cta" class="form-control" name="endYear" ng-disabled="hideEndYear" ng-model="profileTeam.endYear" ng-options="date as date for date in dates" ng-required="!hideEndYear" ng-class="{'ng-invalid': !hideEndYear && profileTeam.endYear < profileTeam.startYear}">
                         <option value="">Pick Year</option>
                     </select>
                 </div>
             </div>
 
-            <select class="team-option form-control" name="sport" ng-model="teamSport" ng-options="sport as sport.name for sport in sports" ng-change="getLeagues(teamSport.id)" required>
+            <select id="profile-team-sport-cta" class="team-option form-control" name="sport" ng-model="teamSport" ng-options="sport as sport.name for sport in sports" ng-change="getLeagues(teamSport.id)" required>
                 <option value="">Pick a Sport</option>
             </select>
 
-            <select class="team-option form-control" name="league" ng-disabled="!leagues.length" ng-model="teamLeague" ng-options="league as league.name for league in leagues" ng-change="getPositionset(teamLeague.positionSetId)" required>
+            <select id="profile-team-league-cta" class="team-option form-control" name="league" ng-disabled="!leagues.length" ng-model="teamLeague" ng-options="league as league.name for league in leagues" ng-change="getPositionset(teamLeague.positionSetId)" required>
                 <option value="">Pick a League</option>
             </select>
 
-            <positions-dropdown is-active="teamLeague.positionSetId" ng-model="profileTeam.positionIds" player="athlete" positionset="positionset"></positions-dropdown>
+            <positions-dropdown id="profile-team-positions-cta" is-active="teamLeague.positionSetId" ng-model="profileTeam.positionIds" player="athlete" positionset="positionset"></positions-dropdown>
 
             <div class="button-row">
-                <span class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
-                <button class="btn btn-primary save-team" ng-click="saveProfileTeam()" ng-disabled="formIncomplete() || isSaving">
+                <span id="add-profile-team-cancel-cta" class="btn-simple-cancel" ng-click="$dismiss()">Cancel</span>
+                <button id="add-profile-team-save-cta" class="btn btn-primary save-team" ng-click="saveProfileTeam()" ng-disabled="formIncomplete() || isSaving">
                     <span ng-show="!isSaving">Done</span>
                     <krossover-spinner ng-show="isSaving" size="'15px'"></krossover-spinner>
                 </button>
