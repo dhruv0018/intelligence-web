@@ -30,8 +30,15 @@ const PRIORITIES = {
     }
 };
 
+const PRIORITY_LIST = [
+    PRIORITIES.NORMAL,
+    PRIORITIES.HIGH,
+    PRIORITIES.HIGHEST
+];
+
 IntelligenceWebClient.constant('PRIORITIES_IDS', PRIORITIES_IDS);
 IntelligenceWebClient.constant('PRIORITIES', PRIORITIES);
+IntelligenceWebClient.constant('PRIORITY_LIST', PRIORITY_LIST);
 
 export default {
     PRIORITIES_IDS,
