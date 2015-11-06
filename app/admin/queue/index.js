@@ -57,9 +57,7 @@ function AdminQueueDataDependencies (
         //TODO should be able to use load, but causes wierd caching issues
         users: users.load(VIEWS.QUEUE.USERS),
         teams: teams.load(VIEWS.QUEUE.TEAMS),
-        priority1Games : games.load(VIEWS.QUEUE.GAME.PRIORITY_1),
-        priority2Games : games.load(VIEWS.QUEUE.GAME.PRIORITY_2),
-        priority3Games : games.load(VIEWS.QUEUE.GAME.PRIORITY_3)
+        games : games.load(VIEWS.QUEUE.GAME.ALL)
     };
     return Data;
 }
@@ -187,9 +185,7 @@ function QueueController (
     $scope.teamsList = teams.getList();
     $scope.usersList = users.getList();
 
-    $scope.games = games.getList(VIEWS.QUEUE.GAME.PRIORITY_3)
-        .concat(games.getList(VIEWS.QUEUE.GAME.PRIORITY_2))
-        .concat(games.getList(VIEWS.QUEUE.GAME.PRIORITY_1));
+    $scope.games = games.getList(VIEWS.QUEUE.GAME.ALL);
 
     //initially show everything
     $scope.queue = $scope.games;
