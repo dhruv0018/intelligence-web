@@ -11,6 +11,17 @@ const IntelligenceWebClient = angular.module(pkg.name);
 const VIEWS = {
     QUEUE: {
         GAME: {
+            ALL: {
+                'status[]': [
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id,
+                    GAME_STATUSES.READY_FOR_QA.id,
+                    GAME_STATUSES.QAING.id
+                ],
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
+            },
             PRIORITY_1: {
                 'status[]': [
                     GAME_STATUSES.READY_FOR_INDEXING.id,
