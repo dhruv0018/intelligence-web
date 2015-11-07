@@ -60,38 +60,44 @@ class KrossoverEvent extends Entity {
             this.variableValues = event.variableValues;
         }
 
-        this.fields = {};
+        if (
+            event &&
+            event instanceof KrossoverEvent &&
+            event.fields
+        ) {
 
-        /* Transform variables into fields */
-        this.tagVariables.forEach((tagVariable, index) => {
+            this.fields = event.fields;
+        } else {
 
-            let variableValue;
+            this.fields = {};
 
-            if (
-                this.variableValues &&
-                this.variableValues[tagVariable.id]
-            ) {
+            /* Transform variables into fields */
+            this.tagVariables.forEach((tagVariable, index) => {
 
-                variableValue = this.variableValues[tagVariable.id];
+                let variableValue = {value: undefined};
 
-            } else {
+                if (
+                    this.variableValues &&
+                    this.variableValues[tagVariable.id]
+                ) {
 
-                variableValue = {value: undefined};
-            }
+                    variableValue = this.variableValues[tagVariable.id];
+                }
 
-            let rawField = Object.assign({}, tagVariable);
+                let rawField = Object.assign({}, tagVariable);
 
-            if (event) {
+                if (event) {
 
-                rawField.eventId = event.id;
-                rawField.playId = event.playId;
-            }
+                    rawField.eventId = event.id;
+                    rawField.playId = event.playId;
+                }
 
-            rawField.gameId = gameId;
-            rawField.index = index + 1;
-            rawField.value = variableValue.value;
-            this.fields[index + 1] = FieldFactory.createField(rawField, variableValue.type);
-        });
+                rawField.gameId = gameId;
+                rawField.index = index + 1;
+                rawField.value = variableValue.value;
+                this.fields[index + 1] = FieldFactory.createField(rawField, variableValue.type);
+            });
+        }
 
         delete this.tagVariables;
 
