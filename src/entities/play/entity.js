@@ -1,4 +1,3 @@
-import Video from '../video';
 import Entity from '../entity';
 import template from '../event/template';
 import KrossoverEvent from '../event';
@@ -6,10 +5,12 @@ import KrossoverEvent from '../event';
 const schema = require('../../../schemas/play.json');
 
 $KrossoverPlay.$inject = [
+    'Video',
     'TagsetsFactory'
 ];
 
 function $KrossoverPlay (
+    Video,
     tagsets
 ) {
 
