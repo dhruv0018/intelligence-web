@@ -2,7 +2,7 @@
 
     <film-info data-title="filmTitle" data-film="film" data-is-editable="isEditable"></film-info>
 
-    <state-selector data-ng-if="isGame && !isClip" data-state-options="gameStates" data-states-as-tabs="true" data-ng-hide="game.isSharedWithUser(currentUser)"></state-selector>
+    <state-selector data-ng-if="isGame && !isClip" data-state-options="gameStates" data-states-as-tabs="true" data-ng-hide="film.isSharedWithUser(currentUser)"></state-selector>
 
     <div class="social-media" data-ng-if="userIsLoggedIn">
         <a href="http://twitter.com/Krossovr" target="_blank"><i class="icon icon-twitter-square"></i></a>
@@ -16,7 +16,7 @@
             reel="film"
         ></publish-user-profile-reel>
 
-        <stats-export ng-if="state.current.name === 'Games.Stats' && isGame" teams="teams" game="game"></stats-export>
+        <stats-export ng-if="state.current.name === 'Games.Stats' && isGame" teams="teams" game="film"></stats-export>
 
         <a
          id="reels-share-cta"
