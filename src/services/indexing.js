@@ -134,7 +134,10 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
-                if (event.isEndAndStart) {
+                if (
+                    event.isEndAndStart &&
+                    !event.id
+                ) {
 
                     /* Get the game ID. */
                     let gameId = playManager.gameId;
