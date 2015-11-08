@@ -55,42 +55,4 @@
             </div>
         </div>
     </div>
-    <div class="general-status-col">
-        <h4>Priority</h4>
-        <div class="general-status-info">
-            <div
-                ng-class="{
-                    'highest-priority': priority.id === PRIORITIES.HIGHEST.id,
-                    'high-priority': priority.id === PRIORITIES.HIGH.id,
-                    'normal-priority': priority.id === PRIORITIES.NORMAL.id
-                }"
-                ng-value="priority.id"
-                ng-repeat="priority in PRIORITIES | orderObjectBy : 'value' : true"
-            >
-                {{ priority.name }}:
-                <a
-                    href
-                    ng-click="setQueue(queueFilters.priority[priority.id])"
-                >{{queueFilters.priority[priority.id].length | padZero}}</a>
-            </div>
-        </div>
-    </div>
-    <div class="general-status-col">
-        <h4>Label</h4>
-        <div class="general-status-info">
-            <div
-                ng-repeat="label in LABELS | orderObjectBy : 'index'"
-                class="filter"
-            >
-                <krossover-team-label-icon
-                    label="label"
-                ></krossover-team-label-icon>
-                {{ label.name }}:
-                <a
-                    href
-                    ng-click="setQueue(queueFilters.labels[label.id])"
-                >{{queueFilters.labels[label.id].length | padZero}}</a>
-            </div>
-        </div>
-    </div>
 </div>
