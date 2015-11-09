@@ -3,12 +3,7 @@ const angular = window.angular;
 
 const GamesArenaChart = angular.module('Games.ArenaChart', []);
 
-GamesArenaChart.run([
-    '$templateCache',
-    function run($templateCache) {
-        $templateCache.put('games/arena-chart.html', require('./template.html'));
-    }
-]);
+import template from './template.html';
 
 GamesArenaChart.config([
     '$stateProvider', '$urlRouterProvider',
@@ -20,7 +15,7 @@ GamesArenaChart.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'games/arena-chart.html'
+                    template
                 }
             },
             resolve: {
@@ -40,3 +35,5 @@ GamesArenaChart.config([
         $stateProvider.state(arenaChart);
     }
 ]);
+
+export default GamesArenaChart;

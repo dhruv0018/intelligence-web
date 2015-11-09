@@ -274,6 +274,7 @@ module.exports = function(grunt) {
                         'lib/dialogs/breakdown-dialog/styles.less',
                         'lib/directives/field/**/*.less',
                         'lib/directives/admin-role/styles.less',
+                        'app/games/**/*.less',
                         'app/reel/*.less',
                         'app/embed/*.less',
                         'app/indexer/**/*.less',

@@ -1,27 +1,21 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var GamesRawFilm = angular.module('Games.RawFilm', []);
+const GamesRawFilm = angular.module('Games.RawFilm', []);
 
-GamesRawFilm.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('games/raw-film/template.html', require('./template.html'));
-    }
-]);
+import template from './template.html';
 
 GamesRawFilm.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var GamesRawFilm = {
+        const GamesRawFilm = {
             name: 'Games.RawFilm',
             url: '/raw-film',
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'games/raw-film/template.html',
+                    template,
                     controller: 'Games.Rawfilm.controller'
                 }
             },
@@ -117,3 +111,5 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
         });
     }
 ]);
+
+export default GamesRawFilm;

@@ -16,6 +16,7 @@ require('./extensions');
 /* Components */
 require('../build/build');
 
+import Games from '../app/games/index.js';
 import Reel from '../app/reel/index.js';
 import Embed from '../app/embed/index.js';
 import Indexer from '../app/indexer/index.js';

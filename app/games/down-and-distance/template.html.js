@@ -1,0 +1,85 @@
+export default `
+
+    <div class="game-area-down-distance">
+        <div class="down-distance-info-container">
+            <div class="dnd-info-header">
+                Create a Down and Distance Report
+            </div>
+            <div class="dnd-info-body">
+                <div class="dnd-option">
+                    <span class="option-label">Team on Offense</span>
+                    <select data-ng-model="dndReport.teamId">
+                        <option value="{{teamId}}">{{teams[game.teamId].name}}</option>
+                        <option value="{{opposingTeamId}}">{{teams[game.opposingTeamId].name}}</option>
+                    </select>
+                </div>
+                <div class="dnd-option">
+                    <span class="option-label">Select Down</span>
+                    <select data-ng-model="dndReport.down" class="second-choices" data-ng-options="option.value as option.name for option in options.down"></select>
+                </div>
+                <div class="dnd-option">
+                    <span class="option-label">Select Distance</span>
+                    <select data-ng-model="dndReport.distance" class="second-choices" data-ng-options="option.value as option.name for option in options.distance"></select>
+                </div>
+                <div class="dnd-option">
+                    <span class="option-label">Select Hash</span>
+                    <select data-ng-model="dndReport.hash" class="second-choices" data-ng-options="option.value as option.name for option in options.hash"></select>
+                </div>
+                <div class="dnd-option">
+                    <span class="option-label">Select Strength</span>
+                    <select data-ng-model="dndReport.strength" class="second-choices" data-ng-options="option.value as option.name for option in options.strength"></select>
+                </div>
+                <div class="dnd-option">
+                    <span class="option-label">Show snaps only from</span>
+                    <select data-ng-model="dndReport.redZone" class="second-choices" data-ng-options="option.value as option.name for option in options.redZone"></select>
+                </div>
+                <div class="dnd-option" feature="CustomTags">
+                    <span class="option-label">Show snaps with tags</span>
+                    <custom-tags-multiselect ng-model="dndReport.customTagIds" custom-tags="customtags"></custom-tags-multiselect>
+                </div>
+                <div class="dnd-option lastOption">
+                    <button ng-click="createDownAndDistanceReport()" class="create-report-btn">
+                        <span ng-hide="creatingDnDReport">Create Report</span>
+                        <krossover-spinner ng-show="creatingDnDReport" size="15px"></krossover-spinner>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="formations-chart-container">
+            <div class="field-header">
+                <span class="field-info" ng-show="createdDndReport">
+                    <span class="field-info-title">Down and Distance:</span>
+                    <span data-ng-if="createdDndReport.down">{{createdDndReport.down}}</span>
+                    <span data-ng-if="!createdDndReport.down">Any down</span>
+                    and
+                    <span data-ng-if="createdDndReport.distance">{{createdDndReport.distance}}</span>
+                    <span data-ng-if="!createdDndReport.distance">any distance</span>
+                </span>
+                <span class="field-info" ng-show="createdDndReport">
+                    <span class="field-info-title">Hash:</span>
+                    <span data-ng-if="createdDndReport.hash">{{createdDndReport.hash}}</span>
+                    <span data-ng-if="!createdDndReport.hash">Any</span>
+                </span>
+                <span class="field-info" ng-show="createdDndReport">
+                    <span class="field-info-title">Strength:</span>
+                    <span data-ng-if="createdDndReport.strength">{{createdDndReport.strength}}</span>
+                    <span data-ng-if="!createdDndReport.strength">Any</span>
+                </span>
+                <span class="field-info" ng-show="createdDndReport">
+                    <span class="field-info-title">Tags:</span>
+                    <span data-ng-if="createdDndReport.customTagIds" ng-repeat="tag in createdDndReport.customTags">{{tag.name}}<span ng-if="!$last">, </span></span>
+                    <span data-ng-if="!createdDndReport.customTagIds.length">Any</span>
+                </span>
+            </div>
+            <!--<div class="field-options">
+                <span class="offense-defense" data-ng-click="teamOnOffense = true" data-ng-class="{active-report: teamOnOffense = true}">What Home did on offense</span>
+                <span class="offense-defense" data-ng-click="teamOnOffense = false" data-ng-class="{active-report: teamOnOffense = false}">What Away did on defense</span>
+                <span class="print-formation"><i class="icon icon-print"></i> Print</span>
+            </div>-->
+            <div class="field">
+                <krossover-arena type="arenaType" plays="plays" chart="chart"></krossover-arena>
+            </div>
+        </div>
+    </div>
+
+`;
