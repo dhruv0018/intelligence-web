@@ -23,6 +23,7 @@ import Styleguide from '../app/styleguide/index.js';
 import Analytics from '../app/analytics/index.js';
 
 import AppDownloads from '../lib/directives/app-downloads';
+import AdminQueueGames from '../lib/directives/admin-queue-games';
 import FieldComponent from '../lib/directives/field';
 import IndexingBlock from '../lib/directives/indexing-block';
 import DynamicTables from '../lib/directives/dynamic-tables';
@@ -37,6 +38,9 @@ import HighlightOnClick from '../lib/directives/highlight-on-click';
 import KrossoverPrioritySelect from '../lib/directives/priority-select';
 import KrossoverLabelSelect from '../lib/directives/label-select';
 import KrossoverTeamLabelIcon from '../lib/directives/team-label-icon';
+import PriorityLabelLegend from '../lib/directives/priority-label-legend';
+import KrossoverPriorityLabelIcon from '../lib/directives/priority-label-icon';
+
 import RevertGameStatus from '../lib/modals/revert-game-status';
 
 /* App dependencies */
@@ -112,6 +116,7 @@ require('./constants/cue-points');
 require('./constants/transcodeProfiles');
 import { PRIORITIES_IDS, PRIORITIES } from './constants/priorities';
 import { LABELS_IDS, LABELS } from './constants/labels';
+import EMAILS from './constants/emails';
 
 
 require('./models/users');
