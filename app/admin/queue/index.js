@@ -224,6 +224,8 @@ function QueueController (
         });
 
         $scope.searching = true;
+        $scope.noResults = false;
+
         let updateQueue = (games) => {
             $scope.queue = games;
         };
@@ -261,6 +263,12 @@ function QueueController (
 
         let success = (games) => {
             games = Array.isArray(games) ? games : [games];
+
+            if (games.length === 0) {
+                emptyOutQueue();
+                return;
+            }
+
             let teamIds = [];
             let userIdsFromGames = [];
             games.forEach(game => {
@@ -275,7 +283,7 @@ function QueueController (
             });
         };
 
-        let error = () => {
+        let emptyOutQueue = () => {
             $scope.queue = [];
             $scope.noResults = true;
             $scope.searching = false;
@@ -283,10 +291,11 @@ function QueueController (
             $scope.$digest();
         };
 
+
         if (parsedFilter.gameId) {
-            games.fetch(parsedFilter.gameId, success, error);
+            games.fetch(parsedFilter.gameId, success, emptyOutQueue);
         } else {
-            games.query(parsedFilter, success, error);
+            games.query(parsedFilter, success, emptyOutQueue);
         }
     };
 }
