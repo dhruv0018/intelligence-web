@@ -36,6 +36,7 @@ else {
     environment = 'production';
     config = require('../config/prod.json');
     config.oauth.uri = `https://${window.location.host}${config.oauth.uri}`;
+    config.api.uri = `https://${window.location.host}${config.api.uri}`;
 }
 
 config.environment = environment;
