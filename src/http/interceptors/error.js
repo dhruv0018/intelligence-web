@@ -1,3 +1,4 @@
+import BLACKLISTED_ERRORS from './blacklisted-errors';
 var pkg = require('../../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -75,13 +76,16 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                     case 500: /* Server Error */
 
-                        ErrorReporter.reportError(new Error('Server error', response.data));
+                        if(checkBlacklisted(response)) {
 
-                        alerts.add({
+                            ErrorReporter.reportError(new Error('Server error', response.data));
 
-                            type: 'danger',
-                            message: 'Server Error'
-                        });
+                            alerts.add({
+
+                                type: 'danger',
+                                message: 'Server Error'
+                            });
+                        }
 
                         break;
 
@@ -101,6 +105,18 @@ IntelligenceWebClient.factory('Error.Interceptor', [
                 return $q.reject(response);
             }
         };
+
+        function checkBlacklisted(response) {
+
+            let path = $location.$$path;
+            let method = response.config.method;
+            let checkBlacklist = BLACKLISTED_ERRORS[response.status] === undefined ||
+                                    BLACKLISTED_ERRORS[response.status][path] === undefined ||
+                                    BLACKLISTED_ERRORS[response.status][path][method] === undefined ||
+                                    BLACKLISTED_ERRORS[response.status][path][method] !== true;
+
+            return checkBlacklist;
+        }
     }
 ]);
 
