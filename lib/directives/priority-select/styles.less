@@ -1,0 +1,33 @@
+@import (reference) "main.less";
+
+@size: 16px;
+
+.pseudo-color(@color) {
+
+    &::before {
+
+        content: "";
+        width: @size;
+        height: @size;
+        display: inline-block;
+        margin-right: 8px;
+        border: thin solid black;
+        border-radius: 2px;
+        background-color: @color;
+    }
+}
+
+.highest-priority {
+
+    .pseudo-color(@priority-color-highest);
+}
+
+.high-priority {
+
+    .pseudo-color(@priority-color-high);
+}
+
+.normal-priority {
+
+    .pseudo-color(@priority-color-normal);
+}

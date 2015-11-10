@@ -7,8 +7,6 @@ import ReelController from './controller.js';
 import template from './template.html.js';
 import restricted from './restricted.html.js';
 
-const templateUrl = './template.html';
-const restrictedUrl = './restricted.html';
 /**
  * Reel module.
  * @module Reel
@@ -19,16 +17,6 @@ const Reel = angular.module('Reel', [
 ]);
 
 Reel.factory('ReelDataDependencies', ReelDataDependencies);
-
-/* Cache the template file */
-Reel.run([
-    '$templateCache',
-    function run ($templateCache) {
-
-        $templateCache.put(templateUrl, template);
-        $templateCache.put(restrictedUrl, restricted);
-    }
-]);
 
 /**
  * Reel state router.
@@ -60,7 +48,7 @@ Reel.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: restrictedUrl
+                    template: restricted
                 }
             }
         };
@@ -71,7 +59,7 @@ Reel.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl,
+                    template,
                     controller: ReelController
                 }
             },

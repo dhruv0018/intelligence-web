@@ -1,5 +1,3 @@
-import Video from '../entities/video';
-
 var PAGE_SIZE = 20;
 
 var moment = require('moment');
@@ -12,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, teams, users, $q, playTelestrationEntity, rawTelestrationEntity) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity', 'Video',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, teams, users, $q, playTelestrationEntity, rawTelestrationEntity, Video) {
 
         var GamesFactory = {
 
@@ -36,7 +34,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 // remove attributes that are circular
                 delete copy.$promise;
-                delete copy.flow;
 
                 // copy share attributes that rely on game functions.
                 // TODO: This sharing copying should not have to be done. It should model reels implementation.
@@ -81,7 +78,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.isSaving = false;
                 game.video = game.video ? new Video(game.video) : null;
                 game.notes = game.notes || {};
-                game.isHomeGame = game.isHomeGame || true;
                 game.isDeleted = game.isDeleted || false;
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
                 game.primaryJerseyColor = game.primaryJerseyColor || '#FFFFFF';
@@ -220,9 +216,16 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 else if (session.currentUser.is(ROLES.ATHLETE)) {
-                    games = games.concat(
-                            this.getByUploaderUserId(userId),
-                            this.getByUploaderTeamId(teamId));
+
+                    const user = session.getCurrentUser();
+
+                    games = games.concat(this.getByUploaderUserId(userId));
+
+                    user.roles.forEach(role => {
+                        if (role.type.id === ROLES.ATHLETE.type.id) {
+                            games = games.concat(this.getByUploaderTeamId(role.teamId));
+                        }
+                    });
                 }
 
                 games = games.concat(this.getBySharedWithUserId(userId));
@@ -289,12 +292,15 @@ IntelligenceWebClient.factory('GamesFactory', [
             * or not.
             * Check if the user is allowed to view a given game.
             */
-            isAllowedToView: function() {
-                let currentUser = session.getCurrentUser();
+            isAllowedToView: function(teamIds, userId) {
+
+                //Check multiple teams in case user is athlete
+                let isUserOnUploaderTeam = teamIds.some(teamId => teamId === this.uploaderTeamId);
+
                 //Check if user has permissions to view game
                 return  this.isSharedWithPublic() ||
-                        this.uploaderUserId === session.getCurrentUserId() ||
-                        this.uploaderTeamId === session.getCurrentTeamId() ||
+                        this.uploaderUserId === userId ||
+                        isUserOnUploaderTeam ||
                         this.isSharedWithCurrentUser();
 
             },
@@ -435,7 +441,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                if (!self.isVideoTranscodeComplete()) return false;
+                if (!self.video.isComplete()) return false;
 
                 /* If the game is in the "Indexing, not started" status, it can
                  * be assigned to an indexer. */
@@ -463,7 +469,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                if (!self.isVideoTranscodeComplete()) return false;
+                if (!self.video.isComplete()) return false;
 
                 /* If the game is in the "QA, not started" status, it can
                  * be assigned to QA. */
@@ -957,6 +963,28 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return model.getFormationReport({ id: self.id });
             },
 
+            /**
+             * copy a game to team
+             * @param {Integer} teamId - the team ID of the team for which the
+             * game should be copied.
+             */
+            copy: function(teamId) {
+
+                let self = this;
+
+                if (!self.id) throw new Error('Game must exist to copy');
+
+                const copyCriteria = {
+                    teamId : teamId,
+                    gameId : self.id
+                };
+
+                let Resource = $injector.get(self.model);
+                let copyResource = new Resource(copyCriteria);
+
+                return $q.when(copyResource.$copy());
+            },
+
             getDownAndDistanceReport: function(report) {
 
                 /* TODO: the only thing used from parameter is gameId */
@@ -1108,26 +1136,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.status === GAME_STATUSES.FINALIZED.id;
             },
             isShared: function() {
-                var self = this;
                 return self.status === GAME_STATUSES.NOT_INDEXED.id;
-            },
-            isVideoTranscodeComplete: function() {
-                var self = this;
-                return self.video.status === VIDEO_STATUSES.COMPLETE.id;
-            },
-            isUploading: function() {
-                var self = this;
-                //return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
-                return false;
-            },
-            isProcessing: function() {
-                var self = this;
-                //return self.video.status === VIDEO_STATUSES.UPLOADED.id;
-                return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
-            },
-            isVideoTranscodeFailed: function() {
-                var self = this;
-                return self.video.status === VIDEO_STATUSES.FAILED.id;
             },
             isBeingBrokenDown: function() {
                 var self = this;
@@ -1508,6 +1517,40 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
 
                 return teamId === self.uploaderTeamId;
+            },
+
+            /**
+             * @returns {String} flagsUrl
+             */
+            getFlagsUrl: function getFlagsUrl() {
+
+                return `${config.api.uri}flags?id=${this.id}`;
+            },
+
+            /**
+             * Determine if the game is copied
+             * @returns {boolean}
+             */
+            isCopied: function () {
+                return this.copiedFromGameId !== null;
+            },
+            /**
+             * get the maxpreps download link for the team
+             * @param team {Object}
+             * @return {String}
+             */
+            getMaxprepsDownloadLinkByTeam: function(team){
+                if (!this.id) throw new Error('Game must be saved before getting maxpreps');
+                let tokenService = $injector.get('TokensService');
+                let url =  config.api.uri +
+                            'games/' +
+                            this.id +
+                            '/max-preps?teamId=' +
+                            team.id +
+                            '&access_token=' +
+                            tokenService.getAccessToken();
+
+                return url;
             }
         };
 

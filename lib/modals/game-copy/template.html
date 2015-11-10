@@ -1,0 +1,21 @@
+<div class="copy-game">
+
+    <header class="modal-header">
+        <h3 class="modal-title">Copy A Game</h3>
+        <i class="icon icon-remove" ng-click="$dismiss()"></i>
+    </header>
+
+    <div class="modal-body">
+        <form name="form" role="form" novalidate>
+            <div>
+                <span class="form-text">Copy this game to team id: </span>
+                <span><input type="number" name="teamId" ng-model="teamId" class="team-id" required /></span>
+                <span><button  type="submit" ng-click="copyGame()" class="btn btn-default" ng-disabled="form.$invalid">{{statusText}}</button></span>
+            </div>
+            <div class="alert " ng-if="alert">
+                <span ng-bind-html="alert.message" class="{{ alert.type }}"></span>
+            </div>
+        </form>
+    </div>
+
+</div>

@@ -2,7 +2,7 @@
     <form>
         <div class="form-block-full">
             <h4>My Teams
-                <a href class="add-team" ng-click="openTeamModal()"><i class="icon icon-plus"></i> Add Team</a>
+                <a id="add-profile-team-cta" href class="add-team" ng-click="openTeamModal()"><i class="icon icon-plus"></i> Add Team</a>
             </h4>
             <div class="no-teams" ng-hide="athlete.profile.teams.length">
                 <h4>You currently have no teams on your profile.</h4>
@@ -24,13 +24,13 @@
                         <span ng-hide="team.endYear">Present</span>
                     </p>
                 </div>
-                <button class="btn btn-primary" ng-click="openTeamModal(team)">Edit</button>
-                <button class="btn btn-default" ng-click="removeTeam(team)"><i class="icon icon-remove"></i> Remove</button>
+                <button id="edit-profile-team-cta-{{$index+1}}" class="btn btn-primary" ng-click="openTeamModal(team)">Edit</button>
+                <button id="remove-profile-team-cta-{{$index+1}}" class="btn btn-default" ng-click="removeTeam(team)"><i class="icon icon-remove"></i> Remove</button>
             </div>
         </div>
         <div class="button-row">
-            <button class="btn btn-primary" ng-click="saveBasicInfo()">Save</button>
-            <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
+            <button id="experience-save-cta" class="btn btn-primary" ng-click="saveBasicInfo()">Save</button>
+            <a id="experience-cancel-cta" href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
         </div>
     </form>
 </div>

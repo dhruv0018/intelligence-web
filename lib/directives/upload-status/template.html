@@ -1,24 +1,42 @@
 <div class="upload-status">
-    <div class="uploading" data-ng-if="flow.isUploading()">
-        <h1 data-ng-if="game.isRegular() && (game.status === null || !isDefined(game.status))">You’re uploading a regular game…</h1>
-        <h1 data-ng-if="game.isNonRegular() && (game.status === null || !isDefined(game.status))">You’re uploading a scouting/scrimmage game…</h1>
-        <h2 data-ng-hide="game.rosters && game.rosters[game.teamId].id" data-ng-if="game.status === null || !isDefined(game.status)">Complete the rest of the game information.</h2>
-        <h2 data-ng-if="game.status === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game will be submitted for breakdown once the upload is complete.</h2>
-        <h2 data-ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game will be available for sharing once the upload is complete.</h2>
+
+    <div class="uploading" ng-if="game.video.isIncomplete()">
+
+        <!-- TODO: Refactor template logic -->
+        <h1 ng-if="game.isRegular() && (game.status === null || !isDefined(game.status))">You’re uploading a regular game…</h1>
+        <h1 ng-if="game.isNonRegular() && (game.status === null || !isDefined(game.status))">You’re uploading a scouting/scrimmage game…</h1>
+
+        <!-- TODO: Refactor game status template logic out of here-->
+        <h2 ng-hide="game.rosters && game.rosters[game.teamId].id" ng-if="game.status === null || !isDefined(game.status)">Complete steps 1-4 of the game information and submit.</h2>
+        <h2 ng-if="game.status === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game will be submitted for breakdown once the upload is complete.</h2>
+        <h2 ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game will be available for sharing once the upload is complete.</h2>
+
     </div>
 
-    <div class="error" data-ng-if="error">
-        <h1>There was an error with your upload!</h1>
-        <h2>Please try to submit your game again.</h2>
+    <div class="error" ng-if="game.video.isFailed()">
+        <h1>There was a problem with your upload!</h1>
+        <h2>Please delete this game and resubmit.</h2>
     </div>
 
-    <div class="uploaded" data-ng-if="(game && !flow) || (game && !flow.isUploading())">
-        <h1 data-ng-if="game.flow && !flow.isUploading()">Your upload is complete!</h1>
-        <h2 data-ng-hide="game.rosters && game.rosters[game.teamId].id" data-ng-if="game.status === null || !isDefined(game.status)">
-            <span data-ng-show="game.isProcessing()">Your video is still processing.</span>
-            <span data-ng-show="game.isUploading()">Your video is still uploading.</span>
-            Please complete the rest of the game information.</h2>
-        <h2 data-ng-if="game.status === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game has been submitted for breakdown.</h2>
-        <h2 data-ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game is available for sharing.</h2>
+    <div class="uploaded" ng-if="game.video.isUploaded()">
+
+        <h1>Your upload is complete and is being processed!</h1>
+
+        <!-- TODO: Refactor game status template logic out of here-->
+        <h2 ng-hide="game.rosters && game.rosters[game.teamId].id" ng-if="game.status === null || !isDefined(game.status)">Complete steps 1-4 of the game information and submit.</h2>
+        <h2 ng-if="game.status === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game has been submitted for breakdown.</h2>
+        <h2 ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game is available for sharing.</h2>
+
     </div>
+
+    <div class="uploaded" ng-if="game.video.isComplete()">
+
+        <h1>Your video has been processed.</h1>
+
+        <!-- TODO: Refactor game status template logic out of here-->
+        <h2 ng-hide="game.rosters && game.rosters[game.teamId].id" ng-if="game.status === null || !isDefined(game.status)">Complete steps 1-4 of the game information and submit.</h2>
+        <h2 ng-if="game.status === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">This game has been submitted for breakdown.</h2>
+        <h2 ng-if="game.status === GAME_STATUSES['NOT_INDEXED'].id">This game is available for sharing.</h2>
+    </div>
+
 </div>

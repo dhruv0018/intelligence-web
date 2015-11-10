@@ -49,8 +49,8 @@ Users.config([
                 },
                 resolve: {
                     'Admin.Users.Data': [
-                        '$q', '$stateParams', 'UsersFactory', 'Admin.Users.Data.Dependencies',
-                        function($q, $stateParams, users, data) {
+                        '$q', '$stateParams', 'TeamsFactory', 'UsersFactory', 'SchoolsFactory', 'Admin.Users.Data.Dependencies',
+                        function($q, $stateParams, teams, users, schools, data) {
 
                             var user;
                             var userId = Number($stateParams.id);
@@ -68,7 +68,11 @@ Users.config([
                                 }
                             }
 
-                            return $q.all([user, data]);
+                            let relatedteams = teams.load({relatedUserId: userId});
+
+                            let relatedSchools = schools.load({relatedUserId: userId});
+
+                            return $q.all([user, relatedteams, relatedSchools, data]);
                         }
                     ]
                 },
@@ -94,18 +98,6 @@ Users.config([
                     }
                 ]
             })
-
-            .state('user-info', {
-                url: '',
-                parent: 'user',
-                views: {
-                    'info@user': {
-                        templateUrl: 'users/user-info.html',
-                        controller: 'Users.User.Info.Controller'
-                    }
-                }
-            })
-
             .state('user-roles', {
                 url: '',
                 parent: 'user',
@@ -113,6 +105,16 @@ Users.config([
                     'roles@user': {
                         templateUrl: 'users/user-roles.html',
                         controller: 'Users.User.Roles.Controller'
+                    }
+                }
+            })
+            .state('user-info', {
+                url: '',
+                parent: 'user',
+                views: {
+                    'info@user': {
+                        templateUrl: 'users/user-info.html',
+                        controller: 'Users.User.Info.Controller'
                     }
                 }
             });

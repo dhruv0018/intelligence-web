@@ -15,8 +15,15 @@
         display: flex;
         flex-direction: column;
         flex: 1;
-        height: calc(~"100% - 106px");
-        background: @gray-lightest;
+        height: calc(~"100% - 106px"); // 106px takes into account the film-header
+        background: @content-bg;
+    }
+
+    &.film-header-hidden {
+
+        .games-content {
+            height: 100%;
+        }
     }
 
     .playlist-control-play-count {

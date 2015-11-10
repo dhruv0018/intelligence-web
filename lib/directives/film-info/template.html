@@ -2,7 +2,7 @@
 	<div data-ng-if="isGame" class="game-info">
 		<div class="meta-data">
 			<h5>{{film.datePlayed | date: 'MMM. d, yyyy'}}</h5>
-			<h5 class="film-title">{{title}}</h5>
+			<h5 class="film-title">{{filmTitle}}</h5>
 		</div>
 		<div class="team">
 			<h3 class="team-name" data-ng-class="{winner: opponentWon}">{{teams[film.opposingTeamId].name || 'Away'}}</h3>
@@ -22,7 +22,7 @@
 	<div data-ng-if="isReel" class="reel-info">
 		<div class="meta-data">
 			<h5>{{film.updatedAt | date: 'MMM. d, yyyy'}}</h5>
-			<h5 class="film-title">{{title}}</h5>
+			<h5 class="film-title">{{filmTitle}}</h5>
 		</div>
 		<div class="reel-title">
 			<h3 data-ng-show="!editingReelTitle">{{film.name}} <span id="reel-title-edit-cta" class="edit-title" data-ng-show="isEditable" data-ng-click="editingReelTitle = true"><i class="icon icon-pencil"></i></span></h3>

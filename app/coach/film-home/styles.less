@@ -8,18 +8,11 @@
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
         border-bottom: 1px solid @gray-border;
         background-color: @gray-lightest;
         padding: 20px;
         line-height: normal;
-
-        .filters-select-tabs {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 5px;
-        }
 
         h3 {
             color: @brand-blue;
@@ -54,11 +47,23 @@
         }
 
         .film-search {
+            margin-left: auto;
+            position: relative;
+
+            .icon-search {
+                position: absolute;
+                left: 11px;
+                top: 9px;
+                color: @gray-light;
+            }
 
             .film-search-input {
                 .form-control;
                 width: 250px;
                 margin: 0px 5px;
+                border: thin solid @gray-border;
+                border-radius: 5px;
+                padding-left: 22px;
             }
 
             .btn-film-search {
@@ -81,6 +86,11 @@
     .sidebar {
         text-transform: capitalize;
         overflow-y: auto;
+
+        @media only screen
+        and (max-width: @md-screen-md) {
+            display: none;
+        }
 
         .sidebar-athlete {
             padding-left: 10px;
