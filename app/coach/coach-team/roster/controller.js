@@ -48,6 +48,29 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
         //TODO honestly, this should be renamed, the roster is a specific thing and NOT a array of players
         var playersFilter = { rosterId: $scope.team.roster.id };
         $scope.roster = players.getList(playersFilter);
+
+        /* We want to check all the players that do not exist in the users collections
+         * and load them.
+         */
+        let userIds = [];
+        $scope.roster.forEach((player) => {
+            if(player.userId) {
+                /* Since doing a get on an nonexisting user id will cause an error and
+                * stop executing the foreach, adding the try catch is necessary to load the missing
+                * user object(s)
+                */
+                try {
+                    users.get(player.userId);
+                } catch(err) {
+                    userIds.push(player.userId);
+                }
+            }
+        });
+
+        if (userIds.length){
+            users.load(userIds);
+        }
+
         $scope.rosterId = $scope.team.roster.id;
 
         alerts.add({
