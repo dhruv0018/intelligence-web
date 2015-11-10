@@ -54,8 +54,11 @@ Users.directive('krossoverNewRole', [
                     /* Remove role from the newRoles array. */
                     $scope.newRoles.splice($scope.newRoles.indexOf(newRole), 1);
 
+                    let team = newRole.teamId ? teams.get(newRole.teamId): null;
+
                     /* Add role to the user roles array. */
-                    users.addRole(newRole);
+                    // TODO: Pass in teamId directly rather than getting off the newRole
+                    $scope.user.addRole(newRole, team);
 
                     element.remove();
                 };
