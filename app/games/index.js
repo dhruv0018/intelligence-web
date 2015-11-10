@@ -9,6 +9,7 @@ import GamesInfo from './game-info';
 import GamesStats from './stats';
 import GamesFormations from './formations';
 import GamesArenaChart from './arena-chart';
+import GamesSelfEditor from './self-editor';
 
 import template from './template.html.js';
 import restricted from './restricted.html.js';
@@ -24,7 +25,8 @@ const Games = angular.module('Games', [
     'Games.Info',
     'Games.Stats',
     'Games.Formations',
-    'Games.ArenaChart'
+    'Games.ArenaChart',
+    'Games.SelfEditor'
 ]);
 
 Games.config([
@@ -309,6 +311,12 @@ function GamesController(
                 $scope.gameStates.shift();
             }
         }
+    }
+
+    if (isTeamUploadersTeam && isCoach && features.isEnabled('SelfEditor')) {
+
+        // self editor
+        $scope.gameStates.push({name: 'Games.SelfEditor'});
     }
 
 }
