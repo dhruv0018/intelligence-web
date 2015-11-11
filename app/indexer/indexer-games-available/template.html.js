@@ -24,7 +24,7 @@ export default `
                         | gameNotIndexedByCurrentUser
                         | orderBy: ['-priority', 'timeRemaining']
                         | limitTo: 100
-                        as filteredGames"
+                        as filteredGames track by $index"
                         ng-class="{
                             'queue-list__highest-priority': game.priority === PRIORITIES.HIGHEST.id,
                             'queue-list__high-priority': game.priority === PRIORITIES.HIGH.id,
