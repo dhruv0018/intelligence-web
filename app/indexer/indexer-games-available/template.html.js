@@ -11,7 +11,7 @@ export default `
                 <thead>
                     <tr>
                         <th>Game ID</th>
-                        <th>Game</th>
+                        <th>Indexer</th>
                         <th>Sport</th>
                         <th>Time Left</th>
                         <th>Action</th>
@@ -34,7 +34,7 @@ export default `
                         <td>{{game.id}}</td>
                         <!--TODO:Add as directive or factory method -->
                         <td>
-                            <span>{{ teams[game.teamId].name }} vs {{ teams[game.opposingTeamId].name }}</span>
+                            <span>{{ users[game.currentAssignment().userId].name }}</span>
                             <krossover-team-label-icon
                                 class="pull-right"
                                 ng-if="teams[game.uploaderTeamId].label"
