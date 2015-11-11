@@ -76,7 +76,9 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                     case 500: /* Server Error */
 
-                        if(checkBlacklisted(response)) {
+                        //Check if the url is a blacklisted url or a wildcard url
+                        //and if so, do not show alert message
+                        if(!isBlacklisted(response) && !isWildcard(response)) {
 
                             ErrorReporter.reportError(new Error('Server error', response.data));
 
@@ -106,17 +108,46 @@ IntelligenceWebClient.factory('Error.Interceptor', [
             }
         };
 
-        function checkBlacklisted(response) {
+        //Check if the url is a blacklisted url
+        function isBlacklisted(response, path = null) {
 
-            let path = $location.$$path;
+            if(!path) {
+                path = $location.$$path;
+            }
             let method = response.config.method;
-            let checkBlacklist = BLACKLISTED_ERRORS[response.status] === undefined ||
+            let blacklisted = BLACKLISTED_ERRORS[response.status] === undefined ||
                                     BLACKLISTED_ERRORS[response.status][path] === undefined ||
                                     BLACKLISTED_ERRORS[response.status][path][method] === undefined ||
                                     BLACKLISTED_ERRORS[response.status][path][method] !== true;
 
-            return checkBlacklist;
+            return !blacklisted;
         }
+
+        //Check if the url is a wildcard url and if so if it is blacklisted
+        function isWildcard(response) {
+
+            let path = getWildcardUrl($location.$$path);
+
+            return isBlacklisted(response, path);
+        }
+
+        //Take a url and convert it to a wildcard url
+        function getWildcardUrl(url) {
+
+            let pairs = url.substring(url.indexOf('/') + 1).split('/');
+            let wildcardUrl = '';
+            if(pairs.length) {
+                pairs.forEach((pair)=>{
+                    if(!isNaN(pair)) {
+                        pair = '*';
+                    }
+                    wildcardUrl += '/' + pair;
+                });
+            }
+
+            return wildcardUrl;
+        }
+
     }
 ]);
 
