@@ -90,6 +90,7 @@ HeaderController.$inject = [
     'SessionService',
     'AccountService',
     'ROLES',
+    'ROLE_TYPE',
     'UsersFactory',
     'LeaguesFactory',
     'TeamsFactory',
@@ -113,6 +114,7 @@ function HeaderController(
     session,
     account,
     ROLES,
+    ROLE_TYPE,
     users,
     leagues,
     teams,
@@ -133,9 +135,28 @@ function HeaderController(
     $scope.session = session;
     $scope.account = account;
 
-    let currentUser = session.currentUser;
+    let currentUser = session.getCurrentUser();
     $scope.currentUserIsAthleteRecruit = currentUser.isAthleteRecruit();
     $scope.canPickupGame = currentUser.canPickupGames();
+
+    //TODO: Create a getRolesOneAthlete that gets one athlete role
+    let userRoles = currentUser.getRoles();
+    let athleteIncluded = false;
+
+    // NOTE: Only get one athlete role for display in the dropdown, since all athlete roles are treated as one
+    // Get all other roles as normal
+    $scope.dropdownUserRoles = userRoles.filter(function(role) {
+        if (role.type.id === ROLE_TYPE.ATHLETE) {
+            if (!athleteIncluded) {
+                athleteIncluded = true;
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    });
 
     //TEMP - get sport id to show Analytics tab for FB only
     if (auth.isLoggedIn) {

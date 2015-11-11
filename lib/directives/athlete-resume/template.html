@@ -28,12 +28,12 @@
             </ul>
         </div>
         <div ng-show="athlete.profile.teams.length && isCurrentUser">
-            <span class="edit-field" ui-sref="Athlete.Profile.EditProfile.Experience"><i class="icon icon-pencil"></i> Edit Experience Information</span>
+            <span id="resume-edit-experience-cta" class="edit-field" ui-sref="Athlete.Profile.EditProfile.Experience"><i class="icon icon-pencil"></i> Edit Experience Information</span>
         </div>
         <!-- Show if no teams -->
         <div ng-show="!athlete.profile.teams.length">
             <p ng-hide="isCurrentUser">{{athlete.firstName}} has not added any teams.</p>
-            <p ng-show="isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Experience">
+            <p id="resume-add-team-cta" ng-show="isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Experience">
                 <span class="add-field"><i class="icon icon-plus"></i> Add Team</span>
             </p>
         </div>
@@ -49,7 +49,7 @@
         <h4 ng-show="hasHighSchoolInfo || isCurrentUser">High School</h4>
         <p class="profile-list-title" ng-show="athlete.profile.highSchool || isCurrentUser">
             <span ng-show="athlete.profile.highSchool">{{athlete.profile.highSchool}}</span>
-            <span class="add-field" ng-show="!athlete.profile.highSchool && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
+            <span id="resume-add-high-school-cta" class="add-field" ng-show="!athlete.profile.highSchool && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
                 <i class="icon icon-plus"></i> Add High School
             </span>
             <span class="pull-right" ng-show="athlete.profile.highSchoolGraduationYear" hide show-gt-sm>Class of {{athlete.profile.highSchoolGraduationYear}}</span>
@@ -71,7 +71,7 @@
         <h4 ng-show="hasCollegeInfo || isCurrentUser">College</h4>
         <p class="profile-list-title" ng-show="athlete.profile.college || isCurrentUser">
             <span ng-show="athlete.profile.college">{{athlete.profile.college}}</span>
-            <span class="add-field" ng-show="!athlete.profile.college && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
+            <span id="resume-add-college-cta" class="add-field" ng-show="!athlete.profile.college && isCurrentUser" ui-sref="Athlete.Profile.EditProfile.Academics">
                 <i class="icon icon-plus"></i> Add College
             </span>
             <span class="pull-right" ng-show="athlete.profile.collegeGraduationYear" hide show-gt-sm>Class of {{athlete.profile.collegeGraduationYear}}</span>
@@ -85,7 +85,7 @@
             </li>
         </ul>
         <div ng-show="isCurrentUser && (hasHighSchoolInfo || hasCollegeInfo)">
-            <span class="edit-field" ui-sref="Athlete.Profile.EditProfile.Academics"><i class="icon icon-pencil"></i> Edit Academic Information</span>
+            <span id="resume-edit-academics-cta" class="edit-field" ui-sref="Athlete.Profile.EditProfile.Academics"><i class="icon icon-pencil"></i> Edit Academic Information</span>
         </div>
         <!-- Show if no academic info -->
         <div ng-hide="hasHighSchoolInfo && hasCollegeInfo || isCurrentUser">
@@ -142,11 +142,11 @@
             </li>
         </ul>
         <div ng-show="hasPhysicalInfo && isCurrentUser">
-            <span class="edit-field" ui-sref="Athlete.Profile.EditProfile.Physical"><i class="icon icon-pencil"></i> Edit Physical Information</span>
+            <span id="resume-edit-physical-cta" class="edit-field" ui-sref="Athlete.Profile.EditProfile.Physical"><i class="icon icon-pencil"></i> Edit Physical Information</span>
         </div>
         <!-- Show if no physical info and is current user's profile -->
         <div ng-show="!hasPhysicalInfo && isCurrentUser">
-            <p ui-sref="Athlete.Profile.EditProfile.Physical">
+            <p id="resume-add-phyisical-cta" ui-sref="Athlete.Profile.EditProfile.Physical">
                 <span class="add-field"><i class="icon icon-plus"></i> Add Physical Information</span>
             </p>
         </div>
