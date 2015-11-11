@@ -18,7 +18,7 @@
             >
                 {{queueFilters.ready.indexing.length | padZero}}
             </span>
-            &nbsp;To be Indexed
+            &nbsp;to be Indexed
         </li>
         <li>
             <span
@@ -27,7 +27,7 @@
             >
                 {{queueFilters.ready.qa.length | padZero}}
             </span>
-            &nbsp;To be QA'd
+            &nbsp;to be QA'd
         </li>
     </ul>
 </section>
@@ -36,21 +36,21 @@
     <ul>
         <li>
             <span
-                ng-click="setQueue(queueFilters.unassigned)"
+                ng-click="setQueue(queueFilters.assigned.indexing)"
                 class="filter"
             >
-                {{queueFilters.unassigned.length | padZero}}
+                {{queueFilters.assigned.indexing.length | padZero}}
             </span>
-            &nbsp;Unassigned
+            &nbsp;Indexing in Progress
         </li>
         <li>
             <span
-                ng-click="setQueue(queueFilters.assigned)"
+                ng-click="setQueue(queueFilters.assigned.qa)"
                 class="filter"
             >
-                {{queueFilters.assigned.length | padZero}}
+                {{queueFilters.assigned.qa.length | padZero}}
             </span>
-            &nbsp;Assigned
+            &nbsp;QA in Progress
         </li>
     </ul>
 </section>
