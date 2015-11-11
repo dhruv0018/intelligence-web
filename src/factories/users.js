@@ -206,7 +206,7 @@ IntelligenceWebClient.factory('UsersFactory', [
                     const ACTIVE_OR_INACTIVE = null;
                     existingRole = this.getRoleForTeam(ROLE.type.id, team, ACTIVE_OR_INACTIVE);
                 } else {
-                    existingRole = this.getRoles(ROLE.type.id);
+                    existingRole = this.getRoles(ROLE.type.id)[0];
                 }
 
                 // NOTE: This role has been found. Make sure it is active, but don't add it again
