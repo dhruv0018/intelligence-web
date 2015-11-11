@@ -2,11 +2,11 @@
 <span class="stats-export dropdown" dropdown is-open="status.isopen" ng-show="showExport">
     <a class="dropdown-toggle" dropdown-toggle><i class="icon icon-file-text"></i>Export</a>
     <div class="export-dropdown-menu dropdown-menu" ng-class="{'export-are-selected': selectedTags.length}">
-        <div class="dropdown-option">
-            <a class="coming-soon">Excel - All Game Stats (coming soon)</a>
+        <div class="dropdown-option" ng-if="!csvDownloadAvailable">
+            <a class="coming-soon" download>Excel - All Game Stats (coming soon)</a>
         </div>
-        <div class="dropdown-option">
-            <a ng-href="{{game.getCSVDownloadLink()}}" download>CSV - All Game Stats</a>
+        <div class="dropdown-option" ng-if="csvDownloadAvailable">
+            <a ng-href="{{game.getCSVDownloadLink()}}" download>Excel - All Game Stats (.csv)</a>
         </div>
         <span ng-repeat="team in teams">
             <div class="dropdown-option">
