@@ -1,9 +1,11 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
-
 const GamesSelfEditor = angular.module('Games.SelfEditor', []);
 
+import GamesSelfEditorController from './controller.js';
 import template from './template.html';
+
+GamesSelfEditor.controller('Games.SelfEditor.controller', GamesSelfEditorController);
 
 GamesSelfEditor.config([
     '$stateProvider', '$urlRouterProvider',
@@ -97,8 +99,8 @@ GamesSelfEditor.service('Games.Data.Dependencies', [
                     if (auth.isLoggedIn && userId && teamId) {
 
                         Data.reels = reels.load({
-                            teamId: teamId,
-                            userId: userId
+                            teamId,
+                            userId
                         });
                     }
 
@@ -126,215 +128,5 @@ GamesSelfEditor.service('Games.Data.Dependencies', [
         return service;
     }
 ]);
-
-GamesSelfEditor.controller('Games.SelfEditor.controller', GamesSelfEditorController);
-
-GamesSelfEditorController.$inject = [
-    '$rootScope',
-    '$scope',
-    '$window',
-    '$state',
-    '$stateParams',
-    'ROLES',
-    'Utilities',
-    'SessionService',
-    'AuthenticationService',
-    'GamesFactory',
-    'TeamsFactory',
-    'LeaguesFactory',
-    'UsersFactory',
-    'PlayersFactory',
-    'PlaysFactory',
-    'FiltersetsFactory',
-    'ReelsFactory',
-    'VIEWPORTS',
-    'PlayManager',
-    'PlaysManager',
-    'PlaylistManager',
-    'PlaylistEventEmitter',
-    'TELESTRATION_PERMISSIONS',
-    'TelestrationsVideoPlayerBroker',
-    'EVENT'
-];
-
-function GamesSelfEditorController (
-    $rootScope,
-    $scope,
-    $window,
-    $state,
-    $stateParams,
-    ROLES,
-    utilities,
-    session,
-    auth,
-    games,
-    teams,
-    leagues,
-    users,
-    players,
-    plays,
-    filtersets,
-    reels,
-    VIEWPORTS,
-    playManager,
-    playsManager,
-    playlistManager,
-    playlistEventEmitter,
-    TELESTRATION_PERMISSIONS,
-    TelestrationsVideoPlayerBroker,
-    EVENT
-) {
-
-        let uploader = users.get($scope.game.uploaderUserId);
-        let gameId = $stateParams.id;
-        $scope.game = games.get(gameId);
-
-        $scope.posterImage = {
-            url: $scope.game.video.thumbnail
-        };
-
-        const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
-
-        let isUploader = session.getCurrentUserId() === $scope.game.uploaderUserId;
-        let isTeamMember = session.getCurrentTeamId() === $scope.game.uploaderTeamId;
-        let isACoachOfUploadersTeam = session.currentUser.is(ROLES.COACH) && isTeamMember;
-
-        playlistManager.isEditable = isUploader || isACoachOfUploadersTeam;
-
-        /* TODO: figure out if this stuff is used */
-        $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
-        $scope.league = leagues.get($scope.uploaderTeam.leagueId);
-
-        $scope.reels = auth.isLoggedIn ? reels.getList() : [];
-        $scope.VIEWPORTS = VIEWPORTS;
-        $scope.orderBy = $scope.reverseOrder ? '-startTime' : 'startTime';
-
-        // TODO: remove some of this later
-        $scope.team = teams.get($scope.game.teamId);
-        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-
-        $scope.filmTitle = $scope.game.description;
-
-        let removeTelestrationsSaveListener = angular.noop;
-
-        //TODO remove when we modify the directives to utilize the factories instead of passing through the scope
-        if ($scope.game.isDelivered()) {
-
-            /* TODO: Make this all better */
-            // Plays
-            let playsFilter = { gameId: $scope.game.id };
-            $scope.plays = plays.getList(playsFilter);
-            playsManager.reset($scope.plays);
-            playsManager.calculatePlays();
-            $scope.plays = $scope.plays
-            .sort(utilities.compareStartTimes)
-            .filter(play => play.hasVisibleEvents);
-            $scope.totalPlays = $scope.plays; // TODO: Unnecessary variable?
-
-            let play = $scope.plays[0];
-            if (play) {
-                playManager.current = play;
-            }
-
-            $scope.currentVideo = play.clip;
-
-            // Set telestrations
-            $scope.telestrationsEntity = $scope.game.playTelestrations;
-            $scope.currentPlayId = play.id;
-
-            /* Telestrations associated with plays */
-
-            $scope.plays.forEach((play) => {
-                play.hasTelestrations = $scope.game.playTelestrations.some((telestration) => play.id === telestration.playId && telestration.hasGlyphs());
-            });
-
-            // set initial cuepoints
-            if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
-
-                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId, play.startTime);
-            }
-
-            /* TODO: Remove this sessionStorage once playIds
-             * is a valid back-end property on the games object.
-             *
-             * Storing playIds in session storage so Clips.Controller can
-             * attach playIds array to game object to mirror reels properties
-             * BEWARE: It only contains viewable, i.e. has a clip, plays
-             */
-
-            let playIds = $scope.plays
-                .filter(function(play) {
-                    return play.clip !== null;
-                })
-                .sort(function(first, second) {
-                    return first.startTime - second.startTime;
-                })
-                .map(function(play) {
-                    return play.id;
-                });
-            let jsonPlayIds = JSON.stringify(playIds);
-            $window.sessionStorage.setItem(
-                'game.plays',
-                jsonPlayIds
-            );
-
-            $scope.filteredPlaysIds = [];
-
-            $scope.expandAll = false;
-
-
-            /* Listeners & Watches */
-
-            if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
-
-                playlistEventEmitter.on(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
-            }
-
-            if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
-
-                $scope.$on('telestrations:updated', function handleTelestrationsUpdated(event) {
-
-                    if (playManager.current) {
-
-                        $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(playManager.current.id, playManager.current.startTime);
-                    }
-                });
-            }
-
-            /* Listeners & Watches */
-
-            if ($scope.telestrationsPermissions === TELESTRATION_PERMISSIONS.EDIT) {
-
-                removeTelestrationsSaveListener = $scope.$on('telestrations:save', saveTelestrations);
-            }
-        }
-
-        function saveTelestrations(event, callbackFn) {
-
-            callbackFn = callbackFn || angular.noop;
-
-            // Save Game
-            $scope.game.save().then(function onSaved() {
-                callbackFn();
-            });
-
-        }
-
-        function onPlaylistWatch(play) {
-
-            if (play && play.id) {
-
-                $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
-                $scope.currentPlayId = play.id;
-            }
-        }
-
-        $scope.$on('$destroy', function onDestroy() {
-
-            removeTelestrationsSaveListener();
-            telestrationsVideoPlayerBroker.cleanup();
-            playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
-        });
-}
 
 export default GamesSelfEditor;
