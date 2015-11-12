@@ -15,25 +15,29 @@ const LABELS = {
     'KL': {
         id: 1,
         name: 'Krossover Lite',
-        abbreviation: 'KL'
+        abbreviation: 'KL',
+        index: 1
     },
 
     'CB': {
         id: 2,
         name: 'Coach Breakdown',
-        abbreviation: 'CB'
+        abbreviation: 'CB',
+        index: 0
     },
 
     'C1': {
         id: 3,
         name: 'Custom 1',
-        abbreviation: 'C1'
+        abbreviation: 'C1',
+        index: 2
     },
 
     'C2': {
         id: 4,
         name: 'Custom 2',
-        abbreviation: 'C2'
+        abbreviation: 'C2',
+        index: 3
     }
 };
 

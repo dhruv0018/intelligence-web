@@ -3,12 +3,21 @@ let angular = window.angular;
 
 function name(field, playerId) {
     let calculatedName = field.name;
-    if (playerId && window && window.angular && document) {
+    if (window && window.angular && document) {
         let injector = angular.element(document).injector();
         let players = injector.get('PlayersFactory');
-        let player = players.get(playerId);
-        let number = jerseyNumber(field, playerId);
-        calculatedName = '(' + number + ') ' + player.firstName + ' ' + player.lastName;
+        let session = injector.get('SessionService');
+        let ROLES = injector.get('ROLES');
+        if (!field.isRequired) {
+            let currentUser = session.currentUser;
+            let isIndexer = currentUser.is(ROLES.INDEXER);
+            calculatedName = isIndexer ? 'Optional' : 'None';
+        }
+        if (playerId) {
+            let player = players.get(playerId);
+            let number = jerseyNumber(field, playerId);
+            calculatedName = '(' + number + ') ' + player.firstName + ' ' + player.lastName;
+        }
     }
     return calculatedName;
 }

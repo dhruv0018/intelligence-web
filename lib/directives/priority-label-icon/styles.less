@@ -1,0 +1,27 @@
+@import (reference) "main.less";
+
+.priority-label-icon(@color) {
+
+    padding: 2px 5px;
+    font-size: 12px;
+    border-radius: 2px;
+    background-color: @color;
+}
+
+krossover-priority-label-icon {
+
+    .highest-priority-label-icon {
+
+        .priority-label-icon(@priority-color-highest);
+    }
+
+    .high-priority-label-icon {
+
+        .priority-label-icon(@priority-color-high);
+    }
+
+    .normal-priority-label-icon {
+
+        .priority-label-icon(@priority-color-normal);
+    }
+}
