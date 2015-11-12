@@ -97,7 +97,7 @@ function PlayerAnalyticsController(
 
     // If current user is an athlete, generate their stats
     if ($scope.currentUserIsAthlete) {
-        let activeRoles = currentUser.activeRoles();
+        let activeRoles = currentUser.getActiveRoles();
         let athleteRoles = activeRoles.filter(role => currentUser.is(role, ROLES.ATHLETE));
 
         // Get teams this athlete plays for

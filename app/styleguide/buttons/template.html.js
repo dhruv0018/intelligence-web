@@ -2,6 +2,7 @@ export default `
 
     <div class="buttons">
 
+        <!-- Boilerplate
         <h2>Buttons</h2>
 
         <button class="btn btn-primary">Primary Button</button>
@@ -20,6 +21,13 @@ export default `
         <button class="navbar-btn">Nav Button</button>
         <br/>
         <button class="btn-block">Block Button</button>
+        -->
+
+        <h3>Priority Label Icons</h3>
+        <krossover-priority-label-icon
+            ng-repeat="priority in PRIORITIES"
+            priority="priority"
+        ></krossover-priority-label-icon>
 
     </div>
 `;
