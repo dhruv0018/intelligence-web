@@ -57,149 +57,6 @@ describe('UsersFactory', function() {
         }]));
     });
 
-    describe('getRolesByTeamId', ()=> {
-        it("Should return empty array when there are no roles", inject(['UsersFactory',
-            function(UsersFactory) {
-                sinon.stub(UsersFactory,'hasNoRoles').returns(true);
-                let roles = UsersFactory.getRolesByTeamId(1);
-                assert(UsersFactory.hasNoRoles.should.have.been.called);
-                expect(roles).to.be.an('array');
-                expect(roles).to.be.empty;
-        }]));
-
-        it("Should return empty when there is no roles for the teamId", inject(['UsersFactory',
-            function(UsersFactory) {
-                sinon.stub(UsersFactory,'hasNoRoles').returns(false);
-                UsersFactory.roles = [];
-                let roles = UsersFactory.getRolesByTeamId(1);
-                assert(UsersFactory.hasNoRoles.should.have.been.called);
-                expect(roles).to.be.an('array');
-                expect(roles).to.be.empty;
-        }]));
-
-        it("Should return roles when there is roles for the teamId", inject(['UsersFactory',
-            function(UsersFactory) {
-                sinon.stub(UsersFactory,'hasNoRoles').returns(false);
-                UsersFactory.roles = [{
-                    teamId:1,
-                    dummy:'dummy1'
-                },{
-                    teamId:2,
-                    dummy:'dummy2'
-                }];
-                let roles = UsersFactory.getRolesByTeamId(1);
-                assert(UsersFactory.hasNoRoles.should.have.been.called);
-                expect(roles).to.be.an('array');
-                expect(roles).to.eql([{
-                    teamId:1,
-                    dummy:'dummy1'
-                }]);
-        }]));
-
-    });
-
-    describe('getUserRoleForTeam', ()=> {
-
-
-        let UsersFactory;
-        let ROLES;
-        let ROLE_TYPE;
-
-        beforeEach(inject([
-            'UsersFactory', 'ROLES', 'ROLE_TYPE',
-            function(_UsersFactory_, _ROLES_, _ROLE_TYPE_) {
-
-                UsersFactory = _UsersFactory_;
-                ROLES = _ROLES_;
-                ROLE_TYPE = _ROLE_TYPE_;
-
-            }
-        ]));
-
-        it('should throw error if no role', function() {
-            expect(function() {
-                UsersFactory.getUserRoleForTeam()
-            }).to.throw(Error);
-        });
-
-        it('should throw error if no team', function() {
-
-            expect(function() {
-                UsersFactory.getUserRoleForTeam({})
-            }).to.throw(Error);
-        });
-
-        it('should return undefined if no roles are found', function() {
-
-            let user = {
-                roles: []
-            }
-
-            UsersFactory.extend(user);
-
-            let userRoleForTeam = user.getUserRoleForTeam(1, {id: 1});
-
-            expect(userRoleForTeam).to.be.undefined;
-        });
-
-        it(`should return undefined if a role is found that only matches ROLE and not the team`, function() {
-
-            let user = {
-                roles: [
-                    {
-                        type: ROLE_TYPE.ASSISTANT_COACH,
-                        teamId: 2
-                    }
-                ]
-            };
-
-            UsersFactory.extend(user);
-
-            let userRoleForTeam = user.getUserRoleForTeam(ROLES.ASSISTANT_COACH, {id: 1});
-
-            expect(userRoleForTeam).to.be.undefined;
-        });
-
-        it(`should return undefined if a role is found that only matches the team and not the ROLE`, function() {
-
-            let user = {
-                roles: [
-                    {
-                        type: ROLE_TYPE.COACH,
-                        teamId: 1
-                    }
-                ]
-            };
-
-            UsersFactory.extend(user);
-
-            let userRoleForTeam = user.getUserRoleForTeam(ROLES.ASSISTANT_COACH, {id: 1});
-
-            expect(userRoleForTeam).to.be.undefined;
-        });
-
-        it(`should return a role if a role is found that matches both the team and the ROLE`, function() {
-
-            let user = {
-                roles: [
-                    {
-                        type: ROLE_TYPE.ASSISTANT_COACH,
-                        teamId: 1
-                    }
-                ]
-            };
-
-            UsersFactory.extend(user);
-
-            let userRoleForTeam = user.getUserRoleForTeam(ROLES.ASSISTANT_COACH, {id: 1});
-
-            expect(userRoleForTeam).to.exist;
-            expect(userRoleForTeam.type.id).to.equal(ROLE_TYPE.ASSISTANT_COACH);
-            expect(userRoleForTeam.teamId).to.equal(1);
-        });
-
-    });
-
     describe('getRoles', ()=> {
 
         let UsersFactory;
@@ -283,7 +140,7 @@ describe('UsersFactory', function() {
 
             UsersFactory.extend(user);
 
-            let userRoleForTeam = user.getRoles(null, false);
+            let userRoleForTeam = user.getRoles(null, null, false);
 
             expect(userRoleForTeam).to.be.an('array');
             expect(userRoleForTeam.length).to.equal(1);
@@ -313,7 +170,7 @@ describe('UsersFactory', function() {
 
             UsersFactory.extend(user);
 
-            let userRoleForTeam = user.getRoles(null, null);
+            let userRoleForTeam = user.getRoles(null, null, null);
 
             expect(userRoleForTeam).to.be.an('array');
             expect(userRoleForTeam.length).to.equal(3);
@@ -374,7 +231,7 @@ describe('UsersFactory', function() {
 
             UsersFactory.extend(user);
 
-            let userRoles = user.getRoles(ROLE_TYPE.ASSISTANT_COACH, false);
+            let userRoles = user.getRoles(ROLE_TYPE.ASSISTANT_COACH, null, false);
 
             expect(userRoles).to.be.an('array');
             expect(userRoles.length).to.equal(1);
@@ -382,7 +239,7 @@ describe('UsersFactory', function() {
             expect(userRoles[0].tenureEnd).to.be.a('string');
         });
 
-        it(`should return both active and inactive of roles of ROLE_TYPE`, function() {
+        it(`should return both active and inactive roles of ROLE_TYPE`, function() {
 
             let user = {
                 roles: [
@@ -406,12 +263,569 @@ describe('UsersFactory', function() {
 
             UsersFactory.extend(user);
 
-            let userRoles = user.getRoles(ROLE_TYPE.ASSISTANT_COACH, null);
+            let userRoles = user.getRoles(ROLE_TYPE.ASSISTANT_COACH, null, null);
 
             expect(userRoles).to.be.an('array');
             expect(userRoles.length).to.equal(2);
             expect(userRoles[0].type.id).to.equal(ROLE_TYPE.ASSISTANT_COACH);
             expect(userRoles[1].type.id).to.equal(ROLE_TYPE.ASSISTANT_COACH);
+        });
+
+        it(`should return both active and inactive roles of a specified team of ROLE_TYPE`, function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+            let team = { id: 2 };
+            let userRoles = user.getRoles(ROLE_TYPE.ASSISTANT_COACH, team, null);
+
+            expect(userRoles).to.be.an('array');
+            expect(userRoles.length).to.equal(1);
+            expect(userRoles[0].type.id).to.equal(ROLE_TYPE.ASSISTANT_COACH);
+        });
+
+        it(`should return active roles of a specified team of ROLE_TYPE`, function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+            let team = { id: 2 };
+            let userRoles = user.getRoles(ROLE_TYPE.ASSISTANT_COACH, team, true);
+
+            expect(userRoles).to.be.an('array');
+            expect(userRoles.length).to.equal(1);
+            expect(userRoles[0].type.id).to.equal(ROLE_TYPE.ASSISTANT_COACH);
+        });
+
+        it(`should return inactive roles of a specified team of ROLE_TYPE`, function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+            let team = { id: 2 };
+            let userRoles = user.getRoles(ROLE_TYPE.ASSISTANT_COACH, team, false);
+
+            expect(userRoles).to.be.an('array');
+            expect(userRoles.length).to.equal(0);
+        });
+
+    });
+
+    describe('getRoleForTeam', ()=> {
+
+        let UsersFactory;
+        let ROLES;
+        let ROLE_TYPE;
+
+        beforeEach(inject([
+            'UsersFactory', 'ROLES', 'ROLE_TYPE',
+            function(_UsersFactory_, _ROLES_, _ROLE_TYPE_) {
+
+                UsersFactory = _UsersFactory_;
+                ROLES = _ROLES_;
+                ROLE_TYPE = _ROLE_TYPE_;
+
+            }
+        ]));
+
+        it('should throw error if no ROLE_TYPE is found', function() {
+
+            let user = {};
+
+            UsersFactory.extend(user);
+
+            expect(function() {
+                user.getRoleForTeam()
+            }).to.throw(Error);
+        });
+
+        it('should throw error if no team is found', function() {
+
+            let user = {};
+
+            UsersFactory.extend(user);
+
+            expect(function() {
+                user.getRoleForTeam(ROLE_TYPE.COACH)
+            }).to.throw(Error);
+        });
+
+        it('should return only active roles with ROLE_TYPE and team', function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+
+            let team = { id: 2 };
+            let userRoleForTeam = user.getRoleForTeam(ROLE_TYPE.ASSISTANT_COACH, team);
+
+            expect(userRoleForTeam).to.be.an('object');
+            expect(userRoleForTeam.type.id).to.equal(ROLE_TYPE.ASSISTANT_COACH);
+        });
+
+        it('should return only inactive roles with ROLE_TYPE and team', function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+
+            let team = { id: 3 };
+            let userRoleForTeam = user.getRoleForTeam(ROLE_TYPE.ASSISTANT_COACH, team, false);
+
+            expect(userRoleForTeam).to.be.an('object');
+            expect(userRoleForTeam.type.id).to.equal(ROLE_TYPE.ASSISTANT_COACH);
+        });
+
+        it('should return undefined with ROLE_TYPE and team that do not match', function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+
+            let team = { id: 2 };
+            let userRoleForTeam = user.getRoleForTeam(ROLE_TYPE.ASSISTANT_COACH, team, false);
+
+            expect(userRoleForTeam).to.be.undefined;
+        });
+
+    });
+
+    describe('getActiveRoles', ()=> {
+
+        let UsersFactory;
+        let ROLES;
+        let ROLE_TYPE;
+
+        beforeEach(inject([
+            'UsersFactory', 'ROLES', 'ROLE_TYPE',
+            function(_UsersFactory_, _ROLES_, _ROLE_TYPE_) {
+
+                UsersFactory = _UsersFactory_;
+                ROLES = _ROLES_;
+                ROLE_TYPE = _ROLE_TYPE_;
+
+            }
+        ]));
+
+        it('should return only active roles', function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+
+            let activeRoles = user.getActiveRoles();
+
+            expect(activeRoles).to.be.an('array');
+            expect(activeRoles.length).to.equal(2);
+            expect(activeRoles[0].type.id).to.equal(ROLE_TYPE.COACH);
+            expect(activeRoles[1].type.id).to.equal(ROLE_TYPE.ASSISTANT_COACH);
+        });
+
+        it('should return only active roles with ROLE_TYPE', function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+
+            let activeRoles = user.getActiveRoles(ROLE_TYPE.COACH);
+
+            expect(activeRoles).to.be.an('array');
+            expect(activeRoles.length).to.equal(1);
+            expect(activeRoles[0].type.id).to.equal(ROLE_TYPE.COACH);
+        });
+
+    });
+
+
+    describe('getInactiveRoles', ()=> {
+
+        let UsersFactory;
+        let ROLES;
+        let ROLE_TYPE;
+
+        beforeEach(inject([
+            'UsersFactory', 'ROLES', 'ROLE_TYPE',
+            function(_UsersFactory_, _ROLES_, _ROLE_TYPE_) {
+
+                UsersFactory = _UsersFactory_;
+                ROLES = _ROLES_;
+                ROLE_TYPE = _ROLE_TYPE_;
+
+            }
+        ]));
+
+        it('should return only inactive roles', function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: "2010-08-13T20:09:59+00:00"
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+
+            let inactiveRoles = user.getInactiveRoles();
+
+            expect(inactiveRoles).to.be.an('array');
+            expect(inactiveRoles.length).to.equal(2);
+            expect(inactiveRoles[0].type.id).to.equal(ROLE_TYPE.COACH);
+            expect(inactiveRoles[1].type.id).to.equal(ROLE_TYPE.ASSISTANT_COACH);
+        });
+
+        it('should return only inactive roles with ROLE_TYPE', function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+
+            let inactiveRoles = user.getInactiveRoles(ROLE_TYPE.ASSISTANT_COACH);
+
+            expect(inactiveRoles).to.be.an('array');
+            expect(inactiveRoles.length).to.equal(1);
+            expect(inactiveRoles[0].type.id).to.equal(ROLE_TYPE.ASSISTANT_COACH);
+        });
+
+    });
+
+    describe('isActive', ()=> {
+
+        let UsersFactory;
+        let ROLES;
+        let ROLE_TYPE;
+
+        beforeEach(inject([
+            'UsersFactory', 'ROLES', 'ROLE_TYPE',
+            function(_UsersFactory_, _ROLES_, _ROLE_TYPE_) {
+
+                UsersFactory = _UsersFactory_;
+                ROLES = _ROLES_;
+                ROLE_TYPE = _ROLE_TYPE_;
+
+            }
+        ]));
+
+        it('should throw error if no role is passed in', function() {
+
+            let user = {};
+
+            UsersFactory.extend(user);
+
+            expect(function() {
+                user.isActive()
+            }).to.throw(Error);
+        });
+
+        it('should return true for active role', function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+
+            let isActiveRole = user.isActive(user.roles[0]);
+
+            expect(isActiveRole).to.be.true;
+        });
+
+        it('should return false for inactive role', function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 3,
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+
+            let isActiveRole = user.isActive(user.roles[2]);
+
+            expect(isActiveRole).to.be.false;
+        });
+
+    });
+
+    describe('getUserByEmail', ()=> {
+
+        let UsersFactory;
+        let ROLES;
+        let ROLE_TYPE;
+
+        beforeEach(inject([
+            'UsersFactory',
+            function(_UsersFactory_, _ROLES_, _ROLE_TYPE_) {
+
+                UsersFactory = _UsersFactory_;
+                ROLES = _ROLES_;
+                ROLE_TYPE = _ROLE_TYPE_;
+
+            }
+        ]));
+
+        it('should return null if no email is passed in', function() {
+
+            let user = {};
+
+            UsersFactory.extend(user);
+
+            let userByEmail = user.getUserByEmail();
+
+            expect(userByEmail).to.equal(null);
+        });
+
+        //TODO: Could not figure out how to test. Will need to come back to this.
+        it('should return user if email is passed in', function() {
+
+        });
+
+    });
+
+    describe('activateRole', ()=> {
+
+        let UsersFactory;
+        let ROLES;
+        let ROLE_TYPE;
+
+        beforeEach(inject([
+            'UsersFactory', 'ROLES', 'ROLE_TYPE',
+            function(_UsersFactory_, _ROLES_, _ROLE_TYPE_) {
+
+                UsersFactory = _UsersFactory_;
+                ROLES = _ROLES_;
+                ROLE_TYPE = _ROLE_TYPE_;
+
+            }
+        ]));
+
+        it('should make tenureEnd for given role null', function() {
+
+            let user = {
+                roles: [
+                    {
+                        type: ROLE_TYPE.COACH,
+                        teamId: 1,
+                        tenureStart: "2011-08-13T20:09:59+00:00",
+                        tenureEnd: null
+                    },
+                    {
+                        type: ROLE_TYPE.ASSISTANT_COACH,
+                        teamId: 2,
+                        tenureStart: "2011-08-13T20:09:59+00:00",
+                        tenureEnd: "2014-08-13T20:09:59+00:00"
+                    }
+                ]
+            };
+
+            UsersFactory.extend(user);
+
+            user.activateRole(user.roles[1]);
+            expect(user.roles[1].tenureEnd).to.equal(null);
         });
 
     });

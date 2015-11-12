@@ -15,7 +15,6 @@ StyleguideDialogsController.$inject = [
     'ManageProfileReels.Modal',
     'ProfileOnboarding.Modal',
     'RawFilm.Modal',
-    'RolesModal',
     'SelectIndexer.Modal',
     'ArenaDialog.Service',
     'MobileAppDialog.Service',
@@ -39,7 +38,6 @@ function StyleguideDialogsController (
     ManageProfileReelsModal,
     ProfileOnboardingModal,
     RawFilmModal,
-    RolesModal,
     SelectIndexerModal,
     ArenaDialog,
     MobileAppDialog,
@@ -147,13 +145,6 @@ function StyleguideDialogsController (
             type: 'UI-Bootstrap modal',
             enabled: false,
             args: [null]
-        },
-        {
-            name: 'Roles',
-            controller: RolesModal,
-            type: 'UI-Bootstrap modal',
-            enabled: true,
-            args: []
         },
         {
             name: 'Mobile App',
