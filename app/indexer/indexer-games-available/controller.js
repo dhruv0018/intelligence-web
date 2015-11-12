@@ -17,6 +17,8 @@ IndexerGamesController.$inject = [
     'SessionService',
     'GAME_STATUSES',
     'VIEWS',
+    'LABELS',
+    'LABELS_IDS',
     'QaPickup.Modal'
 ];
 
@@ -35,15 +37,23 @@ function IndexerGamesController(
     session,
     GAME_STATUSES,
     VIEWS,
+    LABELS,
+    LABELS_IDS,
     QaPickupModal
 ) {
     const ONE_MINUTE = 60000;
 
+    $scope.LABELS = LABELS;
+    $scope.LABELS_IDS = LABELS_IDS;
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
     $scope.teams = teams.getCollection();
     $scope.users = users.getCollection();
-    $scope.games = games.getList(VIEWS.QUEUE.GAME);
+
+    $scope.games = games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_3)
+        .concat(games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_2))
+        .concat(games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_1));
+
     $scope.currentUser = session.getCurrentUser();
     $scope.options = {scope: $scope};
 
