@@ -18,57 +18,38 @@ admin-queue-dashboard {
         }
     }
 
-    h4 {
-
-        margin-top: 0;
-    }
-
     ul {
 
-        padding: 0;
-        margin-bottom: 0;
-        display: flex;
-        justify-content: flex-start;
-        flex-flow: column wrap;
         height: 80px;
     }
 
-    .time-left {
+    ul.time-left {
 
-        // FIXME: Use responsive width
-        width: 275px;
+        column-count: 3;
     }
 
-    .labels {
+    ul.labels {
 
-        // FIXME: Use responsive width
-        width: 310px;
+        column-count: 2;
+    }
+
+    ul.time-left,
+    ul.labels {
+
+        &.less-columns {
+
+            column-count: unset;
+            height: 100%;
+        }
     }
 
     li {
 
-        list-style-type: none;
         margin-bottom: 6px;
-    }
-
-    .column-wrap li {
-
-        // Every child except first three
-        &:nth-child(n+4) {
-
-            padding-left: 20px;
-        }
-
-        // Every third child
-        &:nth-child(3n) {
-
-            margin-bottom: 0;
-        }
     }
 
     .filter {
 
-        float: right;
         color: @brand-primary;
 
         &:hover {

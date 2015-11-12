@@ -56,7 +56,10 @@
 </section>
 <section>
     <h4>Time Left</h4>
-    <ul class="column-wrap time-left">
+    <ul
+        class="time-left"
+        ng-class="{ 'less-columns': sidebarExpand }"
+    >
         <li>
             Total:&nbsp;
             <span
@@ -103,7 +106,7 @@
             </span>
         </li>
         <li>
-            Less than 1h:&nbsp;
+            < 1h:&nbsp;
             <span
                 ng-click="setQueue(queueFilters.remaining['1'])"
                 class="filter"
@@ -124,7 +127,7 @@
 </section>
 <section>
     <h4>Priority</h4>
-    <ul class="column-wrap">
+    <ul>
         <li ng-repeat="priority in PRIORITIES | orderObjectBy : 'value' : true">
             <span
                 ng-class="{
@@ -146,7 +149,10 @@
 </section>
 <section>
     <h4>Label</h4>
-    <ul class="column-wrap labels">
+    <ul
+        class="labels"
+        ng-class="{ 'less-columns': sidebarExpand }"
+    >
         <li ng-repeat="label in LABELS | orderObjectBy : 'index'">
             <span>
                 <krossover-team-label-icon
