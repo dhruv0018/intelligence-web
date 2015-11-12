@@ -17,6 +17,8 @@ IntelligenceWebClient.factory('Error.Interceptor', [
             /* Intercept responses with status codes that indicate errors. */
             responseError: function(response) {
 
+                if (!response || !response.config) return $q.reject(response);
+
                 var data = response.config.data;
                 var method = response.config.method;
                 var description = '';
@@ -47,12 +49,13 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                         ErrorReporter.reportError(new Error('Bad Request', response.data));
 
-                        alerts.add({
+                        if (response && response.data && response.data.userMessage) {
+                            alerts.add({
 
-                            type: 'warning',
-                            message: response.data.userMessage
-                        });
-
+                                type: 'warning',
+                                message: response.data.userMessage
+                            });
+                        }
                         break;
 
                     case 401: /* Not Authorized */
