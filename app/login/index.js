@@ -502,7 +502,7 @@ function LoginController(
                 }).then(function() {
 
                     alerts.add({
-                        type: 'info',
+                        type: 'success',
                         message: 'An email has been sent to ' + email + ' with further instructions'
                     });
                 });
