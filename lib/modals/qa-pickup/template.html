@@ -9,16 +9,34 @@
         </header>
 
         <div class="modal-body">
-            <div>Game {{game.id}}: {{ team.name }} vs {{ opposingTeam.name }}, {{ sport.name | capitalizeFirstLetter}}</div>
-            <div ng-if="game.timeRemaining > 0">{{ game.timeRemaining | millisecondsAsDaysHoursMinutes }} Left to QA</div>
-            <div ng-if="game.timeRemaining <= 0">6H 00M Left to QA</div>
+
+            <div layout="row">
+                <div flex="50">
+                    Game ID: {{ game.id }}
+                </div>
+                <div flex="50" class="qa-time-remaining">
+                    <div ng-if="game.timeRemaining > 0">{{ game.timeRemaining | millisecondsAsDaysHoursMinutes }} Left to QA</div>
+                    <div ng-if="game.timeRemaining <= 0">6H 00M Left to QA</div>
+                </div>
+            </div>
+
+            <h3>{{ team.name }} vs {{ opposingTeam.name }}</h3>
+
+            <krossover-priority-label-icon
+                priority="PRIORITIES[PRIORITIES_IDS[game.priority]]"
+            ></krossover-priority-label-icon>
+
+            <krossover-team-label-icon
+                ng-if="uploaderTeam.label"
+                label="LABELS[LABELS_IDS[uploaderTeam.label]]"
+            ></krossover-team-label-icon>
         </div>
 
         <footer class="modal-footer">
 
             <div class="buttons">
 
-                <button class="qa-pickup-buttons" ng-click="$dismiss()">Cancel</button>
+                <button class="qa-pickup-buttons cancel" ng-click="$dismiss()">Cancel</button>
                 <button class="qa-pickup-buttons" type="submit" ng-click="pickUpGame(true)">Pick up and go to game</button>
                 <button class="qa-pickup-buttons" type="submit" ng-click="pickUpGame(false)">Pick up to QA</button>
 
@@ -33,7 +51,7 @@
                 <i class="icon icon-remove"></i>
             </a>
         </header>
-        <div class="modal-body">
+        <div class="modal-body pickup-success-body">
             <div class="success-icon">
                 <i class="icon icon-check-circle"></i>
             </div>
@@ -43,7 +61,7 @@
 
     <div ng-show="!successfulPickup && gameAlreadyTaken">
 
-        <div class="modal-body">
+        <div class="modal-body pickup-stale-body">
             <div>
                 <p>
                     This game has already been picked up.

@@ -11,13 +11,74 @@ const IntelligenceWebClient = angular.module(pkg.name);
 const VIEWS = {
     QUEUE: {
         GAME: {
-            'status[]': [
-                GAME_STATUSES.READY_FOR_INDEXING.id,
-                GAME_STATUSES.INDEXING.id,
-                GAME_STATUSES.READY_FOR_QA.id,
-                GAME_STATUSES.QAING.id
-            ],
-            videoStatus: VIDEO_STATUSES.COMPLETE.id
+            ALL: {
+                'status[]': [
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id,
+                    GAME_STATUSES.READY_FOR_QA.id,
+                    GAME_STATUSES.QAING.id
+                ],
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
+            },
+            PRIORITY_1: {
+                'status[]': [
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id,
+                    GAME_STATUSES.READY_FOR_QA.id,
+                    GAME_STATUSES.QAING.id
+                ],
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                priority: 1,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
+            },
+            PRIORITY_2: {
+                'status[]': [
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id,
+                    GAME_STATUSES.READY_FOR_QA.id,
+                    GAME_STATUSES.QAING.id
+                ],
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                priority: 2,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
+            },
+            PRIORITY_3: {
+                'status[]': [
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.INDEXING.id,
+                    GAME_STATUSES.READY_FOR_QA.id,
+                    GAME_STATUSES.QAING.id
+                ],
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                priority: 3,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
+            },
+            READY_FOR_QA_PRIORITY_1: {
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                priority: 1,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
+            },
+            READY_FOR_QA_PRIORITY_2: {
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                priority: 2,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
+            },
+            READY_FOR_QA_PRIORITY_3: {
+                status: GAME_STATUSES.READY_FOR_QA.id,
+                videoStatus: VIDEO_STATUSES.COMPLETE.id,
+                priority: 3,
+                sortBy: 'deadline',
+                sortOrder: 'asc'
+            }
         },
         USERS: {
             'relatedGameStatus[]': [
