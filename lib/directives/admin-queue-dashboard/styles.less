@@ -1,5 +1,11 @@
 @import (reference) "main.less";
 
+.less-columns() {
+
+    column-count: unset;
+    height: 100%;
+}
+
 admin-queue-dashboard {
 
     display: flex;
@@ -36,10 +42,14 @@ admin-queue-dashboard {
     ul.time-left,
     ul.labels {
 
+        @media (max-width: 1400px) {
+
+            .less-columns;
+        }
+
         &.less-columns {
 
-            column-count: unset;
-            height: 100%;
+            .less-columns;
         }
     }
 
