@@ -1,25 +1,45 @@
 <div class="select-indexer">
 
-    <header class="modal-header">
-        <h3 class="modal-title">Select indexer to <span data-ng-hide="isQa">index</span><span data-ng-show="isQa">QA</span> this game</h3>
-        <i class="icon icon-remove pull-right" data-ng-click="$dismiss()"></i>
-    </header>
+    <h2>Select <span ng-hide="isQa">Indexer</span><span ng-show="isQa">QA</span></h2>
 
-    <div class="modal-body">
+    <p>
+        Game ID: {{ game.id }}
+    </p>
 
-        <form name="assign">
-            <user-typeahead data-ng-model="indexer" data-role="ROLES.INDEXER"></user-typeahead>
-            <div class="assign-box">
-                <add-time data-modified-date="selectionData.modifiedDeadline" min="2" max="400"></add-time>
-            </div>
-        </form>
+    <h3>{{ team.name }} vs {{ opposingTeam.name }}</h3>
 
-    </div>
+    <krossover-priority-label-icon
+        priority="PRIORITIES[PRIORITIES_IDS[game.priority]]"
+    ></krossover-priority-label-icon>
+
+    <krossover-team-label-icon
+        ng-if="uploaderTeam.label"
+        label="LABELS[LABELS_IDS[uploaderTeam.label]]"
+    ></krossover-team-label-icon>
+
+    <form name="assign">
+
+        <h3>Name</h3>
+        <user-typeahead data-ng-model="indexer" data-role="ROLES.INDEXER"></user-typeahead>
+
+        <h3>Hours</h3>
+        <div class="assign-box">
+            <add-time data-modified-date="selectionData.modifiedDeadline" min="2" max="400"></add-time>
+        </div>
+    </form>
 
     <footer class="modal-footer">
 
-        <button class="btn-assign" data-ng-if="!isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToIndexer(indexer.id, selectionData.modifiedDeadline)">Assign Indexer</button>
-        <button class="btn-assign" data-ng-if="isQa" data-ng-disabled="assign.$invalid" data-ng-click="assignToQa(indexer.id, selectionData.modifiedDeadline)">Assign QA</button>
+        <button class="btn-assign" data-ng-click="$dismiss()">Cancel</button>
+        <button
+            class="btn-assign"
+            ng-disabled="assign.$invalid || assign.$pristine"
+            ng-click="
+                isQa ?
+                assignToQa(indexer.id, selectionData.modifiedDeadline) :
+                assignToIndexer(indexer.id, selectionData.modifiedDeadline)
+            "
+        >Assign {{ isQa ? 'QA' : 'Indexer' }}</button>
 
     </footer>
 

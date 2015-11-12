@@ -3,6 +3,7 @@ const angular = window.angular;
 const moment = require('moment');
 
 IndexerGamesController.$inject = [
+    'PRIORITIES',
     '$scope',
     '$interval',
     'config',
@@ -13,10 +14,13 @@ IndexerGamesController.$inject = [
     'UsersFactory',
     'SessionService',
     'INDEXER_GROUPS',
+    'LABELS',
+    'LABELS_IDS',
     'GAME_STATUSES'
 ];
 
 function IndexerGamesController(
+    PRIORITIES,
     $scope,
     $interval,
     config,
@@ -27,12 +31,16 @@ function IndexerGamesController(
     users,
     session,
     INDEXER_GROUPS,
+    LABELS,
+    LABELS_IDS,
     GAME_STATUSES
 ) {
 
     const ONE_MINUTE = 60000;
     const userLocation = session.getCurrentRole().indexerGroupId;
 
+    $scope.LABELS = LABELS;
+    $scope.LABELS_IDS = LABELS_IDS;
     $scope.GAME_STATUSES = GAME_STATUSES;
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
@@ -42,6 +50,7 @@ function IndexerGamesController(
     $scope.footballFAQ = config.links.indexerFAQ.football.uri;
     $scope.volleyballFAQ = config.links.indexerFAQ.volleyball.uri;
     $scope.options = {scope: $scope};
+    $scope.PRIORITIES = PRIORITIES;
 
     switch (userLocation) {
         case INDEXER_GROUPS.US_MARKETPLACE:
