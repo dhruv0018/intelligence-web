@@ -503,7 +503,7 @@ function LoginController(
 
                     alerts.add({
                         type: 'success',
-                        message: 'An email has been sent to ' + email + ' with further instructions'
+                        message: 'An email has been sent to ' + email + ' with further instructions.'
                     });
                 });
             },
