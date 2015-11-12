@@ -2,10 +2,10 @@
 
     <header class="modal-header">
 
-        <h3 class="modal-title" ng-if="!assistant.firstName">Add a new assistant coach</h3>
+        <h3 class="modal-title" ng-if="!user.firstName">Add a new assistant coach</h3>
 
-        <h3 class="modal-title" ng-if="assistant.firstName">{{assistant.firstName}} {{assistant.lastName}}</h3>
-        <h3 class="modal-title last-accessed" ng-if="assistant.firstName && assistant.lastAccessed">{{assistant.lastAccessed | date: 'mediumDate'}}</h3>
+        <h3 class="modal-title" ng-if="user.firstName">{{user.firstName}} {{user.lastName}}</h3>
+        <h3 class="modal-title last-accessed" ng-if="user.firstName && user.lastAccessed">{{user.lastAccessed | date: 'mediumDate'}}</h3>
         <i class="icon icon-remove" ng-click="$dismiss()"></i>
 
     </header>
@@ -13,15 +13,15 @@
     <div class="modal-body">
             <div class="row">
             <div class="status col-md-12">
-                <div class="inactive" data-ng-if="assistant.id && !assistant.lastAccessed" data-ng-hide="sendingEmail">
+                <div class="inactive" data-ng-if="user.id && !user.lastAccessed" data-ng-hide="sendingEmail">
                     <strong>This assistant coach has an un-activated Krossover account.</strong> Once they activate their account you will no longer be able to edit their name and email address.
-                    <a data-ng-if="!assistant.lastAccessed" data-ng-click="resendInvite(team.id)">Resend Invitation</a>
+                    <a data-ng-if="!user.lastAccessed" data-ng-click="resendInvite(team.id)">Resend Invitation</a>
                 </div>
                 <div class="resending-invite" data-ng-show="sendingEmail">
                     <krossover-spinner ng-show="!confirmSent" size="15px"></krossover-spinner>
                     <span data-ng-show="confirmSent"><i class="icon icon-ok"></i> The invitation has been resent.</span>
                 </div>
-                <div class="active" data-ng-if="assistant.id && assistant.lastAccessed">
+                <div class="active" data-ng-if="user.id && user.lastAccessed">
                     This assistant coach has activated their account with Krossover. You can no longer edit certain items, which the coach will now be responsible to edit.
                 </div>
             </div>
@@ -30,8 +30,8 @@
 
                 <div class="row form-group">
                     <div class="profile-image col-md-3">
-                        <profile-placeholder data-ng-if="!assistant.imageUrl"></profile-placeholder>
-                        <img data-ng-if="assistant.imageUrl" data-ng-src="{{assistant.imageUrl}}" alt="profile image">
+                        <profile-placeholder data-ng-if="!user.imageUrl"></profile-placeholder>
+                        <img data-ng-if="user.imageUrl" data-ng-src="{{user.imageUrl}}" alt="profile image">
                     </div>
                     <div class="col-md-8 col-md-offset-1">
                         <table class="col-md-12">
@@ -42,8 +42,8 @@
                                 </tr>
                             </thead>
                             <tr>
-                                <td><input type="text" class="name" placeholder="First Name" data-ng-disabled="assistant.lastAccessed" data-ng-model="assistant.firstName" required></td>
-                                <td><input type="text" class="name" placeholder="Last Name" data-ng-disabled="assistant.lastAccessed" data-ng-model="assistant.lastName" required></td>
+                                <td><input type="text" class="name form-control" placeholder="First Name" data-ng-disabled="user.lastAccessed" data-ng-model="user.firstName" autofocus required></td>
+                                <td><input type="text" class="name form-control" placeholder="Last Name" data-ng-disabled="user.lastAccessed" data-ng-model="user.lastName" required></td>
                             </tr>
                         </table>
                         <table class="col-md-12">
@@ -53,17 +53,20 @@
                                 </tr>
                             </thead>
                             <tr>
-                                <td><input type="text" data-ng-disabled="assistant.lastAccessed" data-ng-model="assistant.email" placeholder="Email Address"></td>
+                                <td>
+                                    <input type="email" name="email"
+                                    class="form-control" data-ng-disabled="user.id" data-ng-model="user.email" placeholder="Email Address" required>
+                                </td>
                             </tr>
                         </table>
                     </div>
                     <div class="col-md-6">
-                        <input type="submit" class="btn btn-primary" value="Save" data-ng-click="saveAssistant()">
+                        <input type="submit" ng-disabled="saving" class="btn btn-primary" value="Save" data-ng-click="save()">
                     </div>
-                    <div class="col-md-5">
-                        <a class="pull-right remove" href data-ng-click="toggleAssistant()">
-                            <span data-ng-if="!assistantCoachRole.tenureEnd"><i class="icon icon-remove"></i> Remove from team</span>
-                            <span data-ng-if="assistantCoachRole.tenureEnd"><i class="icon icon-add"></i> Add to team</span>
+                    <div class="col-md-5" ng-show="assistantCoachRoleForTeam">
+                        <a class="pull-right remove" href data-ng-click="activateDeactivateAssistantRole(assistantCoachRoleForTeam)">
+                            <span data-ng-if="!assistantCoachRoleForTeam.tenureEnd"><i class="icon icon-remove"></i> Remove from team</span>
+                            <span data-ng-if="assistantCoachRoleForTeam.tenureEnd"><i class="icon icon-add"></i> Add to team</span>
                         </a>
                     </div>
                 </div>

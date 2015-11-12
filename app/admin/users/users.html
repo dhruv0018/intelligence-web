@@ -63,7 +63,7 @@
 
                             <ul>
 
-                                <li data-ng-repeat="role in user.activeRoles()">
+                                <li data-ng-repeat="role in user.getActiveRoles()">
                                     <!--only show the roles which have not ended-->
                                     <span data-ng-show="!role.tenureEnd">
                                         <span data-ng-if="Users.is(role, HEAD_COACH)">Head Coach, {{ teams[role.teamId].name }}</span>

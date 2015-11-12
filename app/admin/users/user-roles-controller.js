@@ -24,7 +24,7 @@ Users.controller('Users.User.Roles.Controller', [
              * so add the role directly. */
             if (users.is(newRole, ROLES.ADMIN)) {
 
-                users.addRole($scope.user, newRole);
+                $scope.user.addRole(newRole);
 
             /* For other roles; fill in information before adding. */
             } else {
