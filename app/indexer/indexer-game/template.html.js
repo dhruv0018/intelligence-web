@@ -42,8 +42,7 @@ export default `
 
                             <td class="name">
 
-                                <h1>{{ teamName }}</h1>
-                                <h5>Customer</h5>
+                                <h1>{{ team.name }}</h1>
 
                             </td>
 
@@ -87,8 +86,7 @@ export default `
 
                             <td class="name">
 
-                                <h1>{{ opposingTeamName }}</h1>
-                                <h5>Opponent</h5>
+                                <h1>{{ opposingTeam.name }}</h1>
 
                             </td>
 

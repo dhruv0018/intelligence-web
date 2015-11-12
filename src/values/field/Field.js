@@ -47,6 +47,14 @@ class Field extends Value {
     }
 
     /**
+     * Getter for placeholder text which displays the tag name when there is no value, but otherwise shows field value name
+     * type {String}
+     */
+    get placeholder() {
+        return this.value.name ? this.value.name : this.name;
+    }
+
+    /**
      * Checks the validity of the variableValue (returned by toJSON)
      *
      * @method isVariableValueValid

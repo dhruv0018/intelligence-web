@@ -28,13 +28,18 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
         $scope.users = users.getCollection();
 
         $scope.team = teams.get(session.currentUser.currentRole.teamId);
-        $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team);
+
+        const ACTIVE = true;
+        $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, ACTIVE);
+        $scope.assistantCoaches = $scope.assistantCoaches.concat(users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, !ACTIVE));
 
         //toggles between assistant views
         $scope.filtering = [
             {type: 'active'},
             {type: 'inactive'}
         ];
+
+        $scope.displayFilter = $scope.filtering[0];
 
         alerts.add({
             type: 'warning',
