@@ -42,6 +42,7 @@ import PriorityLabelLegend from '../lib/directives/priority-label-legend';
 import KrossoverPriorityLabelIcon from '../lib/directives/priority-label-icon';
 
 import RevertGameStatus from '../lib/modals/revert-game-status';
+import SelfEditingPlaylist from '../lib/directives/self-editing-playlist';
 
 /* App dependencies */
 require('./config');
