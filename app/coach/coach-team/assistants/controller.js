@@ -42,7 +42,7 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
 
         alerts.add({
             type: 'warning',
-            message: 'All game film is automatically shared amongst all coaches of the team'
+            message: 'All game film is automatically shared amongst all coaches of the team.'
         });
 
     }
