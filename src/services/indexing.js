@@ -84,7 +84,13 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = new KrossoverEvent(null, tag, time, game.id);
 
                 /* If the play already exists, add play ID to event to make it 'savable' */
-                eventManager.current.playId = playManager.current.id;
+                if (
+                    playManager.current &&
+                    playManager.current.id
+                ) {
+
+                    eventManager.current.playId = playManager.current.id;
+                }
 
                 if (!tag.isGroup) {
 
