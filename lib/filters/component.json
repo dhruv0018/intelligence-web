@@ -18,6 +18,7 @@
         "capitalization"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "order.js"
     ]
 }

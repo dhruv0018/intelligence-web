@@ -5,32 +5,32 @@
                 <h4>Profile Picture</h4>
                 <profile-picture user="athlete"></profile-picture>
 
-                <krossover-uploader upload-label="Change Image" on-upload="setProfilePicture(files)"></krossover-uploader>
+                <krossover-uploader id="set-profile-picture-cta" upload-label="Change Image" on-upload="setProfilePicture(files)"></krossover-uploader>
             </div>
             <div class="form-block-two-thirds">
                 <div>
                     <div class="form-block-half">
                         <h4>First Name</h4>
-                        <input type="text" maxlength="30" ng-model="athlete.firstName" class="form-control" placeholder="Enter First Name"/>
+                        <input id="edit-first-name-cta" type="text" maxlength="30" ng-model="athlete.firstName" class="form-control" placeholder="Enter First Name"/>
                     </div>
                     <div class="form-block-half">
                         <h4>Last Name</h4>
-                        <input type="text" maxlength="30" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
+                        <input id="edit-last-name-cta" type="text" maxlength="30" ng-model="athlete.lastName" class="form-control" placeholder="Enter Last Name"/>
                     </div>
                 </div>
                 <div class="form-block-half-row">
                     <h4>Primary Sport</h4>
-                    <select ng-model="athlete.profile.primarySportId" ng-options="sport.id as sport.name for sport in sports">
+                    <select id="edit-profile-select-sport-cta" ng-model="athlete.profile.primarySportId" ng-options="sport.id as sport.name for sport in sports">
                         <option value="">Select Sport</option>
                     </select>
                 </div>
                 <div class="form-block-half-row">
                     <h4>Primary Position</h4>
-                    <input type="text" maxlength="30" ng-model="athlete.profile.primaryPosition" class="form-control" placeholder="Enter Primary Position"/>
+                    <input id="edit-profile-position-cta" type="text" maxlength="30" ng-model="athlete.profile.primaryPosition" class="form-control" placeholder="Enter Primary Position"/>
                 </div>
                 <div class="form-block-half-row">
                     <h4>Hometown</h4>
-                    <input type="text" maxlength="30" ng-model="athlete.profile.hometown" class="form-control" placeholder="Enter Hometown"/>
+                    <input id="edit-profile-hometown-cta" type="text" maxlength="30" ng-model="athlete.profile.hometown" class="form-control" placeholder="Enter Hometown"/>
                 </div>
                 <div>
                     <h4>
@@ -40,6 +40,7 @@
                         </span>
                     </h4>
                     <textarea
+                        id="edit-profile-about-me-cta"
                         class="form-control"
                         rows="5"
                         maxlength="{{maxAboutMeLength}}"
@@ -52,8 +53,8 @@
             </div>
         </div>
         <div class="button-row">
-            <save-button is-saving="isSaving" confirm-save="confirmSave"></save-button>
-            <a href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
+            <save-button id="basic-info-save-cta" is-saving="isSaving" confirm-save="confirmSave"></save-button>
+            <a id="basic-info-cancel-cta" href class="btn-simple-cancel pull-right" ui-sref="Athlete.Profile({id: athlete.id})">Cancel</a>
         </div>
     </form>
 </div>
