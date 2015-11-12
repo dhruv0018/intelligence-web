@@ -1,44 +1,55 @@
 @import (reference) "main.less";
 
 .qa-pickup {
+
+    .qa-time-remaining {
+
+        text-align: right;
+        text-transform: uppercase;
+        color: @brand-primary;
+        font-weight: 500;
+    }
+
+    krossover-priority-label-icon {
+
+        margin-right: 5px;
+    }
+
     /*TODO: Apply to all modals or none*/
     letter-spacing: normal;
 
-    .modal-header {
+    .modal-header .modal-title {
 
-        .modal-title {
-            text-align: left;
-
-        }
-
-        .icon {
-            cursor: pointer;
-            padding: 5px;
-            margin-botton: 10px;
-        }
-
+        text-align: left;
     }
 
     .modal-footer {
+
         border-top: 1px solid @gray-lighter;
 
         button {
-            float:left;
-            text-align:center;
-            width:32%;
+
+            &.cancel {
+
+                float: left;
+            }
+
+            text-align: center;
             margin: 0 auto;
             margin-left: 5px;
+            padding: 5px 20px;
         }
     }
 
     .modal-body {
-        text-align: center;
-        color: @brand-blue;
-        font-size: 16px;
-        font-weight: 500;
-        letter-spacing: 0.01em;
-        text-align: center;
-        text-transform: uppercase;
+
+        text-align: left;
+
+        &.pickup-success-body,
+        &.pickup-stale-body {
+
+            text-align: center;
+        }
 
         .icon {
             font-size: 55px;
