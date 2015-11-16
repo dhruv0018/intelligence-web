@@ -55,9 +55,9 @@ function AdminQueueDataDependencies (
         sports: sports.load(),
         leagues: leagues.load(),
         //TODO should be able to use load, but causes wierd caching issues
-        users: users.load(VIEWS.QUEUE.USERS),
-        teams: teams.load(VIEWS.QUEUE.TEAMS),
-        games : games.load(VIEWS.QUEUE.GAME.ALL)
+        users: users.parallelGet(VIEWS.QUEUE.USERS),
+        teams: teams.parallelGet(VIEWS.QUEUE.TEAMS),
+        games : games.parallelGet(VIEWS.QUEUE.GAME.ALL)
     };
     return Data;
 }
