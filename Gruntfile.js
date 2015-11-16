@@ -274,7 +274,7 @@ module.exports = function(grunt) {
                         'lib/directives/team-label-icon/*.less',
                         'lib/directives/priority-label-icon/*.less',
                         'lib/directives/event-adjuster/styles.less',
-                        'lib/directives/self-editing-playlist/styles.less',
+                        'lib/features/self-editing-playlist/styles.less',
                         'lib/dialogs/breakdown-dialog/styles.less',
                         'lib/directives/field/**/*.less',
                         'lib/directives/admin-role/styles.less',

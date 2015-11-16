@@ -17,6 +17,7 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'Modals',
     'Filters',
     'Directives',
+    'Features',
     'Dialogs',
     'OnFileChange',
     'FitElement',
