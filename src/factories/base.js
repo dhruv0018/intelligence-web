@@ -14,8 +14,16 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q', '$injector', 'Utilities',
-    function($q, $injector, util) {
+    '$q',
+    '$injector',
+    'Utilities',
+    '$http',
+    function(
+        $q,
+        $injector,
+        util,
+        http)
+    {
 
         var BaseFactory = {
 
@@ -67,6 +75,37 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var storage = $injector.get(self.storage);
 
                 return storage.get(id);
+            },
+
+            /**
+             * Gets resources in parallel
+             * @param {Object} query - a query object
+             * @returns {Promiser} - an array of promises
+             */
+            parallelGet: function(query) {
+                let self = this;
+
+                //if no x-total-count is available, assume this number of total records
+                const RESOURCE_COUNT_FALLBACK = 12000;
+                //get a header for the number of records related to that query
+                return http.head(query).then(response => {
+                    let headers = response.headers();
+                    const TOTAL_RECORD_COUNT = headers['X-total-count'] || RESOURCE_COUNT_FALLBACK;
+                    const PAGE_SIZE = self.PAGE_SIZE;
+                    const PAGES = Math.ceil(TOTAL_RECORD_COUNT/PAGE_SIZE);
+
+                    let promises = [];
+                    let start = 0;
+                    for (let index = 0; index < PAGES; index++) {
+                        let PAGE_QUERY = angular.copy(query);
+                        PAGE_QUERY.count = PAGE_SIZE;
+                        PAGE_QUERY.start = start;
+                        start = start + PAGE_SIZE;
+                        promises.push(self.query(PAGE_QUERY));
+                    }
+                    return $q.all(promises);
+                });
+
             },
 
             /**
