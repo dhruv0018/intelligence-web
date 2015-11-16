@@ -376,7 +376,9 @@ TeamController.$inject = [
     'LeaguesFactory',
     'SchoolsFactory',
     'TeamsFactory',
-    'UsersFactory'
+    'PRIORITIES',
+    'UsersFactory',
+    'EMAILS'
 ];
 
 function TeamController (
@@ -392,9 +394,12 @@ function TeamController (
     leagues,
     schoolsFactory,
     teams,
-    users
+    PRIORITIES,
+    users,
+    EMAILS
 ) {
 
+    $scope.PRIORITIES = PRIORITIES;
     $scope.ROLES = ROLES;
     $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
@@ -403,6 +408,8 @@ function TeamController (
 
     $scope.leagues = leagues.getList();
     $scope.indexedLeagues = leagues.getCollection();
+
+    $scope.EMAILS = EMAILS;
 
     var team;
     $scope.schoolName = '';
@@ -503,7 +510,7 @@ function TeamController (
         var newCoachRole = ROLES.HEAD_COACH;
         newCoachRole.userId = coach.id;
         newCoachRole.teamId = $scope.team.id;
-        coach.addRole(newCoachRole);
+        coach.addRole(newCoachRole, $scope.team);
         coach.save();
         $scope.team.roles = $scope.team.roles || [];
         $scope.team.roles.push(newCoachRole);

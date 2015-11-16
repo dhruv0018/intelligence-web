@@ -7,8 +7,8 @@ export default `
         <div class="game-indexer-content">
             <div ng-show="filteredGames.length > 0">
                 <h3>Games History</h3>
-                <!--FIXME: Put in styles for table instead of using other table styles-->
-                <table class="table-striped table-hover indexer-list">
+
+                <table class="queue-list">
                     <thead>
                     <tr>
                         <th>Date Assigned</th>
@@ -27,6 +27,11 @@ export default `
                         | gameCurrentUserAssignmentIsActive: false
                         | orderBy: getLatestAssignmentDate: true
                         as filteredGames"
+                        ng-class="{
+                            'queue-list__highest-priority': game.priority === PRIORITIES.HIGHEST.id,
+                            'queue-list__high-priority': game.priority === PRIORITIES.HIGH.id,
+                            'queue-list__normal-priority': game.priority === PRIORITIES.NORMAL.id,
+                        }"
                     >
                         <td>{{game.userAssignment().timeAssigned | date:'MM/dd/yyyy'}}</td>
                         <td>{{game.id}}</td>
