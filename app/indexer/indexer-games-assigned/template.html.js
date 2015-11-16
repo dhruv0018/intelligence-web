@@ -54,7 +54,7 @@ export default `
                         | gameIsIndexingOrQaing
                         | gameHasCurrentUserAssignment
                         | gameCurrentUserAssignmentIsActive: true
-                        | orderBy: ['-priority', 'timeRemaining']
+                        | orderBy: ['-priority', 'assignmentTimeRemaining']
                         as filteredGames"
                         ng-class="{
                             'queue-list__highest-priority': game.priority === PRIORITIES.HIGHEST.id,
@@ -78,7 +78,7 @@ export default `
                         </td>
                         <td>{{ game.getHeadCoachName() }}</td>
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
-                        <td>{{ game.timeRemaining | millisecondsAsDaysHoursMinutes }}</td>
+                        <td>{{ game.assignmentTimeRemaining | millisecondsAsDaysHoursMinutes }}</td>
                         <!--TODO: Make this into a directive-->
                         <td>
                             <span ng-if="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)">

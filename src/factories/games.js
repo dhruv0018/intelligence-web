@@ -158,6 +158,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 });
             },
 
+            /**
+             * @param {Object} now - moment time object
+             */
+            timeRemaining: function(now = moment.utc()) {
+
+                return moment(this.deadline).diff(now);
+            },
+
             getByUploaderRole: function(userId, teamId) {
 
                 userId = userId || session.getCurrentUserId();
@@ -1051,35 +1059,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.arenaEvents;
             },
 
-            getRemainingTime: function(uploaderTeam, now) {
-
-                var self = this;
-
-                now = now || moment.utc();
-
-                if (!self.submittedAt) return 0;
-
-                var submittedAt = moment.utc(self.submittedAt);
-
-                if (!submittedAt.isValid()) return 0;
-
-                var timePassed = moment.duration(submittedAt.diff(now));
-                var turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
-
-                var timeRemaining = moment.duration();
-
-                if (timePassed < 0) {
-
-                    timeRemaining = turnaroundTime.add(timePassed);
-                }
-
-                else {
-
-                    timeRemaining = turnaroundTime.subtract(timePassed);
-                }
-
-                return timeRemaining.asMilliseconds();
-            },
             getDeadlineToReturnGame: function(uploaderTeam) {
 
                 if (!this.submittedAt) return 0;

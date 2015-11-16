@@ -221,26 +221,6 @@ function QueueController (
             .then(count => $scope.totalGameCount = count);
     });
 
-    var refreshGames = function() {
-
-        angular.forEach($scope.queue, function(game) {
-
-            if (game.remainingTime) {
-
-                game.remainingTime = moment.duration(game.remainingTime).subtract(1, 'minute').asMilliseconds();
-            }
-        });
-    };
-
-    var ONE_MINUTE = 60000;
-
-    var refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
-
-    $scope.$on('$destroy', function() {
-
-        $interval.cancel(refreshGamesInterval);
-    });
-
     $scope.search = function(filter) {
         let parsedFilter = AdminGames.cleanUpFilter(filter);
 
