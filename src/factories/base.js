@@ -619,7 +619,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                     /* Once the update request finishes. */
                     return update.$promise
 
-                    .then(function() {
+                    .then(function(updated) {
+
+                        /* Update local resource with server resource. */
+                        angular.extend(resource, self.extend(updated));
 
                         delete resource.error;
 

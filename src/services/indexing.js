@@ -134,7 +134,10 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
-                if (event.isEndAndStart) {
+                if (
+                    event.isEndAndStart &&
+                    !event.id
+                ) {
 
                     /* Get the game ID. */
                     let gameId = playManager.gameId;
@@ -155,12 +158,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     let startTag = tagsets.getTag(childId);
 
                     /* Set the current event. */
-                    eventManager.current = new KrossoverEvent(
-                        event.toJSON(),
-                        startTag,
-                        event.time,
-                        gameId
-                    );
+                    eventManager.current = new KrossoverEvent(event, startTag, event.time, gameId);
 
                     if (!tag.isGroup) {
 
