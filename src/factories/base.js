@@ -18,11 +18,13 @@ IntelligenceWebClient.factory('BaseFactory', [
     '$injector',
     'Utilities',
     '$http',
+    'config',
     function(
         $q,
         $injector,
         util,
-        http)
+        http,
+        config)
     {
 
         var BaseFactory = {
@@ -85,21 +87,43 @@ IntelligenceWebClient.factory('BaseFactory', [
             parallelGet: function(query) {
                 let self = this;
 
+                //to turn JS object into query string
+                //adapted from http://stackoverflow.com/questions/1714786/querystring-encoding-of-a-javascript-object
+                //in the absence of https://docs.angularjs.org/api/ng/service/$httpParamSerializer (v1.4)
+                let serialize = function(obj, prefix) {
+                    var str = [];
+                    for(var p in obj) {
+                        if (obj.hasOwnProperty(p)) {
+                            var k = prefix ? prefix: p, v = obj[p];
+                            str.push(typeof v == 'object' ?
+                            serialize(v, k) :
+                            encodeURIComponent(k) + '=' + encodeURIComponent(v));
+                        }
+                    }
+                    return str.join('&');
+                };
+
                 //if no x-total-count is available, assume this number of total records
                 const RESOURCE_COUNT_FALLBACK = 12000;
+
+                let serializedQuery = serialize(query);
+                let headRequest = `${config.api.uri}${self.description}`;
+                if (Object.keys(query).length > 0) {
+                    headRequest = `${headRequest}?${serializedQuery}`;
+                }
+
                 //get a header for the number of records related to that query
-                return http.head(query).then(response => {
+                return http.head(headRequest).then(response => {
                     let headers = response.headers();
-                    const TOTAL_RECORD_COUNT = headers['X-total-count'] || RESOURCE_COUNT_FALLBACK;
+                    const TOTAL_RECORD_COUNT = headers['X-total-count']|| headers['x-total-count'] || RESOURCE_COUNT_FALLBACK;
                     const PAGE_SIZE = self.PAGE_SIZE;
                     const PAGES = Math.ceil(TOTAL_RECORD_COUNT/PAGE_SIZE);
-
                     let promises = [];
                     let start = 0;
                     for (let index = 0; index < PAGES; index++) {
                         let PAGE_QUERY = angular.copy(query);
-                        PAGE_QUERY.count = PAGE_SIZE;
                         PAGE_QUERY.start = start;
+                        PAGE_QUERY.count = PAGE_SIZE;
                         start = start + PAGE_SIZE;
                         promises.push(self.query(PAGE_QUERY));
                     }
