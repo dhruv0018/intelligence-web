@@ -11,7 +11,7 @@ describe('BaseFactory', function() {
         expect(BaseFactory).to.exist;
     }));
 
-    describe.only('parallelGet', () => {
+    describe('parallelGet', () => {
         let query,
             httpBackend,
             endpoint,
@@ -26,29 +26,44 @@ describe('BaseFactory', function() {
                 games,
                 $httpBackend) =>
                 {
-                query = {};
                 games = games;
                 resource = games.extend({});
+                query = {
+                    count: resource.PAGE_SIZE,
+                    isDeleted: false,
+                    start: 0
+                };
                 httpBackend = $httpBackend;
                 endpoint = `${config.api.uri}${resource.description}`;
             }
         ]));
 
-        it('should return a promise', inject([
+        afterEach(function() {
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
+
+        it.only('should return the right number of results', inject([
             'GamesFactory',
-            (games) => {
+            (games, done) => {
                 const PAGE_SIZE = resource.PAGE_SIZE;
-                let firstPage = `${endpoint}?count=${PAGE_SIZE}&isDeleted=false&start=0`;
-                httpBackend.when('HEAD', endpoint).respond({}, {'X-total-count': 2});
-                httpBackend.when('GET', firstPage).respond([
+                const TOTAL_COUNT = 2;
+                let expectedQuery = `${endpoint}?count=${PAGE_SIZE}&isDeleted=false&start=0`;
+                httpBackend.when('HEAD', expectedQuery).respond({}, {'X-total-count': TOTAL_COUNT});
+                httpBackend.when('GET', expectedQuery).respond([
                     {id: 1},
                     {id: 2}
                 ]);
+
+                let numberResources = null;
                 resource.parallelGet(query).then( () => {
-                    let expectedResource = games.get(1);
-                    expect(expectedResource).to.not.be.null;
+                    let expectedResources = games.getList(expectedQuery);
+                    numberResources = expectedResources.length;
+                    expect(numberResources).to.not.be.null;
+                    expect(numberResources).to.equal(TOTAL_COUNT);
                 });
                 httpBackend.flush();
+
         }]));
     });
 
