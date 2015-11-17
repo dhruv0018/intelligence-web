@@ -15,22 +15,22 @@ describe('BaseFactory', function() {
         let query,
             httpBackend,
             endpoint,
+            resourceFactory = 'UsersFactory',
             resource;
 
         beforeEach(inject([
             'config',
-            'GamesFactory',
+            resourceFactory,
             '$httpBackend',
             (
                 config,
-                games,
+                resources,
                 $httpBackend) =>
                 {
-                games = games;
-                resource = games.extend({});
+                resources = resources;
+                resource = resources.extend({});
                 query = {
                     count: resource.PAGE_SIZE,
-                    isDeleted: false,
                     start: 0
                 };
                 httpBackend = $httpBackend;
@@ -43,12 +43,12 @@ describe('BaseFactory', function() {
             httpBackend.verifyNoOutstandingRequest();
         });
 
-        it.only('should return the right number of results', inject([
-            'GamesFactory',
-            (games, done) => {
+        it('should return the right number of results', inject([
+            resourceFactory,
+            resources => {
                 const PAGE_SIZE = resource.PAGE_SIZE;
                 const TOTAL_COUNT = 2;
-                let expectedQuery = `${endpoint}?count=${PAGE_SIZE}&isDeleted=false&start=0`;
+                let expectedQuery = `${endpoint}?count=${PAGE_SIZE}&start=0`;
                 httpBackend.when('HEAD', expectedQuery).respond({}, {'X-total-count': TOTAL_COUNT});
                 httpBackend.when('GET', expectedQuery).respond([
                     {id: 1},
@@ -57,7 +57,7 @@ describe('BaseFactory', function() {
 
                 let numberResources = null;
                 resource.parallelGet(query).then( () => {
-                    let expectedResources = games.getList(expectedQuery);
+                    let expectedResources = resources.getList(expectedQuery);
                     numberResources = expectedResources.length;
                     expect(numberResources).to.not.be.null;
                     expect(numberResources).to.equal(TOTAL_COUNT);
