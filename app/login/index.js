@@ -511,8 +511,8 @@ function LoginController(
                 }).then(function() {
 
                     alerts.add({
-                        type: 'info',
-                        message: 'An email has been sent to ' + email + ' with further instructions'
+                        type: 'success',
+                        message: 'An email has been sent to ' + email + ' with further instructions.'
                     });
                 });
             },
