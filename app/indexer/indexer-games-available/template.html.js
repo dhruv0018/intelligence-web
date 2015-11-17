@@ -11,7 +11,7 @@ export default `
                 <thead>
                     <tr>
                         <th>Game ID</th>
-                        <th>Game</th>
+                        <th>Indexer</th>
                         <th>Sport</th>
                         <th>Time Left</th>
                         <th>Action</th>
@@ -24,7 +24,7 @@ export default `
                         | gameNotIndexedByCurrentUser
                         | orderBy: ['-priority', 'timeRemaining']
                         | limitTo: 100
-                        as filteredGames"
+                        as filteredGames track by $index"
                         ng-class="{
                             'queue-list__highest-priority': game.priority === PRIORITIES.HIGHEST.id,
                             'queue-list__high-priority': game.priority === PRIORITIES.HIGH.id,
@@ -34,7 +34,7 @@ export default `
                         <td>{{game.id}}</td>
                         <!--TODO:Add as directive or factory method -->
                         <td>
-                            <span>{{ teams[game.teamId].name }} vs {{ teams[game.opposingTeamId].name }}</span>
+                            <span>{{ users[game.currentAssignment().userId].name }}</span>
                             <krossover-team-label-icon
                                 class="pull-right"
                                 ng-if="teams[game.uploaderTeamId].label"
