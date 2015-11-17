@@ -81,8 +81,8 @@ IntelligenceWebClient.factory('BaseFactory', [
 
             /**
              * Gets resources in parallel
-             * @param {Object} query - a query object
-             * @returns {Promiser} - an array of promises
+             * @param {Object} query - a query configuration object
+             * @returns {Object} - a promise representing pages of resources
              */
             parallelGet: function(query) {
                 let self = this;
