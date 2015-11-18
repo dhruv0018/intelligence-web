@@ -40,10 +40,16 @@
     </span>
 
     <wsc-link
-        ng-if="(state.current.name === 'Games.Breakdown' || isReel) &&
-                (isUploader || isCoachOnUploaderTeam || (isGame && isOnUploaderTeam))"
-        for-reel="isReel"
-        for-game="isGame"
+        ng-if="isGame && state.current.name === 'Games.Breakdown' && (isUploader || isOnUploaderTeam)"
+        game-id="film.id"
+        team="teams[0]"
+        feature="WSCLink"
+    ></wsc-link>
+
+    <wsc-link
+        ng-if="isReel && (isUploader || isCoachOnUploaderTeam)"
+        reel-id="film.id"
+        team="teams[0]"
         feature="WSCLink"
     ></wsc-link>
 </div>

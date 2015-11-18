@@ -14,8 +14,34 @@ var FilmHome = angular.module('Coach.FilmHome');
  * @type {controller}
  */
 FilmHome.controller('Coach.FilmHome.controller', [
-    '$rootScope', '$scope', '$state', '$filter', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', 'SessionService', 'Coach.Data', 'ROLES',
-    function controller($rootScope, $scope, $state, $filter, reels, games, players, teams, users, session, data, ROLES) {
+    '$rootScope',
+    '$scope',
+    '$state',
+    '$filter',
+    'ReelsFactory',
+    'GamesFactory',
+    'PlayersFactory',
+    'TeamsFactory',
+    'UsersFactory',
+    'LeaguesFactory',
+    'SessionService',
+    'Coach.Data',
+    'ROLES',
+    function controller(
+        $rootScope,
+        $scope,
+        $state,
+        $filter,
+        reels,
+        games,
+        players,
+        teams,
+        users,
+        leagues,
+        session,
+        data,
+        ROLES
+    ) {
 
         var currentUser = session.currentUser;
         var currentRole = currentUser.currentRole;
@@ -29,6 +55,11 @@ FilmHome.controller('Coach.FilmHome.controller', [
         $scope.team = teams.get(teamId);
         $scope.roster = $scope.team.roster;
         $scope.teamPlayers = $filter('toArray')($scope.roster.playerInfo);
+
+        //league related
+        let league = leagues.get($scope.team.leagueId);
+        let season = league.getCurrentSeason();
+        $scope.seasonId = season.id;
 
         //player related
         var playersFilter = { rosterId: $scope.team.roster.id };

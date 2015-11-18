@@ -1,11 +1,12 @@
-var PAGE_SIZE = 100;
+const PAGE_SIZE = 100;
 
-var pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
+const moment = require('moment');
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('LeaguesFactory', [
     'BaseFactory',
@@ -15,7 +16,7 @@ IntelligenceWebClient.factory('LeaguesFactory', [
         config
     ) {
 
-        var LeaguesFactory = {
+        const LeaguesFactory = {
 
             description: 'leagues',
 
@@ -26,6 +27,15 @@ IntelligenceWebClient.factory('LeaguesFactory', [
             getLeaguesBySportId: function(sportId) {
                 let allLeagues = this.getList();
                 return allLeagues.filter(league => league.sportId === sportId);
+            },
+
+            getCurrentSeason: function() {
+                let currentDate = moment(Date.now());
+                return this.seasons.find(season => {
+                    if (currentDate.isAfter(moment(season.startDate)) && currentDate.isBefore(moment(season.endDate))) {
+                        return season;
+                    }
+                });
             },
 
             belongsToYardFormatWhitelist(league = this) {
