@@ -19,6 +19,7 @@
 
             <krossover-athlete  ng-repeat="rosterEntry in playerRosterEntries| activeStatus: filtering | filter: isUnknown track by $index"
                                 athlete="rosterEntry.player"
+                                roster-state="rosterState"
                                 roster="game.rosters[team.id]"
                                 roster-entry="rosterEntry"
                                 player-entries="playerRosterEntries"
@@ -28,10 +29,13 @@
                                 editable="editable"></krossover-athlete>
 
             <div class="controls">
-                <button ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
-                        class="add-player btn btn-default pull-left"
-                        id="game-roster-add-new-player-cta"
-                        ng-click="addNewPlayer()">
+                <button
+                    ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
+                    class="add-player btn btn-default pull-left"
+                    id="game-roster-add-new-player-cta"
+                    ng-click="addNewPlayer()"
+                    ng-disabled="rosterHasEmptyRows || rosterState.isSaving"
+                >
                     Add New Player
                     <i class="icon icon-plus"></i>
                 </button>
