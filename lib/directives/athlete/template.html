@@ -38,6 +38,7 @@
                      id="{{idHook}}-jersey-cta"
                      size="3"
                      ng-change="updateAthleteInformation()"
+                     ng-model-options="{updateOn: 'blur'}"
                      name="jerseyNumber"
                      type="text"
                      ng-model="rosterEntry.playerInfo.jerseyNumber"
@@ -50,6 +51,7 @@
                     <input
                      id="{{idHook}}-first-name-cta"
                      ng-change="updateAthleteInformation()"
+                     ng-model-options="{updateOn: 'blur'}"
                      ng-if="!team.isCustomerTeam"
                      class="name"
                      placeholder="First Name"
@@ -65,6 +67,7 @@
                     <input
                      id="{{idHook}}-last-name-cta"
                      ng-change="updateAthleteInformation()"
+                     ng-model-options="{updateOn: 'blur'}"
                      ng-if="!team.isCustomerTeam"
                      class="name"
                      placeholder="Last Name"
