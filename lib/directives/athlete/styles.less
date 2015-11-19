@@ -46,11 +46,17 @@
 
             input {
                 border-radius: @border-radius-small;
-                border: 1px solid @gray-border;
+                border: 1px solid #aaa;
 
                 &.empty-jersey {
 
                     border: thin solid @brand-primary;
+                }
+
+                &:disabled {
+
+                    opacity: 0.75;
+                    border: 1px solid @gray-border;
                 }
             }
 

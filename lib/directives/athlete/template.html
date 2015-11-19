@@ -60,7 +60,7 @@
                      class="name"
                      placeholder="First Name"
                      ng-model="athlete.firstName"
-                     ng-disabled="!rosterEntry.playerInfo.isActive">
+                     ng-disabled="!rosterEntry.playerInfo.isActive || rosterEntry.playerInfo.jerseyNumber === ''">
 
                     <span ng-if="team.isCustomerTeam"> {{athlete.firstName}}</span>
 
@@ -76,7 +76,7 @@
                      class="name"
                      placeholder="Last Name"
                      ng-model="athlete.lastName"
-                     ng-disabled="!rosterEntry.playerInfo.isActive">
+                     ng-disabled="!rosterEntry.playerInfo.isActive || rosterEntry.playerInfo.jerseyNumber === ''">
 
                     <span ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
 
@@ -87,7 +87,7 @@
                     <data-positions-dropdown
                      id="{{idHook}}-positions-cta"
                      ng-model="rosterEntry.playerInfo.positionIds"
-                     data-is-active="rosterEntry.playerInfo.isActive"
+                     data-is-active="rosterEntry.playerInfo.isActive && rosterEntry.playerInfo.jerseyNumber !== ''"
                      data-player="athlete"
                      data-positionset="positionset"></data-positions-dropdown>
 
