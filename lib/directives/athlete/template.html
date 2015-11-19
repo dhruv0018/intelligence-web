@@ -44,7 +44,7 @@
                         ng-model="rosterEntry.playerInfo.jerseyNumber"
                         ng-disabled="!rosterEntry.playerInfo.isActive"
                         ng-class="{
-                            'empty-jersey': athleteForm.jerseyNumber.$dirty && !rosterEntry.playerInfo.jerseyNumber.length
+                            'empty-jersey': athleteForm.jerseyNumber.$touched && !rosterEntry.playerInfo.jerseyNumber.length
                         }"
                     >
 
