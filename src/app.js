@@ -1,5 +1,15 @@
 var pkg = require('../package.json');
 
+let host = window.location.host;
+
+if (
+    host === 'new.krossover.com' ||
+    host === 'v2-pre-prod.krossover.com'
+) {
+
+    document.location.assign('http://app.krossover.com/intelligence/login');
+}
+
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
