@@ -22,27 +22,6 @@ import Indexer from '../app/indexer/index.js';
 import Styleguide from '../app/styleguide/index.js';
 import Analytics from '../app/analytics/index.js';
 
-import AppDownloads from '../lib/directives/app-downloads';
-import AdminQueueGames from '../lib/directives/admin-queue-games';
-import FieldComponent from '../lib/directives/field';
-import IndexingBlock from '../lib/directives/indexing-block';
-import DynamicTables from '../lib/directives/dynamic-tables';
-import { IndexerFields, UserFields } from '../lib/directives/fields';
-import Play from '../lib/directives/play';
-import SelectMediaSrc from '../lib/directives/video-player/select-media-src';
-import ArenaChart from '../lib/directives/arena-chart';
-import BreakdownDialog from '../lib/dialogs/breakdown-dialog';
-import AdminRole from '../lib/directives/admin-role';
-import EventAdjuster from '../lib/directives/event-adjuster';
-import HighlightOnClick from '../lib/directives/highlight-on-click';
-import KrossoverPrioritySelect from '../lib/directives/priority-select';
-import KrossoverLabelSelect from '../lib/directives/label-select';
-import KrossoverTeamLabelIcon from '../lib/directives/team-label-icon';
-import PriorityLabelLegend from '../lib/directives/priority-label-legend';
-import KrossoverPriorityLabelIcon from '../lib/directives/priority-label-icon';
-
-import RevertGameStatus from '../lib/modals/revert-game-status';
-
 import Lib from '../lib';
 
 /* App dependencies */
