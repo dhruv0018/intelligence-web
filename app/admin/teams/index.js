@@ -516,12 +516,6 @@ function TeamController (
         $scope.addNewHeadCoach = false;
     };
 
-    $scope.save = function(team) {
-
-        teams.save(team).then(function() {
-            $state.go('teams');
-        });
-    };
 }
 
 /**
