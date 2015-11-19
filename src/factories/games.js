@@ -1,4 +1,4 @@
-var PAGE_SIZE = 20;
+var PAGE_SIZE = 500;
 
 var moment = require('moment');
 
@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
         var GamesFactory = {
 
-            PAGE_SIZE: 1000,
+            PAGE_SIZE,
 
             description: 'games',
 
