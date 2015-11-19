@@ -7,7 +7,7 @@
                 <thead>
                     <tr>
                         <th ng-if="team.isCustomerTeam">Picture</th>
-                        <th>Jersey Number</th>
+                        <th>Jersey Number (* required)</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th ng-if="positionset.positions && positionset.positions.length > 0">Position</th>
@@ -36,8 +36,7 @@
                     ng-click="addNewPlayer()"
                     ng-disabled="rosterHasEmptyRows || rosterState.isSaving"
                 >
-                    Add New Player
-                    <i class="icon icon-plus"></i>
+                    Add New Player <i class="icon icon-plus"></i>
                 </button>
 
                 <a class="excel-upload"

@@ -35,14 +35,18 @@
                 <td class="athlete-column">
 
                     <input
-                     id="{{idHook}}-jersey-cta"
-                     size="3"
-                     ng-change="updateAthleteInformation()"
-                     ng-model-options="{updateOn: 'blur'}"
-                     name="jerseyNumber"
-                     type="text"
-                     ng-model="rosterEntry.playerInfo.jerseyNumber"
-                     ng-disabled="!rosterEntry.playerInfo.isActive">
+                        id="{{idHook}}-jersey-cta"
+                        size="3"
+                        ng-change="updateAthleteInformation()"
+                        ng-model-options="{updateOn: 'blur'}"
+                        name="jerseyNumber"
+                        type="text"
+                        ng-model="rosterEntry.playerInfo.jerseyNumber"
+                        ng-disabled="!rosterEntry.playerInfo.isActive"
+                        ng-class="{
+                            'empty-jersey': athleteForm.jerseyNumber.$dirty && !rosterEntry.playerInfo.jerseyNumber.length
+                        }"
+                    >
 
                 </td>
 
