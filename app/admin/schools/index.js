@@ -109,7 +109,7 @@ Schools.controller('SchoolController', [
             $scope.teams = teams.getList({ schoolId: schoolId });
         }
 
-        $scope.school = $scope.school || {};
+        $scope.school = $scope.school || schools.create();
         $scope.teams = $scope.teams || [];
 
         $scope.leagues = leagues;
