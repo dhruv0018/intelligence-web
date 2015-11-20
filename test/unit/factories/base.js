@@ -11,7 +11,7 @@ describe('BaseFactory', function() {
         expect(BaseFactory).to.exist;
     }));
 
-    describe('parallelGet', () => {
+    describe.only('pagedQuery', () => {
         let query,
             httpBackend,
             endpoint,
@@ -56,7 +56,7 @@ describe('BaseFactory', function() {
                 ]);
 
                 let numberResources = null;
-                resource.parallelGet(query).then( () => {
+                resource.pagedQuery(query).then( () => {
                     let expectedResources = resources.getList(expectedQuery);
                     numberResources = expectedResources.length;
                     expect(numberResources).to.not.be.null;

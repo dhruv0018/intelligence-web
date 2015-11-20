@@ -84,7 +84,7 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @param {Object} query - a query configuration object
              * @returns {Object} - a promise representing pages of resources
              */
-            parallelGet: function(query) {
+            pagedQuery: function(query) {
                 let self = this;
 
                 //to turn JS object into query string
