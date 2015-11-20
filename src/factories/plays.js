@@ -1,5 +1,4 @@
 import KrossoverPlay from '../entities/play';
-import KrossoverEvent from '../entities/event';
 
 const pkg = require('../../package.json');
 
@@ -14,22 +13,22 @@ IntelligenceWebClient.factory('PlaysFactory', [
     '$sce',
     'VIDEO_STATUSES',
     'PlaysResource',
+    'KrossoverPlayFactory',
     'BaseFactory',
     'TagsetsFactory',
     'Utilities',
     'CUEPOINT_CONSTANTS',
-    'Video',
     function(
         $injector,
         config,
         $sce,
         VIDEO_STATUSES,
         PlaysResource,
+        KrossoverPlayFactory,
         BaseFactory,
         tagsets,
         utils,
-        CUEPOINT_CONSTANTS,
-        Video
+        CUEPOINT_CONSTANTS
     ) {
 
         var PlaysFactory = {
@@ -44,7 +43,10 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             extend: function (play) {
 
-                return this.instantiate(play);
+                play = KrossoverPlayFactory.create(play);
+                angular.augment(play, this);
+
+                return play;
             },
 
             unextend: function (play) {
@@ -52,32 +54,6 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 play = play || this;
 
                 return play.toJSON();
-            },
-
-            /**
-             * FIXME:
-             * Rename to method 'create'. Must resolve any issues
-             * where BaseFactory.create is invoked, as renaming
-             * will overrride BaseFactory.create
-             */
-            instantiate: function (play) {
-
-                const playIsEntity = play instanceof KrossoverPlay;
-                const eventsAreEntities =
-                    play.events &&
-                    play.events[0] instanceof KrossoverEvent;
-
-                if (!(playIsEntity || eventsAreEntities)) {
-
-                    play = new KrossoverPlay(play, tagsets);
-                    angular.extend(play, this);
-                }
-
-                // TODO: Move to Play entity constructor
-                /* Instantiate Video entity */
-                play.clip = play.clip ? new Video(play.clip) : null;
-
-                return play;
             },
 
             filterPlays: function(filterId, resources, success, error) {

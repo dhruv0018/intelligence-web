@@ -83,6 +83,15 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Create new event. */
                 eventManager.current = new KrossoverEvent(null, tag, time, game.id);
 
+                /* If the play already exists, add play ID to event to make it 'savable' */
+                if (
+                    playManager.current &&
+                    playManager.current.id
+                ) {
+
+                    eventManager.current.playId = playManager.current.id;
+                }
+
                 if (!tag.isGroup) {
 
                     /* Add event to the current play. */
@@ -111,7 +120,15 @@ IntelligenceWebClient.factory('IndexingService', [
             */
             savable: function() {
 
-                return this.nextable() && eventManager.current && eventManager.current.isEnd;
+                const current = eventManager.current;
+
+                const savable =
+                    this.nextable() &&
+                    current &&
+                    (current.isEnd ||
+                    (current.playId && current.isValid));
+
+                return savable;
             },
 
             /**
@@ -134,7 +151,10 @@ IntelligenceWebClient.factory('IndexingService', [
                 eventManager.current = null;
 
                 /* If the event is an end-and-start event. */
-                if (event.isEndAndStart) {
+                if (
+                    event.isEndAndStart &&
+                    !event.id
+                ) {
 
                     /* Get the game ID. */
                     let gameId = playManager.gameId;
@@ -155,12 +175,7 @@ IntelligenceWebClient.factory('IndexingService', [
                     let startTag = tagsets.getTag(childId);
 
                     /* Set the current event. */
-                    eventManager.current = new KrossoverEvent(
-                        event.toJSON(),
-                        startTag,
-                        event.time,
-                        gameId
-                    );
+                    eventManager.current = new KrossoverEvent(event, startTag, event.time, gameId);
 
                     if (!tag.isGroup) {
 
