@@ -320,15 +320,6 @@ function LoginController(
     $scope.config = config;
     $scope.isMobile = $rootScope.DEVICE.ANDROID || $rootScope.DEVICE.IOS;
 
-    if ($state.current.name === 'login') {
-
-        alerts.clear();
-        alerts.add({
-            type: 'warning',
-            message: 'TIME TO REFRESH: <a href="http://support.krossover.com/customer/portal/articles/1642921" target="_blank">PLEASE CLEAR YOUR CACHE</a>'
-        });
-    }
-
     let currentUser = session.retrieveCurrentUser();
 
     if (currentUser && currentUser.persist) {
