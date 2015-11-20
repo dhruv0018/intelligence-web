@@ -4,6 +4,7 @@ import GapField from './Gap.js';
 import PassingZoneField from './PassingZone.js';
 import FormationField from './Formation.js';
 import DropdownField from './Dropdown.js';
+import PeriodField from './Period.js';
 import TextField from './Text.js';
 import YardField from './Yard.js';
 import ArenaField from './Arena.js';
@@ -20,6 +21,7 @@ export default
     PassingZoneField,
     FormationField,
     DropdownField,
+    PeriodField,
     TextField,
     YardField,
     ArenaField
