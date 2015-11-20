@@ -41,14 +41,29 @@
 
             <div>
 
-                <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
-                    <i class="arena-event-icon icon-circle"></i>Made
-                </krossover-checkbox>
+                <div class="filter-group__item">
 
-                <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
-                    <i class="arena-event-icon icon-x"></i>Missed
-                </krossover-checkbox>
+                    <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'" ng-model="filterModel.shots.blocked" filled="true">
+                        <i class="arena-event-icon icon-circle"></i>Blocked
+                    </krossover-checkbox>
 
+                    <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
+                        <i class="arena-event-icon icon-x"></i>Made
+                    </krossover-checkbox>
+
+                </div>
+
+                <div class="filter-group__item">
+
+                    <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'" ng-model="filterModel.shots.saved" filled="true">
+                        <i class="arena-event-icon icon-circle"></i>Saved
+                    </krossover-checkbox>
+
+                    <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
+                        <i class="arena-event-icon icon-x"></i>Missed
+                    </krossover-checkbox>
+
+                </div>
             </div>
 
         </div>
