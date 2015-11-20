@@ -85,8 +85,6 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @returns {Object} - a promise representing pages of resources
              */
             pagedQuery: function(query) {
-                let self = this;
-
                 //to turn JS object into query string
                 //adapted from http://stackoverflow.com/questions/1714786/querystring-encoding-of-a-javascript-object
                 //in the absence of https://docs.angularjs.org/api/ng/service/$httpParamSerializer (v1.4)
@@ -107,7 +105,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 const RESOURCE_COUNT_FALLBACK = 12000;
 
                 let serializedQuery = serialize(query);
-                let headRequest = `${config.api.uri}${self.description}`;
+                let headRequest = `${config.api.uri}${this.description}`;
                 if (Object.keys(query).length > 0) {
                     headRequest = `${headRequest}?${serializedQuery}`;
                 }
@@ -116,7 +114,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 return http.head(headRequest).then(response => {
                     let headers = response.headers();
                     const TOTAL_RECORD_COUNT = headers['X-total-count']|| headers['x-total-count'] || RESOURCE_COUNT_FALLBACK;
-                    const PAGE_SIZE = self.PAGE_SIZE;
+                    const PAGE_SIZE = this.PAGE_SIZE;
                     const PAGES = Math.ceil(TOTAL_RECORD_COUNT/PAGE_SIZE);
                     let promises = [];
                     let start = 0;
@@ -125,7 +123,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                         PAGE_QUERY.start = start;
                         PAGE_QUERY.count = PAGE_SIZE;
                         start = start + PAGE_SIZE;
-                        promises.push(self.query(PAGE_QUERY));
+                        promises.push(this.query(PAGE_QUERY));
                     }
                     return $q.all(promises);
                 });
