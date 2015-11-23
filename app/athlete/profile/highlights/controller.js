@@ -74,7 +74,10 @@ function HighlightsController (
                 $scope.athlete = users.get($stateParams.id);
                 $scope.profileReels = utils.getSortedArrayByIds(reels, $scope.athlete.profile.reelIds);
                 $scope.featuredReel = $scope.profileReels[0];
-                plays.query({reelId: $scope.featuredReel.id}).then(getPlaysArray);
+
+                if ($scope.featuredReel) {
+                    plays.query({reelId: $scope.featuredReel.id}).then(getPlaysArray);
+                }
             });
         };
 }

@@ -8,6 +8,7 @@
     margin-top: 0;
     background-color: white;
     color: @gray-darker;
+    display: flex;
 
     @media only screen
     and (min-width: @md-screen-sm) {
@@ -25,18 +26,22 @@
 
     .clip-info {
         padding: 0 5px;
-        line-height: 60px;
-        display: inline-block;
-    }
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        align-items: center;
 
-    .krossover-playlist-control {
-        .pull-right;
-        display: inline-block;
-        border: none;
-        margin-top: 14px;
+        .clip-select {
+            flex: 1;
+            padding-right: 30px;
+            border: none;
+            background-color: white;
+            width: 100%;
+            cursor: pointer;
 
-        .play-all-plays {
-            position: static;
+            &:hover {
+                color: @brand-primary;
+            }
         }
     }
 
