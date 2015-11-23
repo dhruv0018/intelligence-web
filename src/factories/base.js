@@ -333,7 +333,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else return angular.isUndefined(filter[key]);
                 });
 
-                if (aFilterIsUndefined) throw new Error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
+                if (aFilterIsUndefined) console.error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
 
                 success = success || function(resources) {
 
@@ -426,7 +426,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else return angular.isUndefined(filter[key]);
                 });
 
-                if (aFilterIsUndefined) throw new Error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
+                if (aFilterIsUndefined) console.error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
 
                 success = success || function(resources) {
 
@@ -680,7 +680,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                     /* Once the update request finishes. */
                     return update.$promise
 
-                    .then(function() {
+                    .then(function(updated) {
+
+                        /* Update local resource with server resource. */
+                        angular.extend(resource, self.extend(updated));
 
                         delete resource.error;
 
