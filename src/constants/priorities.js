@@ -13,7 +13,7 @@ const PRIORITIES = {
 
     'NORMAL': {
         id: 1,
-        name: 'Normal Priority (Default)',
+        name: 'Normal Priority',
         value: 0
     },
 
