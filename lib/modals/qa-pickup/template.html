@@ -16,7 +16,7 @@
                 </div>
                 <div flex="50" class="qa-time-remaining">
                     <div ng-if="game.timeRemaining > 0">{{ game.timeRemaining | millisecondsAsDaysHoursMinutes }} Left to QA</div>
-                    <div ng-if="game.timeRemaining <= 0">6H 00M Left to QA</div>
+                    <div ng-if="game.timeRemaining <= 0">{{assignmentHours}}H 00M Left to QA</div>
                 </div>
             </div>
 

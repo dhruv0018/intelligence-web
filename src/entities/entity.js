@@ -24,6 +24,10 @@ class Entity {
      */
     validate (data) {
 
+        /* TODO: Since we can't use `this` before calling `super`, we need to
+         * refactor this to pass the schema in because we can't add the schema
+         * to the instance via `this`. */
+
         if (!this.schema) {
 
             throw new Error('Invoking Entity.validate without a schema!');
