@@ -39,28 +39,44 @@
 
             <h5> Shots </h5>
 
-            <div>
+            <div ng-if="SPORT_IDS[league.sportId] === 'BASKETBALL'">
 
                 <div class="filter-group__item">
 
-                    <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'" ng-model="filterModel.shots.blocked" filled="true">
-                        <i class="arena-event-icon icon-circle"></i>Blocked
-                    </krossover-checkbox>
-
                     <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
                         <i class="arena-event-icon icon-x"></i>Made
+                    </krossover-checkbox>
+
+                    <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
+                        <i class="arena-event-icon icon-x"></i>Missed
+                    </krossover-checkbox>
+
+                </div>
+
+            </div>
+
+            <div ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'">
+
+                <div class="filter-group__item">
+
+                    <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
+                        <i class="arena-event-icon icon-circle"></i>Scored
+                    </krossover-checkbox>
+
+                    <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
+                        <i class="arena-event-icon icon-x"></i>Missed
                     </krossover-checkbox>
 
                 </div>
 
                 <div class="filter-group__item">
 
-                    <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'" ng-model="filterModel.shots.saved" filled="true">
-                        <i class="arena-event-icon icon-circle"></i>Saved
+                    <krossover-checkbox ng-model="filterModel.shots.blocked" filled="true">
+                        <i class="arena-event-icon icon-diamond"></i>Blocked
                     </krossover-checkbox>
 
-                    <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
-                        <i class="arena-event-icon icon-x"></i>Missed
+                    <krossover-checkbox ng-model="filterModel.shots.saved" filled="true">
+                        <i class="arena-event-icon icon-open_circle"></i>Saved
                     </krossover-checkbox>
 
                 </div>
