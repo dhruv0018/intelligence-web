@@ -2099,4 +2099,16 @@ describe('GamesFactory', function() {
                 assert(TokensService.getAccessToken.should.have.been.called);
         }]));
     });
+
+    describe('getCSVDownloadLink', ()=> {
+        it("Should frame the csv download link",
+            inject(['GamesFactory', 'TokensService', 'config', function(GamesFactory, TokensService, config) {
+                let game = GamesFactory.extend({id:12});
+                config.api.uri = 'http://dummyurl/';
+                sinon.stub(TokensService,'getAccessToken').returns('dummytoken');
+                let expectedUrl = 'http://dummyurl/games/12/stats-csv?access_token=dummytoken';
+                expect(game.getCSVDownloadLink()).to.equal(expectedUrl);
+                assert(TokensService.getAccessToken.should.have.been.called);
+        }]));
+    });
 });
