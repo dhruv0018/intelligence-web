@@ -98,13 +98,13 @@ IntelligenceWebClient.service('Utilities', [
 
         /**
          * @method debounce
-         * @description Returns a function that when called, will invoke the passed in promise-based function after a period of time,
+         * @description Returns a function that when called, will invoke the passed in promise-based function after a period of wait,
          * unless the function is called again before the timer ends. The returned function resolves an existing promise immediately
          * when called so that it doesn't block.
          * @param {function} promiseBasedFunction A promise based function add debounce behavior to
-         * @param {=number} time A time to wait before executing the function, promiseBasedFunction.
+         * @param {=number} wait A time to wait before executing the function, promiseBasedFunction.
          */
-        this.promiseDebounce = function(promiseBasedFunction, time = 2000) {
+        this.promiseDebounce = function(promiseBasedFunction, wait = 2000) {
 
             let timerId;
             let deferred;
@@ -127,7 +127,7 @@ IntelligenceWebClient.service('Utilities', [
                         return deferred.reject(result);
                     });
 
-                }, time);
+                }, wait);
 
                 return deferred.promise;
             }
