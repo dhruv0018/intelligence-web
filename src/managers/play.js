@@ -227,7 +227,7 @@ IntelligenceWebClient.service('PlayManager', [
                 if (this.current.id) {
 
                     /* Update it remotely. */
-                    this.current.save();
+                    this.current.save(null, null, null, false);
                 }
             }
 
