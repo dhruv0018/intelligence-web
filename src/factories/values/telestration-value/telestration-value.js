@@ -11,7 +11,7 @@ module.exports = [
             if (typeof time !== 'number') throw new Error('TelestrationValue time parameter is not a number.');
 
             // Telestration Model
-            this.time = utilities.toFixedFloat(time);
+            this.time = time;
             this.glyphs = [];
 
         }
