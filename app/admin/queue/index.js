@@ -144,7 +144,10 @@ QueueController.$inject = [
     'GamesFactory',
     'Admin.Queue.Data',
     'SelectIndexer.Modal',
-    'Utilities'
+    'Utilities',
+    'AdminGamesService',
+    'AdminGamesEventEmitter',
+    'EVENT'
 ];
 
 function QueueController (
@@ -166,8 +169,20 @@ function QueueController (
     games,
     data,
     SelectIndexerModal,
-    utilities
+    utilities,
+    AdminGames,
+    AdminGamesEventEmitter,
+    EVENT
 ) {
+
+    // AdminGames.start = 500;
+    // AdminGames.queryFilter = {
+    //     'status': [3]
+    // };
+    // AdminGames.query();
+    AdminGamesEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, () =>  {
+        console.log('responded');
+    });
 
     $scope.ROLE_TYPE = ROLE_TYPE;
     $scope.GAME_STATUSES = GAME_STATUSES;
