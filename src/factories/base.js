@@ -583,9 +583,9 @@ IntelligenceWebClient.factory('BaseFactory', [
              * @param {=boolean} debounce - debounce by default
              * @return {Promise.<Resource>} - a promise of a resources.
              */
-            save: function(resource, success, error, debounce = true) {
+            save: function(resource, success, error, debounce = false) {
 
-                let baseSave = this.baseSave;
+                let baseSave = this.baseSave.bind(this);
 
                 if (debounce) {
 

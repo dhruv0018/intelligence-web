@@ -120,6 +120,10 @@ IntelligenceWebClient.service('Utilities', [
 
                 timerId = $timeout(() => {
 
+                    // Since the function that is returned is 'debouncedFunction',
+                    // but the intent is to call the promiseBasedFunction as normal,
+                    // we need to give it it's original scope and pass in the array of arguments
+                    // to it.
                     promiseBasedFunction.apply(this, arguments)
                     .then(result => {
                         return deferred.resolve(result);
@@ -132,6 +136,7 @@ IntelligenceWebClient.service('Utilities', [
                 return deferred.promise;
             }
 
+            // must return a function that is bound to the context in which it was called
             return debouncedFunction.bind(this);
         };
     }
