@@ -21,7 +21,8 @@ const VIEWS = {
                 ],
                 videoStatus: VIDEO_STATUSES.COMPLETE.id,
                 sortBy: 'deadline',
-                sortOrder: 'asc'
+                sortOrder: 'asc',
+                isDeleted: false
             },
             PRIORITY_1: {
                 'status[]': [

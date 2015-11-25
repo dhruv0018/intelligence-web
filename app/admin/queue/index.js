@@ -37,9 +37,8 @@ AdminQueueDataDependencies.$inject = [
     'ROLE_TYPE',
     'SportsFactory',
     'LeaguesFactory',
-    'TeamsFactory',
-    'GamesFactory',
-    'UsersFactory'
+    'AdminGamesService',
+    'GamesFactory'
 ];
 
 function AdminQueueDataDependencies (
@@ -47,17 +46,18 @@ function AdminQueueDataDependencies (
     ROLE_TYPE,
     sports,
     leagues,
-    teams,
-    games,
-    users
+    AdminGames,
+    games
 ) {
+    let filter = angular.copy(VIEWS.QUEUE.GAME.ALL);
+    filter.count = 500;
+    AdminGames.queryFilter = filter;
+    AdminGames.start = 0;
     var Data = {
         sports: sports.load(),
         leagues: leagues.load(),
-        //TODO should be able to use load, but causes wierd caching issues
-        users: users.load(VIEWS.QUEUE.USERS),
-        teams: teams.load(VIEWS.QUEUE.TEAMS),
-        games : games.load(VIEWS.QUEUE.GAME.ALL)
+        games : AdminGames.query(),
+        totalGameCount: games.totalCount(VIEWS.QUEUE.GAME.ALL)
     };
     return Data;
 }
@@ -192,18 +192,12 @@ function QueueController (
     $scope.usersList = users.getList();
 
     $scope.games = games.getList(VIEWS.QUEUE.GAME.ALL);
+    $scope.totalGameCount = data.totalGameCount;
+    console.log($scope.totalGameCount);
 
     //initially show everything
     $scope.queue = $scope.games;
 
-    AdminGames.start = 0;
-    AdminGames.queryFilter = {
-        count:10,
-        isDeleted:false,
-        'status[]': [8,2,3,4],
-        videoStatus: 4
-    };
-    AdminGames.query();
     AdminGamesEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, () =>  {
         console.log('responded');
         let filter = angular.copy(AdminGames.queryFilter);
