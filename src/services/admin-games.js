@@ -98,7 +98,7 @@ function AdminGamesService(
                 let queryParams = {
                     'id[]' : chunk
                 };
-                let query = teams.query(queryParams);
+                let query = teams.load(queryParams);
                 /* Get the team names */
                 teamPromises.push(query);
             }
@@ -115,7 +115,7 @@ function AdminGamesService(
                     let queryParams = {
                         'id[]' : chunk
                     };
-                    let query = users.query(queryParams);
+                    let query = users.load(queryParams);
                     userPromises.push(query);
                 }
             });
@@ -151,6 +151,7 @@ function AdminGamesService(
         extractUserIdsFromGame,
         extractTeamIdsFromGame,
         extractUserIdsFromTeams,
-        cleanUpFilter
+        cleanUpFilter,
+        success
     };
 }
