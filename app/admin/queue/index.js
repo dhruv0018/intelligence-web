@@ -193,7 +193,6 @@ function QueueController (
 
     $scope.games = games.getList(VIEWS.QUEUE.GAME.ALL);
     $scope.totalGameCount = data.totalGameCount;
-    console.log($scope.totalGameCount);
 
     //initially show everything
     $scope.queue = $scope.games;
@@ -227,49 +226,21 @@ function QueueController (
     });
 
     $scope.search = function(filter) {
-        let parsedFilter = {};
-
-        Object.keys(filter).forEach(key => {
-            let value = filter[key];
-            let isNull = value === null;
-            let isEmptyString = typeof value === 'string' && value.length === 0;
-
-            //strips out nulls and empty strings
-            if (isNull || isEmptyString) return;
-
-            parsedFilter[key] = value;
-        });
+        let parsedFilter = AdminGames.cleanUpFilter(filter);
 
         $scope.searching = true;
         $scope.noResults = false;
 
         let updateQueue = (games) => {
+            if (!games.length) {
+                games = [games];
+            }
             $scope.queue = games;
         };
 
-        //TODO should belong to indexing game model
-        //leaving this open to potentially getting other info from the team besides head coach id
-        let extractUserIdsFromTeams = (teams) => {
-            let headCoachIds = teams.map(team => {
-                let headCoachRole = team.getHeadCoachRole();
-                return headCoachRole ? headCoachRole.userId : null;
-            }).filter(id => id !== null);
-            return headCoachIds;
-        };
-
-        //TODO this should belong to an indexing game model
-        let extractUserIdsFromGame = (game) => {
-            //indexer related ids
-            let userIds = game.indexerAssignments.map(assignment => assignment.userId);
-            userIds.push(game.uploaderUserId);
-            return userIds;
-        };
-
-        //TODO this should belong to an indexing game model
-        let extractTeamIdsFromGame = (game) => {
-            let teamIds = [game.teamId, game.opposingTeamId, game.uploaderTeamId];
-            return teamIds;
-        };
+        let extractUserIdsFromTeams = AdminGames.extractUserIdsFromTeams;
+        let extractUserIdsFromGame = AdminGames.extractUserIdsFromGame;
+        let extractTeamIdsFromGame = AdminGames.extractTeamIdsFromGame;
 
         let removeSpinner = () => {
             $scope.noResults = false;
@@ -279,25 +250,11 @@ function QueueController (
         };
 
         let success = (games) => {
-            games = Array.isArray(games) ? games : [games];
-
             if (games.length === 0) {
                 emptyOutQueue();
                 return;
             }
-
-            let teamIds = [];
-            let userIdsFromGames = [];
-            games.forEach(game => {
-                teamIds = teamIds.concat(extractTeamIdsFromGame(game));
-                userIdsFromGames = userIdsFromGames.concat(extractUserIdsFromGame(game));
-            });
-            /* Get the team names */
-            teams.load(teamIds).then((teams) => {
-                let userIdsFromTeams = extractUserIdsFromTeams(teams);
-                let userIds = userIdsFromGames.concat(userIdsFromTeams);
-                users.load(userIds).then(() => updateQueue(games)).finally(removeSpinner);
-            });
+            AdminGames.success(games).then(() => updateQueue(games)).finally(removeSpinner);
         };
 
         let emptyOutQueue = () => {
