@@ -11,7 +11,7 @@ describe('BaseFactory', function() {
         expect(BaseFactory).to.exist;
     }));
 
-    describe.only('pagedQuery', () => {
+    describe('totalCount', () => {
         let query,
             httpBackend,
             endpoint,
@@ -50,17 +50,10 @@ describe('BaseFactory', function() {
                 const TOTAL_COUNT = 2;
                 let expectedQuery = `${endpoint}?count=${PAGE_SIZE}&start=0`;
                 httpBackend.when('HEAD', expectedQuery).respond({}, {'X-total-count': TOTAL_COUNT});
-                httpBackend.when('GET', expectedQuery).respond([
-                    {id: 1},
-                    {id: 2}
-                ]);
 
                 let numberResources = null;
-                resource.pagedQuery(query).then( () => {
-                    let expectedResources = resources.getList(expectedQuery);
-                    numberResources = expectedResources.length;
-                    expect(numberResources).to.not.be.null;
-                    expect(numberResources).to.equal(TOTAL_COUNT);
+                resource.totalCount(query).then( count => {
+                    expect(count).to.equal(TOTAL_COUNT);
                 });
                 httpBackend.flush();
 

@@ -80,11 +80,11 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
-             * Gets resources in parallel
+             * Gets count
              * @param {Object} query - a query configuration object
-             * @returns {Object} - a promise representing pages of resources
+             * @returns {Object} - a promise containing total count
              */
-            pagedQuery: function(query) {
+            totalCount: function(query) {
                 //to turn JS object into query string
                 //adapted from http://stackoverflow.com/questions/1714786/querystring-encoding-of-a-javascript-object
                 //in the absence of https://docs.angularjs.org/api/ng/service/$httpParamSerializer (v1.4)
@@ -114,18 +114,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                 return http.head(headRequest).then(response => {
                     let headers = response.headers();
                     const TOTAL_RECORD_COUNT = headers['X-total-count']|| headers['x-total-count'] || RESOURCE_COUNT_FALLBACK;
-                    const PAGE_SIZE = this.PAGE_SIZE;
-                    const PAGES = Math.ceil(TOTAL_RECORD_COUNT/PAGE_SIZE);
-                    let promises = [];
-                    let start = 0;
-                    for (let index = 0; index < PAGES; index++) {
-                        let PAGE_QUERY = angular.copy(query);
-                        PAGE_QUERY.start = start;
-                        PAGE_QUERY.count = PAGE_SIZE;
-                        start = start + PAGE_SIZE;
-                        promises.push(this.query(PAGE_QUERY));
-                    }
-                    return $q.all(promises);
+                    return Number(TOTAL_RECORD_COUNT);
                 });
 
             },
