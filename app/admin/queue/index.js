@@ -175,15 +175,6 @@ function QueueController (
     EVENT
 ) {
 
-    // AdminGames.start = 500;
-    // AdminGames.queryFilter = {
-    //     'status': [3]
-    // };
-    // AdminGames.query();
-    AdminGamesEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, () =>  {
-        console.log('responded');
-    });
-
     $scope.ROLE_TYPE = ROLE_TYPE;
     $scope.GAME_STATUSES = GAME_STATUSES;
     $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
@@ -204,6 +195,22 @@ function QueueController (
 
     //initially show everything
     $scope.queue = $scope.games;
+
+    AdminGames.start = 0;
+    AdminGames.queryFilter = {
+        count:10,
+        isDeleted:false,
+        'status[]': [8,2,3,4],
+        videoStatus: 4
+    };
+    AdminGames.query();
+    AdminGamesEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, () =>  {
+        console.log('responded');
+        let filter = angular.copy(AdminGames.queryFilter);
+        filter.start = AdminGames.start;
+        $scope.queue = games.getList(filter);
+        $scope.$apply();
+    });
 
     var refreshGames = function() {
 
