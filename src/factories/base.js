@@ -634,15 +634,17 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     .then(function(updated) {
 
-                        /* Update local resource with server resource. */
-                        let updatedResource = angular.extend({}, resource, self.extend(updated));
+                        if (resource.updateLocalResourceOnPUT) {
+                            /* Update local resource with server resource. */
+                            angular.extend(resource, self.extend(updated));
+                        }
 
-                        delete updatedResource.error;
+                        delete resource.error;
 
                         /* Store the resource locally in its storage collection. */
-                        storage.set(updatedResource);
+                        storage.set(resource);
 
-                        return updatedResource;
+                        return resource;
                     })
 
                     .catch(function() {
