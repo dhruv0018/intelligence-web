@@ -232,6 +232,9 @@ function QueueController (
         $scope.noResults = false;
 
         let updateQueue = (games) => {
+            if (!games.length) {
+                games = [games];
+            }
             $scope.queue = games;
         };
 
@@ -247,25 +250,11 @@ function QueueController (
         };
 
         let success = (games) => {
-            games = Array.isArray(games) ? games : [games];
-
             if (games.length === 0) {
                 emptyOutQueue();
                 return;
             }
-
-            let teamIds = [];
-            let userIdsFromGames = [];
-            games.forEach(game => {
-                teamIds = teamIds.concat(extractTeamIdsFromGame(game));
-                userIdsFromGames = userIdsFromGames.concat(extractUserIdsFromGame(game));
-            });
-            /* Get the team names */
-            teams.load(teamIds).then((teams) => {
-                let userIdsFromTeams = extractUserIdsFromTeams(teams);
-                let userIds = userIdsFromGames.concat(userIdsFromTeams);
-                users.load(userIds).then(() => updateQueue(games)).finally(removeSpinner);
-            });
+            AdminGames.success(games).then(() => updateQueue(games)).finally(removeSpinner);
         };
 
         let emptyOutQueue = () => {
