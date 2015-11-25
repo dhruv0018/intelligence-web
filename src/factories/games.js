@@ -1000,6 +1000,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
             },
 
+            getQueueDashboardCounts: function() {
+
+                const model = $injector.get(this.model);
+                const query = model.getQueueDashboardCounts();
+
+                return query.$promise;
+            },
+
             /**
              * Retrieves the arena events for a game, and stores in game storage
              * @param {?game} game Defaults to the thisObject
