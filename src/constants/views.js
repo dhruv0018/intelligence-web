@@ -11,6 +11,7 @@ const IntelligenceWebClient = angular.module(pkg.name);
 const VIEWS = {
     QUEUE: {
         GAME: {
+            QUERY_SIZE: 100,
             ALL: {
                 'status[]': [
                     GAME_STATUSES.READY_FOR_INDEXING.id,
