@@ -50,7 +50,6 @@ function AdminQueueDataDependencies (
     games
 ) {
     let filter = angular.copy(VIEWS.QUEUE.GAME.ALL);
-    filter.count = 500;
     AdminGames.queryFilter = filter;
     AdminGames.start = 0;
     var Data = {
