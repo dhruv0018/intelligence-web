@@ -73,10 +73,9 @@ function AdminGamesService(
     //returns chunks
     let chunkResourcesByIds = (resourceIds) => {
         let chunks = [];
-        let numChunks = Math.ceil(resourceIds.length / COUNT_SIZE);
-        for (let index = 0; index < numChunks; index++) {
-            let start = index === 0 ? 0 : index * COUNT_SIZE;
-            chunks[index] = resourceIds.splice(start, COUNT_SIZE);
+        while (resourceIds.length > 0) {
+            let chunk = resourceIds.splice(0, COUNT_SIZE);
+            chunks.push(chunk);
         }
         return chunks;
     };
