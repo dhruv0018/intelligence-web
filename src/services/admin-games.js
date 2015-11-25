@@ -27,7 +27,6 @@ function AdminGamesService(
     //TODO should belong to indexing game model
     //leaving this open to potentially getting other info from the team besides head coach id
     let extractUserIdsFromTeams = (teams) => {
-        console.log(teams);
         let headCoachIds = teams.map(team => {
             let headCoachRole = null;
             //why this function doesnt exist on some teams is an enigma
@@ -105,7 +104,7 @@ function AdminGamesService(
             }
         });
 
-        $q.all(teamPromises).then(teams => {
+        return $q.all(teamPromises).then(teams => {
             let userIdsFromTeams = extractUserIdsFromTeams(teams);
             let userIds = userIdsFromGames.concat(userIdsFromTeams);
             let userChunks = chunkResourcesByIds(userIds);
@@ -129,8 +128,9 @@ function AdminGamesService(
         filter.start = start;
         let parsedFilter = cleanUpFilter(filter);
         return games.query(parsedFilter).then(games => {
-            //AdminGamesEventEmitter.onQueryFinish();
-            return success(games);
+            return success(games).then(() => {
+                AdminGamesEventEmitter.onQueryFinish();
+            });
         });
     }
 
