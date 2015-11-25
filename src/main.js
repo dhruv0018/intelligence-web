@@ -24,6 +24,7 @@ import Analytics from '../app/analytics/index.js';
 
 import AppDownloads from '../lib/directives/app-downloads';
 import AdminQueueGames from '../lib/directives/admin-queue-games';
+import AdminQueuePagination from '../lib/directives/admin-queue-pagination';
 import FieldComponent from '../lib/directives/field';
 import IndexingBlock from '../lib/directives/indexing-block';
 import DynamicTables from '../lib/directives/dynamic-tables';
