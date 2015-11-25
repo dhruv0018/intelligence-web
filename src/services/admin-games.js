@@ -147,6 +147,10 @@ function AdminGamesService(
         set start(offset) {
             start = offset;
         },
-        query
+        query,
+        extractUserIdsFromGame,
+        extractTeamIdsFromGame,
+        extractUserIdsFromTeams,
+        cleanUpFilter
     };
 }
