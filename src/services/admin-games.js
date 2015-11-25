@@ -24,6 +24,7 @@ function AdminGamesService(
     let queryFilter = null;
     let start = null;
     const COUNT_SIZE = 100;
+
     //TODO should belong to indexing game model
     //leaving this open to potentially getting other info from the team besides head coach id
     let extractUserIdsFromTeams = (teams) => {
@@ -82,6 +83,7 @@ function AdminGamesService(
 
     let success = (games) => {
         games = Array.isArray(games) ? games : [games];
+
         let teamIds = [];
         let teamIdPages = [];
         let userIdsFromGames = [];
@@ -128,7 +130,7 @@ function AdminGamesService(
         let parsedFilter = cleanUpFilter(filter);
         return games.query(parsedFilter).then(games => {
             return success(games).then(() => {
-                AdminGamesEventEmitter.onQueryFinish();
+                AdminGamesEventEmitter.onQueryFinish(null, games);
             });
         });
     }
