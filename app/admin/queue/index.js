@@ -144,7 +144,10 @@ QueueController.$inject = [
     'GamesFactory',
     'Admin.Queue.Data',
     'SelectIndexer.Modal',
-    'Utilities'
+    'Utilities',
+    'AdminGamesService',
+    'AdminGamesEventEmitter',
+    'EVENT'
 ];
 
 function QueueController (
@@ -166,7 +169,10 @@ function QueueController (
     games,
     data,
     SelectIndexerModal,
-    utilities
+    utilities,
+    AdminGames,
+    AdminGamesEventEmitter,
+    EVENT
 ) {
 
     $scope.ROLE_TYPE = ROLE_TYPE;
@@ -189,6 +195,22 @@ function QueueController (
 
     //initially show everything
     $scope.queue = $scope.games;
+
+    AdminGames.start = 0;
+    AdminGames.queryFilter = {
+        count:10,
+        isDeleted:false,
+        'status[]': [8,2,3,4],
+        videoStatus: 4
+    };
+    AdminGames.query();
+    AdminGamesEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, () =>  {
+        console.log('responded');
+        let filter = angular.copy(AdminGames.queryFilter);
+        filter.start = AdminGames.start;
+        $scope.queue = games.getList(filter);
+        $scope.$apply();
+    });
 
     var refreshGames = function() {
 

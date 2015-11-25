@@ -49,6 +49,12 @@ const EVENT = {
             ENTER: 'ENTER_KEY_DOWN',
             ESC: 'ESC_KEY_DOWN'
         }
+    },
+
+    ADMIN: {
+        QUERY:{
+            COMPLETE: 'ADMIN_QUERY_COMPLETE'
+        }
     }
 };
 

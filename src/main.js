@@ -84,6 +84,7 @@ require('./services/analytics');
 import './services/performance-timer/angular-index';
 import './services/performance-timer';
 require('./services/fileUpload/fileUploadService');
+require('./services/admin-games');
 
 require('./constants/users');
 require('./constants/games');
@@ -173,6 +174,7 @@ require('./emitters/video-player');
 require('./emitters/telestrations');
 require('./emitters/cue-point-event-emitter');
 require('./emitters/ui-event');
+require('./emitters/admin-games');
 
 require('./brokers/telestrationsVideoPlayerBroker');
 
