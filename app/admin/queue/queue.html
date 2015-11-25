@@ -23,7 +23,7 @@
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="id" placeholder="Game ID" ng-model="filter.gameId" type="text">
+                <input class="form-control" name="id" placeholder="Game ID" ng-model="filter['id[]']" type="text">
             </div>
 
             <div class="form-group">
@@ -72,17 +72,8 @@
             games="games"
             queue="queue"
             sidebar-expand="sidebar"
+            filter-counts="dashboardFilterCounts"
         ></admin-queue-dashboard>
-
-        <admin-queue-games
-            games="games"
-            queue="queue"
-            sports="sports"
-            leagues="leagues"
-            teams="teams"
-            users="users"
-            ng-hide="noResults || searching"
-        ></admin-queue-games>
 
         <div class="results" ng-show="searching">
 
@@ -93,13 +84,24 @@
 
         </div>
 
-        <div class="results noresults" ng-show="noResults">
+        <div class="results noresults" ng-show="noResults || (queue.length === 0 && !searching)">
 
             <i class="icon icon-search"></i>
             <h1>No Results Found</h1>
             <h2>Try your search again.</h2>
 
         </div>
+
+        <admin-queue-games
+            games="games"
+            queue="queue"
+            sports="sports"
+            leagues="leagues"
+            teams="teams"
+            users="users"
+            ng-hide="noResults || searching || (queue.length === 0 && !searching)"
+        ></admin-queue-games>
+
     </div>
 
 </section>

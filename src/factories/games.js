@@ -1,4 +1,4 @@
-var PAGE_SIZE = 500;
+var PAGE_SIZE = 100;
 
 var moment = require('moment');
 
@@ -998,6 +998,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var dndReport = new Resource(report);
 
                 return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
+            },
+
+            getQueueDashboardCounts: function() {
+
+                const model = $injector.get(this.model);
+                const query = model.getQueueDashboardCounts();
+
+                return query.$promise;
             },
 
             /**

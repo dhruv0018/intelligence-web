@@ -50,7 +50,6 @@ function AdminQueueDataDependencies (
     games
 ) {
     let filter = angular.copy(VIEWS.QUEUE.GAME.ALL);
-    filter.count = 500;
     AdminGames.queryFilter = filter;
     AdminGames.start = 0;
     var Data = {
@@ -197,12 +196,18 @@ function QueueController (
     //initially show everything
     $scope.queue = $scope.games;
 
-    AdminGamesEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, () =>  {
-        console.log('responded');
-        let filter = angular.copy(AdminGames.queryFilter);
-        filter.start = AdminGames.start;
-        $scope.queue = games.getList(filter);
-        $scope.$apply();
+    $scope.emptyOutQueue = () => {
+        $scope.queue = [];
+        $scope.noResults = true;
+        $scope.searching = false;
+    };
+
+    AdminGamesEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, (event, games) =>  {
+        if (games.length === 0) {
+            $scope.emptyOutQueue();
+        } else {
+            $scope.queue = games;
+        }
     });
 
     var refreshGames = function() {
@@ -249,27 +254,11 @@ function QueueController (
             $scope.$digest();
         };
 
-        let success = (games) => {
-            if (games.length === 0) {
-                emptyOutQueue();
-                return;
-            }
-            AdminGames.success(games).then(() => updateQueue(games)).finally(removeSpinner);
-        };
-
-        let emptyOutQueue = () => {
-            $scope.queue = [];
-            $scope.noResults = true;
-            $scope.searching = false;
-            //Notify Angular to start digest cycle
-            $scope.$digest();
-        };
-
-
-        if (parsedFilter.gameId) {
-            games.fetch(parsedFilter.gameId, success, emptyOutQueue);
-        } else {
-            games.query(parsedFilter, success, emptyOutQueue);
+        if (parsedFilter['id[]']) {
+            parsedFilter['id[]'] = [parsedFilter['id[]']];
         }
+        AdminGames.queryFilter = parsedFilter;
+        AdminGames.start = 0;
+        AdminGames.query().then().finally(removeSpinner);
     };
 }
