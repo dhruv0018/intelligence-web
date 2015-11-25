@@ -102,6 +102,11 @@
             ng-hide="noResults || searching || (queue.length === 0 && !searching)"
         ></admin-queue-games>
 
+        <admin-queue-pagination
+            total-count="totalGameCount"
+            number-of-adjacent-page-buttons="2"
+        ></admin-queue-pagination>
+
     </div>
 
 </section>
