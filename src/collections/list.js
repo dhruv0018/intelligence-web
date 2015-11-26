@@ -35,6 +35,12 @@ class List {
         };
     }
 
+    // TODO: Unit test this method.
+    get identity () {
+
+        return this.data;
+    }
+
     /**
      * Simulates the ES7 includes method
      *
@@ -122,6 +128,12 @@ class List {
      */
     get last () {
         return this.data[this.data.length - 1];
+    }
+
+    // TODO: Unit test this method.
+    findByProperty (property, value) {
+
+        return this.data.find(item => item.property === value);
     }
 
     /**
