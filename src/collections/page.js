@@ -1,3 +1,5 @@
+// TODO: Write unit tests
+
 class Page {
 
     constructor (number) {
@@ -5,14 +7,9 @@ class Page {
         this.number = number;
     }
 
-    get viewNumber () {
-
-        return this.number + 1;
-    }
-
     get queryStart () {
 
-        return this.number * VIEWS.QUEUE.GAME.QUERY_SIZE;
+        return (this.number - 1) * VIEWS.QUEUE.GAME.QUERY_SIZE;
     }
 }
 
