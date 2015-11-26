@@ -2,12 +2,12 @@
 
 admin-queue-pagination {
 
-    display: block;
-    text-align: center;
-    width: 100%;
     flex: 1 0 auto;
     padding: 1em 0;
     border-top: thin solid @gray-lighter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     button {
 
@@ -26,5 +26,7 @@ admin-queue-pagination {
     .active {
 
         .btn-primary;
+        margin-left: 0.25em;
+        margin-right: 0.25em;
     }
 }
