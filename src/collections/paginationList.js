@@ -5,14 +5,14 @@ import SortedList from './sortedList';
 
 class PaginationList extends SortedList {
 
-    constructor (totalPages, numberOfAdjacentPageButtons) {
+    constructor (totalPages, pageSize, numberOfAdjacentPageButtons) {
 
         let pages = [];
         let sortProperty = 'number';
 
         for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
 
-            pages.push(new Page(pageNumber));
+            pages.push(new Page(pageNumber, pageSize));
         }
 
         super(pages, sortProperty);
