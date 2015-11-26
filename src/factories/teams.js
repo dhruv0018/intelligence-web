@@ -301,7 +301,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     if (activePackages.length === 0) {
                         return undefined;
                     } else if (activePackages.length > 1) {
-                        throw new Error('You have more than one active package for team ' + self.id);
+                        // If more than one package return package with higher id
+                        return activePackages.sort((a, b) => b.id - a.id)[0];
                     } else {
                         return activePackages[0];
                     }
