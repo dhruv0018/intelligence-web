@@ -2,14 +2,15 @@
 
 class Page {
 
-    constructor (number) {
+    constructor (number, size) {
 
         this.number = number;
+        this.size = size;
     }
 
     get queryStart () {
 
-        return (this.number - 1) * VIEWS.QUEUE.GAME.QUERY_SIZE;
+        return (this.number - 1) * this.size;
     }
 }
 
