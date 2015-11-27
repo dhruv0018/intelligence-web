@@ -29,6 +29,6 @@ describe('Page', () => {
     it('should have a `queryStart` getter', () => {
 
         expect(page.queryStart).to.be.a.number;
-        expect(page.queryStart).to.equal(1000);
+        expect(page.queryStart).to.equal(900);
     });
 });
