@@ -1,5 +1,3 @@
-// TODO: Write unit tests
-
 class Page {
 
     constructor (number, size) {
