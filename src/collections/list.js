@@ -118,6 +118,7 @@ class List {
      * @type {}
      */
     get first () {
+
         return this.data[0];
     }
 
@@ -127,6 +128,7 @@ class List {
      * @type {}
      */
     get last () {
+
         return this.data[this.data.length - 1];
     }
 
@@ -212,6 +214,7 @@ class List {
      * @returns {Iterator}
      */
     iterator() {
+
         return new Iterator(this.data);
     }
 }
