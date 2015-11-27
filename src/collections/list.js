@@ -135,7 +135,7 @@ class List {
     // TODO: Unit test this method.
     findByProperty (property, value) {
 
-        return this.data.find(item => item.property === value);
+        return this.data.find(item => item[property] === value);
     }
 
     /**
