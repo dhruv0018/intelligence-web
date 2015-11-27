@@ -1,5 +1,6 @@
 import PaginationList from '../../../src/collections/paginationList';
 import Page from '../../../src/collections/page';
+import Iterator from '../../../src/collections/iterator';
 
 let paginationList;
 const PAGE_SIZE = 100;
@@ -22,6 +23,30 @@ describe(`PaginationList`, () => {
     it(`should have a public API`, () => {
 
         expect(PaginationList).to.respondTo('indexClamp');
+    });
+
+    it(`should have the property 'totalPages'`, () => {
+
+        expect(paginationList).to.contain.keys('totalPages');
+        expect(paginationList.totalPages).to.equal(10);
+    });
+
+    it(`should have the property 'numberOfAdjacentPageButtons'`, () => {
+
+        expect(paginationList).to.contain.keys('numberOfAdjacentPageButtons');
+        expect(paginationList.numberOfAdjacentPageButtons).to.equal(2);
+    });
+
+    it(`should have the property 'subsetSize'`, () => {
+
+        expect(paginationList).to.contain.keys('subsetSize');
+        expect(paginationList.subsetSize).to.equal(5);
+    });
+
+    it(`should have the property 'statefulIterator'`, () => {
+
+        expect(paginationList).to.contain.keys('statefulIterator');
+        expect(paginationList.statefulIterator).to.be.an.instanceof(Iterator);
     });
 });
 
@@ -131,7 +156,6 @@ describe(`PaginationList.indexClamp`, () => {
     it(`should return 5 if current array index is 123 (past the end of the array
         less the length of the subset to be returned)`, () => {
 
-        // 0 1 2 3 4 5 6 7 8 9
         expect(paginationList.indexClamp(123)).to.equal(5);
     });
 });
