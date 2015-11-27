@@ -35,7 +35,6 @@ class List {
         };
     }
 
-    // TODO: Unit test this method.
     get identity () {
 
         return this.data;

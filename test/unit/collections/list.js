@@ -24,27 +24,29 @@ const srcArray = [
     'repeat'
 ];
 
+const classMethods = [
+    'includes',
+    'toJSON',
+    'clear',
+    'get',
+    'add',
+    'remove',
+    'isEmpty',
+    'iterator'
+];
+
+let srcArrayCopy;
+let sampleList;
+
+function createSampleList () {
+
+    srcArrayCopy = srcArray.slice(0);
+    sampleList = new List(srcArrayCopy);
+}
+
 describe('List', () => {
 
-    const classMethods = [
-        'includes',
-        'toJSON',
-        'clear',
-        'get',
-        'add',
-        'remove',
-        'isEmpty',
-        'iterator'
-    ];
-
-    let srcArrayCopy;
-    let sampleList;
-
-    beforeEach(() => {
-
-        srcArrayCopy = srcArray.slice(0);
-        sampleList = new List(srcArrayCopy);
-    });
+    beforeEach(createSampleList);
 
     it('should exist.', () => {
 
@@ -422,4 +424,19 @@ describe('List', () => {
         }
     });
 
+});
+
+describe(`List.identity`, () => {
+
+    beforeEach(createSampleList);
+
+    it(`should return an array`, () => {
+
+        expect(sampleList.identity).to.be.an.array;
+    });
+
+    it(`should return an array that equals the source array`, () => {
+
+        expect(sampleList.identity).to.deep.equal(srcArrayCopy);
+    });
 });
