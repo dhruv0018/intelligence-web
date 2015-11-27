@@ -25,18 +25,16 @@ class PaginationList extends SortedList {
 
     get subset () {
 
-        let indexWithAdjacentPages = this.currentPageNumber - this.numberOfAdjacentPageButtons;
-        let start = this.indexClamp(indexWithAdjacentPages) - 1;
-
-        console.log('start', start);
+        let start = this.currentPageNumber - this.numberOfAdjacentPageButtons;
+        start = this.indexClamp(start - 1);
 
         return this.identity.slice(start, start + this.subsetSize);
     }
 
     indexClamp (value) {
 
-        let min = 1;
-        let max = this.length - this.subsetSize + 1;
+        let min = 0;
+        let max = this.length - this.subsetSize;
 
         if (value < min) return min;
         else if (value > max) return max;
