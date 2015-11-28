@@ -72,7 +72,6 @@ class SortedList extends List {
         return this.sort();
     }
 
-    // TODO: Unit test this method
     find (value) {
 
         return this.findByProperty(this.sortProperty, value);

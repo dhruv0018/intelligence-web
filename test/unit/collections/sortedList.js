@@ -28,27 +28,30 @@ const srcElem1 = {
     qux: 999
 }
 
+const classMethods = [
+    'includes',
+    'toJSON',
+    'clear',
+    'get',
+    'add',
+    'remove',
+    'find',
+    'isEmpty',
+    'sort'
+];
+
+let srcArrayCopy;
+let sampleList;
+
+function createSampleList () {
+
+    srcArrayCopy = srcArray.slice(0);
+    sampleList = new SortedList(srcArrayCopy, 'foo');
+}
+
 describe('SortedList', () => {
 
-    const classMethods = [
-        'includes',
-        'toJSON',
-        'clear',
-        'get',
-        'add',
-        'remove',
-        'isEmpty',
-        'sort'
-    ];
-
-    let srcArrayCopy;
-    let sampleList;
-
-    beforeEach(() => {
-
-        srcArrayCopy = srcArray.slice(0);
-        sampleList   = new SortedList(srcArrayCopy, 'foo');
-    });
+    beforeEach(createSampleList);
 
     it('should exist.', () => {
 
@@ -106,5 +109,21 @@ describe('SortedList', () => {
         expect(sampleList.get(1)).to.deep.equal(srcArray[0]);
         expect(sampleList.get(2)).to.deep.equal(srcArray[2]);
         expect(sampleList.get(3)).to.deep.equal(sampleElem);
+    });
+});
+
+describe(`SortedList.find`, () => {
+
+    beforeEach(createSampleList);
+
+    it(`should return 'undefined' if item not found`, () => {
+
+        expect(sampleList.find('xyz')).to.be.undefined;
+    });
+
+    it(`should return an item if found`, () => {
+
+        expect(sampleList.find('abc')).to.be.an.object;
+        expect(sampleList.find('abc')).to.deep.equal(srcArray[1]);
     });
 });
