@@ -1,5 +1,3 @@
-// TODO: Write unit tests
-
 import Page from './page';
 import SortedList from './sortedList';
 
