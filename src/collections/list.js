@@ -131,10 +131,14 @@ class List {
         return this.data[this.data.length - 1];
     }
 
-    // TODO: Unit test this method.
     findByProperty (property, value) {
 
-        return this.data.find(item => item[property] === value);
+        return this.data.find(item => {
+
+            return item &&
+                item[property] &&
+                item[property] === value;
+        });
     }
 
     /**

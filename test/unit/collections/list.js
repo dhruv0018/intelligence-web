@@ -440,3 +440,19 @@ describe(`List.identity`, () => {
         expect(sampleList.identity).to.deep.equal(srcArrayCopy);
     });
 });
+
+describe(`List.findByProperty`, () => {
+
+    beforeEach(createSampleList);
+
+    it(`should return 'undefined' if item not found`, () => {
+
+        expect(sampleList.findByProperty('baz', 'qux')).to.be.undefined;
+    });
+
+    it(`should return an item if found`, () => {
+
+        expect(sampleList.findByProperty('foo', 4)).to.be.an.object;
+        expect(sampleList.findByProperty('foo', 4)).to.deep.equal(srcArrayCopy[3]);
+    });
+});
