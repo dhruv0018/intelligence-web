@@ -98,6 +98,19 @@ describe(`PaginationList.subset`, () => {
             new Page(10, PAGE_SIZE, NUMBER_OF_ADJACENT_PAGE_BUTTONS)
         ]);
     });
+
+    if(`should get only 3 pages if total pages are 3`, () => {
+
+        paginationList = new PaginationList(3, PAGE_SIZE, NUMBER_OF_ADJACENT_PAGE_BUTTONS);
+
+        expect(paginationList.subset).to.be.an.array;
+        expect(paginationList.subset).to.have.length(3);
+        expect(paginationList.subset).to.deep.equal([
+            new Page(1, PAGE_SIZE, NUMBER_OF_ADJACENT_PAGE_BUTTONS),
+            new Page(2, PAGE_SIZE, NUMBER_OF_ADJACENT_PAGE_BUTTONS),
+            new Page(3, PAGE_SIZE, NUMBER_OF_ADJACENT_PAGE_BUTTONS)
+        ]);
+    });
 });
 
 describe(`PaginationList.currentPage`, () => {
