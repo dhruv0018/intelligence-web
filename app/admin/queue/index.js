@@ -212,7 +212,10 @@ function QueueController (
         }
     });
 
-    AdminGamesEventEmitter.on(EVENT.ADMIN.GAME_COUNT.UPDATE, filter => $scope.totalGameCount = games.totalCount(filter));
+    AdminGamesEventEmitter.on(EVENT.ADMIN.GAME_COUNT.UPDATE, filter => {
+        games.totalCount(filter)
+            .then(count => $scope.totalGameCount = count);
+    });
 
     var refreshGames = function() {
 
