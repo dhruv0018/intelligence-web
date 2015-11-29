@@ -14,19 +14,19 @@
         <li>
             To be Indexed:&nbsp;
             <span
-                ng-click="setQueue(queueFilters.ready.indexing)"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.ready.indexing.length | padZero}}
+                {{ filterCounts.toBeIndexed | padZero }}
             </span>
         </li>
         <li>
             To be QA'd:&nbsp;
             <span
-                ng-click="setQueue(queueFilters.ready.qa)"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.ready.qa.length | padZero}}
+                {{ filterCounts.toBeQad | padZero }}
             </span>
         </li>
     </ul>
@@ -37,19 +37,19 @@
         <li>
             Indexing in Progress:&nbsp;
             <span
-                ng-click="setQueue(queueFilters.assigned.indexing)"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.assigned.indexing.length | padZero}}
+                {{ filterCounts.indexingInProgress | padZero }}
             </span>
         </li>
         <li>
             QA in Progress:&nbsp;
             <span
-                ng-click="setQueue(queueFilters.assigned.qa)"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.assigned.qa.length | padZero}}
+                {{ filterCounts.qaInProgress | padZero }}
             </span>
         </li>
     </ul>
@@ -63,64 +63,64 @@
         <li>
             Total:&nbsp;
             <span
-                ng-click="setQueue(games)"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{games.length | padZero}}
+                {{ filterCounts.total | padZero }}
             </span>
         </li>
         <li>
             48h - 24h:&nbsp;
             <span
-                ng-click="setQueue(queueFilters.remaining['48'])"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.remaining['48'].length | padZero}}
+                {{ filterCounts.deadline48to24 | padZero }}
             </span>
         </li>
         <li>
             24h - 10h:&nbsp;
             <span
-                ng-click="setQueue(queueFilters.remaining['24'])"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.remaining['24'].length | padZero}}
+                {{ filterCounts.deadline24to10 | padZero }}
             </span>
         </li>
         <li>
             10h - 5h:&nbsp;
             <span
-                ng-click="setQueue(queueFilters.remaining['10'])"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.remaining['10'].length | padZero}}
+                {{ filterCounts.deadline10to5 | padZero }}
             </span>
         </li>
         <li>
-            5h - 1h:&nbsp;
+            5h - 2h:&nbsp;
             <span
-                ng-click="setQueue(queueFilters.remaining['5'])"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.remaining['5'].length | padZero}}
+                {{ filterCounts.deadline5to2 | padZero }}
             </span>
         </li>
         <li>
-            < 1h:&nbsp;
+            < 2h:&nbsp;
             <span
-                ng-click="setQueue(queueFilters.remaining['1'])"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.remaining['1'].length | padZero}}
+                {{ filterCounts.deadlineLessThan2 | padZero }}
             </span>
         </li>
         <li>
             Late:&nbsp;
             <span
-                ng-click="setQueue(queueFilters.remaining.late)"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.remaining.late.length | padZero}}
+                {{ filterCounts.late | padZero }}
             </span>
         </li>
     </ul>
@@ -139,10 +139,10 @@
                 {{ priority.name }}:&nbsp;
             </span>
             <span
-                ng-click="setQueue(queueFilters.priority[priority.id])"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.priority[priority.id].length | padZero}}
+                {{ filterCounts.priorities[priority.id] | padZero }}
             </span>
         </li>
     </ul>
@@ -162,10 +162,10 @@
                 {{ label.name }}:&nbsp;
             </span>
             <span
-                ng-click="setQueue(queueFilters.labels[label.id])"
+                ng-click="requestQueueFilter()"
                 class="filter"
             >
-                {{queueFilters.labels[label.id].length | padZero}}
+                {{ filterCounts.labels[label.id] | padZero }}
             </span>
         </li>
     </ul>

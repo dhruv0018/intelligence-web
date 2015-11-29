@@ -56,6 +56,7 @@ function AdminQueueDataDependencies (
         sports: sports.load(),
         leagues: leagues.load(),
         games : AdminGames.query(),
+        filterCounts: games.getQueueDashboardCounts(),
         totalGameCount: games.totalCount(VIEWS.QUEUE.GAME.ALL)
     };
     return Data;
@@ -181,6 +182,7 @@ function QueueController (
     $scope.SelectIndexerModal = SelectIndexerModal;
 
     $scope.data = data;
+    $scope.dashboardFilterCounts = data.filterCounts;
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
     $scope.teams = teams.getCollection();
