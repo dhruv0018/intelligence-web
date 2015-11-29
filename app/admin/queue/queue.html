@@ -103,6 +103,7 @@
         ></admin-queue-games>
 
         <admin-queue-pagination
+            ng-if="totalGameCount > QUERY_SIZE"
             total-count="totalGameCount"
             number-of-adjacent-page-buttons="2"
         ></admin-queue-pagination>

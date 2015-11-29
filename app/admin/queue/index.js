@@ -195,6 +195,8 @@ function QueueController (
     $scope.games = games.getList(VIEWS.QUEUE.GAME.ALL);
     $scope.totalGameCount = data.totalGameCount;
 
+    $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
+
     //initially show everything
     $scope.queue = $scope.games;
 
