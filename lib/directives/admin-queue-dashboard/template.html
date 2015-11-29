@@ -14,7 +14,7 @@
         <li>
             To be Indexed:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('TO_BE_INDEXED')"
                 class="filter"
             >
                 {{ filterCounts.toBeIndexed | padZero }}
@@ -23,7 +23,7 @@
         <li>
             To be QA'd:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('TO_BE_QAD')"
                 class="filter"
             >
                 {{ filterCounts.toBeQad | padZero }}
@@ -37,7 +37,7 @@
         <li>
             Indexing in Progress:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('INDEXING_IN_PROGRESS')"
                 class="filter"
             >
                 {{ filterCounts.indexingInProgress | padZero }}
@@ -46,7 +46,7 @@
         <li>
             QA in Progress:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('QA_IN_PROGRESS')"
                 class="filter"
             >
                 {{ filterCounts.qaInProgress | padZero }}
@@ -63,7 +63,7 @@
         <li>
             Total:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('TOTAL')"
                 class="filter"
             >
                 {{ filterCounts.total | padZero }}
@@ -72,7 +72,7 @@
         <li>
             48h - 24h:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('48_TO_24')"
                 class="filter"
             >
                 {{ filterCounts.deadline48to24 | padZero }}
@@ -81,7 +81,7 @@
         <li>
             24h - 10h:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('24_TO_10')"
                 class="filter"
             >
                 {{ filterCounts.deadline24to10 | padZero }}
@@ -90,7 +90,7 @@
         <li>
             10h - 5h:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('10_TO_5')"
                 class="filter"
             >
                 {{ filterCounts.deadline10to5 | padZero }}
@@ -99,7 +99,7 @@
         <li>
             5h - 2h:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('5_TO_2')"
                 class="filter"
             >
                 {{ filterCounts.deadline5to2 | padZero }}
@@ -108,7 +108,7 @@
         <li>
             < 2h:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('LESS_THAN_2')"
                 class="filter"
             >
                 {{ filterCounts.deadlineLessThan2 | padZero }}
@@ -117,7 +117,7 @@
         <li>
             Late:&nbsp;
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter('LATE')"
                 class="filter"
             >
                 {{ filterCounts.late | padZero }}
@@ -139,7 +139,7 @@
                 {{ priority.name }}:&nbsp;
             </span>
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter(PRIORITIES_IDS[priority.id])"
                 class="filter"
             >
                 {{ filterCounts.priorities[priority.id] | padZero }}
@@ -162,7 +162,7 @@
                 {{ label.name }}:&nbsp;
             </span>
             <span
-                ng-click="requestQueueFilter()"
+                ng-click="requestQueueFilter(LABELS_IDS[label.id])"
                 class="filter"
             >
                 {{ filterCounts.labels[label.id] | padZero }}
