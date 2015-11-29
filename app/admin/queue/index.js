@@ -212,6 +212,8 @@ function QueueController (
         }
     });
 
+    AdminGamesEventEmitter.on(EVENT.ADMIN.GAME_COUNT.UPDATE, filter => $scope.totalGameCount = games.totalCount(filter));
+
     var refreshGames = function() {
 
         angular.forEach($scope.queue, function(game) {

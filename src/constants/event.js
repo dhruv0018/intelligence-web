@@ -52,8 +52,13 @@ const EVENT = {
     },
 
     ADMIN: {
-        QUERY:{
+
+        QUERY: {
             COMPLETE: 'ADMIN_QUERY_COMPLETE'
+        },
+
+        GAME_COUNT: {
+            UPDATE: 'ADMIN_UPDATE_GAME_COUNT'
         }
     }
 };
