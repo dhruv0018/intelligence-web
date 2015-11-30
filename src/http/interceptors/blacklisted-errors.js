@@ -6,6 +6,11 @@ const BLACKLISTED_ERRORS = {
         "/games/*/information": {
             "POST": true
         }
+    },
+    "400": {
+        "/games/*/raw-film": {
+            "POST": true
+        }
     }
 };
 

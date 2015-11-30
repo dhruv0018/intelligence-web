@@ -17,6 +17,11 @@
         ></publish-user-profile-reel>
 
         <stats-export ng-if="state.current.name === 'Games.Stats' && isGame" teams="teams" game="film"></stats-export>
+        <a class="copy-raw-film" ng-if="allowedTeams.length && state.current.name === 'Games.RawFilm' && isGame && !copyingRawFilm && !finishedSaving" ng-click="copyFilm()" open-modal="CopyRawFilm.Modal" modal-options="options">
+            <span><i class="icon icon-copy"></i>Copy Raw Film</span>
+        </a>
+        <span ng-if="copyingRawFilm && !finishedSaving" class="copying-film"><krossover-spinner size="12"></krossover-spinner>Copying</span>
+        <span ng-if="!copyingRawFilm && finishedSaving" class="saved-film"><i class="icon icon-ok"></i>Raw Film Copied</span>
 
         <a
          id="reels-share-cta"

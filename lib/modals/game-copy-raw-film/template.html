@@ -1,0 +1,31 @@
+<div class="copy-game">
+
+    <header class="modal-header">
+        <h3 class="modal-title">Copy Raw Film</h3>
+    </header>
+
+    <div class="modal-body">
+        <form name="form" role="form" novalidate>
+            <div>
+                <select class="form-control" name="sport" data-ng-model="teamId" data-ng-options="team.id as team.name for team in teams" required>
+                    <option value="">Select Team</option>
+                </select>
+            </div>
+            <div>
+                <p class="raw-film-copy-text">*Raw film can be copied to any of your other coach accounts within the same
+                sport. Once copied, the film is available to your coaching staff and can be
+                shared or submitted for breakdown.</p>
+            </div>
+            <div class="buttons">
+
+                <button class="btn btn-primary pull-right"  ng-disabled="form.$invalid" type="submit" ng-click="copyGame()">{{ statusText }}</button>
+                <button class="btn btn-default pull-right cancel-btn" ng-click="$dismiss()">Cancel</button>
+
+            </div>
+            <div class="alert " ng-if="alert">
+                <span ng-bind-html="alert.message" class="{{ alert.type }}"></span>
+            </div>
+        </form>
+    </div>
+
+</div>

@@ -1014,15 +1014,18 @@ IntelligenceWebClient.factory('GamesFactory', [
              * @param {Integer} teamId - the team ID of the team for which the
              * game should be copied.
              */
-            copy: function(teamId) {
+            copy: function(teamId, copyRawFilm = false) {
 
                 let self = this;
+                let currentTeamId = copyRawFilm ? session.getCurrentTeamId() : null;
 
                 if (!self.id) throw new Error('Game must exist to copy');
 
                 const copyCriteria = {
-                    teamId : teamId,
-                    gameId : self.id
+                    copiedFromTeamId: currentTeamId,
+                    copiedToTeamId : teamId,
+                    gameId : self.id,
+                    copyToRaw : copyRawFilm
                 };
 
                 let Resource = $injector.get(self.model);

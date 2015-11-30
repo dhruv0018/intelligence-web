@@ -1,0 +1,55 @@
+@import (reference) "main.less";
+
+.copy-game {
+    span {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .raw-film-copy-text {
+        color: black;
+        margin-top: 10px;
+    }
+
+    .team-id {
+        width: 60px;
+        height: 35px;
+        margin-right: 5px;
+        text-align: center;
+        border: thin solid @gray-border;
+        border-radius: @border-radius-base;
+        -moz-appearance: textfield;
+
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .alert {
+        .danger {
+            color: @alert-danger-text;
+        }
+        .success {
+            color: @alert-success-text;
+        }
+        .warning {
+            color: @alert-warning-text;
+        }
+    }
+
+    .buttons {
+
+            height: 47px;
+            margin-top: 25px;
+            margin-bottom: 0;
+
+            .cancel-btn {
+                margin-right: 10px;
+            }
+    }
+
+}

@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "game-copy-raw-film",
         "raw-film",
         "delete-game",
         "add-reel",

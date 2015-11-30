@@ -65,6 +65,42 @@
         }
     }
 
+    .copy-raw-film {
+        margin-right: 10px;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        .icon {
+            position: relative;
+            top: 1px;
+            margin-right: 2px;
+        }
+    }
+
+    .copying-film {
+        background-color: @state-warning-bg;
+        padding: 2px 15px;
+        color: @state-warning-text;
+        font-weight: 500;
+
+        i {
+            margin-right: 5px;
+        }
+    }
+
+    .saved-film {
+        background-color: @state-success-bg;
+        padding: 2px 15px;
+        color: @state-success-text;
+
+        i {
+            margin-right: 5px;
+        }
+    }
+
     .delete-reel {
         margin-right: 20px;
         color: @gray;

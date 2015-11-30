@@ -48,15 +48,19 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                     case 400: /* Bad Request */
 
-                        ErrorReporter.reportError(new Error('Bad Request', response.data));
+                        if(!isBlacklisted(response) && !isWildcard(response)) {
 
-                        if (response && response.data && response.data.userMessage) {
-                            alerts.add({
+                            ErrorReporter.reportError(new Error('Bad Request', response.data));
 
-                                type: 'warning',
-                                message: response.data.userMessage
-                            });
+                            if (response && response.data && response.data.userMessage) {
+                                alerts.add({
+
+                                    type: 'warning',
+                                    message: response.data.userMessage
+                                });
+                            }
                         }
+
                         break;
 
                     case 401: /* Not Authorized */
