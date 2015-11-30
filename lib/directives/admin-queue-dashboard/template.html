@@ -10,7 +10,7 @@
             <span
                 ng-click="
                     requestQueueFilter('TO_BE_INDEXED');
-                    selectedFilter = FILTERS.TO_BE_INDEXED.id;
+                    selectFilter(FILTERS.TO_BE_INDEXED);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.toBeIndexed === 0
@@ -29,7 +29,7 @@
             <span
                 ng-click="
                     requestQueueFilter('TO_BE_QAD');
-                    selectedFilter = FILTERS.TO_BE_QAD.id;
+                    selectFilter(FILTERS.TO_BE_QAD);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.toBeQad === 0
@@ -53,7 +53,7 @@
             <span
                 ng-click="
                     requestQueueFilter('INDEXING_IN_PROGRESS');
-                    selectedFilter = FILTERS.INDEXING_IN_PROGRESS.id;
+                    selectFilter(FILTERS.INDEXING_IN_PROGRESS);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.indexingInProgress === 0
@@ -72,7 +72,7 @@
             <span
                 ng-click="
                     requestQueueFilter('QA_IN_PROGRESS');
-                    selectedFilter = FILTERS.QA_IN_PROGRESS.id;
+                    selectFilter(FILTERS.QA_IN_PROGRESS);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.qaInProgress === 0
@@ -99,7 +99,7 @@
             <span
                 ng-click="
                     requestQueueFilter('TOTAL');
-                    selectedFilter = FILTERS.TOTAL.id;
+                    selectFilter(FILTERS.TOTAL);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.total === 0
@@ -118,7 +118,7 @@
             <span
                 ng-click="
                     requestQueueFilter('48_TO_24');
-                    selectedFilter = FILTERS['48_TO_24'].id;
+                    selectFilter(FILTERS['48_TO_24']);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.deadline48to24 === 0
@@ -137,7 +137,7 @@
             <span
                 ng-click="
                     requestQueueFilter('24_TO_10');
-                    selectedFilter = FILTERS['24_TO_10'].id;
+                    selectFilter(FILTERS['24_TO_10']);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.deadline24to10 === 0
@@ -156,7 +156,7 @@
             <span
                 ng-click="
                     requestQueueFilter('10_TO_5');
-                    selectedFilter = FILTERS['10_TO_5'].id;
+                    selectFilter(FILTERS['10_TO_5']);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.deadline10to5 === 0
@@ -175,7 +175,7 @@
             <span
                 ng-click="
                     requestQueueFilter('5_TO_2');
-                    selectedFilter = FILTERS['5_TO_2'].id;
+                    selectFilter(FILTERS['5_TO_2']);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.deadline5to2 === 0
@@ -194,7 +194,7 @@
             <span
                 ng-click="
                     requestQueueFilter('LESS_THAN_2');
-                    selectedFilter = FILTERS.LESS_THAN_2.id;
+                    selectFilter(FILTERS.LESS_THAN_2);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.deadlineLessThan2 === 0
@@ -213,7 +213,7 @@
             <span
                 ng-click="
                     requestQueueFilter('LATE');
-                    selectedFilter = FILTERS.LATE.id;
+                    selectFilter(FILTERS.LATE);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.late === 0
@@ -246,7 +246,7 @@
             <span
                 ng-click="
                     requestQueueFilter(PRIORITIES_IDS[priority.id]);
-                    selectedFilter = FILTERS[PRIORITIES_IDS[priority.id]].id;
+                    selectFilter(FILTERS[PRIORITIES_IDS[priority.id]]);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.priorities[priority.id] === 0
@@ -280,7 +280,7 @@
             <span
                 ng-click="
                     requestQueueFilter(LABELS_IDS[label.id]);
-                    selectedFilter = FILTERS[LABELS_IDS[label.id]].id;
+                    selectFilter(FILTERS[LABELS_IDS[label.id]]);
                 "
                 ng-class="{
                     'disabled-filter': filterCounts.labels[label.id] === 0
