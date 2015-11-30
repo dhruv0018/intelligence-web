@@ -162,11 +162,6 @@ function AdminGamesService(
         get totalCount(){
             return totalCount;
         },
-        query,
-        extractUserIdsFromGame,
-        extractTeamIdsFromGame,
-        extractUserIdsFromTeams,
-        cleanUpFilter,
-        success
+        query
     };
 }
