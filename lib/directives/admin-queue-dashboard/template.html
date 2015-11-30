@@ -1,20 +1,13 @@
 <section>
-    <!-- FIXME: Add toggle
-    <i
-        ng-click="toggleDashboard()"
-        ng-class="{
-            'icon-chevron-down': !showDashboard,
-            'icon-chevron-up': showDashboard
-        }"
-        class="icon toggle"
-    ></i>
-    -->
     <h4>Unassigned</h4>
     <ul>
         <li>
             To be Indexed:&nbsp;
             <span
                 ng-click="requestQueueFilter('TO_BE_INDEXED')"
+                ng-class="{
+                    'disabled-filter': filterCounts.toBeIndexed === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.toBeIndexed | padZero }}
@@ -24,6 +17,9 @@
             To be QA'd:&nbsp;
             <span
                 ng-click="requestQueueFilter('TO_BE_QAD')"
+                ng-class="{
+                    'disabled-filter': filterCounts.toBeQad === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.toBeQad | padZero }}
@@ -38,6 +34,9 @@
             Indexing in Progress:&nbsp;
             <span
                 ng-click="requestQueueFilter('INDEXING_IN_PROGRESS')"
+                ng-class="{
+                    'disabled-filter': filterCounts.indexingInProgress === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.indexingInProgress | padZero }}
@@ -47,6 +46,9 @@
             QA in Progress:&nbsp;
             <span
                 ng-click="requestQueueFilter('QA_IN_PROGRESS')"
+                ng-class="{
+                    'disabled-filter': filterCounts.qaInProgress === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.qaInProgress | padZero }}
@@ -64,6 +66,9 @@
             Total:&nbsp;
             <span
                 ng-click="requestQueueFilter('TOTAL')"
+                ng-class="{
+                    'disabled-filter': filterCounts.total === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.total | padZero }}
@@ -73,6 +78,9 @@
             48h - 24h:&nbsp;
             <span
                 ng-click="requestQueueFilter('48_TO_24')"
+                ng-class="{
+                    'disabled-filter': filterCounts.deadline48to24 === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.deadline48to24 | padZero }}
@@ -82,6 +90,9 @@
             24h - 10h:&nbsp;
             <span
                 ng-click="requestQueueFilter('24_TO_10')"
+                ng-class="{
+                    'disabled-filter': filterCounts.deadline24to10 === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.deadline24to10 | padZero }}
@@ -91,6 +102,9 @@
             10h - 5h:&nbsp;
             <span
                 ng-click="requestQueueFilter('10_TO_5')"
+                ng-class="{
+                    'disabled-filter': filterCounts.deadline10to5 === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.deadline10to5 | padZero }}
@@ -100,6 +114,9 @@
             5h - 2h:&nbsp;
             <span
                 ng-click="requestQueueFilter('5_TO_2')"
+                ng-class="{
+                    'disabled-filter': filterCounts.deadline5to2 === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.deadline5to2 | padZero }}
@@ -109,6 +126,9 @@
             < 2h:&nbsp;
             <span
                 ng-click="requestQueueFilter('LESS_THAN_2')"
+                ng-class="{
+                    'disabled-filter': filterCounts.deadlineLessThan2 === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.deadlineLessThan2 | padZero }}
@@ -118,6 +138,9 @@
             Late:&nbsp;
             <span
                 ng-click="requestQueueFilter('LATE')"
+                ng-class="{
+                    'disabled-filter': filterCounts.late === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.late | padZero }}
@@ -140,6 +163,9 @@
             </span>
             <span
                 ng-click="requestQueueFilter(PRIORITIES_IDS[priority.id])"
+                ng-class="{
+                    'disabled-filter': filterCounts.priorities[priority.id] === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.priorities[priority.id] | padZero }}
@@ -163,6 +189,9 @@
             </span>
             <span
                 ng-click="requestQueueFilter(LABELS_IDS[label.id])"
+                ng-class="{
+                    'disabled-filter': filterCounts.labels[label.id] === 0
+                }"
                 class="filter"
             >
                 {{ filterCounts.labels[label.id] | padZero }}
