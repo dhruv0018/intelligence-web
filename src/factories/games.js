@@ -163,7 +163,7 @@ IntelligenceWebClient.factory('GamesFactory', [
              */
             timeRemaining: function(now = moment.utc()) {
 
-                const deadline = this.deadline || this.submittedAt;
+                const deadline = this.deadline || this.submittedAt || this.createdAt;
 
                 return moment(deadline).diff(now);
             },
