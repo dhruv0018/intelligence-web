@@ -84,7 +84,8 @@
 
         </div>
 
-        <div class="results noresults" ng-show="(queue.length === 0 && !searching)">
+        <div class="results noresults"
+            ng-show="queue.length === 0 && !AdminGames.isQuerying">
 
             <i class="icon icon-search"></i>
             <h1>No Results Found</h1>
@@ -99,7 +100,7 @@
             leagues="leagues"
             teams="teams"
             users="users"
-            ng-hide="AdminGames.isQuerying || searching || (queue.length === 0 && !searching)"
+            ng-hide="AdminGames.isQuerying || queue.length === 0"
         ></admin-queue-games>
 
         <admin-queue-pagination
