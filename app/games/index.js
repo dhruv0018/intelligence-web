@@ -260,13 +260,13 @@ function GamesController(
     // uploader could be a coach or an athlete (they have permissions to edit by default)
     else if (isUploader) {
 
-        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
 
     }
     // Coaches on the same team as the uploader can edit
     else if (isTeamUploadersTeam && isCoach) {
 
-        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
 
     } else if (isTelestrationsSharedWithCurrentUser || isTelestrationsSharedPublicly) {
 
