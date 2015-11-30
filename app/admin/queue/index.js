@@ -193,7 +193,6 @@ function QueueController (
     $scope.usersList = users.getList();
 
     $scope.games = games.getList(VIEWS.QUEUE.GAME.ALL);
-    $scope.totalGameCount = data.totalGameCount;
 
     $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
 
@@ -214,11 +213,6 @@ function QueueController (
         } else {
             $scope.queue = games;
         }
-    });
-
-    AdminGamesEventEmitter.on(EVENT.ADMIN.GAME_COUNT.UPDATE, filter => {
-        games.totalCount(filter)
-            .then(count => $scope.totalGameCount = count);
     });
 
     $scope.search = function(filter) {
