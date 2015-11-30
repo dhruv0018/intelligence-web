@@ -77,7 +77,7 @@
 
         <div class="results" ng-show="AdminGames.isQuerying">
 
-            <h1>Searching...</h1>
+            <h1>Loading...</h1>
 
             <!-- TODO: The size shouldn't be a static value -->
             <krossover-spinner ng-if="AdminGames.isQuerying" size="'80px'"></krossover-spinner>
@@ -104,7 +104,7 @@
         ></admin-queue-games>
 
         <admin-queue-pagination
-            ng-if="AdminGames.totalCount > QUERY_SIZE"            
+            ng-if="AdminGames.totalCount > QUERY_SIZE"
             total-count="AdminGames.totalCount"
             number-of-adjacent-page-buttons="2"
         ></admin-queue-pagination>
