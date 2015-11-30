@@ -55,14 +55,14 @@
                                 <div class="col-xs-6">
 
                                     <h6>Primary</h6>
-                                    <input class="form-control" style="background: {{game.primaryJerseyColor}}" name="yourprimarycolor" type="color" data-ng-model="game.primaryJerseyColor" disabled>
+                                    <input class="form-control" style="background: {{game.primaryJerseyColor}}" name="yourprimarycolor" type="color" data-ng-model="game.primaryJerseyColor" ng-change="game.save()">
 
                                 </div>
 
                                 <div class="col-xs-6">
 
                                     <h6>Secondary</h6>
-                                    <input class="form-control" style="background: {{game.secondaryJerseyColor}}" name="yourprimarycolor" type="color" data-ng-model="game.secondaryJerseyColor" disabled>
+                                    <input class="form-control" style="background: {{game.secondaryJerseyColor}}" name="yourprimarycolor" type="color" data-ng-model="game.secondaryJerseyColor"  ng-change="game.save()">
 
                                 </div>
 
@@ -97,14 +97,14 @@
                                 <div class="col-xs-6">
 
                                     <h6>Primary</h6>
-                                    <input class="form-control" style="background: {{game.opposingPrimaryJerseyColor}}" name="theirprimarycolor" type="color" data-ng-model="game.opposingPrimaryJerseyColor" disabled>
+                                    <input class="form-control" style="background: {{game.opposingPrimaryJerseyColor}}" name="theirprimarycolor" type="color" data-ng-model="game.opposingPrimaryJerseyColor"  ng-change="game.save()">
 
                                 </div>
 
                                 <div class="col-xs-6">
 
                                     <h6>Secondary</h6>
-                                    <input class="form-control" style="background: {{game.opposingSecondaryJerseyColor}}" name="theirprimarycolor" type="color" data-ng-model="game.opposingSecondaryJerseyColor" disabled>
+                                    <input class="form-control" style="background: {{game.opposingSecondaryJerseyColor}}" name="theirprimarycolor" type="color" data-ng-model="game.opposingSecondaryJerseyColor"  ng-change="game.save()">
 
                                 </div>
 
