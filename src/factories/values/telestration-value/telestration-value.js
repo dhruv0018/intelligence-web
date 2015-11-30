@@ -2,7 +2,8 @@
 /* TelestrationValue Object */
 
 module.exports = [
-    function() {
+    'Utilities',
+    function(utilities) {
 
         function TelestrationValue(time) {
 
