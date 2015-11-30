@@ -163,7 +163,9 @@ IntelligenceWebClient.factory('GamesFactory', [
              */
             timeRemaining: function(now = moment.utc()) {
 
-                return moment(this.deadline).diff(now);
+                const deadline = this.deadline || this.submittedAt;
+
+                return moment(deadline).diff(now);
             },
 
             getByUploaderRole: function(userId, teamId) {
