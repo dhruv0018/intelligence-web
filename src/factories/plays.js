@@ -41,6 +41,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
 
             storage: 'PlaysStorage',
 
+            updateLocalResourceOnPUT: true,
+
             extend: function (play) {
 
                 play = KrossoverPlayFactory.create(play);

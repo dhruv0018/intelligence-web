@@ -6,8 +6,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.service('Utilities', [
-    '$window',
-    function service($window) {
+    '$window', '$timeout', '$q',
+    function service($window, $timeout, $q) {
 
         /**
          * Builds a unique array of numbers.
@@ -86,14 +86,58 @@ IntelligenceWebClient.service('Utilities', [
             return (castedInput < 10) ? ('0' + castedInput) : castedInput;
         };
 
-        this.toFixedFloat = function(time, precision = 6) {
+        this.toFixedFloat = function(value, precision = 6) {
 
-            return parseFloat(time.toFixed(precision));
+            return parseFloat(value.toFixed(precision));
         };
 
         this.getSortedArrayByIds = function(objectToSort, orderedIds) {
             // Takes an object type and an array of ids and gets objects of that type in the same order
             return orderedIds.map(id => objectToSort.get(id));
+        };
+
+        /**
+         * @method debounce
+         * @description Returns a function that when called, will invoke the passed in promise-based function after a period of wait,
+         * unless the function is called again before the timer ends. The returned function resolves an existing promise immediately
+         * when called so that it doesn't block.
+         * @param {function} promiseBasedFunction A promise based function add debounce behavior to
+         * @param {=number} wait A time to wait before executing the function, promiseBasedFunction.
+         */
+        this.promiseDebounce = function(promiseBasedFunction, wait = 2000) {
+
+            let timerId;
+            let deferred;
+
+            function debouncedFunction() {
+
+                // resolve to keep from blocking
+                if (deferred) deferred.resolve();
+
+                deferred = $q.defer();
+
+                $timeout.cancel(timerId);
+
+                timerId = $timeout(() => {
+
+                    // Since the function that is returned is 'debouncedFunction',
+                    // but the intent is to call the promiseBasedFunction as normal,
+                    // we need to give it it's original scope and pass in the array of arguments
+                    // to it.
+                    promiseBasedFunction.apply(this, arguments)
+                    .then(result => {
+                        return deferred.resolve(result);
+                    }, (result) => {
+                        return deferred.reject(result);
+                    });
+
+                }, wait);
+
+                return deferred.promise;
+            }
+
+            // must return a function that is bound to the context in which it was called
+            return debouncedFunction.bind(this);
         };
     }
 ]);
