@@ -1,5 +1,56 @@
 @import (reference) "main.less";
 
 self-editor {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 15px 15px;
+    background: @gray-lightest;
+    flex: 1;
+    overflow: none;
 
+    .filter-container {
+        background-color: @gray-lightest;
+        flex: 0 0 50px;
+        display: flex;
+        align-items: center;
+    }
+
+    .main-highlight {
+        background-color: @gray-lightest;
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+
+        &.not-editable {
+            padding-top: 15px;
+        }
+    }
+
+    .krossover-sidebar {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .breakdown-sidebar-empty-state {
+            padding: 20px;
+            font-size: @font-size-large;
+        }
+
+        .breakdown-sidebar-footer {
+            margin-top: auto;
+            border-top: thin solid @gray-border;
+
+            button {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    video-player {
+        margin: 0;
+        margin-left: 15px;
+        margin-right: 15px;
+        width: 100%;
+    }
 }

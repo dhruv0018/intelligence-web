@@ -1,7 +1,5 @@
 export default `
 
-    <div class="games-self-editor">
-
-    </div>
+    <self-editor indexing-mode="indexingMode"></self-editor>
 
 `;
