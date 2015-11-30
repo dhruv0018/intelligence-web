@@ -216,8 +216,6 @@ function QueueController (
     });
 
     $scope.search = function(filter) {
-        let parsedFilter = AdminGames.cleanUpFilter(filter);
-
         $scope.searching = true;
         $scope.noResults = false;
 
@@ -228,10 +226,6 @@ function QueueController (
             $scope.queue = games;
         };
 
-        let extractUserIdsFromTeams = AdminGames.extractUserIdsFromTeams;
-        let extractUserIdsFromGame = AdminGames.extractUserIdsFromGame;
-        let extractTeamIdsFromGame = AdminGames.extractTeamIdsFromGame;
-
         let removeSpinner = () => {
             $scope.noResults = false;
             $scope.searching = false;
@@ -239,6 +233,8 @@ function QueueController (
             $scope.$digest();
         };
 
+        //can't use filter directly because manipulating it would change the UI
+        let parsedFilter = angular.copy(filter);
         if (parsedFilter['id[]']) {
             parsedFilter['id[]'] = [parsedFilter['id[]']];
         }
