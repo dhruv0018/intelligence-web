@@ -258,7 +258,7 @@ function ReelController(
             callbackFn = callbackFn || angular.noop;
 
             // Save Game
-            $scope.reel.save().then(function onSaved() {
+            $scope.reel.save(null, null, null, true).then(function onSaved() {
                 callbackFn();
             });
         });

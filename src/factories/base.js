@@ -574,15 +574,28 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
-             * Saves a resources to the server.
+             * @class BaseFactory
+             * @method save
+             * @description Saves a resources to the server if it doesn't get debounced
              * @param {Resource} resource - a resource.
              * @param {Function} success - called upon success.
              * @param {Function} error - called on error.
+             * @param {=boolean} debounce - debounce by default
              * @return {Promise.<Resource>} - a promise of a resources.
              */
-            save: function(resource, success, error) {
+            save: function(resource, success, error, debounce = false) {
+
+                let baseSave = this.baseSave.bind(this);
+
+                if (debounce) {
+
+                    this.debouncedBaseSave = this.debouncedBaseSave || util.promiseDebounce.call(this, baseSave);
+
+                    baseSave = this.debouncedBaseSave;
+                }
+
                 //TODO: find a less hacky way to do this
-                return this.baseSave(resource, success, error);
+                return baseSave(resource, success, error);
             },
             baseSave: function(resource, success, error) {
 
@@ -621,8 +634,10 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                     .then(function(updated) {
 
-                        /* Update local resource with server resource. */
-                        angular.extend(resource, self.extend(updated));
+                        if (resource.updateLocalResourceOnPUT) {
+                            /* Update local resource with server resource. */
+                            angular.extend(resource, self.extend(updated));
+                        }
 
                         delete resource.error;
 
