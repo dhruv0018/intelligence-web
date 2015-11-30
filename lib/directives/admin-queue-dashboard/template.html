@@ -1,10 +1,17 @@
 <section>
     <h4>Unassigned</h4>
     <ul>
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS.TO_BE_INDEXED.id
+            }"
+        >
             To be Indexed:&nbsp;
             <span
-                ng-click="requestQueueFilter('TO_BE_INDEXED')"
+                ng-click="
+                    requestQueueFilter('TO_BE_INDEXED');
+                    selectedFilter = FILTERS.TO_BE_INDEXED.id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.toBeIndexed === 0
                 }"
@@ -13,10 +20,17 @@
                 {{ filterCounts.toBeIndexed | padZero }}
             </span>
         </li>
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS.TO_BE_QAD.id
+            }"
+        >
             To be QA'd:&nbsp;
             <span
-                ng-click="requestQueueFilter('TO_BE_QAD')"
+                ng-click="
+                    requestQueueFilter('TO_BE_QAD');
+                    selectedFilter = FILTERS.TO_BE_QAD.id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.toBeQad === 0
                 }"
@@ -30,10 +44,17 @@
 <section>
     <h4>Assigned</h4>
     <ul>
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS.INDEXING_IN_PROGRESS.id
+            }"
+        >
             Indexing in Progress:&nbsp;
             <span
-                ng-click="requestQueueFilter('INDEXING_IN_PROGRESS')"
+                ng-click="
+                    requestQueueFilter('INDEXING_IN_PROGRESS');
+                    selectedFilter = FILTERS.INDEXING_IN_PROGRESS.id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.indexingInProgress === 0
                 }"
@@ -42,10 +63,17 @@
                 {{ filterCounts.indexingInProgress | padZero }}
             </span>
         </li>
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS.QA_IN_PROGRESS.id
+            }"
+        >
             QA in Progress:&nbsp;
             <span
-                ng-click="requestQueueFilter('QA_IN_PROGRESS')"
+                ng-click="
+                    requestQueueFilter('QA_IN_PROGRESS');
+                    selectedFilter = FILTERS.QA_IN_PROGRESS.id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.qaInProgress === 0
                 }"
@@ -62,10 +90,17 @@
         class="time-left"
         ng-class="{ 'less-columns': sidebarExpand }"
     >
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS.TOTAL.id
+            }"
+        >
             Total:&nbsp;
             <span
-                ng-click="requestQueueFilter('TOTAL')"
+                ng-click="
+                    requestQueueFilter('TOTAL');
+                    selectedFilter = FILTERS.TOTAL.id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.total === 0
                 }"
@@ -74,10 +109,17 @@
                 {{ filterCounts.total | padZero }}
             </span>
         </li>
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS['48_TO_24'].id
+            }"
+        >
             48h - 24h:&nbsp;
             <span
-                ng-click="requestQueueFilter('48_TO_24')"
+                ng-click="
+                    requestQueueFilter('48_TO_24');
+                    selectedFilter = FILTERS['48_TO_24'].id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.deadline48to24 === 0
                 }"
@@ -86,10 +128,17 @@
                 {{ filterCounts.deadline48to24 | padZero }}
             </span>
         </li>
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS['24_TO_10'].id
+            }"
+        >
             24h - 10h:&nbsp;
             <span
-                ng-click="requestQueueFilter('24_TO_10')"
+                ng-click="
+                    requestQueueFilter('24_TO_10');
+                    selectedFilter = FILTERS['24_TO_10'].id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.deadline24to10 === 0
                 }"
@@ -98,10 +147,17 @@
                 {{ filterCounts.deadline24to10 | padZero }}
             </span>
         </li>
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS['10_TO_5'].id
+            }"
+        >
             10h - 5h:&nbsp;
             <span
-                ng-click="requestQueueFilter('10_TO_5')"
+                ng-click="
+                    requestQueueFilter('10_TO_5');
+                    selectedFilter = FILTERS['10_TO_5'].id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.deadline10to5 === 0
                 }"
@@ -110,10 +166,17 @@
                 {{ filterCounts.deadline10to5 | padZero }}
             </span>
         </li>
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS['5_TO_2'].id
+            }"
+        >
             5h - 2h:&nbsp;
             <span
-                ng-click="requestQueueFilter('5_TO_2')"
+                ng-click="
+                    requestQueueFilter('5_TO_2');
+                    selectedFilter = FILTERS['5_TO_2'].id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.deadline5to2 === 0
                 }"
@@ -122,10 +185,17 @@
                 {{ filterCounts.deadline5to2 | padZero }}
             </span>
         </li>
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS.LESS_THAN_2.id
+            }"
+        >
             < 2h:&nbsp;
             <span
-                ng-click="requestQueueFilter('LESS_THAN_2')"
+                ng-click="
+                    requestQueueFilter('LESS_THAN_2');
+                    selectedFilter = FILTERS.LESS_THAN_2.id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.deadlineLessThan2 === 0
                 }"
@@ -134,10 +204,17 @@
                 {{ filterCounts.deadlineLessThan2 | padZero }}
             </span>
         </li>
-        <li>
+        <li
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS.LATE.id
+            }"
+        >
             Late:&nbsp;
             <span
-                ng-click="requestQueueFilter('LATE')"
+                ng-click="
+                    requestQueueFilter('LATE');
+                    selectedFilter = FILTERS.LATE.id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.late === 0
                 }"
@@ -151,7 +228,12 @@
 <section>
     <h4>Priority</h4>
     <ul>
-        <li ng-repeat="priority in PRIORITIES | orderObjectBy : 'value' : true">
+        <li
+            ng-repeat="priority in PRIORITIES | orderObjectBy : 'value' : true"
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS[PRIORITIES_IDS[priority.id]].id
+            }"
+        >
             <span
                 ng-class="{
                     'highest-priority': priority.id === PRIORITIES.HIGHEST.id,
@@ -162,7 +244,10 @@
                 {{ priority.name }}:&nbsp;
             </span>
             <span
-                ng-click="requestQueueFilter(PRIORITIES_IDS[priority.id])"
+                ng-click="
+                    requestQueueFilter(PRIORITIES_IDS[priority.id]);
+                    selectedFilter = FILTERS[PRIORITIES_IDS[priority.id]].id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.priorities[priority.id] === 0
                 }"
@@ -179,7 +264,12 @@
         class="labels"
         ng-class="{ 'less-columns': sidebarExpand }"
     >
-        <li ng-repeat="label in LABELS | orderObjectBy : 'index'">
+        <li
+            ng-repeat="label in LABELS | orderObjectBy : 'index'"
+            ng-class="{
+                'selected-filter': selectedFilter === FILTERS[LABELS_IDS[label.id]].id
+            }"
+        >
             <span>
                 <krossover-team-label-icon
                     label="label"
@@ -188,7 +278,10 @@
                 {{ label.name }}:&nbsp;
             </span>
             <span
-                ng-click="requestQueueFilter(LABELS_IDS[label.id])"
+                ng-click="
+                    requestQueueFilter(LABELS_IDS[label.id]);
+                    selectedFilter = FILTERS[LABELS_IDS[label.id]].id;
+                "
                 ng-class="{
                     'disabled-filter': filterCounts.labels[label.id] === 0
                 }"
