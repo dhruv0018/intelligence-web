@@ -147,7 +147,8 @@ QueueController.$inject = [
     'Utilities',
     'AdminGamesService',
     'AdminGamesEventEmitter',
-    'EVENT'
+    'EVENT',
+    'VIDEO_STATUSES'
 ];
 
 function QueueController (
@@ -172,7 +173,8 @@ function QueueController (
     utilities,
     AdminGames,
     AdminGamesEventEmitter,
-    EVENT
+    EVENT,
+    VIDEO_STATUSES
 ) {
 
     $scope.ROLE_TYPE = ROLE_TYPE;
@@ -235,6 +237,8 @@ function QueueController (
 
         //can't use filter directly because manipulating it would change the UI
         let parsedFilter = angular.copy(filter);
+        parsedFilter.isDeleted = false;
+        parsedFilter.videoStatus = VIDEO_STATUSES.COMPLETE.id;
         if (parsedFilter['id[]']) {
             parsedFilter['id[]'] = [parsedFilter['id[]']];
         }
