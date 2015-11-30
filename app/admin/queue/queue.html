@@ -104,6 +104,7 @@
 
         <admin-queue-pagination
             ng-if="AdminGames.totalCount > QUERY_SIZE"
+            ng-hide="AdminGames.isQuerying"
             total-count="AdminGames.totalCount"
             number-of-adjacent-page-buttons="2"
         ></admin-queue-pagination>
