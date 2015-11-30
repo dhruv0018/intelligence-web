@@ -137,7 +137,8 @@ Game.controller('GameController', [
         $scope.team = teams.get($scope.game.teamId);
         $scope.teams = teams.getCollection();
         $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-        $scope.league = leagues.get($scope.team.leagueId);
+        $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
+        $scope.league = leagues.get($scope.uploaderTeam.leagueId);
         $scope.sport = sports.get($scope.league.sportId);
 
         if (data.school) {
