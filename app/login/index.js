@@ -320,15 +320,6 @@ function LoginController(
     $scope.config = config;
     $scope.isMobile = $rootScope.DEVICE.ANDROID || $rootScope.DEVICE.IOS;
 
-    if ($state.current.name === 'login') {
-
-        alerts.clear();
-        alerts.add({
-            type: 'warning',
-            message: 'TIME TO REFRESH: <a href="http://support.krossover.com/customer/portal/articles/1642921" target="_blank">PLEASE CLEAR YOUR CACHE</a>'
-        });
-    }
-
     let currentUser = session.retrieveCurrentUser();
 
     if (currentUser && currentUser.persist) {
@@ -347,7 +338,7 @@ function LoginController(
 
         $scope.newUser = {
             password     : undefined,
-            showPassword : true, // By default, show the new user's password
+            showPassword : false, // By default, hide the new user's password
             agree        : false,
             email        : $stateParams.email,
             activated    : $stateParams.activated === 'true' ? true : false,
@@ -511,8 +502,8 @@ function LoginController(
                 }).then(function() {
 
                     alerts.add({
-                        type: 'info',
-                        message: 'An email has been sent to ' + email + ' with further instructions'
+                        type: 'success',
+                        message: 'An email has been sent to ' + email + ' with further instructions.'
                     });
                 });
             },

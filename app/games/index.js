@@ -188,7 +188,8 @@ GamesController.$inject = [
     'SessionService',
     'SPORTS',
     'SPORT_IDS',
-    'ROLES'
+    'ROLES',
+    'ROLE_TYPE'
 ];
 
 function GamesController(
@@ -207,7 +208,8 @@ function GamesController(
     session,
     SPORTS,
     SPORT_IDS,
-    ROLES
+    ROLES,
+    ROLE_TYPE
 ) {
 
     let gameId = Number($stateParams.id);
@@ -221,12 +223,20 @@ function GamesController(
     let uploader = users.get(game.uploaderUserId);
     let uploaderIsCoach = uploader.is(ROLES.COACH);
     let isUploader = game.isUploader(currentUser.id);
-    let isTeamUploadersTeam = game.isTeamUploadersTeam(currentUser.currentRole.teamId);
     let isCoach = currentUser.is(ROLES.COACH);
+    let isAthlete = currentUser.is(ROLES.ATHLETE);
     let isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
     let isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
     let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
     let isDelivered = game.isDelivered();
+    let isTeamUploadersTeam = false;
+
+    if (isCoach) {
+        isTeamUploadersTeam = game.isTeamUploadersTeam(session.getCurrentTeamId());
+    } else if (isAthlete) {
+        let athleteRoles = currentUser.getRoles(ROLE_TYPE.ATHLETE);
+        isTeamUploadersTeam = athleteRoles.some(role => game.isTeamUploadersTeam(role.teamId));
+    }
 
     /* Scope */
 

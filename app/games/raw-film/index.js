@@ -98,7 +98,7 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
             callbackFn = callbackFn || angular.noop;
 
             // Save Game
-            $scope.game.save().then(function onSaved() {
+            $scope.game.save(null, null, null, true).then(function onSaved() {
                 callbackFn();
             });
 

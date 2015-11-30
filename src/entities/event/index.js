@@ -12,10 +12,11 @@ class KrossoverEvent extends Entity {
 
     /**
      * @constructs KrossoverEvent
-     * @param {Object} event     - Event JSON
+     *
+     * @param {Object|KrossoverEvent} event - Event JSON or KrossoverEvent
      * @param {KrossoverTag} tag - An instantiated KrossoverTag tag
-     * @param {Number} time      - The time
-     * @param {Number} gameId    - The game ID
+     * @param {Number} time - The time
+     * @param {Number} gameId - The game ID
      */
     constructor (event, tag, time, gameId) {
 
@@ -24,66 +25,79 @@ class KrossoverEvent extends Entity {
             throw new Error('KrossoverEvent cannot be instantiated with no parameters!');
         }
 
-        this.schema = schema;
-
-        /* Use tag to setup event */
         super(tag);
 
         this.tagId = tag.id;
-        this.time  = time;
+        this.time = time;
         this.gameId = gameId;
 
         delete this.id;
 
-        /* If we have an event, fill in the details */
+        /* Existing events, JSON or KrossoverEvent. */
         if (event) {
 
             /* Validate event JSON */
             /* TODO: Re-enable this at some point. Right now, far too many
              * events are failing validtion and polluting the console. */
-            // let validation = this.validate(event);
+            // if (event instanceof KrossoverEvent) {
             //
-            // if (validation.errors.length) {
+            //     if (!event.isValid) {
             //
-            //     console.warn(validation.errors.shift());
+            //         console.warn('KrossoverEvent: invalid KrossoverEvent passed to constructor!');
+            //     }
+            // } else {
+            //
+            //     let validation = this.validate(event, schema);
+            //
+            //     if (validation.errors.length) {
+            //
+            //         console.warn(validation.errors.shift());
+            //     }
             // }
 
-            this.id     = event.id;
+            this.id = event.id;
             this.playId = event.playId;
+            this.variableValues = event.variableValues;
         }
 
-        this.fields = {};
+        if (
+            event &&
+            event instanceof KrossoverEvent &&
+            event.fields
+        ) {
 
-        /* Transform variables into fields */
-        this.tagVariables.forEach((tagVariable, index) => {
+            this.fields = event.fields;
+        } else {
 
-            let variableValue;
+            this.fields = {};
 
-            //TODO: move event && event.variableValues out of forEach, not moved as this could be a patch update.
+            /* Transform variables into fields */
+            this.tagVariables.forEach((tagVariable, index) => {
 
-            //variableValues, need not have all tagVariable,
-            if (event && event.variableValues && event.variableValues[tagVariable.id]) {
+                let variableValue = {value: undefined};
 
-                variableValue = event.variableValues[tagVariable.id];
+                if (
+                    this.variableValues &&
+                    this.variableValues[tagVariable.id]
+                ) {
 
-            } else {
+                    variableValue = this.variableValues[tagVariable.id];
+                }
 
-                variableValue = {value: undefined};
-            }
+                let rawField = Object.assign({}, tagVariable);
 
-            let rawField           = Object.assign({}, tagVariable);
+                if (event) {
 
-            if (event) {
+                    rawField.eventId = event.id;
+                    rawField.playId = event.playId;
+                }
 
-                rawField.eventId = event.id;
-                rawField.playId = event.playId;
-            }
-
-            rawField.gameId        = gameId;
-            rawField.index         = index + 1;
-            rawField.value         = variableValue.value;
-            this.fields[index + 1] = FieldFactory.createField(rawField, variableValue.type);
-        });
+                rawField.gameId = gameId;
+                rawField.index = index + 1;
+                rawField.value = variableValue.value;
+                this.fields[index + 1] = FieldFactory.createField(rawField, variableValue.type);
+            });
+        }
 
         delete this.tagVariables;
 
@@ -221,8 +235,8 @@ class KrossoverEvent extends Entity {
     get isValid () {
 
         return Object.keys(this.fields)
-        .map(key => this.fields[key])
-        .every(field => field.valid);
+            .map(key => this.fields[key])
+            .every(field => field.valid);
     }
 
     /**
@@ -232,7 +246,10 @@ class KrossoverEvent extends Entity {
      */
     get isFloat () {
 
-        return this.isStart === false && this.isEnd === false && this.children && this.children.length === 0;
+        return this.isStart === false &&
+            this.isEnd === false &&
+            this.children &&
+            this.children.length === 0;
     }
 
     /**
@@ -259,19 +276,23 @@ class KrossoverEvent extends Entity {
             console.error('Cannot convert event to JSON without valid field data!');
         }
 
-        let copy = {
+        let copy = {};
+        let eventProperties = Object.keys(schema.properties);
 
-            id            : this.id,
-            time          : this.time,
-            tagId         : this.tagId,
-            playId        : this.playId,
-            variableValues: {},
-        };
+        for (let property of eventProperties) {
 
-        Object.keys(this.fields).forEach(key => {
+            copy[property] = this[property];
+        }
 
-            copy.variableValues[this.fields[key].id] = this.fields[key].toJSON();
-        });
+        if (!copy.variableValues) copy.variableValues = {};
+
+        let fieldKeys = Object.keys(this.fields);
+
+        for (let key of fieldKeys) {
+
+            let field = this.fields[key];
+            copy.variableValues[field.id] = field.toJSON();
+        }
 
         return copy;
     }
