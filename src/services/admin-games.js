@@ -16,7 +16,7 @@ AdminGamesService.$inject = [
 ];
 
 function AdminGamesService(
-    games,
+    gamesFactory,
     teams,
     users,
     $q
@@ -84,8 +84,6 @@ function AdminGamesService(
     };
 
     let success = (games) => {
-        games = Array.isArray(games) ? games : [games];
-
         let teamIds = [];
         let teamIdPages = [];
         let userIdsFromGames = [];
@@ -131,15 +129,24 @@ function AdminGamesService(
         filter.start = start;
         let parsedFilter = cleanUpFilter(filter);
         isQuerying = true;
-        let totalResultCount = games.totalCount(parsedFilter).then(numberOfGames => {
-            totalCount = numberOfGames;
+        let totalResultCount = gamesFactory.totalCount(parsedFilter).then(numberOfGames => {
+            totalCount = numberOfGames || 0;
         });
-        let requestedGames = games.query(parsedFilter).then(games => {
+
+        let requestedGames = null;
+        if (parsedFilter['id[]']) {
+            requestedGames = gamesFactory.fetch(parsedFilter['id[]']);
+        } else {
+            requestedGames = gamesFactory.query(parsedFilter);
+        }
+        requestedGames.then(games => {
+            games = Array.isArray(games) ? games : [games];
             return success(games).then(() => {
                 isQuerying = false;
                 AdminGamesEventEmitter.onQueryFinish(null, games);
             });
         });
+
         return $q.all([totalResultCount, requestedGames]);
     }
 
