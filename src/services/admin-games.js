@@ -22,6 +22,7 @@ function AdminGamesService(
     $q
 ) {
     let queryFilter = null;
+    let isQuerying = false;
     let start = null;
     const COUNT_SIZE = 100;
 
@@ -128,8 +129,10 @@ function AdminGamesService(
         let filter = angular.copy(queryFilter);
         filter.start = start;
         let parsedFilter = cleanUpFilter(filter);
+        isQuerying = true;
         return games.query(parsedFilter).then(games => {
             return success(games).then(() => {
+                isQuerying = false;
                 AdminGamesEventEmitter.onQueryFinish(null, games);
             });
         });
@@ -147,6 +150,9 @@ function AdminGamesService(
         },
         set start(offset) {
             start = offset;
+        },
+        get isQuerying(){
+            return isQuerying;
         },
         query,
         extractUserIdsFromGame,

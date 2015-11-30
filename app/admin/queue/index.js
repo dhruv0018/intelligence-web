@@ -197,6 +197,8 @@ function QueueController (
 
     $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
 
+    $scope.AdminGames = AdminGames;
+
     //initially show everything
     $scope.queue = $scope.games;
 

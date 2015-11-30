@@ -75,16 +75,16 @@
             filter-counts="dashboardFilterCounts"
         ></admin-queue-dashboard>
 
-        <div class="results" ng-show="searching">
+        <div class="results" ng-show="AdminGames.isQuerying">
 
             <h1>Searching...</h1>
 
             <!-- TODO: The size shouldn't be a static value -->
-            <krossover-spinner ng-if="searching" size="'80px'"></krossover-spinner>
+            <krossover-spinner ng-if="AdminGames.isQuerying" size="'80px'"></krossover-spinner>
 
         </div>
 
-        <div class="results noresults" ng-show="noResults || (queue.length === 0 && !searching)">
+        <div class="results noresults" ng-show="(queue.length === 0 && !searching)">
 
             <i class="icon icon-search"></i>
             <h1>No Results Found</h1>
@@ -99,7 +99,7 @@
             leagues="leagues"
             teams="teams"
             users="users"
-            ng-hide="noResults || searching || (queue.length === 0 && !searching)"
+            ng-hide="AdminGames.isQuerying || searching || (queue.length === 0 && !searching)"
         ></admin-queue-games>
 
         <admin-queue-pagination
