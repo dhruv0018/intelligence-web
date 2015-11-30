@@ -22,7 +22,6 @@ class AdminGamesEventEmitter extends EventEmitter {
     }
 
     onQueryFinish (event, games) {
-        console.log('firing');
         this.emit(EVENT.ADMIN.QUERY.COMPLETE, event, games);
     }
 }
