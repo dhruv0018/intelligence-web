@@ -24,6 +24,7 @@ function AdminGamesService(
     let queryFilter = null;
     let isQuerying = false;
     let start = null;
+    let totalCount = null;
     const COUNT_SIZE = 100;
 
     //TODO should belong to indexing game model
@@ -130,12 +131,16 @@ function AdminGamesService(
         filter.start = start;
         let parsedFilter = cleanUpFilter(filter);
         isQuerying = true;
-        return games.query(parsedFilter).then(games => {
+        let totalResultCount = games.totalCount(parsedFilter).then(numberOfGames => {
+            totalCount = numberOfGames;
+        });
+        let requestedGames = games.query(parsedFilter).then(games => {
             return success(games).then(() => {
                 isQuerying = false;
                 AdminGamesEventEmitter.onQueryFinish(null, games);
             });
         });
+        return $q.all([totalResultCount, requestedGames]);
     }
 
     return {
@@ -153,6 +158,9 @@ function AdminGamesService(
         },
         get isQuerying(){
             return isQuerying;
+        },
+        get totalCount(){
+            return totalCount;
         },
         query,
         extractUserIdsFromGame,
