@@ -38,6 +38,7 @@ AdminQueueDataDependencies.$inject = [
     'SportsFactory',
     'LeaguesFactory',
     'AdminGamesService',
+    'AdminQueueDashboardService',
     'GamesFactory'
 ];
 
@@ -47,9 +48,10 @@ function AdminQueueDataDependencies (
     sports,
     leagues,
     AdminGames,
+    AdminQueueDashboardService,
     games
 ) {
-    let filter = angular.copy(VIEWS.QUEUE.GAME.ALL);
+    let filter = Object.assign({}, AdminQueueDashboardService.ALL_QUEUE_GAMES);
     AdminGames.queryFilter = filter;
     AdminGames.start = 0;
     var Data = {
@@ -146,6 +148,7 @@ QueueController.$inject = [
     'SelectIndexer.Modal',
     'Utilities',
     'AdminGamesService',
+    'AdminQueueDashboardService',
     'AdminGamesEventEmitter',
     'EVENT',
     'VIDEO_STATUSES'
@@ -172,6 +175,7 @@ function QueueController (
     SelectIndexerModal,
     utilities,
     AdminGames,
+    AdminQueueDashboardService,
     AdminGamesEventEmitter,
     EVENT,
     VIDEO_STATUSES
@@ -236,9 +240,7 @@ function QueueController (
         };
 
         //can't use filter directly because manipulating it would change the UI
-        let parsedFilter = angular.copy(filter);
-        parsedFilter.isDeleted = false;
-        parsedFilter.videoStatus = VIDEO_STATUSES.COMPLETE.id;
+        const parsedFilter = Object.assign({}, filter, AdminQueueDashboardService.BASE_QUEUE_FILTER);
         if (parsedFilter['id[]']) {
             parsedFilter['id[]'] = [parsedFilter['id[]']];
         }
