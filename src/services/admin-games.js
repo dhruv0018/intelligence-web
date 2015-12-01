@@ -109,7 +109,6 @@ function AdminGamesService(
             let userIdsFromTeams = extractUserIdsFromTeams(teams);
             let userIds = userIdsFromGames.concat(userIdsFromTeams);
             let userChunks = chunkResourcesByIds(userIds);
-            //return users.load(userIds);
             let userPromises = [];
             userChunks.forEach(chunk => {
                 if (chunk.length > 0) {
@@ -135,7 +134,10 @@ function AdminGamesService(
 
         let requestedGames = null;
         if (parsedFilter['id[]']) {
-            requestedGames = gamesFactory.fetch(parsedFilter['id[]']);
+            requestedGames = gamesFactory.fetch(parsedFilter['id[]'], null, () => {
+                isQuerying = false;
+                AdminGamesEventEmitter.onQueryFinish(null, []);
+            });
         } else {
             requestedGames = gamesFactory.query(parsedFilter);
         }
