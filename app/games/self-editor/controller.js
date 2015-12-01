@@ -2,13 +2,18 @@
 const angular = window.angular;
 
 GamesSelfEditorController.$inject = [
-    '$scope'
+    '$scope',
+    '$stateParams',
+    'GamesFactory'
 ];
 
 function GamesSelfEditorController (
-    $scope
+    $scope,
+    $stateParams,
+    games
 ) {
     $scope.indexingMode = false;
+    $scope.game = games.get($stateParams.id);
 }
 
 export default GamesSelfEditorController;
