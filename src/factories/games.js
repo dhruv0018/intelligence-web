@@ -160,6 +160,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
             /**
              * @param {Object} now - moment time object
+             * @returns {Integer} diff - milliseconds
              */
             timeRemaining: function(now = moment.utc()) {
 
