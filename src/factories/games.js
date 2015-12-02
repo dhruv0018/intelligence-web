@@ -1,4 +1,4 @@
-var PAGE_SIZE = 20;
+var PAGE_SIZE = 500;
 
 var moment = require('moment');
 
@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
         var GamesFactory = {
 
-            PAGE_SIZE: 1000,
+            PAGE_SIZE,
 
             description: 'games',
 
@@ -1561,6 +1561,21 @@ IntelligenceWebClient.factory('GamesFactory', [
                             '/max-preps?teamId=' +
                             team.id +
                             '&access_token=' +
+                            tokenService.getAccessToken();
+
+                return url;
+            },
+            /**
+             * get the csv stats download link
+             * @return {String}
+             */
+            getCSVDownloadLink: function(){
+                if (!this.id) throw new Error('Game must be saved before getting csv');
+                let tokenService = $injector.get('TokensService');
+                let url =  config.api.uri +
+                            'games/' +
+                            this.id +
+                            '/stats-csv?access_token=' +
                             tokenService.getAccessToken();
 
                 return url;

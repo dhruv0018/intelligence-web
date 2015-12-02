@@ -1,58 +1,172 @@
-<i ng-click="toggleDashboard()"
-   ng-class="{'icon-chevron-down': !showDashboard, 'icon-chevron-up': showDashboard}"
-   class="icon toggle"></i>
-<div ng-show="showDashboard" class="general-status-row">
-    <div class="general-status-col">
-        <h4>Current</h4>
-        <div class="general-status-info">
-            <div class="filter">
-                <a href data-ng-click="setQueue(queueFilters.ready.indexing)">{{queueFilters.ready.indexing.length | padZero}}</a> to be indexed
-            </div>
-        </div>
-        <div class="general-status-info">
-            <div class="filter">
-                <a href data-ng-click="setQueue(queueFilters.ready.qa)">{{queueFilters.ready.qa.length | padZero}}</a> to be QA'd
-            </div>
-        </div>
-    </div>
-    <div class="general-status-col">
-        <h4>Games</h4>
-        <div class="general-status-info">
-            <div class="filter">
-                <a href data-ng-click="setQueue(games)">{{games.length | padZero}}</a> Total
-            </div>
-            <div class="filter">
-                <a href data-ng-click="setQueue(queueFilters.remaining['24'])">{{queueFilters.remaining['24'].length | padZero}}</a> 24h - 10h
-            </div>
-            <div class="filter">
-                <a href data-ng-click="setQueue(queueFilters.remaining['5'])">{{queueFilters.remaining['5'].length | padZero}}</a> 5h - 1h
-            </div>
-            <div class="filter">
-                <a href data-ng-click="setQueue(queueFilters.remaining.late)">{{queueFilters.remaining.late.length | padZero}}</a> Late
-            </div>
-        </div>
-        <div class="general-status-info">
-            <div class="filter">
-                <a href data-ng-click="setQueue(queueFilters.remaining['48'])">{{queueFilters.remaining['48'].length | padZero}}</a> 48h - 24h
-            </div>
-            <div class="filter">
-                <a href data-ng-click="setQueue(queueFilters.remaining['10'])">{{queueFilters.remaining['10'].length | padZero}}</a> 10h - 5h
-            </div>
-            <div class="filter">
-                <a href data-ng-click="setQueue(queueFilters.remaining['1'])">{{queueFilters.remaining['1'].length | padZero}}</a> Less than 1h
-            </div>
-        </div>
-    </div>
-    <div class="general-status-col">
-        <div class="general-status-info">
-            <div class="filter">
-                <a href data-ng-click="setQueue(queueFilters.assigned)"> {{queueFilters.assigned.length | padZero}}</a> Assigned
-            </div>
-        </div>
-        <div class="general-status-info">
-            <div class="filter">
-                <a href data-ng-click="setQueue(queueFilters.unassigned)"> {{queueFilters.unassigned.length | padZero}}</a> Unassigned
-            </div>
-        </div>
-    </div>
-</div>
+<section>
+    <!-- FIXME: Add toggle
+    <i
+        ng-click="toggleDashboard()"
+        ng-class="{
+            'icon-chevron-down': !showDashboard,
+            'icon-chevron-up': showDashboard
+        }"
+        class="icon toggle"
+    ></i>
+    -->
+    <h4>Unassigned</h4>
+    <ul>
+        <li>
+            To be Indexed:&nbsp;
+            <span
+                ng-click="setQueue(queueFilters.ready.indexing)"
+                class="filter"
+            >
+                {{queueFilters.ready.indexing.length | padZero}}
+            </span>
+        </li>
+        <li>
+            To be QA'd:&nbsp;
+            <span
+                ng-click="setQueue(queueFilters.ready.qa)"
+                class="filter"
+            >
+                {{queueFilters.ready.qa.length | padZero}}
+            </span>
+        </li>
+    </ul>
+</section>
+<section>
+    <h4>Assigned</h4>
+    <ul>
+        <li>
+            Indexing in Progress:&nbsp;
+            <span
+                ng-click="setQueue(queueFilters.assigned.indexing)"
+                class="filter"
+            >
+                {{queueFilters.assigned.indexing.length | padZero}}
+            </span>
+        </li>
+        <li>
+            QA in Progress:&nbsp;
+            <span
+                ng-click="setQueue(queueFilters.assigned.qa)"
+                class="filter"
+            >
+                {{queueFilters.assigned.qa.length | padZero}}
+            </span>
+        </li>
+    </ul>
+</section>
+<section>
+    <h4>Time Left</h4>
+    <ul
+        class="time-left"
+        ng-class="{ 'less-columns': sidebarExpand }"
+    >
+        <li>
+            Total:&nbsp;
+            <span
+                ng-click="setQueue(games)"
+                class="filter"
+            >
+                {{games.length | padZero}}
+            </span>
+        </li>
+        <li>
+            48h - 24h:&nbsp;
+            <span
+                ng-click="setQueue(queueFilters.remaining['48'])"
+                class="filter"
+            >
+                {{queueFilters.remaining['48'].length | padZero}}
+            </span>
+        </li>
+        <li>
+            24h - 10h:&nbsp;
+            <span
+                ng-click="setQueue(queueFilters.remaining['24'])"
+                class="filter"
+            >
+                {{queueFilters.remaining['24'].length | padZero}}
+            </span>
+        </li>
+        <li>
+            10h - 5h:&nbsp;
+            <span
+                ng-click="setQueue(queueFilters.remaining['10'])"
+                class="filter"
+            >
+                {{queueFilters.remaining['10'].length | padZero}}
+            </span>
+        </li>
+        <li>
+            5h - 1h:&nbsp;
+            <span
+                ng-click="setQueue(queueFilters.remaining['5'])"
+                class="filter"
+            >
+                {{queueFilters.remaining['5'].length | padZero}}
+            </span>
+        </li>
+        <li>
+            < 1h:&nbsp;
+            <span
+                ng-click="setQueue(queueFilters.remaining['1'])"
+                class="filter"
+            >
+                {{queueFilters.remaining['1'].length | padZero}}
+            </span>
+        </li>
+        <li>
+            Late:&nbsp;
+            <span
+                ng-click="setQueue(queueFilters.remaining.late)"
+                class="filter"
+            >
+                {{queueFilters.remaining.late.length | padZero}}
+            </span>
+        </li>
+    </ul>
+</section>
+<section>
+    <h4>Priority</h4>
+    <ul>
+        <li ng-repeat="priority in PRIORITIES | orderObjectBy : 'value' : true">
+            <span
+                ng-class="{
+                    'highest-priority': priority.id === PRIORITIES.HIGHEST.id,
+                    'high-priority': priority.id === PRIORITIES.HIGH.id,
+                    'normal-priority': priority.id === PRIORITIES.NORMAL.id
+                }"
+            >
+                {{ priority.name }}:&nbsp;
+            </span>
+            <span
+                ng-click="setQueue(queueFilters.priority[priority.id])"
+                class="filter"
+            >
+                {{queueFilters.priority[priority.id].length | padZero}}
+            </span>
+        </li>
+    </ul>
+</section>
+<section>
+    <h4>Label</h4>
+    <ul
+        class="labels"
+        ng-class="{ 'less-columns': sidebarExpand }"
+    >
+        <li ng-repeat="label in LABELS | orderObjectBy : 'index'">
+            <span>
+                <krossover-team-label-icon
+                    label="label"
+                    tooltip="false"
+                ></krossover-team-label-icon>
+                {{ label.name }}:&nbsp;
+            </span>
+            <span
+                ng-click="setQueue(queueFilters.labels[label.id])"
+                class="filter"
+            >
+                {{queueFilters.labels[label.id].length | padZero}}
+            </span>
+        </li>
+    </ul>
+</section>

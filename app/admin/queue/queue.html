@@ -16,7 +16,7 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="status" ng-model="filter.status" ng-options="status.id as status.name for (key, status) in GAME_STATUSES">
+                <select class="form-control" name="status" ng-model="filter['status[]']" ng-options="status.id as status.name for (key, status) in GAME_STATUSES">
                     <option value="">Status</option>
                 </select>
 
@@ -69,17 +69,19 @@
     <div class="queue-container">
 
         <admin-queue-dashboard
-         games="games"
-         queue="queue"
+            games="games"
+            queue="queue"
+            sidebar-expand="sidebar"
         ></admin-queue-dashboard>
 
         <admin-queue-games
-         queue="queue"
-         sports="sports"
-         leagues="leagues"
-         teams="teams"
-         users="users"
-         ng-hide="noResults || searching"
+            games="games"
+            queue="queue"
+            sports="sports"
+            leagues="leagues"
+            teams="teams"
+            users="users"
+            ng-hide="noResults || searching"
         ></admin-queue-games>
 
         <div class="results" ng-show="searching">

@@ -6,8 +6,8 @@ const LABELS_IDS = {
 
     1: 'KL',
     2: 'CB',
-    3: 'C1',
-    4: 'C2'
+    3: 'CC',
+    4: 'HT'
 };
 
 const LABELS = {
@@ -15,25 +15,29 @@ const LABELS = {
     'KL': {
         id: 1,
         name: 'Krossover Lite',
-        abbreviation: 'KL'
+        abbreviation: 'KL',
+        index: 1
     },
 
     'CB': {
         id: 2,
         name: 'Coach Breakdown',
-        abbreviation: 'CB'
+        abbreviation: 'CB',
+        index: 0
     },
 
-    'C1': {
+    'CC': {
         id: 3,
-        name: 'Custom 1',
-        abbreviation: 'C1'
+        name: 'Coach Complaint',
+        abbreviation: 'CC',
+        index: 2
     },
 
-    'C2': {
+    'HT': {
         id: 4,
-        name: 'Custom 2',
-        abbreviation: 'C2'
+        name: 'Hyper Turnaround',
+        abbreviation: 'HT',
+        index: 3
     }
 };
 

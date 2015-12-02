@@ -57,7 +57,7 @@ function AdminQueueDataDependencies (
         //TODO should be able to use load, but causes wierd caching issues
         users: users.load(VIEWS.QUEUE.USERS),
         teams: teams.load(VIEWS.QUEUE.TEAMS),
-        games: games.load(VIEWS.QUEUE.GAME)
+        games : games.load(VIEWS.QUEUE.GAME.ALL)
     };
     return Data;
 }
@@ -184,7 +184,8 @@ function QueueController (
     $scope.sportsList = sports.getList();
     $scope.teamsList = teams.getList();
     $scope.usersList = users.getList();
-    $scope.games = games.getList(VIEWS.QUEUE.GAME);
+
+    $scope.games = games.getList(VIEWS.QUEUE.GAME.ALL);
 
     //initially show everything
     $scope.queue = $scope.games;
@@ -210,72 +211,92 @@ function QueueController (
     });
 
     $scope.search = function(filter) {
+        let parsedFilter = {};
+
+        Object.keys(filter).forEach(key => {
+            let value = filter[key];
+            let isNull = value === null;
+            let isEmptyString = typeof value === 'string' && value.length === 0;
+
+            //strips out nulls and empty strings
+            if (isNull || isEmptyString) return;
+
+            parsedFilter[key] = value;
+        });
 
         $scope.searching = true;
+        $scope.noResults = false;
 
-        /* If search by ID is used, just pull the single game. */
-        if (filter.gameId) {
+        let updateQueue = (games) => {
+            $scope.queue = games;
+        };
 
-            games.fetch(filter.gameId,
+        //TODO should belong to indexing game model
+        //leaving this open to potentially getting other info from the team besides head coach id
+        let extractUserIdsFromTeams = (teams) => {
+            let headCoachIds = teams.map(team => {
+                let headCoachRole = team.getHeadCoachRole();
+                return headCoachRole ? headCoachRole.userId : null;
+            }).filter(id => id !== null);
+            return headCoachIds;
+        };
 
-                function success(game) {
+        //TODO this should belong to an indexing game model
+        let extractUserIdsFromGame = (game) => {
+            //indexer related ids
+            let userIds = game.indexerAssignments.map(assignment => assignment.userId);
+            userIds.push(game.uploaderUserId);
+            return userIds;
+        };
 
-                    /* Get the team names */
-                    teams.load([game.teamId, game.opposingTeamId]).then(
-                        function updateQueue() {
-                            $scope.queue = [];
-                            $scope.queue[0] = game;
-                    }).finally(function removeSpinner() {
-                        $scope.noResults = false;
-                        $scope.searching = false;
-                        //Notify Angular to start digest cycle
-                        $scope.$digest();
-                    });
-                },
+        //TODO this should belong to an indexing game model
+        let extractTeamIdsFromGame = (game) => {
+            let teamIds = [game.teamId, game.opposingTeamId, game.uploaderTeamId];
+            return teamIds;
+        };
 
-                function error() {
+        let removeSpinner = () => {
+            $scope.noResults = false;
+            $scope.searching = false;
+            //Notify Angular to start digest cycle
+            $scope.$digest();
+        };
 
-                    $scope.queue = [];
-                    $scope.noResults = true;
-                    $scope.searching = false;
-                    //Notify Angular to start digest cycle
-                    $scope.$digest();
-                }
-            );
-        }
+        let success = (games) => {
+            games = Array.isArray(games) ? games : [games];
 
-        else {
+            if (games.length === 0) {
+                emptyOutQueue();
+                return;
+            }
 
-            games.query(filter,
+            let teamIds = [];
+            let userIdsFromGames = [];
+            games.forEach(game => {
+                teamIds = teamIds.concat(extractTeamIdsFromGame(game));
+                userIdsFromGames = userIdsFromGames.concat(extractUserIdsFromGame(game));
+            });
+            /* Get the team names */
+            teams.load(teamIds).then((teams) => {
+                let userIdsFromTeams = extractUserIdsFromTeams(teams);
+                let userIds = userIdsFromGames.concat(userIdsFromTeams);
+                users.load(userIds).then(() => updateQueue(games)).finally(removeSpinner);
+            });
+        };
 
-                function success(games) {
+        let emptyOutQueue = () => {
+            $scope.queue = [];
+            $scope.noResults = true;
+            $scope.searching = false;
+            //Notify Angular to start digest cycle
+            $scope.$digest();
+        };
 
-                    let teamIds = [];
-                    /* Get the team names */
-                    for (let game of games) {
-                        teamIds.push(game.teamId, game.opposingTeamId);
-                    }
-                    /* Get the unique teams */
-                    teams.load(teamIds).then(
-                        function updateQueue() {
-                            $scope.queue = games;
-                    }).finally(function removeSpinner() {
-                        $scope.noResults = false;
-                        $scope.searching = false;
-                        //Notify Angular to start digest cycle
-                        $scope.$digest();
-                    });
-                },
 
-                function error() {
-
-                    $scope.queue = [];
-                    $scope.noResults = true;
-                    $scope.searching = false;
-                    //Notify Angular to start digest cycle
-                    $scope.$digest();
-                }
-            );
+        if (parsedFilter.gameId) {
+            games.fetch(parsedFilter.gameId, success, emptyOutQueue);
+        } else {
+            games.query(parsedFilter, success, emptyOutQueue);
         }
     };
 }

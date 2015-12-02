@@ -29,8 +29,9 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
 
         $scope.team = teams.get(session.currentUser.currentRole.teamId);
 
-        $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, true);
-        $scope.assistantCoaches = $scope.assistantCoaches.concat(users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, false));
+        const ACTIVE = true;
+        $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, ACTIVE);
+        $scope.assistantCoaches = $scope.assistantCoaches.concat(users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, !ACTIVE));
 
         //toggles between assistant views
         $scope.filtering = [
@@ -42,7 +43,7 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
 
         alerts.add({
             type: 'warning',
-            message: 'All game film is automatically shared amongst all coaches of the team'
+            message: 'All game film is automatically shared amongst all active Coaches of the team.'
         });
 
     }
