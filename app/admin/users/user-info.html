@@ -41,8 +41,9 @@
         <input class="form-control" name="phone2" placeholder="Phone Number 2" data-ng-model="user.phone2" type="tel">
 
     </div>
-
+    
     <krossover-admin-resource-save
+        disabled="formUserInfo.$pristine"
         button-id="save-user-contact-info-cta"
         resource="user">
     </krossover-admin-resource-save>
