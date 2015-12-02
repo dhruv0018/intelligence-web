@@ -15,7 +15,6 @@ function IndexerGamesHistoryController(
     session,
     GAME_STATUSES
 ) {
-    console.log('hi');
     $scope.assignments = [];
     $scope.teams = teams.getMap();
     $scope.games = games.getMap();
@@ -23,19 +22,15 @@ function IndexerGamesHistoryController(
 
     let userId = session.getCurrentUserId();
 
-    //let timeAssigned = (firstGame, secondGame) =>  secondGame.timeAssigned - firstGame.timeAssigned;
-
     games.getList({ assignedUserId: userId })
         .filter(game => game.isDeleted === false)
         .filter(game => game.status !== GAME_STATUSES.SET_ASIDE.id)
-        //.sort(timeAssigned)
         .forEach(game => {
             let assignments = game.getInactiveAssignmentsByUserId(userId);
             assignments.forEach(assignment => {
-            assignment.game = game;
-            console.log(assignment.timeAssigned);
-            $scope.assignments.push(assignment);
-        });
+                assignment.game = game;
+                $scope.assignments.push(assignment);
+            });
     });
 
     $scope.getSportName = function(teamId) {
