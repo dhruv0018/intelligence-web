@@ -698,14 +698,14 @@ IntelligenceWebClient.factory('GamesFactory', [
             getAssignmentsByUserId: function(userId) {
                 let assignments = [];
                 if (userId) {
-                    assignments = this.indexerAssignments.map(assignment => assignment.userId === userId ? assignment : null);
+                    assignments = this.indexerAssignments.filter(assignment => assignment.userId === userId);
                 }
                 return assignments;
             },
 
             getInactiveAssignmentsByUserId: function(userId) {
                 let assignments = this.getAssignmentsByUserId(userId);
-                return assignments.map(assignment => assignment.timeFinished !== null ? assignment : null);
+                return assignments.filter(assignment => assignment.timeFinished);
             },
 
             isAssignmentStarted: function(assignment) {
