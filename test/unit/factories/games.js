@@ -2149,4 +2149,39 @@ describe('GamesFactory', function() {
             expect(assignments.length).to.equal(0);
         });
     });
+
+    describe("getInactiveAssignmentsByUserId", () => {
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {
+                    indexerAssignments: [
+                        {
+                          "userId": 1,
+                          "timeFinished": "2015-07-08T15:17:59+00:00"
+                        },
+                        {
+                          "userId": 5
+                        },
+                        {
+                            "userId": 1
+                        },
+                        {
+                            "userId": 1,
+                            "timeFinished": "2015-07-09T15:17:59+00:00"
+                        }
+                    ]
+                };
+                game = gamesFactory.extend(game);
+            }
+        ]));
+
+        it("should return the proper number of assignments corresponding to the user id passed in", () => {
+            let userId = 1;
+            let assignments = game.getInactiveAssignmentsByUserId(userId);
+            expect(assignments.length).to.equal(2);
+        });
+    });
 });
