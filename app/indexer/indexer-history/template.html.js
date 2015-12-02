@@ -27,7 +27,7 @@ export default `
                             'queue-list__normal-priority': assignment.game.priority === PRIORITIES.NORMAL.id,
                         }"
                     >
-                        <td>{{assignment.game.userAssignment().timeAssigned | date:'MM/dd/yyyy'}}</td>
+                        <td>{{assignment.timeAssigned | date:'MM/dd/yyyy'}}</td>
                         <td>{{assignment.game.id}}</td>
                         <!-- TODO Add a getter in GamesFactory that returns the team vs opposing team string -->
                         <td>
@@ -36,9 +36,9 @@ export default `
                             </a>
                         </td>
                         <td>{{ getSportName(assignment.game.teamId) | capitalizeFirstLetter }}</td>
-                        <td>{{assignment.game.userAssignment().isQa ? 'QA' : 'Indexed'}}</td>
+                        <td>{{assignment.isQa ? 'QA' : 'Indexed'}}</td>
                         <td>
-                            {{assignment.game.userAssignment().timeFinished ? (assignment.game.userAssignment().timeFinished | date:'MM/dd/yyyy') : 'Incomplete'}}
+                            {{assignment.timeFinished ? (assignment.timeFinished | date:'MM/dd/yyyy') : 'Incomplete'}}
                         </td>
                     </tr>
                     </tbody>
