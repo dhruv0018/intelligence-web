@@ -18,13 +18,13 @@
             </div>
 
             <div class="form-group">
-                <team-typeahead  data-ng-hide="!sportId" data-ng-if="users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-customer-teams="true" data-ng-model="role.teamId" data-without-role="ROLES.HEAD_COACH"></team-typeahead>
-                <team-typeahead data-element-id="user-role-team-field" data-ng-hide="!sportId" data-ng-if="!users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-customer-teams="true" data-ng-model="role.teamId"></team-typeahead>
+                <team-typeahead  data-ng-hide="!sportId" data-ng-if="users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-customer-teams="true" data-ng-model="role.teamId" data-without-role="ROLES.HEAD_COACH" required="true"></team-typeahead>
+                <team-typeahead data-element-id="user-role-team-field" data-ng-hide="!sportId" data-ng-if="!users.is(role, HEAD_COACH)" data-sport-id="sportId" data-team="selectedTeam" data-customer-teams="true" data-ng-model="role.teamId" required="true"></team-typeahead>
             </div>
 
             <div class="form-group">
                 <div class="new-roles-controls">
-                    <button type="button" id="coach-add-new-user-role-cta" class="btn-role-new"
+                    <button type="button" id="coach-add-new-user-role-cta" class="btn btn-role-new"
                         href data-ng-disabled="form.$invalid" data-ng-click="addRole(role)">
                         <i class="icon icon-plus-sign"></i> Add New Role
                     </button>
@@ -39,7 +39,7 @@
     <div data-ng-if="users.is(role, INDEXER)">
 
         <h4>Indexer</h4>
-        <form>
+        <form name="form" role="form">
             <div class="form-group">
                 <select class="form-control" name="indexerGroup" id="user-role-indexer-group-dropdown" data-ng-model="role.indexerGroupId" data-ng-options="key as value for (key,value) in INDEXER_GROUPS_ID" required>
 
@@ -47,9 +47,12 @@
 
                 </select>
             </div>
-            <div>
+            <div class="form-group">
                 <div class="new-roles-controls">
-                    <a class="btn-role-new" id="indexer-add-new-user-role-cta" href data-ng-click="addRole(role)"><i class="icon icon-plus-sign"></i> Add New Role</a>
+                    <button type="button" id="indexer-add-new-user-role-cta" class="btn btn-role-new"
+                        href ng-disabled="form.$invalid" ng-click="addRole(role)">
+                        <i class="icon icon-plus-sign"></i> Add New Role
+                    </button>
                     <a id="cancel-role-addition-indexer-cta" class="cancel-role-addition" ng-click="removeRole(role)">Cancel</a>
                 </div>
             </div>
@@ -64,9 +67,12 @@
 
         <p>Only Athletes can add parents to their account</p>
 
-        <div>
+        <div class="form-group">
             <div class="new-roles-controls">
-                <a class="btn-role-new" href id="athlete-add-new-user-role-cta" data-ng-click="addRole(role)"><i class="icon icon-plus-sign"></i> Add New Role</a>
+                <button type="button" id="athlete-add-new-user-role-cta" class="btn btn-role-new"
+                        href ng-click="addRole(role)">
+                    <i class="icon icon-plus-sign"></i> Add New Role
+                </button>
                 <a id="cancel-role-addition-athlete-cta" class="cancel-role-addition" ng-click="removeRole(role)">Cancel</a>
             </div>
         </div>
