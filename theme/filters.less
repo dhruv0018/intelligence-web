@@ -22,12 +22,23 @@
         align-items: flex-start;
         height: inherit;
 
+        > .filter-group__item {
+            height: inherit;
+        }
+
         &__item {
-            margin: 0px 10px;
             display: inline-flex;
             justify-content: space-around;
             align-items: flex-start;
             flex-direction: column;
+
+            &-title {
+                flex: 40;
+            }
+
+            &-actions {
+                flex: 60;
+            }
         }
 
         &:first-child, &:last-child {

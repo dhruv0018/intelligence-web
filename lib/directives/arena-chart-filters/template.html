@@ -6,7 +6,7 @@
         <!--  team player filter -->
         <div class="filter-group__item">
 
-            <div>
+            <div class="filter-group__item-title">
 
                 <color-shape color="::game.primaryJerseyColor"></color-shape>
 
@@ -14,7 +14,7 @@
 
             </div>
 
-            <div>
+            <div class="filter-group__item-actions">
 
                 <krossover-multiselect
                     ng-model="filterModel.teamPlayersIds"
@@ -37,25 +37,23 @@
         <!-- shots filter -->
         <div class="filter-group__item">
 
-            <h5> Shots </h5>
+            <div class="filter-group__item-title">
+                <h5> Shots </h5>
+            </div>
 
-            <div ng-if="SPORT_IDS[league.sportId] === 'BASKETBALL'">
+            <div class="filter-group__item-actions" ng-if="SPORT_IDS[league.sportId] === 'BASKETBALL'">
 
-                <div class="filter-group__item">
+                <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
+                    <i class="arena-event-icon icon-circle"></i>Made
+                </krossover-checkbox>
 
-                    <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
-                        <i class="arena-event-icon icon-x"></i>Made
-                    </krossover-checkbox>
-
-                    <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
-                        <i class="arena-event-icon icon-x"></i>Missed
-                    </krossover-checkbox>
-
-                </div>
+                <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
+                    <i class="arena-event-icon icon-x"></i>Missed
+                </krossover-checkbox>
 
             </div>
 
-            <div ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'">
+            <div class="filter-group__item-actions" ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'">
 
                 <div class="filter-group__item">
 
@@ -87,9 +85,11 @@
         <!-- period filter -->
         <div class="filter-group__item" ng-if="league.numberOfPeriods !== 1">
 
-            <h5> Period </h5>
+            <div class="filter-group__item-title">
+                <h5> Period </h5>
+            </div>
 
-            <div>
+            <div class="filter-group__item-actions">
 
                 <krossover-checkbox ng-model="filterModel.allPeriods" children-models="filterModel.periods" children-listen="false">
                     All
@@ -110,9 +110,11 @@
         <!-- custom tags filter -->
         <div class="filter-group__item">
 
-            <h5> Tags </h5>
+            <div class="filter-group__item-title">
+                <h5> Tags </h5>
+            </div>
 
-            <div>
+            <div class="filter-group__item-actions">
 
                 <krossover-multiselect
                     ng-model="filterModel.customTagIds"
@@ -135,7 +137,7 @@
         <!-- opposing team filter -->
         <div class="filter-group__item">
 
-            <div>
+            <div class="filter-group__item-title">
 
                 <h5 class="team-label__name">{{::opposingTeam.name}}</h5>
 
@@ -143,7 +145,7 @@
 
             </div>
 
-            <div>
+            <div class="filter-group__item-actions">
 
                 <krossover-multiselect
                     ng-model="filterModel.opposingTeamPlayersIds"
