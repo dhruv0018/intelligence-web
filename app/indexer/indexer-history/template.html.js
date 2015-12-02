@@ -5,7 +5,7 @@ export default `
         <indexer-sidebar></indexer-sidebar>
 
         <div class="game-indexer-content">
-            <div ng-show="filteredGames.length > 0">
+            <div ng-show="assignments.length > 0">
                 <h3>Games History</h3>
 
                 <table class="queue-list">
@@ -20,33 +20,31 @@ export default `
                     </tr>
                     </thead>
                     <tbody>
-                    <tr data-ng-repeat="game in games
-                        | gameIsDeleted: false
-                        | gameIsNotSetAside
-                        | gameHasCurrentUserAssignment
-                        | gameCurrentUserAssignmentIsActive: false
-                        | orderBy: getLatestAssignmentDate: true
-                        as filteredGames"
+                    <tr data-ng-repeat="assignment in assignments | orderBy: '-timeAssigned' "
                         ng-class="{
-                            'queue-list__highest-priority': game.priority === PRIORITIES.HIGHEST.id,
-                            'queue-list__high-priority': game.priority === PRIORITIES.HIGH.id,
-                            'queue-list__normal-priority': game.priority === PRIORITIES.NORMAL.id,
+                            'queue-list__highest-priority': assignment.game.priority === PRIORITIES.HIGHEST.id,
+                            'queue-list__high-priority': assignment.game.priority === PRIORITIES.HIGH.id,
+                            'queue-list__normal-priority': assignment.game.priority === PRIORITIES.NORMAL.id,
                         }"
                     >
-                        <td>{{game.userAssignment().timeAssigned | date:'MM/dd/yyyy'}}</td>
-                        <td>{{game.id}}</td>
+                        <td>{{assignment.game.userAssignment().timeAssigned | date:'MM/dd/yyyy'}}</td>
+                        <td>{{assignment.game.id}}</td>
                         <!-- TODO Add a getter in GamesFactory that returns the team vs opposing team string -->
-                        <td><a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: game.id })">{{teams[game.teamId].name}} vs {{teams[game.opposingTeamId].name}}</a></td>
-                        <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
-                        <td>{{game.userAssignment().isQa ? 'QA' : 'Indexed'}}</td>
                         <td>
-                            {{game.userAssignment().timeFinished ? (game.userAssignment().timeFinished | date:'MM/dd/yyyy') : 'Incomplete'}}
+                            <a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: assignment.game.id })">
+                            {{teams[assignment.game.teamId].name}} vs {{teams[assignment.game.opposingTeamId].name}}
+                            </a>
+                        </td>
+                        <td>{{ getSportName(assignment.game.teamId) | capitalizeFirstLetter }}</td>
+                        <td>{{assignment.game.userAssignment().isQa ? 'QA' : 'Indexed'}}</td>
+                        <td>
+                            {{assignment.game.userAssignment().timeFinished ? (assignment.game.userAssignment().timeFinished | date:'MM/dd/yyyy') : 'Incomplete'}}
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <div ng-hide="filteredGames.length > 0">
+            <div ng-hide="assignments.length > 0">
                 <h3>You haven't worked on any games yet.</h3>
             </div>
         </div>
