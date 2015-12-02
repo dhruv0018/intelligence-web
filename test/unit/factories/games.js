@@ -2111,4 +2111,42 @@ describe('GamesFactory', function() {
                 assert(TokensService.getAccessToken.should.have.been.called);
         }]));
     });
+
+    describe('getAssignmentsByUserId', function() {
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {
+                    indexerAssignments: [
+                        {
+                          "userId": 1
+                        },
+                        {
+                          "userId": 5
+                        },
+                    ]
+                };
+                game = gamesFactory.extend(game);
+            }
+        ]));
+
+        it("should return the proper number of assignments corresponding to the user id passed in", () => {
+            let userId = 1;
+            let assignments = game.getAssignmentsByUserId(userId);
+            expect(assignments.length).to.equal(1);
+        });
+
+        it("should return empty array if no user id passed in", () => {
+            let assignments = game.getAssignmentsByUserId();
+            expect(assignments.length).to.equal(0);
+        });
+
+        it("should return empty array if user id passed in is not found", () => {
+            let userId = 100;
+            let assignments = game.getAssignmentsByUserId(userId);
+            expect(assignments.length).to.equal(0);
+        });
+    });
 });
