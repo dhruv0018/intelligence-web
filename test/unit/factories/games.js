@@ -2121,10 +2121,10 @@ describe('GamesFactory', function() {
                 game = {
                     indexerAssignments: [
                         {
-                          "userId": 1
+                            "userId": 1
                         },
                         {
-                          "userId": 5
+                            "userId": 5
                         },
                     ]
                 };
@@ -2159,11 +2159,11 @@ describe('GamesFactory', function() {
                 game = {
                     indexerAssignments: [
                         {
-                          "userId": 1,
-                          "timeFinished": "2015-07-08T15:17:59+00:00"
+                            "userId": 1,
+                            "timeFinished": "2015-07-08T15:17:59+00:00"
                         },
                         {
-                          "userId": 5
+                            "userId": 5
                         },
                         {
                             "userId": 1
