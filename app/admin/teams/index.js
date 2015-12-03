@@ -413,6 +413,12 @@ function TeamController (
 
     var team;
     $scope.schoolName = '';
+    $scope.rolesChanged = false;
+
+    $scope.removeRole = (role) => {
+        $scope.team.removeRole(role);
+        $scope.rolesChanged = true;
+    };
 
     $scope.updateTeamAddress = function($item) {
 
@@ -438,7 +444,7 @@ function TeamController (
             });
         }
     };
-    $scope.originalRoleCount = 0;
+
     /* If no team is stored locally, then get the team from the server. */
     if (!team) {
         $scope.team = teams.create();
@@ -451,7 +457,6 @@ function TeamController (
                 $scope.team.members = data.members;
                 $scope.sportId = leagues.get(team.leagueId).sportId;
                 $scope.updateTeamAddress();
-                $scope.originalRoleCount = team.roles.length;
             });
         }
     }
@@ -514,6 +519,7 @@ function TeamController (
         coach.save();
         $scope.team.roles = $scope.team.roles || [];
         $scope.team.roles.push(newCoachRole);
+        $scope.rolesChanged = true;
         $scope.addNewHeadCoach = false;
     };
 

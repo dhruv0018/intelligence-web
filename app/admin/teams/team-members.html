@@ -31,7 +31,7 @@
 
             <td>{{role.type.name}}</td>
             <td><a data-ui-sref="user-roles({ id: role.userId })">{{team.members[role.userId].firstName}} {{team.members[role.userId].lastName}}</a></td>
-            <td><a href data-ng-click="team.removeRole(role)">remove</a></td>
+            <td><a href data-ng-click="removeRole(role)">remove</a></td>
 
         </tr>
 
@@ -58,7 +58,7 @@
 
 <krossover-admin-resource-save
     button-id="save-team-member-cta"
-    disabled="form.$invalid || filteredRoles.length === 0 || team.roles.length === originalRoleCount"
+    disabled="form.$invalid || filteredRoles.length === 0 || !rolesChanged"
     resource="team">
 </krossover-admin-resource-save>
 
