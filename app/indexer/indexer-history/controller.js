@@ -27,11 +27,8 @@ function IndexerGamesHistoryController(
         .filter(game => game.status !== GAME_STATUSES.SET_ASIDE.id)
         .forEach(game => {
             let assignments = game.getInactiveAssignmentsByUserId(userId);
-            assignments.forEach(assignment => {
-                assignment.game = game;
-                $scope.assignments.push(assignment);
-            });
-    });
+            $scope.assignments = $scope.assignments.concat(assignments);
+        });
 
     $scope.getSportName = function(teamId) {
 

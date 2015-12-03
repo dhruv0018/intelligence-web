@@ -22,20 +22,20 @@ export default `
                     <tbody>
                     <tr data-ng-repeat="assignment in assignments | orderBy: '-timeAssigned' "
                         ng-class="{
-                            'queue-list__highest-priority': assignment.game.priority === PRIORITIES.HIGHEST.id,
-                            'queue-list__high-priority': assignment.game.priority === PRIORITIES.HIGH.id,
-                            'queue-list__normal-priority': assignment.game.priority === PRIORITIES.NORMAL.id,
+                            'queue-list__highest-priority': games[assignment.gameId].priority === PRIORITIES.HIGHEST.id,
+                            'queue-list__high-priority': games[assignment.gameId].priority === PRIORITIES.HIGH.id,
+                            'queue-list__normal-priority': games[assignment.gameId].priority === PRIORITIES.NORMAL.id,
                         }"
                     >
                         <td>{{assignment.timeAssigned | date:'MM/dd/yyyy'}}</td>
-                        <td>{{assignment.game.id}}</td>
+                        <td>{{assignment.gameId}}</td>
                         <!-- TODO Add a getter in GamesFactory that returns the team vs opposing team string -->
                         <td>
-                            <a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: assignment.game.id })">
-                            {{teams[assignment.game.teamId].name}} vs {{teams[assignment.game.opposingTeamId].name}}
+                            <a id="select-indexer-game-cta-game-{{$index}}" data-ui-sref="IndexerGame({ id: assignment.gameId })">
+                            {{teams[games[assignment.gameId].teamId].name}} vs {{teams[games[assignment.gameId].opposingTeamId].name}}
                             </a>
                         </td>
-                        <td>{{ getSportName(assignment.game.teamId) | capitalizeFirstLetter }}</td>
+                        <td>{{ getSportName(games[assignment.gameId].teamId) | capitalizeFirstLetter }}</td>
                         <td>{{assignment.isQa ? 'QA' : 'Indexed'}}</td>
                         <td>
                             {{assignment.timeFinished ? (assignment.timeFinished | date:'MM/dd/yyyy') : 'Incomplete'}}
