@@ -5,7 +5,16 @@
         <a href open-modal="BasicEditProfile.Modal" ng-if="!user.isAthleteRecruit()">Edit Profile</a>
     </div>
     <hr>
-    <wsc-link for-season="true" feature="WSCLink"></wsc-link>
+    <div class="wsc-link-container">
+        <span class="wsc-highlight-title">Show me the highlights!</span>
+        <span class="wsc-highlight-info">
+            We’ll automatically pick the best clips of the season, add
+            transitions, and mix in your favorite music. Click here to get a
+            slick custom highlight reel.
+        </span>
+    </div>
+    <select class="form-control" ng-show="teams.length > 1" ng-options="team as team.name for team in teams" ng-model="team"></select>
+    <wsc-link season-id="seasonId" teams="[team]" feature="WSCLink"></wsc-link>
     <hr feature="WSCLink">
     <div class="player-roles-info" ng-repeat="roleInfo in rolesInfo">
         <sport-placeholder sport="roleInfo.sport"></sport-placeholder>

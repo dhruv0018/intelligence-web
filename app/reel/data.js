@@ -8,7 +8,8 @@ ReelDataDependencies.$inject = [
     'PlaysFactory',
     'PlayersFactory',
     'LeaguesFactory',
-    'TagsetsFactory'
+    'TagsetsFactory',
+    'SessionService'
 ];
 
 function ReelDataDependencies (
@@ -18,12 +19,15 @@ function ReelDataDependencies (
     plays,
     players,
     leagues,
-    tagsets
+    tagsets,
+    session
 ) {
 
     class ReelData {
 
         constructor (reelId) {
+
+            const userId = session.getCurrentUserId();
 
             /* Load data. */
             this.tagset = tagsets.load();
@@ -33,6 +37,7 @@ function ReelDataDependencies (
             this.teams = teams.load({reelId: reelId});
             this.plays = plays.load({reelId: reelId});
             this.players = players.load({reelId: reelId});
+            this.userPlayers = players.load({userId});
         }
     }
 
