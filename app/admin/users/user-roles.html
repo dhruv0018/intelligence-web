@@ -25,7 +25,7 @@
 
     <li
         class="role role-details list-group-item"
-        ng-repeat="role in user.roles | filter:{tenureEnd:null}"
+        ng-repeat="role in user.roles | filter:{tenureEnd:null} as filteredRoles"
     >
         <admin-role
             user="user"
@@ -51,7 +51,7 @@
     <krossover-admin-resource-save
         button-id="save-user-role-updates-cta"
         resource="user"
-        disabled="formUserInfo.$invalid">
+        disabled="!rolesChanged">
     </krossover-admin-resource-save>
     <a class="pull-right" id="cancel-user-role-updates-cta" href data-ui-sref="users">Cancel</a>
 </div>
