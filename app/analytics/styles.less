@@ -80,6 +80,18 @@
                 margin: auto;
                 border-top: thin solid black;
 
+                td {
+                    text-align: left;
+                }
+
+                th {
+                    font-weight: 400;
+                    border:thin solid black;
+                    background-color: @brand-blue;
+                    color: white;
+                    text-align: center;
+                }
+
                 &.bball-stats {
                     width: 90%;
 
@@ -95,19 +107,11 @@
                         background-color: rgb(241, 246, 252);
                     }
 
+                    td {
+                        text-align: center;
+                    }
+
                 }
-            }
-
-            td {
-                text-align: left;
-            }
-
-            th {
-                font-weight: 400;
-                border:thin solid black;
-                background-color: @brand-blue;
-                color: white;
-                text-align: center;
             }
 
             .fixed-table {
