@@ -438,7 +438,7 @@ function TeamController (
             });
         }
     };
-
+    $scope.originalRoleCount = 0;
     /* If no team is stored locally, then get the team from the server. */
     if (!team) {
         $scope.team = teams.create();
@@ -451,6 +451,7 @@ function TeamController (
                 $scope.team.members = data.members;
                 $scope.sportId = leagues.get(team.leagueId).sportId;
                 $scope.updateTeamAddress();
+                $scope.originalRoleCount = team.roles.length;
             });
         }
     }

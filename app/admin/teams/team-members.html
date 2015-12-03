@@ -27,7 +27,7 @@
 
     <tbody>
 
-        <tr class="member" data-ng-repeat="role in team.roles | filter:onlyCurrentRoles | orderBy:team.roles.type.name">
+        <tr class="member" data-ng-repeat="role in team.roles | filter:onlyCurrentRoles | orderBy:team.roles.type.name as filteredRoles">
 
             <td>{{role.type.name}}</td>
             <td><a data-ui-sref="user-roles({ id: role.userId })">{{team.members[role.userId].firstName}} {{team.members[role.userId].lastName}}</a></td>
@@ -58,7 +58,7 @@
 
 <krossover-admin-resource-save
     button-id="save-team-member-cta"
-    disabled="form.$invalid"
+    disabled="form.$invalid || filteredRoles.length === 0 || team.roles.length === originalRoleCount"
     resource="team">
 </krossover-admin-resource-save>
 
