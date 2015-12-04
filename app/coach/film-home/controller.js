@@ -27,6 +27,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
     'SessionService',
     'Coach.Data',
     'ROLES',
+    'SPORTS',
     function controller(
         $rootScope,
         $scope,
@@ -40,7 +41,8 @@ FilmHome.controller('Coach.FilmHome.controller', [
         leagues,
         session,
         data,
-        ROLES
+        ROLES,
+        SPORTS
     ) {
 
         var currentUser = session.currentUser;
@@ -60,6 +62,11 @@ FilmHome.controller('Coach.FilmHome.controller', [
         let league = leagues.get($scope.team.leagueId);
         let season = league.getCurrentSeason();
         $scope.seasonId = season.id;
+
+        // Sport related
+        let sport = $scope.team.getSport();
+        $scope.isBasketball = sport.id === SPORTS.BASKETBALL.id;
+        console.log($scope.isBasketball);
 
         //player related
         var playersFilter = { rosterId: $scope.team.roster.id };
