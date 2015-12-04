@@ -1,0 +1,33 @@
+@import (reference) "main.less";
+
+admin-queue-pagination {
+
+    flex: 1 0 auto;
+    padding: 1em 0;
+    border-top: thin solid @gray-lighter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height:65px;
+
+    button {
+
+        .btn;
+        line-height: 1;
+    }
+
+    .page {
+
+        .btn-default;
+        margin-left: 0.25em;
+        margin-right: 0.25em;
+    }
+
+    .shift,
+    .active {
+
+        .btn-primary;
+        margin-left: 0.25em;
+        margin-right: 0.25em;
+    }
+}

@@ -12,6 +12,25 @@ admin-queue-dashboard {
     justify-content: flex-start;
     border-bottom: thin solid @gray-lighter;
 
+    .disabled-filter {
+
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .selected-filter {
+
+        @selected-color: @brand-blue;
+
+        color: @selected-color;
+        font-weight: 500;
+
+        .filter {
+
+            color: @selected-color;
+        }
+    }
+
     section {
 
         padding: 0 30px;
