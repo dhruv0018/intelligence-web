@@ -1,26 +1,21 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var GamesStats = angular.module('Games.Stats', []);
+const GamesStats = angular.module('Games.Stats', []);
 
-GamesStats.run([
-    '$templateCache',
-    function run($templateCache) {
-        $templateCache.put('games/statistics.html', require('./template.html'));
-    }
-]);
+import template from './template.html';
 
 GamesStats.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var gameStats = {
+        const gameStats = {
             name: 'Games.Stats',
             url: '/statistics',
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'games/statistics.html',
+                    template,
                     controller: 'GamesStats.controller'
                 }
             },
@@ -89,3 +84,5 @@ GamesStats.controller('GamesStats.controller', [
 
     }
 ]);
+
+export default GamesStats;
