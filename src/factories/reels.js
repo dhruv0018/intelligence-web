@@ -461,6 +461,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
                         userId: session.currentUser.id,
                         reelId: self.id,
                         sharedWithUserId: null,
+                        sharedWithTeamId: null,
                         createdAt: moment.utc().toDate(),
                         isTelestrationsShared
                     };

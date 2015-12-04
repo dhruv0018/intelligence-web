@@ -1407,6 +1407,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                         teamId: session.getCurrentTeamId(),
                         gameId: self.id,
                         sharedWithUserId: null,
+                        sharedWithTeamId: null,
                         createdAt: moment.utc().toDate(),
                         isBreakdownShared: false,
                         isTelestrationsShared: isTelestrationsShared
