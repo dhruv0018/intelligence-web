@@ -1,9 +1,0 @@
-{
-    "name": "arena-chart",
-    "templates": [
-        "template.html"
-    ],
-    "scripts": [
-        "index.js"
-    ]
-}

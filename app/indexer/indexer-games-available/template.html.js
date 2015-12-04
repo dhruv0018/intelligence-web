@@ -11,7 +11,7 @@ export default `
                 <thead>
                     <tr>
                         <th>Game ID</th>
-                        <th>Game</th>
+                        <th>Indexer</th>
                         <th>Sport</th>
                         <th>Time Left</th>
                         <th>Action</th>
@@ -22,9 +22,9 @@ export default `
                         | gameIsDeleted: false
                         | gameIsReadyForQa
                         | gameNotIndexedByCurrentUser
-                        | orderBy: ['-priority', 'timeRemaining']
+                        | orderBy: ['-priority', 'deadline']
                         | limitTo: 100
-                        as filteredGames"
+                        as filteredGames track by $index"
                         ng-class="{
                             'queue-list__highest-priority': game.priority === PRIORITIES.HIGHEST.id,
                             'queue-list__high-priority': game.priority === PRIORITIES.HIGH.id,
@@ -34,7 +34,7 @@ export default `
                         <td>{{game.id}}</td>
                         <!--TODO:Add as directive or factory method -->
                         <td>
-                            <span>{{ teams[game.teamId].name }} vs {{ teams[game.opposingTeamId].name }}</span>
+                            <span>{{ users[game.currentAssignment().userId].name }}</span>
                             <krossover-team-label-icon
                                 class="pull-right"
                                 ng-if="teams[game.uploaderTeamId].label"
@@ -45,9 +45,9 @@ export default `
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                         <!--TODO:Add as directive since it is used in the queue as well -->
                         <td class="time-left">
-                            <span class="late" ng-if="game.timeRemaining < 0">{{ getRemainingTime(game) | millisecondsAsDaysHoursMinutes }}</span>
-                            <span class="none" ng-if="game.timeRemaining === 0">None</span>
-                            <span class="togo" ng-if="game.timeRemaining > 0">{{ getRemainingTime(game) | millisecondsAsDaysHoursMinutes }}</span>
+                            <span class="late" ng-if="::game.timeRemaining() < 0">{{ ::game.timeRemaining() | millisecondsAsDaysHoursMinutes }}</span>
+                            <span class="none" ng-if="::game.timeRemaining() === 0">None</span>
+                            <span class="togo" ng-if="::game.timeRemaining() > 0">{{ ::game.timeRemaining() | millisecondsAsDaysHoursMinutes }}</span>
                         </td>
                         <td>
                             <button id="pick-up-qa-cta" class="queue-button" ng-click="qaPickup(game)">

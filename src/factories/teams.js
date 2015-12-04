@@ -1,7 +1,7 @@
 import List from '../collections/list.js';
 import Subscription from '../entities/subscription.js';
 
-var PAGE_SIZE = 1000;
+var PAGE_SIZE = 100;
 
 var pkg = require('../../package.json');
 var moment = require('moment');
@@ -37,7 +37,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
         var TeamsFactory = {
 
-            PAGE_SIZE: PAGE_SIZE,
+            PAGE_SIZE,
 
             description: 'teams',
 

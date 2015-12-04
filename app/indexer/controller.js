@@ -72,7 +72,7 @@ function IndexerGamesController(
     const currentRole = session.getCurrentRole();
     $scope.indexerQuality = currentRole.indexerQuality;
 
-    $scope.games.forEach(game => game.timeRemaining = game.assignmentTimeRemaining());
+    $scope.games.forEach(game => game.assignmentTimeRemaining = game.assignmentTimeRemaining());
 
     $scope.getSportName = function(teamId) {
 
@@ -85,23 +85,6 @@ function IndexerGamesController(
     };
 
     $scope.getLatestAssignmentDate = (game) => game.userAssignment().timeAssigned;
-
-    let refreshGames = function() {
-
-        $scope.gamesAvailable.forEach(function(game) {
-            if (game.timeRemaining) {
-
-                game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
-            }
-        });
-    };
-
-    let refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
-
-    $scope.$on('$destroy', function() {
-
-        $interval.cancel(refreshGamesInterval);
-    });
 }
 
 export default IndexerGamesController;

@@ -32,5 +32,10 @@
         "Head Coach": true,
         "Assistant Coach": true,
         "Athlete": true
+    },
+
+    "SelfEditor": {
+        "Head Coach": false,
+        "Assistant Coach": false
     }
 }
