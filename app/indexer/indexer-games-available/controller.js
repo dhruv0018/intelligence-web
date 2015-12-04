@@ -59,11 +59,6 @@ function IndexerGamesController(
 
     let now = moment.utc();
 
-    $scope.games.forEach(function(game) {
-        let team = teams.get(game.uploaderTeamId);
-        game.timeRemaining = game.getRemainingTime(team, now);
-    });
-
     $scope.getSportName = function(teamId) {
 
         const team = teams.get(teamId);
@@ -72,10 +67,6 @@ function IndexerGamesController(
 
     $scope.getLatestAssignmentDate = function(game) {
         return game.userAssignment().timeAssigned;
-    };
-
-    $scope.getRemainingTime = function(game) {
-        return game.getRemainingTime(teams.get(game.uploaderTeamId));
     };
 
     $scope.qaPickup = function(game) {
@@ -90,27 +81,6 @@ function IndexerGamesController(
             $scope.games = newGames;
         });
     };
-
-
-    /*TODO: Make this into a directive as this code appears many times*/
-    let refreshGames = function() {
-
-        $scope.games.forEach(function(game) {
-
-            if (game.timeRemaining) {
-
-                game.timeRemaining = moment.duration(game.timeRemaining).subtract(1, 'minute').asMilliseconds();
-            }
-        });
-
-    };
-
-    let refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
-
-    $scope.$on('$destroy', function() {
-
-        $interval.cancel(refreshGamesInterval);
-    });
 }
 
 export default IndexerGamesController;
