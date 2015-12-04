@@ -446,27 +446,20 @@ IntelligenceWebClient.factory('ReelsFactory', [
             },
 
             togglePublicSharing: function(isTelestrationsShared = false) {
-                var self = this;
 
-                self.shares = self.shares || [];
-
-                if (self.isSharedWithPublic()) {
-                    self.shares.forEach(function(share, index) {
-                        if (!share.sharedWithUserId) {
-                            self.shares.splice(index, 1);
-                        }
-                    });
+                if (this.isSharedWithPublic()) {
+                    this.shares = this.getNonPublicShares();
                 } else {
                     var share = {
                         userId: session.currentUser.id,
-                        reelId: self.id,
+                        reelId: this.id,
                         sharedWithUserId: null,
                         sharedWithTeamId: null,
                         createdAt: moment.utc().toDate(),
                         isTelestrationsShared
                     };
 
-                    self.shares.push(share);
+                    this.shares.push(share);
                 }
             },
             getPublicShare: function() {
@@ -479,13 +472,8 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 });
             },
             isSharedWithPublic: function() {
-                var self = this;
 
-                if (!self.shares) return false;
-
-                var publicShare = self.getPublicShare();
-
-                if (angular.isDefined(publicShare)) return true;
+                return !!this.getPublicShare();
             },
 
             /**
@@ -494,7 +482,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
              * @return {boolean}
              */
             isPublicShare: function(share) {
-                return share === this.getPublicShare();
+                return !share.sharedWithUserId && !share.sharedWithTeamId;
             },
 
             isFeatureSharedPublicly: function(featureAttribute) {

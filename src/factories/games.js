@@ -39,6 +39,9 @@ IntelligenceWebClient.factory('GamesFactory', [
                 // TODO: This sharing copying should not have to be done. It should model reels implementation.
 
                 if (copy.isSharedWithPublic()) {
+                    copy.shares = copy.shares.filter(function(share) {
+                        return (share.sharedWithUserId || share.sharedWithTeamId);
+                    });
                     copy.shares.push(copy.publicShare);
                 }
 
@@ -108,7 +111,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (game.shares && game.shares.length) {
 
-                    angular.forEach(game.shares, function(share, index) {
+                    game.shares.forEach(function(share, index) {
                         if (share.sharedWithUserId) {
                             game.sharedWithUsers[share.sharedWithUserId] = share;
                         } else if (share.sharedWithTeamId) {
@@ -233,7 +236,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     games = games.concat(this.getByUploaderUserId(userId));
 
                     user.roles.forEach(role => {
-                        if (role.type.id === ROLES.ATHLETE.type.id) {
+                        if ((role.type.id === ROLES.ATHLETE.type.id) && role.teamId) {
                             games = games.concat(this.getByUploaderTeamId(role.teamId));
                         }
                     });
@@ -1433,7 +1436,7 @@ IntelligenceWebClient.factory('GamesFactory', [
              * @return {boolean}
              */
             isPublicShare: function(share) {
-                return share === this.getPublicShare();
+                return !share.sharedWithUserId && !share.sharedWithTeamId;
             },
 
             isFeatureSharedPublicly: function(featureAttribute) {
