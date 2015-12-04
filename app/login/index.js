@@ -338,7 +338,7 @@ function LoginController(
 
         $scope.newUser = {
             password     : undefined,
-            showPassword : true, // By default, show the new user's password
+            showPassword : false, // By default, hide the new user's password
             agree        : false,
             email        : $stateParams.email,
             activated    : $stateParams.activated === 'true' ? true : false,
@@ -502,8 +502,8 @@ function LoginController(
                 }).then(function() {
 
                     alerts.add({
-                        type: 'info',
-                        message: 'An email has been sent to ' + email + ' with further instructions'
+                        type: 'success',
+                        message: 'An email has been sent to ' + email + ' with further instructions.'
                     });
                 });
             },

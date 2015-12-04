@@ -37,9 +37,9 @@ AdminQueueDataDependencies.$inject = [
     'ROLE_TYPE',
     'SportsFactory',
     'LeaguesFactory',
-    'TeamsFactory',
-    'GamesFactory',
-    'UsersFactory'
+    'AdminGamesService',
+    'AdminQueueDashboardService',
+    'GamesFactory'
 ];
 
 function AdminQueueDataDependencies (
@@ -47,17 +47,19 @@ function AdminQueueDataDependencies (
     ROLE_TYPE,
     sports,
     leagues,
-    teams,
-    games,
-    users
+    AdminGames,
+    AdminQueueDashboardService,
+    games
 ) {
+    let filter = Object.assign({}, AdminQueueDashboardService.ALL_QUEUE_GAMES);
+    AdminGames.queryFilter = filter;
+    AdminGames.start = 0;
     var Data = {
         sports: sports.load(),
         leagues: leagues.load(),
-        //TODO should be able to use load, but causes wierd caching issues
-        users: users.load(VIEWS.QUEUE.USERS),
-        teams: teams.load(VIEWS.QUEUE.TEAMS),
-        games: games.load(VIEWS.QUEUE.GAME)
+        games : AdminGames.query(),
+        filterCounts: games.getQueueDashboardCounts(),
+        totalGameCount: games.totalCount(VIEWS.QUEUE.GAME.ALL)
     };
     return Data;
 }
@@ -144,7 +146,12 @@ QueueController.$inject = [
     'GamesFactory',
     'Admin.Queue.Data',
     'SelectIndexer.Modal',
-    'Utilities'
+    'Utilities',
+    'AdminGamesService',
+    'AdminQueueDashboardService',
+    'AdminGamesEventEmitter',
+    'EVENT',
+    'VIDEO_STATUSES'
 ];
 
 function QueueController (
@@ -166,7 +173,12 @@ function QueueController (
     games,
     data,
     SelectIndexerModal,
-    utilities
+    utilities,
+    AdminGames,
+    AdminQueueDashboardService,
+    AdminGamesEventEmitter,
+    EVENT,
+    VIDEO_STATUSES
 ) {
 
     $scope.ROLE_TYPE = ROLE_TYPE;
@@ -176,6 +188,7 @@ function QueueController (
     $scope.SelectIndexerModal = SelectIndexerModal;
 
     $scope.data = data;
+    $scope.dashboardFilterCounts = data.filterCounts;
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
     $scope.teams = teams.getCollection();
@@ -184,98 +197,55 @@ function QueueController (
     $scope.sportsList = sports.getList();
     $scope.teamsList = teams.getList();
     $scope.usersList = users.getList();
-    $scope.games = games.getList(VIEWS.QUEUE.GAME);
+
+    $scope.games = games.getList(VIEWS.QUEUE.GAME.ALL);
+
+    $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
+
+    $scope.AdminGames = AdminGames;
 
     //initially show everything
     $scope.queue = $scope.games;
 
-    var refreshGames = function() {
-
-        angular.forEach($scope.queue, function(game) {
-
-            if (game.remainingTime) {
-
-                game.remainingTime = moment.duration(game.remainingTime).subtract(1, 'minute').asMilliseconds();
-            }
-        });
+    $scope.emptyOutQueue = () => {
+        $scope.queue = [];
+        $scope.noResults = true;
+        $scope.searching = false;
     };
 
-    var ONE_MINUTE = 60000;
-
-    var refreshGamesInterval = $interval(refreshGames, ONE_MINUTE);
-
-    $scope.$on('$destroy', function() {
-
-        $interval.cancel(refreshGamesInterval);
+    AdminGamesEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, (event, games) =>  {
+        if (games.length === 0) {
+            $scope.emptyOutQueue();
+        } else {
+            $scope.queue = games;
+        }
     });
 
     $scope.search = function(filter) {
-
         $scope.searching = true;
+        $scope.noResults = false;
 
-        /* If search by ID is used, just pull the single game. */
-        if (filter.gameId) {
+        let updateQueue = (games) => {
+            if (!games.length) {
+                games = [games];
+            }
+            $scope.queue = games;
+        };
 
-            games.fetch(filter.gameId,
+        let removeSpinner = () => {
+            $scope.noResults = false;
+            $scope.searching = false;
+            //Notify Angular to start digest cycle
+            $scope.$digest();
+        };
 
-                function success(game) {
-
-                    /* Get the team names */
-                    teams.load([game.teamId, game.opposingTeamId]).then(
-                        function updateQueue() {
-                            $scope.queue = [];
-                            $scope.queue[0] = game;
-                    }).finally(function removeSpinner() {
-                        $scope.noResults = false;
-                        $scope.searching = false;
-                        //Notify Angular to start digest cycle
-                        $scope.$digest();
-                    });
-                },
-
-                function error() {
-
-                    $scope.queue = [];
-                    $scope.noResults = true;
-                    $scope.searching = false;
-                    //Notify Angular to start digest cycle
-                    $scope.$digest();
-                }
-            );
+        //can't use filter directly because manipulating it would change the UI
+        const parsedFilter = Object.assign({}, filter, AdminQueueDashboardService.BASE_QUEUE_FILTER);
+        if (parsedFilter['id[]']) {
+            parsedFilter['id[]'] = [parsedFilter['id[]']];
         }
-
-        else {
-
-            games.query(filter,
-
-                function success(games) {
-
-                    let teamIds = [];
-                    /* Get the team names */
-                    for (let game of games) {
-                        teamIds.push(game.teamId, game.opposingTeamId);
-                    }
-                    /* Get the unique teams */
-                    teams.load(teamIds).then(
-                        function updateQueue() {
-                            $scope.queue = games;
-                    }).finally(function removeSpinner() {
-                        $scope.noResults = false;
-                        $scope.searching = false;
-                        //Notify Angular to start digest cycle
-                        $scope.$digest();
-                    });
-                },
-
-                function error() {
-
-                    $scope.queue = [];
-                    $scope.noResults = true;
-                    $scope.searching = false;
-                    //Notify Angular to start digest cycle
-                    $scope.$digest();
-                }
-            );
-        }
+        AdminGames.queryFilter = parsedFilter;
+        AdminGames.start = 0;
+        AdminGames.query().then().finally(removeSpinner);
     };
 }

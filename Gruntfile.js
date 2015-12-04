@@ -257,6 +257,9 @@ module.exports = function(grunt) {
             components: {
                 files: {
                     'build/components.css': [
+                        'lib/features/**/*.less',
+                        'lib/directives/admin-queue-games/*.less',
+                        'lib/directives/admin-queue-pagination/*.less',
                         'lib/directives/app-downloads/*.less',
                         'lib/directives/fields/indexer-fields/*.less',
                         'lib/directives/fields/user-fields/*.less',
@@ -267,10 +270,16 @@ module.exports = function(grunt) {
                         'lib/directives/dynamic-tables/styles.less',
                         'lib/directives/video-player/select-media-src/styles.less',
                         'lib/directives/arena-chart/styles.less',
+                        'lib/directives/priority-select/*.less',
+                        'lib/directives/label-select/*.less',
+                        'lib/directives/priority-label-legend/*.less',
+                        'lib/directives/team-label-icon/*.less',
+                        'lib/directives/priority-label-icon/*.less',
                         'lib/directives/event-adjuster/styles.less',
                         'lib/dialogs/breakdown-dialog/styles.less',
                         'lib/directives/field/**/*.less',
                         'lib/directives/admin-role/styles.less',
+                        'app/games/**/*.less',
                         'app/reel/*.less',
                         'app/embed/*.less',
                         'app/indexer/**/*.less',
