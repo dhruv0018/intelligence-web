@@ -1,6 +1,4 @@
-import Video from '../entities/video';
-
-var PAGE_SIZE = 20;
+var PAGE_SIZE = 100;
 
 var moment = require('moment');
 
@@ -12,12 +10,12 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, teams, users, $q, playTelestrationEntity, rawTelestrationEntity) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity', 'Video',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, teams, users, $q, playTelestrationEntity, rawTelestrationEntity, Video) {
 
         var GamesFactory = {
 
-            PAGE_SIZE: 1000,
+            PAGE_SIZE,
 
             description: 'games',
 
@@ -36,7 +34,6 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 // remove attributes that are circular
                 delete copy.$promise;
-                delete copy.flow;
 
                 // copy share attributes that rely on game functions.
                 // TODO: This sharing copying should not have to be done. It should model reels implementation.
@@ -159,6 +156,17 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     return game.uploaderTeamId == teamId;
                 });
+            },
+
+            /**
+             * @param {Object} now - moment time object
+             * @returns {Integer} diff - milliseconds
+             */
+            timeRemaining: function(now = moment.utc()) {
+
+                const deadline = this.deadline || this.submittedAt || this.createdAt;
+
+                return moment(deadline).diff(now);
             },
 
             getByUploaderRole: function(userId, teamId) {
@@ -295,12 +303,15 @@ IntelligenceWebClient.factory('GamesFactory', [
             * or not.
             * Check if the user is allowed to view a given game.
             */
-            isAllowedToView: function() {
-                let currentUser = session.getCurrentUser();
+            isAllowedToView: function(teamIds, userId) {
+
+                //Check multiple teams in case user is athlete
+                let isUserOnUploaderTeam = teamIds.some(teamId => teamId === this.uploaderTeamId);
+
                 //Check if user has permissions to view game
                 return  this.isSharedWithPublic() ||
-                        this.uploaderUserId === session.getCurrentUserId() ||
-                        this.uploaderTeamId === session.getCurrentTeamId() ||
+                        this.uploaderUserId === userId ||
+                        isUserOnUploaderTeam ||
                         this.isSharedWithCurrentUser();
 
             },
@@ -441,7 +452,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                if (!self.isVideoTranscodeComplete()) return false;
+                if (!self.video.isComplete()) return false;
 
                 /* If the game is in the "Indexing, not started" status, it can
                  * be assigned to an indexer. */
@@ -469,7 +480,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 var self = this;
 
-                if (!self.isVideoTranscodeComplete()) return false;
+                if (!self.video.isComplete()) return false;
 
                 /* If the game is in the "QA, not started" status, it can
                  * be assigned to QA. */
@@ -1000,6 +1011,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
             },
 
+            getQueueDashboardCounts: function() {
+
+                const model = $injector.get(this.model);
+                const query = model.getQueueDashboardCounts();
+
+                return query.$promise;
+            },
+
             /**
              * Retrieves the arena events for a game, and stores in game storage
              * @param {?game} game Defaults to the thisObject
@@ -1043,35 +1062,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.arenaEvents;
             },
 
-            getRemainingTime: function(uploaderTeam, now) {
-
-                var self = this;
-
-                now = now || moment.utc();
-
-                if (!self.submittedAt) return 0;
-
-                var submittedAt = moment.utc(self.submittedAt);
-
-                if (!submittedAt.isValid()) return 0;
-
-                var timePassed = moment.duration(submittedAt.diff(now));
-                var turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
-
-                var timeRemaining = moment.duration();
-
-                if (timePassed < 0) {
-
-                    timeRemaining = turnaroundTime.add(timePassed);
-                }
-
-                else {
-
-                    timeRemaining = turnaroundTime.subtract(timePassed);
-                }
-
-                return timeRemaining.asMilliseconds();
-            },
             getDeadlineToReturnGame: function(uploaderTeam) {
 
                 if (!this.submittedAt) return 0;
@@ -1136,26 +1126,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return self.status === GAME_STATUSES.FINALIZED.id;
             },
             isShared: function() {
-                var self = this;
                 return self.status === GAME_STATUSES.NOT_INDEXED.id;
-            },
-            isVideoTranscodeComplete: function() {
-                var self = this;
-                return self.video.status === VIDEO_STATUSES.COMPLETE.id;
-            },
-            isUploading: function() {
-                var self = this;
-                //return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
-                return false;
-            },
-            isProcessing: function() {
-                var self = this;
-                //return self.video.status === VIDEO_STATUSES.UPLOADED.id;
-                return self.video.status === VIDEO_STATUSES.INCOMPLETE.id;
-            },
-            isVideoTranscodeFailed: function() {
-                var self = this;
-                return self.video.status === VIDEO_STATUSES.FAILED.id;
             },
             isBeingBrokenDown: function() {
                 var self = this;
@@ -1567,6 +1538,21 @@ IntelligenceWebClient.factory('GamesFactory', [
                             '/max-preps?teamId=' +
                             team.id +
                             '&access_token=' +
+                            tokenService.getAccessToken();
+
+                return url;
+            },
+            /**
+             * get the csv stats download link
+             * @return {String}
+             */
+            getCSVDownloadLink: function(){
+                if (!this.id) throw new Error('Game must be saved before getting csv');
+                let tokenService = $injector.get('TokensService');
+                let url =  config.api.uri +
+                            'games/' +
+                            this.id +
+                            '/stats-csv?access_token=' +
                             tokenService.getAccessToken();
 
                 return url;

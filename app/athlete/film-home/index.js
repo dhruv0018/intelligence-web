@@ -76,7 +76,7 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
 
         Data.players = Data.teams.then(function() {
 
-            let athleteRoles = session.currentUser.roleTypes[ROLE_TYPE.ATHLETE];
+            let athleteRoles = session.currentUser.getRoles(ROLE_TYPE.ATHLETE);
             let rosterIds = [];
 
             athleteRoles.forEach(function(role, index) {

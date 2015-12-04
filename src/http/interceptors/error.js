@@ -1,3 +1,4 @@
+import BLACKLISTED_ERRORS from './blacklisted-errors';
 var pkg = require('../../../package.json');
 
 /* Fetch angular from the browser scope */
@@ -16,6 +17,8 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
             /* Intercept responses with status codes that indicate errors. */
             responseError: function(response) {
+
+                if (!response || !response.config) return $q.reject(response);
 
                 var data = response.config.data;
                 var method = response.config.method;
@@ -47,12 +50,13 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                         ErrorReporter.reportError(new Error('Bad Request', response.data));
 
-                        alerts.add({
+                        if (response && response.data && response.data.userMessage) {
+                            alerts.add({
 
-                            type: 'warning',
-                            message: response.data.userMessage
-                        });
-
+                                type: 'warning',
+                                message: response.data.userMessage
+                            });
+                        }
                         break;
 
                     case 401: /* Not Authorized */
@@ -75,13 +79,18 @@ IntelligenceWebClient.factory('Error.Interceptor', [
 
                     case 500: /* Server Error */
 
-                        ErrorReporter.reportError(new Error('Server error', response.data));
+                        //Check if the url is a blacklisted url or a wildcard url
+                        //and if so, do not show alert message
+                        if(!isBlacklisted(response) && !isWildcard(response)) {
 
-                        alerts.add({
+                            ErrorReporter.reportError(new Error('Server error', response.data));
 
-                            type: 'danger',
-                            message: 'Server Error'
-                        });
+                            alerts.add({
+
+                                type: 'danger',
+                                message: 'Server Error'
+                            });
+                        }
 
                         break;
 
@@ -101,6 +110,47 @@ IntelligenceWebClient.factory('Error.Interceptor', [
                 return $q.reject(response);
             }
         };
+
+        //Check if the url is a blacklisted url
+        function isBlacklisted(response, path = null) {
+
+            if(!path) {
+                path = $location.$$path;
+            }
+            let method = response.config.method;
+            let blacklisted = BLACKLISTED_ERRORS[response.status] === undefined ||
+                                    BLACKLISTED_ERRORS[response.status][path] === undefined ||
+                                    BLACKLISTED_ERRORS[response.status][path][method] === undefined ||
+                                    BLACKLISTED_ERRORS[response.status][path][method] !== true;
+
+            return !blacklisted;
+        }
+
+        //Check if the url is a wildcard url and if so if it is blacklisted
+        function isWildcard(response) {
+
+            let path = getWildcardUrl($location.$$path);
+
+            return isBlacklisted(response, path);
+        }
+
+        //Take a url and convert it to a wildcard url
+        function getWildcardUrl(url) {
+
+            let pairs = url.substring(url.indexOf('/') + 1).split('/');
+            let wildcardUrl = '';
+            if(pairs.length) {
+                pairs.forEach((pair)=>{
+                    if(!isNaN(pair)) {
+                        pair = '*';
+                    }
+                    wildcardUrl += '/' + pair;
+                });
+            }
+
+            return wildcardUrl;
+        }
+
     }
 ]);
 

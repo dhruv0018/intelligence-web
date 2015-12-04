@@ -24,27 +24,29 @@ const srcArray = [
     'repeat'
 ];
 
+const classMethods = [
+    'includes',
+    'toJSON',
+    'clear',
+    'get',
+    'add',
+    'remove',
+    'isEmpty',
+    'iterator'
+];
+
+let srcArrayCopy;
+let sampleList;
+
+function createSampleList () {
+
+    srcArrayCopy = srcArray.slice(0);
+    sampleList = new List(srcArrayCopy);
+}
+
 describe('List', () => {
 
-    const classMethods = [
-        'includes',
-        'toJSON',
-        'clear',
-        'get',
-        'add',
-        'remove',
-        'isEmpty',
-        'iterator'
-    ];
-
-    let srcArrayCopy;
-    let sampleList;
-
-    beforeEach(() => {
-
-        srcArrayCopy = srcArray.slice(0);
-        sampleList = new List(srcArrayCopy);
-    });
+    beforeEach(createSampleList);
 
     it('should exist.', () => {
 
@@ -422,4 +424,35 @@ describe('List', () => {
         }
     });
 
+});
+
+describe(`List.identity`, () => {
+
+    beforeEach(createSampleList);
+
+    it(`should return an array`, () => {
+
+        expect(sampleList.identity).to.be.an.array;
+    });
+
+    it(`should return an array that equals the source array`, () => {
+
+        expect(sampleList.identity).to.deep.equal(srcArrayCopy);
+    });
+});
+
+describe(`List.findByProperty`, () => {
+
+    beforeEach(createSampleList);
+
+    it(`should return 'undefined' if item not found`, () => {
+
+        expect(sampleList.findByProperty('baz', 'qux')).to.be.undefined;
+    });
+
+    it(`should return an item if found`, () => {
+
+        expect(sampleList.findByProperty('foo', 4)).to.be.an.object;
+        expect(sampleList.findByProperty('foo', 4)).to.deep.equal(srcArrayCopy[3]);
+    });
 });

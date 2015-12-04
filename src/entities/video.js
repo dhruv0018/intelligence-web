@@ -1,3 +1,10 @@
+const pkg = require('../../package.json');
+
+/* Fetch angular from the browser scope */
+const angular = window.angular;
+
+const IntelligenceWebClient = angular.module(pkg.name);
+
 import Entity from './entity';
 import TranscodeProfile from './transcodeProfile';
 import { TRANSCODE_PROFILE_IDS, TRANSCODE_PROFILES } from '../constants/transcodeProfiles';
@@ -81,143 +88,240 @@ const schema = require('../../schemas/video.json');
  * @property {Array<Object>} resourceUrls
  * @readonly
  */
-class Video extends Entity {
 
-    /**
-     * Instantiates new Video entity
-     * @constructor
-     * @param {Object} VideoJSONObject (req)
-     * @returns {Video} Video entity
-     */
-    constructor (video) {
+video.$inject = [
+    'FileUploadService'
+];
 
-        switch (arguments.length) {
+function video(
+    FileUploadService
+) {
+    class Video extends Entity {
 
-            case 0:
+        /**
+         * Instantiates new Video entity
+         * @constructor
+         * @param {Object} VideoJSONObject (req)
+         * @returns {Video} Video entity
+         */
+        constructor (video) {
 
-                throw new Error('Invoking Video.constructor without passing a JSON object');
+            switch (arguments.length) {
+
+                case 0:
+
+                    throw new Error('Invoking Video.constructor without passing a JSON object');
+            }
+
+            // TODO: Validate video to schema. Fails when methods/properties are added to video in this class that need to be removed or be allowed.
+            if (video.id) {
+
+                let validation = this.validate(video);
+
+                if (validation.errors.length) {
+
+                    console.error(validation.errors.shift());
+                }
+            }
+
+            super(video);
+
+            this.status = this.status || VIDEO_STATUSES.INCOMPLETE.id;
+
+            // Instantiate transcodeProfile entities
+            if (this.videoTranscodeProfiles) {
+
+                // NOTE: Adding videoTranscodeProfilesByBitrate FIXES A BACKEND BUG
+                // WHERE DUPLICATE TRANSCODE PROFILES ARE PRESENT AND REMOVES THEM
+                // ON THE FRONTEND.
+                // TODO: REMOVE videoTranscodeProfilesByBitrate WHEN BACKEND NO LONGER
+                // PRODUCES DUPLICATE VIDEO PROFILES AND A MIGRATION IS COMPLETE.
+                let videoTranscodeProfilesByBitrate = {};
+
+                this.videoTranscodeProfiles.forEach(videoTranscodeProfile => {
+
+                    let targetBitrate = videoTranscodeProfile.transcodeProfile.targetBitrate;
+                    if (videoTranscodeProfilesByBitrate[targetBitrate]) return;
+                    else videoTranscodeProfilesByBitrate[targetBitrate] = videoTranscodeProfile;
+                });
+
+                this.videoTranscodeProfiles = Object.keys(videoTranscodeProfilesByBitrate).map(bitrate => {
+
+                    let transcodeProfile = videoTranscodeProfilesByBitrate[bitrate];
+                    return new TranscodeProfile(transcodeProfile);
+                });
+
+                this.videoTranscodeProfiles.sort((a, b) => b.targetBitrate - a.targetBitrate);
+            }
         }
 
-        // TODO: Validate video to schema. Fails when methods/properties are added to video in this class that need to be removed or be allowed.
-        let validation = this.validate(video);
+        /**
+         * Serializes Video entity to valid JSON
+         * @method Video.toJSON
+         * @returns {Object} VideoJSONObject
+         */
+        toJSON () {
 
-        if (validation.errors.length) {
+            /* TODO: Construct this from the JSON schema. Currently, the schemas
+             * is not up to date. The challenge here is to figure out a way to do it
+             * when certain properties (like `videoTranscodeProfiles`) are not named
+             * the same in the schema as they are in the entity instance. */
+            let copy = {
 
-            console.error(validation.errors.shift());
+                id: this.id,
+                guid: this.guid,
+                status: this.status,
+                videoTranscodeProfiles: this.transcodeProfiles,
+                duration: this.duration,
+                thumbnail: this.thumbnail
+            };
+
+            if (copy.videoTranscodeProfiles) {
+
+                copy.videoTranscodeProfiles = copy.videoTranscodeProfiles
+                    .map(transcodeProfile => transcodeProfile.toJSON());
+            }
+
+            return copy;
         }
 
-        super(video);
+        /**
+        * Checks a video JSON object for valid properties
+        * @method Video.validate
+        * @param {Object} VideoJSONObject [req]
+        * @returns {Boolean} validated [true] if valid object
+        */
+        validate (video) {
 
-        this.status = this.status || VIDEO_STATUSES.INCOMPLETE.id;
+            switch (arguments.length) {
 
-        // Instantiate transcodeProfile entities
-        if (this.isComplete() && this.videoTranscodeProfiles) {
+                case 0:
 
-            // NOTE: Adding videoTranscodeProfilesByBitrate FIXES A BACKEND BUG
-            // WHERE DUPLICATE TRANSCODE PROFILES ARE PRESENT AND REMOVES THEM
-            // ON THE FRONTEND.
-            // TODO: REMOVE videoTranscodeProfilesByBitrate WHEN BACKEND NO LONGER
-            // PRODUCES DUPLICATE VIDEO PROFILES AND A MIGRATION IS COMPLETE.
-            let videoTranscodeProfilesByBitrate = {};
+                    throw new Error('Invoking Video.validate without passing a JSON object');
+            }
 
-            this.videoTranscodeProfiles.forEach(videoTranscodeProfile => {
+            let validation = tv4.validateMultiple(video, schema);
 
-                let targetBitrate = videoTranscodeProfile.transcodeProfile.targetBitrate;
-                if (videoTranscodeProfilesByBitrate[targetBitrate]) return;
-                else videoTranscodeProfilesByBitrate[targetBitrate] = videoTranscodeProfile;
-            });
+            return validation;
+        }
 
-            this.videoTranscodeProfiles = Object.keys(videoTranscodeProfilesByBitrate).map(bitrate => {
+        /**
+         * Getter for Video.videoTranscodeProfiles
+         * @method Video.videoTranscodeProfiles
+         * @returns {Array} transcodeProfiles array of entities
+         */
+        get transcodeProfiles() {
 
-                let transcodeProfile = videoTranscodeProfilesByBitrate[bitrate];
-                return new TranscodeProfile(transcodeProfile);
-            });
+            return this.videoTranscodeProfiles;
+        }
 
-            this.videoTranscodeProfiles.sort((a, b) => b.targetBitrate - a.targetBitrate);
+        /**
+         * Setter for Video.videoTranscodeProfiles
+         * @method Video.videoTranscodeProfiles
+         * @param {Array} transcodeProfiles array of transcodeProfiles
+         */
+        set transcodeProfiles(transcodeProfiles) {
+
+            this.videoTranscodeProfiles = transcodeProfiles;
+        }
+
+        /**
+         * Getter for Video.resourceUrls
+         * @method Video.resourceUrls
+         * @readonly
+         * @returns {Array} resourceUrls Array of trusted Resource URLs
+         */
+        get resourceUrls() {
+
+            return this.transcodeProfiles.map(transcodeProfile => transcodeProfile.resourceUrl);
+        }
+
+        /**
+         * Returns true if the status is INCOMPLETE (NOTE: INCOMPLETE means UPLOADING)
+         * @method isIncomplete
+         * @returns {Boolean} true if video is incomplete
+         */
+        isIncomplete(video = this) {
+
+            let fileUpload = FileUploadService.getFileUpload(video.guid);
+
+            return !!(fileUpload && fileUpload.isUploading());
+
+            // FIXME: The video 'status'' SHOULD be sufficient for determining
+            // if it is INCOMPLETE, however, since the server is dumb currently
+            // we need to compensate with the FileUploadService.
+            // When the server can determine if the upload is uploading (i.e. INCOMPLETE) immediately,
+            // and can push notifications, we can simply use this line of code:
+            // ```return video.status === VIDEO_STATUSES.INCOMPLETE.id;```
+        }
+
+        /**
+         * Returns true if the status is UPLOADED
+         * @method isUploaded
+         * @returns {Boolean} isUploaded [true] if video is uploaded
+         */
+        isUploaded(video = this) {
+
+            let fileUpload = FileUploadService.getFileUpload(video.guid);
+
+            return (fileUpload && fileUpload.isUploaded() && !video.isComplete()) ||
+                video.status === VIDEO_STATUSES.UPLOADED.id;
+
+            // FIXME: The video 'status'' SHOULD be sufficient for determining
+            // if it is UPLOADED, however, since the server is dumb currently
+            // we need to compensate with the FileUploadService.
+            // When the server can determine if the upload failed immediately,
+            // and can push notifications, we can simply use this line of code:
+            // ```return video.status === VIDEO_STATUSES.UPLOADED.id;```
+        }
+
+        /**
+         * Returns true if the status is COMPLETE
+         * @method isComplete
+         * @returns {Boolean} isComplete [true] if video is complete
+         */
+        isComplete(video = this) {
+
+            return video.status === VIDEO_STATUSES.COMPLETE.id;
+        }
+
+        /**
+         * Returns true if the status is FAILED
+         * @method isFailed
+         * @returns {Boolean} isFailed [true] if video is failed
+         */
+        isFailed(video = this) {
+
+            let fileUpload = FileUploadService.getFileUpload(video.guid);
+
+            // NOTE: The upload surely isFailed if there is no upload in progress,
+            // but the server thinks that there is still (e.g. if user refreshses during upload)
+            if (!fileUpload && video.status === VIDEO_STATUSES.INCOMPLETE.id) {
+
+                return true;
+
+            } else {
+
+                // NOTE: The failure could come from server or client-side
+                return !!(fileUpload && fileUpload.isFailed()) ||
+                    video.status === VIDEO_STATUSES.FAILED.id;
+            }
+
+            // FIXME: The video 'status'' SHOULD be sufficient for determining
+            // if it is FAILED, however, since the server is dumb currently
+            // we need to compensate with the FileUploadService.
+            // When the server can determine if the upload failed immediately,
+            // and can push notifications, we can simply use this line of code:
+            // ```return video.status === VIDEO_STATUSES.FAILED.id;```
         }
     }
 
-    /**
-     * Serializes Video entity to valid JSON
-     * @method Video.toJSON
-     * @returns {Object} VideoJSONObject
-     */
-    toJSON () {
-
-        let copy = Object.assign({}, this);
-
-        if (copy.transcodeProfiles) {
-
-            copy.videoTranscodeProfiles = copy.videoTranscodeProfiles.map(transcodeProfile => JSON.stringify(transcodeProfile));
-        }
-
-        return copy;
-    }
-
-    /**
-    * Checks a video JSON object for valid properties
-    * @method Video.validate
-    * @param {Object} VideoJSONObject [req]
-    * @returns {Boolean} validated [true] if valid object
-    */
-    validate (video) {
-
-        switch (arguments.length) {
-
-            case 0:
-
-                throw new Error('Invoking Video.validate without passing a JSON object');
-        }
-
-        let validation = tv4.validateMultiple(video, schema);
-
-        return validation;
-    }
-
-    /**
-     * Getter for Video.videoTranscodeProfiles
-     * @method Video.videoTranscodeProfiles
-     * @returns {Array} transcodeProfiles array of entities
-     */
-    get transcodeProfiles() {
-
-        return this.videoTranscodeProfiles;
-    }
-
-    /**
-     * Setter for Video.videoTranscodeProfiles
-     * @method Video.videoTranscodeProfiles
-     * @param {Array} transcodeProfiles array of transcodeProfiles
-     */
-    set transcodeProfiles(transcodeProfiles) {
-
-        this.videoTranscodeProfiles = transcodeProfiles;
-    }
-
-    /**
-     * Getter for Video.resourceUrls
-     * @method Video.resourceUrls
-     * @readonly
-     * @returns {Array} resourceUrls Array of trusted Resource URLs
-     */
-    get resourceUrls() {
-
-        return this.transcodeProfiles.map(transcodeProfile => transcodeProfile.resourceUrl);
-    }
-
-    /**
-     * Business logic for status complete
-     * @method isComplete
-     * @returns {Boolean} isComplete [true] if video is complete
-     */
-    isComplete(video = this) {
-
-        return video.status === VIDEO_STATUSES.COMPLETE.id;
-    }
+    return Video;
 }
 
 /**
  * @module Video
  * @exports entities/video
  */
-export default Video;
+export default video;
+IntelligenceWebClient.factory('Video', video);

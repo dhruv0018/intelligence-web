@@ -16,23 +16,14 @@ require('./extensions');
 /* Components */
 require('../build/build');
 
+import Games from '../app/games/index.js';
 import Reel from '../app/reel/index.js';
 import Embed from '../app/embed/index.js';
 import Indexer from '../app/indexer/index.js';
 import Styleguide from '../app/styleguide/index.js';
 import Analytics from '../app/analytics/index.js';
 
-import AppDownloads from '../lib/directives/app-downloads';
-import FieldComponent from '../lib/directives/field';
-import IndexingBlock from '../lib/directives/indexing-block';
-import DynamicTables from '../lib/directives/dynamic-tables';
-import { IndexerFields, UserFields } from '../lib/directives/fields';
-import Play from '../lib/directives/play';
-import SelectMediaSrc from '../lib/directives/video-player/select-media-src';
-import ArenaChart from '../lib/directives/arena-chart';
-import BreakdownDialog from '../lib/dialogs/breakdown-dialog';
-import AdminRole from '../lib/directives/admin-role';
-import EventAdjuster from '../lib/directives/event-adjuster';
+import Lib from '../lib';
 
 /* App dependencies */
 require('./config');
@@ -74,6 +65,8 @@ require('./services/detectDevice');
 require('./services/analytics');
 import './services/performance-timer/angular-index';
 import './services/performance-timer';
+require('./services/fileUpload/fileUploadService');
+require('./services/admin-games');
 
 require('./constants/users');
 require('./constants/games');
@@ -104,6 +97,9 @@ require('./constants/telestrations');
 require('./constants/feature-flags');
 require('./constants/cue-points');
 require('./constants/transcodeProfiles');
+import { PRIORITIES_IDS, PRIORITIES } from './constants/priorities';
+import { LABELS_IDS, LABELS } from './constants/labels';
+import EMAILS from './constants/emails';
 
 
 require('./models/users');
@@ -160,6 +156,7 @@ require('./emitters/video-player');
 require('./emitters/telestrations');
 require('./emitters/cue-point-event-emitter');
 require('./emitters/ui-event');
+require('./emitters/admin-games');
 
 require('./brokers/telestrationsVideoPlayerBroker');
 

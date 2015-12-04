@@ -26,5 +26,10 @@
     "TeamAnalytics": {
 
         "*": true
+    },
+
+    "SelfEditor": {
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }

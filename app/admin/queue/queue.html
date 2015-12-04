@@ -16,14 +16,14 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="status" ng-model="filter.status" ng-options="status.id as status.name for (key, status) in GAME_STATUSES">
+                <select class="form-control" name="status" ng-model="filter['status[]']" ng-options="status.id as status.name for (key, status) in GAME_STATUSES">
                     <option value="">Status</option>
                 </select>
 
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="id" placeholder="Game ID" ng-model="filter.gameId" type="text">
+                <input class="form-control" name="id" placeholder="Game ID" ng-model="filter['id[]']" type="text">
             </div>
 
             <div class="form-group">
@@ -69,35 +69,46 @@
     <div class="queue-container">
 
         <admin-queue-dashboard
-         games="games"
-         queue="queue"
+            games="games"
+            queue="queue"
+            sidebar-expand="sidebar"
+            filter-counts="dashboardFilterCounts"
         ></admin-queue-dashboard>
 
-        <admin-queue-games
-         queue="queue"
-         sports="sports"
-         leagues="leagues"
-         teams="teams"
-         users="users"
-         ng-hide="noResults || searching"
-        ></admin-queue-games>
+        <div class="results" ng-show="AdminGames.isQuerying">
 
-        <div class="results" ng-show="searching">
-
-            <h1>Searching...</h1>
+            <h1>Loading...</h1>
 
             <!-- TODO: The size shouldn't be a static value -->
-            <krossover-spinner ng-if="searching" size="'80px'"></krossover-spinner>
+            <krossover-spinner ng-if="AdminGames.isQuerying" size="'80px'"></krossover-spinner>
 
         </div>
 
-        <div class="results noresults" ng-show="noResults">
+        <div class="results noresults"
+            ng-show="queue.length === 0 && !AdminGames.isQuerying">
 
             <i class="icon icon-search"></i>
             <h1>No Results Found</h1>
             <h2>Try your search again.</h2>
 
         </div>
+
+        <admin-queue-games
+            games="games"
+            queue="queue"
+            sports="sports"
+            leagues="leagues"
+            teams="teams"
+            users="users"
+            ng-hide="AdminGames.isQuerying || queue.length === 0"
+        ></admin-queue-games>
+
+        <admin-queue-pagination
+            ng-if="AdminGames.totalCount > QUERY_SIZE"
+            total-count="AdminGames.totalCount"
+            number-of-adjacent-page-buttons="2"
+        ></admin-queue-pagination>
+
     </div>
 
 </section>
