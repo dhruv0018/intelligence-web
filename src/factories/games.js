@@ -111,7 +111,8 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 if (game.shares && game.shares.length) {
 
-                    game.shares.forEach(function(share, index) {
+                    let shares = angular.copy(game.shares);
+                    shares.forEach(function(share, index) {
                         if (share.sharedWithUserId) {
                             game.sharedWithUsers[share.sharedWithUserId] = share;
                         } else if (share.sharedWithTeamId) {
