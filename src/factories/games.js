@@ -1,4 +1,4 @@
-var PAGE_SIZE = 100;
+var PAGE_SIZE = 500;
 
 var moment = require('moment');
 
