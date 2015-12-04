@@ -8,6 +8,7 @@
     ],
     "scripts": [
         "index.js",
+        "service.js",
         "controller.js"
     ],
     "dependencies": {

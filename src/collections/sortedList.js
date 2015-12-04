@@ -71,6 +71,11 @@ class SortedList extends List {
 
         return this.sort();
     }
+
+    find (value) {
+
+        return this.findByProperty(this.sortProperty, value);
+    }
 }
 
 export default SortedList;

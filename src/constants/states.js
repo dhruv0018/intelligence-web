@@ -40,6 +40,11 @@ const STATE_NAMES = {
     'Games.ArenaChart': {
         display: 'Shot Chart',
         id: 'arena-chart-cta'
+    },
+
+    'Games.SelfEditor': {
+        display: 'Self-Editor',
+        id: 'self-editor-cta'
     }
 };
 

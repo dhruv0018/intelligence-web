@@ -3,13 +3,7 @@ const angular = window.angular;
 
 const GamesBreakdown = angular.module('Games.Breakdown', []);
 
-GamesBreakdown.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('games/breakdown/template.html', require('./template.html'));
-    }
-]);
+import template from './template.html';
 
 GamesBreakdown.config([
     '$stateProvider', '$urlRouterProvider',
@@ -21,7 +15,7 @@ GamesBreakdown.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'games/breakdown/template.html',
+                    template,
                     controller: 'Games.Breakdown.controller'
                 }
             },
@@ -320,7 +314,7 @@ function GamesBreakdownController (
             callbackFn = callbackFn || angular.noop;
 
             // Save Game
-            $scope.game.save().then(function onSaved() {
+            $scope.game.save(null, null, null, true).then(function onSaved() {
                 callbackFn();
             });
 
@@ -342,3 +336,5 @@ function GamesBreakdownController (
             playlistEventEmitter.removeListener(EVENT.PLAYLIST.PLAY.CURRENT, onPlaylistWatch);
         });
 }
+
+export default GamesBreakdown;
