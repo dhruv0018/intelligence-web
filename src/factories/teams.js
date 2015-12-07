@@ -1,7 +1,7 @@
 import List from '../collections/list.js';
 import Subscription from '../entities/subscription.js';
 
-var PAGE_SIZE = 500;
+var PAGE_SIZE = 2000;
 
 var pkg = require('../../package.json');
 var moment = require('moment');
