@@ -1,6 +1,6 @@
 var pkg = require('../../package.json');
 
-const PAGE_SIZE = 2000;
+const PAGE_SIZE = 1000;
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
