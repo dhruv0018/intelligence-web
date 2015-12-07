@@ -602,4 +602,16 @@ describe('ReelsFactory', function() {
         }]));
 
     });
+
+    describe('getPublicShare', ()=> {
+        it("should return the public share when exist", inject(['ReelsFactory', function(ReelsFactory) {
+                let reel = ReelsFactory.extend({id:2, shares:[{sharedWithTeamId:6}, {sharedWithUserId:7}, {sharedWithTeamId:null, sharedwithUserId:null}]});
+                expect(reel.getPublicShare()).to.eql({sharedWithTeamId:null, sharedwithUserId:null});
+        }]));
+
+        it("Should return undefined when public share doesnt exist", inject(['ReelsFactory', function(ReelsFactory) {
+                let reel = ReelsFactory.extend({id:2, shares:[{sharedWithTeamId:6}, {sharedWithUserId:7}]});
+                expect(reel.getPublicShare()).to.be.undefined;
+        }]));
+    });
 });

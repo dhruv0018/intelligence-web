@@ -466,10 +466,7 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 if (!this.shares) return undefined;
 
-                return this.shares.find(share => {
-
-                    return !share.sharedWithUserId && !share.sharedWithTeamId;
-                });
+                return this.shares.find(share => this.isPublicShare(share));
             },
             isSharedWithPublic: function() {
 
