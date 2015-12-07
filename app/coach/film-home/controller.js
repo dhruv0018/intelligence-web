@@ -66,7 +66,6 @@ FilmHome.controller('Coach.FilmHome.controller', [
         // Sport related
         let sport = $scope.team.getSport();
         $scope.isBasketball = sport.id === SPORTS.BASKETBALL.id;
-        console.log($scope.isBasketball);
 
         //player related
         var playersFilter = { rosterId: $scope.team.roster.id };
