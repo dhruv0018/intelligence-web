@@ -323,8 +323,8 @@ describe('ReelsFactory', function() {
 
     describe('getNonPublicShares', ()=> {
         it("Should return only non public shares", inject(['ReelsFactory', function(ReelsFactory) {
-                let reel = ReelsFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
-                expect(reel.getNonPublicShares()).to.eql([{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}]);
+                let reel = ReelsFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2}, {id:3}, {id:4, sharedWithUserId:7}, {id:5}]});
+                expect(reel.getNonPublicShares()).to.eql([{id:1, sharedWithTeamId:6}, {id:4, sharedWithUserId:7}]);
         }]));
     });
 
