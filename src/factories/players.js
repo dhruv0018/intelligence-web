@@ -1,5 +1,7 @@
 var pkg = require('../../package.json');
 
+const PAGE_SIZE = 2000;
+
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
@@ -10,6 +12,8 @@ IntelligenceWebClient.factory('PlayersFactory', [
     function($injector, $q, BaseFactory, $filter) {
 
         var PlayersFactory = {
+
+            PAGE_SIZE,
 
             description: 'players',
 
