@@ -12,20 +12,22 @@ AdminGamesService.$inject = [
     'GamesFactory',
     'TeamsFactory',
     'UsersFactory',
-    '$q'
+    '$q',
+    'VIEWS'
 ];
 
 function AdminGamesService(
     gamesFactory,
     teams,
     users,
-    $q
+    $q,
+    VIEWS
 ) {
     let queryFilter = null;
     let isQuerying = false;
     let start = null;
     let totalCount = null;
-    const COUNT_SIZE = 100;
+    const COUNT_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
 
     //TODO should belong to indexing game model
     //leaving this open to potentially getting other info from the team besides head coach id
