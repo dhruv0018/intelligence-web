@@ -126,6 +126,7 @@ function AdminGamesService(
     function query() {
         let filter = angular.copy(queryFilter);
         filter.start = start;
+        filter.count = COUNT_SIZE;
         let parsedFilter = cleanUpFilter(filter);
         isQuerying = true;
         let totalResultCount = gamesFactory.totalCount(parsedFilter).then(numberOfGames => {
