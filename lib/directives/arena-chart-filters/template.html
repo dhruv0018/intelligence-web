@@ -1,4 +1,4 @@
-<div class="arena-chart-filters filters">
+<div class="arena-chart-filters filters {{SPORT_IDS[league.sportId] | lowercase}}">
 
     <!-- Filters -->
     <div class="arena-chart-filters-start filter-group">
@@ -35,55 +35,38 @@
     <div class="arena-chart-filters-center filter-group">
 
         <!-- shots filter -->
-        <div class="filter-group__item">
+        <div class="filter-group__item shots-filter">
 
             <div class="filter-group__item-title">
                 <h5> Shots </h5>
             </div>
 
-            <div class="filter-group__item-actions" ng-if="SPORT_IDS[league.sportId] === 'BASKETBALL'">
+            <div class="filter-group__item-actions">
 
                 <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
-                    <i class="arena-event-icon icon-circle"></i>Made
+                    <i class="arena-event-icon arena-event-icon-smallest icon-circle"></i>
+                    <span ng-if="SPORT_IDS[league.sportId] === 'BASKETBALL'">Made</span>
+                    <span ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'">Scored</span>
                 </krossover-checkbox>
 
                 <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
                     <i class="arena-event-icon icon-x"></i>Missed
                 </krossover-checkbox>
 
-            </div>
+                <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'" ng-model="filterModel.shots.blocked" filled="true">
+                    <i class="arena-event-icon arena-event-icon-smallest icon-diamond-line-thick"></i>Blocked
+                </krossover-checkbox>
 
-            <div class="filter-group__item-actions" ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'">
+                <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'" ng-model="filterModel.shots.saved" filled="true">
+                    <i class="arena-event-icon arena-event-icon-smallest icon-open_circle"></i>Saved
+                </krossover-checkbox>
 
-                <div class="filter-group__item">
-
-                    <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
-                        <i class="arena-event-icon icon-circle"></i>Scored
-                    </krossover-checkbox>
-
-                    <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
-                        <i class="arena-event-icon icon-x"></i>Missed
-                    </krossover-checkbox>
-
-                </div>
-
-                <div class="filter-group__item">
-
-                    <krossover-checkbox ng-model="filterModel.shots.blocked" filled="true">
-                        <i class="arena-event-icon icon-diamond-line-thick"></i>Blocked
-                    </krossover-checkbox>
-
-                    <krossover-checkbox ng-model="filterModel.shots.saved" filled="true">
-                        <i class="arena-event-icon icon-open_circle"></i>Saved
-                    </krossover-checkbox>
-
-                </div>
             </div>
 
         </div>
 
         <!-- period filter -->
-        <div class="filter-group__item" ng-if="league.numberOfPeriods !== 1">
+        <div class="filter-group__item" class="period-filter" ng-if="league.numberOfPeriods !== 1">
 
             <div class="filter-group__item-title">
                 <h5> Period </h5>
