@@ -41,6 +41,12 @@ Users.controller('Users.User.Roles.Controller', [
             $scope.rolesChanged = true;
         };
 
+        $scope.$watch('user.roles', function(newRoles, oldRoles){
+            if (newRoles !== oldRoles) {
+                $scope.rolesChanged = true;
+            }
+        }, true);
+
         $scope.ROLES = ROLES;
     }
 ]);
