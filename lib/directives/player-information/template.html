@@ -6,11 +6,9 @@
     </div>
     <hr>
     <div class="wsc-link-container" ng-show="teams.length">
-        <span class="wsc-highlight-title">Show me the highlights!</span>
+        <h3 class="wsc-highlight-title">New Premium Highlights</h3>
         <span class="wsc-highlight-info">
-            We'll pick your best basketball clips of the season, add
-            transitions, and mix in your favorite music. Click here to get a
-            slick custom highlight reel.
+            We customize your best basketball clips from this season.
         </span>
     </div>
     <select class="form-control" ng-show="teams.length > 1" ng-options="team as team.name for team in teams" ng-model="team"></select>
