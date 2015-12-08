@@ -48,13 +48,15 @@
         resource="user">
     </krossover-admin-resource-save>
 
-    <button class="btn toggle-lock-user" type="button" data-ng-model="user.isLocked" data-ng-disabled="isLockDisabled()" data-btn-checkbox data-btn-checkbox-true="true" data-btn-checkbox-false="false">
+    <button class="btn toggle-lock-user" type="button"
+        data-ng-model="user.isLocked"
+        data-ng-disabled="!user.id || isLockDisabled()" data-btn-checkbox data-btn-checkbox-true="true" data-btn-checkbox-false="false">
         <i class="icon icon-lock" data-ng-show="!user.isLocked"></i>
         <i class="icon icon-unlock" data-ng-show="user.isLocked"></i>
         {{ user.isLocked ? "Unlock" : "Lock" }}
     </button>
 
-    <button ng-disabled="user.id && sendingEmail && formUserInfo.$valid" class="btn btn-danger reset-password" data-ng-click="resetPassword()">
+    <button ng-disabled="!user.id || sendingEmail && formUserInfo.$valid" class="btn btn-danger reset-password" data-ng-click="resetPassword()">
         <span ng-show="!sendingEmail">Password Reset</span>
         <span class="icon icon-spinner spinner" ng-show="sendingEmail"></span>
     </button>
