@@ -35,15 +35,7 @@ Users.controller('Users.Users.Controller', [
 
         $scope.filter = {};
 
-        $scope.add = function() {
-
-            // $modal.open({
-            //
-            //     templateUrl: 'users/adduser.html',
-            //     controller: 'Users.User.New.Controller'
-            // });
-            $state.go('user-info',{location: true});
-        };
+        $scope.add = () => $state.go('user-info', {location: true});
 
         $scope.search = function(filter) {
 
