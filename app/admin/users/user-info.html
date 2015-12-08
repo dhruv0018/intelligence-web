@@ -43,7 +43,7 @@
     </div>
 
     <krossover-admin-resource-save
-        disabled="formUserInfo.$pristine && formUserInfo.$valid"
+        disabled="formUserInfo.$pristine || formUserInfo.$invalid"
         button-id="save-user-contact-info-cta"
         resource="user">
     </krossover-admin-resource-save>
