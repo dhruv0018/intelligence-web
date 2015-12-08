@@ -24,36 +24,6 @@ Game.run([
 ]);
 
 /**
- * Admin Game data dependencies.
- * @module Game
- * @type {service}
- */
-Game.service('Admin.Game.Data.Dependencies', [
-    'ROLE_TYPE', 'GAME_STATUSES', 'VIDEO_STATUSES', 'SportsFactory', 'LeaguesFactory','TeamsFactory', 'GamesFactory', 'UsersFactory',
-    function(ROLE_TYPE, GAME_STATUSES, VIDEO_STATUSES, sports, leagues, teams, games, users) {
-
-        var statuses = [
-            GAME_STATUSES.READY_FOR_INDEXING.id,
-            GAME_STATUSES.INDEXING.id,
-            GAME_STATUSES.READY_FOR_QA.id,
-            GAME_STATUSES.QAING.id,
-            GAME_STATUSES.SET_ASIDE.id
-        ];
-
-        var Data = {
-
-            sports: sports.load(),
-            leagues: leagues.load(),
-            users: users.load({ 'relatedGameStatus[]': statuses }),
-            teams: teams.load({ 'relatedGameStatus[]': statuses }),
-            games: games.load({ 'status[]': statuses, videoStatus: VIDEO_STATUSES.COMPLETE.id })
-        };
-
-        return Data;
-    }
-]);
-
-/**
  * Game page state router.
  * @module Game
  * @type {UI-Router}
@@ -74,19 +44,83 @@ Game.config([
             },
             resolve: {
                 'Admin.Game.Data': [
-                    '$q', '$stateParams', 'Admin.Game.Data.Dependencies', 'SchoolsFactory', 'TeamsFactory', 'GamesFactory',
-                    function($q, $stateParams, data, schools, teams, games) {
+                    '$q',
+                    '$stateParams',
+                    'SchoolsFactory',
+                    'TeamsFactory',
+                    'GamesFactory',
+                    'UsersFactory',
+                    'ROLES',
+                    'Utilities',
+                    function(
+                        $q,
+                        $stateParams,
+                        schools,
+                        teams,
+                        games,
+                        users,
+                        ROLES,
+                        utilities
+                    ) {
 
-                        return $q.all(data).then(function(data) {
-                            var game = games.get($stateParams.id);
-                            var team = teams.get(game.teamId);
+                        const gameId = Number($stateParams.id);
+                        const gamePromise = games.load(gameId);
+                        let game;
 
-                            if (team.schoolId) {
-                                data.school = schools.fetch(team.schoolId);
+                        // Wait for the game until requesting teams, users, and school
+                        gamePromise.then(results => {
+
+                            game = results[0];
+                            let gameTeamIds = [
+                                game.teamId,
+                                game.opposingTeamId,
+                                game.uploaderTeamId
+                            ];
+                            gameTeamIds = utilities.unique(gameTeamIds);
+
+                            // Request each of the game's teams
+                            const teamsPromise = teams.load({ 'id[]': gameTeamIds });
+                            /**
+                             * FIXME: If I use the above promise, I cannot factory.get the
+                             * team in the controller. WTF. Sorry
+                             */
+                            // const teamsPromise = $q.all({
+                            //     team: teams.load(game.teamId),
+                            //     opposingTeam: teams.load(game.opposingTeamId),
+                            //     uploaderTeam: teams.load(game.uploaderTeamId)
+                            // });
+
+                            return teamsPromise;
+
+
+                        }).then(() => {
+
+                            const uploaderTeam = teams.get(game.uploaderTeamId);
+                            let usersPromise, schoolsPromise;
+
+                            // Request indexer assignments' users
+                            if (game.indexerAssignments) {
+
+                                let userIds = game.indexerAssignments.map(assignment => assignment.userId);
+
+                                // Also get the effin head coach
+                                const headCoachRole = uploaderTeam.roles.filter(role => role.type.id === ROLES.HEAD_COACH.type.id)[0];
+                                const headCoachUserId = headCoachRole.userId;
+                                userIds.push(headCoachUserId);
+
+                                usersPromise = users.load({ 'id[]': userIds});
                             }
 
-                            return $q.all(data);
+                            // Request the uploader team's school
+                            if (uploaderTeam.schoolId) {
+
+                                schoolsPromise = schools.load(uploaderTeam.schoolId);
+                            }
+
+                            return $q.all([usersPromise, schoolsPromise]);
                         });
+
+                        return gamePromise;
                     }
                 ]
             },
@@ -117,8 +151,8 @@ Game.config([
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'Admin.Game.Data', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal', 'UsersFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'RevertGameStatus.Modal',
-    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES,  data, RawFilmModal, DeleteGameModal, SelectIndexerModal, users, sports, leagues, teams, games, RevertGameStatusModal) {
+    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal', 'UsersFactory', 'SportsFactory', 'SchoolsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'RevertGameStatus.Modal',
+    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, RawFilmModal, DeleteGameModal, SelectIndexerModal, users, sports, schools, leagues, teams, games, RevertGameStatusModal) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -132,7 +166,6 @@ Game.controller('GameController', [
 
         var gameId = $stateParams.id;
 
-        $scope.data = data;
         $scope.game = games.get(gameId);
         $scope.team = teams.get($scope.game.teamId);
         $scope.teams = teams.getCollection();
@@ -140,9 +173,10 @@ Game.controller('GameController', [
         $scope.league = leagues.get($scope.team.leagueId);
         $scope.sport = sports.get($scope.league.sportId);
 
-        if (data.school) {
-            $scope.school = data.school;
-        }
+        const uploaderTeam = teams.get($scope.game.uploaderTeamId);
+        // if (uploaderTeam.schoolId) {
+            // $scope.school = schools.get(uploaderTeam.schoolId);
+        // }
 
         $scope.users = users.getList();
 
