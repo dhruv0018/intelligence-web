@@ -41,9 +41,9 @@
         <input class="form-control" name="phone2" placeholder="Phone Number 2" data-ng-model="user.phone2" type="tel">
 
     </div>
-    
+
     <krossover-admin-resource-save
-        disabled="formUserInfo.$pristine"
+        disabled="formUserInfo.$pristine && formUserInfo.$valid"
         button-id="save-user-contact-info-cta"
         resource="user">
     </krossover-admin-resource-save>
@@ -54,7 +54,7 @@
         {{ user.isLocked ? "Unlock" : "Lock" }}
     </button>
 
-    <button ng-disabled="sendingEmail" class="btn btn-danger reset-password" data-ng-click="resetPassword()">
+    <button ng-disabled="user.id && sendingEmail && formUserInfo.$valid" class="btn btn-danger reset-password" data-ng-click="resetPassword()">
         <span ng-show="!sendingEmail">Password Reset</span>
         <span class="icon icon-spinner spinner" ng-show="sendingEmail"></span>
     </button>

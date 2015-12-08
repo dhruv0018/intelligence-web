@@ -37,11 +37,12 @@ Users.controller('Users.Users.Controller', [
 
         $scope.add = function() {
 
-            $modal.open({
-
-                templateUrl: 'users/adduser.html',
-                controller: 'Users.User.New.Controller'
-            });
+            // $modal.open({
+            //
+            //     templateUrl: 'users/adduser.html',
+            //     controller: 'Users.User.New.Controller'
+            // });
+            $state.go('user-info',{location: true});
         };
 
         $scope.search = function(filter) {

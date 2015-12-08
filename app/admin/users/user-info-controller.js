@@ -24,19 +24,21 @@ Users.controller('Users.User.Info.Controller', [
         $scope.isLockDisabled = function() {
 
             var userId = $stateParams.id;
-            var user = users.get($stateParams.id);
+            if (userId) {
+                var user = users.get($stateParams.id);
 
-            /* Enable the lock button for new users. */
-            if (!user) return false;
+                /* Enable the lock button for new users. */
+                if (!user) return false;
 
-            /* Super admin can only be locked from the database. */
-            else if (user.has(ROLES.SUPER_ADMIN)) return true;
+                /* Super admin can only be locked from the database. */
+                else if (user.has(ROLES.SUPER_ADMIN)) return true;
 
-            /* Admins can only be locked by super admins. */
-            else if (user.has(ROLES.ADMIN)) return !session.currentUser.is(ROLES.SUPER_ADMIN);
+                /* Admins can only be locked by super admins. */
+                else if (user.has(ROLES.ADMIN)) return !session.currentUser.is(ROLES.SUPER_ADMIN);
+            }
 
             /* For other users, assume the lock button is enabled. */
-            else return false;
+            return false;
         };
 
         $scope.resetPassword = () => {
