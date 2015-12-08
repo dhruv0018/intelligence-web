@@ -3,12 +3,7 @@ const angular = window.angular;
 
 const GamesFormations = angular.module('Games.Formations', []);
 
-GamesFormations.run([
-    '$templateCache',
-    function run($templateCache) {
-        $templateCache.put('games/formations.html', require('./template.html'));
-    }
-]);
+import template from './template.html';
 
 GamesFormations.config([
     '$stateProvider', '$urlRouterProvider',
@@ -20,7 +15,7 @@ GamesFormations.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'games/formations.html',
+                    template,
                     controller: 'GamesFormations.controller'
                 }
             },
@@ -246,3 +241,5 @@ GamesFormations.controller('GamesFormations.controller', [
         });
     }
 ]);
+
+export default GamesFormations;

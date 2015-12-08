@@ -8,7 +8,6 @@ require('admin');
 require('coach');
 require('athlete');
 require('indexing');
-require('games');
 require('clips');
 
 /* Fetch angular from the browser scope */
