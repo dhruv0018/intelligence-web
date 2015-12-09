@@ -50,7 +50,7 @@
                 </krossover-checkbox>
 
                 <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
-                    <i class="arena-event-icon icon-x"></i>Missed
+                    <i class="arena-event-icon arena-event-icon-smallest icon-x"></i>Missed
                 </krossover-checkbox>
 
                 <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE'" ng-model="filterModel.shots.blocked" filled="true">
@@ -66,7 +66,7 @@
         </div>
 
         <!-- period filter -->
-        <div class="filter-group__item" class="period-filter" ng-if="league.numberOfPeriods !== 1">
+        <div class="filter-group__item periods-filter" ng-if="league.numberOfPeriods !== 1">
 
             <div class="filter-group__item-title">
                 <h5> Period </h5>
