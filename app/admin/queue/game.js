@@ -50,7 +50,6 @@ Game.config([
                     'TeamsFactory',
                     'GamesFactory',
                     'UsersFactory',
-                    'ROLES',
                     'Utilities',
                     function(
                         $q,
@@ -59,7 +58,6 @@ Game.config([
                         teams,
                         games,
                         users,
-                        ROLES,
                         utilities
                     ) {
 
@@ -67,58 +65,87 @@ Game.config([
                         const gamePromise = games.load(gameId);
                         let game;
 
-                        // Wait for the game until requesting teams, users, and school
-                        gamePromise.then(results => {
+                        gamePromise
+                            .then(loadGameTeams)
+                            .then(loadGameUsersAndSchool);
 
-                            game = results[0];
-                            let gameTeamIds = [
-                                game.teamId,
-                                game.opposingTeamId,
-                                game.uploaderTeamId
-                            ];
-                            gameTeamIds = utilities.unique(gameTeamIds);
+                        /**
+                         * @param {Array<Resource>} gamesPromiseResults
+                         * @returns {Promise} teamsPromise
+                         */
+                        function loadGameTeams(gamesPromiseResults) {
 
-                            // Request each of the game's teams
-                            const teamsPromise = teams.load({ 'id[]': gameTeamIds });
+                            game = gamesPromiseResults[0];
+
+                            // let gameTeamIds = [
+                            //     game.teamId,
+                            //     game.opposingTeamId,
+                            //     game.uploaderTeamId
+                            // ];
+                            // gameTeamIds = utilities.unique(gameTeamIds);
+                            // const teamsPromise = teams.load({ 'id[]': gameTeamIds });
                             /**
                              * FIXME: If I use the above promise, I cannot factory.get the
                              * team in the controller. WTF. Sorry
                              */
-                            // const teamsPromise = $q.all({
-                            //     team: teams.load(game.teamId),
-                            //     opposingTeam: teams.load(game.opposingTeamId),
-                            //     uploaderTeam: teams.load(game.uploaderTeamId)
-                            // });
+                            const teamsPromise = $q.all([
+                                teams.fetch(game.teamId),
+                                teams.fetch(game.opposingTeamId),
+                                teams.fetch(game.uploaderTeamId)
+                            ]);
 
                             return teamsPromise;
+                        }
 
-
-                        }).then(() => {
+                        /**
+                         * @param {Array<Resource>} teamsPromiseResults
+                         * @param {Promise} usersAndSchoolsPromise
+                         */
+                        function loadGameUsersAndSchool(teamsPromiseResults) {
 
                             const uploaderTeam = teams.get(game.uploaderTeamId);
-                            let usersPromise, schoolsPromise;
+                            console.log(`teams.get(${game.uploaderTeamId})`, uploaderTeam);
 
-                            // Request indexer assignments' users
+                            return $q.all([
+                                loadTeamUsers(game, uploaderTeam),
+                                loadTeamSchool(uploaderTeam)
+                            ]);
+                        }
+
+                        /**
+                         * @param {GameResource} game
+                         * @param {TeamResource} team
+                         * @returns {Promise} users
+                         */
+                        function loadTeamUsers(game, team) {
+
+                            let userIds = [];
+                            const headCoachRole = team.getHeadCoachRole();
+
                             if (game.indexerAssignments) {
 
-                                let userIds = game.indexerAssignments.map(assignment => assignment.userId);
-
-                                // Also get the effin head coach
-                                const headCoachRole = uploaderTeam.roles.filter(role => role.type.id === ROLES.HEAD_COACH.type.id)[0];
-                                const headCoachUserId = headCoachRole.userId;
-                                userIds.push(headCoachUserId);
-
-                                usersPromise = users.load({ 'id[]': userIds});
+                                userIds = game.indexerAssignments.map(assignment => assignment.userId);
                             }
 
-                            // Request the uploader team's school
-                            if (uploaderTeam.schoolId) {
+                            if (headCoachRole) {
 
-                                schoolsPromise = schools.load(uploaderTeam.schoolId);
+                                userIds.push(headCoachRole.userId);
                             }
 
-                            return $q.all([usersPromise, schoolsPromise]);
-                        });
+                            return users.load({ 'id[]': userIds});
+                        }
+
+                        /**
+                         * @param {TeamsResource} team
+                         * @returns {Promise | undefined} school
+                         */
+                        function loadTeamSchool(team) {
+
+                            if (team.schoolId) {
+
+                                return schools.load(team.schoolId);
+                            }
+                        }
 
                         return gamePromise;
                     }
