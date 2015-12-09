@@ -57,8 +57,10 @@ describe('LeaguesFactory', function() {
             }
 
             LeaguesFactory.extend(league);
+            let expectedSeasonId = league.seasons[0].id;
             let season = league.getCurrentSeason();
             expect(season).to.be.an('object');
+            expect(season.id).to.equal(expectedSeasonId);
             expect(moment(currentDate).isAfter(moment(season.startDate))).to.be.true;
             expect(moment(currentDate).isBefore(moment(season.endDate))).to.be.true;
         });
