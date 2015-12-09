@@ -153,7 +153,7 @@ Game.controller('GameController', [
             $scope.headCoach = users.get(headCoachRole.userId);
         }
 
-        $scope.deliverTime = $scope.game.getRemainingTime($scope.teams[$scope.game.uploaderTeamId]);
+        $scope.deliverTime = $scope.game.timeRemaining();
         if ($scope.deliverTime === 0) {
             $scope.deliverTime = 'None';
         }
