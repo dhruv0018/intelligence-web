@@ -174,9 +174,9 @@ Game.controller('GameController', [
         $scope.sport = sports.get($scope.league.sportId);
 
         const uploaderTeam = teams.get($scope.game.uploaderTeamId);
-        // if (uploaderTeam.schoolId) {
-            // $scope.school = schools.get(uploaderTeam.schoolId);
-        // }
+        if (uploaderTeam.schoolId) {
+            $scope.school = schools.get(uploaderTeam.schoolId);
+        }
 
         $scope.users = users.getList();
 
