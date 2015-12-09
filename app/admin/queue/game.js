@@ -65,46 +65,31 @@ Game.config([
                         const gamePromise = games.load(gameId);
                         let game;
 
-                        gamePromise
-                            .then(loadGameTeams)
-                            .then(loadGameUsersAndSchool);
-
                         /**
-                         * @param {Array<Resource>} gamesPromiseResults
+                         * @param {Array<GamesResource>} gamesPromiseResults
                          * @returns {Promise} teamsPromise
                          */
                         function loadGameTeams(gamesPromiseResults) {
 
                             game = gamesPromiseResults[0];
 
-                            // let gameTeamIds = [
-                            //     game.teamId,
-                            //     game.opposingTeamId,
-                            //     game.uploaderTeamId
-                            // ];
-                            // gameTeamIds = utilities.unique(gameTeamIds);
-                            // const teamsPromise = teams.load({ 'id[]': gameTeamIds });
-                            /**
-                             * FIXME: If I use the above promise, I cannot factory.get the
-                             * team in the controller. WTF. Sorry
-                             */
-                            const teamsPromise = $q.all([
-                                teams.fetch(game.teamId),
-                                teams.fetch(game.opposingTeamId),
-                                teams.fetch(game.uploaderTeamId)
-                            ]);
+                            let gameTeamIds = [
+                                game.teamId,
+                                game.opposingTeamId,
+                                game.uploaderTeamId
+                            ];
+                            gameTeamIds = utilities.unique(gameTeamIds);
 
-                            return teamsPromise;
+                            return teams.load({ 'id[]': gameTeamIds });
                         }
 
                         /**
-                         * @param {Array<Resource>} teamsPromiseResults
+                         * @param {Array<TeamsResource>} teamsPromiseResults
                          * @param {Promise} usersAndSchoolsPromise
                          */
                         function loadGameUsersAndSchool(teamsPromiseResults) {
 
                             const uploaderTeam = teams.get(game.uploaderTeamId);
-                            console.log(`teams.get(${game.uploaderTeamId})`, uploaderTeam);
 
                             return $q.all([
                                 loadTeamUsers(game, uploaderTeam),
@@ -132,7 +117,7 @@ Game.config([
                                 userIds.push(headCoachRole.userId);
                             }
 
-                            return users.load({ 'id[]': userIds});
+                            return users.load({ 'id[]': userIds });
                         }
 
                         /**
@@ -147,7 +132,9 @@ Game.config([
                             }
                         }
 
-                        return gamePromise;
+                        return gamePromise
+                            .then(loadGameTeams)
+                            .then(loadGameUsersAndSchool);
                     }
                 ]
             },
