@@ -235,7 +235,7 @@
 
         <ul data-ng-if="game.hasQaAssignment()" data-ng-repeat="assignment in game.indexerAssignments">
 
-            <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(data, game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
+            <li><button class="btn btn-link" data-ng-disabled="game.status != GAME_STATUSES.SET_ASIDE.id" data-ng-click="SelectIndexerModal.open(game, true)">{{ users[assignment.userId].firstName }} {{ users[assignment.userId].lastName }}</button></li>
 
         </ul>
 
