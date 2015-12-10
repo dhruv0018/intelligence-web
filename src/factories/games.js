@@ -82,6 +82,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
                 game.primaryJerseyColor = game.primaryJerseyColor || '#FFFFFF';
                 game.opposingPrimaryJerseyColor = game.opposingPrimaryJerseyColor || '#000000';
+                game.secondaryJerseyColor = game.secondaryJerseyColor || '#000000';
+                game.opposingSecondaryJerseyColor = game.opposingSecondaryJerseyColor || '#FFFFFF';
 
                 //TODO remove when the back end makes notes always a object
                 if (angular.isArray(game.notes)) {
