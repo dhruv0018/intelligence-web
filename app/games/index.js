@@ -248,7 +248,7 @@ function GamesController(
 
     // Watch for header display
     $scope.hideHeader = false;
-    $scope.$on('toggleHeaderDisplay', (toggleHeaderDisplayEvent, indexingMode) => {
+    $scope.$on('toggleHeaderDisplay', function(toggleHeaderDisplayEvent, indexingMode) {
         $scope.hideHeader = indexingMode;
     });
 
