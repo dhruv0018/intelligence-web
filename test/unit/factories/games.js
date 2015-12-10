@@ -976,7 +976,7 @@ describe('GamesFactory', function() {
             function(GAME_STATUSES) {
                 [
                     GAME_STATUSES.NOT_INDEXED.id,
-                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.SUBMITTED_FOR_INDEXING.id,
                     GAME_STATUSES.FINALIZED.id
                 ].forEach(function(status) {
                         game.status = status;
@@ -991,6 +991,7 @@ describe('GamesFactory', function() {
                     GAME_STATUSES.INDEXING.id,
                     GAME_STATUSES.READY_FOR_QA.id,
                     GAME_STATUSES.QAING.id,
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
                     GAME_STATUSES.SET_ASIDE.id,
                     GAME_STATUSES.INDEXED.id
                 ].forEach(function(status) {

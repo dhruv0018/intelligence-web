@@ -1150,6 +1150,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     case GAME_STATUSES.QAING.id:
                     case GAME_STATUSES.SET_ASIDE.id:
                     case GAME_STATUSES.INDEXED.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                         isBeingBrokenDown = true;
                         break;
                 }
