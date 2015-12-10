@@ -53,14 +53,14 @@ export default `
                                     <div class="col-xs-6">
 
                                         <h6>Primary</h6>
-                                        <input class="form-control" name="yourprimarycolor" type="color" data-ng-model="game.primaryJerseyColor" disabled>
+                                        <input class="form-control" name="yourprimarycolor" type="color" style="background: {{game.primaryJerseyColor}}" data-ng-model="game.primaryJerseyColor" disabled>
 
                                     </div>
 
                                     <div class="col-xs-6">
 
                                         <h6>Secondary</h6>
-                                        <input class="form-control" name="yourprimarycolor" type="color" data-ng-model="game.secondaryJerseyColor" disabled>
+                                        <input class="form-control" name="yourprimarycolor" type="color" style="background: {{game.secondaryJerseyColor}}" data-ng-model="game.secondaryJerseyColor" disabled>
 
                                     </div>
 
@@ -97,14 +97,14 @@ export default `
                                     <div class="col-xs-6">
 
                                         <h6>Primary</h6>
-                                        <input class="form-control" name="theirprimarycolor" type="color" data-ng-model="game.opposingPrimaryJerseyColor" disabled>
+                                        <input class="form-control" name="theirprimarycolor" type="color" style="background: {{game.opposingPrimaryJerseyColor}}" data-ng-model="game.opposingPrimaryJerseyColor" disabled>
 
                                     </div>
 
                                     <div class="col-xs-6">
 
                                         <h6>Secondary</h6>
-                                        <input class="form-control" name="theirprimarycolor" type="color" data-ng-model="game.opposingSecondaryJerseyColor" disabled>
+                                        <input class="form-control" name="theirprimarycolor" type="color" style="background: {{game.opposingSecondaryJerseyColor}}" data-ng-model="game.opposingSecondaryJerseyColor" disabled>
 
                                     </div>
 
