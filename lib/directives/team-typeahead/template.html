@@ -3,12 +3,13 @@
     <input class="form-control"
            type="text"
            id = "{{elementId}}"
-           placeholder="Team" data-ng-model="team"
-           data-typeahead-loading="loading"
-           data-typeahead-min-length="3"
-           data-typeahead-template-url="team-typeahead-dropdown.html"
-           data-typeahead-input-formatter="$model.name"
-           data-typeahead-on-select="getId($item)"
-           data-typeahead="team as team.name for team in findTeams() | filter: {result: $viewValue}">
+           placeholder="Team (please enter minimum of 3 letters)" ng-model="team"
+           typeahead-loading="loading"
+           typeahead-min-length="3"
+           typeahead-template-url="team-typeahead-dropdown.html"
+           typeahead-input-formatter="$model.name"
+           typeahead-on-select="getId($item)"
+           typeahead="team as team.name for team in findTeams() | filter: {result: $viewValue}">
+    <krossover-spinner ng-if="loading" size="25px"></krossover-spinner>
 </div>
 
