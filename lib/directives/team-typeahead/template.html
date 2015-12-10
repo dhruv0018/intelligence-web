@@ -4,6 +4,7 @@
            type="text"
            id = "{{elementId}}"
            placeholder="Team (please enter minimum of 3 letters)" ng-model="team"
+           typeahead-wait-ms="200"
            typeahead-loading="loading"
            typeahead-min-length="3"
            typeahead-template-url="team-typeahead-dropdown.html"
