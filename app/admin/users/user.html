@@ -1,9 +1,11 @@
 <section class="user">
 
     <aside class="sidebar">
-
-        <x-krossover-role user="user" role="role"></x-krossover-role>
-
+        <div>
+            <div ng-show="user.id">Edit User</div>
+            <div ng-hide="user.id">New User</div>
+            <div ng-show="user.id">{{user.name}}</div>
+        </div>
         <nav role="navigation">
 
             <ul class="nav nav-pills nav-stacked">
