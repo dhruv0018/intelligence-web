@@ -14,6 +14,10 @@ function GamesSelfEditorController (
 ) {
     $scope.indexingMode = false;
     $scope.game = games.get($stateParams.id);
+
+    $scope.$watch('indexingMode', () => {
+        $scope.$emit('toggleHeaderDisplay', $scope.indexingMode);
+    });
 }
 
 export default GamesSelfEditorController;

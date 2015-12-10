@@ -45,7 +45,11 @@ Root.config([
  * @type {Controller}
  */
 Root.controller('RootController', [
-    function controller() {
-
+    '$scope',
+    function controller($scope) {
+        $scope.hideHeader = false;
+        $scope.$on('toggleHeaderDisplay', (toggleHeaderDisplayEvent, indexingMode) => {
+            $scope.hideHeader = indexingMode;
+        });
     }
 ]);

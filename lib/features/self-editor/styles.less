@@ -3,16 +3,36 @@
 self-editor {
     display: flex;
     flex-direction: column;
-    padding: 0px 15px 15px;
     background: @gray-lightest;
     flex: 1;
     overflow: none;
+
+    .self-editing-header {
+        flex: 0 0 50px;
+        display: flex;
+        text-align: center;
+        border-bottom: thin solid @gray-border;
+
+        .clips-header {
+            width: 420px;
+            border-right: thin solid @gray-border;
+        }
+
+        .team-name-header {
+            flex: 1;
+        }
+
+        h3 {
+            margin-bottom: 0;
+        }
+    }
 
     .filter-container {
         background-color: @gray-lightest;
         flex: 0 0 50px;
         display: flex;
         align-items: center;
+        padding: 0px 15px;
     }
 
     .main-highlight {
@@ -20,9 +40,18 @@ self-editor {
         display: flex;
         flex: 1;
         flex-direction: row;
+        padding: 0px 15px 15px;
 
-        &.not-editable {
-            padding-top: 15px;
+        &.editing-mode {
+            padding: 0;
+
+            .krossover-sidebar {
+                border-top: none;
+            }
+
+            video-player {
+                margin-top: 15px;
+            }
         }
     }
 
