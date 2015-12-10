@@ -705,6 +705,19 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return ~index ? assignments[index] : undefined;
             },
 
+            getAssignmentsByUserId: function(userId) {
+                let assignments = [];
+                if (userId) {
+                    assignments = this.indexerAssignments.filter(assignment => assignment.userId === userId);
+                }
+                return assignments;
+            },
+
+            getInactiveAssignmentsByUserId: function(userId) {
+                let assignments = this.getAssignmentsByUserId(userId);
+                return assignments.filter(assignment => assignment.timeFinished);
+            },
+
             isAssignmentStarted: function(assignment) {
 
                 assignment = assignment || this.currentAssignment();

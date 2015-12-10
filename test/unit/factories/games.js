@@ -2124,6 +2124,7 @@ describe('GamesFactory', function() {
         }]));
     });
 
+
     describe('unextend', ()=> {
         it("Should remove any duplicate public shares",
             inject(['GamesFactory', function(GamesFactory) {
@@ -2140,5 +2141,78 @@ describe('GamesFactory', function() {
                     {sharedWithUserId:7, gameId:2, userId:2, isBreakdownShared:false},
                     {sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false}]);
         }]));
+    });
+
+    describe('getAssignmentsByUserId', function() {
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {
+                    indexerAssignments: [
+                        {
+                            "userId": 1
+                        },
+                        {
+                            "userId": 5
+                        },
+                    ]
+                };
+                game = gamesFactory.extend(game);
+            }
+        ]));
+
+        it("should return the proper number of assignments corresponding to the user id passed in", () => {
+            let userId = 1;
+            let assignments = game.getAssignmentsByUserId(userId);
+            expect(assignments.length).to.equal(1);
+        });
+
+        it("should return empty array if no user id passed in", () => {
+            let assignments = game.getAssignmentsByUserId();
+            expect(assignments.length).to.equal(0);
+        });
+
+        it("should return empty array if user id passed in is not found", () => {
+            let userId = 100;
+            let assignments = game.getAssignmentsByUserId(userId);
+            expect(assignments.length).to.equal(0);
+        });
+    });
+
+    describe("getInactiveAssignmentsByUserId", () => {
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {
+                    indexerAssignments: [
+                        {
+                            "userId": 1,
+                            "timeFinished": "2015-07-08T15:17:59+00:00"
+                        },
+                        {
+                            "userId": 5
+                        },
+                        {
+                            "userId": 1
+                        },
+                        {
+                            "userId": 1,
+                            "timeFinished": "2015-07-09T15:17:59+00:00"
+                        }
+                    ]
+                };
+                game = gamesFactory.extend(game);
+            }
+        ]));
+
+        it("should return the proper number of assignments corresponding to the user id passed in", () => {
+            let userId = 1;
+            let assignments = game.getInactiveAssignmentsByUserId(userId);
+            expect(assignments.length).to.equal(2);
+        });
     });
 });
