@@ -114,13 +114,13 @@
                                                     </div>
 
                                                     <button id="change-breakdown-choice-cta"
-                                                        data-ng-disabled="statusBuffer > GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id || (data.remainingBreakdowns.planGamesRemaining <= 0 && data.remainingBreakdowns.packageGamesRemaining <= 0) || game.isSaving" class="switch-choice" data-ng-click="switchChoice()">
+                                                        data-ng-disabled="game.isBeingBrokenDown() || game.isDelivered() || (data.remainingBreakdowns.planGamesRemaining <= 0 && data.remainingBreakdowns.packageGamesRemaining <= 0) || game.isSaving" class="switch-choice" data-ng-click="switchChoice()">
 
                                                         <i class="icon icon-arrow-left"></i>
                                                         <span data-ng-show="statusBuffer === GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id">Change to sharing only</span>
                                                         <span data-ng-show="statusBuffer === GAME_STATUSES['NOT_INDEXED'].id">Break this game down</span>
-                                                        <span data-ng-show="statusBuffer > GAME_STATUSES['SUBMITTED_FOR_INDEXING'].id && statusBuffer !== GAME_STATUSES['FINALIZED'].id">Game is being broken down</span>
-                                                        <span data-ng-show="statusBuffer === GAME_STATUSES['FINALIZED'].id">Game has already been broken down</span>
+                                                        <span data-ng-show="game.isBeingBrokenDown()">Game is being broken down</span>
+                                                        <span data-ng-show="game.isDelivered()">Game has already been broken down</span>
 
                                                     </button>
                                                 </div>
