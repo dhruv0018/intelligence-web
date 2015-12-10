@@ -7,7 +7,7 @@ var pkg = require('../../package.json');
 var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 1000;
 
 IntelligenceWebClient.factory('UsersFactory', [
     '$injector', '$rootScope', '$http', 'config', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'SUBSCRIPTIONS',
