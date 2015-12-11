@@ -121,15 +121,15 @@
 
             <p class="public-share-option-title">How would you like to share?</p>
             <div class="public-share-types">
-                <button id="share-film-make-public-cta" type="button" class="btn-radio" ng-model="linkActive" btn-radio="true" ng-change="togglePublicLink()" required>Make video public</button>
-                <button id="share-film-make-private-cta" type="button" class="btn-radio" ng-model="linkActive" btn-radio="false" ng-change="togglePublicLink()" required>Keep video private</button>
+                <button id="share-film-make-public-cta" type="button" class="btn-radio" ng-model="linkActive" btn-radio="true" ng-change="togglePublicLink()" required ng-disabled="film.isSaving">Make video public</button>
+                <button id="share-film-make-private-cta" type="button" class="btn-radio" ng-model="linkActive" btn-radio="false" ng-change="togglePublicLink()" required ng-disabled="film.isSaving">Keep video private</button>
             </div>
 
             <div class="options-for-publicly-shared-films" ng-class="{'expanded': linkActive}">
                 <p class="public-share-option-title" ng-show="isGame && film.isDelivered()">What would you like to share?</p>
                 <div class="public-share-types" ng-show="isGame && film.isDelivered()">
-                    <button id="share-film-public-raw-film-only-cta" type="button" class="btn-radio" ng-model="film.publicShare.isBreakdownShared" btn-radio="false" ng-change="film.save()" required>Share Raw Film Only</button>
-                    <button id="share-film-public-raw-film-and-breakdown-cta" type="button" class="btn-radio" ng-model="film.publicShare.isBreakdownShared" btn-radio="true" ng-change="film.save()" required>Share Breakdown and Raw Film</button>
+                    <button id="share-film-public-raw-film-only-cta" type="button" class="btn-radio" ng-model="film.publicShare.isBreakdownShared" btn-radio="false" ng-change="film.save()" required ng-disabled="film.isSaving">Share Raw Film Only</button>
+                    <button id="share-film-public-raw-film-and-breakdown-cta" type="button" class="btn-radio" ng-model="film.publicShare.isBreakdownShared" btn-radio="true" ng-change="film.save()" required ng-disabled="film.isSaving">Share Breakdown and Raw Film</button>
                 </div>
 
                 <div class="public-share-methods">
@@ -162,7 +162,7 @@
 
             <div class="button-row">
                 <button id="share-film-public-back-cta" class="btn btn-default" ng-click="withPublic = false"><i class="icon icon-chevron-left"></i> Back</button>
-                <button id="share-film-public-done-cta" class="btn btn-primary pull-right" ng-click="$close()">Done</button>
+                <button id="share-film-public-done-cta" class="btn btn-primary pull-right" ng-click="$close()" ng-disabled="film.isSaving">Done</button>
             </div>
         </div>
 
