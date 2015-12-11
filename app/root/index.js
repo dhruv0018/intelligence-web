@@ -48,8 +48,8 @@ Root.controller('RootController', [
     '$scope',
     function controller($scope) {
         $scope.hideHeader = false;
-        $scope.$on('toggleHeaderDisplay', function(toggleHeaderDisplayEvent, indexingMode) {
-            $scope.hideHeader = indexingMode;
+        $scope.$on('toggleHeaderDisplay', function(toggleHeaderDisplayEvent, isSelfEditing) {
+            $scope.hideHeader = isSelfEditing;
         });
     }
 ]);

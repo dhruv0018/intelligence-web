@@ -1,5 +1,5 @@
 export default `
 
-    <self-editor indexing-mode="indexingMode" game="game"></self-editor>
+    <self-editor is-self-editing="isSelfEditing" game="game"></self-editor>
 
 `;

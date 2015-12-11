@@ -12,11 +12,11 @@ function GamesSelfEditorController (
     $stateParams,
     games
 ) {
-    $scope.indexingMode = false;
+    $scope.isSelfEditing = false;
     $scope.game = games.get($stateParams.id);
 
-    $scope.$watch('indexingMode', () => {
-        $scope.$emit('toggleHeaderDisplay', $scope.indexingMode);
+    $scope.$watch('isSelfEditing', () => {
+        $scope.$emit('toggleHeaderDisplay', $scope.isSelfEditing);
     });
 }
 
