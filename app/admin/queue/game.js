@@ -194,7 +194,7 @@ Game.controller('GameController', [
 
         $scope.users = users.getList();
 
-        var headCoachRole = $scope.team.getHeadCoachRole();
+        var headCoachRole = uploaderTeam.getHeadCoachRole();
 
         if (headCoachRole) {
 
