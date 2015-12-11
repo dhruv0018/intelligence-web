@@ -49,6 +49,12 @@ IntelligenceWebClient.factory('GamesResource', [
                 url: config.api.uri + base + '/actions/copy',
             },
 
+            getQueueDashboardCounts: {
+
+                method: 'GET',
+                url: config.api.uri + base + '/queued-games-count'
+            },
+
             retrieveArenaEvents: {
                 method: 'GET',
                 isArray: true,
