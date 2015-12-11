@@ -1,10 +1,10 @@
 <section class="user">
 
     <aside class="sidebar">
-        <div>
-            <div ng-show="user.id">Edit User</div>
-            <div ng-hide="user.id">New User</div>
-            <div ng-show="user.id">{{user.name}}</div>
+        <div class="information">
+            <div class="action" ng-show="user.id">Edit User</div>
+            <div class="action" ng-hide="user.id">New User</div>
+            <div class="name" ng-show="user.id">{{user.name}}</div>
         </div>
         <nav role="navigation">
 
