@@ -6,7 +6,12 @@
 
             <h2>Game Id <em>#{{ game.id }}</em></h2>
             <h1>{{ team.name }} vs {{ opposingTeam.name }}</h1>
-            <h3>{{ school.name }} {{ sport.name }}, <a data-ui-sref="user-info({ id: headCoach.id })">Coach {{ headCoach.lastName }}</a></h3>
+            <h3>
+                {{ school.name }} {{ sport.name }},
+                <a ng-show="headCoach" data-ui-sref="user-info({ id: headCoach.id })">Coach {{ headCoach.lastName }}</a>
+                <span ng-show="!headCoach">No Active Head Coach</span>
+            </h3>
+
 
         </header>
 
