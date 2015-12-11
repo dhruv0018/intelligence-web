@@ -90,7 +90,7 @@ function IndexerGameController(
         let previousAssignment = $scope.game.findLastIndexerAssignment();
         $scope.game.revert();
 
-        let remainingTime = $scope.game.getRemainingTime(teams.get($scope.game.uploaderTeamId));
+        let remainingTime = $scope.game.timeRemaining();
 
         //half of the remaining time
         let newDeadline = moment.utc().add(remainingTime / 2, 'milliseconds');

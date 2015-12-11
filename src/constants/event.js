@@ -49,6 +49,17 @@ const EVENT = {
             ENTER: 'ENTER_KEY_DOWN',
             ESC: 'ESC_KEY_DOWN'
         }
+    },
+
+    ADMIN: {
+
+        QUERY: {
+            COMPLETE: 'ADMIN_QUERY_COMPLETE'
+        },
+
+        GAME_COUNT: {
+            UPDATE: 'ADMIN_UPDATE_GAME_COUNT'
+        }
     }
 };
 
