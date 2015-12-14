@@ -1575,8 +1575,37 @@ describe('GamesFactory', function() {
                     }];
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
-                expect(game.shares).to.eql(expectedShares);
-                expect(game.sharedWithTeams).to.eql(expectedTeamShares);
+
+                expect(game.shares[0]).to.eql(expectedShares[0]);
+                Object.keys(expectedShares[1])
+                    .forEach(key => {
+
+                        if (key === 'createdAt') {
+
+                            expect(game.shares[1][key]).to.be.instanceof(Date);
+                        } else {
+
+                            expect(game.shares[1][key]).to.eql(expectedShares[1][key]);
+                        }
+                    });
+
+                Object.keys(expectedTeamShares)
+                    .forEach(key => {
+
+                        Object.keys(expectedTeamShares[key])
+                            .forEach(property => {
+
+                                if (property === 'createdAt') {
+
+                                    expect(game.sharedWithTeams[key][property])
+                                        .to.be.instanceof(Date);
+                                } else {
+
+                                    expect(game.sharedWithTeams[key][property])
+                                        .to.eql(expectedTeamShares[key][property]);
+                                }
+                            });
+                });
         }]));
 
         it("Should share with team, with telestration", inject(['GamesFactory', 'SessionService',
@@ -1607,8 +1636,39 @@ describe('GamesFactory', function() {
                     }];
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
-                expect(game.shares).to.eql(expectedShares);
-                expect(game.sharedWithTeams).to.eql(expectedTeamShares);
+
+                expect(game.shares[0]).to.eql(expectedShares[0]);
+                Object.keys(expectedShares[1])
+                    .forEach(key => {
+
+                        if (key === 'createdAt') {
+
+                            expect(game.shares[1][key])
+                                .to.be.instanceof(Date);
+                        } else {
+
+                            expect(game.shares[1][key])
+                                .to.eql(expectedShares[1][key]);
+                        }
+                    });
+
+                Object.keys(expectedTeamShares)
+                    .forEach(key => {
+
+                        Object.keys(expectedTeamShares[key])
+                            .forEach(property => {
+
+                                if (property === 'createdAt') {
+
+                                    expect(game.sharedWithTeams[key][property])
+                                        .to.be.instanceof(Date);
+                                } else {
+
+                                    expect(game.sharedWithTeams[key][property])
+                                        .to.eql(expectedTeamShares[key][property]);
+                                }
+                            });
+                });
         }]));
     });
 
