@@ -251,6 +251,9 @@ function GamesController(
     $scope.$on('toggleHeaderDisplay', function(toggleHeaderDisplayEvent, isSelfEditing) {
         $scope.hideHeader = isSelfEditing;
     });
+    $scope.$on('$stateChangeStart', function(event) {
+        $scope.hideHeader = false;
+    });
 
     // services
     $scope.auth = auth;
