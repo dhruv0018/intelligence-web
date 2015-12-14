@@ -1,4 +1,4 @@
-var PAGE_SIZE = 500;
+var PAGE_SIZE = 1000;
 
 var moment = require('moment');
 
@@ -37,7 +37,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 // copy share attributes that rely on game functions.
                 // TODO: This sharing copying should not have to be done. It should model reels implementation.
-
+                copy.shares = copy.getNonPublicShares();
                 if (copy.isSharedWithPublic()) {
                     copy.shares.push(copy.publicShare);
                 }
@@ -107,17 +107,16 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 if (game.shares && game.shares.length) {
-
-                    angular.forEach(game.shares, function(share, index) {
+                    game.shares.forEach(function(share, index) {
                         if (share.sharedWithUserId) {
                             game.sharedWithUsers[share.sharedWithUserId] = share;
                         } else if (share.sharedWithTeamId) {
                             game.sharedWithTeams[share.sharedWithTeamId] = share;
                         } else if (!share.sharedWithUserId && !share.sharedWithTeamId) {
                             game.publicShare = share;
-                            game.shares.splice(index, 1);
                         }
                     });
+                    game.shares = game.getNonPublicShares();
                 }
 
                 // Extend Telestration Entities
@@ -156,6 +155,17 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                     return game.uploaderTeamId == teamId;
                 });
+            },
+
+            /**
+             * @param {Object} now - moment time object
+             * @returns {Integer} diff - milliseconds
+             */
+            timeRemaining: function(now = moment.utc()) {
+
+                const deadline = this.deadline || this.submittedAt || this.createdAt;
+
+                return moment(deadline).diff(now);
             },
 
             getByUploaderRole: function(userId, teamId) {
@@ -222,7 +232,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     games = games.concat(this.getByUploaderUserId(userId));
 
                     user.roles.forEach(role => {
-                        if (role.type.id === ROLES.ATHLETE.type.id) {
+                        if ((role.type.id === ROLES.ATHLETE.type.id) && role.teamId) {
                             games = games.concat(this.getByUploaderTeamId(role.teamId));
                         }
                     });
@@ -1000,6 +1010,14 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return $q.when(dndReport.$generateDownAndDistanceReport({ id: report.gameId }));
             },
 
+            getQueueDashboardCounts: function() {
+
+                const model = $injector.get(this.model);
+                const query = model.getQueueDashboardCounts();
+
+                return query.$promise;
+            },
+
             /**
              * Retrieves the arena events for a game, and stores in game storage
              * @param {?game} game Defaults to the thisObject
@@ -1043,35 +1061,6 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return this.arenaEvents;
             },
 
-            getRemainingTime: function(uploaderTeam, now) {
-
-                var self = this;
-
-                now = now || moment.utc();
-
-                if (!self.submittedAt) return 0;
-
-                var submittedAt = moment.utc(self.submittedAt);
-
-                if (!submittedAt.isValid()) return 0;
-
-                var timePassed = moment.duration(submittedAt.diff(now));
-                var turnaroundTime = moment.duration(uploaderTeam.getMaxTurnaroundTime(), 'hours');
-
-                var timeRemaining = moment.duration();
-
-                if (timePassed < 0) {
-
-                    timeRemaining = turnaroundTime.add(timePassed);
-                }
-
-                else {
-
-                    timeRemaining = turnaroundTime.subtract(timePassed);
-                }
-
-                return timeRemaining.asMilliseconds();
-            },
             getDeadlineToReturnGame: function(uploaderTeam) {
 
                 if (!this.submittedAt) return 0;
@@ -1417,6 +1406,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                         teamId: session.getCurrentTeamId(),
                         gameId: self.id,
                         sharedWithUserId: null,
+                        sharedWithTeamId: null,
                         createdAt: moment.utc().toDate(),
                         isBreakdownShared: false,
                         isTelestrationsShared: isTelestrationsShared
@@ -1442,7 +1432,7 @@ IntelligenceWebClient.factory('GamesFactory', [
              * @return {boolean}
              */
             isPublicShare: function(share) {
-                return share === this.getPublicShare();
+                return !share.sharedWithUserId && !share.sharedWithTeamId;
             },
 
             isFeatureSharedPublicly: function(featureAttribute) {

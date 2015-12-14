@@ -259,6 +259,7 @@ module.exports = function(grunt) {
                     'build/components.css': [
                         'lib/features/**/*.less',
                         'lib/directives/admin-queue-games/*.less',
+                        'lib/directives/admin-queue-pagination/*.less',
                         'lib/directives/app-downloads/*.less',
                         'lib/directives/fields/indexer-fields/*.less',
                         'lib/directives/fields/user-fields/*.less',
