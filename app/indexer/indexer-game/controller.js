@@ -68,9 +68,9 @@ function IndexerGameController(
     $scope.team = teams.get($scope.game.teamId);
     $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
 
+    let uploaderTeam = teams.get($scope.game.uploaderTeamId);
     const league = leagues.get($scope.team.leagueId);
-    const headCoachRole = $scope.team.getHeadCoachRole();
-
+    const headCoachRole = uploaderTeam.getHeadCoachRole();
     const sport = sports.get(league.sportId);
     $scope.sport = sport;
     $scope.isBasketballGame = sport.id === SPORTS.BASKETBALL.id;
