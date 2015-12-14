@@ -51,11 +51,16 @@ function AdminQueueDataDependencies (
     AdminQueueDashboardService,
     games
 ) {
+    let filter = Object.assign({}, AdminQueueDashboardService.ALL_QUEUE_GAMES);
+    AdminGames.queryFilter = filter;
+    AdminGames.start = 0;
     var Data = {
+        games: AdminGames.query(),
         sports: sports.load(),
         leagues: leagues.load(),
         filterCounts: games.getQueueDashboardCounts()
     };
+
     return Data;
 }
 
@@ -181,7 +186,6 @@ function QueueController (
     $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
     $scope.GAME_TYPES = GAME_TYPES;
     $scope.SelectIndexerModal = SelectIndexerModal;
-
     $scope.data = data;
     $scope.dashboardFilterCounts = data.filterCounts;
     $scope.sports = sports.getCollection();
@@ -193,12 +197,8 @@ function QueueController (
     $scope.teamsList = teams.getList();
     $scope.usersList = users.getList();
     $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
-
-    let filter = Object.assign({}, AdminQueueDashboardService.ALL_QUEUE_GAMES);
-    AdminGames.queryFilter = filter;
-    AdminGames.start = 0;
-    AdminGames.query();
     $scope.AdminGames = AdminGames;
+    $scope.queue = data.games;
 
     $scope.emptyOutQueue = () => {
         $scope.queue = [];

@@ -89,6 +89,7 @@ function AdminGamesService(
         let teamIds = [];
         let teamIdPages = [];
         let userIdsFromGames = [];
+
         games.forEach(game => {
             teamIds = teamIds.concat(extractTeamIdsFromGame(game));
             userIdsFromGames = userIdsFromGames.concat(extractUserIdsFromGame(game));
@@ -131,28 +132,31 @@ function AdminGamesService(
         filter.count = COUNT_SIZE;
         let parsedFilter = cleanUpFilter(filter);
         isQuerying = true;
+
         let totalResultCount = gamesFactory.totalCount(parsedFilter).then(numberOfGames => {
             totalCount = numberOfGames || 0;
         });
 
-        let requestedGames = null;
-        if (parsedFilter['id[]']) {
-            requestedGames = gamesFactory.fetch(parsedFilter['id[]'], null, () => {
-                isQuerying = false;
-                AdminGamesEventEmitter.onQueryFinish(null, []);
-            });
-        } else {
-            requestedGames = gamesFactory.query(parsedFilter);
-        }
-        requestedGames.then(games => {
-            games = Array.isArray(games) ? games : [games];
-            return success(games).then(() => {
-                isQuerying = false;
-                AdminGamesEventEmitter.onQueryFinish(null, games);
+        return $q.all(totalResultCount).then( () => {
+            let requestedGames = null;
+            if (parsedFilter['id[]']) {
+                requestedGames = gamesFactory.fetch(parsedFilter['id[]'], null, () => {
+                    isQuerying = false;
+                    AdminGamesEventEmitter.onQueryFinish(null, []);
+                });
+            } else {
+                requestedGames = gamesFactory.query(parsedFilter);
+            }
+
+            return requestedGames.then(games => {
+                games = Array.isArray(games) ? games : [games];
+                return success(games).then(() => {
+                    isQuerying = false;
+                    AdminGamesEventEmitter.onQueryFinish(null, games);
+                    return games;
+                });
             });
         });
-
-        return $q.all([totalResultCount, requestedGames]);
     }
 
     return {
