@@ -30,7 +30,7 @@ IntelligenceWebClient.factory('LeaguesFactory', [
             },
 
             getCurrentSeason: function() {
-                let currentDate = moment(Date.now());
+                let currentDate = moment();
                 return this.seasons.find(season => {
                     if (currentDate.isAfter(moment(season.startDate)) && currentDate.isBefore(moment(season.endDate))) {
                         return season;

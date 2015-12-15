@@ -19,50 +19,51 @@ describe('LeaguesFactory', function() {
         expect(LeaguesFactory).to.respondTo('getCurrentSeason');
     }));
 
-    describe('getCurrentSeason', () => {
+});
 
-        let LeaguesFactory;
+describe('LeaguesFactory.getCurrentSeason', () => {
 
-        beforeEach(inject([
-            'LeaguesFactory',
-            function(_LeaugesFactory_) {
-                LeaguesFactory = _LeaugesFactory_;
-            }
-        ]));
+    let LeaguesFactory;
 
-        it('should return the current season of the league', function() {
-            let currentDate = Date.now();
-            let league = {
-                id: 1,
-                seasons: [
-                    {
-                        id: 1,
-                        startDate: currentDate - 100,
-                        endDate: currentDate + 100,
-                        leagueId: 1
-                    },
-                    {
-                        id: 2,
-                        startDate: currentDate - 200,
-                        endDate: currentDate - 100,
-                        leagueId: 1
-                    },
-                    {
-                        id: 3,
-                        startDate: currentDate - 300,
-                        endDate: currentDate - 200,
-                        leagueId: 1
-                    }
-                ]
-            }
+    beforeEach(inject([
+        'LeaguesFactory',
+        function(_LeaugesFactory_) {
+            LeaguesFactory = _LeaugesFactory_;
+        }
+    ]));
 
-            LeaguesFactory.extend(league);
-            let expectedSeasonId = league.seasons[0].id;
-            let season = league.getCurrentSeason();
-            expect(season).to.be.an('object');
-            expect(season.id).to.equal(expectedSeasonId);
-            expect(moment(currentDate).isAfter(moment(season.startDate))).to.be.true;
-            expect(moment(currentDate).isBefore(moment(season.endDate))).to.be.true;
-        });
+    it('should return the current season of the league', function() {
+        let currentDate = moment();
+        let league = {
+            id: 1,
+            seasons: [
+                {
+                    id: 1,
+                    startDate: currentDate - 3000,
+                    endDate: currentDate + 3000,
+                    leagueId: 1
+                },
+                {
+                    id: 2,
+                    startDate: currentDate - 4000,
+                    endDate: currentDate - 3000,
+                    leagueId: 1
+                },
+                {
+                    id: 3,
+                    startDate: currentDate - 5000,
+                    endDate: currentDate - 4000,
+                    leagueId: 1
+                }
+            ]
+        }
+
+        LeaguesFactory.extend(league);
+        let expectedSeasonId = league.seasons[0].id;
+        let season = league.getCurrentSeason();
+        expect(season).to.be.an('object');
+        expect(season.id).to.equal(expectedSeasonId);
+        expect(moment(currentDate).isAfter(moment(season.startDate))).to.be.true;
+        expect(moment(currentDate).isBefore(moment(season.endDate))).to.be.true;
     });
 });
