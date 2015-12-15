@@ -1533,8 +1533,6 @@ describe('GamesFactory', function() {
 
     describe('shareWithTeam', ()=> {
 
-
-
         it("Should throw error when there is no team", inject(['GamesFactory',
                                                                 function(GamesFactory) {
                 expect(()=>GamesFactory.shareWithTeam()).to.throw(Error);
