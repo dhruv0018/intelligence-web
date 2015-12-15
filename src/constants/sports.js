@@ -25,7 +25,7 @@ var SPORTS = {
         id: 3,
         name: 'Lacrosse',
         hasAnalytics: false,
-        hasStatistics: false
+        hasStatistics: true
     },
 
     VOLLEYBALL: {
