@@ -98,7 +98,7 @@ describe('BaseFactory.retrieve', () => {
             { id: 67890 }
         ]);
 
-        TeamsFactory.retrieve(queryParams)
+        let retrieve = TeamsFactory.retrieve(queryParams)
             .then(response => {
 
                 expect(response).to.be.an.array;
@@ -112,5 +112,7 @@ describe('BaseFactory.retrieve', () => {
             });
 
         $httpBackend.flush();
+
+        retrieve.should.be.fulfilled;
     });
 });
