@@ -1531,6 +1531,29 @@ describe('GamesFactory', function() {
     });
 
     describe('shareWithTeam', ()=> {
+
+        /* Make sure Date objects match; there may be a slight milliseconds
+         * difference when creating shares in the Game Factory and creating
+         * test data to test against. */
+
+        function normalizeCreatedAtTimes (collection) {
+
+            Object.keys(collection)
+                .forEach(key => {
+
+                    let share = collection[key];
+                    if (share.createdAt) {
+
+                        share.createdAt = moment.utc(share.createdAt)
+                            .milliseconds(0)
+                            .seconds(0)
+                            .toDate();
+                    }
+                });
+
+            return collection;
+        }
+
         it("Should throw error when there is no team", inject(['GamesFactory',
                                                                 function(GamesFactory) {
                 expect(()=>GamesFactory.shareWithTeam()).to.throw(Error);
@@ -1565,7 +1588,7 @@ describe('GamesFactory', function() {
                 sinon.stub(game,'isSharedWithTeam').returns(false);
                 game.shareWithTeam(team);
                 assert(game.isSharedWithTeam.should.have.been.called);
-                const expectedShares = [{sharedWithTeamId:2}, {
+                let expectedShares = [{sharedWithTeamId:2}, {
                         userId: session.currentUser.id,
                         gameId: game.id,
                         sharedWithTeamId: team.id,
@@ -1576,36 +1599,13 @@ describe('GamesFactory', function() {
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
 
-                expect(game.shares[0]).to.eql(expectedShares[0]);
-                Object.keys(expectedShares[1])
-                    .forEach(key => {
+                game.shares = normalizeCreatedAtTimes(game.shares);
+                expectedShares = normalizeCreatedAtTimes(expectedShares);
+                expect(game.shares).to.eql(expectedShares);
 
-                        if (key === 'createdAt') {
-
-                            expect(game.shares[1][key]).to.be.instanceof(Date);
-                        } else {
-
-                            expect(game.shares[1][key]).to.eql(expectedShares[1][key]);
-                        }
-                    });
-
-                Object.keys(expectedTeamShares)
-                    .forEach(key => {
-
-                        Object.keys(expectedTeamShares[key])
-                            .forEach(property => {
-
-                                if (property === 'createdAt') {
-
-                                    expect(game.sharedWithTeams[key][property])
-                                        .to.be.instanceof(Date);
-                                } else {
-
-                                    expect(game.sharedWithTeams[key][property])
-                                        .to.eql(expectedTeamShares[key][property]);
-                                }
-                            });
-                });
+                game.sharedWithTeams = normalizeCreatedAtTimes(game.sharedWithTeams);
+                expectedTeamShares = normalizeCreatedAtTimes(expectedTeamShares);
+                expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
 
         it("Should share with team, with telestration", inject(['GamesFactory', 'SessionService',
@@ -1626,7 +1626,7 @@ describe('GamesFactory', function() {
                 sinon.stub(game,'isSharedWithTeam').returns(false);
                 game.shareWithTeam(team, true);
                 assert(game.isSharedWithTeam.should.have.been.called);
-                const expectedShares = [{sharedWithTeamId:2}, {
+                let expectedShares = [{sharedWithTeamId:2}, {
                         userId: session.currentUser.id,
                         gameId: game.id,
                         sharedWithTeamId: team.id,
@@ -1637,38 +1637,13 @@ describe('GamesFactory', function() {
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
 
-                expect(game.shares[0]).to.eql(expectedShares[0]);
-                Object.keys(expectedShares[1])
-                    .forEach(key => {
+                game.shares = normalizeCreatedAtTimes(game.shares);
+                expectedShares = normalizeCreatedAtTimes(expectedShares);
+                expect(game.shares).to.eql(expectedShares);
 
-                        if (key === 'createdAt') {
-
-                            expect(game.shares[1][key])
-                                .to.be.instanceof(Date);
-                        } else {
-
-                            expect(game.shares[1][key])
-                                .to.eql(expectedShares[1][key]);
-                        }
-                    });
-
-                Object.keys(expectedTeamShares)
-                    .forEach(key => {
-
-                        Object.keys(expectedTeamShares[key])
-                            .forEach(property => {
-
-                                if (property === 'createdAt') {
-
-                                    expect(game.sharedWithTeams[key][property])
-                                        .to.be.instanceof(Date);
-                                } else {
-
-                                    expect(game.sharedWithTeams[key][property])
-                                        .to.eql(expectedTeamShares[key][property]);
-                                }
-                            });
-                });
+                game.sharedWithTeams = normalizeCreatedAtTimes(game.sharedWithTeams);
+                expectedTeamShares = normalizeCreatedAtTimes(expectedTeamShares);
+                expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
     });
 
