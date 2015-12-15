@@ -59,6 +59,10 @@ const EVENT = {
 
         GAME_COUNT: {
             UPDATE: 'ADMIN_UPDATE_GAME_COUNT'
+        },
+
+        DASHBOARD: {
+            RESET_FILTERS: 'RESET_ADMIN_DASHBOARD_FILTERS'
         }
     }
 };
