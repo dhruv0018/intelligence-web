@@ -101,7 +101,7 @@
             </div>
         	<div ng-show="film.getNonPublicShares().length" class="shared-with-table">
         		<div class="shared-with-header">Shared with:</div>
-        		<div class="shared-with" ng-repeat="share in film.getNonPublicShares()" ng-hide="!isGame && team.isMember(share.sharedWithUserId) && users.get(share.sharedWithUserId).is(ROLES.ATHLETE) && (!film.isPublicShare(share))">
+        		<div class="shared-with" ng-repeat="share in nonPublicShares" ng-hide="!isGame && team.isMember(share.sharedWithUserId) && users.get(share.sharedWithUserId).is(ROLES.ATHLETE) && (!film.isPublicShare(share))">
         			<strong ng-if="share.sharedWithUserId" ng-class="{'user-for-game': isGame}">{{usersMap[share.sharedWithUserId].firstName}} {{usersMap[share.sharedWithUserId].lastName}} </strong>
         			<strong ng-if="share.sharedWithTeamId" ng-class="{'user-for-game': isGame}">Coaching staff, {{teamsMap[share.sharedWithTeamId].name}}</strong>
                     <span class="pull-right">
