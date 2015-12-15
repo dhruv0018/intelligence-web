@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 /* Make sure Date objects match; there may be a slight milliseconds
- * difference when creating shares in the Game Factory and creating
+ * difference when creating Dates in testable code and creating
  * test data to test against. */
 
 function setSecondsToZero (dateObject) {
@@ -12,25 +12,21 @@ function setSecondsToZero (dateObject) {
         .toDate();
 }
 
-function normalizeTimes (collection, dateProperties) {
-
-    if (!Array.isArray(dateProperties)) {
-
-        dateProperties = [dateProperties];
-    }
+function normalizeTimes (collection) {
 
     Object.keys(collection)
         .forEach(key => {
 
-            let share = collection[key];
+            let item = collection[key];
 
-            dateProperties.forEach(property => {
+            Object.getOwnPropertyNames(item)
+                .forEach(property => {
 
-                if (share[property]) {
+                    if (item[property] instanceof Date) {
 
-                    share[property] = setSecondsToZero(share[property]);
-                }
-            });
+                        item[property] = setSecondsToZero(item[property]);
+                    }
+                });
         });
 
     return collection;

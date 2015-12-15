@@ -54,12 +54,12 @@ describe('ReelsFactory', function() {
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
 
-                reel.shares = normalizeTimes(reel.shares, 'createdAt');
-                expectedShares = normalizeTimes(expectedShares, 'createdAt');
+                reel.shares = normalizeTimes(reel.shares);
+                expectedShares = normalizeTimes(expectedShares);
                 expect(reel.shares).to.eql(expectedShares);
 
-                reel.sharedWithTeams = normalizeTimes(reel.sharedWithTeams, 'createdAt');
-                expectedTeamShares = normalizeTimes(expectedTeamShares, 'createdAt');
+                reel.sharedWithTeams = normalizeTimes(reel.sharedWithTeams);
+                expectedTeamShares = normalizeTimes(expectedTeamShares);
                 expect(reel.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
 
@@ -85,12 +85,12 @@ describe('ReelsFactory', function() {
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
 
-                reel.shares = normalizeTimes(reel.shares, 'createdAt');
-                expectedShares = normalizeTimes(expectedShares, 'createdAt');
+                reel.shares = normalizeTimes(reel.shares);
+                expectedShares = normalizeTimes(expectedShares);
                 expect(reel.shares).to.eql(expectedShares);
 
-                reel.sharedWithTeams = normalizeTimes(reel.sharedWithTeams, 'createdAt');
-                expectedTeamShares = normalizeTimes(expectedTeamShares, 'createdAt');
+                reel.sharedWithTeams = normalizeTimes(reel.sharedWithTeams);
+                expectedTeamShares = normalizeTimes(expectedTeamShares);
                 expect(reel.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
     });

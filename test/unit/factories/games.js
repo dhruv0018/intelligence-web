@@ -1578,12 +1578,12 @@ describe('GamesFactory', function() {
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
 
-                game.shares = normalizeTimes(game.shares, 'createdAt');
-                expectedShares = normalizeTimes(expectedShares, 'createdAt');
+                game.shares = normalizeTimes(game.shares);
+                expectedShares = normalizeTimes(expectedShares);
                 expect(game.shares).to.eql(expectedShares);
 
-                game.sharedWithTeams = normalizeTimes(game.sharedWithTeams, 'createdAt');
-                expectedTeamShares = normalizeTimes(expectedTeamShares, 'createdAt');
+                game.sharedWithTeams = normalizeTimes(game.sharedWithTeams);
+                expectedTeamShares = normalizeTimes(expectedTeamShares);
                 expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
 
@@ -1616,12 +1616,12 @@ describe('GamesFactory', function() {
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
 
-                game.shares = normalizeTimes(game.shares, 'createdAt');
-                expectedShares = normalizeTimes(expectedShares, 'createdAt');
+                game.shares = normalizeTimes(game.shares);
+                expectedShares = normalizeTimes(expectedShares);
                 expect(game.shares).to.eql(expectedShares);
 
-                game.sharedWithTeams = normalizeTimes(game.sharedWithTeams, 'createdAt');
-                expectedTeamShares = normalizeTimes(expectedTeamShares, 'createdAt');
+                game.sharedWithTeams = normalizeTimes(game.sharedWithTeams);
+                expectedTeamShares = normalizeTimes(expectedTeamShares);
                 expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
     });
