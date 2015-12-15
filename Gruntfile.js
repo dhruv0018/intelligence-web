@@ -649,7 +649,7 @@ module.exports = function(grunt) {
                 tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             unit: {
-                files: ['test/unit/**/*.js'],
+                files: ['test/unit/**/*.js', '!test/unit/helpers/**/*.js'],
                 tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'karma']
             },
             integration: {
