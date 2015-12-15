@@ -3,6 +3,7 @@ var expect = chai.expect;
 var should = chai.should();
 
 var moment = require('moment');
+import normalizeTimes from '../helpers/normalize-times.js';
 
 describe('GamesFactory', function() {
 
@@ -1532,27 +1533,7 @@ describe('GamesFactory', function() {
 
     describe('shareWithTeam', ()=> {
 
-        /* Make sure Date objects match; there may be a slight milliseconds
-         * difference when creating shares in the Game Factory and creating
-         * test data to test against. */
 
-        function normalizeCreatedAtTimes (collection) {
-
-            Object.keys(collection)
-                .forEach(key => {
-
-                    let share = collection[key];
-                    if (share.createdAt) {
-
-                        share.createdAt = moment.utc(share.createdAt)
-                            .milliseconds(0)
-                            .seconds(0)
-                            .toDate();
-                    }
-                });
-
-            return collection;
-        }
 
         it("Should throw error when there is no team", inject(['GamesFactory',
                                                                 function(GamesFactory) {
@@ -1599,12 +1580,12 @@ describe('GamesFactory', function() {
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
 
-                game.shares = normalizeCreatedAtTimes(game.shares);
-                expectedShares = normalizeCreatedAtTimes(expectedShares);
+                game.shares = normalizeTimes(game.shares, 'createdAt');
+                expectedShares = normalizeTimes(expectedShares, 'createdAt');
                 expect(game.shares).to.eql(expectedShares);
 
-                game.sharedWithTeams = normalizeCreatedAtTimes(game.sharedWithTeams);
-                expectedTeamShares = normalizeCreatedAtTimes(expectedTeamShares);
+                game.sharedWithTeams = normalizeTimes(game.sharedWithTeams, 'createdAt');
+                expectedTeamShares = normalizeTimes(expectedTeamShares, 'createdAt');
                 expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
 
@@ -1637,12 +1618,12 @@ describe('GamesFactory', function() {
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
 
-                game.shares = normalizeCreatedAtTimes(game.shares);
-                expectedShares = normalizeCreatedAtTimes(expectedShares);
+                game.shares = normalizeTimes(game.shares, 'createdAt');
+                expectedShares = normalizeTimes(expectedShares, 'createdAt');
                 expect(game.shares).to.eql(expectedShares);
 
-                game.sharedWithTeams = normalizeCreatedAtTimes(game.sharedWithTeams);
-                expectedTeamShares = normalizeCreatedAtTimes(expectedTeamShares);
+                game.sharedWithTeams = normalizeTimes(game.sharedWithTeams, 'createdAt');
+                expectedTeamShares = normalizeTimes(expectedTeamShares, 'createdAt');
                 expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
     });
