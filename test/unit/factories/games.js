@@ -1565,8 +1565,14 @@ describe('GamesFactory', function() {
                 sinon.stub(game,'isSharedWithTeam').returns(false);
                 game.shareWithTeam(team);
                 assert(game.isSharedWithTeam.should.have.been.called);
-                let expectedShares = initialShares;
-                expectedShares.push(newShare);
+                const expectedShares = [{sharedWithTeamId:2}, {
+                        userId: session.currentUser.id,
+                        gameId: game.id,
+                        sharedWithTeamId: team.id,
+                        createdAt: moment.utc().toDate(),
+                        isBreakdownShared: false,
+                        isTelestrationsShared: false
+                    }];
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
                 expect(game.shares).to.eql(expectedShares);
@@ -1591,8 +1597,14 @@ describe('GamesFactory', function() {
                 sinon.stub(game,'isSharedWithTeam').returns(false);
                 game.shareWithTeam(team, true);
                 assert(game.isSharedWithTeam.should.have.been.called);
-                let expectedShares = initialShares;
-                expectedShares.push(newShare);
+                const expectedShares = [{sharedWithTeamId:2}, {
+                        userId: session.currentUser.id,
+                        gameId: game.id,
+                        sharedWithTeamId: team.id,
+                        createdAt: moment.utc().toDate(),
+                        isBreakdownShared: false,
+                        isTelestrationsShared: true
+                    }];
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
                 expect(game.shares).to.eql(expectedShares);
@@ -1920,8 +1932,8 @@ describe('GamesFactory', function() {
 
     describe('getNonPublicShares', ()=> {
         it("Should return only non public shares", inject(['GamesFactory', function(GamesFactory) {
-                let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
-                expect(game.getNonPublicShares()).to.eql([{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}]);
+                let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2}, {id:3}, {id:4, sharedWithUserId:7}, {id:5}]});
+                expect(game.getNonPublicShares()).to.eql([{id:1, sharedWithTeamId:6}, {id:4, sharedWithUserId:7}]);
         }]));
     });
 
@@ -2109,6 +2121,24 @@ describe('GamesFactory', function() {
                 let expectedUrl = 'http://dummyurl/games/12/stats-csv?access_token=dummytoken';
                 expect(game.getCSVDownloadLink()).to.equal(expectedUrl);
                 assert(TokensService.getAccessToken.should.have.been.called);
+        }]));
+    });
+
+    describe('unextend', ()=> {
+        it("Should remove any duplicate public shares",
+            inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:2,
+                    shares:[{sharedWithTeamId:6, gameId:2, userId:2, isBreakdownShared:false},
+                        {sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false},
+                        {sharedWithUserId:7, gameId:2, userId:2, isBreakdownShared:false},
+                        {sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false}],
+                    video: null});
+                game.shares.push({sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false});
+                game.shares.push({sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false});
+                game = game.unextend();
+                expect(game.shares).to.eql([{sharedWithTeamId:6, gameId:2, userId:2, isBreakdownShared:false},
+                    {sharedWithUserId:7, gameId:2, userId:2, isBreakdownShared:false},
+                    {sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false}]);
         }]));
     });
 });
