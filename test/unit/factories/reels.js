@@ -323,8 +323,8 @@ describe('ReelsFactory', function() {
 
     describe('getNonPublicShares', ()=> {
         it("Should return only non public shares", inject(['ReelsFactory', function(ReelsFactory) {
-                let reel = ReelsFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
-                expect(reel.getNonPublicShares()).to.eql([{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}]);
+                let reel = ReelsFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2}, {id:3}, {id:4, sharedWithUserId:7}, {id:5}]});
+                expect(reel.getNonPublicShares()).to.eql([{id:1, sharedWithTeamId:6}, {id:4, sharedWithUserId:7}]);
         }]));
     });
 
@@ -601,5 +601,17 @@ describe('ReelsFactory', function() {
                     });
         }]));
 
+    });
+
+    describe('getPublicShare', ()=> {
+        it("should return the public share when exist", inject(['ReelsFactory', function(ReelsFactory) {
+                let reel = ReelsFactory.extend({id:2, shares:[{sharedWithTeamId:6}, {sharedWithUserId:7}, {sharedWithTeamId:null, sharedwithUserId:null}]});
+                expect(reel.getPublicShare()).to.eql({sharedWithTeamId:null, sharedwithUserId:null});
+        }]));
+
+        it("Should return undefined when public share doesnt exist", inject(['ReelsFactory', function(ReelsFactory) {
+                let reel = ReelsFactory.extend({id:2, shares:[{sharedWithTeamId:6}, {sharedWithUserId:7}]});
+                expect(reel.getPublicShare()).to.be.undefined;
+        }]));
     });
 });

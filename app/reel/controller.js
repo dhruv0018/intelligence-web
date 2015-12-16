@@ -158,13 +158,13 @@ function ReelController(
     }
     else if (isUploader) {
 
-        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
 
     }
     // Coaches on the same team as the uploader can edit
     else if (isTeamUploadersTeam && isCoach) {
 
-        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.VIEW;
+        $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.EDIT;
 
     } else if (isTelestrationsSharedWithCurrentUser || isTelestrationsSharedPublicly) {
 
