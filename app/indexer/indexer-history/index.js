@@ -3,11 +3,10 @@ const angular = window.angular;
 const IndexerHistory = angular.module('IndexerHistory', []);
 
 import IndexerDataDependencies from '../data';
-import IndexerGamesController from '../controller';
+import controller from './controller';
 import template from './template.html';
 
 IndexerHistory.factory('IndexerDataDependencies', IndexerDataDependencies);
-IndexerHistory.controller('IndexerGamesController', IndexerGamesController);
 
 IndexerHistory.config([
     '$stateProvider', '$urlRouterProvider',
@@ -21,7 +20,7 @@ IndexerHistory.config([
                 views: {
                     'main@root': {
                         template,
-                        controller: IndexerGamesController
+                        controller
                     }
                 },
                 resolve: {

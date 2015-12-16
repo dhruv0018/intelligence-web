@@ -78,6 +78,10 @@ GamesStats.controller('GamesStats.controller', [
         $scope.stats               = data.stats;
         $scope.game                = games.get(gameId);
         $scope.teams               = [teams.get($scope.game.teamId), teams.get($scope.game.opposingTeamId)];
+
+        const team = teams.get($scope.game.teamId);
+        $scope.sport = team.getSport();
+
     }
 ]);
 
