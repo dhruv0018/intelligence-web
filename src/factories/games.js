@@ -82,6 +82,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
                 game.primaryJerseyColor = game.primaryJerseyColor || '#FFFFFF';
                 game.opposingPrimaryJerseyColor = game.opposingPrimaryJerseyColor || '#000000';
+                game.secondaryJerseyColor = game.secondaryJerseyColor || '#000000';
+                game.opposingSecondaryJerseyColor = game.opposingSecondaryJerseyColor || '#FFFFFF';
 
                 //TODO remove when the back end makes notes always a object
                 if (angular.isArray(game.notes)) {
@@ -705,6 +707,19 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return ~index ? assignments[index] : undefined;
             },
 
+            getAssignmentsByUserId: function(userId) {
+                let assignments = [];
+                if (userId) {
+                    assignments = this.indexerAssignments.filter(assignment => assignment.userId === userId);
+                }
+                return assignments;
+            },
+
+            getInactiveAssignmentsByUserId: function(userId) {
+                let assignments = this.getAssignmentsByUserId(userId);
+                return assignments.filter(assignment => assignment.timeFinished);
+            },
+
             isAssignmentStarted: function(assignment) {
 
                 assignment = assignment || this.currentAssignment();
@@ -1137,6 +1152,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     case GAME_STATUSES.QAING.id:
                     case GAME_STATUSES.SET_ASIDE.id:
                     case GAME_STATUSES.INDEXED.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                         isBeingBrokenDown = true;
                         break;
                 }

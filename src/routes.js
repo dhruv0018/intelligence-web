@@ -31,6 +31,7 @@ IntelligenceWebClient.run([
     'AuthorizationService',
     'SessionService',
     'AlertsService',
+    'AnalyticsService',
     'AccountService',
     function run(
         $timeout,
@@ -48,6 +49,7 @@ IntelligenceWebClient.run([
         authz,
         session,
         alerts,
+        analytics,
         account
     ) {
 
@@ -129,6 +131,9 @@ IntelligenceWebClient.run([
 
             /* Clear any alerts. */
             alerts.clear();
+
+            /* Identify the user for analytics */
+            analytics.identify();
 
             /* Store previous state */
             $previousState = fromState;
