@@ -40,9 +40,11 @@ function TeamAnalyticsController(
         }
     };
 
+    //Current sport team is associated with
+    $scope.sport = team.getSport();
     // Reference to generateStats data response, to populate dynamic-tables
     $scope.stats = {};
-    // Available seaons for filters
+    // Available seasons for filters
     $scope.seasons = seasons;
     // Available game types for filters
     $scope.GAME_TYPES = GAME_TYPES;
