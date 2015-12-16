@@ -35,6 +35,7 @@ function PlayerAnalyticsController(
 
     $scope.currentUserIsAthlete = currentUser.is(ROLES.ATHLETE);
     $scope.team = team;
+    $scope.sport = team.getSport();
 
     const generateStats = function (selectedPlayer) {
         $scope.loadingTables = true;
@@ -108,6 +109,7 @@ function PlayerAnalyticsController(
 
     $scope.changeTeam = function changeTeam(newTeam) {
         // Get list of players for new team
+        $scope.sport = newTeam.getSport();
         $scope.players = players.getList({rosterId: newTeam.roster.id});
         generateStatsForAthlete();
     };
