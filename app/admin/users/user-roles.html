@@ -48,8 +48,10 @@
 
 </ul>
 <div class="roles-save">
-    <button class="btn btn-primary" id="save-user-role-updates-cta"
-    	data-ng-disabled="formUserInfo.$invalid" data-ng-click="save(user)">Save</button>
-
+    <krossover-admin-resource-save
+        button-id="save-user-role-updates-cta"
+        resource="user"
+        disabled="formUserInfo.$invalid">
+    </krossover-admin-resource-save>
     <a class="pull-right" id="cancel-user-role-updates-cta" href data-ui-sref="users">Cancel</a>
 </div>
