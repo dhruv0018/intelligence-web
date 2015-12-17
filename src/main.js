@@ -99,6 +99,7 @@ require('./constants/telestrations');
 require('./constants/feature-flags');
 require('./constants/cue-points');
 require('./constants/transcodeProfiles');
+require('./constants/self-editor');
 import { PRIORITIES_IDS, PRIORITIES } from './constants/priorities';
 import { LABELS_IDS, LABELS } from './constants/labels';
 import EMAILS from './constants/emails';

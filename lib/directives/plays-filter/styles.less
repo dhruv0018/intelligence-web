@@ -1,0 +1,31 @@
+@import (reference) "main.less";
+
+plays-filter {
+
+    display: block;
+    width: 160px;
+    border: thin solid rgb(217, 217, 216);
+    border-radius: 4px;
+    margin-bottom: 7px;
+    padding: 3px 20px;
+    background-color: rgb(235, 235, 235);
+
+    &:hover {
+
+        background-color: #d2d2d2;
+        border-color: #bbbbb9;
+    }
+
+    &.selected {
+
+        border-color: @brand-primary;
+        background-color: @brand-primary;
+        color: white;
+
+        &:hover {
+
+            @border-color: #C7300F;
+            @background-color: #D1330F;
+        }
+    }
+}

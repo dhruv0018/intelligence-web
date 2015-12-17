@@ -1,5 +1,5 @@
 export default `
 
-    <self-editor is-self-editing="isSelfEditing" game="game"></self-editor>
+    <self-editor hide-headers="hideHeaders" game="game"></self-editor>
 
 `;

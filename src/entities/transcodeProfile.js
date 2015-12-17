@@ -319,26 +319,14 @@ class TranscodeProfile extends Entity {
      * Getter for TranscodeProfile.resourceUrl
      * @method TranscodeProfile.resourceUrl
      * @readonly
-     * @returns {Object} resourceUrl Trusted Resource URL
+     * @returns {Object} resourceUrl
      */
     get resourceUrl() {
-
-        /**
-         * Angular Dependency Injector
-         * @const {Object} injector
-         */
-        const injector = window.angular.element(document).injector();
-
-        /**
-         * Angular Strict Contextual Escaping service
-         * @const {Object} $sce
-         */
-        const $sce = injector.get('$sce');
 
         return {
 
             type: 'video/mp4',
-            src: $sce.trustAsResourceUrl(this.url)
+            src: this.url
         };
     }
 }

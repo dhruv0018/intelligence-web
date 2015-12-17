@@ -229,7 +229,7 @@ function video(
          * Getter for Video.resourceUrls
          * @method Video.resourceUrls
          * @readonly
-         * @returns {Array} resourceUrls Array of trusted Resource URLs
+         * @returns {Array} resourceUrls Array of Resource URLs
          */
         get resourceUrls() {
 

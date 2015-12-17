@@ -8,11 +8,11 @@ const IntelligenceWebClient = angular.module(pkg.name);
 const CUEPOINT_CONSTANTS = {
     TYPES: {
         'TELESTRATION': 0,
-        'EVENT': 1
+        'SELF_EDITOR': 1
     },
     LABELS: [
         'TELESTRATION',
-        'EVENT'
+        'SELF_EDITOR'
     ],
     /*
      * NOTE: The max amount of time (in seconds) before a cuePoint's time is within range of being `hit`

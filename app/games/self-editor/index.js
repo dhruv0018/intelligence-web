@@ -20,6 +20,19 @@ GamesSelfEditor.config([
                     template,
                     controller: 'Games.SelfEditor.controller'
                 }
+            },
+            resolve: {
+                'Games.SelfEditor.Data': [
+                    '$stateParams', '$q', 'SelfEditedPlaysFactory',
+                    function($stateParams, $q, selfEditedPlays) {
+                        let gameId = Number($stateParams.id);
+                        let Data = {
+                            selfEditedPlays: selfEditedPlays.load({gameId})
+                        };
+
+                        return $q.all(Data);
+                    }
+                ]
             }
         };
 

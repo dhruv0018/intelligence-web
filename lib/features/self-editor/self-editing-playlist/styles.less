@@ -2,9 +2,75 @@
 
 self-editing-playlist {
 
+    font-weight: 500;
+
     .playlist-empty-state {
         font-weight: @headings-font-weight;
         font-size: @font-size-large;
         padding: 20px;
+        margin-top: 50px;
+        text-align: center;
+
+        .editor-empty-state {
+            text-align: left;
+        }
+    }
+
+    .playlist-tagging-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+        padding: 0 22px;
+        border-bottom: 1px solid @gray-border;
+
+        .select-all {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .playlist-item-container {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid @gray-border;
+        align-items: baseline;
+        min-height: 60px;
+        padding: 15px;
+    }
+
+    .playlist-item-content {
+        display: flex;
+        width: 100%;
+        align-items: center;
+    }
+
+    .playlist-item-index {
+        margin-right: 6px;
+    }
+
+    self-edited-play {
+        display: inline-flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .play-selected-for-editing {
+        background-color: @play-selected-bg;
+        border-top: 1px solid;
+        border-color: @brand-primary;
+    }
+
+    .play-disabled {
+        pointer-events: none;
+        opacity: .4;
+    }
+
+    check-box {
+        font-size: 20px;
+        margin-right: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 }

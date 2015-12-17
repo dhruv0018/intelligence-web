@@ -43,14 +43,15 @@ self-editor {
         padding: 0px 15px 15px;
 
         &.editing-mode {
-            padding: 0;
+            padding: 0 0 15px 0;
 
             .krossover-sidebar {
                 border-top: none;
             }
 
-            video-player {
+            .self-editing-video-container {
                 margin-top: 15px;
+                margin-right: 15px;
             }
         }
     }
@@ -60,14 +61,10 @@ self-editor {
         flex-direction: column;
         justify-content: space-around;
 
-        .breakdown-sidebar-empty-state {
-            padding: 20px;
-            font-size: @font-size-large;
-        }
-
         .breakdown-sidebar-footer {
             margin-top: auto;
             border-top: thin solid @gray-border;
+            min-height: 37px; // IMPORTANT: MUST HAVE MIN-HEIGHT TO DISPLAY PROPERLY AS A CHILD OF A COLUMN-BASED FLEX CONTAINER
 
             button {
                 width: 100%;
@@ -77,10 +74,26 @@ self-editor {
         }
     }
 
-    video-player {
+    self-editing-playlist {
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    .self-editing-video-container {
         margin: 0;
         margin-left: 15px;
-        margin-right: 15px;
-        width: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        video-player {
+            flex: 1;
+
+            .video-player {
+                justify-content: center;
+            }
+        }
     }
 }

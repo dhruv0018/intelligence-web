@@ -1,0 +1,80 @@
+@import (reference) "main.less";
+
+custom-tags-filter {
+
+    @spacing: 5px;
+    @icon-font-size: 12px;
+
+    display: flex;
+    position: relative;
+    margin-left: 20px;
+
+    summary {
+
+        .filter-count {
+            margin-right: @spacing;
+            color: black;
+        }
+
+        .dropdown-title {
+            color: @brand-primary;
+        }
+
+        .icon {
+            margin-left: @spacing;
+            font-size: @icon-font-size;
+        }
+    }
+
+    section {
+
+        position: absolute;
+        top: 25px;
+        left: 0;
+        padding: 25px;
+        border: thin solid rgba(0, 0, 0, 0.14902);
+        background-color: rgba(255, 255, 255, 0.952941);
+        overflow-y: auto;
+        max-height: 315px;
+    }
+
+    input {
+
+        width: 160px;
+        border: thin solid rgb(217, 217, 216);
+        border-radius: 4px;
+        margin-bottom: 7px;
+        padding: 3px 10px;
+    }
+
+    ul {
+
+        display: inline-flex;
+        list-style-type: none;
+        margin: 0 @spacing;
+        padding: 0;
+    }
+
+    li {
+
+        padding: 0px 10px;
+
+        &.selected-tag {
+
+            border: thin solid #D9D9D8;
+            border-radius: 4px;
+            margin: 0 @spacing;
+            background-color: @gray-lighter;
+
+            i {
+                font-size: @icon-font-size;
+                margin: 3px;
+            }
+        }
+
+        &.clear-tags {
+
+            color: @brand-primary;
+        }
+    }
+}

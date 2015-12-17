@@ -259,6 +259,9 @@ module.exports = function(grunt) {
                     'build/components.css': [
                         'lib/features/self-editor/*.less',
                         'lib/features/self-editor/self-editing-playlist/*.less',
+                        'lib/features/self-editor/self-editing-controls/*.less',
+                        'lib/features/self-editor/self-edited-play/*.less',
+                        'lib/features/self-editor/self-edited-play-footer/*.less',
                         'lib/directives/admin-queue-games/*.less',
                         'lib/directives/admin-queue-pagination/*.less',
                         'lib/directives/app-downloads/*.less',
@@ -281,6 +284,8 @@ module.exports = function(grunt) {
                         'lib/dialogs/breakdown-dialog/styles.less',
                         'lib/directives/field/**/*.less',
                         'lib/directives/admin-role/styles.less',
+                        'lib/directives/custom-tags-filter/*.less',
+                        'lib/directives/plays-filter/*.less',
                         'app/games/**/*.less',
                         'app/reel/*.less',
                         'app/embed/*.less',

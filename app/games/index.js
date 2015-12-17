@@ -107,6 +107,7 @@ Games.config([
                     'UsersFactory',
                     'LeaguesFactory',
                     'CustomtagsFactory',
+                    'TagsetsFactory',
                     'SessionService',
                     'AuthenticationService',
                     function(
@@ -119,6 +120,7 @@ Games.config([
                         users,
                         leagues,
                         customtags,
+                        tagsets,
                         session,
                         auth
                     ) {
@@ -135,7 +137,9 @@ Games.config([
 
                                 positionsets: positionsets.load(),
 
-                                reels: reels.load({ relatedUserId: currentUserId })
+                                reels: reels.load({ relatedUserId: currentUserId }),
+
+                                tagsets: tagsets.load()
                             };
 
                             //Load custom tags
@@ -189,7 +193,8 @@ GamesController.$inject = [
     'SPORTS',
     'SPORT_IDS',
     'ROLES',
-    'ROLE_TYPE'
+    'ROLE_TYPE',
+    'SELF_EDITOR_TEAM_ID_WHITELIST'
 ];
 
 function GamesController(
@@ -209,7 +214,8 @@ function GamesController(
     SPORTS,
     SPORT_IDS,
     ROLES,
-    ROLE_TYPE
+    ROLE_TYPE,
+    SELF_EDITOR_TEAM_ID_WHITELIST
 ) {
 
     let gameId = Number($stateParams.id);
@@ -230,6 +236,7 @@ function GamesController(
     let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
     let isDelivered = game.isDelivered();
     let isTeamUploadersTeam = false;
+    let currentTeamIsOnSelfEditorWhitelist = SELF_EDITOR_TEAM_ID_WHITELIST.some(whitelistId => team.id === whitelistId);
 
     if (isCoach) {
         isTeamUploadersTeam = game.isTeamUploadersTeam(session.getCurrentTeamId());
@@ -337,7 +344,7 @@ function GamesController(
         }
     }
 
-    if (isTeamUploadersTeam && isCoach && features.isEnabled('SelfEditor')) {
+    if (isTeamUploadersTeam && isCoach && features.isEnabled('SelfEditor') && currentTeamIsOnSelfEditorWhitelist) {
 
         // self editor
         $scope.gameStates.push({name: 'Games.SelfEditor'});

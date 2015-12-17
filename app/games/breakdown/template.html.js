@@ -4,10 +4,10 @@ export default `
 
         <div class="filter-container screen-lg-min">
 
-            <plays-filter
+            <plays-filters
                     data-game="game"
                     data-ng-model="filteredPlaysIds">
-            </plays-filter>
+            </plays-filters>
 
         </div>
 

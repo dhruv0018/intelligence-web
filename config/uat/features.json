@@ -41,7 +41,7 @@
     },
 
     "SelfEditor": {
-        "Head Coach": false,
-        "Assistant Coach": false
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }

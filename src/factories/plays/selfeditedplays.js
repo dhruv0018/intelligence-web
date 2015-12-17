@@ -29,6 +29,14 @@ IntelligenceWebClient.factory('SelfEditedPlaysFactory', [
 
             updateLocalResourceOnPUT,
 
+            setStartTime: function(startTime) {
+                this.startTime = startTime;
+            },
+
+            setEndTime: function(endTime) {
+                this.endTime = endTime;
+            }
+
         };
 
         angular.augment(SelfEditedPlaysFactory, PlaysFactory);

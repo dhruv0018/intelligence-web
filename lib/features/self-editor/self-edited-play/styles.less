@@ -1,0 +1,62 @@
+@import (reference) "main.less";
+
+self-edited-play {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.self-edited-play {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    i {
+        cursor: pointer;
+    }
+
+    :first-child, :last-child {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .state-actions,
+    .delete-confirmation-actions {
+        i,
+        .delete-cancel {
+            margin-right: 10px;
+            color: @brand-primary;
+        }
+
+        :last-child i {
+            margin-right: 0px;
+        }
+
+        i:hover,
+        .delete-cancel:hover {
+            color: @brand-secondary;
+        }
+
+    }
+
+    .watch-play {
+        display: inherit;
+        font-size: 22px;
+        margin-right: 4px;
+        color: @gray-light;
+
+        &:hover {
+            color: @brand-primary;
+        }
+
+        &.playing {
+            color: @brand-light-blue;
+        }
+    }
+
+    time {
+        color: black;
+    }
+}

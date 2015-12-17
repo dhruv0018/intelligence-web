@@ -1,5 +1,5 @@
 <header ui-view="header" ng-hide="hideHeader"></header>
 
-<main ui-view="main"></main>
+<main ui-view="main" ng-class="{'no-header': hideHeader}"></main>
 
 <loading></loading>
