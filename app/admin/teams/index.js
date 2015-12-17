@@ -416,7 +416,7 @@ function TeamController (
     $scope.rolesChanged = false;
 
     $scope.removeRole = (role) => {
-        $scope.team.removeRole(role);
+        role.tenureEnd = new Date();
         $scope.rolesChanged = true;
     };
 
