@@ -1,26 +1,21 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-var GamesInfo = angular.module('Games.Info', []);
+const GamesInfo = angular.module('Games.Info', []);
 
-GamesInfo.run([
-    '$templateCache',
-    function run($templateCache) {
-        $templateCache.put('games/game-info.html', require('./template.html'));
-    }
-]);
+import template from './template.html';
 
 GamesInfo.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var gameInfo = {
+        const gameInfo = {
             name: 'Games.Info',
             url: '/information?isHomeGame',
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'games/game-info.html',
+                    template,
                     controller: 'GamesInfo.controller'
                 }
             },
@@ -123,3 +118,5 @@ function GamesInfoController (
     $scope.teamPlayerList = ($scope.game.rosters && $scope.game.teamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.teamId].id }) : [];
     $scope.opposingPlayerList = ($scope.game.rosters && $scope.game.opposingTeamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.opposingTeamId].id }) : [];
 }
+
+export default GamesInfo;

@@ -1,14 +1,18 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
+/* Component dependencies */
+import GamesRawFilm from './raw-film/';
+import GamesBreakdown from './breakdown/';
+import GamesDownAndDistance from './down-and-distance';
+import GamesInfo from './game-info';
+import GamesStats from './stats';
+import GamesFormations from './formations';
+import GamesArenaChart from './arena-chart';
+import GamesSelfEditor from './self-editor';
 
-require('raw-film');
-require('breakdown');
-require('down-and-distance');
-require('game-info');
-require('stats');
-require('formations');
-require('arena-chart');
+import template from './template.html.js';
+import restricted from './restricted.html.js';
 
 /**
 * Coach game area raw film page module.
@@ -21,16 +25,8 @@ const Games = angular.module('Games', [
     'Games.Info',
     'Games.Stats',
     'Games.Formations',
-    'Games.ArenaChart'
-]);
-
-Games.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('games/template.html', require('./template.html'));
-        $templateCache.put('games/restricted.html', require('./restricted.html'));
-    }
+    'Games.ArenaChart',
+    'Games.SelfEditor'
 ]);
 
 Games.config([
@@ -56,7 +52,7 @@ Games.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: 'games/restricted.html'
+                    template: restricted
                 }
             }
         };
@@ -96,7 +92,7 @@ Games.config([
             ],
             views: {
                 'main@root': {
-                    templateUrl: 'games/template.html',
+                    template,
                     controller: 'Games.controller'
                 }
             },
@@ -192,7 +188,8 @@ GamesController.$inject = [
     'SessionService',
     'SPORTS',
     'SPORT_IDS',
-    'ROLES'
+    'ROLES',
+    'ROLE_TYPE'
 ];
 
 function GamesController(
@@ -211,7 +208,8 @@ function GamesController(
     session,
     SPORTS,
     SPORT_IDS,
-    ROLES
+    ROLES,
+    ROLE_TYPE
 ) {
 
     let gameId = Number($stateParams.id);
@@ -225,12 +223,20 @@ function GamesController(
     let uploader = users.get(game.uploaderUserId);
     let uploaderIsCoach = uploader.is(ROLES.COACH);
     let isUploader = game.isUploader(currentUser.id);
-    let isTeamUploadersTeam = game.isTeamUploadersTeam(currentUser.currentRole.teamId);
     let isCoach = currentUser.is(ROLES.COACH);
+    let isAthlete = currentUser.is(ROLES.ATHLETE);
     let isTelestrationsSharedWithCurrentUser = game.isTelestrationsSharedWithUser(currentUser);
     let isTelestrationsSharedPublicly = game.isTelestrationsSharedPublicly();
     let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
     let isDelivered = game.isDelivered();
+    let isTeamUploadersTeam = false;
+
+    if (isCoach) {
+        isTeamUploadersTeam = game.isTeamUploadersTeam(session.getCurrentTeamId());
+    } else if (isAthlete) {
+        let athleteRoles = currentUser.getRoles(ROLE_TYPE.ATHLETE);
+        isTeamUploadersTeam = athleteRoles.some(role => game.isTeamUploadersTeam(role.teamId));
+    }
 
     /* Scope */
 
@@ -317,6 +323,14 @@ function GamesController(
         }
     }
 
+    if (isTeamUploadersTeam && isCoach && features.isEnabled('SelfEditor')) {
+
+        // self editor
+        $scope.gameStates.push({name: 'Games.SelfEditor'});
+    }
+
 }
 
 Games.controller('Games.controller', GamesController);
+
+export default Games;

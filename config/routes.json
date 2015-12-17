@@ -538,6 +538,11 @@
         "Athlete": true
     },
 
+    "Games.SelfEditor": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "ShortGames": {
 
         "*": true
