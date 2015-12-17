@@ -452,7 +452,6 @@ function TeamController (
 
         if (teamId) {
             teams.fetch(teamId).then(team => {
-
                 angular.extend($scope.team, team);
                 $scope.team.members = data.members;
                 $scope.sportId = leagues.get(team.leagueId).sportId;
@@ -510,17 +509,24 @@ function TeamController (
         return firstName + ' ' + lastName + ' - ' + email;
     };
 
+    $scope.preSave = null;
     $scope.addHeadCoach = function(coach) {
 
         var newCoachRole = ROLES.HEAD_COACH;
         newCoachRole.userId = coach.id;
         newCoachRole.teamId = $scope.team.id;
         coach.addRole(newCoachRole, $scope.team);
-        coach.save();
+        coach.activateRole(newCoachRole);
         $scope.team.roles = $scope.team.roles || [];
         $scope.team.roles.push(newCoachRole);
         $scope.rolesChanged = true;
         $scope.addNewHeadCoach = false;
+        $scope.team.members[coach.id] = coach;
+        $scope.preSave = () => $scope.saveCoach(coach);
+    };
+
+    $scope.saveCoach = (coach) => {
+        return coach.save();
     };
 
 }
