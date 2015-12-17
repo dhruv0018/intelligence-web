@@ -30,7 +30,9 @@
         <tr class="member" data-ng-repeat="role in team.roles | filter:onlyCurrentRoles | orderBy:team.roles.type.name as filteredRoles">
 
             <td>{{role.type.name}}</td>
-            <td><a data-ui-sref="user-roles({ id: role.userId })">{{team.members[role.userId].firstName}} {{team.members[role.userId].lastName}}</a></td>
+            <td><a data-ui-sref="user-roles({ id: role.userId })">
+                {{team.members[role.userId].firstName}} {{team.members[role.userId].lastName}}
+            </a></td>
             <td><a href data-ng-click="removeRole(role)">remove</a></td>
 
         </tr>
@@ -59,6 +61,7 @@
 <krossover-admin-resource-save
     button-id="save-team-member-cta"
     disabled="form.$invalid || !rolesChanged"
+    pre-save="preSave"
     resource="team">
 </krossover-admin-resource-save>
 
