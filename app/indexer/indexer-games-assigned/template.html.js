@@ -41,6 +41,7 @@ export default `
                     <tr>
                         <th>Game ID</th>
                         <th>Game</th>
+                        <th>Indexer</th>
                         <th>Coach</th>
                         <th>Sport</th>
                         <th>Time Left</th>
@@ -74,6 +75,9 @@ export default `
                                 ng-if="teams[game.uploaderTeamId].label"
                                 label="LABELS[LABELS_IDS[teams[game.uploaderTeamId].label]]"
                             ></krossover-team-label-icon>
+                        </td>
+                        <td>
+                            {{users[game.lastIndexerAssignment().userId].name}}
                         </td>
                         <td>{{ game.getHeadCoachName() }}</td>
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
