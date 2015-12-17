@@ -44,7 +44,6 @@ export default `
                         <th>Coach</th>
                         <th>Sport</th>
                         <th>Time Left</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -79,16 +78,6 @@ export default `
                         <td>{{ game.getHeadCoachName() }}</td>
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                         <td>{{ game.assignmentTimeRemaining | millisecondsAsDaysHoursMinutes }}</td>
-                        <!--TODO: Make this into a directive-->
-                        <td>
-                            <span ng-if="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)">
-                                <span ng-hide="game.isAssignmentStarted()">Ready to Index </span>
-                                <span ng-show="game.isAssignmentStarted()">Indexing</span>
-                            </span>
-                            <span ng-if="game.canBeQAed() && game.isAssignedToQa() && game.isAssignedToUser(userId)">
-                                <span ng-hide="game.isAssignmentStarted()">Ready to QA </span>
-                                <span ng-show="game.isAssignmentStarted()">QAing</span>
-                            </span>
                         <td>
                             <button id="enter-indexing-cta" class="start-indexing" ng-show="game.isAssignedToIndexer() && game.canBeIndexed() && game.isAssignedToUser(userId)" ui-sref="indexing({ id: game.id })">
                                 <span ng-hide="game.isAssignmentStarted()">Start Indexing</span>
