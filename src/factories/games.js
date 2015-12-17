@@ -707,6 +707,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return ~index ? assignments[index] : undefined;
             },
 
+            lastIndexerAssignment: function() {
+                let indexerAssignments = this.indexerAssignments.filter(assignment => !assignment.isQa);
+                return indexerAssignments.pop();
+            },
+
             getAssignmentsByUserId: function(userId) {
                 let assignments = [];
                 if (userId) {
