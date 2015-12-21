@@ -6,11 +6,11 @@ const IntelligenceWebClient = angular.module(pkg.name);
 
 // IntelligenceWebClient.factory('QueueGamesService', $QueueGamesService);
 
-AdminGamesService.$inject = [
+IndexerGamesService.$inject = [
     'QueueGamesService'
 ];
 
-function AdminGamesService (
+function IndexerGamesService (
     QueueGamesService
 ) {
 
@@ -19,4 +19,4 @@ function AdminGamesService (
     return service;
 }
 
-IntelligenceWebClient.service('AdminGamesService', AdminGamesService);
+IntelligenceWebClient.service('IndexerGamesService', IndexerGamesService);
