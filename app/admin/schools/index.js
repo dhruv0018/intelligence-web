@@ -109,19 +109,13 @@ Schools.controller('SchoolController', [
             $scope.teams = teams.getList({ schoolId: schoolId });
         }
 
-        $scope.school = $scope.school || {};
+        $scope.school = $scope.school || schools.create();
         $scope.teams = $scope.teams || [];
 
         $scope.leagues = leagues;
 
         const teamLeagues = new Map($scope.teams.map(team => [team.id, leagues.get(team.leagueId)]));
         $scope.teamLeagues = teamLeagues;
-
-        $scope.save = function(school) {
-            schools.save(school).then(function() {
-                $state.go('schools');
-            });
-        };
     }
 ]);
 

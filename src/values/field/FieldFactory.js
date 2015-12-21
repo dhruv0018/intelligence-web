@@ -3,6 +3,7 @@ import GapField from './Gap';
 import PassingZoneField from './PassingZone';
 import FormationField from './Formation';
 import DropdownField from './Dropdown';
+import PeriodField from './Period';
 import TextField from './Text';
 import YardField from './Yard';
 import ArenaField from './Arena';
@@ -51,6 +52,8 @@ class FieldFactory {
             return new FormationField(rawField);
         case 'DROPDOWN':
             return new DropdownField(rawField);
+        case 'PERIOD':
+            return new PeriodField(rawField);
         // case 'TEXT':
         //     return new TextField(rawField);
         //todo tech debt

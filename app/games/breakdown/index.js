@@ -242,16 +242,15 @@ function GamesBreakdownController (
             $scope.telestrationsEntity = $scope.game.playTelestrations;
             $scope.currentPlayId = play.id;
 
-            /* Telestrations associated with plays */
-
-            $scope.plays.forEach((play) => {
-                play.hasTelestrations = $scope.game.playTelestrations.some((telestration) => play.id === telestration.playId && telestration.hasGlyphs());
-            });
-
-            // set initial cuepoints
+            // set initial cuepoints and modify play
             if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
                 $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints($scope.currentPlayId, play.startTime);
+
+                /* Telestrations associated with plays */
+                $scope.plays.forEach((play) => {
+                    play.hasTelestrations = $scope.game.playTelestrations.some((telestration) => play.id === telestration.playId && telestration.hasGlyphs());
+                });
             }
 
             /* TODO: Remove this sessionStorage once playIds

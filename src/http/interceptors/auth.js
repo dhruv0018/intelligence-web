@@ -31,6 +31,11 @@ IntelligenceWebClient.factory('Auth.Interceptor', [
                                     /* Refresh token. */
                                     return tokens.refreshToken().then(function() {
 
+                                        // reset Authorization header
+                                        if (response.config && response.config.headers) {
+                                            response.config.headers.Authorization = tokens.getAuthorization();
+                                        }
+
                                         /* Queue the original request to be re-requested. */
                                         return queue.enqueue(response);
                                     });

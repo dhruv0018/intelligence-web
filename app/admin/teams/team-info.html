@@ -101,6 +101,10 @@
 
 </form>
 
-<button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="save(team)">Save</button>
+<krossover-admin-resource-save
+    button-id="save-team-info-cta"
+    disabled="form.$invalid"
+    resource="team">
+</krossover-admin-resource-save>
 
 <a class="pull-right" href data-ui-sref="teams">Cancel</a>
