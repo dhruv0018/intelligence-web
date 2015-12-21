@@ -39,7 +39,9 @@
     <!-- Send to QA menu -->
     <menu class="send-to-qa" data-ng-if="game.status === GAME_STATUSES.INDEXING.id">
 
-        <li><button class="navbar-btn btn btn-blank" data-ng-click="sendToQa()">Send to QA</button></li>
+        <li>
+            <button class="navbar-btn btn btn-blank" data-ng-click="launchSendToQaModal()">Send to QA</button>
+        </li>
 
     </menu>
 

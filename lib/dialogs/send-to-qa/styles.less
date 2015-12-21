@@ -1,0 +1,29 @@
+@import (reference) "main.less";
+@import (reference) "modal.less";
+
+.send-to-qa {
+    font-size: @font-size-large;
+
+    .modal-title{
+        font-size: @font-size-large;
+    }
+
+    .modal-body{
+        display:flex;
+        flex-direction: column;
+    }
+
+    .cancel, .confirm {
+            margin-left: 5px;
+
+            .btn;
+            .btn-lg;
+            .btn-default;
+
+            &:focus,
+            &:hover {
+
+                .btn-primary;
+            }
+    }
+}

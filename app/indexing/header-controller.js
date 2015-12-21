@@ -20,6 +20,7 @@ Indexing.controller('Indexing.Header.Controller', [
     '$stateParams',
     '$modal',
     'GAME_STATUSES',
+    'SPORTS',
     'SessionService',
     'IndexingService',
     'Indexing.Sidebar',
@@ -30,6 +31,9 @@ Indexing.controller('Indexing.Header.Controller', [
     'PlaysManager',
     'PlaylistEventEmitter',
     'EVENT',
+    'SendToQaDialog.Service',
+    'AlertsService',
+    '$mdDialog',
     function controller(
         $window,
         $scope,
@@ -37,6 +41,7 @@ Indexing.controller('Indexing.Header.Controller', [
         $stateParams,
         $modal,
         GAME_STATUSES,
+        SPORTS,
         session,
         indexing,
         sidebar,
@@ -46,7 +51,10 @@ Indexing.controller('Indexing.Header.Controller', [
         games,
         playsManager,
         playlistEventEmitter,
-        EVENT
+        EVENT,
+        SendToQaDialogService,
+        alerts,
+        $mdDialog
     ) {
 
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -90,8 +98,36 @@ Indexing.controller('Indexing.Header.Controller', [
 
             indexing.isIndexing = false;
             $scope.game.finishAssignment(userId);
-            $scope.game.save();
-            $state.go('IndexerGamesAssigned');
+            const onSuccess = (game) => {
+                $scope.game.extend(game);
+                $mdDialog.hide();
+                $state.go('IndexerGamesAssigned').then( () => {
+                    alerts.add({
+                        type: 'success',
+                        message: 'Send to QA Successful'
+                    });
+                });
+            };
+
+            const onFailure = () => {
+                alerts.add({
+                    type: 'danger',
+                    message: 'Send to QA Unsuccessful'
+                });
+            };
+            return $scope.game.save(null, onSuccess, onFailure);
+        };
+
+        $scope.launchSendToQaModal = function() {
+            let isBasketballGame = $scope.league.sportId === SPORTS.BASKETBALL.id;
+            let isLacrosseGame = $scope.league.sportId === SPORTS.LACROSSE.id;
+            let locals = {
+                'sendToQa': $scope.sendToQa,
+                'flagsUrl': $scope.game.getFlagsUrl(),
+                //show the flags only for basketball
+                'showFlags': isBasketballGame || isLacrosseGame
+            };
+            let modal = SendToQaDialogService.show(locals);
         };
 
         $scope.sendToTeam = function() {
