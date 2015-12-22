@@ -67,6 +67,7 @@ import './services/performance-timer';
 require('./services/fileUpload/fileUploadService');
 require('./services/games-resolution/index');
 require('./services/admin-games');
+require('./services/indexer-games');
 
 require('./constants/users');
 require('./constants/games');
