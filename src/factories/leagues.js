@@ -31,11 +31,18 @@ IntelligenceWebClient.factory('LeaguesFactory', [
 
             getCurrentSeason: function() {
                 let currentDate = moment();
-                return this.seasons.find(season => {
+                let currentSeason = this.seasons.find(season => {
                     if (currentDate.isAfter(moment(season.startDate)) && currentDate.isBefore(moment(season.endDate))) {
                         return season;
                     }
                 });
+
+                if (currentSeason) {
+                    return currentSeason;
+                } else {
+                    let seasons = this.seasons.sort((a, b) => moment(b.startDate).diff(a.startDate));
+                    return seasons[0];
+                }
             },
 
             belongsToYardFormatWhitelist(league = this) {
