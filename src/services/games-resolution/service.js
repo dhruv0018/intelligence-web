@@ -1,7 +1,7 @@
 import AdminGamesEventEmitter from '../../emitters/admin-games';
 const angular = window.angular;
 
-$QueueGamesService.$inject = [
+$GamesResolutionService.$inject = [
     'GamesFactory',
     'TeamsFactory',
     'UsersFactory',
@@ -9,7 +9,7 @@ $QueueGamesService.$inject = [
     'VIEWS'
 ];
 
-function $QueueGamesService (
+function $GamesResolutionService (
     gamesFactory,
     teams,
     users,
@@ -181,4 +181,4 @@ function $QueueGamesService (
     };
 }
 
-export default $QueueGamesService;
+export default $GamesResolutionService;

@@ -2,6 +2,6 @@ const pkg = require('../../../package.json');
 const angular = window.angular;
 const IntelligenceWebClient = angular.module(pkg.name);
 
-import $QueueGamesService from './base-queue.js';
+import $GamesResolutionService from './service.js';
 
-IntelligenceWebClient.factory('QueueGamesService', $QueueGamesService);
+IntelligenceWebClient.factory('GamesResolutionService', $GamesResolutionService);

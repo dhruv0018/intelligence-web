@@ -3,14 +3,14 @@ const angular = window.angular;
 const IntelligenceWebClient = angular.module(pkg.name);
 
 IndexerGamesService.$inject = [
-    'QueueGamesService'
+    'GamesResolutionService'
 ];
 
 function IndexerGamesService (
-    QueueGamesService
+    GamesResolutionService
 ) {
 
-    const service = Object.create(QueueGamesService);
+    const service = Object.create(GamesResolutionService);
 
     return service;
 }
