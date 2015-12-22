@@ -66,6 +66,18 @@ describe('LeaguesFactory.getCurrentSeason', () => {
         expect(moment(currentDate).isAfter(moment(season.startDate))).to.be.true;
         expect(moment(currentDate).isBefore(moment(season.endDate))).to.be.true;
     });
+});
+
+describe('LeaguesFactory.getMostRecentSeason', () => {
+
+    let LeaguesFactory;
+
+    beforeEach(inject([
+        'LeaguesFactory',
+        function(_LeaugesFactory_) {
+            LeaguesFactory = _LeaugesFactory_;
+        }
+    ]));
 
     it('should return the most recent season if the league has no current season', function() {
         let currentDate = moment();
@@ -95,7 +107,7 @@ describe('LeaguesFactory.getCurrentSeason', () => {
 
         LeaguesFactory.extend(league);
         let expectedSeasonId = league.seasons[0].id;
-        let season = league.getCurrentSeason();
+        let season = league.getMostRecentSeason();
         expect(season).to.be.an('object');
         expect(season.id).to.equal(expectedSeasonId);
         expect(moment(currentDate).isAfter(moment(season.startDate))).to.be.true;
