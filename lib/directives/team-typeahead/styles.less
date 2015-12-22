@@ -1,9 +1,22 @@
 @import (reference) "main.less";
 
 .team-typeahead {
+    position: relative;
 
     ul {
         max-height: 292px;
         overflow-y: scroll;
+    }
+
+    .spinner {
+        position: absolute;
+        top: 7px;
+        right: 7px;
+        margin: 0;
+        color: @brand-secondary;
+    }
+
+    .no-results {
+        padding : 0;
     }
 }

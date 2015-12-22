@@ -42,7 +42,10 @@
 
     </div>
 
-    <button class="btn btn-primary" type="submit" data-ng-click="save(user)">Save</button>
+    <krossover-admin-resource-save
+        button-id="save-user-contact-info-cta"
+        resource="user">
+    </krossover-admin-resource-save>
 
     <button class="btn toggle-lock-user" type="button" data-ng-model="user.isLocked" data-ng-disabled="isLockDisabled()" data-btn-checkbox data-btn-checkbox-true="true" data-btn-checkbox-false="false">
         <i class="icon icon-lock" data-ng-show="!user.isLocked"></i>
