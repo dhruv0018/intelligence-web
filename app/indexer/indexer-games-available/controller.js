@@ -3,6 +3,9 @@ const angular = window.angular;
 const moment = require('moment');
 
 IndexerGamesController.$inject = [
+    'EVENT',
+    'GamesResolutionEventEmitter',
+    'IndexerGamesService',
     '$scope',
     '$state',
     '$interval',
@@ -23,6 +26,9 @@ IndexerGamesController.$inject = [
 ];
 
 function IndexerGamesController(
+    EVENT,
+    GamesResolutionEventEmitter,
+    IndexerGames,
     $scope,
     $state,
     $interval,
@@ -58,6 +64,20 @@ function IndexerGamesController(
     $scope.options = {scope: $scope};
 
     let now = moment.utc();
+
+    GamesResolutionEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, (event, games) =>  {
+
+        if (games.length === 0) {
+            $scope.emptyOutQueue();
+        } else {
+            $scope.games = games;
+        }
+    });
+
+    $scope.emptyOutQueue = () => {
+
+        $scope.games = [];
+    };
 
     $scope.getSportName = function(teamId) {
 
