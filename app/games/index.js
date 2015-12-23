@@ -298,6 +298,11 @@ function GamesController(
                     $scope.gameStates.push({name: 'Games.ArenaChart'});
                 }
                 break;
+            case SPORTS.LACROSSE.id:
+                if (features.isEnabled('ArenaChart')) {
+                    $scope.gameStates.push({name: 'Games.ArenaChart'});
+                }
+                break;
             case SPORTS.FOOTBALL.id:
                 if (isCoach) {
                     $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
