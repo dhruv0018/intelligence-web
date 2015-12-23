@@ -1,4 +1,4 @@
-import AdminGamesEventEmitter from '../../emitters/admin-games';
+import GamesResolutionEventEmitter from '../../emitters/admin-games';
 const angular = window.angular;
 
 $GamesResolutionService.$inject = [
@@ -135,7 +135,7 @@ function $GamesResolutionService (
         if (parsedFilter['id[]']) {
             requestedGames = gamesFactory.fetch(parsedFilter['id[]'], null, () => {
                 isQuerying = false;
-                AdminGamesEventEmitter.onQueryFinish(null, []);
+                GamesResolutionEventEmitter.onQueryFinish(null, []);
             });
         } else {
             requestedGames = gamesFactory.query(parsedFilter);
@@ -144,7 +144,7 @@ function $GamesResolutionService (
             games = Array.isArray(games) ? games : [games];
             return success(games).then(() => {
                 isQuerying = false;
-                AdminGamesEventEmitter.onQueryFinish(null, games);
+                GamesResolutionEventEmitter.onQueryFinish(null, games);
             });
         });
 
