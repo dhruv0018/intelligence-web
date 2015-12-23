@@ -149,7 +149,7 @@ QueueController.$inject = [
     'Utilities',
     'AdminGamesService',
     'AdminQueueDashboardService',
-    'AdminGamesEventEmitter',
+    'GamesResolutionEventEmitter',
     'EVENT',
     'VIDEO_STATUSES'
 ];
@@ -176,7 +176,7 @@ function QueueController (
     utilities,
     AdminGames,
     AdminQueueDashboardService,
-    AdminGamesEventEmitter,
+    GamesResolutionEventEmitter,
     EVENT,
     VIDEO_STATUSES
 ) {
@@ -213,7 +213,7 @@ function QueueController (
         $scope.searching = false;
     };
 
-    AdminGamesEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, (event, games) =>  {
+    GamesResolutionEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, (event, games) =>  {
         if (games.length === 0) {
             $scope.emptyOutQueue();
         } else {
