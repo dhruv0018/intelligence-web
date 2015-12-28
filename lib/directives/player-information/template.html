@@ -5,15 +5,15 @@
         <a href open-modal="BasicEditProfile.Modal" ng-if="!user.isAthleteRecruit()">Edit Profile</a>
     </div>
     <hr>
-    <div class="wsc-link-container" ng-show="teams.length" feature="WSCLink">
+    <div class="wsc-link-container" ng-if="seasonId && teams.length" feature="WSCLink">
         <h3 class="wsc-highlight-title">New Premium Highlights</h3>
         <span class="wsc-highlight-info">
             We customize your best basketball clips from this season.
         </span>
     </div>
-    <select class="form-control" ng-show="teams.length > 1" feature="WSCLink" ng-options="team as team.name for team in teams" ng-model="team"></select>
-    <wsc-link season-id="seasonId" teams="[team]" feature="WSCLink" ng-show="teams.length"></wsc-link>
-    <hr feature="WSCLink" ng-show="teams.length">
+    <select class="form-control" ng-if="seasonId && teams.length > 1" feature="WSCLink" ng-options="team as team.name for team in teams" ng-model="team"></select>
+    <wsc-link season-id="seasonId" teams="[team]" feature="WSCLink" ng-if="seasonId && teams.length"></wsc-link>
+    <hr feature="WSCLink" ng-if="seasonId && teams.length">
     <div class="player-roles-info" ng-repeat="roleInfo in rolesInfo">
         <sport-placeholder sport="roleInfo.sport"></sport-placeholder>
         <div class="player-info-text">
