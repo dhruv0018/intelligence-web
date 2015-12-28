@@ -61,7 +61,7 @@ FilmHome.controller('Coach.FilmHome.controller', [
         //league related
         let league = leagues.get($scope.team.leagueId);
         let season = league.getCurrentSeason() || league.getMostRecentSeason();
-        $scope.seasonId = season.id;
+        if (season) $scope.seasonId = season.id;
 
         // Sport related
         let sport = $scope.team.getSport();
