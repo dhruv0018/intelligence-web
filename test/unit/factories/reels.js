@@ -4,6 +4,7 @@ var expect = chai.expect;
 var should = chai.should();
 
 var moment = require('moment');
+import normalizeTimes from '../helpers/normalize-times.js';
 
 describe('ReelsFactory', function() {
 
@@ -52,7 +53,13 @@ describe('ReelsFactory', function() {
                 expectedShares.push(newShare);
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
+
+                reel.shares = normalizeTimes(reel.shares);
+                expectedShares = normalizeTimes(expectedShares);
                 expect(reel.shares).to.eql(expectedShares);
+
+                reel.sharedWithTeams = normalizeTimes(reel.sharedWithTeams);
+                expectedTeamShares = normalizeTimes(expectedTeamShares);
                 expect(reel.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
 
@@ -77,7 +84,13 @@ describe('ReelsFactory', function() {
                 expectedShares.push(newShare);
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
+
+                reel.shares = normalizeTimes(reel.shares);
+                expectedShares = normalizeTimes(expectedShares);
                 expect(reel.shares).to.eql(expectedShares);
+
+                reel.sharedWithTeams = normalizeTimes(reel.sharedWithTeams);
+                expectedTeamShares = normalizeTimes(expectedTeamShares);
                 expect(reel.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
     });
