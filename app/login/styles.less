@@ -18,50 +18,12 @@
         });
     }
 
-    .mobile-login-info {
-
-        display: none;
-
-        .phone({
-
-            display: block;
-            border-top: 1px solid @gray-lighter;
-            padding-top: 20px;
-            text-align: center;
-            font-weight: 500;
-            line-height: @line-height-base;
-        });
-    }
-
     position: relative;
     color: @brand-blue;
     letter-spacing: normal;
     display: block;
     overflow-y: auto;
     height: 100%;
-
-    .phone({
-
-        height: auto;
-    });
-
-    .icon-krossover-logo {
-
-        .full-page-icon-krossover-logo;
-    }
-
-    .login-container {
-        margin: auto;
-        display: table;
-    }
-
-    h1 {
-        margin-top: 5px;
-        margin-bottom: 20px;
-        font-weight: 500;
-        font-size: 28px;
-        text-transform: uppercase;
-    }
 
     .form-field-login {
 
@@ -90,35 +52,37 @@
         }
     }
 
-    .new-login {
+    .phone({
 
-        width: 50%;
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
-        padding-right: 50px;
-        border-right: thin solid @gray-border;
+        height: auto;
+    });
 
-        &.new-user {
+    .icon-krossover-logo {
 
-            padding-right: 0;
-            border-right: none;
-        }
+        .full-page-icon-krossover-logo;
     }
 
-    .icon-row > .icon {
-        font-size: 50px;
-        margin-right: 10px;
-        margin-left: 10px;
+    .login-container {
+        margin: auto;
+        display: table;
     }
 
-    .oldLogin {
+    h1 {
+        margin-top: 5px;
+        margin-bottom: 20px;
+        font-weight: 500;
+        font-size: 28px;
+        text-transform: uppercase;
+    }
 
-        width: 50%;
-        display: table-cell;
-        padding-top: 30px;
-        padding-left: 50px;
+    .v2-login {
+        width: 100%;
+    }
+
+    .v1-login {
         text-align: center;
+        margin-top: 75px;
+        font-weight: 400;
     }
 
     .temp-warning {
@@ -149,10 +113,6 @@ and (max-width: @screen-md) {
         h1 {
             font-size: 22px;
         }
-
-        .icon-row > .icon {
-            font-size: 40px;
-        }
     }
 }
 
@@ -161,10 +121,6 @@ and (max-width: @screen-sm) {
     .login {
         h1 {
             font-size: 16px;
-        }
-
-        .icon-row > .icon {
-            font-size: 30px;
         }
 
         .password-reset,
@@ -188,41 +144,8 @@ and (max-width: @screen-xs) {
             display: block;
         }
 
-        .new-login {
-
-            padding: 0;
-            border: none;
-
-            .form-field-login {
-
-                width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
-            }
-        }
-
         h1 {
             font-size: 20px;
-        }
-
-        .oldLogin {
-
-            padding: 20px;
-            display: block;
-            width: 100%;
-
-            .form-field-login {
-
-                width: ~"calc( 100% - 20px - 20px - 3px - 3px )";
-            }
-
-            .button-signin {
-
-                width: 100%;
-            }
-
-            .password-reset {
-
-                .text-center;
-            }
         }
     }
 }
