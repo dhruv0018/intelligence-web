@@ -1,16 +1,11 @@
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var GamesDownAndDistance = angular.module('Games.DownAndDistance', [
+const GamesDownAndDistance = angular.module('Games.DownAndDistance', [
     'am.multiselect'
 ]);
 
-GamesDownAndDistance.run([
-    '$templateCache',
-    function run($templateCache) {
-        $templateCache.put('games/downDistance.html', require('./template.html'));
-    }
-]);
+import template from './template.html';
 
 GamesDownAndDistance.config([
     '$stateProvider', '$urlRouterProvider',
@@ -22,7 +17,7 @@ GamesDownAndDistance.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    templateUrl: 'games/downDistance.html',
+                    template,
                     controller: 'GamesDownAndDistance.controller'
                 }
             },
@@ -263,3 +258,5 @@ GamesDownAndDistance.controller('GamesDownAndDistance.controller', [
         $scope.arenaType = ARENA_TYPES[league.arenaId].type;
     }
 ]);
+
+export default GamesDownAndDistance;

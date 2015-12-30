@@ -121,12 +121,6 @@ function ReelController(
         });
     });
 
-    /* Telestrations associated with plays */
-
-    $scope.plays.forEach((play) => {
-        play.hasTelestrations = reel.telestrations.some((telestration) => play.id === telestration.playId && telestration.hasGlyphs());
-    });
-
     /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
     // Editing config
 
@@ -175,10 +169,15 @@ function ReelController(
         $scope.telestrationsPermissions = TELESTRATION_PERMISSIONS.NO_ACCESS;
     }
 
-    // set initial cuepoints
+    // set initial cuepoints and modify play
     if ($scope.telestrationsPermissions !== TELESTRATION_PERMISSIONS.NO_ACCESS) {
 
         $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
+
+        /* Telestrations associated with plays */
+        $scope.plays.forEach((play) => {
+            play.hasTelestrations = reel.telestrations.some((telestration) => play.id === telestration.playId && telestration.hasGlyphs());
+        });
     }
 
 
@@ -258,7 +257,7 @@ function ReelController(
             callbackFn = callbackFn || angular.noop;
 
             // Save Game
-            $scope.reel.save().then(function onSaved() {
+            $scope.reel.save(null, null, null, true).then(function onSaved() {
                 callbackFn();
             });
         });

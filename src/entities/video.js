@@ -162,11 +162,24 @@ function video(
          */
         toJSON () {
 
-            let copy = Object.assign({}, this);
+            /* TODO: Construct this from the JSON schema. Currently, the schemas
+             * is not up to date. The challenge here is to figure out a way to do it
+             * when certain properties (like `videoTranscodeProfiles`) are not named
+             * the same in the schema as they are in the entity instance. */
+            let copy = {
 
-            if (copy.transcodeProfiles) {
+                id: this.id,
+                guid: this.guid,
+                status: this.status,
+                videoTranscodeProfiles: this.transcodeProfiles,
+                duration: this.duration,
+                thumbnail: this.thumbnail
+            };
 
-                copy.videoTranscodeProfiles = copy.videoTranscodeProfiles.map(transcodeProfile => JSON.stringify(transcodeProfile));
+            if (copy.videoTranscodeProfiles) {
+
+                copy.videoTranscodeProfiles = copy.videoTranscodeProfiles
+                    .map(transcodeProfile => transcodeProfile.toJSON());
             }
 
             return copy;

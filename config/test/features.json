@@ -26,5 +26,16 @@
     "TeamAnalytics": {
 
         "*": true
+    },
+
+    "WSCLink": {
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
+    },
+
+    "SelfEditor": {
+        "Head Coach": true,
+        "Assistant Coach": true
     }
 }

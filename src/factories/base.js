@@ -14,8 +14,18 @@ var IntelligenceWebClient = angular.module(pkg.name);
  * @type {factory}
  */
 IntelligenceWebClient.factory('BaseFactory', [
-    '$q', '$injector', 'Utilities',
-    function($q, $injector, util) {
+    '$q',
+    '$injector',
+    'Utilities',
+    '$http',
+    'config',
+    function(
+        $q,
+        $injector,
+        util,
+        http,
+        config)
+    {
 
         var BaseFactory = {
 
@@ -67,6 +77,46 @@ IntelligenceWebClient.factory('BaseFactory', [
                 var storage = $injector.get(self.storage);
 
                 return storage.get(id);
+            },
+
+            /**
+             * Gets count
+             * @param {Object} query - a query configuration object
+             * @returns {Object} - a promise containing total count
+             */
+            totalCount: function(query) {
+                //to turn JS object into query string
+                //adapted from http://stackoverflow.com/questions/1714786/querystring-encoding-of-a-javascript-object
+                //in the absence of https://docs.angularjs.org/api/ng/service/$httpParamSerializer (v1.4)
+                let serialize = function(obj, prefix) {
+                    var str = [];
+                    for(var p in obj) {
+                        if (obj.hasOwnProperty(p)) {
+                            var k = prefix ? prefix: p, v = obj[p];
+                            str.push(typeof v == 'object' ?
+                            serialize(v, k) :
+                            encodeURIComponent(k) + '=' + encodeURIComponent(v));
+                        }
+                    }
+                    return str.join('&');
+                };
+
+                //if no x-total-count is available, assume this number of total records
+                const RESOURCE_COUNT_FALLBACK = 12000;
+
+                let serializedQuery = serialize(query);
+                let headRequest = `${config.api.uri}${this.description}`;
+                if (Object.keys(query).length > 0) {
+                    headRequest = `${headRequest}?${serializedQuery}`;
+                }
+
+                //get a header for the number of records related to that query
+                return http.head(headRequest).then(response => {
+                    let headers = response.headers();
+                    const TOTAL_RECORD_COUNT = headers['X-total-count']|| headers['x-total-count'] || RESOURCE_COUNT_FALLBACK;
+                    return Number(TOTAL_RECORD_COUNT);
+                });
+
             },
 
             /**
@@ -272,7 +322,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else return angular.isUndefined(filter[key]);
                 });
 
-                if (aFilterIsUndefined) throw new Error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
+                if (aFilterIsUndefined) console.error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
 
                 success = success || function(resources) {
 
@@ -365,7 +415,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else return angular.isUndefined(filter[key]);
                 });
 
-                if (aFilterIsUndefined) throw new Error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
+                if (aFilterIsUndefined) console.error('Undefined filter in ' + self.description + ' ' + JSON.stringify(filter));
 
                 success = success || function(resources) {
 
@@ -574,15 +624,28 @@ IntelligenceWebClient.factory('BaseFactory', [
             },
 
             /**
-             * Saves a resources to the server.
+             * @class BaseFactory
+             * @method save
+             * @description Saves a resources to the server if it doesn't get debounced
              * @param {Resource} resource - a resource.
              * @param {Function} success - called upon success.
              * @param {Function} error - called on error.
+             * @param {=boolean} debounce - debounce by default
              * @return {Promise.<Resource>} - a promise of a resources.
              */
-            save: function(resource, success, error) {
+            save: function(resource, success, error, debounce = false) {
+
+                let baseSave = this.baseSave.bind(this);
+
+                if (debounce) {
+
+                    this.debouncedBaseSave = this.debouncedBaseSave || util.promiseDebounce.call(this, baseSave);
+
+                    baseSave = this.debouncedBaseSave;
+                }
+
                 //TODO: find a less hacky way to do this
-                return this.baseSave(resource, success, error);
+                return baseSave(resource, success, error);
             },
             baseSave: function(resource, success, error) {
 
@@ -619,7 +682,12 @@ IntelligenceWebClient.factory('BaseFactory', [
                     /* Once the update request finishes. */
                     return update.$promise
 
-                    .then(function() {
+                    .then(function(updated) {
+
+                        if (resource.updateLocalResourceOnPUT) {
+                            /* Update local resource with server resource. */
+                            angular.extend(resource, self.extend(updated));
+                        }
 
                         delete resource.error;
 
