@@ -34,6 +34,12 @@
         "Athlete": true
     },
 
+    "WSCLink": {
+        "Head Coach": false,
+        "Assistant Coach": false,
+        "Athlete": false
+    },
+
     "SelfEditor": {
         "Head Coach": false,
         "Assistant Coach": false
