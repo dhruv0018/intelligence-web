@@ -61,3 +61,58 @@ describe('BaseFactory', function() {
     });
 
 });
+
+describe('BaseFactory.retrieve', () => {
+
+    let $httpBackend;
+    let TeamsFactory;
+    let config;
+    let teamRetrieve;
+    let teamsGETURL;
+    const queryParams = {
+        'id[]': [12345, 67890]
+    };
+
+    beforeEach(angular.mock.module('intelligence-web-client'));
+
+    beforeEach(inject(function ($injector) {
+
+        $httpBackend = $injector.get('$httpBackend');
+        TeamsFactory = $injector.get('TeamsFactory');
+        config = $injector.get('config');
+        teamsGETURL = `${config.api.uri}teams?id%5B%5D=12345&id%5B%5D=67890`;
+
+        teamRetrieve = $httpBackend.when('GET', teamsGETURL);
+    }));
+
+    afterEach(function () {
+
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it(`should return a promise`, done => {
+
+        teamRetrieve.respond([
+            { id: 12345 },
+            { id: 67890 }
+        ]);
+
+        let retrieve = TeamsFactory.retrieve(queryParams)
+            .then(response => {
+
+                expect(response).to.be.an.array;
+                expect(response).to.have.length(2);
+                expect(response[0]).to.have.property('id');
+                expect(response[0].id).to.equal(12345);
+                expect(response[1]).to.have.property('id');
+                expect(response[1].id).to.equal(67890);
+
+                done();
+            });
+
+        $httpBackend.flush();
+
+        retrieve.should.be.fulfilled;
+    });
+});
