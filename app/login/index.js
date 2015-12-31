@@ -318,7 +318,7 @@ function LoginController(
 ) {
 
     $scope.config = config;
-    $scope.isMobile = $rootScope.DEVICE.ANDROID || $rootScope.DEVICE.IOS;
+    $scope.isMobile = ($rootScope.DEVICE.ANDROID || $rootScope.DEVICE.IOS) && $rootScope.viewport.name == 'Mobile';
 
     let currentUser = session.retrieveCurrentUser();
 
