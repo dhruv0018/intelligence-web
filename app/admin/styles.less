@@ -1,0 +1,15 @@
+@import (reference) "main.less";
+
+.form-info.required-legend:before {
+    content: "Required *";
+    color: red;
+    float: right;
+}
+
+.form-group {
+    .required:after {
+        content: "*";
+        color: red;
+        padding-left:1%;
+    }
+}
