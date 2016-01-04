@@ -83,6 +83,7 @@ function IndexerGameController(
 
     $scope.sport = sport;
     $scope.isBasketballGame = sport.id === SPORTS.BASKETBALL.id;
+    $scope.isLaxGame = sport.id === SPORTS.LACROSSE.id;
 
     if ($scope.team.schoolId) {
         $scope.school = schools.get($scope.team.schoolId);

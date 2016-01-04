@@ -173,7 +173,7 @@ export default `
 
                 <li
                     feature="IndexerFlags"
-                    ng-if="isBasketballGame"
+                    ng-if="isBasketballGame || isLaxGame"
                 >
                     <i class="icon icon-flag"></i>
                     <a
