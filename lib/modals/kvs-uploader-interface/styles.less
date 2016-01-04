@@ -1,12 +1,12 @@
 @import (reference) "main.less";
 
 // Add variable to allow modal to scroll after certain height
-@maxHeightModalScroll: 210px;
+@maxHeightModalScroll: calc(100vh ~"-" 210px);
 
 .kvs-uploader-interface {
 
     .modal-body {
-        max-height: calc(100vh ~"-" @maxHeightModalScroll);
+        max-height: @maxHeightModalScroll;
         overflow-y: auto;
         overflow-x: hidden;
 
