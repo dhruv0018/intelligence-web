@@ -22,7 +22,6 @@ Users.run([
         $templateCache.put('users/user.html', require('./user.html'));
         $templateCache.put('users/user-info.html', require('./user-info.html'));
         $templateCache.put('users/user-roles.html', require('./user-roles.html'));
-        $templateCache.put('users/adduser.html', require('./adduser.html'));
         $templateCache.put('users/newrole.html', require('./newrole.html'));
     }
 ]);
@@ -51,7 +50,6 @@ require('./states');
 require('./filters');
 require('./directives');
 require('./user-controller');
-require('./new-user-controller');
 require('./user-info-controller');
 require('./user-roles-controller');
 require('./users-controller');

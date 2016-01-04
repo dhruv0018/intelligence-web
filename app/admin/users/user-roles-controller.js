@@ -16,6 +16,7 @@ var Users = angular.module('Users');
 Users.controller('Users.User.Roles.Controller', [
     '$scope', 'ROLES', 'UsersFactory',
     function controller($scope, ROLES, users) {
+        $scope.rolesChanged = false;
 
         $scope.addNewRole = function(newRole) {
             if (!newRole) return;
@@ -32,7 +33,19 @@ Users.controller('Users.User.Roles.Controller', [
                 $scope.newRoles = $scope.newRoles || [];
                 $scope.newRoles.unshift(angular.copy(newRole));
             }
+            $scope.rolesChanged = true;
         };
+
+        $scope.removeRole = (user, role) => {
+            users.removeRole(user, role);
+            $scope.rolesChanged = true;
+        };
+
+        $scope.$watch('user.roles', function(newRoles, oldRoles){
+            if (newRoles !== oldRoles) {
+                $scope.rolesChanged = true;
+            }
+        }, true);
 
         $scope.ROLES = ROLES;
     }
