@@ -55,12 +55,12 @@ function AdminQueueDataDependencies (
     AdminGames.queryFilter = filter;
     AdminGames.start = 0;
     var Data = {
+        games: AdminGames.query(),
         sports: sports.load(),
         leagues: leagues.load(),
-        games : AdminGames.query(),
-        filterCounts: games.getQueueDashboardCounts(),
-        totalGameCount: games.totalCount(VIEWS.QUEUE.GAME.ALL)
+        filterCounts: games.getQueueDashboardCounts()
     };
+
     return Data;
 }
 
@@ -186,7 +186,6 @@ function QueueController (
     $scope.GAME_STATUS_IDS = GAME_STATUS_IDS;
     $scope.GAME_TYPES = GAME_TYPES;
     $scope.SelectIndexerModal = SelectIndexerModal;
-
     $scope.data = data;
     $scope.dashboardFilterCounts = data.filterCounts;
     $scope.sports = sports.getCollection();
@@ -197,15 +196,9 @@ function QueueController (
     $scope.sportsList = sports.getList();
     $scope.teamsList = teams.getList();
     $scope.usersList = users.getList();
-
-    $scope.games = games.getList(VIEWS.QUEUE.GAME.ALL);
-
     $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
-
     $scope.AdminGames = AdminGames;
-
-    //initially show everything
-    $scope.queue = $scope.games;
+    $scope.queue = data.games;
 
     $scope.emptyOutQueue = () => {
         $scope.queue = [];
@@ -251,4 +244,9 @@ function QueueController (
         AdminGames.start = 0;
         AdminGames.query().then().finally(removeSpinner);
     };
+
+    $scope.$on('$destroy', () => {
+        AdminGames.queryFilter = null;
+        AdminGames.start = 0;
+    });
 }
