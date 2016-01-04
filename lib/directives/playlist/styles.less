@@ -27,6 +27,19 @@
                 display: flex;
                 flex-direction: column;
             }
+
+            /* NOTE: DO NOT DELETE. This is required as it fixes a glitch where the krossover-play's collapse if
+             * their outer container has a height that is less than the combined heights of all of the
+             * krossover-play's heights when in edit mode.
+             */
+            krossover-play.edit-mode {
+                display: flex;
+                flex: 0 0 75px;
+            }
+
+            .play.play__reel.edit-mode {
+                justify-content: center;
+            }
         }
     }
 
