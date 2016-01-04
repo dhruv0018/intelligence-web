@@ -62,6 +62,10 @@ Users.directive('krossoverNewRole', [
 
                     element.remove();
                 };
+
+                $scope.removeRole = (newRole) => {
+                    $scope.newRoles.splice($scope.newRoles.indexOf(newRole), 1);
+                };
             }
         };
 

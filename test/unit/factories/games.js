@@ -3,6 +3,7 @@ var expect = chai.expect;
 var should = chai.should();
 
 var moment = require('moment');
+import normalizeTimes from '../helpers/normalize-times.js';
 
 describe('GamesFactory', function() {
 
@@ -976,7 +977,7 @@ describe('GamesFactory', function() {
             function(GAME_STATUSES) {
                 [
                     GAME_STATUSES.NOT_INDEXED.id,
-                    GAME_STATUSES.READY_FOR_INDEXING.id,
+                    GAME_STATUSES.SUBMITTED_FOR_INDEXING.id,
                     GAME_STATUSES.FINALIZED.id
                 ].forEach(function(status) {
                         game.status = status;
@@ -991,6 +992,7 @@ describe('GamesFactory', function() {
                     GAME_STATUSES.INDEXING.id,
                     GAME_STATUSES.READY_FOR_QA.id,
                     GAME_STATUSES.QAING.id,
+                    GAME_STATUSES.READY_FOR_INDEXING.id,
                     GAME_STATUSES.SET_ASIDE.id,
                     GAME_STATUSES.INDEXED.id
                 ].forEach(function(status) {
@@ -1531,6 +1533,7 @@ describe('GamesFactory', function() {
     });
 
     describe('shareWithTeam', ()=> {
+
         it("Should throw error when there is no team", inject(['GamesFactory',
                                                                 function(GamesFactory) {
                 expect(()=>GamesFactory.shareWithTeam()).to.throw(Error);
@@ -1565,11 +1568,23 @@ describe('GamesFactory', function() {
                 sinon.stub(game,'isSharedWithTeam').returns(false);
                 game.shareWithTeam(team);
                 assert(game.isSharedWithTeam.should.have.been.called);
-                let expectedShares = initialShares;
-                expectedShares.push(newShare);
+                let expectedShares = [{sharedWithTeamId:2}, {
+                        userId: session.currentUser.id,
+                        gameId: game.id,
+                        sharedWithTeamId: team.id,
+                        createdAt: moment.utc().toDate(),
+                        isBreakdownShared: false,
+                        isTelestrationsShared: false
+                    }];
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
+
+                game.shares = normalizeTimes(game.shares);
+                expectedShares = normalizeTimes(expectedShares);
                 expect(game.shares).to.eql(expectedShares);
+
+                game.sharedWithTeams = normalizeTimes(game.sharedWithTeams);
+                expectedTeamShares = normalizeTimes(expectedTeamShares);
                 expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
 
@@ -1591,11 +1606,23 @@ describe('GamesFactory', function() {
                 sinon.stub(game,'isSharedWithTeam').returns(false);
                 game.shareWithTeam(team, true);
                 assert(game.isSharedWithTeam.should.have.been.called);
-                let expectedShares = initialShares;
-                expectedShares.push(newShare);
+                let expectedShares = [{sharedWithTeamId:2}, {
+                        userId: session.currentUser.id,
+                        gameId: game.id,
+                        sharedWithTeamId: team.id,
+                        createdAt: moment.utc().toDate(),
+                        isBreakdownShared: false,
+                        isTelestrationsShared: true
+                    }];
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
+
+                game.shares = normalizeTimes(game.shares);
+                expectedShares = normalizeTimes(expectedShares);
                 expect(game.shares).to.eql(expectedShares);
+
+                game.sharedWithTeams = normalizeTimes(game.sharedWithTeams);
+                expectedTeamShares = normalizeTimes(expectedTeamShares);
                 expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
     });
@@ -1920,8 +1947,8 @@ describe('GamesFactory', function() {
 
     describe('getNonPublicShares', ()=> {
         it("Should return only non public shares", inject(['GamesFactory', function(GamesFactory) {
-                let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}, {id:3}]});
-                expect(game.getNonPublicShares()).to.eql([{id:1, sharedWithTeamId:6}, {id:2, sharedWithUserId:7}]);
+                let game = GamesFactory.extend({id:2, shares:[{id:1, sharedWithTeamId:6}, {id:2}, {id:3}, {id:4, sharedWithUserId:7}, {id:5}]});
+                expect(game.getNonPublicShares()).to.eql([{id:1, sharedWithTeamId:6}, {id:4, sharedWithUserId:7}]);
         }]));
     });
 
@@ -2110,5 +2137,97 @@ describe('GamesFactory', function() {
                 expect(game.getCSVDownloadLink()).to.equal(expectedUrl);
                 assert(TokensService.getAccessToken.should.have.been.called);
         }]));
+    });
+
+
+    describe('unextend', ()=> {
+        it("Should remove any duplicate public shares",
+            inject(['GamesFactory', function(GamesFactory) {
+                let game = GamesFactory.extend({id:2,
+                    shares:[{sharedWithTeamId:6, gameId:2, userId:2, isBreakdownShared:false},
+                        {sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false},
+                        {sharedWithUserId:7, gameId:2, userId:2, isBreakdownShared:false},
+                        {sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false}],
+                    video: null});
+                game.shares.push({sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false});
+                game.shares.push({sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false});
+                game = game.unextend();
+                expect(game.shares).to.eql([{sharedWithTeamId:6, gameId:2, userId:2, isBreakdownShared:false},
+                    {sharedWithUserId:7, gameId:2, userId:2, isBreakdownShared:false},
+                    {sharedWithUserId:null, sharedWithTeamId:null, gameId:2, userId:2, isBreakdownShared:false}]);
+        }]));
+    });
+
+    describe('getAssignmentsByUserId', function() {
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {
+                    indexerAssignments: [
+                        {
+                            "userId": 1
+                        },
+                        {
+                            "userId": 5
+                        },
+                    ]
+                };
+                game = gamesFactory.extend(game);
+            }
+        ]));
+
+        it("should return the proper number of assignments corresponding to the user id passed in", () => {
+            let userId = 1;
+            let assignments = game.getAssignmentsByUserId(userId);
+            expect(assignments.length).to.equal(1);
+        });
+
+        it("should return empty array if no user id passed in", () => {
+            let assignments = game.getAssignmentsByUserId();
+            expect(assignments.length).to.equal(0);
+        });
+
+        it("should return empty array if user id passed in is not found", () => {
+            let userId = 100;
+            let assignments = game.getAssignmentsByUserId(userId);
+            expect(assignments.length).to.equal(0);
+        });
+    });
+
+    describe("getInactiveAssignmentsByUserId", () => {
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {
+                    indexerAssignments: [
+                        {
+                            "userId": 1,
+                            "timeFinished": "2015-07-08T15:17:59+00:00"
+                        },
+                        {
+                            "userId": 5
+                        },
+                        {
+                            "userId": 1
+                        },
+                        {
+                            "userId": 1,
+                            "timeFinished": "2015-07-09T15:17:59+00:00"
+                        }
+                    ]
+                };
+                game = gamesFactory.extend(game);
+            }
+        ]));
+
+        it("should return the proper number of assignments corresponding to the user id passed in", () => {
+            let userId = 1;
+            let assignments = game.getInactiveAssignmentsByUserId(userId);
+            expect(assignments.length).to.equal(2);
+        });
     });
 });
