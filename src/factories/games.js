@@ -37,7 +37,7 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 // copy share attributes that rely on game functions.
                 // TODO: This sharing copying should not have to be done. It should model reels implementation.
-
+                copy.shares = copy.getNonPublicShares();
                 if (copy.isSharedWithPublic()) {
                     copy.shares.push(copy.publicShare);
                 }
@@ -82,6 +82,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 game.datePlayed = game.datePlayed || moment.utc().toDate();
                 game.primaryJerseyColor = game.primaryJerseyColor || '#FFFFFF';
                 game.opposingPrimaryJerseyColor = game.opposingPrimaryJerseyColor || '#000000';
+                game.secondaryJerseyColor = game.secondaryJerseyColor || '#000000';
+                game.opposingSecondaryJerseyColor = game.opposingSecondaryJerseyColor || '#FFFFFF';
 
                 //TODO remove when the back end makes notes always a object
                 if (angular.isArray(game.notes)) {
@@ -107,17 +109,16 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 if (game.shares && game.shares.length) {
-
-                    angular.forEach(game.shares, function(share, index) {
+                    game.shares.forEach(function(share, index) {
                         if (share.sharedWithUserId) {
                             game.sharedWithUsers[share.sharedWithUserId] = share;
                         } else if (share.sharedWithTeamId) {
                             game.sharedWithTeams[share.sharedWithTeamId] = share;
                         } else if (!share.sharedWithUserId && !share.sharedWithTeamId) {
                             game.publicShare = share;
-                            game.shares.splice(index, 1);
                         }
                     });
+                    game.shares = game.getNonPublicShares();
                 }
 
                 // Extend Telestration Entities
@@ -233,7 +234,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     games = games.concat(this.getByUploaderUserId(userId));
 
                     user.roles.forEach(role => {
-                        if (role.type.id === ROLES.ATHLETE.type.id) {
+                        if ((role.type.id === ROLES.ATHLETE.type.id) && role.teamId) {
                             games = games.concat(this.getByUploaderTeamId(role.teamId));
                         }
                     });
@@ -706,6 +707,19 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return ~index ? assignments[index] : undefined;
             },
 
+            getAssignmentsByUserId: function(userId) {
+                let assignments = [];
+                if (userId) {
+                    assignments = this.indexerAssignments.filter(assignment => assignment.userId === userId);
+                }
+                return assignments;
+            },
+
+            getInactiveAssignmentsByUserId: function(userId) {
+                let assignments = this.getAssignmentsByUserId(userId);
+                return assignments.filter(assignment => assignment.timeFinished);
+            },
+
             isAssignmentStarted: function(assignment) {
 
                 assignment = assignment || this.currentAssignment();
@@ -1138,6 +1152,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                     case GAME_STATUSES.QAING.id:
                     case GAME_STATUSES.SET_ASIDE.id:
                     case GAME_STATUSES.INDEXED.id:
+                    case GAME_STATUSES.READY_FOR_INDEXING.id:
                         isBeingBrokenDown = true;
                         break;
                 }
@@ -1407,6 +1422,7 @@ IntelligenceWebClient.factory('GamesFactory', [
                         teamId: session.getCurrentTeamId(),
                         gameId: self.id,
                         sharedWithUserId: null,
+                        sharedWithTeamId: null,
                         createdAt: moment.utc().toDate(),
                         isBreakdownShared: false,
                         isTelestrationsShared: isTelestrationsShared
@@ -1432,7 +1448,7 @@ IntelligenceWebClient.factory('GamesFactory', [
              * @return {boolean}
              */
             isPublicShare: function(share) {
-                return share === this.getPublicShare();
+                return !share.sharedWithUserId && !share.sharedWithTeamId;
             },
 
             isFeatureSharedPublicly: function(featureAttribute) {

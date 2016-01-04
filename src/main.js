@@ -22,7 +22,6 @@ import Embed from '../app/embed/index.js';
 import Indexer from '../app/indexer/index.js';
 import Styleguide from '../app/styleguide/index.js';
 import Analytics from '../app/analytics/index.js';
-
 import Lib from '../lib';
 
 /* App dependencies */
@@ -100,6 +99,7 @@ require('./constants/transcodeProfiles');
 import { PRIORITIES_IDS, PRIORITIES } from './constants/priorities';
 import { LABELS_IDS, LABELS } from './constants/labels';
 import EMAILS from './constants/emails';
+import ARENA_CHART from './constants/arena-chart';
 
 
 require('./models/users');

@@ -36,7 +36,11 @@
 
             <div class="form-group">
 
-                <button class="btn btn-primary" id="save-school-cta" data-ng-disabled="form.$invalid" data-ng-click="save(school)">Save</button>
+                <krossover-admin-resource-save
+                    resource="school"
+                    button-id="save-school-cta"
+                    disabled="form.$invalid">
+                </krossover-admin-resource-save>
                 <a class="pull-right" href id="cancel-school-cta" data-ui-sref="schools">cancel</a>
 
             </div>

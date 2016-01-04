@@ -66,7 +66,7 @@
                             <div class="col-md-9">
 
                                 <div class="teamTableTitle">
-                                    <h4>*Opponents &amp; Score</h4>
+                                    <h4>*Teams, Scores,  &amp; Jersey Colors</h4>
                                     <h4 class="pull-right">*Required</h4>
                                 </div>
 
@@ -79,7 +79,7 @@
                                             <tr>
                                                 <th>Teams</th>
                                                 <th class="score">Scores</th>
-                                                <th>Colors</th>
+                                                <th>Jersey Colors</th>
                                             </tr>
 
                                         </thead>
@@ -116,14 +116,16 @@
                                                         <div class="col-xs-6">
 
                                                             <h6>Primary</h6>
-                                                            <input class="form-control" id="team-primary-color-cta" name="yourprimarycolor" type="color" data-ng-model="game.primaryJerseyColor">
+                                                            <input class="form-control" id="team-primary-color-cta" name="yourprimarycolor" type="color"
+                                                            style="background: {{game.primaryJerseyColor}}" data-ng-model="game.primaryJerseyColor">
 
                                                         </div>
 
                                                         <div class="col-xs-6">
 
                                                             <h6>Secondary</h6>
-                                                            <input class="form-control" id="team-secondary-color-cta" name="yoursecondarycolor" type="color" data-ng-model="game.secondaryJerseyColor">
+                                                            <input class="form-control" id="team-secondary-color-cta" name="yoursecondarycolor" type="color"
+                                                            style="background: {{game.secondaryJerseyColor}}" data-ng-model="game.secondaryJerseyColor">
 
                                                         </div>
 
@@ -154,14 +156,16 @@
                                                         <div class="col-xs-6">
 
                                                             <h6>Primary</h6>
-                                                            <input class="form-control" id="opposing-team-primary-color-cta" name="theirprimarycolor" type="color" data-ng-model="game.opposingPrimaryJerseyColor">
+                                                            <input class="form-control" id="opposing-team-primary-color-cta" name="theirprimarycolor" type="color"
+                                                            style="background: {{game.opposingPrimaryJerseyColor}}" data-ng-model="game.opposingPrimaryJerseyColor">
 
                                                         </div>
 
                                                         <div class="col-xs-6">
 
                                                             <h6>Secondary</h6>
-                                                            <input class="form-control" id="opposing-team-secondary-color-cta" name="theirsecondarycolor" type="color" data-ng-model="game.opposingSecondaryJerseyColor">
+                                                            <input class="form-control" id="opposing-team-secondary-color-cta" name="theirsecondarycolor" type="color"
+                                                            style="background: {{game.opposingSecondaryJerseyColor}}" data-ng-model="game.opposingSecondaryJerseyColor">
 
                                                         </div>
 
