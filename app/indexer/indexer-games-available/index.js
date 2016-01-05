@@ -26,10 +26,20 @@ IndexerGamesAvailable.config([
                 },
                 resolve: {
                     'Indexer.Games.Data': [
-                        '$q', 'IndexerGamesAvailableData',
-                        function($q, IndexerGamesAvailableData) {
-                            let data = new IndexerGamesAvailableData();
-                            return $q.all(data);
+                        '$q', 'IndexerGamesService', 'VIEWS', 'LeaguesFactory',
+                        function($q, IndexerGamesService, VIEWS, leagues) {
+                            //let data = new IndexerGamesAvailableData();
+                            //return $q.all(data);
+                            let queries = [];
+                            [
+                                VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_1,
+                                VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_2,
+                                VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_3
+                            ].forEach(priorityFilter => {
+                                IndexerGamesService.queryFilter = priorityFilter;
+                                queries.push(IndexerGamesService.query());
+                            });
+                            return $q.all(queries);
                         }
                     ]
                 }
