@@ -3,6 +3,7 @@ var expect = chai.expect;
 var should = chai.should();
 
 var moment = require('moment');
+import normalizeTimes from '../helpers/normalize-times.js';
 
 describe('GamesFactory', function() {
 
@@ -1532,6 +1533,7 @@ describe('GamesFactory', function() {
     });
 
     describe('shareWithTeam', ()=> {
+
         it("Should throw error when there is no team", inject(['GamesFactory',
                                                                 function(GamesFactory) {
                 expect(()=>GamesFactory.shareWithTeam()).to.throw(Error);
@@ -1566,7 +1568,7 @@ describe('GamesFactory', function() {
                 sinon.stub(game,'isSharedWithTeam').returns(false);
                 game.shareWithTeam(team);
                 assert(game.isSharedWithTeam.should.have.been.called);
-                const expectedShares = [{sharedWithTeamId:2}, {
+                let expectedShares = [{sharedWithTeamId:2}, {
                         userId: session.currentUser.id,
                         gameId: game.id,
                         sharedWithTeamId: team.id,
@@ -1576,7 +1578,13 @@ describe('GamesFactory', function() {
                     }];
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
+
+                game.shares = normalizeTimes(game.shares);
+                expectedShares = normalizeTimes(expectedShares);
                 expect(game.shares).to.eql(expectedShares);
+
+                game.sharedWithTeams = normalizeTimes(game.sharedWithTeams);
+                expectedTeamShares = normalizeTimes(expectedTeamShares);
                 expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
 
@@ -1598,7 +1606,7 @@ describe('GamesFactory', function() {
                 sinon.stub(game,'isSharedWithTeam').returns(false);
                 game.shareWithTeam(team, true);
                 assert(game.isSharedWithTeam.should.have.been.called);
-                const expectedShares = [{sharedWithTeamId:2}, {
+                let expectedShares = [{sharedWithTeamId:2}, {
                         userId: session.currentUser.id,
                         gameId: game.id,
                         sharedWithTeamId: team.id,
@@ -1608,7 +1616,13 @@ describe('GamesFactory', function() {
                     }];
                 let expectedTeamShares = initialTeamShares;
                 expectedTeamShares[newShare.sharedWithTeamId] = newShare;
+
+                game.shares = normalizeTimes(game.shares);
+                expectedShares = normalizeTimes(expectedShares);
                 expect(game.shares).to.eql(expectedShares);
+
+                game.sharedWithTeams = normalizeTimes(game.sharedWithTeams);
+                expectedTeamShares = normalizeTimes(expectedTeamShares);
                 expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
     });
