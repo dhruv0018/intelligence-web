@@ -127,28 +127,31 @@ function $GamesResolutionService (
         filter.count = COUNT_SIZE;
         let parsedFilter = cleanUpFilter(filter);
         isQuerying = true;
+
         let totalResultCount = gamesFactory.totalCount(parsedFilter).then(numberOfGames => {
             totalCount = numberOfGames || 0;
         });
 
-        let requestedGames = null;
-        if (parsedFilter['id[]']) {
-            requestedGames = gamesFactory.fetch(parsedFilter['id[]'], null, () => {
-                isQuerying = false;
-                GamesResolutionEventEmitter.onQueryFinish(null, []);
-            });
-        } else {
-            requestedGames = gamesFactory.query(parsedFilter);
-        }
-        requestedGames.then(games => {
-            games = Array.isArray(games) ? games : [games];
-            return success(games).then(() => {
-                isQuerying = false;
-                GamesResolutionEventEmitter.onQueryFinish(null, games);
+        return $q.all(totalResultCount).then( () => {
+            let requestedGames = null;
+            if (parsedFilter['id[]']) {
+                requestedGames = gamesFactory.fetch(parsedFilter['id[]'], null, () => {
+                    isQuerying = false;
+                    AdminGamesEventEmitter.onQueryFinish(null, []);
+                });
+            } else {
+                requestedGames = gamesFactory.query(parsedFilter);
+            }
+
+            return requestedGames.then(games => {
+                games = Array.isArray(games) ? games : [games];
+                return success(games).then(() => {
+                    isQuerying = false;
+                    GamesResolutionEventEmitter.onQueryFinish(null, games);
+                    return games;
+                });
             });
         });
-
-        return $q.all([totalResultCount, requestedGames]);
     }
 
     function reset () {
