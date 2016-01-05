@@ -142,9 +142,8 @@ IntelligenceWebClient.factory('IndexingService', [
                 /* Snap video back to time of current event. */
                 videoPlayer.seekTime(event.time);
 
-                playManager.current.save();
+                playManager.current.save().then(() => playsManager.calculatePlays());
 
-                playsManager.calculatePlays();
                 playManager.clear();
                 tagsManager.reset();
                 this.tagStack.clear();

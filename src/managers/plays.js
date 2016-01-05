@@ -153,7 +153,6 @@ IntelligenceWebClient.service('PlaysManager', [
          * Calculate the details for each play.
          */
         this.calculatePlays = function() {
-
             period = 0;
             indexedScore = 0;
             opposingIndexedScore = 0;
@@ -183,9 +182,6 @@ IntelligenceWebClient.service('PlaysManager', [
             let teamId;
             let game = games.get(play.gameId);
 
-            /* If the event is a period event, then advance the period. */
-            if (event.isPeriodTag) period++;
-
             /* Set the period of the play. */
             play.period = period;
 
@@ -201,6 +197,13 @@ IntelligenceWebClient.service('PlaysManager', [
             if (!firstField) return;
             let firstFieldId = firstField.index;
             let field = event.fields[firstFieldId];
+
+            /* If the event is a period event, then reset the period value. */
+            if (event.isPeriodTag) {
+                period = field.value.name;
+                play.period = period;
+            }
+
             /* If the field value is defined. */
             if (angular.isDefined(field) && angular.isDefined(field.value)) {
 
