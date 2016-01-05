@@ -441,11 +441,10 @@ function TeamController (
 
     /* If no team is stored locally, then get the team from the server. */
     if (!team) {
-
+        $scope.team = teams.create();
         var teamId = $stateParams.id;
 
         if (teamId) {
-            $scope.team = teams.create();
             teams.fetch(teamId).then(team => {
 
                 angular.extend($scope.team, team);
@@ -517,12 +516,6 @@ function TeamController (
         $scope.addNewHeadCoach = false;
     };
 
-    $scope.save = function(team) {
-
-        teams.save(team).then(function() {
-            $state.go('teams');
-        });
-    };
 }
 
 /**

@@ -405,6 +405,14 @@ IntelligenceWebClient.factory('TokensService', [
             },
 
             /**
+             * Returns the OAuth Authorization header if stored.
+             * @returns {String} the Authorization header as a string.
+             */
+            getAuthorization: function() {
+                return `${this.getTokenType()} ${this.getAccessToken()}`;
+            },
+
+            /**
              * Returns the OAuth token type if stored.
              * @returns {String} the token type as a string.
              */
@@ -482,7 +490,7 @@ IntelligenceWebClient.factory('TokensService', [
                     var $http = $injector.get('$http');
 
                     /* Set the access token in the authorization header. */
-                    $http.defaults.headers.common.Authorization = tokens.getTokenType() + ' ' + tokens.getAccessToken();
+                    $http.defaults.headers.common.Authorization = tokens.getAuthorization();
 
                     /* Calculate the time remaining before the access token expires. */
                     var accessTokenTimeRemaining = accessTokenExpirationDate - now;
