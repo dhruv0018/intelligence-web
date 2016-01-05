@@ -22,7 +22,8 @@ IndexerGamesController.$inject = [
     'VIEWS',
     'LABELS',
     'LABELS_IDS',
-    'QaPickup.Modal'
+    'QaPickup.Modal',
+    'IndexerGamesService'
 ];
 
 function IndexerGamesController(
@@ -45,7 +46,8 @@ function IndexerGamesController(
     VIEWS,
     LABELS,
     LABELS_IDS,
-    QaPickupModal
+    QaPickupModal,
+    IndexerGamesService
 ) {
     const ONE_MINUTE = 60000;
 
@@ -55,10 +57,9 @@ function IndexerGamesController(
     $scope.leagues = leagues.getCollection();
     $scope.teams = teams.getCollection();
     $scope.users = users.getCollection();
-
-    $scope.games = games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_3)
-        .concat(games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_2))
-        .concat(games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_1));
+    $scope.IndexerGames = IndexerGamesService;
+    $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
+    $scope.games = games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA);
 
     $scope.currentUser = session.getCurrentUser();
     $scope.options = {scope: $scope};
@@ -66,7 +67,6 @@ function IndexerGamesController(
     let now = moment.utc();
 
     GamesResolutionEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, (event, games) =>  {
-
         if (games.length === 0) {
             $scope.emptyOutQueue();
         } else {
@@ -75,7 +75,6 @@ function IndexerGamesController(
     });
 
     $scope.emptyOutQueue = () => {
-
         $scope.games = [];
     };
 
