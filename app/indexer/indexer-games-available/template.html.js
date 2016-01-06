@@ -23,7 +23,7 @@ export default `
                         | gameIsReadyForQa
                         | gameNotIndexedByCurrentUser
                         | orderBy: ['-priority', 'deadline']
-                        | limitTo: 100
+                        | limitTo: QUERY_SIZE
                         as filteredGames track by $index"
                         ng-class="{
                             'queue-list__highest-priority': game.priority === PRIORITIES.HIGHEST.id,
