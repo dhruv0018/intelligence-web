@@ -7,6 +7,9 @@ const IntelligenceWebClient = angular.module(pkg.name);
 
 const PAGE_SIZE = 1000;
 const description = 'selfeditedplays';
+const model = 'SelfEditedPlaysResource';
+const storage = 'SelfEditedPlaysStorage';
+const updateLocalResourceOnPUT = true;
 
 IntelligenceWebClient.factory('SelfEditedPlaysFactory', [
     'PlaysFactory',
@@ -20,11 +23,11 @@ IntelligenceWebClient.factory('SelfEditedPlaysFactory', [
 
             description,
 
-            model: 'SelfEditedPlaysResource',
+            model,
 
-            storage: 'SelfEditedPlaysStorage',
+            storage,
 
-            updateLocalResourceOnPUT: true,
+            updateLocalResourceOnPUT,
 
         };
 
