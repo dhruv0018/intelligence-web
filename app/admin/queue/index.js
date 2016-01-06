@@ -51,17 +51,25 @@ function AdminQueueDataDependencies (
     AdminQueueDashboardService,
     games
 ) {
-    let filter = Object.assign({}, AdminQueueDashboardService.ALL_QUEUE_GAMES);
-    AdminGames.queryFilter = filter;
-    AdminGames.start = 0;
-    var Data = {
-        sports: sports.load(),
-        leagues: leagues.load(),
-        games : AdminGames.query(),
-        filterCounts: games.getQueueDashboardCounts(),
-        totalGameCount: games.totalCount(VIEWS.QUEUE.GAME.ALL)
-    };
-    return Data;
+
+    class AdminQueueData{
+        constructor() {
+        }
+        gather() {
+            let filter = Object.assign({}, AdminQueueDashboardService.ALL_QUEUE_GAMES);
+            AdminGames.queryFilter = filter;
+            AdminGames.start = 0;
+            var Data = {
+                sports: sports.load(),
+                leagues: leagues.load(),
+                games : AdminGames.query(),
+                filterCounts: games.getQueueDashboardCounts(),
+                totalGameCount: games.totalCount(VIEWS.QUEUE.GAME.ALL)
+            };
+            return Data;
+        }
+    }
+    return AdminQueueData;
 }
 
 /**
@@ -87,8 +95,9 @@ Queue.config([
                 resolve: {
                     'Admin.Queue.Data': [
                         '$q', 'Admin.Queue.Data.Dependencies',
-                        function($q, data) {
-                            return $q.all(data);
+                        function($q, AdminQueueData) {
+                            let data = new AdminQueueData();
+                            return $q.all(data.gather());
                         }
                     ]
                 }
@@ -200,8 +209,7 @@ function QueueController (
 
     $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
 
-    $scope.AdminGames = AdminGames;
-
+    $scope.AdminGames = AdminGames;    
     $scope.queue = data.games;
 
     $scope.emptyOutQueue = () => {
