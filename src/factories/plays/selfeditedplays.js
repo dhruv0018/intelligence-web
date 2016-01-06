@@ -5,6 +5,9 @@ const angular = window.angular;
 
 const IntelligenceWebClient = angular.module(pkg.name);
 
+const PAGE_SIZE = 1000;
+const description = 'selfeditedplays';
+
 IntelligenceWebClient.factory('SelfEditedPlaysFactory', [
     function(
 
@@ -12,9 +15,9 @@ IntelligenceWebClient.factory('SelfEditedPlaysFactory', [
 
         var SelfEditedPlaysFactory = {
 
-            PAGE_SIZE: 1000,
+            PAGE_SIZE,
 
-            description: 'selfeditedplays',
+            description,
 
             model: 'SelfEditedPlaysResource',
 
