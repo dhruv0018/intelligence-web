@@ -11,7 +11,7 @@ IntelligenceWebClient.factory('SelfEditedPlaysResource', [
 
         const base = 'plays/self-edited';
 
-        let url = config.api.uri + base + '/:id';
+        let url = `${config.api.uri}${base}/:id`;
 
         let paramDefaults = {
 
@@ -23,7 +23,7 @@ IntelligenceWebClient.factory('SelfEditedPlaysResource', [
 
             filter: {
                 method: 'POST',
-                url: config.api.uri + 'plays/self-edited/filter/:filterId',
+                url: `${config.api.uri}plays/self-edited/filter/:filterId`,
                 params: {
                     filterId: '@filterId'
                 }
@@ -32,7 +32,7 @@ IntelligenceWebClient.factory('SelfEditedPlaysResource', [
             update: { method: 'PUT' },
             batchUpdate: {
                 method: 'POST',
-                url: config.api.uri + 'plays/self-edited/batch',
+                url: `${config.api.uri}plays/self-edited/batch`,
                 isArray: true
             }
         };
