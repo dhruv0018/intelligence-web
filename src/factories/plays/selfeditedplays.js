@@ -9,8 +9,9 @@ const PAGE_SIZE = 1000;
 const description = 'selfeditedplays';
 
 IntelligenceWebClient.factory('SelfEditedPlaysFactory', [
+    'PlaysFactory',
     function(
-
+        PlaysFactory
     ) {
 
         var SelfEditedPlaysFactory = {
