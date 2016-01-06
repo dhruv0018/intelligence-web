@@ -198,14 +198,11 @@ function QueueController (
     $scope.teamsList = teams.getList();
     $scope.usersList = users.getList();
 
-    $scope.games = games.getList(VIEWS.QUEUE.GAME.ALL);
-
     $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
 
     $scope.AdminGames = AdminGames;
 
-    //initially show everything
-    $scope.queue = $scope.games;
+    $scope.queue = data.games;
 
     $scope.emptyOutQueue = () => {
         $scope.queue = [];
@@ -248,4 +245,9 @@ function QueueController (
         AdminGames.start = 0;
         AdminGames.query().then().finally(removeSpinner);
     };
+
+    $scope.$on('$destroy', () => {
+        AdminGames.queryFilter = null;
+        AdminGames.start = 0;
+    });
 }
