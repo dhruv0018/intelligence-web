@@ -79,18 +79,41 @@
                 width: auto;
                 margin: auto;
                 border-top: thin solid black;
-            }
 
-            td {
-                text-align: left;
-            }
+                td {
+                    text-align: left;
+                }
 
-            th {
-                font-weight: 400;
-                border:thin solid black;
-                background-color: @brand-blue;
-                color: white;
-                text-align: center;
+                th {
+                    font-weight: 400;
+                    border:thin solid black;
+                    background-color: @brand-blue;
+                    color: white;
+                    text-align: center;
+                }
+
+                /*This is a temporary class that will be removed when this new
+                design is implemented for all sports.*/
+                &.stats-redesign {
+                    width: 90%;
+
+                    tr:nth-of-type(even) {
+                        background-color: #f7f7fa;
+                    }
+
+                    tr:nth-of-type(odd) {
+                        background-color: #fff;
+                    }
+
+                    tr:hover {
+                        background-color: rgb(241, 246, 252);
+                    }
+
+                    td {
+                        text-align: center;
+                    }
+
+                }
             }
 
             .fixed-table {

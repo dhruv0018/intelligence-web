@@ -10,6 +10,14 @@ arena-chart-filters {
 
     @team-name-width: 120px;
 
+    color-shape {
+        margin: 4px;
+    }
+
+    .filter-group > .filter-group__item {
+        margin: 0 10px;
+    }
+
     &-start {
         justify-content: flex-start;
 
@@ -41,6 +49,18 @@ arena-chart-filters {
             display: inline-block;
             width: @team-name-width;
             vertical-align: middle;
+        }
+    }
+
+    // lacrosse-specific overrides
+    &.lacrosse {
+
+        .shots-filter .filter-group__item-actions {
+            width: 162px
+        }
+
+        .periods-filter .filter-group__item-actions {
+            width: 126px;
         }
     }
 }
