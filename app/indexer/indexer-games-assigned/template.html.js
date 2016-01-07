@@ -67,8 +67,9 @@ export default `
                             <a
                                 id="select-indexer-game-cta-game-{{$index}}"
                                 ui-sref="IndexerGame({ id: game.id })"
+                                title="{{ (teams[game.teamId].name + ' vs ' + teams[game.opposingTeamId].name)}}"
                             >
-                                {{ (teams[game.teamId].name + ' vs... ' + teams[game.opposingTeamId].name).substring(0,8) }}...
+                                {{ (teams[game.teamId].name + ' vs ' + teams[game.opposingTeamId].name).substring(0,8) }}...
                             </a>
                             <krossover-team-label-icon
                                 class="pull-right"
