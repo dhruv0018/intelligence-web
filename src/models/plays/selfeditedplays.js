@@ -1,6 +1,5 @@
 const pkg = require('../../../package.json');
 
-/* Fetch angular from the browser scope */
 const angular = window.angular;
 
 const IntelligenceWebClient = angular.module(pkg.name);
@@ -23,7 +22,7 @@ IntelligenceWebClient.factory('SelfEditedPlaysResource', [
 
             filter: {
                 method: 'POST',
-                url: `${config.api.uri}plays/self-edited/filter/:filterId`,
+                url: `${config.api.uri}${base}/filter/:filterId`,
                 params: {
                     filterId: '@filterId'
                 }
@@ -32,7 +31,7 @@ IntelligenceWebClient.factory('SelfEditedPlaysResource', [
             update: { method: 'PUT' },
             batchUpdate: {
                 method: 'POST',
-                url: `${config.api.uri}plays/self-edited/batch`,
+                url: `${config.api.uri}${base}/batch`,
                 isArray: true
             }
         };
