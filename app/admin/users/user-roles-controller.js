@@ -36,7 +36,7 @@ Users.controller('Users.User.Roles.Controller', [
             $scope.rolesChanged = true;
         };
 
-        $scope.removeRole = (user, role) => {
+        $scope.removeRole = function(user, role) {            
             users.removeRole(user, role);
             $scope.rolesChanged = true;
         };
