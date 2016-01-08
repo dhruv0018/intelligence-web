@@ -7,7 +7,9 @@ const LABELS_IDS = {
     1: 'KL',
     2: 'CB',
     3: 'CC',
-    4: 'HT'
+    4: 'HT',
+    5: 'C1',
+    6: 'C2'
 };
 
 const LABELS = {
@@ -38,6 +40,20 @@ const LABELS = {
         name: 'Hyper Turnaround',
         abbreviation: 'HT',
         index: 3
+    },
+
+    'C1': {
+        id: 5,
+        name: 'Custom 1',
+        abbreviation: 'C1',
+        index: 4
+    },
+
+    'C2': {
+        id: 6,
+        name: 'Custom 2',
+        abbreviation: 'C2',
+        index: 5
     }
 };
 
