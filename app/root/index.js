@@ -45,7 +45,15 @@ Root.config([
  * @type {Controller}
  */
 Root.controller('RootController', [
-    function controller() {
-
+    '$scope',
+    function controller($scope) {
+        // Watch for header display
+        $scope.hideHeader = false;
+        $scope.$on('toggleHeaderDisplay', function(toggleHeaderDisplayEvent, isSelfEditing) {
+            $scope.hideHeader = isSelfEditing;
+        });
+        $scope.$on('$stateChangeStart', function(event) {
+            $scope.hideHeader = false;
+        });
     }
 ]);
