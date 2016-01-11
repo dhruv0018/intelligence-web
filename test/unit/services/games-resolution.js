@@ -19,12 +19,18 @@ describe.only('GamesResolutionService', function() {
         expect(GamesResolutionService).to.respondTo('query');
     }));
 
-    it('should be able to set a queryfilter', inject(function(GamesResolutionService) {
+    it('should be able to set a queryFilter', inject(function(GamesResolutionService) {
         let filter = {
             status: 1
         };
         GamesResolutionService.queryFilter = filter;
         expect(GamesResolutionService.queryFilter).to.equal(filter);
+    }));
+
+    it('should be able to set a start', inject(function(GamesResolutionService) {
+        let start = 500;
+        GamesResolutionService.start = start;
+        expect(GamesResolutionService.start).to.equal(start);
     }));
 
 });
