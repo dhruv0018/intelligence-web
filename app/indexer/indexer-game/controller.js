@@ -67,6 +67,14 @@ function IndexerGameController(
 
     $scope.team = teams.get($scope.game.teamId);
     $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+    $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
+    $scope.league = leagues.get($scope.uploaderTeam.leagueId);
+    $scope.showSetAside =   $scope.game.status === GAME_STATUSES.READY_FOR_INDEXING.id ||
+                            $scope.game.status === GAME_STATUSES.INDEXING.id ||
+                            $scope.game.status === GAME_STATUSES.READY_FOR_QA.id ||
+                            $scope.game.status === GAME_STATUSES.QAING.id;
+
+    const headCoachRole = $scope.team.getHeadCoachRole();
 
     let uploaderTeam = teams.get($scope.game.uploaderTeamId);
     $scope.league = leagues.get(uploaderTeam.leagueId);
