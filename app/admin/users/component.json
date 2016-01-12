@@ -2,7 +2,6 @@
     "name": "users",
     "templates": [
         "user.html",
-        "adduser.html",
         "newrole.html",
         "users.html",
         "user-info.html",
@@ -13,8 +12,7 @@
         "states.js",
         "filters.js",
         "directives.js",
-        "user-controller.js",
-        "new-user-controller.js",
+        "user-controller.js",        
         "user-info-controller.js",
         "user-roles-controller.js",
         "users-controller.js"

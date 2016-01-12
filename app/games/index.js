@@ -246,6 +246,15 @@ function GamesController(
     $scope.opposingTeam = $scope.teams[game.opposingTeamId];
     $scope.league = league;
 
+    // Watch for header display
+    $scope.hideHeader = false;
+    $scope.$on('toggleHeaderDisplay', function(toggleHeaderDisplayEvent, isSelfEditing) {
+        $scope.hideHeader = isSelfEditing;
+    });
+    $scope.$on('$stateChangeStart', function(event) {
+        $scope.hideHeader = false;
+    });
+
     // services
     $scope.auth = auth;
 

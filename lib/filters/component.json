@@ -4,6 +4,7 @@
         "."
     ],
     "locals": [
+        "seasons",
         "arenas",
         "time",
         "sport",

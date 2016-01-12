@@ -1,7 +1,5 @@
 export default `
 
-    <div class="games-self-editor">
-
-    </div>
+    <self-editor is-self-editing="isSelfEditing" game="game"></self-editor>
 
 `;

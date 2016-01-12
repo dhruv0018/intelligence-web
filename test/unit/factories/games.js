@@ -2230,4 +2230,44 @@ describe('GamesFactory', function() {
             expect(assignments.length).to.equal(2);
         });
     });
+
+    describe("lastIndexerAssignment", () => {
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {
+                    indexerAssignments: [
+                        {
+                            isQa: false,
+                            userId: 3,
+                            timeAssigned: "2015-12-17T19:53:56+00:00",
+                            timeFinished: "2015-12-18T19:53:56+00:00"
+                        },
+                        {
+                            isQa: true,
+                            userId: 2,
+                            timeAssigned: "2015-12-19T19:53:56+00:00",
+                            timeFinished: "2015-12-20T19:53:56+00:00"
+                        },
+                        {
+                            isQa: false,
+                            userId: 1,
+                            timeAssigned: "2015-12-21T19:53:56+00:00",
+                            timeFinished: "2015-12-22T19:53:56+00:00"
+                        }
+                    ]
+                };
+                game = gamesFactory.extend(game);
+            }
+        ]));
+
+        it("should return the proper indexer assignment", () => {
+            let expectedUserId = 1;
+            let assignment = game.lastIndexerAssignment();
+            expect(assignment.isQa).to.be.false;
+            expect(assignment.userId).to.equal(expectedUserId);
+        });
+    });
 });

@@ -4,14 +4,14 @@ export default `
         ng-class="{'film-header-hidden': !game.video.isComplete()}">
 
         <film-header
-            data-game-states="gameStates"
-            data-film="game"
-            data-ng-show="game.video.isComplete()">
+            game-states="gameStates"
+            film="game"
+            ng-show="game.video.isComplete() && !hideHeader">
         </film-header>
 
-        <div class="games-content" data-ui-view="gameView"></div>
+        <div class="games-content" ui-view="gameView"></div>
 
-        <public-footer data-ng-hide="auth.isLoggedIn"></public-footer>
+        <public-footer ng-hide="auth.isLoggedIn"></public-footer>
 
     </div>
 

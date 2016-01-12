@@ -8,7 +8,7 @@ export default `
                     <span>Season:&nbsp;</span>
                     <select
                         id="analytics-season-cta"
-                        ng-options="season.id as season.startDate | date: 'yyyy' for season in seasons"
+                        ng-options="season.id as season | formattedSeasons for season in seasons"
                         ng-model="filterQuery.seasonId"
                         ng-change="generateStats()"
                     ></select>

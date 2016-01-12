@@ -1,8 +1,16 @@
 @import (reference) "main.less";
 
+// Add variable to allow modal to scroll after certain height
+@maxHeightModalScroll: calc(100vh ~"-" 210px);
+
 .excel-upload {
 
     .modal-body{
+        max-height: @maxHeightModalScroll;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-left: 0px;
+
         ul{
             li{
                 list-style-type: none;
@@ -51,6 +59,7 @@
         }
 
         .errors-list{
+            padding-left: 20px;
             .warning{
                 text-align: center;
                 color: @brand-secondary;
