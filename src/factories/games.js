@@ -248,18 +248,29 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             getHeadCoachName: function() {
+                let userName = null;
+                if (!this.uploaderTeamId) {
+                    console.error('No uploader team id');
+                    return userName;
+                }
 
-                if (!this.uploaderTeamId) throw new Error('No uploader team id');
                 let uploaderTeamId = this.uploaderTeamId;
 
                 let team = teams.get(uploaderTeamId);
-                if (!team) throw new Error('Team does not exist');
+                if (!team){
+                    console.error('Team does not exist');
+                    return userName;
+                }
 
                 let headCoachRole = team.getHeadCoachRole();
-                let user = users.get(headCoachRole.userId);
-                if (!user) throw new Error('User does not exist');
+                let user = headCoachRole && headCoachRole.userId ? users.get(headCoachRole.userId) : null;
+                if (!user){
+                    console.error('User does not exist');
+                    return userName;
+                }
+                userName = user.name;
 
-                return user.name;
+                return userName;
             },
 
 
