@@ -30,7 +30,7 @@
             >
                 <div>
                     <p class="reel-name">{{reel.name}}</p>
-                    <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM d, yyyy'}}</p>
+                    <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | dateTitle}}</p>
                 </div>
                 <button id="remove-reel-from-profile-cta-{{$index+1}}" class="remove-from-profile" ng-click="removeReelFromProfile(reel)">Remove</button>
             </div>
@@ -47,7 +47,7 @@
             >
                 <div>
                     <p class="reel-name">{{reel.name}}</p>
-                    <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM d, yyyy'}}</p>
+                    <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | dateTitle}}</p>
                 </div>
                 <i class="icon icon-bars"></i>
             </div>
@@ -59,7 +59,7 @@
                 <div class="reel-option" ng-repeat="reel in matchingNonProfileReels = (nonProfileReels | filter: filters)">
                     <div>
                         <p class="reel-name">{{reel.name}}</p>
-                        <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | date: 'MMM d, yyyy'}}</p>
+                        <p class="reel-info">{{reel.plays.length}} clips, last updated {{reel.updatedAt | dateTitle}}</p>
                     </div>
                     <span id="add-reel-to-profile-cta-{{$index+1}}" class="add-to-profile" ng-click="addReelToProfile(reel)">Add</span>
                 </div>

@@ -1,7 +1,7 @@
 <div class="film-info">
 	<div data-ng-if="isGame" class="game-info">
 		<div class="meta-data">
-			<h5>{{film.datePlayed | date: 'MMM d, yyyy'}}</h5>
+			<h5>{{film.datePlayed | dateTitle}}</h5>
 			<h5 class="film-title">{{filmTitle}}</h5>
 		</div>
 		<div class="team">
@@ -21,7 +21,7 @@
 	</div>
 	<div data-ng-if="isReel" class="reel-info">
 		<div class="meta-data">
-			<h5>{{film.updatedAt | date: 'MMM d, yyyy'}}</h5>
+			<h5>{{film.updatedAt | dateTitle}}</h5>
 			<h5 class="film-title">{{filmTitle}}</h5>
 		</div>
 		<div class="reel-title">
