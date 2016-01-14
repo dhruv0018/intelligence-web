@@ -377,6 +377,8 @@ IntelligenceWebClient.factory('BaseFactory', [
              */
             retrieve: function(filter, success, error) {
 
+                let subsetOfIds;
+
                 var self = this;
 
                 var model = $injector.get(self.model);
@@ -400,10 +402,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                     filter.count = null;
 
                     /* Store unique ids. */
-                    storage.ids = util.unique(filter['id[]']);
+                    subsetOfIds = util.unique(filter['id[]']);
 
                     /* Batch filter in sets of 100. */
-                    filter['id[]'] = storage.ids.splice(0, 100);
+                    filter['id[]'] = subsetOfIds.splice(0, 100);
                 }
 
                 if (filter.start !== null) filter.start = filter.start || 0;
@@ -446,7 +448,7 @@ IntelligenceWebClient.factory('BaseFactory', [
                     storage.query = storage.query.concat(resources);
 
                     /* If all of the server resources have been retrieved. */
-                    if ((storage.ids && !storage.ids.length) || resources.length < filter.count) {
+                    if ((subsetOfIds && !subsetOfIds.length) || resources.length < filter.count) {
 
                         var query = storage.query.slice();
 
@@ -458,7 +460,6 @@ IntelligenceWebClient.factory('BaseFactory', [
                             storage.saveView(view, ids);
                         }
 
-                        delete storage.ids;
                         delete storage.query;
 
                         return query;
@@ -468,10 +469,10 @@ IntelligenceWebClient.factory('BaseFactory', [
                     else {
 
                         /* If there are pending IDs. */
-                        if (storage.ids && storage.ids.length) {
+                        if (subsetOfIds && subsetOfIds.length) {
 
                             /* Set filter to remaining IDs. */
-                            filter['id[]'] = storage.ids;
+                            filter['id[]'] = subsetOfIds;
                         }
 
                         /* If the start and count filters are both set. */

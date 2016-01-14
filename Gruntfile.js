@@ -257,7 +257,8 @@ module.exports = function(grunt) {
             components: {
                 files: {
                     'build/components.css': [
-                        'lib/features/**/*.less',
+                        'lib/features/self-editor/*.less',
+                        'lib/features/self-editor/self-editing-playlist/*.less',
                         'lib/directives/admin-queue-games/*.less',
                         'lib/directives/admin-queue-pagination/*.less',
                         'lib/directives/app-downloads/*.less',

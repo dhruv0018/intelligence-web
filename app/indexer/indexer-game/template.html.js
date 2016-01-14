@@ -8,8 +8,13 @@ export default `
 
                 <h2>Game Id <em>#{{ game.id }}</em></h2>
                 <h1>{{ team.name }} vs {{ opposingTeam.name }}</h1>
-                <h3>{{ school.name }} {{ sport.name }}, <a data-ui-sref="user-info({ id: headCoach.id })">Coach {{ headCoach.lastName }}</a></h3>
+                <h3>
+                    {{ school.name }} {{ sport.name }},
+                    <span ng-show="headCoach">Coach {{ headCoach.lastName }}</span>
+                    <span ng-hide="headCoach">No Active Head Coach</span>
+                </h3>
                 <h3>Period: <span class="period">{{ league.periodLabel }}</span></h3>
+
             </header>
 
             <main class="content content-full-height">

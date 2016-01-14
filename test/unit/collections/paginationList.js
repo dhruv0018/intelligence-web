@@ -99,9 +99,25 @@ describe(`PaginationList.subset`, () => {
         ]);
     });
 
-    if(`should get only 3 pages if total pages are 3`, () => {
+    it(`should get only 3 pages if total pages are 3`, () => {
 
         paginationList = new PaginationList(3, PAGE_SIZE, NUMBER_OF_ADJACENT_PAGE_BUTTONS);
+
+        expect(paginationList.subset).to.be.an.array;
+        expect(paginationList.subset).to.have.length(3);
+        expect(paginationList.subset).to.deep.equal([
+            new Page(1, PAGE_SIZE, NUMBER_OF_ADJACENT_PAGE_BUTTONS),
+            new Page(2, PAGE_SIZE, NUMBER_OF_ADJACENT_PAGE_BUTTONS),
+            new Page(3, PAGE_SIZE, NUMBER_OF_ADJACENT_PAGE_BUTTONS)
+        ]);
+    });
+
+    it(`should get 3 pages if total pages are 3 and the current page is 3`, () => {
+
+        paginationList = new PaginationList(3, PAGE_SIZE, NUMBER_OF_ADJACENT_PAGE_BUTTONS);
+
+        let targetPage = paginationList.find(3);
+        paginationList.currentPage = targetPage;
 
         expect(paginationList.subset).to.be.an.array;
         expect(paginationList.subset).to.have.length(3);

@@ -11,7 +11,6 @@ function AdminGamesService (
 ) {
 
     const service = Object.create(GamesResolutionService);
-
     return service;
 }
 
