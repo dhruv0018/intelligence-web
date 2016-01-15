@@ -245,14 +245,15 @@ function video(
 
             let fileUpload = FileUploadService.getFileUpload(video.guid);
 
-            return !!(fileUpload && fileUpload.isUploading());
+            if (fileUpload) {
+                return fileUpload.isUploading();
+            }
 
-            // FIXME: The video 'status'' SHOULD be sufficient for determining
-            // if it is INCOMPLETE, however, since the server is dumb currently
-            // we need to compensate with the FileUploadService.
-            // When the server can determine if the upload is uploading (i.e. INCOMPLETE) immediately,
-            // and can push notifications, we can simply use this line of code:
-            // ```return video.status === VIDEO_STATUSES.INCOMPLETE.id;```
+            return video.status === VIDEO_STATUSES.INCOMPLETE.id;
+
+            // FIXME: whe use both approaches, video status and fileUpload,
+            // fileUpload has precedence but it doesn't work to know the status
+            // when 2 different sessions are looing to the same video.
         }
 
         /**
@@ -264,7 +265,8 @@ function video(
 
             let fileUpload = FileUploadService.getFileUpload(video.guid);
 
-            return (fileUpload && fileUpload.isUploaded() && !video.isComplete()) ||
+            return (fileUpload && fileUpload.isUploaded() && !video.isComplete() &&
+                video.status !== VIDEO_STATUSES.FAILED.id) ||
                 video.status === VIDEO_STATUSES.UPLOADED.id;
 
             // FIXME: The video 'status'' SHOULD be sufficient for determining
@@ -292,21 +294,16 @@ function video(
          */
         isFailed(video = this) {
 
+
             let fileUpload = FileUploadService.getFileUpload(video.guid);
 
-            // NOTE: The upload surely isFailed if there is no upload in progress,
-            // but the server thinks that there is still (e.g. if user refreshses during upload)
-            if (!fileUpload && video.status === VIDEO_STATUSES.INCOMPLETE.id) {
-
-                return true;
-
-            } else {
-
+            if (fileUpload) {
                 // NOTE: The failure could come from server or client-side
                 return !!(fileUpload && fileUpload.isFailed()) ||
                     video.status === VIDEO_STATUSES.FAILED.id;
             }
 
+            return video.status === VIDEO_STATUSES.FAILED.id;
             // FIXME: The video 'status'' SHOULD be sufficient for determining
             // if it is FAILED, however, since the server is dumb currently
             // we need to compensate with the FileUploadService.
