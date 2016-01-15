@@ -23,6 +23,8 @@ class PaginationList extends SortedList {
 
     get subset () {
 
+        if (this.length <= this.subsetSize) return this.identity;
+
         let start = this.currentPageNumber - this.numberOfAdjacentPageButtons;
         start = this.indexClamp(start - 1);
 

@@ -49,7 +49,7 @@
 
                     <button-video-step-backward
                         krossover-blur-on-select
-                        ng-show="userIsIndexer"
+                        ng-show="userIsIndexer || videoPlayer.selfEditingMode"
                         class="ng-hide"
                     ></button-video-step-backward>
                     <button-video-fast-backward
@@ -69,7 +69,7 @@
                     ></button-video-fast-forward>
                     <button-video-step-forward
                         krossover-blur-on-select
-                        ng-show="userIsIndexer"
+                        ng-show="userIsIndexer || videoPlayer.selfEditingMode"
                         class="ng-hide"
                     ></button-video-step-forward>
 
@@ -80,6 +80,7 @@
                     <a
                         class="download control-button"
                         ng-href="{{videoPlayer.sources[0].src}}"
+                        ng-hide="videoPlayer.selfEditingMode"
                         tooltip="Download"
                         download
                         krossover-blur-on-select

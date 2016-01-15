@@ -413,6 +413,12 @@ function TeamController (
 
     var team;
     $scope.schoolName = '';
+    $scope.rolesChanged = false;
+
+    $scope.removeRole = (role) => {
+        $scope.team.removeRole(role);
+        $scope.rolesChanged = true;
+    };
 
     $scope.updateTeamAddress = function($item) {
 
@@ -513,6 +519,7 @@ function TeamController (
         coach.save();
         $scope.team.roles = $scope.team.roles || [];
         $scope.team.roles.push(newCoachRole);
+        $scope.rolesChanged = true;
         $scope.addNewHeadCoach = false;
     };
 

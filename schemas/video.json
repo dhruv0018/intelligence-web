@@ -21,6 +21,10 @@
         },
         "thumbnail": {
             "type": ["null", "string"]
+        },
+        "uploadFinishedAt": {
+          "type": ["null", "string"],
+          "format": "date-time"
         }
     },
     "additionalProperties": false
