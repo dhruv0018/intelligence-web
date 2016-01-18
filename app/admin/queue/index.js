@@ -224,7 +224,7 @@ function QueueController (
 
     $scope.search = function(filter) {
 
-        AdminGamesEventEmitter.emit(EVENT.ADMIN.DASHBOARD.RESET_FILTERS);
+        GamesResolutionEventEmitter.emit(EVENT.ADMIN.DASHBOARD.RESET_FILTERS);
 
         $scope.searching = true;
         $scope.noResults = false;

@@ -137,7 +137,7 @@ function $GamesResolutionService (
             if (parsedFilter['id[]']) {
                 requestedGames = gamesFactory.fetch(parsedFilter['id[]'], null, () => {
                     isQuerying = false;
-                    AdminGamesEventEmitter.onQueryFinish(null, []);
+                    GamesResolutionEventEmitter.onQueryFinish(null, []);
                 });
             } else {
                 requestedGames = gamesFactory.query(parsedFilter);
