@@ -45,9 +45,9 @@ export default `
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                         <!--TODO:Add as directive since it is used in the queue as well -->
                         <td class="time-left">
-                            <span class="late" ng-if="::game.timeRemaining() < 0">{{ ::game.timeRemaining() | millisecondsAsDaysHoursMinutes }}</span>
+                            <span class="late" ng-if="::game.timeRemaining() < 0">{{ game.timeRemaining() | millisecondsAsDaysHoursMinutes }}</span>
                             <span class="none" ng-if="::game.timeRemaining() === 0">None</span>
-                            <span class="togo" ng-if="::game.timeRemaining() > 0">{{ ::game.timeRemaining() | millisecondsAsDaysHoursMinutes }}</span>
+                            <span class="togo" ng-if="::game.timeRemaining() > 0">{{ game.timeRemaining() | millisecondsAsDaysHoursMinutes }}</span>
                         </td>
                         <td>
                             <button id="pick-up-qa-cta" class="queue-button" ng-click="qaPickup(game)">
