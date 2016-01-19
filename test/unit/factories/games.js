@@ -1307,10 +1307,13 @@ describe('GamesFactory', function() {
                 expect(GamesFactory.getHeadCoachName()).to.equal('Test Person');
         });
 
-        it('should throw an errow if no uploader team id', ()=> {
-
+        it('should log an error if no uploader team id', ()=> {
+                var spy = sinon.spy(console, 'error');
+                var errorMsg = 'No uploader team id';
                 GamesFactory.uploaderTeamId = null;
-                expect(() => GamesFactory.getHeadCoachName()).to.throw(Error);
+                GamesFactory.getHeadCoachName();
+                expect(spy.calledWith(errorMsg)).to.be.true;
+                expect(spy.callCount).to.equal(1);
         });
 
         it('should throw an errow if team does not exist', ()=> {
