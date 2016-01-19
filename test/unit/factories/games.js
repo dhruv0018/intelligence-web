@@ -1316,10 +1316,13 @@ describe('GamesFactory', function() {
                 expect(spy.callCount).to.equal(1);
         });
 
-        it('should throw an errow if team does not exist', ()=> {
-
+        it.only('should log an error if team does not exist', ()=> {
+                var spy = sinon.spy(console, 'error');
+                var errorMsg = 'Team does not exist';
                 GamesFactory.uploaderTeamId = 3;
-                expect(() => GamesFactory.getHeadCoachName()).to.throw(Error);
+                GamesFactory.getHeadCoachName();
+                expect(spy.calledWith(errorMsg)).to.be.true;
+                expect(spy.callCount).to.equal(1);
         });
 
         it('should throw an errow if user does not exist', ()=> {
