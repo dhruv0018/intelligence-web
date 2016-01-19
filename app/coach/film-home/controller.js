@@ -98,6 +98,9 @@ FilmHome.controller('Coach.FilmHome.controller', [
         //ui
         $scope.filteredFilmsList = $scope.filmsList;
 
+        // Show WSC link for seasons - to be activated later
+        $scope.showWSCSeasons = false;
+
         $scope.getPlayerJerseysAsNumbers = function(playerInfo) {
             return Number(playerInfo.jerseyNumber);
         };
