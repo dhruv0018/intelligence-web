@@ -1314,21 +1314,27 @@ describe('GamesFactory', function() {
                 GamesFactory.getHeadCoachName();
                 expect(spy.calledWith(errorMsg)).to.be.true;
                 expect(spy.callCount).to.equal(1);
+                console.error.restore();
         });
 
-        it.only('should log an error if team does not exist', ()=> {
+        it('should log an error if team does not exist', ()=> {
                 var spy = sinon.spy(console, 'error');
                 var errorMsg = 'Team does not exist';
                 GamesFactory.uploaderTeamId = 3;
                 GamesFactory.getHeadCoachName();
                 expect(spy.calledWith(errorMsg)).to.be.true;
                 expect(spy.callCount).to.equal(1);
+                console.error.restore();
         });
 
-        it('should throw an errow if user does not exist', ()=> {
-
+        it('should log an error if user does not exist', ()=> {
+                var spy = sinon.spy(console, 'error');
+                var errorMsg = 'User does not exist';
                 GamesFactory.uploaderTeamId = 2;
-                expect(() => GamesFactory.getHeadCoachName()).to.throw(Error);
+                GamesFactory.getHeadCoachName();
+                expect(spy.calledWith(errorMsg)).to.be.true;
+                expect(spy.callCount).to.equal(1);
+                console.error.restore();
         });
     });
 
