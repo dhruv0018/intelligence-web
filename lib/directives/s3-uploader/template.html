@@ -64,7 +64,7 @@
                         </div>
                     </div>
 
-                    <button id="start-uploading-cta" class="btn-upload-start" ng-click="upload()" ng-disabled="!isReadyToSubmit()">
+                    <button id="start-uploading-cta" class="btn-upload-start" ng-click="upload()" ng-disabled="!isReadyToSubmit() || uploading">
 
                         <span ng-hide="uploading">Start u</span><span ng-show="uploading">U</span>ploading…<i class="icon icon-chevron-right pull-right"></i>
 
