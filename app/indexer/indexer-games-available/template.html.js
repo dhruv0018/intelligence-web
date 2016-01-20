@@ -5,7 +5,7 @@ export default `
     <indexer-sidebar></indexer-sidebar>
 
     <div class="game-indexer-content">
-        <div ng-show="filteredGames.length > 0">
+        <div ng-show="filteredGames.length > 0 && !IndexerGames.isQuerying">
             <h3>Available Games to be QA\'d</h3>
             <table class="queue-list">
                 <thead>
@@ -57,15 +57,23 @@ export default `
                         </tr>
                 </tbody>
             </table>
-            <admin-queue-pagination
-                ng-if="IndexerGames.totalCount > QUERY_SIZE"
-                total-count="IndexerGames.totalCount"
-                number-of-adjacent-page-buttons="2"
-            ></admin-queue-pagination>
         </div>
-        <div ng-hide="filteredGames.length > 0">
+        <div class="results" ng-show="IndexerGames.isQuerying">
+
+            <h1>Loading...</h1>
+
+            <!-- TODO: The size shouldn't be a static value -->
+            <krossover-spinner ng-if="IndexerGames.isQuerying" size="'80px'"></krossover-spinner>
+
+        </div>
+        <div ng-if="filteredGames.length === 0 && !IndexerGames.isQuerying">
             <h3>There aren't any games available for you currently. Please check back later.</h3>
         </div>
+        <admin-queue-pagination
+            ng-if="IndexerGames.totalCount > QUERY_SIZE"
+            total-count="IndexerGames.totalCount"
+            number-of-adjacent-page-buttons="2"
+        ></admin-queue-pagination>
     </div>
 
 </section>
