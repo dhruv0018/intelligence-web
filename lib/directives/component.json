@@ -60,6 +60,7 @@
         "uploading-controls",
         "upload-status",
         "kvs-uploader",
+        "s3-uploader",
         "profile",
         "film-header",
         "public-footer",

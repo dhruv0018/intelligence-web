@@ -1,4 +1,3 @@
-
 const UPLOAD_STATUSES = {
     NOT_STARTED: 0,
     UPLOADING: 1,
@@ -28,16 +27,28 @@ class FileUpload {
 
         this.callbacks = {
             complete: [],
-            error: []
+            error: [],
+            partial: [],
+            progress: [],
+            warn: [],
+            failedAuth: []
         };
 
         this.status = UPLOAD_STATUSES.NOT_STARTED;
 
         this.complete = this.complete.bind(this);
         this.error = this.error.bind(this);
+        this.partial = this.partial.bind(this);
+        this.progress = this.progress.bind(this);
+        this.warn = this.warn.bind(this);
+        this.failedAuth = this.failedAuth.bind(this);
+
         this.uploaderServiceInstance.on('complete', this.complete);
         this.uploaderServiceInstance.on('error', this.error);
-
+        this.uploaderServiceInstance.on('partial', this.partial);
+        this.uploaderServiceInstance.on('progress', this.progress);
+        this.uploaderServiceInstance.on('warn', this.warn);
+        this.uploaderServiceInstance.on('failedAuth', this.failedAuth);
     }
 
     isNotStarted() {
@@ -79,6 +90,30 @@ class FileUpload {
     }
 
     /**
+     * Add a callback to an array of callbacks that will be callend when
+     * the uploading progress is updated.
+     * @param  {function} callback
+     */
+    onProgress(callback) {
+        if (!callback) throw new Error(`onProgress requires the callback argument`);
+        if (typeof callback !== 'function') throw new Error(`callback is not a function`);
+
+        this.callbacks.progress.push(callback);
+    }
+
+    /**
+     * Add a callback to an array of callbacks that will be callend when
+     * a single file is done uploading.
+     * @param  {function} callback
+     */
+    onPartial(callback) {
+        if (!callback) throw new Error(`onPartialartial requires the callback argument`);
+        if (typeof callback !== 'function') throw new Error(`callback is not a function`);
+
+        this.callbacks.partial.push(callback);
+    }
+
+    /**
      * Adds a callback to an array of callbacks that will be called when
      * the upload has an error.
      * @param {function} callback
@@ -89,6 +124,26 @@ class FileUpload {
         if (typeof callback !== 'function') throw new Error(`callback is not a function`);
 
         this.callbacks.error.push(callback);
+    }
+
+    /**
+     * Adds a callback to an array of callbacks that will be called when
+     * the upload has an warning.
+     * @param {function} callback
+     */
+    onWarn(callback) {
+
+        if (!callback) throw new Error(`onWarn requires the callback argument`);
+        if (typeof callback !== 'function') throw new Error(`callback is not a function`);
+
+        this.callbacks.warn.push(callback);
+    }
+
+    onFailedAuth(callback) {
+        if (!callback) throw new Error(`onFailedAuth requires the callback argument`);
+        if (typeof callback !== 'function') throw new Error(`callback is not a function`);
+
+        this.callbacks.failedAuth.push(callback);
     }
 
     /**
@@ -105,7 +160,7 @@ class FileUpload {
     upload() {
 
         this.status = UPLOAD_STATUSES.UPLOADING;
-        this.uploaderServiceInstance.upload();
+        this.uploaderServiceInstance.upload(this.files);
     }
 
     /**
@@ -146,21 +201,43 @@ class FileUpload {
      */
     complete(result) {
 
-        if (this.getProgress() === 1) {
+        if (this.getProgress() === 1 && this.status != UPLOAD_STATUSES.UPLOADED ) {
 
             this.status = UPLOAD_STATUSES.UPLOADED;
 
             this.callbacks.complete.forEach((callback) => {
-                callback();
+                callback(result);
             });
 
         } else {
-
             // if the progress isn't 1 but was complete, it was cancelled
-            this.cancelled();
+            this.cancelled(result);
         }
     }
 
+    /**
+     * Calls when a single file is done uploaded
+     *
+     * @method     partial
+     * @param      {object}  result
+     */
+    partial(result) {
+        this.callbacks.partial.forEach((callback) => {
+            callback(result);
+        });
+
+    }
+
+    /**
+     * Calls all of the progress callback events
+     * @param  {object} result
+     */
+    progress(result) {
+        this.callbacks.progress.forEach((callback) => {
+            callback(result);
+        });
+
+    }
     /**
      * Calls all of the error callback events
      */
@@ -179,6 +256,25 @@ class FileUpload {
         this.status = UPLOAD_STATUSES.FAILED;
 
         this.callbacks.error.forEach((callback) => {
+            callback();
+        });
+    }
+
+
+    /**
+     * Calls all of the warn callback events
+     */
+    warn() {
+        this.callbacks.warn.forEach((callback) => {
+            callback();
+        });
+    }
+
+    /**
+     * Calls all of the failedAuth callback events
+     */
+    failedAuth() {
+        this.callbacks.failedAuth.forEach((callback) => {
             callback();
         });
     }
