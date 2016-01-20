@@ -22,8 +22,7 @@ IndexerGamesController.$inject = [
     'VIEWS',
     'LABELS',
     'LABELS_IDS',
-    'QaPickup.Modal',
-    'IndexerGamesService'
+    'QaPickup.Modal'
 ];
 
 function IndexerGamesController(
@@ -46,8 +45,7 @@ function IndexerGamesController(
     VIEWS,
     LABELS,
     LABELS_IDS,
-    QaPickupModal,
-    IndexerGamesService
+    QaPickupModal
 ) {
     const ONE_MINUTE = 60000;
 
@@ -57,7 +55,7 @@ function IndexerGamesController(
     $scope.leagues = leagues.getCollection();
     $scope.teams = teams.getCollection();
     $scope.users = users.getCollection();
-    $scope.IndexerGames = IndexerGamesService;
+    $scope.IndexerGames = IndexerGames;
     $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
     $scope.games = games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA);
 
