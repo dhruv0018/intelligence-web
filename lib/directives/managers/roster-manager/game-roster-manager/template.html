@@ -28,10 +28,10 @@
                                 team="team"
                                 editable="editable"></krossover-athlete>
 
-            <div class="controls">
+            <div class="col-xs-2 controls">
                 <button
                     ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
-                    class="add-player btn btn-default pull-left"
+                    class="add-player btn btn-default btn-block"
                     id="game-roster-add-new-player-cta"
                     ng-click="addNewPlayer()"
                     ng-disabled="rosterHasEmptyRows || rosterState.isSaving"
@@ -45,7 +45,7 @@
                    id="upload-game-roster-excel-cta"
                    open-modal="ExcelUpload.Modal"
                    modal-options="options">
-                    Upload Roster via Excel
+                    <i class="icon icon-cloud-upload"></i> Upload Roster via Excel
                 </a>
             </div>
 
