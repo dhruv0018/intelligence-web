@@ -1,6 +1,6 @@
-import KrossoverPlay from '../entities/play';
+import KrossoverPlay from '../../entities/play';
 
-const pkg = require('../../package.json');
+const pkg = require('../../../package.json');
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
