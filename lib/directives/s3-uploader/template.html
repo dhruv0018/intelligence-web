@@ -1,0 +1,80 @@
+<div class="kvs-uploader">
+
+    <div class="upload-files col-md-6" >
+
+        <div class="row">
+            <div class="row">
+
+                <div class="col-md-11">
+
+                    <!-- TODO: Use FileUpload to get number of files in upload -->
+                    <button
+                        id="choose-files-cta"
+                        class="choose-files"
+                        ngf-drop
+                        ngf-select
+                        ng-model="files"
+                        ngf-multiple="true"
+                        ngf-keep="true"
+                        ng-hide="files.length"
+                        accept="{{allowedFileExtensions}}"
+                        ngf-drop-disabled="{{!config.uploader.dragdrop}}">
+                        <i class="icon icon-upload"></i>
+                            <div class="upload-text">
+                                <h1>Choose files to upload…</h1>
+                                <p class="drag-drop" ng-show="{{config.uploader.dragdrop}}">Or drag and drop files here</p>
+                            </div>
+                    </button>
+
+                    <table class="files" >
+                        <tbody  data-as-sortable="{}" data-ng-model="files">
+                        <tr class="file" ng-repeat="file in files" data-as-sortable-item>
+                            <td class="drag" data-as-sortable-item-handle>
+                                <span><i class="icon icon-align-justify"></i> {{ $index+1 }}. {{ file.name }} — {{ file.size | bytes }}</span>
+                                <button id="cancel-file-{{$index}}" class="btn-remove pull-right" ng-click="removeFile($index)"><i class="icon icon-remove"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+
+                    <button
+                        id="choose-files-continue-cta"
+                        class="btn-choose-files"
+                        ng-show="files.length"
+                        ngf-select
+                        ng-model="files"
+                        ngf-multiple="true"
+                        ngf-keep="true"
+                        accept="{{allowedFileExtensions}}">
+
+                        <i class="icon icon-upload"></i> Choose files to upload…
+
+                    </button>
+
+                    <div id="unsupported-file-alerts-cta" class="unsupported-file-alerts">
+                        <div ng-if="alerts.length > 0">
+                            <span>One or more files is not a supported media type:</span>
+                            <div class="unsupported-files">
+                                <div ng-repeat="alert in alerts" class="unsupported-file">
+                                    {{alert}}
+                                </div>
+                            </div>
+                            <p>Please try again.</p>
+                        </div>
+                    </div>
+
+                    <button id="start-uploading-cta" class="btn-upload-start" ng-click="upload()" ng-disabled="!isReadyToSubmit()">
+
+                        <span ng-hide="uploading">Start u</span><span ng-show="uploading">U</span>ploading…<i class="icon icon-chevron-right pull-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

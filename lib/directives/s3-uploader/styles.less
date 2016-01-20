@@ -1,0 +1,187 @@
+@import (reference) "main.less";
+.kvs-uploader {
+
+    .container;
+    letter-spacing: -0.01em;
+
+    .upload-files {
+        text-align: center;
+
+        .titlebar {
+
+            background-color: @brand-blue;
+            border: 1px solid @brand-blue;
+            text-align: left;
+
+            h3 {
+
+                color: white;
+                margin: 0;
+                padding: 10px;
+                font-size: 18px;
+                font-weight: 200;
+            }
+        }
+
+        .choose-files {
+
+            .btn;
+            .btn-blank;
+            color: @gray-lighter;
+            border: 1px solid @gray-lighter;
+            width: 500px;
+            height: 200px;
+            margin-top: 20px;
+            overflow: hidden;
+            .center-block();
+
+            i {
+
+                font-size: 100px;
+            }
+
+            &:hover {
+
+                color: @brand-secondary;
+                border: 3px solid @brand-secondary;
+            }
+
+            &:active {
+
+                .box-shadow(none);
+                color: @brand-success;
+                border: 3px solid @brand-success;
+            }
+
+            .upload-text {
+                position: relative;
+                bottom: 20px;
+
+                .drag-drop {
+                    position: relative;
+                    bottom: 20px;
+                    font-size: 18px;
+                }
+
+            }
+
+        }
+
+        &.files-drop-enter .choose-files {
+
+            color: @brand-success;
+            border: 3px solid @brand-success;
+        }
+
+        &.files-drop-leave .choose-files {
+
+            color: @brand-secondary;
+            border: 3px solid @brand-secondary;
+        }
+
+        .files {
+            .table;
+            .table-striped;
+
+            table-layout: fixed;
+            word-wrap: break-word;
+
+            tbody {
+
+                border-bottom: 1px solid @gray-lighter;
+
+                td {
+
+                    .text-overflow();
+                    text-align: left;
+                    line-height: 23px;
+                }
+
+                td.drag {
+
+                    /*.col-xs-1;*/
+                }
+
+                td.remove {
+
+                    /*.col-xs-1;*/
+                    text-align: right;
+
+                    button {
+
+                        padding-top: 0;
+                        padding-bottom: 0;
+                    }
+                }
+
+                tr,
+                tr.active {
+
+                    cursor: row-resize;
+                    cursor: url('/intelligence/assets/move.png'), row-resize;
+                    cursor: url('/intelligence/assets/move.png') 16 16, row-resize;
+                }
+
+                tr.active td {
+
+                    background-color: @table-bg-active;
+                }
+
+                tr.file > td > i.icon-align-justify {
+                    margin-right: 5px;
+                }
+            }
+        }
+
+        .btn-choose-files {
+
+            .btn;
+            .btn-lg;
+            .btn-default;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px;
+            margin-bottom: 15px;
+        }
+
+        .btn-upload-start {
+
+            .btn;
+            .btn-lg;
+            .btn-primary;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 15px;
+
+            i {
+
+                font-size: 16px;
+                line-height: 26px;
+            }
+        }
+
+        .unsupported-file-alerts {
+            color: @brand-primary;
+            font-size: 16px;
+
+            .unsupported-files {
+                width: 270px;
+                text-align: center;
+                margin: 0 auto;
+
+                .unsupported-file {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+    }
+
+    h3 {
+
+        color: @brand-blue;
+    }
+}

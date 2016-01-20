@@ -19,7 +19,6 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'ngResource',
     'angulartics',
     'angulartics.segment.io',
-    'flow',
     'ui.router',
     'ui.bootstrap',
     'config',
@@ -30,5 +29,8 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'KrossoverCheckbox',
     'KrossoverMultiselect',
     'Pills',
-    'KrossoverTags'
+    'KrossoverTags',
+    'ngFileUpload',
+    'flow',
+    'as.sortable'
 ]);

@@ -40,3 +40,7 @@ require('@krossover/pills');
 require('@krossover/krossover-blur-on-select');
 require('@krossover/krossover-tags');
 require('@krossover/on-file-change');
+require('spark-md5');
+require('evaporate');
+require('ng-file-upload');
+require('ng-sortable');

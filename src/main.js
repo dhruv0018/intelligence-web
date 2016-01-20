@@ -65,6 +65,7 @@ require('./services/analytics');
 import './services/performance-timer/angular-index';
 import './services/performance-timer';
 require('./services/fileUpload/fileUploadService');
+require('./services/fileUpload/fileUploadEvaporate');
 require('./services/admin-games');
 
 require('./constants/users');

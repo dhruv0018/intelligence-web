@@ -23,7 +23,7 @@ var ALLOWED_FILE_EXTENSIONS = [
     '.svi',  '.tivo', '.tod',  '.tp',    '.tp0',    '.tpd',      '.tsp',   '.vc1',   '.vcv',
     '.veg',  '.vfw',  '.vgz',  '.vid',   '.video',  '.viv',      '.vivo',  '.vp3',   '.vp6',
     '.vp7',  '.vs4',  '.vse',  '.webm',  '.wm',     '.wot',      '.xvid',  '.yuv',   '.zm1',
-    '.zm2',  '.zm3'
+    '.zm2',  '.zm3',  '.ts',   '.mxf',   '.gxf'
 ];
 
 IntelligenceWebClient.constant('ALLOWED_FILE_EXTENSIONS', ALLOWED_FILE_EXTENSIONS);

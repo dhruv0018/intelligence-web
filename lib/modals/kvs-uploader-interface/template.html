@@ -1,7 +1,7 @@
 <div class="kvs-uploader-interface">
 
     <header class="modal-header">
-    	<h3 class="modal-title" ng-show="film.isRegular()">Uploading a regular game</h3>
+        <h3 class="modal-title" ng-show="film.isRegular()">Uploading a regular game</h3>
         <h3 class="modal-title" ng-show="film.isNonRegular()">Uploading a scouting/scrimmage game</h3>
         <i class="icon icon-remove" id="cancel-uploading-modal-cta" data-ng-click="$dismiss()"></i>
     </header>
@@ -9,7 +9,13 @@
     <div class="modal-body">
         <kvs-uploader
                 data-modal="modal"
-                data-film="film"></kvs-uploader>
+                data-film="film"
+                data-ng-if="!config.useS3Uploader"></kvs-uploader>
+
+        <s3-uploader
+                data-modal="modal"
+                data-film="film"
+                data-ng-if="config.useS3Uploader"></s3-uploader>
 
         <div class="instructions">
             <h3>To ensure a smooth upload:</h3>
