@@ -112,5 +112,5 @@
     "uploader": {
         "dragdrop":true
     },
-    "useS3Uploader": false
+    "useS3Uploader": true
 }
