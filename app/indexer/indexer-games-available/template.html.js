@@ -5,7 +5,7 @@ export default `
     <indexer-sidebar></indexer-sidebar>
 
     <div class="game-indexer-content">
-        <div ng-show="filteredGames.length > 0">
+        <div ng-show="filteredGames.length > 0 && !IndexerGames.isQuerying">
             <h3>Available Games to be QA\'d</h3>
             <table class="queue-list">
                 <thead>
@@ -23,7 +23,7 @@ export default `
                         | gameIsReadyForQa
                         | gameNotIndexedByCurrentUser
                         | orderBy: ['-priority', 'deadline']
-                        | limitTo: 100
+                        | limitTo: QUERY_SIZE
                         as filteredGames track by $index"
                         ng-class="{
                             'queue-list__highest-priority': game.priority === PRIORITIES.HIGHEST.id,
@@ -45,9 +45,9 @@ export default `
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                         <!--TODO:Add as directive since it is used in the queue as well -->
                         <td class="time-left">
-                            <span class="late" ng-if="::game.timeRemaining() < 0">{{ ::game.timeRemaining() | millisecondsAsDaysHoursMinutes }}</span>
+                            <span class="late" ng-if="::game.timeRemaining() < 0">{{ game.timeRemaining() | millisecondsAsDaysHoursMinutes }}</span>
                             <span class="none" ng-if="::game.timeRemaining() === 0">None</span>
-                            <span class="togo" ng-if="::game.timeRemaining() > 0">{{ ::game.timeRemaining() | millisecondsAsDaysHoursMinutes }}</span>
+                            <span class="togo" ng-if="::game.timeRemaining() > 0">{{ game.timeRemaining() | millisecondsAsDaysHoursMinutes }}</span>
                         </td>
                         <td>
                             <button id="pick-up-qa-cta" class="queue-button" ng-click="qaPickup(game)">
@@ -58,9 +58,22 @@ export default `
                 </tbody>
             </table>
         </div>
-        <div ng-hide="filteredGames.length > 0">
+        <div class="results" ng-show="IndexerGames.isQuerying">
+
+            <h1>Loading...</h1>
+
+            <!-- TODO: The size shouldn't be a static value -->
+            <krossover-spinner ng-if="IndexerGames.isQuerying" size="'80px'"></krossover-spinner>
+
+        </div>
+        <div ng-if="filteredGames.length === 0 && !IndexerGames.isQuerying">
             <h3>There aren't any games available for you currently. Please check back later.</h3>
         </div>
+        <admin-queue-pagination
+            ng-if="IndexerGames.totalCount > QUERY_SIZE"
+            total-count="IndexerGames.totalCount"
+            number-of-adjacent-page-buttons="2"
+        ></admin-queue-pagination>
     </div>
 
 </section>
