@@ -80,7 +80,10 @@ export default `
                         <td>
                             {{users[game.lastIndexerAssignment().userId].name}}
                         </td>
-                        <td>{{ game.getHeadCoachName() }}</td>
+                        <td>
+                            <span ng-if="game.getHeadCoachName()">{{ game.getHeadCoachName() }}</span>
+                            <span ng-if="!game.getHeadCoachName()"> No Active Head Coach </span>
+                        </td>
                         <td>{{ getSportName(game.teamId) | capitalizeFirstLetter }}</td>
                         <td>{{ game.assignmentTimeRemaining | millisecondsAsDaysHoursMinutes }}</td>
                         <td>
