@@ -1,14 +1,33 @@
 <section class="user">
 
     <aside class="sidebar">
-
-        <x-krossover-role user="user" role="role"></x-krossover-role>
-
+        <div class="information">
+            <div class="action" ng-show="user.id">Edit User</div>
+            <div class="action" ng-hide="user.id">New User</div>
+            <div class="name" ng-show="user.id">{{user.name}}</div>
+        </div>
         <nav role="navigation">
 
             <ul class="nav nav-pills nav-stacked">
-                <li data-ui-sref-active="active"><a href data-ui-sref="user-roles" id="user-roles-navigation-cta"><i class="icon icon-trophy"></i> Roles</a></li>
-                <li data-ui-sref-active="active"><a href data-ui-sref="user-info" id="user-info-navigation-cta"><i class="icon icon-info-circle"></i> Contact Info</a></li>
+                <li data-ui-sref-active="active">
+                    <a
+                        href
+                        data-ui-sref="user-info"
+                        id="user-info-navigation-cta">
+                            <i class="icon icon-info-circle"></i>
+                            Contact Info
+                    </a>
+                </li>
+                <li ng-class="{disabled: !user.id}"
+                    data-ui-sref-active="active">
+                    <a
+                        href
+                        data-ui-sref="user-roles"
+                        id="user-roles-navigation-cta">
+                            <i class="icon icon-trophy"></i>
+                            Roles
+                    </a>
+                </li>
             </ul>
 
         </nav>

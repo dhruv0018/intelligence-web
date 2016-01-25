@@ -9,11 +9,18 @@
 
         <!-- Mobile App Download Messaging -->
         <section ng-if="isMobile" class="login__app-downloads">
+            <div class="optimal-experience">
+                <h5>For optimal experience download our apps</h5>
+            </div>
             <app-downloads></app-downloads>
         </section>
 
         <div class="v2-login">
             <main ui-view="main"></main>
+        </div>
+
+        <div ng-if="isMobile" class="old-link">
+            Looking For The Old Krossover? <a href="http://www.krossover.com/intelligence/user/login?redirFromNew=true">Tap Here</a>
         </div>
 
     </div>

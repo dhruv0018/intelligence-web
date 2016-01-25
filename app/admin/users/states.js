@@ -38,7 +38,7 @@ Users.config([
             })
 
             .state('user', {
-                url: '/user/:id',
+                url: '/user?id',
                 parent: 'base',
                 abstract: true,
                 views: {
@@ -99,7 +99,7 @@ Users.config([
                 ]
             })
             .state('user-roles', {
-                url: '',
+                url: '/roles',
                 parent: 'user',
                 views: {
                     'roles@user': {
@@ -109,7 +109,7 @@ Users.config([
                 }
             })
             .state('user-info', {
-                url: '',
+                url: '/info',
                 parent: 'user',
                 views: {
                     'info@user': {

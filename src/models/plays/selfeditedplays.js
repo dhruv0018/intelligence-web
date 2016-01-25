@@ -1,29 +1,28 @@
-var pkg = require('../../package.json');
+const pkg = require('../../../package.json');
 
-/* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
-var IntelligenceWebClient = angular.module(pkg.name);
+const IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.factory('PlaysResource', [
+IntelligenceWebClient.factory('SelfEditedPlaysResource', [
     'config', '$resource',
     function(config, $resource) {
 
-        var base = 'plays';
+        const base = 'plays/self-edited';
 
-        var url = config.api.uri + base + '/:id';
+        let url = `${config.api.uri}${base}/:id`;
 
-        var paramDefaults = {
+        let paramDefaults = {
 
             id: '@id'
 
         };
 
-        var actions = {
+        let actions = {
 
             filter: {
                 method: 'POST',
-                url: config.api.uri + 'plays/filter/:filterId',
+                url: `${config.api.uri}${base}/filter/:filterId`,
                 params: {
                     filterId: '@filterId'
                 }
@@ -32,7 +31,7 @@ IntelligenceWebClient.factory('PlaysResource', [
             update: { method: 'PUT' },
             batchUpdate: {
                 method: 'POST',
-                url: config.api.uri + 'plays/batch',
+                url: `${config.api.uri}${base}/batch`,
                 isArray: true
             }
         };

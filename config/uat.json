@@ -74,6 +74,9 @@
             },
             "volleyball": {
                 "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/uat/Krossover-volleyball-rotation-position.pdf"
+            },
+            "basketball": {
+                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/uat/basketball-guide.pdf"
             }
         },
         "addFilmHelp": {
@@ -117,5 +120,9 @@
         4,
         38
     ],
-    "maxYardsFormat": 100
+    "maxYardsFormat": 100,
+    "uploader": {
+        "dragdrop":true
+    },
+    "useS3Uploader": true
 }

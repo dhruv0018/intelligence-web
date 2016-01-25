@@ -29,12 +29,100 @@ IndexerGame.config([
                         controller: IndexerGameController
                     }
                 },
+                //FIXME: Copy resolve from Admin.Game -- to reconsider during game-info refactor
                 resolve: {
                     'Indexer.Game.Data': [
-                        '$q', 'IndexerDataDependencies',
-                        function($q, IndexingGameData) {
-                            let data = new IndexingGameData();
-                            return $q.all(data);
+                        '$q',
+                        '$stateParams',
+                        'SchoolsFactory',
+                        'TeamsFactory',
+                        'GamesFactory',
+                        'UsersFactory',
+                        'Utilities',
+                        function(
+                            $q,
+                            $stateParams,
+                            schools,
+                            teams,
+                            games,
+                            users,
+                            utilities
+                        ) {
+
+                            const gameId = Number($stateParams.id);
+                            const gamePromise = games.load(gameId);
+                            let game;
+
+                            /**
+                             * @param {Array<GamesResource>} gamesPromiseResults
+                             * @returns {Promise} teamsPromise
+                             */
+                            function loadGameTeams(gamesPromiseResults) {
+
+                                game = gamesPromiseResults[0];
+
+                                let gameTeamIds = [
+                                    game.teamId,
+                                    game.opposingTeamId,
+                                    game.uploaderTeamId
+                                ];
+                                gameTeamIds = utilities.unique(gameTeamIds);
+
+                                return teams.load({ 'id[]': gameTeamIds });
+                            }
+
+                            /**
+                             * @param {Array<TeamsResource>} teamsPromiseResults
+                             * @param {Promise} usersAndSchoolsPromise
+                             */
+                            function loadGameUsersAndSchool(teamsPromiseResults) {
+
+                                const uploaderTeam = teams.get(game.uploaderTeamId);
+
+                                return $q.all([
+                                    loadTeamUsers(game, uploaderTeam),
+                                    loadTeamSchool(uploaderTeam)
+                                ]);
+                            }
+
+                            /**
+                             * @param {GameResource} game
+                             * @param {TeamResource} team
+                             * @returns {Promise} users
+                             */
+                            function loadTeamUsers(game, team) {
+
+                                let userIds = [];
+                                const headCoachRole = team.getHeadCoachRole();
+
+                                if (game.indexerAssignments) {
+
+                                    userIds = game.indexerAssignments.map(assignment => assignment.userId);
+                                }
+
+                                if (headCoachRole) {
+
+                                    userIds.push(headCoachRole.userId);
+                                }
+
+                                return users.load({ 'id[]': userIds });
+                            }
+
+                            /**
+                             * @param {TeamsResource} team
+                             * @returns {Promise | undefined} school
+                             */
+                            function loadTeamSchool(team) {
+
+                                if (team.schoolId) {
+
+                                    return schools.load(team.schoolId);
+                                }
+                            }
+
+                            return gamePromise
+                                .then(loadGameTeams)
+                                .then(loadGameUsersAndSchool);
                         }
                     ]
                 },
