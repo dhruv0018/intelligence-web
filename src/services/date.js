@@ -40,8 +40,7 @@ IntelligenceWebClient.factory('NewDate', function() {
             }
 
             if (!planStartDate.isValid()) {
-
-                throw new Error(`NewDate Factory: Attempt to generate plan start date with invalid value (${ISODateString})`);
+                console.error(`NewDate Factory: Attempt to generate plan start date with invalid value (${ISODateString})`);
             }
 
             return planStartDate.toDate();
@@ -63,11 +62,53 @@ IntelligenceWebClient.factory('NewDate', function() {
             }
 
             if (!planEndDate.isValid()) {
-
-                throw new Error(`NewDate Factory: Attempt to generate plan end date with invalid value (${ISODateString})`);
+                console.error(`NewDate Factory: Attempt to generate plan end date with invalid value (${ISODateString})`);
             }
 
             return planEndDate.toDate();
+        },
+        generatePackageStartDate: function (ISODateString) {
+
+            let packageStartDate;
+
+            if (ISODateString !== undefined) {
+
+                /* Attempt to create Date object from exisiting date */
+                packageStartDate = createDateFromISOString(ISODateString)
+                    .startOf('day');
+            } else {
+
+                /* Get today's date at midnight */
+                packageStartDate = momentTimezone.tz('America/New_York')
+                    .startOf('day');
+            }
+
+            if (!packageStartDate.isValid()) {
+                console.error(`NewDate Factory: Attempt to generate package start date with invalid value (${ISODateString})`);
+            }
+            return packageStartDate.toDate();
+        },
+        generatePackageEndDate: function (ISODateString) {
+
+            let packageEndDate;
+
+            if (ISODateString !== undefined) {
+
+                packageEndDate = createDateFromISOString(ISODateString).endOf('day');
+            } else {
+
+                /* Get The day after a month just before midnight */
+                packageEndDate = momentTimezone.tz('America/New_York')
+                    .endOf('day')
+                    .add(1, 'month')
+                    .subtract(1, 'day');
+            }
+
+            if (!packageEndDate.isValid()) {
+                console.error(`NewDate Factory: Attempt to generate package end date with invalid value (${ISODateString})`);
+            }
+
+            return packageEndDate.toDate();
         }
     };
 });

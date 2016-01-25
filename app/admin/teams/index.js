@@ -194,11 +194,6 @@ Teams.filter('visiblePlanOrPackage', [
             for (var i = 0; i < planOrPackageArray.length; i++) {
                 var planOrPackage = planOrPackageArray[i];
 
-                if (typeof planOrPackage.endDate === 'string') {
-                    planOrPackage.endDate = newDate.generatePlanEndDate(planOrPackage.endDate);
-                    planOrPackage.startDate = newDate.generatePlanStartDate(planOrPackage.startDate);
-                }
-
                 if (typeof planOrPackage.endDate !== 'undefined' &&
                     planOrPackage.endDate >= currentDate) {
 
@@ -228,7 +223,8 @@ TeamPlansController.$inject = [
     '$modal',
     'TeamsFactory',
     'TURNAROUND_TIME_MIN_TIME_LOOKUP',
-    'BasicModals'
+    'BasicModals',
+    'NewDate'
 ];
 
 function TeamPlansController (
@@ -238,7 +234,8 @@ function TeamPlansController (
     $modal,
     teams,
     minTurnaroundTimeLookup,
-    basicModals
+    basicModals,
+    newDate
 ) {
 
     //todo do we need to add a factory for remaining breakdowns so we dont need to inject data?
@@ -248,7 +245,19 @@ function TeamPlansController (
     $scope.minTurnaroundTimeLookup = minTurnaroundTimeLookup;
 
     $scope.team.teamPackages = $scope.team.teamPackages || [];
+    $scope.team.teamPackages.forEach(teamPackage => {
+        if (typeof teamPackage.endDate === 'string') {
+            teamPackage.endDate = newDate.generatePackageEndDate(teamPackage.endDate);
+            teamPackage.startDate = newDate.generatePackageStartDate(teamPackage.startDate);
+        }
+    });
     $scope.team.teamPlans = $scope.team.teamPlans || [];
+    $scope.team.teamPlans.forEach(teamPlan => {
+        if (typeof teamPlan.endDate === 'string') {
+            teamPlan.endDate = newDate.generatePlanEndDate(teamPlan.endDate);
+            teamPlan.startDate = newDate.generatePlanStartDate(teamPlan.startDate);
+        }
+    });
 
     $scope.applyFilter = function() {
         $scope.filteredPackages = $filter('visiblePlanOrPackage')($scope.team.teamPackages);
