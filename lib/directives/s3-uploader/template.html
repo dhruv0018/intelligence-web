@@ -17,6 +17,7 @@
                         ngf-multiple="true"
                         ngf-keep="true"
                         ng-hide="files.length"
+                        ngf-change="onFilesDropped($files)"
                         accept="{{allowedFileExtensions}}"
                         ngf-drop-disabled="{{!config.uploader.dragdrop}}">
                         <i class="icon icon-upload"></i>
@@ -46,6 +47,7 @@
                         ng-model="files"
                         ngf-multiple="true"
                         ngf-keep="true"
+                        ngf-change="onFilesDropped($files)"
                         accept="{{allowedFileExtensions}}">
 
                         <i class="icon icon-upload"></i> Choose files to upload…
