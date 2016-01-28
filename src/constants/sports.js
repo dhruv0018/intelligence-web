@@ -24,7 +24,7 @@ var SPORTS = {
     LACROSSE: {
         id: 3,
         name: 'Lacrosse',
-        hasAnalytics: false,
+        hasAnalytics: true,
         hasStatistics: true
     },
 
