@@ -57,7 +57,8 @@ class EvaporateUploader {
 
         files.forEach(function(file, index, files) {
 
-            function onComplete(complete) {
+            function onComplete(complete, awsKey) {
+                file.fileName = awsKey;
                 self.progressFiles[index] = 1;
                 self.callbacks.partial.forEach(callback => {
                     callback(file);
