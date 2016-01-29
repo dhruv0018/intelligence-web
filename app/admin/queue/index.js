@@ -51,6 +51,7 @@ function AdminQueueDataDependencies (
     AdminQueueDashboardService,
     games
 ) {
+
     class AdminQueueData{
         constructor() {
         }
@@ -156,7 +157,7 @@ QueueController.$inject = [
     'Utilities',
     'AdminGamesService',
     'AdminQueueDashboardService',
-    'AdminGamesEventEmitter',
+    'GamesResolutionEventEmitter',
     'EVENT',
     'VIDEO_STATUSES'
 ];
@@ -183,7 +184,7 @@ function QueueController (
     utilities,
     AdminGames,
     AdminQueueDashboardService,
-    AdminGamesEventEmitter,
+    GamesResolutionEventEmitter,
     EVENT,
     VIDEO_STATUSES
 ) {
@@ -213,7 +214,7 @@ function QueueController (
         $scope.searching = false;
     };
 
-    AdminGamesEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, (event, games) =>  {
+    GamesResolutionEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, (event, games) =>  {
         if (games.length === 0) {
             $scope.emptyOutQueue();
         } else {
@@ -223,7 +224,7 @@ function QueueController (
 
     $scope.search = function(filter) {
 
-        AdminGamesEventEmitter.emit(EVENT.ADMIN.DASHBOARD.RESET_FILTERS);
+        GamesResolutionEventEmitter.emit(EVENT.ADMIN.DASHBOARD.RESET_FILTERS);
 
         $scope.searching = true;
         $scope.noResults = false;

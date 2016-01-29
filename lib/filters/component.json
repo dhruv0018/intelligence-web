@@ -16,7 +16,8 @@
         "games",
         "padding",
         "to-array",
-        "capitalization"
+        "capitalization",
+        "date-title"
     ],
     "scripts": [
         "index.js",

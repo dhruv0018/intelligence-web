@@ -26,10 +26,10 @@ IndexerGamesAvailable.config([
                 },
                 resolve: {
                     'Indexer.Games.Data': [
-                        '$q', 'IndexerGamesAvailableData',
-                        function($q, IndexerGamesAvailableData) {
-                            let data = new IndexerGamesAvailableData();
-                            return $q.all(data);
+                        '$q', 'IndexerGamesService', 'VIEWS', 'LeaguesFactory',
+                        function($q, IndexerGamesService, VIEWS, leagues) {
+                            IndexerGamesService.queryFilter = VIEWS.QUEUE.GAME.READY_FOR_QA;
+                            return IndexerGamesService.query();
                         }
                     ]
                 }

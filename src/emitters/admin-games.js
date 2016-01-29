@@ -9,12 +9,12 @@ const EventEmitter = require('events').EventEmitter;
 /* Import EVENT types constant */
 import EVENT from '../constants/event';
 
-class AdminGamesEventEmitter extends EventEmitter {
+class GamesResolutionEventEmitter extends EventEmitter {
 
     /**
      * Binds desired GlobalEventHandlers to class methods
      * @constructor
-     * @returns {AdminGamesEventEmitter}
+     * @returns {GamesResolutionEventEmitter}
      */
     constructor () {
         super();
@@ -27,10 +27,10 @@ class AdminGamesEventEmitter extends EventEmitter {
 }
 
 /* Singleton */
-const adminGamesEventEmitter = new AdminGamesEventEmitter();
+const gamesResolutionEventEmitter = new GamesResolutionEventEmitter();
 
 /* Open singleton to Angular DI */
-IntelligenceWebClient.factory('AdminGamesEventEmitter', () => adminGamesEventEmitter);
+IntelligenceWebClient.factory('GamesResolutionEventEmitter', () => gamesResolutionEventEmitter);
 
 /* Export singleton for ES6, non-Angular modules */
-export default adminGamesEventEmitter;
+export default gamesResolutionEventEmitter;

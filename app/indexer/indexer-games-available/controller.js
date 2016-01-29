@@ -3,6 +3,9 @@ const angular = window.angular;
 const moment = require('moment');
 
 IndexerGamesController.$inject = [
+    'EVENT',
+    'GamesResolutionEventEmitter',
+    'IndexerGamesService',
     '$scope',
     '$state',
     '$interval',
@@ -23,6 +26,9 @@ IndexerGamesController.$inject = [
 ];
 
 function IndexerGamesController(
+    EVENT,
+    GamesResolutionEventEmitter,
+    IndexerGames,
     $scope,
     $state,
     $interval,
@@ -49,15 +55,26 @@ function IndexerGamesController(
     $scope.leagues = leagues.getCollection();
     $scope.teams = teams.getCollection();
     $scope.users = users.getCollection();
-
-    $scope.games = games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_3)
-        .concat(games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_2))
-        .concat(games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA_PRIORITY_1));
+    $scope.IndexerGames = IndexerGames;
+    $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
+    $scope.games = games.getList(VIEWS.QUEUE.GAME.READY_FOR_QA);
 
     $scope.currentUser = session.getCurrentUser();
     $scope.options = {scope: $scope};
 
     let now = moment.utc();
+
+    GamesResolutionEventEmitter.on(EVENT.ADMIN.QUERY.COMPLETE, (event, games) =>  {
+        if (games.length === 0) {
+            $scope.emptyOutQueue();
+        } else {
+            $scope.games = games;
+        }
+    });
+
+    $scope.emptyOutQueue = () => {
+        $scope.games = [];
+    };
 
     $scope.getSportName = function(teamId) {
 

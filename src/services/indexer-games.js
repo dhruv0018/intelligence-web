@@ -2,16 +2,17 @@ const pkg = require('../../package.json');
 const angular = window.angular;
 const IntelligenceWebClient = angular.module(pkg.name);
 
-AdminGamesService.$inject = [
+IndexerGamesService.$inject = [
     'GamesResolutionService'
 ];
 
-function AdminGamesService (
+function IndexerGamesService (
     GamesResolutionService
 ) {
 
     const service = Object.create(GamesResolutionService);
+
     return service;
 }
 
-IntelligenceWebClient.service('AdminGamesService', AdminGamesService);
+IntelligenceWebClient.service('IndexerGamesService', IndexerGamesService);

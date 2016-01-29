@@ -173,7 +173,7 @@ export default `
 
                 <li
                     feature="IndexerFlags"
-                    ng-if="isBasketballGame"
+                    ng-if="isBasketballGame || isLaxGame"
                 >
                     <i class="icon icon-flag"></i>
                     <a
@@ -184,9 +184,8 @@ export default `
                 </li>
                 <li><button class="btn btn-link" data-ng-click="RawFilmModal.open(game)"><i class="icon icon-play-circle"></i> View raw film</button></li>
                 <li><button class="btn btn-link" data-ui-sref="indexer-read-notes" disabled><i class="icon icon-save"></i> Read notes</button></li>
-                <li><button class="btn btn-link" data-ng-click="setAside()">Set Aside</button></li>
-                <li data-ng-if="currentAssignment.isQa" data-ng-click="revertAssignment()"><button class="btn btn-link">Revert to Indexer</button></li>
-
+                <li><button ng-show="showSetAside" class="btn btn-link" data-ng-click="setAside()">Set Aside</button></li>
+                <li ng-show="showRevertToIndexing" data-ng-click="revertAssignment()"><button class="btn btn-link">Revert to Indexer</button></li>
             </ul>
 
             <hr>

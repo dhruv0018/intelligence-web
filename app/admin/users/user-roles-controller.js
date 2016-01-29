@@ -18,7 +18,7 @@ Users.controller('Users.User.Roles.Controller', [
     function controller($scope, ROLES, users) {
         $scope.rolesChanged = false;
 
-        $scope.addNewRole = function(newRole) {
+        $scope.addNewRole = function (newRole) {
             if (!newRole) return;
 
             /* In the case of an Admin role, there is no information to fill in,
@@ -36,12 +36,12 @@ Users.controller('Users.User.Roles.Controller', [
             $scope.rolesChanged = true;
         };
 
-        $scope.removeRole = function(user, role) {
+        $scope.removeRole = function (user, role) {
             users.removeRole(user, role);
             $scope.rolesChanged = true;
         };
 
-        $scope.$watch('user.roles', function(newRoles, oldRoles){
+        $scope.$watch('user.roles', function (newRoles, oldRoles){
             if (newRoles !== oldRoles) {
                 $scope.rolesChanged = true;
             }

@@ -2,7 +2,7 @@
 <span class="stats-export dropdown" dropdown is-open="status.isopen">
     <a class="dropdown-toggle" dropdown-toggle><i class="icon icon-share-square-o"></i>Export</a>
     <div class="export-dropdown-menu dropdown-menu" ng-class="{'export-are-selected': selectedTags.length}">
-        <div ng-if="!isLax">
+        <div>
             <div class="dropdown-option" ng-if="!csvDownloadAvailable">
                 <a class="coming-soon" download>Excel - All Game Stats (coming soon)</a>
             </div>
@@ -16,12 +16,6 @@
                     <a ng-href="{{game.getMaxprepsDownloadLinkByTeam(team)}}" download>MaxPreps - All Stats {{team.name}}</a>
                 </div>
             </span>
-        </div>
-        <div ng-if="isLax">
-            <div class="dropdown-option">
-                <i class="icon icon-file-text"></i>
-                <a ng-href="{{game.getCSVDownloadLink()}}" download>Excel - All Game Stats (.csv)</a>
-            </div>
         </div>
     </div>
 </span>

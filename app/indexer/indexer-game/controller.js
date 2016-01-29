@@ -67,14 +67,25 @@ function IndexerGameController(
 
     $scope.team = teams.get($scope.game.teamId);
     $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+    $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
+    $scope.league = leagues.get($scope.uploaderTeam.leagueId);
+    $scope.showSetAside =   $scope.game.status === GAME_STATUSES.READY_FOR_INDEXING.id ||
+                            $scope.game.status === GAME_STATUSES.INDEXING.id ||
+                            $scope.game.status === GAME_STATUSES.READY_FOR_QA.id ||
+                            $scope.game.status === GAME_STATUSES.QAING.id;
 
     let uploaderTeam = teams.get($scope.game.uploaderTeamId);
     $scope.league = leagues.get(uploaderTeam.leagueId);
+    $scope.showRevertToIndexing =   $scope.game.status === GAME_STATUSES.READY_FOR_QA.id ||
+                                    $scope.game.status === GAME_STATUSES.QAING.id &&
+                                    $scope.currentAssignment.isQa;
+
     const headCoachRole = uploaderTeam.getHeadCoachRole();
     const sport = sports.get($scope.league.sportId);
 
     $scope.sport = sport;
     $scope.isBasketballGame = sport.id === SPORTS.BASKETBALL.id;
+    $scope.isLaxGame = sport.id === SPORTS.LACROSSE.id;
 
     if ($scope.team.schoolId) {
         $scope.school = schools.get($scope.team.schoolId);
