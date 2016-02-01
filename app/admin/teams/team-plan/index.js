@@ -29,8 +29,8 @@ TeamPlan.run([
  * @type {Controller}
  */
 TeamPlan.controller('TeamPlanController', [
-    '$scope', '$state', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'SessionService', 'PlansFactory', 'TeamsFactory', 'Team', 'TeamPlanIndex', 'NewDate', 'BasicModals',
-    function controller($scope, $state, $modalInstance, TURNAROUND_TIME_RANGES, session, plans, teams, team, teamPlanIndex, dateZeroTime, basicModals) {
+    '$scope', '$state', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'SessionService', 'PlansFactory', 'TeamsFactory', 'Team', 'TeamPlanIndex', 'BasicModals', 'PlanService',
+    function controller($scope, $state, $modalInstance, TURNAROUND_TIME_RANGES, session, plans, teams, team, teamPlanIndex, basicModals, planService) {
 
         $scope.team = team;
         $scope.team.teamPlans = $scope.team.teamPlans || [];
@@ -44,8 +44,8 @@ TeamPlan.controller('TeamPlanController', [
 
         if (!$scope.teamPlan) {
             $scope.teamPlan = {
-                startDate: dateZeroTime.generatePlanStartDate(),
-                endDate: dateZeroTime.generatePlanEndDate(),
+                startDate: planService.getStartDateOfPlan(),
+                endDate: planService.getEndDateOfPlan(),
                 name: '',
                 maxGamesPerPlan: 0,
                 maxRegularGames: 0,
@@ -61,21 +61,8 @@ TeamPlan.controller('TeamPlanController', [
                 delete $scope.teamPlan.id; //prevent overwriting default plan on server
 
                 //Format the saved dates for editing
-                if (plan.startDay && plan.startMonth) {
-                    var startDate = dateZeroTime.generatePlanStartDate();
-                    startDate.setMonth(plan.startMonth);
-                    startDate.setDate(plan.startDay);
-
-                    $scope.teamPlan.startDate = startDate;
-                }
-
-                if (plan.endDay && plan.endMonth) {
-                    var endDate = dateZeroTime.generatePlanEndDate();
-                    endDate.setMonth(plan.endMonth);
-                    endDate.setDate(plan.endDay);
-
-                    $scope.teamPlan.endDate = endDate;
-                }
+                $scope.teamPlan.startDate = planService.getStartDateOfPlan(plan);
+                $scope.teamPlan.endDate = planService.getEndDateOfPlan(plan);
 
             }
         });

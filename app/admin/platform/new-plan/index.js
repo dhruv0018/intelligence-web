@@ -30,8 +30,8 @@ NewPlan.run([
  * @type {Controller}
  */
 NewPlan.controller('NewPlanController', [
-    '$scope', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'EditPlanObj', 'NewDate', 'PlatformData', 'SportsFactory', 'LeaguesFactory',
-    function controller($scope, $modalInstance, turnaroundTimeRanges, editPlanObj, newDate, data, sports, leagues) {
+    '$scope', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'EditPlanObj', 'PlanService', 'PlatformData', 'SportsFactory', 'LeaguesFactory',
+    function controller($scope, $modalInstance, turnaroundTimeRanges, editPlanObj, planService, data, sports, leagues) {
 
         $scope.defaultPlan = {};
         $scope.defaultPlan.leagueIds = [];
@@ -40,6 +40,9 @@ NewPlan.controller('NewPlanController', [
         $scope.leagues = leagues.getList();
 
         $scope.maxTurnaroundTimes = turnaroundTimeRanges;
+
+        $scope.defaultPlan.startDate = planService.getStartDateOfPlan();
+        $scope.defaultPlan.endDate = planService.getEndDateOfPlan();
 
         if (editPlanObj) {
             $scope.defaultPlan = angular.copy(editPlanObj);
@@ -50,18 +53,8 @@ NewPlan.controller('NewPlanController', [
                 $scope.defaultPlan.sportId = leagues.get(editPlanObj.leagueIds[0]).sportId;
             }
 
-            //Format the saved dates for editing
-            var startDate = newDate.generatePlanStartDate();
-            startDate.setMonth($scope.defaultPlan.startMonth);
-            startDate.setDate($scope.defaultPlan.startDay);
-
-            $scope.defaultPlan.startDate = startDate;
-
-            var endDate = newDate.generatePlanEndDate();
-            endDate.setMonth($scope.defaultPlan.endMonth);
-            endDate.setDate($scope.defaultPlan.endDay);
-
-            $scope.defaultPlan.endDate = endDate;
+            $scope.defaultPlan.startDate = planService.getStartDateOfPlan($scope.defaultPlan);
+            $scope.defaultPlan.endDate = planService.getEndDateOfPlan($scope.defaultPlan);
         }
 
         /**

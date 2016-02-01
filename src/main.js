@@ -68,6 +68,7 @@ require('./services/fileUpload/fileUploadEvaporate');
 require('./services/games-resolution/index');
 require('./services/admin-games');
 require('./services/indexer-games');
+require('./services/plan');
 
 require('./constants/users');
 require('./constants/games');
