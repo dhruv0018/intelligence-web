@@ -61,6 +61,7 @@ class EvaporateUploader {
                 file.fileName = awsKey;
                 self.progressFiles[index] = 1;
                 self.callbacks.partial.forEach(callback => {
+                    file.sequence = index + 1;
                     callback(file);
                 });
 
