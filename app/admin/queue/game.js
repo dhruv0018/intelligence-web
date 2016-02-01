@@ -165,8 +165,41 @@ Game.config([
  * @type {Controller}
  */
 Game.controller('GameController', [
-    '$scope', '$stateParams', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES', 'GAME_NOTE_TYPES', 'RawFilm.Modal', 'DeleteGame.Modal', 'SelectIndexer.Modal', 'UsersFactory', 'SportsFactory', 'SchoolsFactory', 'LeaguesFactory', 'TeamsFactory', 'GamesFactory', 'RevertGameStatus.Modal',
-    function controller($scope, $stateParams, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES, GAME_NOTE_TYPES, RawFilmModal, DeleteGameModal, SelectIndexerModal, users, sports, schools, leagues, teams, games, RevertGameStatusModal) {
+    '$scope',
+    '$stateParams',
+    'GAME_STATUSES',
+    'GAME_STATUS_IDS',
+    'GAME_TYPES',
+    'GAME_NOTE_TYPES',
+    'RawFilm.Modal',
+    'DeleteGame.Modal',
+    'SelectIndexer.Modal',
+    'UsersFactory',
+    'SportsFactory',
+    'SchoolsFactory',
+    'LeaguesFactory',
+    'TeamsFactory',
+    'GamesFactory',
+    'RevertGameStatus.Modal',
+    'AlertsService',
+    function controller($scope,
+        $stateParams,
+        GAME_STATUSES,
+        GAME_STATUS_IDS,
+        GAME_TYPES,
+        GAME_NOTE_TYPES,
+        RawFilmModal,
+        DeleteGameModal,
+        SelectIndexerModal,
+        users,
+        sports,
+        schools,
+        leagues,
+        teams,
+        games,
+        RevertGameStatusModal,
+        alerts
+    ) {
 
         $scope.GAME_TYPES = GAME_TYPES;
         $scope.GAME_STATUSES = GAME_STATUSES;
@@ -187,6 +220,19 @@ Game.controller('GameController', [
         $scope.uploaderTeam = teams.get($scope.game.uploaderTeamId);
         $scope.league = leagues.get($scope.uploaderTeam.leagueId);
         $scope.sport = sports.get($scope.league.sportId);
+        $scope.currentAssignment = $scope.game.currentAssignment();
+        $scope.isQa = $scope.game.isQa();
+        $scope.revertAssignment = () => {
+            $scope.game.revertToLastIndexer();
+            $scope.game.save().then(responseGame => {
+                let alert = {
+                    type: 'success',
+                    message: 'You have reverted the game back to indexing'
+                };
+                alerts.add(alert);
+                $scope.currentAssignment = responseGame.currentAssignment();
+            });
+        };
 
         const uploaderTeam = teams.get($scope.game.uploaderTeamId);
         if (uploaderTeam.schoolId) {

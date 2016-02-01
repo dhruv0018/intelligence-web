@@ -107,18 +107,8 @@ function IndexerGameController(
         $scope.headCoach = users.get(headCoachRole.userId);
     }
 
-    //TODO: The game should handle this or the revert(). The scope function
-    //should only have to call that, save the game and change the state.
     $scope.revertAssignment = function() {
-        let previousAssignment = $scope.game.findLastIndexerAssignment();
-        $scope.game.revert();
-
-        let remainingTime = $scope.game.timeRemaining();
-
-        //half of the remaining time
-        let newDeadline = moment.utc().add(remainingTime / 2, 'milliseconds');
-
-        $scope.game.assignToIndexer(previousAssignment.userId, newDeadline);
+        $scope.game.revertToLastIndexer();
         $scope.game.save();
         $state.go(STATES.INDEXER_GAMES_ASSIGNED);
     };

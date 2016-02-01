@@ -191,6 +191,83 @@ describe('GamesFactory', function() {
         }]));
     });
 
+    describe.only('revertToLastIndexer', () => {
+        var game;
+
+        beforeEach(inject([
+            'GamesFactory',
+            function(gamesFactory) {
+                game = {
+                    indexerAssignments: [
+                        {
+                            'userId': 1,
+                            'timeFinished': '2015-07-08T15:17:59+00:00'
+                        },
+                        {
+                            'userId': 2,
+                            'timeFinished': '2015-07-09T15:17:59+00:00'
+                        }
+                    ],
+                    video: {
+                        isComplete: function() {
+                            return true
+                        }
+                    }
+                };
+                game = gamesFactory.extend(game);
+            }
+        ]));
+
+        it('should have the correct number of assignments', () => {
+            game.revertToLastIndexer();
+            expect(game.indexerAssignments.length).to.equal(3);
+        });
+
+        it('should have a current assignment that is a indexing assignment', () => {
+            game.revertToLastIndexer();
+            let currentAssignment = game.currentAssignment();
+            expect(currentAssignment.isQa).to.be.false;
+        });
+
+        it('should be reverted to previous indexer', () => {
+            game.revertToLastIndexer();
+            let currentAssignment = game.currentAssignment();
+            let expectedUserId = 1;
+            expect(currentAssignment.userId).to.equal(expectedUserId);
+        });
+    });
+
+
+    describe("isQa", () => {
+        let game;
+        let GAME_STATUSES;
+
+        beforeEach(inject([
+            'GamesFactory', 'GAME_STATUSES',
+            function(gamesFactory, STATUSES) {
+                game = gamesFactory.extend({});
+                GAME_STATUSES = STATUSES;
+            }
+        ]));
+
+        it("should return false when game status is not in [QAING, READY_FOR_QA]", () => {
+            Object.keys(GAME_STATUSES).filter(function(status) {
+                return status !== 'QAING' && status !== 'READY_FOR_QA';
+            }).forEach(function(status) {
+                game.status = status;
+                expect(game.isQa()).to.be.false;
+            });
+        });
+
+        it("should return true when game status is in [QAING, READY_FOR_QA]", () => {
+            [GAME_STATUSES.QAING.id,
+            GAME_STATUSES.READY_FOR_QA.id].forEach(function(status) {
+                game.status = status;
+                expect(game.isQa()).to.be.true;
+            });
+        });
+    });
+
     describe('canBeAssignedToQa', function() {
 
         it('should return false when the video status is not complete', inject([

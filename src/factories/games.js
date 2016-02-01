@@ -1159,6 +1159,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 throw new Error('An indexer assignment could not be located');
 
             },
+            revertToLastIndexer: function(timeAllotted = Math.abs(this.timeRemaining()/2) ) {
+                let previousAssignment = this.findLastIndexerAssignment();
+                let newDeadline = moment.utc().add(timeAllotted, 'milliseconds');
+                this.revert();
+                this.assignToIndexer(previousAssignment.userId, newDeadline);
+            },
+            isQa: function() {
+                return (this.status === GAME_STATUSES.QAING.id || this.status === GAME_STATUSES.READY_FOR_QA.id);
+            },
             isDelivered: function() {
                 var self = this;
                 return self.status === GAME_STATUSES.FINALIZED.id;
