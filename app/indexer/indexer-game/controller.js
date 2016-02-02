@@ -83,9 +83,11 @@ function IndexerGameController(
 
     let uploaderTeam = teams.get($scope.game.uploaderTeamId);
     $scope.league = leagues.get(uploaderTeam.leagueId);
-    $scope.showRevertToIndexing =   $scope.game.status === GAME_STATUSES.READY_FOR_QA.id ||
-                                    $scope.game.status === GAME_STATUSES.QAING.id &&
-                                    $scope.currentAssignment.isQa;
+    $scope.showRevertToIndexing =   ($scope.game.status === GAME_STATUSES.READY_FOR_QA.id ||
+                                    $scope.game.status === GAME_STATUSES.QAING.id) &&
+                                    $scope.currentAssignment.isQa &&
+                                    userOwnsCurrentAssignment &&
+                                    currentAssignmentIsActive;
 
     const headCoachRole = uploaderTeam.getHeadCoachRole();
     const sport = sports.get($scope.league.sportId);
