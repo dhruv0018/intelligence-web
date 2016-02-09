@@ -40,7 +40,9 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 Object.defineProperty(player, 'shortName', {
                     get: function() {
-                        return this.firstName[0] + '. ' + this.lastName;
+                        let firstName = this.firstName;
+                        let hasFirstName = firstName && firstName.length;
+                        return hasFirstName ? (firstName[0] + '. ' + this.lastName) : this.lastName;
                     },
                     configurable: true
                 });
