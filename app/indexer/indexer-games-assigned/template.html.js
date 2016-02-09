@@ -6,7 +6,7 @@ export default `
 
     <div class="game-indexer-content">
         <div class="indexer-links-container">
-            <a class="lookup" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank">
+            <a class="lookup" id="looking-for-game-cta" href="{{signUpLocation}}" target="_blank" ng-if="signUpLocation">
                 <!--FIXME: Need a grid system-->
                 <div class="lookup-container">
                     <div class="right-container">

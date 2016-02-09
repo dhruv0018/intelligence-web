@@ -44,6 +44,12 @@ Users.directive('krossoverNewRole', [
                 $scope.ATHLETE = ROLES.ATHLETE;
                 $scope.INDEXER_GROUPS_ID = INDEXER_GROUPS_ID;
 
+                // Convert the INDEXER_GROUPS_ID object into a ng-options useable array of objects
+                $scope.indexerGroupOptions = [];
+                angular.forEach(INDEXER_GROUPS_ID, function parseIndexerGroupId(indexerGroupName, indexerGroupId) {
+                    $scope.indexerGroupOptions.push({ id: parseInt(indexerGroupId, 10), name: indexerGroupName });
+                });
+
                 $scope.user.roles = $scope.user.roles || [];
 
                 $scope.users = users;

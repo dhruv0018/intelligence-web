@@ -122,8 +122,17 @@ var ROLES = {
 var INDEXER_GROUPS_ID = {
     1: 'US Marketplace',
     2: 'India Marketplace',
-    3: 'India Office',
-    4: 'Philippines Office'
+    3: 'India Sandcube',
+    4: 'India SourceUs',
+    5: 'India Relativit',
+    6: 'India Tacklesoft',
+    7: 'India Highwave',
+    8: 'Cambodia WBO',
+    9: 'Philippines Marketplace',
+    10: 'Philippines Chrisian',
+    11: 'Office 1',
+    12: 'Office 2',
+    13: 'Office 3'
 };
 
 IntelligenceWebClient.constant('INDEXER_GROUPS_ID', INDEXER_GROUPS_ID);
@@ -142,8 +151,17 @@ IntelligenceWebClient.constant('EMAIL_REQUEST_TYPES', EMAIL_REQUEST_TYPES);
 var INDEXER_GROUPS = {
     US_MARKETPLACE: 1,
     INDIA_MARKETPLACE: 2,
-    INDIA_OFFICE: 3,
-    PHILIPPINES_OFFICE: 4
+    INDIA_SANDCUBE: 3,
+    INDIA_SOURCEUS: 4,
+    INDIA_RELATIVIT: 5,
+    INDIA_TACKLESOFT: 6,
+    INDIA_HIGHWAVE: 7,
+    CAMBODIA_WBO: 8,
+    PHILIPPINES_MARKETPLACE: 9,
+    PHILIPPINES_CHRISIAN: 10,
+    OFFICE_1: 11,
+    OFFICE_2: 12,
+    OFFICE_3: 13
 };
 
 IntelligenceWebClient.constant('INDEXER_GROUPS', INDEXER_GROUPS);

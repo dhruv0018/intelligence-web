@@ -41,7 +41,7 @@
         <h4>Indexer</h4>
         <form name="form" role="form">
             <div class="form-group">
-                <select class="form-control" name="indexerGroup" id="user-role-indexer-group-dropdown" data-ng-model="role.indexerGroupId" data-ng-options="key as value for (key,value) in INDEXER_GROUPS_ID" required>
+                <select class="form-control" name="indexerGroup" id="user-role-indexer-group-dropdown" data-ng-model="role.indexerGroupId" data-ng-options="indexerGroupOption.id as indexerGroupOption.name for indexerGroupOption in indexerGroupOptions" required>
 
                     <option value="">Pick an Office/Marketplace</option>
 

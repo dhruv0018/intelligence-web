@@ -52,15 +52,20 @@ function IndexerGamesController(
     $scope.options = {scope: $scope};
     $scope.PRIORITIES = PRIORITIES;
 
+
     switch (userLocation) {
         case INDEXER_GROUPS.US_MARKETPLACE:
             $scope.signUpLocation = config.links.indexerSignUp.unitedStates.uri;
             break;
         case INDEXER_GROUPS.INDIA_MARKETPLACE:
-        case INDEXER_GROUPS.INDIA_OFFICE:
+        case INDEXER_GROUPS.INDIA_SANDCUBE:
+        case INDEXER_GROUPS.INDIA_SOURCEUS:
+        case INDEXER_GROUPS.INDIA_RELATIVIT:
+        case INDEXER_GROUPS.INDIA_TACKLESOFT:
+        case INDEXER_GROUPS.INDIA_HIGHWAVE:
             $scope.signUpLocation = config.links.indexerSignUp.india.uri;
             break;
-        case INDEXER_GROUPS.PHILIPPINES_OFFICE:
+        case INDEXER_GROUPS.PHILIPPINES_MARKETPLACE:
             $scope.signUpLocation = config.links.indexerSignUp.philippines.uri;
             break;
     }
