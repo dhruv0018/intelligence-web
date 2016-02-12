@@ -308,7 +308,17 @@ module.exports = function(grunt) {
 
         concat: {
             unprefixed: {
-                src: ['fonts.css', 'icons.css', 'build/icons.data.svg.css', 'node_modules/angular-multi-select/angular-multi-select.css', 'node_modules/angular-material/angular-material.css', 'build/build.css', 'build/components.css', 'build/theme.css'],
+                src: [
+                    'fonts.css',
+                    'icons.css',
+                    'build/icons.data.svg.css',
+                    'node_modules/angular-multi-select/angular-multi-select.css',
+                    'node_modules/angular-material/angular-material.css',
+                    'node_modules/angular-bootstrap-colorpicker/css/colorpicker.css',
+                    'build/build.css',
+                    'build/components.css',
+                    'build/theme.css'
+                ],
                 dest: 'build/unprefixed.css'
             }
         },
