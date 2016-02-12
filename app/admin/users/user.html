@@ -5,6 +5,12 @@
             <div class="action" ng-show="user.id">Edit User</div>
             <div class="action" ng-hide="user.id">New User</div>
             <div class="name" ng-show="user.id">{{user.name}}</div>
+            <go-to-as
+                data-ng-if="user.hasNoRoles() || !user.has([ROLES.SUPER_ADMIN, ROLES.ADMIN])"
+                ng-hide="!user.id"
+                id="user-go-to-as-cta-user-{{$index}}"
+                user="user">
+            </go-to-as>
         </div>
         <nav role="navigation">
 

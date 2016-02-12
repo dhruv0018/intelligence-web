@@ -298,7 +298,7 @@ module.exports = function(grunt) {
                         'app/styleguide/**/*.less',
                         'lib/directives/arena-chart/styles.less',
                         'lib/directives/admin-resource-save/styles.less',
-                        'lib/dialogs/send-to-qa/styles.less'
+                        'lib/directives/go-to-as/styles.less'
                     ]
                 }
             }

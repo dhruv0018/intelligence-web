@@ -89,7 +89,11 @@
 
                         </td>
                         <td>
-                            <button id="user-go-to-as-cta-user-{{$index}}" data-ng-if="user.hasNoRoles() || !user.has([ROLES.SUPER_ADMIN, ROLES.ADMIN])" data-ng-click="account.gotoAsUser(user)" class="btn btn-primary">Go To As</button>
+                            <go-to-as
+                                data-ng-if="user.hasNoRoles() || !user.has([ROLES.SUPER_ADMIN, ROLES.ADMIN])"
+                                id="user-go-to-as-cta-user-{{$index}}"
+                                user="user">
+                            </go-to-as>
                         </td>
                     </tr>
 
