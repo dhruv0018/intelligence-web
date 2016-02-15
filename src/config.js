@@ -31,6 +31,14 @@ else if (environment === 'uat') {
     config = require('../config/uat.json');
 }
 
+else if (environment === 'buildserver') {
+
+    environment = 'production';
+    config = require('../config/prod.json');
+    config.oauth.uri = 'http://' + process.env.BUILDSERVER + '.v2.krossover.com/intelligence-api/oauth/';
+    config.api.uri = 'http://' + process.env.BUILDSERVER + '.v2.krossover.com/intelligence-api/v1/';
+}
+
 else {
 
     environment = 'production';
