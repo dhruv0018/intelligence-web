@@ -219,6 +219,11 @@ IntelligenceWebClient.service('PlaysManager', [
                     if (!teamId) {
 
                         console.warn('WARNING: Missing `teamId` in Field!', field);
+                    } else {
+                        /* Make sure that the possessionTeamId is of the team serving for Volleyball */
+                        if (event.name === 'Serve') {
+                            play.possessionTeamId = teamId;
+                        }
                     }
                 }
 
