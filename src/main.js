@@ -121,6 +121,7 @@ require('./models/filtersets');
 require('./models/reels');
 require('./models/plans');
 require('./models/customtags');
+require('./models/formationlabels');
 
 require('./storage/base');
 require('./storage/users');
@@ -138,6 +139,7 @@ require('./storage/reels');
 require('./storage/positionsets');
 require('./storage/plans');
 require('./storage/customtags');
+require('./storage/formationlabels');
 
 require('./factories');
 require('./factories/base');
@@ -156,6 +158,7 @@ require('./factories/reels');
 require('./factories/positionsets');
 require('./factories/plans');
 require('./factories/customtags');
+require('./factories/formationlabels');
 
 require('./emitters/emitter.js');
 require('./emitters/playlist');
