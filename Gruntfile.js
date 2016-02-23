@@ -31,6 +31,10 @@ module.exports = function(grunt) {
             },
             prod: {
                 NODE_ENV: 'production'
+            },
+            buildserver: {
+                NODE_ENV: 'buildserver',
+                BUILDSERVER: grunt.option('buildserver')
             }
         },
 
@@ -382,6 +386,20 @@ module.exports = function(grunt) {
                 dest: './build'
             },
             prod: {
+                options: {
+                    development: false,
+                    standalone: true,
+                    require: true,
+                    verbose: true,
+                    copy: false,
+                    scripts: true,
+                    styles: false,
+                    files: false
+                },
+                src: '.',
+                dest: './build'
+            },
+            buildserver: {
                 options: {
                     development: false,
                     standalone: true,
@@ -793,6 +811,31 @@ module.exports = function(grunt) {
     grunt.registerTask('uat', [
         'clean',
         'env:uat',
+        'componentbuild:prod',
+        'browserify:prod',
+        'ngAnnotate',
+        'copy:theme-vendor',
+        'componentbuild:styles',
+        'less',
+        'svgmin',
+        'grunticon',
+        'concat:unprefixed',
+        'autoprefixer',
+        'componentbuild:files',
+        'copy:theme-assets',
+        'copy:assets',
+        'copy:dev',
+        'copy:build',
+        'copy:polyfills',
+        'copy:htaccess',
+        'manifests',
+        'ver:polyfills',
+        'ver:prod'
+    ]);
+
+    grunt.registerTask('buildserver', [
+        'clean',
+        'env:buildserver',
         'componentbuild:prod',
         'browserify:prod',
         'ngAnnotate',
