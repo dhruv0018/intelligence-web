@@ -10,50 +10,57 @@
 
         <ul data-ng-hide="errors.length > 0">
             <li>
-                <strong> Step 1:</strong> Download our <a id="open-template-roster-cta" target="_blank" href="{{rosterTemplateUrl}}">excel roster file</a>
+                <strong> Step 1:</strong> Download our <a id="open-template-roster-cta" target="_blank" href="{{rosterTemplateUrl}}">Excel roster file</a>
             </li>
             <li>
-                <strong>Step 2:</strong> Enter your roster into the excel file.
+                <strong>Step 2:</strong> Enter your roster into the Excel file
             </li>
             <li>
-                <strong>Step 3:</strong> Read these important notes about entering information into the excel file.
-                <p>
-                    <i>Entering an email will create a Krossover account for the Athlete. Use these abbreviations for position:</i>
-                </p>
+                <strong>Step 3:</strong> Note the important info below when entering your roster
+            </li>
+            <li>
+                <strong>Step 4:</strong> Start upload
+            </li>
+            <li>
+                <div class="positions-instructions shaded">
 
-                <div class="positions-list shaded">
-                    <div class="position" data-ng-class="{'pull-left': !$last}" data-ng-repeat="position in positionset.positions">
+                    <div class="instruction-header">
+                        Use these abbreviations for position:
+                    </div>
+
+                    <div class="position" data-ng-class="{'pull-left': !$last || positionset.positions.length%2==0, 'last': $last}" data-ng-repeat="position in positionset.positions">
                         <span class="description">{{position.description}}</span>
                         <span class="name">{{position.name}}</span>
                     </div>
-                </div>
 
-                <div class="positions-list">
-                    Separate multiple positions with a comma, like this:
-                    <div>
-                        <span data-ng-repeat="position in positionset.positions">
-                            <strong>
-                                {{position.name}}<span data-ng-if="!$last">,</span>
-                            </strong>
-                        </span>
+                    <div class="instruction-header">
+                        Separate multiple positions with a comma, like this:
+                    </div>
+
+                    <span data-ng-repeat="position in positionset.positions | limitTo: 5">
+                        {{position.name}}<span data-ng-if="!$last">,</span>
+                    </span>
+
+                    <div class="instruction-header upper-margin">
+                        Entering an email will create a Krossover account for the Athlete.
                     </div>
                 </div>
 
             </li>
-            <li>
-                Once the roster is in the excel file, select it <br/>
+            <li class="extra-upper-margin">
+                <div class="upload-instructions">Once the roster is <strong>saved</strong> in the Excel file, upload it below.</div>
 
                 <div data-ng-show="files" class="files-list shaded">
                     <div>
-                        {{files[0].name}} <data-krossover-uploader data-id="pick-file-again-cta" data-ng-show="files" data-upload-label="Pick Again" ng-click="clearAlerts()" data-on-upload="uploadFile(files)"></data-krossover-uploader>
+                        {{files[0].name}} <data-krossover-uploader data-id="pick-file-again-cta" data-ng-show="files" data-upload-label="Choose Again" ng-click="clearAlerts()" data-on-upload="uploadFile(files)"></data-krossover-uploader>
                     </div>
                     <span ng-if="invalidFormat" class="invalid-file-format">Invalid file format. Please try again.</span>
                 </div>
 
-                <data-krossover-uploader data-id="choose-roster-cta" data-ng-show="!files" data-upload-label="Choose File" data-on-upload="uploadFile(files)"></data-krossover-uploader>
+                <data-krossover-uploader data-id="choose-roster-cta" data-ng-show="!files" data-upload-label="Choose File" data-on-upload="uploadFile(files)" data-no-file="true"></data-krossover-uploader>
             </li>
-            <li>
-                <button class="btn btn-primary" id="start-roster-upload-cta" data-ng-click="uploadRoster()"  ng-disabled="isUploading">
+            <li class="extra-upper-margin">
+                <button class="btn btn-primary pull-right" id="start-roster-upload-cta" data-ng-click="uploadRoster()"  ng-disabled="isUploading">
                     Start Roster Upload
                     <krossover-spinner ng-show="isUploading" size="'15px'"></krossover-spinner>
                 </button>

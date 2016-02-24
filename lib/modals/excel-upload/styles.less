@@ -9,9 +9,11 @@
         max-height: @maxHeightModalScroll;
         overflow-y: auto;
         overflow-x: hidden;
+        padding-left: 0px;
 
         ul{
             padding: 0px;
+            margin-left: -20px;
 
             li{
                 list-style-type: none;
@@ -19,7 +21,7 @@
             }
         }
 
-        .positions-list{
+        .positions-instructions{
             margin: 10px 0 10px 0;
 
             .position{
@@ -29,18 +31,37 @@
                     display:inline-block;
                     width: 180px;
                 }
+            }
 
+            .last{
+                margin-bottom: 11px;
+            }
+
+            .instruction-header{
+                font-weight: 500;
             }
         }
 
+        .upper-margin{
+            margin-top: 11px;
+        }
+
+        .extra-upper-margin{
+            margin-top: 22px;
+        }
+
         .shaded{
-            padding:20px;
+            padding:10px 20px 10px 20px;
             background: @content-bg;
             border: 1px solid @gray-border;
         }
 
         .krossover-uploader{
             line-height: 10px;
+        }
+
+        .upload-instructions{
+            margin-bottom:5px;
         }
 
         .files-list{

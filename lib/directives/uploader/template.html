@@ -1,5 +1,7 @@
 <div class="krossover-uploader">
     <form>
         <button id="{{id}}" class="btn-upload">{{uploadLabel}} <i class="icon icon-upload-alt"></i><input id="upload-files-input" type="file" on-file-change="onUpload"></button>
+        <!-- Since the file chosen information is tracked on the directive user's side, it's their responsibility to pass the correct value for noFile -->
+        <span class="file-status" ng-show="noFile">No file chosen</span>
     </form>
 </div>
