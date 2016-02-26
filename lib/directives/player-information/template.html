@@ -12,7 +12,7 @@
         </span>
     </div>
     <select class="form-control" ng-if="seasonId && teams.length > 1 && showWSCSeasons" feature="WSCLink" ng-options="team as team.name for team in teams" ng-model="team"></select>
-    <wsc-link season-id="seasonId" teams="[team]" feature="WSCLink" ng-if="seasonId && teams.length && showWSCSeasons"></wsc-link>
+    <wsc-link league-id="highlightLeagueId" season-id="seasonId" teams="[team]" feature="WSCLink" ng-if="seasonId && teams.length && showWSCSeasons"></wsc-link>
     <hr feature="WSCLink" ng-if="seasonId && teams.length && showWSCSeasons">
     <div class="player-roles-info" ng-repeat="roleInfo in rolesInfo">
         <sport-placeholder sport="roleInfo.sport"></sport-placeholder>
