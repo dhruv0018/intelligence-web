@@ -1,3 +1,17 @@
+# v2.37.0#
+##Features##
+- Improves styling of "go to as" and adds it to the Users page.
+- Restricts reverting indexer assignments to only the indexer's active assignments
+- Add additional teams to the Self Editor Whitelist
+- Makes Postal Code required for Schools
+- Restricts reverting indexer set aside to only active assignments
+- Adds WSC link to Player Information template
+
+##Fixes##
+- Improves Roster upload modal styling
+- Reverts to redirects for https:
+
+
 # v2.36.0#
 ##Features##
 - Improves navigation styling a bit, focus on search bar when opening drop down
