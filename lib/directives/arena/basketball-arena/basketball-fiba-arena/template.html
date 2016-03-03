@@ -29,14 +29,21 @@
 		<!-- Behind the Arc -->
 		<rect class="behind-the-arc indexable-region" x="0" y="0" width="50%" height="100%" />
 
-		<!-- Mid Range -->
-		<use class="mid-range indexable-region" xlink:href="#left-arc" />
+		<!-- Mid Range
+		 	 Temporarily removing use elements because of a Chrome 49 issue with them.
+			 Once this has been resolved, these can be uncommented to put them back and
+			 the hard coded shapes removed.
+			 
+		<use class="mid-range indexable-region" xlink:href="#left-arc" /> -->
+		<path class="mid-range indexable-region" stroke-width="4" stroke-miterlimit="10" d="M1.9,591.1h127.2c0,0,223.7-44,223.7-270.4 c0-238.3-223.7-277.4-223.7-277.4H1.9"/>
 
-		<!-- Inside the Paint -->
-		<use class="inside-the-paint indexable-region" xlink:href="#left-key" />
+		<!-- Inside the Paint
+		<use class="inside-the-paint indexable-region" xlink:href="#left-key" /> -->
+		<polyline class="inside-the-paint indexable-region" stroke-width="4" stroke-miterlimit="10" points="1.9,421.6 246.2,421.6 246.2,219.7 1.9,219.7"/>
 
-		<!-- Around the Rim -->
-		<use class="around-the-rim indexable-region" xlink:href="#left-around-rim" />
+		<!-- Around the Rim
+		<use class="around-the-rim indexable-region" xlink:href="#left-around-rim" />-->
+		<path class="around-the-rim indexable-region" d="M0,262 h55 a55,55,0,0,1,0,120 h-55 z" />
 
 		<!-------- Visible Regions -------->
 
@@ -47,14 +54,16 @@
 				c-5.5,0-9.9,4.4-9.9,9.9c0,5.5,4.4,9.9,9.9,9.9c5.5,0,9.9-4.4,9.9-9.9C81.2,315.2,76.8,310.8,71.3,310.8L71.3,310.8z"/>
 		</g>
 
-		<!-- Key -->
-		<use xlink:href="#left-key" class="no-fill stroke" />
+		<!-- Key
+		<use xlink:href="#left-key" class="no-fill stroke" /> -->
+		<polyline class="no-fill stroke" stroke-width="4" stroke-miterlimit="10" points="1.9,421.6 246.2,421.6 246.2,219.7 1.9,219.7"/>
 
 		<!-- Free Throw Circle -->
 		<circle class="no-fill stroke" stroke-miterlimit="10" cx="248" cy="320.7" r="76"/>
 
-		<!-- Three Point Arc -->
-		<use xlink:href="#left-arc" class="no-fill stroke" />
+		<!-- Three Point Arc
+		<use xlink:href="#left-arc" class="no-fill stroke" /> -->
+		<path class="no-fill stroke" stroke-width="4" stroke-miterlimit="10" d="M1.9,591.1h127.2c0,0,223.7-44,223.7-270.4 c0-238.3-223.7-277.4-223.7-277.4H1.9"/>
 	</g>
 
 	<!-- Right Half of Court -->
@@ -64,14 +73,17 @@
 		<!-- Behind the Arc -->
 		<rect class="behind-the-arc indexable-region" x="590" y="0" width="50%" height="100%" />
 
-		<!-- Mid Range -->
-		<use class="mid-range indexable-region" xlink:href="#right-arc" />
+		<!-- Mid Range
+		<use class="mid-range indexable-region" xlink:href="#right-arc" /> -->
+		<path class="mid-range indexable-region" stroke-width="4" stroke-miterlimit="10" d="M1181.8,43.3h-127.2c0,0-223.7,44-223.7,270.4 c0,238.3,223.7,277.4,223.7,277.4h127.2"/>
 
-		<!-- Inside the Paint -->
-		<use class="inside-the-paint indexable-region" xlink:href="#right-key" />
+		<!-- Inside the Paint
+		<use class="inside-the-paint indexable-region" xlink:href="#right-key" /> -->
+		<polyline class="inside-the-paint indexable-region" stroke-width="4" stroke-miterlimit="10" points="1181.8,212.8 937.5,212.8 937.5,414.7 1181.8,414.7"/>
 
-		<!-- Around the Rim -->
-		<use class="around-the-rim indexable-region" xlink:href="#right-around-rim" />
+		<!-- Around the Rim
+		<use class="around-the-rim indexable-region" xlink:href="#right-around-rim" /> -->
+		<path class="around-the-rim indexable-region" d="M1181,374 h-55 a55,55,0,0,1,0,-120 h55 z" />
 
 		<!-------- Visible Regions -------->
 
@@ -83,14 +95,16 @@
 				L1112.4,303.7z"/>
 		</g>
 
-		<!-- Key -->
-		<use xlink:href="#right-key" class="no-fill stroke" />
+		<!-- Key
+		<use xlink:href="#right-key" class="no-fill stroke" /> -->
+		<polyline class="no-fill stroke" stroke-width="4" stroke-miterlimit="10" points="1181.8,212.8 937.5,212.8 937.5,414.7 1181.8,414.7"/>
 
 		<!-- Free Throw Circle -->
 		<circle class="no-fill stroke" stroke-miterlimit="10" cx="935.7" cy="313.7" r="76"/>
 
-		<!-- Three Point Arc -->
-		<use xlink:href="#right-arc" class="no-fill stroke" />
+		<!-- Three Point Arc
+		<use xlink:href="#right-arc" class="no-fill stroke" /> -->
+		<path class="no-fill stroke" stroke-width="4" stroke-miterlimit="10" d="M1181.8,43.3h-127.2c0,0-223.7,44-223.7,270.4 c0,238.3,223.7,277.4,223.7,277.4h127.2"/>
 	</g>
 
 	<!-- Krossover Logo and Half Court Line -->
