@@ -770,7 +770,6 @@ module.exports = function(grunt) {
         'browserify:prod',
         'ngAnnotate',
         'copy:theme-vendor',
-        'componentbuild:styles',
         'less',
         'svgmin',
         'grunticon',
