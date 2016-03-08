@@ -1,66 +1,153 @@
 <div class="football-field-formation" style="left: {{left}}%">
+    <div class="formations-container">
+        <svg class="formation right-formation" version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 310 118" preserveaspectratio="none">
+            <g id="right-flank">
+                <circle
+                    id="right1"
+                    class="skill-position"
+                    ng-if="rightFlankFormation.players.flank1"
+                    ng-attr-cx="{{rightFlankFormation.players.flank1.x}}"
+                    ng-attr-cy="{{rightFlankFormation.players.flank1.y}}"
+                    r="10">
+                </circle>
+                <circle
+                    id="right2"
+                    class="skill-position"
+                    ng-if="rightFlankFormation.players.flank2"
+                    ng-attr-cx="{{rightFlankFormation.players.flank2.x}}"
+                    ng-attr-cy="{{rightFlankFormation.players.flank2.y}}"
+                    r="10">
+                </circle>
+                <circle
+                    id="right3"
+                    class="skill-position"
+                    ng-if="rightFlankFormation.players.flank3"
+                    ng-attr-cx="{{rightFlankFormation.players.flank3.x}}"
+                    ng-attr-cy="{{rightFlankFormation.players.flank3.y}}"
+                    r="10">
+                </circle>
+                <circle
+                    id="right4"
+                    class="skill-position"
+                    ng-if="rightFlankFormation.players.flank4"
+                    ng-attr-cx="{{rightFlankFormation.players.flank4.x}}"
+                    ng-attr-cy="{{rightFlankFormation.players.flank4.y}}"
+                    r="10">
+                </circle>
+            </g>
+        </svg>
+        <svg class="formation middle-formation" version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 140 118" preserveaspectratio="none">
+            <g id="rightOL">
+                <circle
+                    id="right-tackle"
+                    class="lineman"
+                    cx="9.5"
+                    cy="95"
+                    r="10">
+                </circle>
+                <circle
+                    id="right-guard"
+                    class="lineman"
+                    cx="40"
+                    cy="95"
+                    r="10">
+                </circle>
+            </g>
+            <g id="center">
+                <rect id="center-outer-square" stroke="#000000" stroke-width="2" fill="#FFFFFF" x="60" y="85" width="20" height="20" rx="2"></rect>
+                <g id="Group-4" transform="translate(70, 86.5) rotate(-315.000000)" stroke="#000000" stroke-width="2" fill="#FFFFFF">
+                    <rect id="center-x-1" x="0" y="5" width="12" height="2" rx="2"></rect>
+                    <rect id="center-x-2" transform="translate(6.000000, 6.000000) rotate(-270.000000) translate(-6.000000, -6.000000) " x="0" y="5" width="12" height="2" rx="2"></rect>
+                </g>
+            </g>
+            <g id="leftOL">
+                <circle
+                    id="left-guard"
+                    class="lineman"
+                    cx="100"
+                    cy="95"
+                    r="10">
+                </circle>
+                <circle
+                    id="left-tackle"
+                    class="lineman"
+                    cx="130"
+                    cy="95"
+                    r="10">
+                </circle>
+            </g>
+            <g id="backfield">
+                <circle
+                    id="quarterback"
+                    class="qb"
+                    ng-attr-cx="{{backfieldFormation.players.qb.x}}"
+                    ng-attr-cy="{{backfieldFormation.players.qb.y}}"
+                    r="10">
+                </circle>
+                <circle
+                    id="back1"
+                    class="skill-position"
+                    ng-if="backfieldFormation.players.back1"
+                    ng-attr-cx="{{backfieldFormation.players.back1.x}}"
+                    ng-attr-cy="{{backfieldFormation.players.back1.y}}"
+                    r="10">
+                </circle>
+                <circle
+                    id="back2"
+                    class="skill-position"
+                    ng-if="backfieldFormation.players.back2"
+                    ng-attr-cx="{{backfieldFormation.players.back2.x}}"
+                    ng-attr-cy="{{backfieldFormation.players.back2.y}}"
+                    r="10">
+                </circle>
+                <circle
+                    id="back3"
+                    class="skill-position"
+                    ng-if="backfieldFormation.players.back3"
+                    ng-attr-cx="{{backfieldFormation.players.back3.x}}"
+                    ng-attr-cy="{{backfieldFormation.players.back3.y}}"
+                    r="10">
+                </circle>
+            </g>
+        </svg>
+        <svg class="formation left-formation" version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 310 118" preserveaspectratio="none">
+            <g id="left-flank" transform="translate(310,0) scale(-1,1)">
+                <circle
+                    id="left1"
+                    class="skill-position"
+                    ng-if="leftFlankFormation.players.flank1"
+                    ng-attr-cx="{{leftFlankFormation.players.flank1.x}}"
+                    ng-attr-cy="{{leftFlankFormation.players.flank1.y}}"
+                    r="10">
+                </circle>
+                <circle
+                    id="left2"
+                    class="skill-position"
+                    ng-if="leftFlankFormation.players.flank2"
+                    ng-attr-cx="{{leftFlankFormation.players.flank2.x}}"
+                    ng-attr-cy="{{leftFlankFormation.players.flank2.y}}"
+                    r="10">
+                </circle>
+                <circle
+                    id="left3"
+                    class="skill-position"
+                    ng-if="leftFlankFormation.players.flank3"
+                    ng-attr-cx="{{leftFlankFormation.players.flank3.x}}"
+                    ng-attr-cy="{{leftFlankFormation.players.flank3.y}}"
+                    r="10">
+                </circle>
+                <circle
+                    id="left4"
+                    class="skill-position"
+                    ng-if="leftFlankFormation.players.flank4"
+                    ng-attr-cx="{{leftFlankFormation.players.flank4.x}}"
+                    ng-attr-cy="{{leftFlankFormation.players.flank4.y}}"
+                    r="10">
+                </circle>
+            </g>
+        </svg>
+    </div>
 
-    <svg class="formation" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewbox="0 0 204 118" preserveaspectratio="none">
-    <g id="rightSide">
-        <path style="fill:#CCCCCC;stroke:#000000;stroke-width:1.152;stroke-miterlimit:10;" d="M53.3639641,94.6359787
-            c3.51474,3.5148315,3.51474,9.2131958,0,12.7280273c-3.5147095,3.5147095-9.2131958,3.5147095-12.7279053,0
-            c-3.5147362-3.5148315-3.5147362-9.2131958,0-12.7280273C44.1507683,91.1212692,49.8492546,91.1212692,53.3639641,94.6359787"/>
-        <path style="fill:#CCCCCC;stroke:#000000;stroke-width:1.152;stroke-miterlimit:10;" d="M80.3640213,94.6359787
-            c3.5147018,3.5148315,3.5147018,9.2131958,0,12.7280273c-3.514801,3.5147095-9.2132416,3.5147095-12.727951,0
-            c-3.51474-3.5148315-3.51474-9.2131958,0-12.7280273C71.1507797,91.1212692,76.8492203,91.1212692,80.3640213,94.6359787"/>
-    </g>
-    <g id="center">
-        <path style="fill:#FFFFFF;" d="M93.4970703,111.1147461c-0.3374023,0-0.6118164-0.2744141-0.6118164-0.6118164V91.4970703
-            c0-0.3374023,0.2744141-0.6118164,0.6118164-0.6118164h19.0058594c0.3369141,0,0.6113281,0.2744141,0.6113281,0.6118164v19.0058594
-            c0,0.3374023-0.2744141,0.6118164-0.6113281,0.6118164H93.4970703z"/>
-        <path d="M112.5030212,91.4611206c0.0197754,0,0.0358582,0.0160828,0.0358582,0.0358582v19.006012
-            c0,0.0198059-0.0160828,0.0358887-0.0358582,0.0358887h-19.006012c-0.0198059,0-0.0358887-0.0160828-0.0358887-0.0358887
-            v-19.006012c0-0.0197754,0.0160828-0.0358582,0.0358887-0.0358582H112.5030212 M112.5030212,90.3091125h-19.006012
-            c-0.6560669,0-1.1878967,0.5317993-1.1878967,1.1878662v19.006012c0,0.6560669,0.5318298,1.1878967,1.1878967,1.1878967h19.006012
-            c0.6560669,0,1.1878662-0.5318298,1.1878662-1.1878967v-19.006012
-            C113.6908875,90.8409119,113.1590881,90.3091125,112.5030212,90.3091125L112.5030212,90.3091125z"/>
-    </g>
-    <path d="M107.3938675,103.6777725c0-0.1849823-0.0740051-0.3698883-0.2071304-0.5030212l-2.1747665-2.1747589l2.1747665-2.1746902
-        c0.1331253-0.133194,0.2071304-0.3181076,0.2071304-0.5030136c0-0.1849136-0.0740051-0.3698273-0.2071304-0.5030212
-        l-1.0060349-1.0059662c-0.1331329-0.1331253-0.3180389-0.2071304-0.5029526-0.2071304
-        c-0.1849823,0-0.3698883,0.0740051-0.5030212,0.2071304l-2.1747589,2.1746902l-2.1746902-2.1746902
-        c-0.1331253-0.1331253-0.3181076-0.2071304-0.5030136-0.2071304c-0.1849136,0-0.3698273,0.0740051-0.5030212,0.2071304
-        l-1.0059662,1.0059662c-0.1331253,0.133194-0.2071304,0.3181076-0.2071304,0.5030212
-        c0,0.184906,0.0740051,0.3698196,0.2071304,0.5030136l2.1747589,2.1746902l-2.1747589,2.1747589
-        c-0.1331253,0.1331329-0.2071304,0.3180389-0.2071304,0.5030212c0,0.1849136,0.0740051,0.3698196,0.2071304,0.5029449
-        l1.0059662,1.0060425c0.133194,0.1331253,0.3181076,0.2070618,0.5030212,0.2070618
-        c0.184906,0,0.3698883-0.0739365,0.5030136-0.2070618l2.1746902-2.1747665l2.1747589,2.1747665
-        c0.1331329,0.1331253,0.3180389,0.2070618,0.5030212,0.2070618c0.1849136,0,0.3698196-0.0739365,0.5029526-0.2070618
-        l1.0060349-1.0060425C107.3198624,104.0475922,107.3938675,103.8626862,107.3938675,103.6777725z"/>
-    <g id="leftSide">
-        <path style="fill:#CCCCCC;stroke:#000000;stroke-width:1.152;stroke-miterlimit:10;" d="M165.3639526,94.6359787
-            c3.51474,3.5148315,3.51474,9.2131958,0,12.7280273c-3.5147095,3.5147095-9.2131958,3.5147095-12.7279053,0
-            c-3.51474-3.5148315-3.51474-9.2131958,0-12.7280273C156.1507568,91.1212692,161.8492432,91.1212692,165.3639526,94.6359787"/>
-        <path style="fill:#CCCCCC;stroke:#000000;stroke-width:1.152;stroke-miterlimit:10;" d="M138.3639374,94.6359787
-            c3.51474,3.5148315,3.51474,9.2131958,0,12.7280273c-3.5147095,3.5147095-9.2131958,3.5147095-12.7279129,0
-            c-3.5147324-3.5148315-3.5147324-9.2131958,0-12.7280273C129.1507416,91.1212692,134.8492279,91.1212692,138.3639374,94.6359787"/>
-    </g>
-    <g id="backfield" data-ng-hide="true">
-        <path style="fill:#CCCCCC;stroke:#000000;stroke-width:1.152;stroke-miterlimit:10;" d="M109.190239,65.6359787
-            c3.5146942,3.5148315,3.5146942,9.2131958,0,12.7280273c-3.514801,3.5147095-9.2131958,3.5147095-12.7279968,0
-            c-3.5146942-3.5148315-3.5146942-9.2131958,0-12.7280273C99.9770432,62.121273,105.6754379,62.121273,109.190239,65.6359787"/>
-        <path style="fill:#CCCCCC;stroke:#000000;stroke-width:1.152;stroke-miterlimit:10;" d="M109.190239,38.635891
-            c3.5146942,3.5148315,3.5146942,9.2131958,0,12.7280273c-3.514801,3.5147095-9.2131958,3.5147095-12.7279968,0
-            c-3.5146942-3.5148315-3.5146942-9.2131958,0-12.7280273C99.9770432,35.1211815,105.6754379,35.1211815,109.190239,38.635891"/>
-        <path style="fill:#CCCCCC;stroke:#000000;stroke-width:1.152;stroke-miterlimit:10;" d="M109.190239,11.6357975
-            c3.5146942,3.5148315,3.5146942,9.2131958,0,12.7280273c-3.514801,3.5147095-9.2131958,3.5147095-12.7279968,0
-            c-3.5146942-3.5148315-3.5146942-9.2131958,0-12.7280273C99.9770432,8.121088,105.6754379,8.121088,109.190239,11.6357975"/>
-    </g>
-    <g id="tightEnds">
-        <path style="fill:#CCCCCC;stroke:#000000;stroke-width:1.152;stroke-miterlimit:10;" d="M26.3639469,94.6359787
-            c3.51474,3.5148315,3.51474,9.2131958,0,12.7280273c-3.5147095,3.5147095-9.2131958,3.5147095-12.7279053,0
-            c-3.5147362-3.5148315-3.5147362-9.2131958,0-12.7280273C17.1507511,91.1212692,22.8492374,91.1212692,26.3639469,94.6359787"/>
-        <path style="fill:#CCCCCC;stroke:#000000;stroke-width:1.152;stroke-miterlimit:10;" d="M192.3639984,94.6359787
-        c3.5147095,3.5148315,3.5147095,9.2131958,0,12.7280273c-3.514801,3.5147095-9.2132416,3.5147095-12.727951,0
-        c-3.51474-3.5148315-3.51474-9.2131958,0-12.7280273C183.1507568,91.1212692,188.8491974,91.1212692,192.3639984,94.6359787"/>
-    </g>
-    </svg>
-
-    <krossover-arena-football-field-run-report data-runs="runs" data-game="game" data-plays="plays" data-team-id="teamId" data-opposing-team-id="opposingTeamId" data-team-players="teamPlayers" data-opposing-team-players="opposingTeamPlayers" data-league="league" data-chart="chart" data-redzone="redzone"></krossover-arena-football-field-run-report>
+    <krossover-arena-football-field-run-report runs="runs" game="game" plays="plays" team-id="teamId" opposing-team-id="opposingTeamId" team-players="teamPlayers" opposing-team-players="opposingTeamPlayers" league="league" chart="chart" redzone="redzone"></krossover-arena-football-field-run-report>
 
 </div>

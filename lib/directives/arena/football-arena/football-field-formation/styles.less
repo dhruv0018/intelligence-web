@@ -9,10 +9,42 @@
             z-index: 2;
             margin-left: -100px;
 
-            .formation {
+            .formations-container {
 
-                width: 200px;
-                height: 118px;
+                display: flex;
+                margin-left: -280px;
+
+                .formation {
+
+                    height: 118px;
+                    overflow: visible;
+                }
+
+                .right-formation,
+                .left-formation {
+                    width: 310px;
+                }
+
+                .middle-formation {
+                    width: 140px;
+                }
+
+                circle {
+                    stroke: black;
+                    stroke-width: 1.5px;
+                }
+
+                .lineman {
+                    fill: white;
+                }
+
+                .skill-position {
+                    fill: @brand-blue;
+                }
+
+                .qb {
+                    fill: @brand-light-blue;
+                }
             }
         }
     }
