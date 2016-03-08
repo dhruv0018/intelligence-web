@@ -1,3 +1,7 @@
+# v2.38.0#
+##Features##
+- Adds ability to create custom Football Formation Labels
+
 # v2.37.0#
 ##Features##
 - Improves styling of "go to as" and adds it to the Users page.
