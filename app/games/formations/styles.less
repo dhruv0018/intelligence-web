@@ -3,6 +3,13 @@
     height: 100%;
     overflow-y: auto;
 
+    .formations-loading {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .formations-teams-header {
         width: 80%;
         margin: 20px auto;
@@ -44,26 +51,32 @@
         }
 
         .field-header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
             color: white;
             background-color: @brand-blue;
             height: 50px;
-            line-height: 50px;
             padding-left: 20px;
             padding-right: 20px;
+            font-size: @font-size-base;
             font-weight: 400;
 
             .field-info {
                 margin-right: 30px;
+            }
 
-                .field-info-title {
-                    font-weight: 500;
-                    color: yellow;
-                }
+            .field-info-title {
+                font-weight: 500;
+                color: yellow;
+            }
+
+            .formation-label-container {
+                flex: 1;
             }
 
             i {
-                line-height: 50px;
-                font-size: 30px;
+                font-size: 14px;
             }
         }
 
@@ -71,10 +84,8 @@
             background-color: @gray-lighter;
             color: @brand-blue;
 
-            .field-info {
-                .field-info-title {
-                    color: @brand-blue;
-                }
+            .field-info-title {
+                color: @brand-blue;
             }
         }
 

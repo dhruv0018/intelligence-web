@@ -125,6 +125,7 @@ GamesFormations.controller('GamesFormations.controller', [
 
         let formationReport = angular.copy(data.formationReport);
         $scope.report = formationReport;
+        $scope.updatingFormations = false;
 
         //Game Related
         let gameId = $stateParams.id;
@@ -139,6 +140,8 @@ GamesFormations.controller('GamesFormations.controller', [
         //League Related
         let league = leagues.get($scope.team.leagueId);
         $scope.league = league;
+        let season = league.getCurrentSeason() || league.getMostRecentSeason();
+        if (season) $scope.seasonId = season.id;
 
         //Custom Tags Related
         $scope.customtags = customtags.getList();
@@ -158,58 +161,62 @@ GamesFormations.controller('GamesFormations.controller', [
         $scope.$watch('customTagIds', updateReport);
 
         function updateReport() {
-            //Filter plays by custom tag ids
-            $scope.plays = plays.filterByCustomTags($scope.allPlays, $scope.customTagIds);
-            let playIds = $scope.plays.map(play => play.id);
+            $scope.updatingFormations = true;
+            $scope.game.getFormationReport().$promise.then(updatedFormationReport => {
+                //Filter plays by custom tag ids
+                $scope.plays = plays.filterByCustomTags($scope.allPlays, $scope.customTagIds);
+                let playIds = $scope.plays.map(play => play.id);
 
-            //Make new copy of formation report before filtering
-            formationReport = angular.copy(data.formationReport);
+                //Make new copy of formation report before filtering
+                formationReport = angular.copy(updatedFormationReport);
 
-            formationReport[$scope.teamId].forEach(chart => {
-                let snaps = 0;
+                formationReport[$scope.teamId].forEach(chart => {
+                    let snaps = 0;
 
-                //For some reason this becomes an array when empty
-                if (chart.passes && !Array.isArray(chart.passes)) {
-                    Object.keys(ZONE_IDS).forEach(zoneId => {
-                        let passes = chart.passes[zoneId];
+                    //For some reason this becomes an array when empty
+                    if (chart.passes && !Array.isArray(chart.passes)) {
+                        Object.keys(ZONE_IDS).forEach(zoneId => {
+                            let passes = chart.passes[zoneId];
 
-                        if (passes) {
-                            //Filter passes by new list of plays
-                            chart.passes[zoneId].playIds = passes.playIds.filter(playId => {
-                                return !!~playIds.indexOf(playId);
-                            });
+                            if (passes) {
+                                //Filter passes by new list of plays
+                                chart.passes[zoneId].playIds = passes.playIds.filter(playId => {
+                                    return !!~playIds.indexOf(playId);
+                                });
 
-                            //Update total number of passes for this zone based on filtered plays
-                            chart.passes[zoneId].totalPassCount = chart.passes[zoneId].playIds.length;
-                            snaps += chart.passes[zoneId].totalPassCount;
-                        }
-                    });
-                }
+                                //Update total number of passes for this zone based on filtered plays
+                                chart.passes[zoneId].totalPassCount = chart.passes[zoneId].playIds.length;
+                                snaps += chart.passes[zoneId].totalPassCount;
+                            }
+                        });
+                    }
 
-                //For some reason this becomes an array when empty
-                if (chart.runs && !Array.isArray(chart.runs)) {
-                    Object.keys(GAP_IDS).forEach(gapId => {
-                        let runs = chart.runs[gapId];
+                    //For some reason this becomes an array when empty
+                    if (chart.runs && !Array.isArray(chart.runs)) {
+                        Object.keys(GAP_IDS).forEach(gapId => {
+                            let runs = chart.runs[gapId];
 
-                        if (runs) {
-                            //Filter runs by new list of plays
-                            chart.runs[gapId].playIds = runs.playIds.filter(playId => {
-                                return !!~playIds.indexOf(playId);
-                            });
+                            if (runs) {
+                                //Filter runs by new list of plays
+                                chart.runs[gapId].playIds = runs.playIds.filter(playId => {
+                                    return !!~playIds.indexOf(playId);
+                                });
 
-                            //Update total number of runs for this gap based on filtered plays
-                            chart.runs[gapId].totalRuns = chart.runs[gapId].playIds.length;
-                            snaps += chart.runs[gapId].totalRuns;
-                        }
-                    });
-                }
+                                //Update total number of runs for this gap based on filtered plays
+                                chart.runs[gapId].totalRuns = chart.runs[gapId].playIds.length;
+                                snaps += chart.runs[gapId].totalRuns;
+                            }
+                        });
+                    }
 
-                //Update snap count based on filtered plays
-                chart.snaps = snaps;
+                    //Update snap count based on filtered plays
+                    chart.snaps = snaps;
+                });
+
+                formationReport[$scope.teamId] = formationReport[$scope.teamId].filter(chart => chart.snaps);
+                $scope.report = formationReport;
+                $scope.updatingFormations = false;
             });
-
-            formationReport[$scope.teamId] = formationReport[$scope.teamId].filter(chart => chart.snaps);
-            $scope.report = formationReport;
         }
 
         //TODO get rid of the previous code and use this code instead once caching is in

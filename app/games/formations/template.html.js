@@ -22,10 +22,23 @@ export default `
             </div>
         </div>
 
-        <accordion close-others="true">
-            <formation-chart arena-type="arenaType" chart="chart" ng-repeat="chart in report[teamId]" redzone="isRedZone" plays="plays"></formation-chart>
+        <accordion close-others="true" ng-hide="updatingFormations">
+            <formation-chart
+                arena-type="arenaType"
+                chart="chart"
+                ng-repeat="chart in report[teamId] | orderBy: '-snaps'"
+                redzone="isRedZone"
+                plays="plays"
+                team-id="game.uploaderTeamId"
+                season-id="seasonId">
+            </formation-chart>
             <no-results ng-hide="report[teamId].length"></no-results>
         </accordion>
+
+        <div class="formations-loading" ng-show="updatingFormations">
+            <krossover-spinner size="'40px'"></krossover-spinner>
+            <p>Loading Formations...</p>
+        </div>
     </div>
 
 `;

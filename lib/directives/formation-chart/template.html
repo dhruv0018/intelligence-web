@@ -2,21 +2,25 @@
         <accordion-group is-open="status.open">
             <accordion-heading>
                 <div ng-class="{'field-header-collapsed': !status.open}" class="field-header">
+                    <div class="formation-label-container">
+                        <span class="field-info-title">Formation:</span>
+                        <formation-label formation="chart" formation-label="chart.label" team-id="teamId" season-id="seasonId"></formation-label>
+                    </div>
                     <span class="field-info">
                         <span class="field-info-title">Backfield:</span> {{chart.backfieldFormation}}
                     </span>
                     <span class="field-info">
-                        <span class="field-info-title">TEs:</span> {{chart.TEStrength}}
+                        <span class="field-info-title">Left Flank:</span> {{chart.leftFlankName}}
                     </span>
                     <span class="field-info">
-                        <span class="field-info-title">WRs:</span> {{chart.WRStrength}}
+                        <span class="field-info-title">Right Flank:</span> {{chart.rightFlankName}}
                     </span>
                     <span class="field-info">
                         <span class="field-info-title" ng-hide="redzone">{{chart.snaps}}</span>
                         <span class="field-info-title" ng-show="redzone">{{chart.redzoneSnaps}}</span>
                         snaps
                     </span>
-                    <i class="pull-right icon" ng-class="{'icon-chevron-up': status.open, 'icon-chevron-down': !status.open}"></i>
+                    <i class="icon" ng-class="{'icon-chevron-up': status.open, 'icon-chevron-down': !status.open}"></i>
                 </div>
             </accordion-heading>
             <div class="field">
