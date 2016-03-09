@@ -42,7 +42,7 @@ class EvaporateUploader {
         this.settings = settings;
         if (this.settings.computeContentMd5) {
             this.settings.cryptoMd5Method = function(data) {
-                return btoa(SparkMD5.hashBinary(data, true));
+                return btoa(SparkMD5.ArrayBuffer.hash(data, true));
             };
         }
     }
