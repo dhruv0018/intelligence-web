@@ -31,6 +31,5 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'Pills',
     'KrossoverTags',
     'ngFileUpload',
-    'flow',
     'as.sortable'
 ]);

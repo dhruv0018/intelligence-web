@@ -7,15 +7,10 @@
     </header>
 
     <div class="modal-body">
-        <kvs-uploader
-                data-modal="modal"
-                data-film="film"
-                data-ng-if="!config.useS3Uploader"></kvs-uploader>
-
         <s3-uploader
                 data-modal="modal"
                 data-film="film"
-                data-ng-if="config.useS3Uploader"></s3-uploader>
+                ></s3-uploader>
 
         <div class="instructions">
             <h3>To ensure a smooth upload:</h3>

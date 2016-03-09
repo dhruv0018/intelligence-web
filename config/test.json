@@ -118,7 +118,6 @@
     "uploader": {
         "dragdrop":true
     },
-    "useS3Uploader": true,
     "wsc": {
         "authorizeUrl": "https://krossover.clipro.tv/api/requests",
         "redirectUrl": "https://krossover.clipro.tv/index.aspx",
