@@ -1,3 +1,30 @@
+# v2.41.0#
+##Features##
+- Corrects Football Formation Visualizations!
+
+## Fixes##
+- Fixes minutes display on Admin Games overdue for indexing
+- Resolved console javascript bug when viewing a copied game
+- Correctly uses the most recent package for a Team if more than one package has been assigned
+
+# v2.40.0#
+##Features##
+- Hides WSC Link on film home for coach and athlete
+- Adds two new team labels "custom1" and "custom2"
+- improves display of required fields on the Team Info page
+
+## Fixes##
+- Fixes team name showing for volleyball breakdowns based on which team served first
+
+# v2.39.0#
+##Features##
+- Hides WSC Link on film home for coach and athlete
+- Adds two new team labels "custom1" and "custom2"
+- improves display of required fields on the Team Info page
+
+## Fixes##
+- Fixes team name showing for volleyball breakdowns based on which team served first
+
 # v2.38.0#
 ##Features##
 - Adds ability to create custom Football Formation Labels
