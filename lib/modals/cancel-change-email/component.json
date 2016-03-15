@@ -1,0 +1,12 @@
+{
+    "name": "cancel-change-email",
+    "templates": [
+        "template.html"
+    ],
+    "styles": [
+        "styles.less"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

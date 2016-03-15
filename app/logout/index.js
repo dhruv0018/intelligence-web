@@ -45,23 +45,6 @@ Logout.config([
                     '$state', 'AuthenticationService',
                     function($state, auth) {
 
-                        /* TODO: There's a bug with attempting to resolve this
-                         * promise. Sometimes it hangs on the deleteDatabase()
-                         * call preventing the promise from ever resolving and
-                         * therefore never moving on to the 'login' state.
-                         **/
-                        // function logoutSuccess () {
-                        //
-                        //     $state.go('login');
-                        // }
-                        //
-                        // function logoutError (err) {
-                        //
-                        //     throw new Error(err);
-                        // }
-                        //
-                        // auth.logoutUser().then(logoutSuccess, logoutError);
-
                         auth.logoutUser();
                         $state.go('login');
                     }

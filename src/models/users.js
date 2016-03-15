@@ -21,7 +21,11 @@ IntelligenceWebClient.factory('UsersResource', [
                 create: { method: 'POST' },
                 update: { method: 'PUT' },
                 resendEmail: { method: 'POST', url: config.api.uri + 'users/:unique' + '/emailRequest' },
+                emailChange: { method: 'GET', url: config.api.uri + 'users/:id' + '/email-change' },
+                cancelEmailChange: { method: 'DELETE', url: config.api.uri + 'users/:id' + '/email-change' },
+                resendEmailChange: { method: 'PUT', url: config.api.uri + 'users/:id' + '/email-change' },
                 resetPassword: { method: 'POST', url: config.api.uri + 'users/password-reset/:token', params: {token: '@token'} },
+                confirmEmail: { method: 'POST', url: config.api.uri + 'users/email-change/:token', params: {token: '@token'} },
                 typeahead: { method: 'GET', url: config.api.uri + 'service/user-typeahead', isArray: true,
                     //transforms the resource into an array of user objects with extra properties used by the user typeahead
                     transformResponse: function(data) {

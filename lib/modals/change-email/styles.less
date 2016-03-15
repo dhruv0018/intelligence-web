@@ -1,0 +1,17 @@
+.change-email{
+    /* Overrides for validation error message */
+    .error {
+        position: static !important;
+        line-height: normal !important;
+        margin-left: 0px;
+        a{
+            color: blue;
+        }
+    }
+    input.ng-dirty.ng-invalid:not(:focus) + .error{
+        white-space: normal !important;
+    }
+    .buttons{
+        margin-top: 25px;
+    }
+}

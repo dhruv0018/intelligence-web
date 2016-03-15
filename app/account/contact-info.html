@@ -4,14 +4,27 @@
 
         <label for="email">Email</label>
         <input class="form-control" type="email" data-ng-model="currentUser.email" disabled>
-
+        <button class="btn-link" ng-click="sendRequest()" ng-hide="emailChange"><i class="icon icon-pencil"></i> Change Email Address</button>
+        <p ng-show="emailChange">
+          Verification email sent to {{emailChange.requestedEmail}}.
+          No message received?
+          <span ng-hide="resendEmail">
+            <a href="javascript:;" ng-click="resendRequest()" class="btn btn-link">Resend Email</a>
+            |
+            <a href="javascript:;" ng-click="cancelRequest()" class="btn btn-link">Cancel Request</a>
+          </span>
+          <span class="btn-successful" ng-show="resendEmail">
+              <krossover-spinner ng-show="!emailSent" size="15px"></krossover-spinner>
+              <span ng-show="emailSent" class="btn-successful btn"><i class="icon icon-ok"></i> Email Sent</span>
+          </span>
+        </p>
     </div>
 
     <div class="form-group">
 
         <label for="password">Password</label>
         <input class="form-control" type="password" value="****" disabled>
-        <button class="btn-link" data-open-modal="ChangePassword.Modal"><i class="icon icon-pencil"></i> Edit</button>
+        <button class="btn-link" data-open-modal="ChangePassword.Modal"><i class="icon icon-pencil"></i> Change Password</button>
 
     </div>
 

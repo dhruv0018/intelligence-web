@@ -54,6 +54,11 @@
         "*": true
     },
 
+    "confirm-email": {
+
+        "*": true
+    },
+
     "new-user": {
 
         "*": true

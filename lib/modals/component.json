@@ -14,6 +14,8 @@
         "basic-modals",
         "info",
         "change-password",
+        "change-email",
+        "cancel-change-email",
         "admin-management",
         "kvs-uploader-interface",
         "game-copy",

@@ -1,0 +1,25 @@
+<div class="cancel-change-email">
+
+        <header class="modal-header">
+
+            <h3 class="modal-title">Confirm Cancel Request</h3>
+
+        </header>
+
+        <div class="modal-body">
+
+            <form class="form-change-email form-horizontal" name="cancelChangeEmailForm" role="form" novalidate>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <p>Are you sure you want to cancel the request to change your email?</p>
+                    </div>
+                    <div class="text-right col-sm-12">
+                        <button class="btn btn-lg btn-default" ng-click="$dismiss()">No</button>
+                        <button class="btn btn-lg btn-primary" type="submit" ng-click="$close()">Yes, Cancel</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+</div>

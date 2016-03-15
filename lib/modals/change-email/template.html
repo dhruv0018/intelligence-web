@@ -1,0 +1,43 @@
+<div class="change-email">
+
+        <header class="modal-header">
+
+            <h3 class="modal-title">Change Email Address</h3>
+
+        </header>
+
+        <div class="modal-body">
+
+            <form class="form-change-email form-horizontal" name="changeEmailForm" role="form" novalidate>
+
+                <div class="form-group">
+                    <span for="currentEmail" class="col-sm-3 control-label">Current Email: </span>
+                    <div class="col-sm-9">
+                        <input class="form-control" name="currentEmail" type="email" placeholder="Current Email" ng-model="user.email" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <span for="newEmail" class="col-sm-3 control-label">Enter New Email: </span>
+                    <div class="col-sm-9">
+                      <input class="form-control" name="newEmail" type="email" placeholder="New Email" ng-model="newEmail" ng-trim="true" data-ng-change="changeEmailForm.newEmail.$setValidity('exist', true);" ui-validate=" 'user.email !== $value' " errors="{ validator: 'The email address you entered is the same as the current email.',exist: 'The email address is already in use with Krossover. Please try another or contact <a href=mailto:support@krossover.com?Subject=Change%20Account%20Email target=_blank>support@krossover.com</a>.', required: 'Required!', email: 'The email address you entered is invalid.'}" autofocus required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <span for="password" class="col-sm-3 control-label">Verify Password: </span>
+                    <div class="col-sm-9">
+                      <input class="form-control" name="password" type="password" placeholder="Password" ng-model="currentPassword" ng-minlength="4"  data-ng-change="changeEmailForm.password.$setValidity('password', true);" errors="{ password: 'The password you entered is incorrect.'}" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12 buttons">
+                        <button class="btn btn-lg btn-default pull-left" ng-click="$dismiss()">Cancel</button>
+                        <button class="btn btn-lg btn-primary pull-right" ng-click="submit(newEmail)" data-ng-disabled="changeEmailForm.$invalid">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+</div>

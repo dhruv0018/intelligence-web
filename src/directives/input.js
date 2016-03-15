@@ -131,7 +131,7 @@ IntelligenceWebClient.directive('input', [
                         if ($error[error]) {
 
                             element.addClass('has-error');
-                            element.next().text(errors[error]);
+                            element.next().html(errors[error]);
                         }
                     });
                 }

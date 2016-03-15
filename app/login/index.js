@@ -55,7 +55,7 @@ Login.config([
             })
 
             .state('login', {
-                url: '/login',
+                url: '/login?{emailConfirmation:string}',
                 views: {
                     'header@login': {
                         templateUrl: 'signup.html'
@@ -71,10 +71,10 @@ Login.config([
                 },
 
                 onEnter: [
-                    '$state', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService',
-                    function ($state, ROLES, auth, session, account) {
+                    '$state', '$stateParams', 'ROLES', 'AuthenticationService', 'SessionService', 'AccountService', 'UsersFactory', 'AlertsService',
+                    function ($state, $stateParams, ROLES, auth, session, account, users, alerts) {
 
-                        if (auth.isLoggedIn) {
+                        if (auth.isLoggedIn && !$stateParams.emailConfirmation) {
 
                             let currentUser = session.retrieveCurrentUser();
 
@@ -327,6 +327,39 @@ function LoginController(
         $scope.login = {};
         $scope.login.email = currentUser.email;
         $scope.login.remember = currentUser.persist;
+    }
+
+    if($stateParams.emailConfirmation && !$scope.confirmingEmail){
+
+        // The controller gets called twice so this prevents two calls being made to confirm the new email
+        $scope.confirmingEmail = true;
+
+        if(auth.isLoggedIn){
+            auth.logoutUser();
+        }
+
+        users.emailConfirm($stateParams.emailConfirmation).then(
+
+            function success(data, status) {
+                alerts.add({
+                    type: 'success',
+                    message: 'Email successfully changed! You can now login with your new email address.'
+                });
+
+                $scope.login = {};
+                $scope.login.email = data.email;
+            },
+
+            function error(data, status) {
+                alerts.add({
+                    type: 'danger',
+                    message: 'The link sent to you has expired. In order to change your email address, login and resend the verification email.'
+                });
+
+                throw new Error('Could not confirm email change');
+            }
+        );
+
     }
 
     if ($state.current.data && $state.current.data.isResettingPassword) {

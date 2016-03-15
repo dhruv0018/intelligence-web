@@ -799,6 +799,21 @@ IntelligenceWebClient.factory('UsersFactory', [
             },
 
             /**
+             * @class User
+             * @method emailConfirm
+             * @param {String} email confirmation token
+             * @returns {Object} resource promise
+             */
+            emailConfirm: function emailConfirm (token) {
+
+                const model = $injector.get(this.model);
+
+                return model.confirmEmail(
+                    {token: token}
+                ).$promise;
+            },
+
+            /**
              * @param {Object} filter
              * @returns {Array} Array of user, team, school and role
              */
@@ -884,6 +899,72 @@ IntelligenceWebClient.factory('UsersFactory', [
                         teams.splice(index, 1);
                     }
                 });
+            },
+            /**
+             * @class User
+             * @method changeEmail
+             * @description change current user's email, put in a different table waiting for confirmation
+             * @param {Object} user
+             * @param {string} requestEmail
+             * @param {string} password
+             * @returns {Object}
+             */
+            changeEmail: function(user, requestEmail, password) {
+
+                let data = {
+                    'currentEmail': user.email,
+                    'requestedEmail': requestEmail,
+                    'password': password
+                };
+                return $http.post(config.api.uri + 'users/' + user.id + '/email-change', data);
+            },
+            /**
+             * @class User
+             * @method changeEmailStatus
+             * @description check to see if there's outstanding email change request
+             * @returns {Object}
+             */
+            changeEmailStatus: function() {
+
+                let self = this;
+                let model = $injector.get(self.model);
+                let id = self.id;
+
+                return model.emailChange({
+                    id: id
+                }).$promise;
+            },
+            /**
+             * @class User
+             * @method resendEmailChange
+             * @description resend email change request
+             * @returns {Object}
+             */
+            resendEmailChange: function() {
+
+                let self = this;
+                let model = $injector.get(self.model);
+                let id = self.id;
+
+                return model.resendEmailChange({
+                    id: id
+                }).$promise;
+            },
+            /**
+             * @class User
+             * @method cancelEmailChange
+             * @description cancel email change request
+             * @returns {Object}
+             */
+            cancelEmailChange: function() {
+
+                let self = this;
+                let model = $injector.get(self.model);
+                let id = self.id;
+
+                return model.cancelEmailChange({
+                    id: id
+                }).$promise;
             }
         };
 
