@@ -927,7 +927,7 @@ const FORMATIONS = {
                 y: FLANK_FORMATION_GRID.ROW.ONE
             },
             flank2: {
-                x: FLANK_FORMATION_GRID.COL.ONE,
+                x: FLANK_FORMATION_GRID.COL.TWO,
                 y: FLANK_FORMATION_GRID.ROW.TWO
             }
         }
