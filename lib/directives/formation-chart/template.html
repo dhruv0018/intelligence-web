@@ -6,14 +6,17 @@
                         <span class="field-info-title">Formation:</span>
                         <formation-label formation="chart" formation-label="chart.label" team-id="teamId" season-id="seasonId"></formation-label>
                     </div>
-                    <span class="field-info">
-                        <span class="field-info-title">Backfield:</span> {{chart.backfieldFormation}}
+                    <span class="field-info formation-info">
+                        <span class="field-info-title">Backfield:</span>
+                        <span>{{chart.backfieldFormation}}</span>
                     </span>
-                    <span class="field-info">
-                        <span class="field-info-title">Left Flank:</span> {{chart.leftFlankName}}
+                    <span class="field-info formation-info">
+                        <span class="field-info-title">Left Flank:</span>
+                        <span>{{chart.leftFlankName}}</span>
                     </span>
-                    <span class="field-info">
-                        <span class="field-info-title">Right Flank:</span> {{chart.rightFlankName}}
+                    <span class="field-info formation-info">
+                        <span class="field-info-title">Right Flank:</span>
+                        <span>{{chart.rightFlankName}}</span>
                     </span>
                     <span class="field-info">
                         <span class="field-info-title" ng-hide="redzone">{{chart.snaps}}</span>
