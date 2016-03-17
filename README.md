@@ -45,16 +45,16 @@ _NVM should be sourced in every environment you want to run node and grunt in_
 
 ## Install node
 
-This will install Node.js and NPM (the Node.js package manager)
+This will install Node.js and NPM (the Node.js package manager, lock down to version 4.1.1)
 
 ```
-nvm install 4
+nvm install v4.1.1
 ```
 
 ## Set default node version
 
 ```
-nvm alias default 4
+nvm alias default v4.1.1
 ```
 
 ## Install NPM
