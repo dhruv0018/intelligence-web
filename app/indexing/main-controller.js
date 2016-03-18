@@ -88,7 +88,7 @@ Indexing.controller('Indexing.Main.Controller', [
          * Watch for video player full screen changes.
          */
         function videoPlayerFullScreenWatch () {
-            $scope.fullScreenEnabled = videoPlayer.isFullScreen || document.fullscreenEnabled;
+            $scope.fullScreenEnabled = videoPlayer.isFullScreen;
         }
 
     }
