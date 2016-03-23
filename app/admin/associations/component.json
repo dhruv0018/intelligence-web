@@ -1,0 +1,15 @@
+{
+    "name": "associations",
+    "templates": [
+        "association.html",
+        "associations.html",
+        "association-info.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "association.less",
+        "associations.less"
+    ]
+}
