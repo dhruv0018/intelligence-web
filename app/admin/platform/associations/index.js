@@ -22,7 +22,7 @@ Associations.run([
 
         $templateCache.put('association.html', require('./association.html'));
         $templateCache.put('associations.html', require('./associations.html'));
-        $templateCache.put('association-info.html', require('./associations-info.html'));
+        $templateCache.put('association-info.html', require('./association-info.html'));
     }
 ]);
 

@@ -249,6 +249,12 @@
         "Super Admin": true
     },
 
+    "associations": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "IndexerGame": {
 
         "Indexer": true
