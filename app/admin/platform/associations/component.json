@@ -6,7 +6,9 @@
         "association-info.html"
     ],
     "scripts": [
-        "index.js"
+        "index.js",
+        "associations.js",
+        "association.js"
     ],
     "styles": [
         "association.less",

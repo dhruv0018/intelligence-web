@@ -255,6 +255,18 @@
         "Admin": true
     },
 
+    "association": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "association-info": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "IndexerGame": {
 
         "Indexer": true

@@ -9,7 +9,7 @@ AssociationsController.$inject = [
 /**
  * Associations page controller
  */
-function controller(
+function AssociationsController(
     $scope,
     $state,
     associations

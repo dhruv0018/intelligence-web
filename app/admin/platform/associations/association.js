@@ -2,24 +2,24 @@ const angular = window.angular;
 
 AssociationController.$inject = [
     '$scope',
-    '$state',
+    '$stateParams',
     'AssociationsFactory'
 ];
 
 /**
  * Associations page controller
  */
-function controller(
+function AssociationController(
     $scope,
-    $state,
+    $stateParams,
     associations
 ) {
 
     let associationId = Number($stateParams.id);
 
-        if (schoolId) {
+        if (associationId) {
 
-            $scope.association = associations.get(schoolId);
+            $scope.association = associations.get(associationId);
         }
 
         $scope.association = $scope.association || associations.create();
