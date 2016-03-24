@@ -23,13 +23,69 @@ AddFilm.run([
 ]);
 
 /**
+ * Coach team data service.
+ * @module Team
+ * @type {service}
+ */
+AddFilm.service('Coach.AddFilm.Data.Dependencies', [
+    'SessionService',
+    'GamesFactory',
+    'TeamsFactory',
+    'PlayersFactory',
+    function(
+        session,
+        games,
+        teams,
+        players
+    ) {
+
+        var Data = {
+            get teamsAndPlayers() {
+
+                var user  = session.getCurrentUser();
+
+                teams.load(user.currentRole.teamId).then(function(){
+                    var team = teams.get(session.currentUser.currentRole.teamId);
+
+                    return players.load({ rosterId: team.roster.id });
+                });
+            },
+
+            get games() {
+
+                var userId = session.currentUser.id;
+
+                return games.load({ relatedUserId: userId });
+            },
+
+            get remainingBreakdowns() {
+
+                var teamId = session.currentUser.currentRole.teamId;
+
+                return teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
+                    session.currentUser.remainingBreakdowns = breakdownData;
+                    return breakdownData;
+                });
+            }
+
+        };
+
+        return Data;
+    }
+]);
+
+/**
  * Add Film page state router.
  * @module AddFilm
  * @type {UI-Router}
  */
 AddFilm.config([
-    '$stateProvider', '$urlRouterProvider',
-    function config($stateProvider, $urlRouterProvider) {
+    '$stateProvider',
+    '$urlRouterProvider',
+    function config(
+        $stateProvider,
+        $urlRouterProvider
+    ) {
 
         var addFilm = {
             name: 'add-film',
@@ -43,16 +99,9 @@ AddFilm.config([
             },
             resolve: {
                 'Coach.Data': [
-                    '$q', 'Coach.Data.Dependencies', 'SessionService', 'LeaguesFactory', 'TeamsFactory',
-                    function($q, data, session, leagues, teams) {
-
+                    '$q', 'Coach.AddFilm.Data.Dependencies',
+                    function($q, data) {
                         return $q.all(data).then(function(data) {
-                            var leaguesCollection = leagues.getCollection();
-                            var teamsCollection = teams.getCollection();
-                            var team = teamsCollection[session.currentUser.currentRole.teamId];
-                            data.league = leaguesCollection[team.leagueId];
-                            data.coachsTeam = team;
-
                             return data;
                         });
                     }
@@ -71,8 +120,28 @@ AddFilm.config([
  * @type {Controller}
  */
 AddFilm.controller('AddFilmController', [
-    '$scope', '$state', 'config', 'GamesFactory', 'Coach.Data', 'AlertsService', 'TeamsFactory', 'SessionService', 'GAME_TYPES', 'LeaguesFactory', 'kvsUploaderInterface.Modal',
-    function controller($scope, $state, config, games, data, alerts, teams, session, GAME_TYPES, leagues, uploaderModal) {
+    '$scope',
+    '$state',
+    'config',
+    'GamesFactory',
+    'AlertsService',
+    'TeamsFactory',
+    'SessionService',
+    'GAME_TYPES',
+    'LeaguesFactory',
+    'kvsUploaderInterface.Modal',
+    function controller(
+        $scope,
+        $state,
+        config,
+        games,
+        alerts,
+        teams,
+        session,
+        GAME_TYPES,
+        leagues,
+        uploaderModal
+    ) {
 
         //constants
         $scope.GAME_TYPES = GAME_TYPES;

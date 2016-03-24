@@ -25,8 +25,12 @@ var Coach = angular.module('Coach', [
  * @type {UI-Router}
  */
 Coach.config([
-    '$stateProvider', '$urlRouterProvider',
-    function config($stateProvider, $urlRouterProvider) {
+    '$stateProvider',
+    '$urlRouterProvider',
+    function config(
+        $stateProvider,
+        $urlRouterProvider
+    ) {
 
         var Coach = {
             name: 'Coach',
@@ -45,14 +49,27 @@ Coach.config([
  * @type {service}
  */
 Coach.service('Coach.Data.Dependencies', [
-    '$q', 'SessionService', 'TeamsFactory', 'ReelsFactory', 'GamesFactory', 'PlayersFactory', 'UsersFactory', 'LeaguesFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory', 'ROLE_TYPE', 'ROLES',
-    function($q, session, teams, reels, games, players, users, leagues, tagsets, filtersets, positionsets, ROLE_TYPE, ROLES) {
+    '$q',
+    'SessionService',
+    'TeamsFactory',
+    'ReelsFactory',
+    'GamesFactory',
+    'UsersFactory',
+    'PlayersFactory',
+    'ROLE_TYPE',
+    'ROLES',
+    function($q,
+        session,
+        teams,
+        reels,
+        games,
+        users,
+        players,
+        ROLE_TYPE,
+        ROLES
+    ) {
 
         var Data = {
-
-            tagsets: tagsets.load(),
-            filtersets: filtersets.load(),
-            positionsets: positionsets.load(),
 
             get users() {
 
@@ -61,11 +78,15 @@ Coach.service('Coach.Data.Dependencies', [
                 return users.load({ relatedUserId: userId });
             },
 
-            get teams() {
+            get teamsAndPlayers() {
 
                 var userId = session.currentUser.id;
 
-                return teams.load({ relatedUserId: userId });
+                teams.load({ relatedUserId: userId }).then(function(){
+                    var team = teams.get(session.currentUser.currentRole.teamId);
+
+                    return players.load({ rosterId: team.roster.id });
+                });
             },
 
             get games() {
@@ -80,40 +101,6 @@ Coach.service('Coach.Data.Dependencies', [
                 var userId = session.currentUser.id;
 
                 return reels.load({ relatedUserId: userId });
-            },
-
-            get players() {
-
-                var teamIds = session.currentUser.getTeamIds();
-
-                return this.teams.then(function(relatedTeams) {
-
-                    var rosters = [];
-
-                    relatedTeams
-
-                    .filter(function(team) {
-
-                        return ~teamIds.indexOf(team.id);
-                    })
-
-                    .forEach(function(team) {
-
-                        rosters.push(players.load({ rosterId: team.roster.id }));
-                    });
-
-                    return $q.all(rosters);
-                });
-            },
-
-            get remainingBreakdowns() {
-
-                var teamId = session.currentUser.currentRole.teamId;
-
-                return teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
-                    session.currentUser.remainingBreakdowns = breakdownData;
-                    return breakdownData;
-                });
             }
         };
 

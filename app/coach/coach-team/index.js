@@ -30,15 +30,41 @@ Team.run([
  * @type {service}
  */
 Team.service('Coach.Team.Data.Dependencies', [
-    'UsersFactory', 'Coach.Data.Dependencies',
-    function(users, data) {
+    'UsersFactory',
+    'PositionsetsFactory',
+    'PlayersFactory',
+    'TeamsFactory',
+    'SessionService',
+    function(
+        users,
+        positionsets,
+        players,
+        teams,
+        session
+    ) {
 
         var Data = {
 
-            users: users.load()
-        };
+            positionsets: positionsets.load(),
 
-        angular.extend(Data, data);
+            get users() {
+
+                var userId = session.currentUser.id;
+
+                return users.load({ relatedUserId: userId });
+            },
+
+            get teamsAndPlayers() {
+
+                var user  = session.getCurrentUser();
+
+                teams.load(user.currentRole.teamId).then(function(){
+                    var team = teams.get(session.currentUser.currentRole.teamId);
+
+                    return players.load({ rosterId: team.roster.id });
+                });
+            }
+        };
 
         return Data;
     }
@@ -58,7 +84,7 @@ Team.config([
             .state('Coach.Team', {
                 url: '/team',
                 resolve: {
-                    'Coach.Team.Data': ['$q','Coach.Data.Dependencies', function($q, data) {
+                    'Coach.Team.Data': ['$q','Coach.Team.Data.Dependencies', function($q, data) {
                         return $q.all(data).then(function(data) {
                             return data;
                         });

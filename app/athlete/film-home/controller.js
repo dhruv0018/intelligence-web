@@ -19,7 +19,6 @@ FilmHome.controller('Athlete.FilmHome.controller', [
 
         let teamId = session.currentUser.currentRole.teamId;
 
-        $scope.playersList = data.playersList;
         $scope.team = teams.get(teamId);
         $scope.teams = teams.getCollection();
         $scope.games = games.getCollection();

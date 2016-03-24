@@ -15,16 +15,48 @@ var TeamInfo = angular.module('Coach.Team.Info');
  */
 
 TeamInfo.controller('Coach.Team.Info.controller', [
-    '$rootScope', '$scope', '$state', '$http', 'config', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
-    function controller($rootScope, $scope, $state, $http, config, games, players, data) {
+    '$rootScope',
+    '$scope',
+    '$state',
+    '$http',
+    'config',
+    'GamesFactory',
+    'PlayersFactory',
+    function controller(
+        $rootScope,
+        $scope,
+        $state,
+        $http,
+        config,
+        games,
+        players
+    ) {
 
         $state.go('Coach.Team.Info.Information');
     }
 ]);
 
 TeamInfo.controller('Coach.Team.Plans.controller', [
-    '$rootScope', '$scope', '$state', '$http', 'config', 'SessionService', 'TeamsFactory', 'GamesFactory', 'PlayersFactory', 'Coach.Data',
-    function controller($rootScope, $scope, $state, $http, config, session, teams, games, players, data) {
+    '$rootScope',
+    '$scope',
+    '$state',
+    '$http',
+    'config',
+    'SessionService',
+    'TeamsFactory',
+    'GamesFactory',
+    'PlayersFactory',
+    function controller(
+        $rootScope,
+        $scope,
+        $state,
+        $http,
+        config,
+        session,
+        teams,
+        games,
+        players
+    ) {
 
         var teamId = session.currentUser.currentRole.teamId;
         var team = teams.get(teamId);

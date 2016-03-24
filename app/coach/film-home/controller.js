@@ -20,12 +20,11 @@ FilmHome.controller('Coach.FilmHome.controller', [
     '$filter',
     'ReelsFactory',
     'GamesFactory',
-    'PlayersFactory',
     'TeamsFactory',
     'UsersFactory',
     'LeaguesFactory',
+    'PlayersFactory',
     'SessionService',
-    'Coach.Data',
     'ROLES',
     'SPORTS',
     function controller(
@@ -35,12 +34,11 @@ FilmHome.controller('Coach.FilmHome.controller', [
         $filter,
         reels,
         games,
-        players,
         teams,
         users,
         leagues,
+        players,
         session,
-        data,
         ROLES,
         SPORTS
     ) {
@@ -67,26 +65,17 @@ FilmHome.controller('Coach.FilmHome.controller', [
         let sport = $scope.team.getSport();
         $scope.isBasketball = sport.id === SPORTS.BASKETBALL.id;
 
-        //player related
-        var playersFilter = { rosterId: $scope.team.roster.id };
-
-        //Arrays of resources
-        $scope.playersList = players.getList(playersFilter);
-
         var gamesList = games.getByRelatedRole();
         var reelsList = reels.getByRelatedRole();
 
         $scope.filmsList = gamesList.concat(reelsList);
 
         //Collections of resources
+        $scope.players =  players.getCollection();
         $scope.users = users.getCollection();
         $scope.teams = teams.getCollection();
         $scope.games = games.getCollection();
         $scope.reels = reels.getCollection();
-        $scope.players = players.getCollection();
-
-        //TODO not sure what this is used for -- potentially remove
-        $scope.activeRoster = [];
 
         //used for search
         $scope.query = '';

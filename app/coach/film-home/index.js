@@ -28,8 +28,12 @@ FilmHome.run([
  * @type {UI-Router}
  */
 FilmHome.config([
-    '$stateProvider', '$urlRouterProvider',
-    function config($stateProvider, $urlRouterProvider) {
+    '$stateProvider',
+    '$urlRouterProvider',
+    function config(
+        $stateProvider,
+        $urlRouterProvider
+    ) {
 
         $stateProvider
 
