@@ -22,6 +22,7 @@ IntelligenceWebClient.factory('UsersResource', [
                 update: { method: 'PUT' },
                 resendEmail: { method: 'POST', url: config.api.uri + 'users/:unique' + '/emailRequest' },
                 emailChange: { method: 'GET', url: config.api.uri + 'users/:id' + '/email-change' },
+                postEmailChange: { method: 'POST', url: config.api.uri + 'users/:id' + '/email-change' },
                 cancelEmailChange: { method: 'DELETE', url: config.api.uri + 'users/:id' + '/email-change' },
                 resendEmailChange: { method: 'PUT', url: config.api.uri + 'users/:id' + '/email-change' },
                 resetPassword: { method: 'POST', url: config.api.uri + 'users/password-reset/:token', params: {token: '@token'} },

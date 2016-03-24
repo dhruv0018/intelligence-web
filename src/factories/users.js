@@ -911,12 +911,16 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
             changeEmail: function(user, requestEmail, password) {
 
+                let self = this;
+                let model = $injector.get(self.model);
                 let data = {
                     'currentEmail': user.email,
                     'requestedEmail': requestEmail,
-                    'password': password
+                    'password': password,
+                    'id': user.id
                 };
-                return $http.post(config.api.uri + 'users/' + user.id + '/email-change', data);
+
+                return model.postEmailChange(data).$promise;
             },
             /**
              * @class User
