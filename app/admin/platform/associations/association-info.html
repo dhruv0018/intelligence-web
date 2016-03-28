@@ -1,28 +1,32 @@
 <div class="row">
 
-    <div class="col-md-4">
+    <div class="col-md-6">
 
         <form class="form-info" name="form" role="form">
 
             <div class="form-group">
 
+                <h3>Association Name</h3>
                 <input class="form-control" name="name" placeholder="Name" ng-model="association.name" type="text" required>
 
-                <input class="form-control" name="abbreviation" placeholder="Abbreviation" ng-model="association.abbreviation" type="text">
+                <h3>Association Acronym</h3>
+                <input class="form-control" name="abbreviation" placeholder="Acronym" ng-model="association.acronym" type="text">
 
-                <input class="form-control" name="description" placeholder="Description" ng-model="association.description" type="text">
 
-                <select class="form-control" name="level" ng-model="association.level" required>
-                    <option value="">Pick the school level</option>
-                </select>
+                <h3>Association Short Name</h3>
+                <input class="form-control" name="shortName" placeholder="Short Name" ng-model="association.shortName" type="text">
+                <p>Note: this will serve as the internal ID of the association and cannot be changed.</p>
+                <p>Do not include spaces or + signs.</p>
 
-                <select class="form-control" name="status" ng-model="association.status" required>
-                    <option value="">Pick the ameteur status</option>
-                </select>
+                <h3>Description</h3>
+                <textarea rows="4" cols="50" class="form-control description" name="description" placeholder="Description" ng-model="association.description"></textarea>
 
-                <select class="form-control" name="jurisdiction" ng-model="association.jurisdiction" required>
-                    <option value="">Pick the jurisdiction</option>
-                </select>
+                <button class="btn btn-default" ng-click="addCompetitionLevel()"><i class="icon icon-plus"></i> Add Competition Level</button>
+
+                <div ng-repeat="competitionLevel in association.competitionLevels">
+                    Competition Level
+                    <i class="icon icon-remove"></i>
+                </div>
 
             </div>
 

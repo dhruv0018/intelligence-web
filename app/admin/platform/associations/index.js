@@ -23,6 +23,7 @@ Associations.run([
         $templateCache.put('association.html', require('./association.html'));
         $templateCache.put('associations.html', require('./associations.html'));
         $templateCache.put('association-info.html', require('./association-info.html'));
+        $templateCache.put('conferences.html', require('./conferences.html'));
     }
 ]);
 
@@ -88,6 +89,17 @@ Associations.config([
                 views: {
                     'content@association': {
                         templateUrl: 'association-info.html',
+                        controller: AssociationController
+                    }
+                }
+            })
+
+            .state('conferences', {
+                url: '',
+                parent: 'association',
+                views: {
+                    'content@association': {
+                        templateUrl: 'conferences.html',
                         controller: AssociationController
                     }
                 }

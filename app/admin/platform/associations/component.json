@@ -3,7 +3,8 @@
     "templates": [
         "association.html",
         "associations.html",
-        "association-info.html"
+        "association-info.html",
+        "conferences.html"
     ],
     "scripts": [
         "index.js",

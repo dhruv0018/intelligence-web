@@ -23,6 +23,14 @@ function AssociationController(
         }
 
         $scope.association = $scope.association || associations.create();
+
+    $scope.addCompetitionLevel = function() {
+
+    };
+
+    $scope.addConference = function() {
+
+    };
 }
 
 export default AssociationController;

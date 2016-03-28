@@ -267,6 +267,12 @@
         "Admin": true
     },
 
+    "conferences": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "IndexerGame": {
 
         "Indexer": true
