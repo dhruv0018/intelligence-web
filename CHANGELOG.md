@@ -1,3 +1,9 @@
+# v2.42.0#
+## Features##
+- Updates Evaporate to v1.0.2
+- Removes old S3 uploader files
+- Prevents user from editing reel information when it is not allowed
+
 # v2.41.0#
 ##Features##
 - Corrects Football Formation Visualizations!
