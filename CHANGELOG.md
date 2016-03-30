@@ -1,3 +1,7 @@
+# v2.42.1#
+## Fixes##
+- Unhides season-highlights button 
+
 # v2.42.0#
 ## Features##
 - Updates Evaporate to v1.0.2
