@@ -7,9 +7,9 @@
 
         <hr>
 
-        <wsc-link league-id="team.leagueId" season-id="seasonId" feature="WSCLink" ng-if="seasonId && isBasketball && showSeasonHighlights"></wsc-link>
+        <wsc-link league-id="team.leagueId" season-id="seasonId" feature="WSCLink" ng-if="seasonId && isBasketball"></wsc-link>
 
-        <hr feature="WSCLink" ng-if="seasonId && isBasketball && showSeasonHighlights">
+        <hr feature="WSCLink" ng-if="seasonId && isBasketball">
 
         <krossover-role
                 ng-if="role.type.id === ROLES.HEAD_COACH.type.id && role.teamId == team.id"

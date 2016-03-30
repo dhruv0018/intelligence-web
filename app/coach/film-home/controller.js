@@ -50,9 +50,6 @@ FilmHome.controller('Coach.FilmHome.controller', [
         var userId = currentUser.id;
         var teamId = currentRole.teamId;
 
-        //Temporarily hide wsc button
-        $scope.showSeasonHighlights = false;
-
         //Constants
         $scope.ROLES = ROLES;
 
