@@ -3,7 +3,7 @@
         class="btn btn-sm dropdown-toggle"
         ng-class="{'btn-default': !status.isopen, 'btn-primary': status.isopen}"
         ng-click="focusSearchBar(status.isopen)"
-        dropdown-toggle>
+        dropdown-toggle ng-disabled="disabled">
             Add Tag
         </button>
     <div class="tags-dropdown-menu dropdown-menu" ng-click="$event.stopPropagation()" ng-class="{'tags-are-selected': selectedTags.length}">
@@ -32,8 +32,10 @@
                 ng-mouseenter="setFocusIndex(-1)"
             >{{filters.name}}</p>
 
+            <hr ng-show="filters.name && !tagAlreadyExists(filters.name)" />
+
             <span class="tag-selection-label" ng-hide="filters.name">All Tags</span>
-            <span class="tag-selection-label" ng-show="filters.name">Matching Tags</span>
+            <span class="tag-selection-label" ng-show="filters.name">Select Matching Tag</span>
             <ul ng-show="filteredTags.length">
                 <li
                     ng-repeat="tag in filteredTags"

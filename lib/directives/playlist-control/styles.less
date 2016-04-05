@@ -3,13 +3,13 @@
     background: #ffffff;
     padding: 0 15px;
     flex: 0 0 55px;
-    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid rgb(216, 216, 216);
     position: relative;
+    justify-content: flex-end;
 
     .select-all {
-        margin-right: 125px;
+        margin-right: auto;
         width: 110px;
 
         check-box {
@@ -25,41 +25,39 @@
         }
     }
 
+    .btn{
+        margin: 0px 15px 0px 5px;
+        &.dropdown-toggle{
+            margin-left: 0px;
+        }
+    }
+
+    .play-all-plays + .tooltip {
+        .tooltip-inner{
+            min-width: 120px;
+        }
+    }
+
     button.play-all-plays {
 
-        margin-left: 75px;
         cursor: pointer;
         display: inline-block;
-        padding: 0;
+        padding: 5px 0px 0px;
         background: white;
         border: 0;
         margin: 0;
         outline: 0;
-        position: absolute;
-        top: 12px;
-        right: 12px;
-
-        .play-all-text {
-            padding: 2px 2px 2px 8px;
+        font-size: 24px;
+        color: @gray-lighter;
+        &.right{
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
 
-        .on, .off {
-            padding: 4px;
-            display: inline-block;
-            color: @gray-light;
-            background: @gray-lightest;
+        &.on{
+            color: @brand-success;
         }
-
-        .on.chosen {
-            background: @brand-success;
-            color: white;
-        }
-
-        .off.chosen {
-            background: @brand-danger;
-            color: white;
-        }
-
     }
 
     .add-tag-success {
@@ -68,6 +66,11 @@
         background-color: @state-success-bg;
         border: thin solid @state-success-border;
         color: @state-success-text;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 200px;
+        text-align: center;
 
         .icon-ok {
             margin-right: 10px;

@@ -10,15 +10,13 @@
         <span ng-show="selectedPlays.length">{{selectedPlays.length}} Selected</span>
     </div>
 
-    <button id="playlist-continuous-play-on-off-cta" ng-hide="selectedPlays.length || confirmTagSave" class="play-all-plays" ng-click="playManager.playAllPlays = !playManager.playAllPlays">
-        <span class="play-all-text">Continuous Play</span>
-        <span class="on" ng-class="{chosen: playManager.playAllPlays}">ON</span>
-        <span class="off" ng-class="{chosen: !playManager.playAllPlays}">OFF</span>
+    <button feature="SelectPlays" class="btn btn-sm btn-default" open-modal="AddReel.Modal" modal-options="options" ng-disabled="isReelDisabled()" ng-if="isTeamMember">Add to Reel</button>
+
+    <custom-tags-dropdown feature="CustomTags" disabled="isTagDisabled()" plays="selectedPlays" ng-if="!isReel"></custom-tags-dropdown>
+
+    <button id="playlist-continuous-play-on-off-cta" class="play-all-plays" ng-click="playManager.playAllPlays = !playManager.playAllPlays" ng-class="{on: playManager.playAllPlays, right: !isTeamMember}" tooltip="Continuous Play {{playManager.playAllPlays ? 'On': 'Off'}}" tooltip-placement="top">
+        <i class="icon icon-loop-play"></i>
     </button>
-
-    <button feature="SelectPlays" ng-if="selectedPlays.length && isTeamMember && !confirmTagSave" class="btn btn-sm btn-default" open-modal="AddReel.Modal" modal-options="options">Add to Reel</button>
-
-    <custom-tags-dropdown feature="CustomTags" ng-if="selectedPlays.length && isTeamMember && currentUser.is(ROLES.COACH) && !isReel && !confirmTagSave" plays="selectedPlays"></custom-tags-dropdown>
 
     <div ng-show="confirmTagSave" class="add-tag-success">
         <i class="icon icon-ok"></i>
