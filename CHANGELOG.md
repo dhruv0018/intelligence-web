@@ -1,3 +1,11 @@
+# v2.43#
+## Features##
+- Updates design for WSC season highlights link
+- improves messaging to user around changing their email address
+
+## Fixes##
+- addresses console.log error on the self-editor playlist
+
 # v2.42.1#
 ## Fixes##
 - Unhides season-highlights button 
