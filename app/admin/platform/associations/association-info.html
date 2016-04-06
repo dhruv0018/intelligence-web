@@ -13,10 +13,57 @@
                 <input class="form-control" name="abbreviation" placeholder="Acronym" ng-model="association.acronym" type="text">
 
 
-                <h3>Association Short Name</h3>
-                <input class="form-control" name="shortName" placeholder="Short Name" ng-model="association.shortName" type="text">
+                <h3>Association Code</h3>
+                <input class="form-control" name="code" placeholder="Code" ng-model="association.code" type="text">
                 <p>Note: this will serve as the internal ID of the association and cannot be changed.
                 <br>Do not include spaces or + signs.</p>
+
+                <h3>Country</h3>
+                <select ng-model="association.country">
+                    <option value="">Pick a Country</option>
+                    <option value="US">US</option>
+                </select>
+
+                <h3>Type</h3>
+                <select ng-model="association.type">
+                    <option value="">Pick an Association Type</option>
+                    <option value="Scholastic">Scholastic</option>
+                    <option value="Recreational">Recreational</option>
+                    <option value="Coaching">Coaching</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Promotional">Promotional</option>
+                    <option value="International">International</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <h3>Age Level</h3>
+                <select ng-model="association.ageLevel">
+                    <option value="">Pick an Age Level</option>
+                    <option value="Primary">Primary</option>
+                    <option value="Secondary">Secondary</option>
+                    <option value="Collegiate">Collegiate</option>
+                    <option value="Adult">Adult</option>
+                    <option value="All Ages">All Ages</option>
+                </select>
+
+                <h3>Sanction Status</h3>
+                <select ng-model="association.isSanctioning">
+                    <option value="true">Sanctioning</option>
+                    <option value="false">Unsanctioning</option>
+                </select>
+
+                <h3>Amateur Status</h3>
+                <select ng-model="association.amateurPro">
+                    <option value="amateur">Amateur</option>
+                    <option value="pro">Pro</option>
+                    <option value="both">Both</option>
+                </select>
+
+                <h3>Defunct Status</h3>
+                <select ng-model="association.isDefunct">
+                    <option value="false">Active</option>
+                    <option value="true">Defunct</option>
+                </select>
 
                 <h3>Description</h3>
                 <textarea rows="4" cols="50" class="form-control description" name="description" placeholder="Description" ng-model="association.description"></textarea>

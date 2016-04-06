@@ -17,12 +17,12 @@ function AssociationController(
 
     let associationId = Number($stateParams.id);
 
-        if (associationId) {
+    if (associationId) {
 
-            $scope.association = associations.get(associationId);
-        }
+        $scope.association = associations.get(associationId);
+    }
 
-        $scope.association = $scope.association || associations.create();
+    $scope.association = $scope.association || associations.create({});
 
     $scope.addCompetitionLevel = function() {
 

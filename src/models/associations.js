@@ -8,19 +8,19 @@ IntelligenceWebClient.factory('AssociationsResource', [
     'config', '$resource',
     function(config, $resource) {
 
-        const base = 'associations';
+        const base = 'sports-associations';
 
-        let url = `${config.api.uri}${base}/:id`;
+        let url = `${config.api.uri}${base}`;
 
         let paramDefaults = {
 
-            id: '@id'
+            code: '@code'
 
         };
 
         let actions = {
             create: { method: 'POST' },
-            update: { method: 'PUT' }
+            update: { method: 'PUT', url: `${url}/:code` }
         };
 
         return $resource(url, paramDefaults, actions);
