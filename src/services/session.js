@@ -45,13 +45,29 @@ IntelligenceWebClient.service('SessionService', [
             /* Get the current users current role. */
             const currentRole = this.getCurrentRole();
             /* Ensure the current role is set for the current user. */
-            if (currentRole && currentRole.type) {
+            if (currentRole && currentRole.id) {
 
                 /* Get the role id of the user. */
-                roleId = currentRole.type.id;
+                roleId = currentRole.id;
             }
 
             return roleId;
+        };
+
+        this.getCurrentRoleTypeId = function() {
+
+            let roleTypeId;
+
+            /* Get the current users current role. */
+            const currentRole = this.getCurrentRole();
+            /* Ensure the current role is set for the current user. */
+            if (currentRole && currentRole.type) {
+
+                /* Get the role type id of the user. */
+                roleTypeId = currentRole.type.id;
+            }
+
+            return roleTypeId;
         };
 
         this.getCurrentRoleName = function() {

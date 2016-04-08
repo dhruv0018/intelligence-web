@@ -122,7 +122,7 @@ function IndexerGameController(
     };
 
     $scope.setAside = function() {
-        const roleId = session.getCurrentRoleId();
+        const roleTypeId = session.getCurrentRoleTypeId();
         const userId = session.getCurrentUserId();
         const modalInstance = basicModal.openForConfirm({
             title: 'Set aside this Game?',
@@ -132,7 +132,7 @@ function IndexerGameController(
         modalInstance.result.then(function() {
             $scope.game.setAside();
             $scope.game.save();
-            users.resendEmail(EMAIL_REQUEST_TYPES.SET_ASIDE_EMAIL, {roleType: roleId, gameId: gameId}, userId);
+            users.resendEmail(EMAIL_REQUEST_TYPES.SET_ASIDE_EMAIL, {roleType: roleTypeId, gameId: gameId}, userId);
             $state.go(STATES.INDEXER_GAMES);
         });
     };

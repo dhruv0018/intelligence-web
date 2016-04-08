@@ -53,9 +53,9 @@ AddFilm.service('Coach.AddFilm.Data.Dependencies', [
 
             get games() {
 
-                var userId = session.currentUser.id;
+                var roleId = session.getCurrentRoleId();
 
-                return games.load({ relatedUserId: userId });
+                return games.load({ relatedRoleId: roleId });
             },
 
             get remainingBreakdowns() {

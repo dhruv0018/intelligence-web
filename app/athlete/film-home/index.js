@@ -64,13 +64,14 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
 
         var userId = session.getCurrentUserId();
         var teamId = session.getCurrentTeamId();
+        var roleId = session.getCurrentRoleId();
 
         var Data = {
 
             positionsets: positionsets.load(),
             users: users.load({ relatedUserId: userId }),
             teams: teams.load({ relatedUserId: userId }),
-            games: games.load({ relatedUserId: userId }),
+            games: games.load({ relatedRoleId: roleId }),
             reels: reels.load({ relatedUserId: userId})
         };
 
