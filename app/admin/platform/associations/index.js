@@ -54,7 +54,7 @@ Associations.config([
             })
 
             .state('association', {
-                url: '/association/:id',
+                url: '/association/:code',
                 parent: 'base',
                 abstract: true,
                 views: {
@@ -65,19 +65,31 @@ Associations.config([
                 },
                 resolve: {
                     'Associations.Data': [
-                        '$stateParams', '$q', 'AssociationsFactory', 'TeamsFactory',
-                        function($stateParams, $q, associations, teams) {
-                            /*
-                            let associationId = Number($stateParams.id);
+                        '$stateParams',
+                        '$q',
+                        'AssociationsFactory',
+                        'TeamsFactory',
+                        'Iso3166countriesFactory',
+                        function(
+                            $stateParams,
+                            $q,
+                            associations,
+                            teams,
+                            iso3166countries
+                        ) {
+
+                            let associationCode = $stateParams.code;
 
                             let Data = {};
 
-                            if (associationId) {
+                            if (associationCode) {
 
-                                Data.association = associations.load(associationId);
+                                Data.association = associations.load({code: associationCode});
                             }
 
-                            return $q.all(Data);*/
+                            Data.iso3166countries = iso3166countries.load();
+
+                            return $q.all(Data);
                         }
                     ]
                 }

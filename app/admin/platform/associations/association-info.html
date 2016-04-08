@@ -71,7 +71,7 @@
                 <button class="btn btn-default" ng-click="addCompetitionLevel()"><i class="icon icon-plus"></i> Add Competition Level</button>
 
                 <div ng-repeat="competitionLevel in association.competitionLevels">
-                    Competition Level
+                    <input class="form-control" name="competitionLevel" placeholder="Competition Level" ng-model="competitionLevel" type="text">
                     <i class="icon icon-remove"></i>
                 </div>
 

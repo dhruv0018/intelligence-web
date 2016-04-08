@@ -3,7 +3,8 @@ const angular = window.angular;
 AssociationController.$inject = [
     '$scope',
     '$stateParams',
-    'AssociationsFactory'
+    'AssociationsFactory',
+    'Iso3166countriesFactory'
 ];
 
 /**
@@ -12,10 +13,12 @@ AssociationController.$inject = [
 function AssociationController(
     $scope,
     $stateParams,
-    associations
+    associations,
+    iso3166countries
 ) {
 
-    let associationId = Number($stateParams.id);
+    let associationId = $stateParams.id;
+    $scope.countries = iso3166countries.getList();
 
     if (associationId) {
 

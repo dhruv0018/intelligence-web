@@ -13,15 +13,7 @@
             </div>
 
             <div class="form-group">
-                <select class="form-control" name="level">
-                    <option value="">Pick the school level</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <select class="form-control" name="status">
-                    <option value="">Pick the amateur status</option>
-                </select>
+                <input class="form-control" name="acronym" placeholder="Association Acronym" ng-model="filter.acronym" type="text">
             </div>
 
             <div class="form-group">
@@ -49,7 +41,7 @@
 
                     <tr ng-repeat="association in associations">
 
-                        <td><a ui-sref="association-info({ id: association.id })">{{association.name}}</a></td>
+                        <td><a ui-sref="association-info({ code: association.code })">{{association.name}}</a></td>
                         <td>{{association.acronym}}</td>
                         <td>{{association.level}}</td>
                         <td>{{association.status}}</td>
