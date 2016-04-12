@@ -1,3 +1,11 @@
+# v2.44#
+## Features##
+- Updates the UI for Playlists; makes tags case-insensitive
+- reduces load times of Film home for customers with multiple Roles
+
+## Fixes##
+- fixes plan start date bug
+
 # v2.43#
 ## Features##
 - Updates design for WSC season highlights link
