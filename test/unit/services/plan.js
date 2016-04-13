@@ -3,7 +3,7 @@ var expect = chai.expect;
 var should = chai.should();
 var moment = require('moment');
 
-describe('PlanService', function() {
+xdescribe('PlanService', function() {
 
     beforeEach(angular.mock.module('intelligence-web-client'));
 
