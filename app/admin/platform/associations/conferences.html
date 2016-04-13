@@ -6,18 +6,18 @@
 
         <div>
             <span>Name*</span>
-            <input class="form-control" type="text">
+            <input class="form-control" type="text" ng-model="newConference.name">
         </div>
 
         <div>
             <span>Code*</span>
-            <input class="form-control" type="text">
+            <input class="form-control" type="text" ng-model="newConference.code">
             <span class="code-note">Must be unique within this association</span>
         </div>
 
         <div>
             <span>Competition Level</span>
-            <select class="form-control">
+            <select class="form-control" ng-model="newConference.competitionLevel" ng-options="association.competitionLevels">
                 <option value="">None</option>
             </select>
         </div>

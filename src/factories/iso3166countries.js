@@ -8,8 +8,10 @@ const model = 'Iso3166countriesResource';
 const storage = 'Iso3166countriesStorage';
 
 IntelligenceWebClient.factory('Iso3166countriesFactory', [
+    '$injector',
     'BaseFactory',
     function(
+        $injector,
         BaseFactory
     ) {
 
@@ -17,7 +19,13 @@ IntelligenceWebClient.factory('Iso3166countriesFactory', [
 
             description,
             model,
-            storage
+            storage,
+
+            getRegions: function(code) {
+                const model = $injector.get(this.model);
+
+                return model.getRegions({ code: code }).$promise;
+            }
 
         };
 

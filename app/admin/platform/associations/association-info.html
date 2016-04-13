@@ -19,9 +19,20 @@
                 <br>Do not include spaces or + signs.</p>
 
                 <h3>Country</h3>
-                <select ng-model="association.country">
+                <select
+                    ng-model="association.country"
+                    ng-options="country.code as country.name for country in countries | orderBy: name"
+                    ng-change="updateRegionList()">
                     <option value="">Pick a Country</option>
-                    <option value="US">US</option>
+                </select>
+
+                <h3>Region</h3>
+                <select
+                    ng-disabled="!regions.length"
+                    ng-class="{'disabled': !regions.length}"
+                    ng-model="association.region"
+                    ng-options="region.code as region.name for region in regions | orderBy: name">
+                    <option value="">No Region</option>
                 </select>
 
                 <h3>Type</h3>
@@ -46,33 +57,44 @@
                     <option value="All Ages">All Ages</option>
                 </select>
 
-                <h3>Sanction Status</h3>
-                <select ng-model="association.isSanctioning">
-                    <option value="true">Sanctioning</option>
-                    <option value="false">Unsanctioning</option>
-                </select>
-
                 <h3>Amateur Status</h3>
                 <select ng-model="association.amateurPro">
+                    <option value="">Pick an Amateur Status</option>
                     <option value="amateur">Amateur</option>
                     <option value="pro">Pro</option>
                     <option value="both">Both</option>
                 </select>
 
-                <h3>Defunct Status</h3>
-                <select ng-model="association.isDefunct">
-                    <option value="false">Active</option>
-                    <option value="true">Defunct</option>
-                </select>
+                <h3>
+                    Is Sanctioning
+                    <check-box
+                        id="association-is-sanctioning-cta"
+                        checked="association.isSanctioning"
+                        ng-click="association.isSanctioning = !association.isSanctioning">
+                    </check-box>
+                </h3>
+
+                <h3>
+                    Is Defunct
+                    <check-box
+                        id="association-is-defunct-cta"
+                        checked="association.isDefunct"
+                        ng-click="association.isDefunct = !association.isDefunct">
+                    </check-box>
+                </h3>
 
                 <h3>Description</h3>
-                <textarea rows="4" cols="50" class="form-control description" name="description" placeholder="Description" ng-model="association.description"></textarea>
+                <textarea rows="4" cols="50" class="form-control description" name="description" placeholder="Description" ng-model="association.about"></textarea>
 
-                <button class="btn btn-default" ng-click="addCompetitionLevel()"><i class="icon icon-plus"></i> Add Competition Level</button>
+                <h3>Competition Levels</h3>
+                <div class="competition-level-container">
+                    <input class="form-control" name="competitionLevel" placeholder="Competition Level" ng-model="newCompetitionLevel" type="text">
+                    <a ng-click="addCompetitionLevel(newCompetitionLevel)"><i class="icon icon-plus"></i> Add Competition Level</a>
+                </div>
 
-                <div ng-repeat="competitionLevel in association.competitionLevels">
+                <div class="competition-level-container" ng-repeat="competitionLevel in association.competitionLevels">
                     <input class="form-control" name="competitionLevel" placeholder="Competition Level" ng-model="competitionLevel" type="text">
-                    <i class="icon icon-remove"></i>
+                    <i class="icon icon-remove" ng-click="removeCompetitionLevel($index)"></i>
                 </div>
 
             </div>

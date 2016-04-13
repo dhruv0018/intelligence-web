@@ -14,6 +14,26 @@
         select {
             background-color: white;
             padding-right: 30px;
+
+            &.disabled {
+                background-color: @content-bg;
+                opacity: .7;
+            }
+        }
+    }
+
+    .competition-level-container {
+        margin: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .form-control {
+            width: 60%;
+        }
+
+        a {
+            cursor: pointer;
         }
     }
 

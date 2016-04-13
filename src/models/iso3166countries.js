@@ -18,7 +18,9 @@ IntelligenceWebClient.factory('Iso3166countriesResource', [
 
         };
 
-        let actions = {};
+        let actions = {
+            getRegions: { method: 'GET', url: `${url}/:code/iso3166regions`, isArray: true }
+        };
 
         return $resource(url, paramDefaults, actions);
     }
