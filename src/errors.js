@@ -11,6 +11,8 @@ var IntelligenceWebClient = angular.module(pkg.name);
  */
 var ErrorReporter = {
 
+    previousError: null,
+
     /**
      * Delegates the error to specified services.
      * @method reportError
@@ -20,18 +22,22 @@ var ErrorReporter = {
 
         if (!error) return;
 
-        /* TODO: Check if this is the same error as the last one;
-         * in which case we don't need to report it again. */
-
         /* TODO: Rate limit the number of errors generated. */
+        if(this.previousError && this.previousError.name === error.name){
+            //if the same error as the last one no need to report again
+            return;
+        }else{
+            error.message = 'Error: ' + error.message + '\n';
 
-        error.message = 'Error: ' + error.message + '\n';
+            /* Append the stack trace to the error message if present. */
+            if (error.stack) error.message += 'Stacktrace:\n' + error.stack;
 
-        /* Append the stack trace to the error message if present. */
-        if (error.stack) error.message += 'Stacktrace:\n' + error.stack;
+            this.logToConsole(error);
+            this.logToAPI(error);
 
-        this.logToConsole(error);
-        this.logToAPI(error);
+            this.previousError = error;
+        }
+
     },
 
     /**

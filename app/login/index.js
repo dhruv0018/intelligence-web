@@ -345,7 +345,7 @@ function LoginController(
                     type: 'success',
                     message: 'Email successfully changed! You can now login with your new email address.'
                 });
-
+                localStorage.setItem('emailChanged', data.email);
                 $scope.login = {};
                 $scope.login.email = data.email;
             },
@@ -353,7 +353,7 @@ function LoginController(
             function error(data, status) {
                 alerts.add({
                     type: 'danger',
-                    message: 'The link sent to you has expired. In order to change your email address, login and resend the verification email.'
+                    message: 'This request has expired. In order to change your email address, login and resend the verification email.'
                 });
 
                 throw new Error('Could not confirm email change');

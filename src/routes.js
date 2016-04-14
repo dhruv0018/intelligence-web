@@ -124,6 +124,16 @@ IntelligenceWebClient.run([
                     type: 'info',
                     message: 'You do not have permission to go to ' + toState.name
                 });
+            }else{
+                if(localStorage.getItem('emailChanged')){
+                    //check if email exist if not, clear session and delete localstorage item
+                    if(localStorage.getItem('emailChanged') != session.getCurrentUserEmail()){
+                        event.preventDefault();
+                        localStorage.removeItem('emailChanged');
+                        sessionStorage.clear();
+                        location.reload();
+                    }
+                }
             }
         });
 

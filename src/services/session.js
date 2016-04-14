@@ -98,6 +98,13 @@ IntelligenceWebClient.service('SessionService', [
             return currentUser.id;
         };
 
+        this.getCurrentUserEmail = function() {
+
+            var currentUser = this.getCurrentUser();
+
+            return currentUser.email;
+        };
+
         this.getCurrentTeamId = function() {
 
             var currentRole = this.getCurrentRole();

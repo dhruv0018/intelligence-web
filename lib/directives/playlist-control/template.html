@@ -12,7 +12,7 @@
 
     <button feature="SelectPlays" class="btn btn-sm btn-default" open-modal="AddReel.Modal" modal-options="options" ng-disabled="isReelDisabled()" ng-if="isTeamMember">Add to Reel</button>
 
-    <custom-tags-dropdown feature="CustomTags" disabled="isTagDisabled()" plays="selectedPlays" ng-if="!isReel"></custom-tags-dropdown>
+    <custom-tags-dropdown feature="CustomTags" disabled="isTagDisabled()" plays="selectedPlays" ng-if="!isReel&&isTeamMember"></custom-tags-dropdown>
 
     <button id="playlist-continuous-play-on-off-cta" class="play-all-plays" ng-click="playManager.playAllPlays = !playManager.playAllPlays" ng-class="{on: playManager.playAllPlays, right: !isTeamMember}" tooltip="Continuous Play {{playManager.playAllPlays ? 'On': 'Off'}}" tooltip-placement="top">
         <i class="icon icon-loop-play"></i>

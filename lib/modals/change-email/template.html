@@ -8,7 +8,7 @@
 
         <div class="modal-body">
 
-            <form class="form-change-email form-horizontal" name="changeEmailForm" role="form" novalidate>
+            <form class="form-change-email form-horizontal" ng-submit="submit(newEmail)" name="changeEmailForm" role="form" novalidate>
 
                 <div class="form-group">
                     <span for="currentEmail" class="col-sm-3 control-label">Current Email: </span>
@@ -33,8 +33,10 @@
 
                 <div class="form-group">
                     <div class="col-sm-12 buttons">
-                        <button class="btn btn-lg btn-default pull-left" ng-click="$dismiss()">Cancel</button>
-                        <button class="btn btn-lg btn-primary pull-right" ng-click="submit(newEmail)" data-ng-disabled="changeEmailForm.$invalid">Submit</button>
+                        <button class="btn btn-lg btn-default pull-left" type="button" ng-click="$dismiss()">Cancel</button>
+                        <button class="btn btn-lg btn-primary pull-right" type="submit"  data-ng-disabled="changeEmailForm.$invalid">
+                            <krossover-spinner ng-show="isProcessing" size="'15px'"></krossover-spinner>
+                            Submit</button>
                     </div>
                 </div>
             </form>

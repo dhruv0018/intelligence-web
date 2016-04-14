@@ -36,8 +36,10 @@
 
                 <div class="buttons">
 
-                    <button class="btn btn-lg btn-default pull-left" ng-click="$dismiss()">Cancel</button>
-                    <button class="btn btn-lg btn-primary pull-right" type="submit" ng-click="submitPasswordChange(newPassword)">Submit</button>
+                    <button class="btn btn-lg btn-default pull-left" type="button" ng-click="$dismiss()">Cancel</button>
+                    <button class="btn btn-lg btn-primary pull-right" type="submit">Submit
+                        <krossover-spinner ng-show="isProcessing" size="'15px'"></krossover-spinner>
+                    </button>
 
                 </div>
 
