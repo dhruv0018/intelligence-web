@@ -64,16 +64,34 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
 
         var userId = session.getCurrentUserId();
         var teamId = session.getCurrentTeamId();
-        var roleId = session.getCurrentRoleId();
 
         var Data = {
 
             positionsets: positionsets.load(),
             users: users.load({ relatedUserId: userId }),
             teams: teams.load({ relatedUserId: userId }),
-            games: games.load({ relatedRoleId: roleId }),
+            games: games.load({ relatedUserId: userId }),
             reels: reels.load({ relatedUserId: userId})
         };
+
+        Data.players = Data.teams.then(function() {
+
+            let athleteRoles = session.currentUser.getRoles(ROLE_TYPE.ATHLETE);
+            let rosterIds = [];
+
+            athleteRoles.forEach(function(role, index) {
+                let team = teams.get(role.teamId);
+                rosterIds.push(team.roster.id);
+            });
+
+            let rosters = {
+                'rosterId[]': rosterIds
+            };
+
+            return $q.all({
+                rosters: players.load(rosters)
+            });
+        });
 
         Data.athlete = {
             players: players.load({

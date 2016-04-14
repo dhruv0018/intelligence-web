@@ -32,11 +32,13 @@ AddFilm.service('Coach.AddFilm.Data.Dependencies', [
     'GamesFactory',
     'TeamsFactory',
     'PlayersFactory',
+    'UsersFactory',
     function(
         session,
         games,
         teams,
-        players
+        players,
+        users
     ) {
 
         var Data = {
@@ -53,9 +55,16 @@ AddFilm.service('Coach.AddFilm.Data.Dependencies', [
 
             get games() {
 
-                var roleId = session.getCurrentRoleId();
+                let currentId = session.getCurrentUserId();
 
-                return games.load({ relatedRoleId: roleId });
+                // Load a fresh copy of the user to get the latest role ID
+                // TODO: Remove this once role IDs are locked down and user cache
+                //       problems with old, potentially changed role IDs are cleared
+                users.load(currentId).then(function(){
+                    let roleId = users.get(currentId).getCurrentRole().id;
+
+                    return games.load({ relatedRoleId: roleId });
+                });
             },
 
             get remainingBreakdowns() {

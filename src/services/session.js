@@ -38,6 +38,10 @@ IntelligenceWebClient.service('SessionService', [
             return currentUser ? currentUser.getCurrentRole() : undefined;
         };
 
+        // TODO: This currently may return stale data because a user may be cached
+        // with one Role ID and that role ID can then be changed by a PUT on the
+        // team he has the role with. Once the API is ammended to preserve the ID
+        // and local cached versions of old users are cleared, this can be relied on
         this.getCurrentRoleId = function() {
 
             let roleId;
