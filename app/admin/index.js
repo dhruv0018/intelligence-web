@@ -3,6 +3,7 @@ require('teams');
 require('schools');
 require('queue');
 require('platform');
+require('film-exchange');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -16,7 +17,8 @@ var Admin = angular.module('Admin', [
     'teams',
     'schools',
     'queue',
-    'platform'
+    'platform',
+    'filmExchange'
 ]);
 
 /**

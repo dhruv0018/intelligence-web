@@ -4,7 +4,7 @@
     "esnext"    : true,
     "indent"    : 4,
     "newcap"    : true,
-    "camelcase" : true,
+    "camelcase" : false,
     "quotmark"  : true,
     "trailing"  : true,
     "asi"       : false

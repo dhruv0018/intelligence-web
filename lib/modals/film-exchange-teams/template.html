@@ -1,0 +1,43 @@
+<div id="film-exchange-teams">
+
+    <header class="modal-header">
+
+        <h3 class="modal-title">Film Exchange Teams</h3>
+        <i class="icon icon-remove" ng-click="$dismiss()"></i>
+
+    </header>
+    <div class="modal-sub-header">
+        <div class="icon icon-search"></div>
+        <input id="film-exchange-teams-search" type="text" placeholder="Search by school name, team name" />
+        <label class="suspended-teams-toggle-label" for="suspended-teams-toggle">Suspended Teams Only</label>
+        <input id="suspended-teams-toggle" type="checkbox" ng-click="toggleShowSuspendedTeams()" />
+    </div>
+    <div class="modal-body" ng-show="teams.length > 0">
+        <div class="teams-list" infinite-scroll="loadMore()">
+            <table id="table-header">
+                <tr>
+                    <th>Team Name</th>
+                    <th>Access</th>
+                </tr>
+            </table>
+            <table id="table-body">
+                <tr data-ng-repeat="team in teams">
+                    <td>{{team.teamName}}</td>
+                    <td>
+                        <fancy-toggle ng-click="toggleSuspend(team.teamId)"></fancy-toggle>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="table-wait" ng-show="loadingResult == true">
+          <krossover-spinner class="spinner" size="'40px'"></krossover-spinner>
+        </div>
+    </div>
+    <div ng-show="teams.length == 0 && loadingResult == true" class="loading-teams">
+        <krossover-spinner class="spinner"></krossover-spinner>
+    </div>
+    <div class="modal-body" ng-show="teams.length == 0 && loadingResult == false">
+        <h3>No Results Found</h3>
+        <h3>Try adjusting your search or filter to find what you’re looking for</h3>
+    </div>
+</div>

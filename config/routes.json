@@ -218,6 +218,11 @@
         "Admin": true
     },
 
+    "film-exchange": {
+
+        "Super Admin": true
+    },
+
     "report": {
 
         "Super Admin": true,

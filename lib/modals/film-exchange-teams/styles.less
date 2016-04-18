@@ -1,0 +1,123 @@
+#film-exchange-teams {
+    .modal-sub-header {
+        padding: 15px 15px 0px 15px;
+        .icon-search {
+            color: #777;
+            left: 20px;
+            position: absolute;
+            top: 75px;
+        }
+        #film-exchange-teams-search {
+            width: 300px;
+            height: 30px;
+            padding-left: 25px;
+        }
+        #suspended-teams-toggle {
+            outline: none;
+            -webkit-appearance: none;
+            border: 1px solid #999;
+            padding: 9px;
+            display: inline-block;
+            position: relative;
+            float: right;
+            &:checked {
+                &:after {
+                    content: '\2714';
+                    font-size: 14px;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    color: white;
+                    background: #d9534f;
+                    width: 18px;
+                    padding-left: 4px;
+                }
+            }
+        }
+        label {
+            float: right;
+            margin: 3px 7px;
+        }
+    }
+    .modal-body {
+        height: 448px;
+        h3 {
+            text-align: center;
+            margin: 30px;
+        }
+        h3:first-child {
+            margin-top: 110px;
+        }
+        .teams-list {
+            border: 1px solid #ddd;
+            height: 408px;
+            overflow: scroll;
+            position: relative;
+            width: 100%;
+            table#table-header {
+                position: fixed;
+                outline: 1px solid #333;
+                width: 93%;
+                z-index: 10;
+                tr {
+                    height: 30px;
+                    th {
+                        background: #1A3A65;
+                        color: white;
+                        font-size: 18px;
+                        padding: 7px 16px;
+                        width: 80%;
+                    }
+                }
+            }
+            table#table-body {
+                margin-top: 39px;
+                width: 100%;
+                tr {
+                    border-bottom: 1px solid #ddd;
+                    height: 30px;
+                    td {
+                        background: white;
+                        font-size: 14px;
+                        padding: 13px 15px 13px 21px;
+                        width: 81%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.table-wait {
+    background: white;
+    height: 30px;
+    position: absolute;
+    bottom: 10px;
+    width: 93%;
+    z-index: 10;
+    .spinner {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        bottom: 0px;
+        top: 0px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+.loading-teams {
+    height: 448px;
+    width: 100%;
+    .spinner {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        bottom: 0px;
+        top: 40px;
+        width: 40px;
+        height: 40px;
+    }
+}

@@ -86,6 +86,8 @@
         "custom-tags-multiselect",
         "custom-tag-pills",
         "indexer-sidebar",
+        "infinite-scroll",
+        "fancy-toggle",
         "clips-navigation",
         "telestrations",
         "stats-export"

@@ -97,6 +97,9 @@
                 <!--<li data-ng-hide="true"><a href="#">Set Aside Times</a></li>-->
             </ul>
         </li>
+        <li ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN)">
+          <a id="menu-admin-film-exchange-cta" ui-sref="film-exchange">Film Exchange</a>
+        </li>
 
     </menu>
 

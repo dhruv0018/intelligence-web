@@ -16,6 +16,7 @@ StyleguideDialogsController.$inject = [
     'ProfileOnboarding.Modal',
     'RawFilm.Modal',
     'SelectIndexer.Modal',
+    'FilmExchangeTeams.Modal',
     'ArenaDialog.Service',
     'MobileAppDialog.Service',
     'TermsDialog.Service',
@@ -39,6 +40,7 @@ function StyleguideDialogsController (
     ProfileOnboardingModal,
     RawFilmModal,
     SelectIndexerModal,
+    FilmExchangeTeamsModal,
     ArenaDialog,
     MobileAppDialog,
     TermsDialog,
@@ -138,6 +140,13 @@ function StyleguideDialogsController (
             type: 'UI-Bootstrap modal',
             enabled: true,
             args: [null, false]
+        },
+        {
+            name: 'Film Exchange Teams',
+            controller: FilmExchangeTeamsModal,
+            type: 'UI-Bootstrap modal',
+            enabled: true,
+            args: [null]
         },
         {
             name: 'Raw Film',

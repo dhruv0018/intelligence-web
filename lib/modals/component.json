@@ -23,7 +23,8 @@
         "manage-profile-reels",
         "add-profile-team",
         "profile-onboarding",
-        "basic-edit-profile"
+        "basic-edit-profile",
+        "film-exchange-teams"
     ],
     "scripts": [
         "index.js"

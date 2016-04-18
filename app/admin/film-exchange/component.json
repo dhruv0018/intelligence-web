@@ -1,0 +1,12 @@
+{
+    "name": "film-exchange",
+    "templates": [
+        "film-exchange.html"
+    ],
+    "scripts": [
+        "index.js"
+    ],
+    "styles": [
+        "film-exchange.less"
+    ]
+}
