@@ -9,8 +9,10 @@ const storage = 'AssociationsStorage';
 const updateLocalResourceOnPUT = true;
 
 IntelligenceWebClient.factory('AssociationsFactory', [
+    '$injector',
     'BaseFactory',
     function(
+        $injector,
         BaseFactory
     ) {
 
@@ -19,7 +21,19 @@ IntelligenceWebClient.factory('AssociationsFactory', [
             description,
             model,
             storage,
-            updateLocalResourceOnPUT
+            updateLocalResourceOnPUT,
+
+            loadCompetitionLevels(code) {
+                code = code || this.code;
+                const model = $injector.get(this.model);
+                return model.getCompetitionLevels({code}).$promise;
+            },
+
+            createCompetitionLevel(code, data) {
+                code = code || this.code;
+                const model = $injector.get(this.model);
+                return model.createCompetitionLevels({code, data}).$promise;
+            }
 
         };
 

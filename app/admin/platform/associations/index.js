@@ -54,13 +54,12 @@ Associations.config([
             })
 
             .state('association', {
-                url: '/association/:code',
+                url: '/association/:id',
                 parent: 'base',
                 abstract: true,
                 views: {
                     'main@root': {
-                        templateUrl: 'association.html',
-                        controller: AssociationController
+                        templateUrl: 'association.html'
                     }
                 },
                 resolve: {
@@ -78,13 +77,13 @@ Associations.config([
                             iso3166countries
                         ) {
 
-                            let associationCode = $stateParams.code;
+                            let associationId = Number($stateParams.id);
 
                             let Data = {};
 
-                            if (associationCode) {
+                            if (associationId) {
 
-                                Data.association = associations.load({code: associationCode});
+                                Data.association = associations.load(associationId);
                             }
 
                             Data.iso3166countries = iso3166countries.load();

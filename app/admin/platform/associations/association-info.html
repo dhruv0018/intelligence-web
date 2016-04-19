@@ -2,7 +2,7 @@
 
     <div class="col-md-6">
 
-        <form class="form-info" name="form" role="form">
+        <form class="form-info" name="form" role="form" ng-submit="saveAssociation()">
 
             <div class="form-group">
 
@@ -10,11 +10,11 @@
                 <input class="form-control" name="name" placeholder="Name" ng-model="association.name" type="text" required>
 
                 <h3>Association Acronym</h3>
-                <input class="form-control" name="abbreviation" placeholder="Acronym" ng-model="association.acronym" type="text">
+                <input class="form-control" name="abbreviation" placeholder="Acronym" ng-model="association.acronym" type="text" required>
 
 
                 <h3>Association Code</h3>
-                <input class="form-control" name="code" placeholder="Code" ng-model="association.code" type="text">
+                <input class="form-control" name="code" placeholder="Code" ng-model="association.code" type="text" required>
                 <p>Note: this will serve as the internal ID of the association and cannot be changed.
                 <br>Do not include spaces or + signs.</p>
 
@@ -22,7 +22,8 @@
                 <select
                     ng-model="association.country"
                     ng-options="country.code as country.name for country in countries | orderBy: name"
-                    ng-change="updateRegionList()">
+                    ng-change="updateRegionList()"
+                    required>
                     <option value="">Pick a Country</option>
                 </select>
 
@@ -36,7 +37,7 @@
                 </select>
 
                 <h3>Type</h3>
-                <select ng-model="association.type">
+                <select ng-model="association.type" required>
                     <option value="">Pick an Association Type</option>
                     <option value="Scholastic">Scholastic</option>
                     <option value="Recreational">Recreational</option>
@@ -48,7 +49,7 @@
                 </select>
 
                 <h3>Age Level</h3>
-                <select ng-model="association.ageLevel">
+                <select ng-model="association.ageLevel" required>
                     <option value="">Pick an Age Level</option>
                     <option value="Primary">Primary</option>
                     <option value="Secondary">Secondary</option>
@@ -58,15 +59,18 @@
                 </select>
 
                 <h3>Amateur Status</h3>
-                <select ng-model="association.amateurPro">
+                <select ng-model="association.amateurPro" required>
                     <option value="">Pick an Amateur Status</option>
-                    <option value="amateur">Amateur</option>
-                    <option value="pro">Pro</option>
-                    <option value="both">Both</option>
+                    <option value="Amateur">Amateur</option>
+                    <option value="Pro">Pro</option>
+                    <option value="Both">Both</option>
                 </select>
 
+                <h3>Description</h3>
+                <textarea rows="4" cols="50" class="form-control description" name="description" placeholder="Description" ng-model="association.about"></textarea>
+
                 <h3>
-                    Is Sanctioning
+                    Is this association a sanctioning body?
                     <check-box
                         id="association-is-sanctioning-cta"
                         checked="association.isSanctioning"
@@ -75,7 +79,7 @@
                 </h3>
 
                 <h3>
-                    Is Defunct
+                    Make this association defunct
                     <check-box
                         id="association-is-defunct-cta"
                         checked="association.isDefunct"
@@ -83,17 +87,16 @@
                     </check-box>
                 </h3>
 
-                <h3>Description</h3>
-                <textarea rows="4" cols="50" class="form-control description" name="description" placeholder="Description" ng-model="association.about"></textarea>
-
                 <h3>Competition Levels</h3>
                 <div class="competition-level-container">
-                    <input class="form-control" name="competitionLevel" placeholder="Competition Level" ng-model="newCompetitionLevel" type="text">
+                    <input class="form-control" name="competitionLevelName" placeholder="Competition Level Name" ng-model="newCompetitionLevel.name" type="text">
+                    <input class="form-control competition-level-code-input" name="competitionLevelCode" placeholder="Code" ng-model="newCompetitionLevel.code" type="text">
                     <a ng-click="addCompetitionLevel(newCompetitionLevel)"><i class="icon icon-plus"></i> Add Competition Level</a>
                 </div>
 
-                <div class="competition-level-container" ng-repeat="competitionLevel in association.competitionLevels">
-                    <input class="form-control" name="competitionLevel" placeholder="Competition Level" ng-model="competitionLevel" type="text">
+                <div class="competition-level-container" ng-repeat="competitionLevel in competitionLevels">
+                    <input class="form-control" name="competitionLevel" placeholder="Competition Level Name" ng-model="competitionLevel.name" type="text">
+                    <input class="form-control competition-level-code-input" name="competitionLevelCode" placeholder="Code" ng-model="competitionLevel.code" type="text">
                     <i class="icon icon-remove" ng-click="removeCompetitionLevel($index)"></i>
                 </div>
 
@@ -101,11 +104,11 @@
 
             <div class="form-group">
 
-                <krossover-admin-resource-save
-                    resource="association"
-                    button-id="save-association-cta"
-                    disabled="form.$invalid || form.$pristine">
-                </krossover-admin-resource-save>
+                <button
+                    class="btn btn-primary"
+                    id="save-association-cta"
+                    type="submit">Save
+                </button>
                 <a class="pull-right" href id="cancel-association-cta" ui-sref="associations">Cancel</a>
 
             </div>
