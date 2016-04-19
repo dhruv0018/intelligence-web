@@ -13,7 +13,7 @@
             <li ui-sref-active="active"><a id="mobile-menu-admin-teams-cta" ui-sref="teams">Teams</a></li>
             <li ui-sref-active="active"><a id="mobile-menu-admin-schools-cta" ui-sref="schools">Schools</a></li>
             <li ui-sref-active="active"><a id="mobile-menu-admin-queue-cta" ui-sref="queue">Queue</a></li>
-            <li ui-sref-active="active" ng-show="currentUser.is(ADMIN)" ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
+            <li ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)" ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
                 <a>Platform</a>
                 <ul class="mobile-submenu" ng-show="subMenu">
                     <li ng-show="currentUser.is(SUPER_ADMIN)"><a ui-sref="plan-defaults">Plan Defaults</a></li>
@@ -75,7 +75,7 @@
         <li ui-sref-active="active"><a id="menu-admin-schools-cta" ui-sref="schools">Schools</a></li>
         <li ui-sref-active="active"><a id="menu-admin-queue-cta" ui-sref="queue">Queue</a></li>
         <!--<li class="disabled" data-ui-sref-active="active"><a data-ui-sref="reports">Reports</a></li>-->
-        <li class="header-dropdown" ui-sref-active="active" ng-show="currentUser.is(ADMIN)"><a class="dropdown-toggle" dropdown-toggle>Platform</a>
+        <li class="header-dropdown" ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)"><a class="dropdown-toggle" dropdown-toggle>Platform</a>
             <ul class="dropdown-menu">
                 <li ng-show="currentUser.is(SUPER_ADMIN)"><a ui-sref="plan-defaults">Plan Defaults</a></li>
                 <li ng-show="currentUser.is(SUPER_ADMIN)"><a ui-sref="leagues">Leagues</a></li>
