@@ -19,11 +19,13 @@ function AssociationController(
 
     let associationId = Number($stateParams.id);
     $scope.countries = iso3166countries.getList();
+    $scope.isExistingAssociation = false;
     $scope.regions = [];
     $scope.competitionLevels = [];
 
     if (associationId) {
         $scope.association = associations.get(associationId);
+        $scope.isExistingAssociation = true;
         /*$scope.competitionLevels = associations.loadCompetitionLevels($scope.association.code).then(response => {
             return response.value;
         });
@@ -38,27 +40,18 @@ function AssociationController(
 
     $scope.updateRegionList = updateRegionList;
 
-    $scope.addCompetitionLevel = function(newCompetitionLevel) {
+    $scope.addCompetitionLevel = function(competitionLevel) {
         if (newCompetitionLevel.name && newCompetitionLevel.code) {
-            $scope.competitionLevels.push(newCompetitionLevel);
-            $scope.newCompetitionLevel = {};
+            associations.createCompetitionLevel($scope.association.code, competitionLevel);
         }
     };
 
-    $scope.removeCompetitionLevel = function(index) {
-        $scope.competitionLevels.splice(index, 1);
+    $scope.removeCompetitionLevel = function(competitionLevel) {
+        associations.deleteCompetitionLevel($scope.association.code, competitionLevel);
     };
 
     $scope.addConference = function() {
 
-    };
-
-    $scope.saveAssociation = function() {
-        $scope.association.save().then(response => {
-            if ($scope.competitionLevels.length) {
-                associations.createCompetitionLevel(response.code, $scope.competitionLevels);
-            }
-        });
     };
 
     function updateRegionList() {

@@ -1,0 +1,35 @@
+<div class="row">
+
+    <h4>Add Competition Level</h4>
+
+    <div class="add-competition-level-container">
+
+        <div>
+            <span>Name*</span>
+            <input class="form-control" type="text" ng-model="newCompetitionLevel.name">
+        </div>
+
+        <div>
+            <span>Code*</span>
+            <input class="form-control" type="text" ng-model="newCompetitionLevel.code">
+            <span class="code-note">Must be unique within this association</span>
+        </div>
+
+        <button class="btn btn-default" ng-click="addCompetitionLevel(newCompetitionLevel)"><i class="icon icon-plus"></i> Add Competition Level</button>
+
+    </div>
+
+    <h4>Existing Competition Levels</h4>
+
+    <div class="competition-level-container" ng-repeat="competitionLevel in competitionLevels">
+
+        <input class="form-control" type="text" ng-model="competitionLevel.name">
+
+        <p type="text" ng-model="competitionLevel.code"></p>
+
+        <i class="icon icon-pencil"></i>
+        <i class="icon icon-trash"></i>
+
+    </div>
+
+</div>

@@ -2,9 +2,21 @@
 
     <div class="col-md-6">
 
-        <form class="form-info" name="form" role="form" ng-submit="saveAssociation()">
+        <form class="form-info" name="form" role="form">
 
             <div class="form-group">
+
+                <h3>Association Code</h3>
+                <input
+                    class="form-control"
+                    name="code"
+                    placeholder="Code"
+                    ng-model="association.code"
+                    type="text"
+                    ng-disabled="isExistingAssociation"
+                    required>
+                <p>Note: this will serve as the internal ID of the association and cannot be changed.
+                <br>Do not include spaces or + signs.</p>
 
                 <h3>Association Name</h3>
                 <input class="form-control" name="name" placeholder="Name" ng-model="association.name" type="text" required>
@@ -12,16 +24,10 @@
                 <h3>Association Acronym</h3>
                 <input class="form-control" name="abbreviation" placeholder="Acronym" ng-model="association.acronym" type="text" required>
 
-
-                <h3>Association Code</h3>
-                <input class="form-control" name="code" placeholder="Code" ng-model="association.code" type="text" required>
-                <p>Note: this will serve as the internal ID of the association and cannot be changed.
-                <br>Do not include spaces or + signs.</p>
-
                 <h3>Country</h3>
                 <select
                     ng-model="association.country"
-                    ng-options="country.code as country.name for country in countries | orderBy: name"
+                    ng-options="country.code as country.name for country in countries"
                     ng-change="updateRegionList()"
                     required>
                     <option value="">Pick a Country</option>
@@ -32,7 +38,7 @@
                     ng-disabled="!regions.length"
                     ng-class="{'disabled': !regions.length}"
                     ng-model="association.region"
-                    ng-options="region.code as region.name for region in regions | orderBy: name">
+                    ng-options="region.code as region.name for region in regions">
                     <option value="">No Region</option>
                 </select>
 
@@ -87,28 +93,15 @@
                     </check-box>
                 </h3>
 
-                <h3>Competition Levels</h3>
-                <div class="competition-level-container">
-                    <input class="form-control" name="competitionLevelName" placeholder="Competition Level Name" ng-model="newCompetitionLevel.name" type="text">
-                    <input class="form-control competition-level-code-input" name="competitionLevelCode" placeholder="Code" ng-model="newCompetitionLevel.code" type="text">
-                    <a ng-click="addCompetitionLevel(newCompetitionLevel)"><i class="icon icon-plus"></i> Add Competition Level</a>
-                </div>
-
-                <div class="competition-level-container" ng-repeat="competitionLevel in competitionLevels">
-                    <input class="form-control" name="competitionLevel" placeholder="Competition Level Name" ng-model="competitionLevel.name" type="text">
-                    <input class="form-control competition-level-code-input" name="competitionLevelCode" placeholder="Code" ng-model="competitionLevel.code" type="text">
-                    <i class="icon icon-remove" ng-click="removeCompetitionLevel($index)"></i>
-                </div>
-
             </div>
 
             <div class="form-group">
 
-                <button
-                    class="btn btn-primary"
-                    id="save-association-cta"
-                    type="submit">Save
-                </button>
+                <krossover-admin-resource-save
+                     resource="association"
+                     button-id="save-association-cta"
+                     disabled="form.$invalid || form.$pristine">
+                 </krossover-admin-resource-save>
                 <a class="pull-right" href id="cancel-association-cta" ui-sref="associations">Cancel</a>
 
             </div>

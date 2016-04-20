@@ -23,6 +23,7 @@ Associations.run([
         $templateCache.put('association.html', require('./association.html'));
         $templateCache.put('associations.html', require('./associations.html'));
         $templateCache.put('association-info.html', require('./association-info.html'));
+        $templateCache.put('competition-levels.html', require('./competition-levels.html'));
         $templateCache.put('conferences.html', require('./conferences.html'));
     }
 ]);
@@ -59,7 +60,8 @@ Associations.config([
                 abstract: true,
                 views: {
                     'main@root': {
-                        templateUrl: 'association.html'
+                        templateUrl: 'association.html',
+                        controller: AssociationController
                     }
                 },
                 resolve: {
@@ -99,8 +101,17 @@ Associations.config([
                 parent: 'association',
                 views: {
                     'content@association': {
-                        templateUrl: 'association-info.html',
-                        controller: AssociationController
+                        templateUrl: 'association-info.html'
+                    }
+                }
+            })
+
+            .state('competition-levels', {
+                url: '',
+                parent: 'association',
+                views: {
+                    'content@association': {
+                        templateUrl: 'competition-levels.html'
                     }
                 }
             })
@@ -110,8 +121,7 @@ Associations.config([
                 parent: 'association',
                 views: {
                     'content@association': {
-                        templateUrl: 'conferences.html',
-                        controller: AssociationController
+                        templateUrl: 'conferences.html'
                     }
                 }
             });

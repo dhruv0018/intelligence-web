@@ -15,7 +15,6 @@ IntelligenceWebClient.factory('AssociationsResource', [
         let paramDefaults = {
 
             id: '@id',
-            code: '@code'
 
         };
 
@@ -23,7 +22,7 @@ IntelligenceWebClient.factory('AssociationsResource', [
             create: { method: 'POST' },
             update: { method: 'PUT' },
             getCompetitionLevels: { method: 'GET', url: `${config.api.uri}${base}/:code/competition-levels`, isArray: true},
-            createCompetitionLevels: { method: 'POST', url: `${config.api.uri}${base}/:code/competition-levels`, data: '@data'}
+            createCompetitionLevels: { method: 'POST', url: `${config.api.uri}${base}/:code/competition-levels`, params: {competitionLevel: '@compLevel'}}
         };
 
         return $resource(url, paramDefaults, actions);
