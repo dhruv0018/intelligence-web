@@ -2,11 +2,11 @@
 
     <div class="col-md-6">
 
-        <form class="form-info" name="form" role="form">
+        <form class="form-info required-legend" name="form" role="form">
 
             <div class="form-group">
 
-                <h3>Association Code</h3>
+                <h3 class="required">Association Code</h3>
                 <input
                     class="form-control"
                     name="code"
@@ -18,13 +18,13 @@
                 <p>Note: this will serve as the internal ID of the association and cannot be changed.
                 <br>Do not include spaces or + signs.</p>
 
-                <h3>Association Name</h3>
+                <h3 class="required">Association Name</h3>
                 <input class="form-control" name="name" placeholder="Name" ng-model="association.name" type="text" required>
 
-                <h3>Association Acronym</h3>
+                <h3 class="required">Association Acronym</h3>
                 <input class="form-control" name="abbreviation" placeholder="Acronym" ng-model="association.acronym" type="text" required>
 
-                <h3>Country</h3>
+                <h3 class="required">Country</h3>
                 <select
                     ng-model="association.country"
                     ng-options="country.code as country.name for country in countries"
@@ -42,7 +42,7 @@
                     <option value="">No Region</option>
                 </select>
 
-                <h3>Type</h3>
+                <h3 class="required">Type</h3>
                 <select ng-model="association.type" required>
                     <option value="">Pick an Association Type</option>
                     <option value="Scholastic">Scholastic</option>
@@ -54,7 +54,7 @@
                     <option value="Other">Other</option>
                 </select>
 
-                <h3>Age Level</h3>
+                <h3 class="required">Age Level</h3>
                 <select ng-model="association.ageLevel" required>
                     <option value="">Pick an Age Level</option>
                     <option value="Primary">Primary</option>
@@ -64,7 +64,7 @@
                     <option value="All Ages">All Ages</option>
                 </select>
 
-                <h3>Amateur Status</h3>
+                <h3 class="required">Amateur Status</h3>
                 <select ng-model="association.amateurPro" required>
                     <option value="">Pick an Amateur Status</option>
                     <option value="Amateur">Amateur</option>
@@ -75,7 +75,7 @@
                 <h3>Description</h3>
                 <textarea rows="4" cols="50" class="form-control description" name="description" placeholder="Description" ng-model="association.about"></textarea>
 
-                <h3>
+                <h3 class="required">
                     Is this association a sanctioning body?
                     <check-box
                         id="association-is-sanctioning-cta"
@@ -84,7 +84,7 @@
                     </check-box>
                 </h3>
 
-                <h3>
+                <h3 class="required">
                     Make this association defunct
                     <check-box
                         id="association-is-defunct-cta"

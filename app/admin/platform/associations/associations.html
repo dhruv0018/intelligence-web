@@ -29,17 +29,17 @@
 
     <div class="list" ng-show="associations.length">
 
+        <table class="table table-head">
+                <tr>
+                    <td>Code</td>
+                    <td>Acronym</td>
+                    <td>Name</td>
+                </tr>
+        </table>
+
         <div class="table-responsive">
 
             <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Code</th>
-                        <th>Acronym</th>
-                        <th>Name</th>
-                    </tr>
-                </thead>
-
                 <tbody>
 
                     <tr ng-repeat="association in associations">
