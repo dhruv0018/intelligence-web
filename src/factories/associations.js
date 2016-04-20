@@ -29,10 +29,24 @@ IntelligenceWebClient.factory('AssociationsFactory', [
                 return model.getCompetitionLevels({code}).$promise;
             },
 
-            createCompetitionLevel(associationCode, competitionLevel) {
-                associationCode = associationCode || this.code;
+            createCompetitionLevel(code, competitionLevel) {
+                code = code || this.code;
                 const model = $injector.get(this.model);
-                return model.createCompetitionLevels({associationCode}, competitionLevel).$promise;
+                return model.createCompetitionLevel({code}, competitionLevel).$promise;
+            },
+
+            updateCompetitionLevel(competitionLevel) {
+                const model = $injector.get(this.model);
+                let associationCode = competitionLevel.sportsAssociation;
+                let compLevelCode = competitionLevel.code;
+                return model.updateCompetitionLevel({associationCode, compLevelCode}, competitionLevel).$promise;
+            },
+
+            deleteCompetitionLevel(competitionLevel) {
+                const model = $injector.get(this.model);
+                let associationCode = competitionLevel.sportsAssociation;
+                let compLevelCode = competitionLevel.code;
+                return model.deleteCompetitionLevel({associationCode, compLevelCode}).$promise;
             }
 
         };

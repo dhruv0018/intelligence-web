@@ -22,6 +22,7 @@ function AssociationController(
     $scope.isExistingAssociation = false;
     $scope.regions = [];
     $scope.competitionLevels = [];
+    $scope.newCompetitionLevel = {};
 
     if (associationId) {
         $scope.association = associations.get(associationId);
@@ -35,6 +36,10 @@ function AssociationController(
         isDefunct: false
     });
 
+    $scope.$on('delete-competition-level', () => {
+        updateCompetitionLevels();
+    });
+
     $scope.updateRegionList = updateRegionList;
 
     $scope.addCompetitionLevel = function(competitionLevel) {
@@ -44,12 +49,9 @@ function AssociationController(
             competitionLevel.sportsAssociation = $scope.association.code;
             associations.createCompetitionLevel($scope.association.code, competitionLevel).then(() => {
                 updateCompetitionLevels();
+                $scope.newCompetitionLevel = {};
             });
         }
-    };
-
-    $scope.removeCompetitionLevel = function(competitionLevel) {
-        associations.deleteCompetitionLevel($scope.association.code, competitionLevel);
     };
 
     $scope.addConference = function() {

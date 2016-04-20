@@ -267,6 +267,12 @@
         "Admin": true
     },
 
+    "competition-levels": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "conferences": {
 
         "Super Admin": true,
