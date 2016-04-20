@@ -9,15 +9,11 @@
         <form role="form" ng-submit="search(filter)">
 
             <div class="form-group">
-                <input class="form-control" name="name" placeholder="Association Name" ng-model="filter.name" type="text">
-            </div>
-
-            <div class="form-group">
                 <input class="form-control" name="acronym" placeholder="Association Acronym" ng-model="filter.acronym" type="text">
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="conference" placeholder="Conference" ng-model="filter.conference" type="text">
+                <input class="form-control" name="name" placeholder="Association Name" ng-model="filter.name" type="text">
             </div>
 
             <button id="search-associations-cta" class="btn-search" ng-show="sidebar" ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
@@ -36,16 +32,21 @@
         <div class="table-responsive">
 
             <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Acronym</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
 
                 <tbody>
 
                     <tr ng-repeat="association in associations">
 
-                        <td><a ui-sref="association-info({ id: association.id })">{{association.name}}</a></td>
+                        <td><a ui-sref="association-info({ id: association.id })">{{association.code}}</a></td>
                         <td>{{association.acronym}}</td>
-                        <td>{{association.level}}</td>
-                        <td>{{association.status}}</td>
-                        <td>{{association.jurisdiction}}</td>
+                        <td>{{association.name}}</td>
 
                     </tr>
 
@@ -59,4 +60,3 @@
     <data-results ng-hide="associations.length" query="query"></data-results>
 
 </section>
-
