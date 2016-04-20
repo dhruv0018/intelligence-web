@@ -424,6 +424,12 @@ function TeamController (
     $scope.schoolName = '';
     $scope.rolesChanged = false;
 
+
+
+    $scope.clearSearchTerm = function() {
+        $scope.searchTerm = '';
+    };
+
     $scope.removeRole = (role) => {
         role.tenureEnd = new Date();
         $scope.rolesChanged = true;
