@@ -26,10 +26,7 @@ function AssociationController(
     if (associationId) {
         $scope.association = associations.get(associationId);
         $scope.isExistingAssociation = true;
-        /*$scope.competitionLevels = associations.loadCompetitionLevels($scope.association.code).then(response => {
-            return response.value;
-        });
-        console.log($scope.competitionLevels);*/
+        updateCompetitionLevels();
         updateRegionList();
     }
 
@@ -41,8 +38,13 @@ function AssociationController(
     $scope.updateRegionList = updateRegionList;
 
     $scope.addCompetitionLevel = function(competitionLevel) {
-        if (newCompetitionLevel.name && newCompetitionLevel.code) {
-            associations.createCompetitionLevel($scope.association.code, competitionLevel);
+        if (competitionLevel.name && competitionLevel.code) {
+            competitionLevel.sortOrder = 1;
+            competitionLevel.isDefunct = 0;
+            competitionLevel.sportsAssociation = $scope.association.code;
+            associations.createCompetitionLevel($scope.association.code, competitionLevel).then(() => {
+                updateCompetitionLevels();
+            });
         }
     };
 
@@ -60,6 +62,12 @@ function AssociationController(
                 $scope.regions = regionData;
             });
         }
+    }
+
+    function updateCompetitionLevels() {
+        associations.loadCompetitionLevels($scope.association.code).then(response => {
+            $scope.competitionLevels = response;
+        });
     }
 }
 

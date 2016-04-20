@@ -14,8 +14,8 @@
             <ul class="nav nav-pills nav-stacked">
 
                 <li ui-sref-active="active"><a href ui-sref="association-info">Association Information</a></li>
-                <li ui-sref-active="active" ng-show="isExistingAssociation"><a href ui-sref="competition-levels">Competition Levels</a></li>
-                <li ui-sref-active="active" ng-show="isExistingAssociation"><a href ui-sref="conferences">Conferences</a></li>
+                <li ui-sref-active="active" ng-class="{disabled: !isExistingAssociation}"><a href ui-sref="competition-levels">Competition Levels</a></li>
+                <li ui-sref-active="active" ng-class="{disabled: !isExistingAssociation}"><a href ui-sref="conferences">Conferences</a></li>
 
             </ul>
 

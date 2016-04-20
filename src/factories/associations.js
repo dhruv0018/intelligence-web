@@ -29,10 +29,10 @@ IntelligenceWebClient.factory('AssociationsFactory', [
                 return model.getCompetitionLevels({code}).$promise;
             },
 
-            createCompetitionLevel(code, data) {
-                code = code || this.code;
+            createCompetitionLevel(associationCode, competitionLevel) {
+                associationCode = associationCode || this.code;
                 const model = $injector.get(this.model);
-                return model.createCompetitionLevels({code, data}).$promise;
+                return model.createCompetitionLevels({associationCode}, competitionLevel).$promise;
             }
 
         };
