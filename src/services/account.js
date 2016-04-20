@@ -51,22 +51,24 @@ function AccountService (
             /* Update the user in the session. */
             session.storeCurrentUser(user);
 
+            let self = this;
+
             /* Permanently save the user. */
-            user.save();
+            user.save().then(function(responseUser){
+                /* Assert that the users role has been changed to the desired role. */
+                if (angular.equals(responseUser.currentRole, role)) {
 
-            /* Assert that the users role has been changed to the desired role. */
-            if (angular.equals(user.currentRole, role)) {
+                    /* Broadcast successful role change. */
+                    $rootScope.$broadcast('roleChangeSuccess', role);
 
-                /* Broadcast successful role change. */
-                $rootScope.$broadcast('roleChangeSuccess', role);
+                    self.gotoUsersHomeState(user, true);
 
-                this.gotoUsersHomeState(user, true);
+                } else {
 
-            } else {
-
-                /* Broadcast role change error. */
-                $rootScope.$broadcast('roleChangeError', role);
-            }
+                    /* Broadcast role change error. */
+                    $rootScope.$broadcast('roleChangeError', role);
+                }
+            });
         },
 
         changeCurrentUserRole: function(role) {
