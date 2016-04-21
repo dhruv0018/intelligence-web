@@ -5,25 +5,33 @@
     <div class="add-conference-container">
 
         <div>
-            <span>Name*</span>
-            <input class="form-control" type="text" ng-model="newConference.name">
-        </div>
-
-        <div>
             <span>Code*</span>
             <input class="form-control" type="text" ng-model="newConference.code">
             <span class="code-note">Must be unique within this association</span>
         </div>
 
         <div>
+            <span>Name*</span>
+            <input class="form-control" type="text" ng-model="newConference.name">
+        </div>
+
+        <div>
             <span>Competition Level</span>
-            <select class="form-control" ng-model="newConference.competitionLevel" ng-options="association.competitionLevels">
+            <select class="form-control" ng-model="newConference.competitionLevel" ng-options="competitionLevel.code as competitionLevel.name for competitionLevel in competitionLevels">
                 <option value="">None</option>
             </select>
         </div>
 
-        <button class="btn btn-default" ng-click="addConference()"><i class="icon icon-plus"></i> Add Conference</button>
+        <button class="btn btn-default" ng-click="addConference(newConference)"><i class="icon icon-plus"></i> Add Conference</button>
 
     </div>
+
+    <h4 ng-show="conferences.length">Existing Conferences</h4>
+
+    <association-conference
+        ng-repeat="conference in conferences"
+        conference="conference"
+        competition-levels="competitionLevels">
+    </association-conference>
 
 </div>

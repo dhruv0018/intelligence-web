@@ -5,9 +5,10 @@ AssociationController.$inject = [
     '$stateParams',
     '$state',
     'AssociationsFactory',
+    'ConferencesFactory',
     'Iso3166countriesFactory',
     'BasicModals',
-    'AlertsService',
+    'AlertsService'
 ];
 
 /**
@@ -18,6 +19,7 @@ function AssociationController(
     $stateParams,
     $state,
     associations,
+    conferences,
     iso3166countries,
     basicModals,
     alerts
@@ -29,11 +31,13 @@ function AssociationController(
     $scope.regions = [];
     $scope.competitionLevels = [];
     $scope.newCompetitionLevel = {};
+    $scope.newConference = {};
 
     if (associationId) {
         $scope.association = associations.get(associationId);
         $scope.isExistingAssociation = true;
         updateCompetitionLevels();
+        updateConferences();
         updateRegionList();
     }
 
@@ -88,6 +92,10 @@ function AssociationController(
         updateCompetitionLevels();
     });
 
+    $scope.$on('delete-conference', () => {
+        updateConferences();
+    });
+
     $scope.updateRegionList = updateRegionList;
 
     $scope.addCompetitionLevel = function(competitionLevel) {
@@ -102,8 +110,21 @@ function AssociationController(
         }
     };
 
-    $scope.addConference = function() {
-
+    $scope.addConference = function(newConference) {
+        if (newConference.name && newConference.code) {
+            let conference = conferences.create({
+                name: newConference.name,
+                code: newConference.code,
+                competitionLevel: newConference.competitionLevel || null,
+                sortOrder: 1,
+                isDefunct: 0,
+                sportsAssociation: $scope.association.code
+            });
+            conferences.createConference($scope.association.code, conference).then(() => {
+                updateConferences();
+                $scope.newConference = {};
+            });
+        }
     };
 
     function updateRegionList() {
@@ -117,6 +138,12 @@ function AssociationController(
     function updateCompetitionLevels() {
         associations.loadCompetitionLevels($scope.association.code).then(response => {
             $scope.competitionLevels = response;
+        });
+    }
+
+    function updateConferences() {
+        conferences.loadConferences($scope.association.code).then(response => {
+            $scope.conferences = response;
         });
     }
 }

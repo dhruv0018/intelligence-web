@@ -124,6 +124,7 @@ require('./models/plans');
 require('./models/customtags');
 require('./models/formationlabels');
 require('./models/associations');
+require('./models/conferences');
 require('./models/iso3166countries');
 
 require('./storage/base');
@@ -144,6 +145,7 @@ require('./storage/plans');
 require('./storage/customtags');
 require('./storage/formationlabels');
 require('./storage/associations');
+require('./storage/conferences');
 require('./storage/iso3166countries');
 
 require('./factories');
@@ -165,6 +167,7 @@ require('./factories/plans');
 require('./factories/customtags');
 require('./factories/formationlabels');
 require('./factories/associations');
+require('./factories/conferences');
 require('./factories/iso3166countries');
 
 require('./emitters/emitter.js');
