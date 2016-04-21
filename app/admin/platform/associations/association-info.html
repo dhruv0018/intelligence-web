@@ -14,15 +14,16 @@
                     ng-model="association.code"
                     type="text"
                     ng-disabled="isExistingAssociation"
+                    maxlength="20"
                     required>
                 <p>Note: this will serve as the internal ID of the association and cannot be changed.
                 <br>Do not include spaces or + signs.</p>
 
                 <h3 class="required">Association Name</h3>
-                <input class="form-control" name="name" placeholder="Name" ng-model="association.name" type="text" required>
+                <input class="form-control" name="name" placeholder="Name" ng-model="association.name" type="text" maxlength="255" required>
 
                 <h3 class="required">Association Acronym</h3>
-                <input class="form-control" name="abbreviation" placeholder="Acronym" ng-model="association.acronym" type="text" required>
+                <input class="form-control" name="abbreviation" placeholder="Acronym" ng-model="association.acronym" type="text" maxlength="20" required>
 
                 <h3 class="required">Country</h3>
                 <select
@@ -75,7 +76,7 @@
                 <h3>Description</h3>
                 <textarea rows="4" cols="50" class="form-control description" name="description" placeholder="Description" ng-model="association.about"></textarea>
 
-                <h3 class="required">
+                <h3>
                     Is this association a sanctioning body?
                     <check-box
                         id="association-is-sanctioning-cta"
@@ -84,7 +85,7 @@
                     </check-box>
                 </h3>
 
-                <h3 class="required">
+                <h3>
                     Make this association defunct
                     <check-box
                         id="association-is-defunct-cta"
@@ -97,13 +98,17 @@
 
             <div class="form-group">
 
-                <krossover-admin-resource-save
-                     resource="association"
-                     button-id="save-association-cta"
-                     disabled="form.$invalid || form.$pristine">
-                 </krossover-admin-resource-save>
-                <a class="pull-right" href id="cancel-association-cta" ui-sref="associations">Cancel</a>
-
+                <div class="pull-left" ng-show="isExistingAssociation">
+                    <button class="btn btn-primary" id="delete-association" ng-click="deleteAssocation()">Delete</button>
+                </div>
+                <div class="pull-right">
+                    <krossover-admin-resource-save
+                        resource="association"
+                        button-id="save-association-cta"
+                        disabled="form.$invalid || form.$pristine">
+                     </krossover-admin-resource-save>
+                     <a href id="cancel-association-cta" ui-sref="associations">Cancel</a>
+                 </div>
             </div>
 
         </form>
