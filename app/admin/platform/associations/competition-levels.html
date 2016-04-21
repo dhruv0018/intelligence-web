@@ -5,14 +5,14 @@
     <div class="add-competition-level-container">
 
         <div>
-            <span>Name*</span>
-            <input class="form-control" type="text" ng-model="newCompetitionLevel.name">
-        </div>
-
-        <div>
             <span>Code*</span>
             <input class="form-control" type="text" ng-model="newCompetitionLevel.code">
             <span class="code-note">Must be unique within this association</span>
+        </div>
+
+        <div>
+            <span>Name*</span>
+            <input class="form-control" type="text" ng-model="newCompetitionLevel.name">
         </div>
 
         <button class="btn btn-default" ng-click="addCompetitionLevel(newCompetitionLevel)"><i class="icon icon-plus"></i> Add Competition Level</button>
