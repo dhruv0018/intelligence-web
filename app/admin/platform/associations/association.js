@@ -106,6 +106,7 @@ function AssociationController(
             associations.createCompetitionLevel($scope.association.code, competitionLevel).then(() => {
                 updateCompetitionLevels();
                 $scope.newCompetitionLevel = {};
+                $scope.form.$setPristine();
             });
         }
     };
@@ -123,6 +124,7 @@ function AssociationController(
             conferences.createConference($scope.association.code, conference).then(() => {
                 updateConferences();
                 $scope.newConference = {};
+                $scope.form.$setPristine();
             });
         }
     };

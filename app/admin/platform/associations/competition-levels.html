@@ -2,22 +2,24 @@
 
     <h4>Add Competition Level</h4>
 
-    <div class="add-competition-level-container">
+    <form name="form" role="form" class="add-competition-level-container">
 
         <div>
             <span>Code*</span>
-            <input class="form-control" type="text" ng-model="newCompetitionLevel.code">
-            <span class="code-note">Must be unique within this association</span>
+            <input class="form-control" type="text" ng-model="newCompetitionLevel.code" required>
+            <span class="code-note">Must be unique within this association. Do not include spaces or + signs.</span>
         </div>
 
         <div>
             <span>Name*</span>
-            <input class="form-control" type="text" ng-model="newCompetitionLevel.name">
+            <input class="form-control" type="text" ng-model="newCompetitionLevel.name" required>
         </div>
 
-        <button class="btn btn-default" ng-click="addCompetitionLevel(newCompetitionLevel)"><i class="icon icon-plus"></i> Add Competition Level</button>
 
-    </div>
+        <button class="btn btn-default btn-add-competition" ng-disabled="form.$invalid || form.$pristine" ng-click="addCompetitionLevel(newCompetitionLevel)"><i class="icon icon-plus"></i> Add Competition Level</button>
+
+
+    </form>
 
     <h4 ng-show="competitionLevels.length">Existing Competition Levels</h4>
 

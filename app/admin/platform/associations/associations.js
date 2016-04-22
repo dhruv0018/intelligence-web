@@ -15,7 +15,13 @@ function AssociationsController(
     associations
 ) {
 
-    $scope.associations = [];
+    $scope.associations = associations.query().then(filteredAssociations => {
+
+        $scope.associations = filteredAssociations;
+
+    }).catch(function(){
+        $scope.associations = [];
+    });
 
     $scope.add = function() {
         $state.go('association-info');

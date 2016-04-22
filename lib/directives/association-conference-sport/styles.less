@@ -3,7 +3,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    &.isDefunct{
+        span, i{
+            opacity: .5;
+        }
+        i.icon-refresh{
+            opacity: 1;
+        }
+    }
     .icon {
         color: @brand-primary;
         margin-left: 10px;

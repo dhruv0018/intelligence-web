@@ -55,17 +55,26 @@
         background-color: white;
         border: thin solid @gray-border;
 
-        div {
-            flex: 1;
-            margin-right: 5%;
-        }
-
         .code-note {
             font-size: 12px;
         }
 
         button {
             align-self: center;
+            margin-top: -4%;
+        }
+    }
+
+    .add-competition-level-container{
+        div {
+            flex: 1;
+            margin-right: 5%;
+            &:nth-child(2){
+                flex: 2;
+                input.form-control{
+                    width: 85%;
+                }
+            }
         }
     }
 
@@ -75,6 +84,19 @@
         margin-bottom: 20px;
     }
 
+    .association-competition-level{
+        padding: 20px;
+        span{
+            flex: 1;
+            &:nth-child(2){
+                flex: 2;
+                margin-left: -5%;
+            }
+        }
+        input{
+            width: 55%;
+        }
+    }
     #cancel-association-cta{
         margin: auto 15px;
     }
