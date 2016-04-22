@@ -69,13 +69,13 @@ Associations.config([
                         '$stateParams',
                         '$q',
                         'AssociationsFactory',
-                        'TeamsFactory',
+                        'SportsFactory',
                         'Iso3166countriesFactory',
                         function(
                             $stateParams,
                             $q,
                             associations,
-                            teams,
+                            sports,
                             iso3166countries
                         ) {
 
@@ -86,6 +86,7 @@ Associations.config([
                             if (associationId) {
 
                                 Data.association = associations.load(associationId);
+                                Data.sports = sports.load();
                             }
 
                             Data.iso3166countries = iso3166countries.load();

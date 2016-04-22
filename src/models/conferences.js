@@ -12,7 +12,7 @@ IntelligenceWebClient.factory('ConferencesResource', [
         const conferencesBase = 'conferences';
         const conferenceSportsBase = 'conference-sports';
 
-        let url = `${config.api.uri}/`;
+        let url = `${config.api.uri}`;
 
         let paramDefaults = {
 
@@ -42,6 +42,27 @@ IntelligenceWebClient.factory('ConferencesResource', [
                 url: `${url}${associationsBase}/:associationCode/conferences/:conferenceCode`,
                 params: {associationCode: '@associationCode', conferenceCode: '@conferenceCode'}
             },
+            createConferenceSport: {
+                method: 'POST',
+                url: `${url}${conferencesBase}/:combinationCode/sports`,
+                params: {combinationCode: '@combinationCode'}
+            },
+            readConferenceSport: {
+                method: 'GET',
+                url: `${url}${conferencesBase}/:combinationCode/sports`,
+                params: {combinationCode: '@combinationCode'},
+                isArray: true
+            },
+            updateConferenceSport: {
+                method: 'PUT',
+                url: `${url}${conferencesBase}/:combinationCode/sports/:genderSport`,
+                params: {combinationCode: '@combinationCode', genderSport: '@genderSport'}
+            },
+            deleteConferenceSport: {
+                method: 'DELETE',
+                url: `${url}${conferencesBase}/:combinationCode/sports/:genderSport`,
+                params: {combinationCode: '@combinationCode', genderSport: '@genderSport'}
+            }
         };
 
         return $resource(url, paramDefaults, actions);
