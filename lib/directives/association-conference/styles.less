@@ -4,16 +4,28 @@
     padding: 10px;
     width: 100%;
 
-    .conference-info {
+    .conference-header {
         height: 60px;
         padding: 10px;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
+        .conference-info {
+            width: 30%;
+
+            &:first-child {
+                width: 10%;
+            }
+        }
+
         .icon {
-            color: @brand-primary;
             margin-left: 10px;
+
+            &.icon-pencil,
+            &.icon-trash-o {
+                color: @brand-primary;
+            }
         }
     }
 
@@ -25,6 +37,10 @@
             display: flex;
             justify-content: space-between;
             text-transform: capitalize;
+
+            .form-control {
+                width: 30%;
+            }
 
             .add-sport-btn {
                 color: @brand-primary;
@@ -38,10 +54,6 @@
         .association-conference-sport {
             margin-top: 10px;
         }
-    }
-
-    .form-control {
-        width: 30%;
     }
 
     .panel{

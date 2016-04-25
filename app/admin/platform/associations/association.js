@@ -1,4 +1,5 @@
 const angular = window.angular;
+const moment = require('moment');
 
 AssociationController.$inject = [
     '$scope',
@@ -145,7 +146,7 @@ function AssociationController(
 
     function updateConferences() {
         conferences.loadConferences($scope.association.code).then(response => {
-            $scope.conferences = response;
+            $scope.conferences = response.sort((a, b) => moment(b.createdAt).diff(a.createdAt));
         });
     }
 }
