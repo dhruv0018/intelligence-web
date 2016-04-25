@@ -123,6 +123,7 @@ function AssociationController(
                 sportsAssociation: $scope.association.code
             });
             conferences.createConference($scope.association.code, conference).then(() => {
+                $scope.newConferenceCode = conference.code;
                 updateConferences();
                 $scope.newConference = {};
                 $scope.form.$setPristine();
