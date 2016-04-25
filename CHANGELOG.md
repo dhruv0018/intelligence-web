@@ -1,3 +1,17 @@
+# v2.45#
+## Features##
+- Adds revert to indexer
+- Enables QA Flags for VB/FB
+- Adds indexing groups
+
+# v2.44.2#
+## Fixes##
+- Fixes styling issues related to Chrome v50 update
+
+# v2.44.1#
+## Fixes##
+- Fixes race condition when switching roles
+
 # v2.44#
 ## Features##
 - Updates the UI for Playlists; makes tags case-insensitive
