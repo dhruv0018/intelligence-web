@@ -42,37 +42,43 @@ function AssociationController(
         updateRegionList();
     }
 
-    $scope.deleteAssocation = function(){
-        if(associationId){
-            let basicModalOptions = {};
+    $scope.deleteAssocation = function() {
+        if(associationId) {
+            let deleteAssociationModal = basicModals.openForConfirm({
+                title: 'Delete Association',
+                bodyText: 'Are you sure you want to delete this association?',
+                buttonText: 'Yes'
+            });
 
-            basicModalOptions.title = 'Are you sure to delete this association?';
-            basicModals.openForConfirm(basicModalOptions).result.then(
-                function(){
-                    associations.delete($scope.association)
-                        .then(function(){
-                            //go to the association main page
-                            $state.go('associations');
-                        })
-                        .catch(function(response){
-                            //stay at current page but alert the error
-                            // alerts.add({
-                            //     type: 'danger',
-                            //     message: response
-                            // });
+            deleteAssociationModal.result.then(function deleteModalCallback() {
+                associations.delete($scope.association)
+                    .then(function() {
+                        //go to the association main page
+                        $state.go('associations').then(() => {
+                            alerts.add({
+                                type: 'success',
+                                message: 'Association deleted successfully!'
+                            });
                         });
-                }
-            );
+                    })
+                    .catch(function(response) {
+                        //stay at current page but alert the error
+                        // alerts.add({
+                        //     type: 'danger',
+                        //     message: response
+                        // });
+                    });
+            });
         }
     };
 
-    $scope.clickCheckBox = function(item){
+    $scope.clickCheckBox = function(item) {
         $scope[item] = !$scope[item];
         $scope.form.$setDirty();
         console.log($scope[item]);
     };
 
-    $scope.$watch('association.isSanctioning', function(n, o){
+    $scope.$watch('association.isSanctioning', function(n, o) {
         if(n !== o){
             $scope.form.$setDirty();
         }

@@ -96,12 +96,14 @@
 
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-action-buttons">
 
-                <div class="pull-left" ng-show="isExistingAssociation">
-                    <button class="btn btn-primary" id="delete-association" ng-click="deleteAssocation()">Delete</button>
+                <div class="delete-association" ng-show="isExistingAssociation">
+                    <span id="delete-association-cta" ng-click="deleteAssocation()">
+                        <i class="icon icon-remove"></i> Delete Association
+                    </span>
                 </div>
-                <div class="pull-right">
+                <div>
                      <a href id="cancel-association-cta" ui-sref="associations">Cancel</a>
                     <krossover-admin-resource-save
                         resource="association"
