@@ -425,6 +425,74 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 let league = leagues.get(this.leagueId);
                 let sport = sports.get(league.sportId);
                 return sport;
+            },
+            /**
+             * @class Team
+             * @method getAvailableConferences
+             *
+             * Gets all the available conferences for this team
+             */
+            getAvailableConferences: function(id){
+                let self = this;
+                let model = $injector.get(self.model);
+                id = id || self.id;
+
+                return model.getAvailableConferences({id: id}).$promise;
+
+            },
+            /**
+             * @class Team
+             * @method addConference
+             *
+             * Add one conference to a team
+             */
+            addConference: function(id, conference){
+                let self = this;
+                let model = $injector.get(self.model);
+                id = id || self.id;
+                return model.createConference({id}, conference).$promise;
+            },
+            /**
+             * @class Team
+             * @method getConferences
+             *
+             * Gets all the conferences for this team
+             */
+            getConferences: function(id){
+                let self = this;
+                let model = $injector.get(self.model);
+                id = id || self.id;
+
+                return model.getConferences({id: id}).$promise;
+
+            },
+            /**
+             * @class Team
+             * @method updateConference
+             *
+             * Update conference for this team
+             */
+            updateConference: function(id, conference){
+                let self = this;
+                let model = $injector.get(self.model);
+                id = id || self.id;
+
+                return model.updateConference({id: id, conferenceId: conference.id}, conference).$promise;
+
+            },
+            /**
+             * @class Team
+             * @method deleteConferences
+             *
+             * Gets a conference for this team
+             */
+            deleteConference: function(id, conferenceId){
+                let self = this;
+                let model = $injector.get(self.model);
+                id = id || self.id;
+
+                return model.deleteConference({id: id, conferenceId: conferenceId}).$promise;
+
             }
         };
 

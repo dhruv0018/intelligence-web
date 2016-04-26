@@ -1,0 +1,56 @@
+<div class="row">
+    <h3>Add Conferences</h3>
+    <form name="form" role="form">
+        <div class="team-conferences-container">
+            <div>
+                <search-dropdown
+                    options="availableConferences"
+                    option-label="Conference"
+                    filter-criteria="fullName"
+                    on-select="selConference"
+                    ng-model="newConference"
+                ></search-dropdown>
+            </div>
+            <button class="btn btn-default btn-add-conference" ng-disabled="addConferenceDisabled" ng-click="addConference(newConference)"><i class="icon icon-plus"></i> Add Conference</button>
+        </div>
+        <div class="team-conferences-div" ng-repeat="teamConference in teamConferences track by $index">
+            <div>
+                <h4>{{teamConference.fullName}}</h4>
+                <span><a href ng-click="removeConference($index)">Remove</a></span>
+            </div>
+            <div class="competition-level-wrapper">
+                <span>
+                    Competition Level:
+                </span>
+                <select class="form-control" name="competitionLevels" id="competitionLevels-{{$index}}" ng-model="teamConference.competitionLevel" ng-change="changeLevel(teamConference)">
+                    <option value="{{level.code}}"
+                            ng-repeat="level in teamConference.lstCompetitionLevels"
+                            ng-selected="level.code == teamConference.competitionLevel">
+                            {{level.name}}
+                    </option>
+                </select>
+                <span class="claimer">* Do not edit unless you must override the Default</span>
+            </div>
+            <div>
+                <span>
+                    Primary Conference:
+                    <check-box
+                        class="team-conference-primary"
+                        checked="teamConference.isPrimary=== 'Y'"
+                        ng-click="selPrimaryConference($index)">
+                    </check-box>
+                </span>
+            </div>
+        </div>
+        <div class="team-conference-footer">
+            <a href ng-click="cancel()">Cancel</a>
+            <button class="btn btn-primary saveBtn"
+                button-id="save-team-conference-cta"
+                ng-disabled="form.$invalid || form.$pristine"
+                ng-click="saveAll()">
+                <span ng-show="!isSaving">Save</span>
+                <span ng-show="isSaving" class="icon icon-spinner spinner"></span>
+            </button>
+        </div>
+    </form>
+</div>

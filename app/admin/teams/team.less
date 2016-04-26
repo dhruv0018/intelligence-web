@@ -91,4 +91,69 @@
             overflow-y: auto;
         }
     }
+
+    .team-conferences-container{
+        max-width: 800px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 20px;
+        background-color: white;
+        border: thin solid @gray-border;
+        margin-bottom: 40px;
+        &>div{
+            width: 100%;
+        }
+        .search-dropdown{
+            width: 100%;
+            button{
+                width: 95%;
+                text-align: left;
+                span:first-child{
+                    float: left;
+                }
+                .icon-chevron-down{
+                    float: right;
+                }
+            }
+            .search-dropdown-menu{
+                width: 95%;
+            }
+        }
+    }
+    .team-conferences-div{
+        max-width: 800px;
+        padding: 20px;
+        background-color: white;
+        border: thin solid @gray-border;
+        margin: 20px 0;
+        div{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            select.form-control{
+                width: 30%;
+                margin: 0px 10px;
+            }
+            &.competition-level-wrapper{
+                justify-content: flex-start;
+                span.claimer{
+                    font-size: 0.9em;
+                }
+            }
+        }
+    }
+    .team-conference-footer{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 20px 0px;
+        max-width: 800px;
+        .saveBtn{
+            height: 40px;
+            overflow: hidden;
+            margin: 0px 0px 0px 20px;
+        }
+    }
 }

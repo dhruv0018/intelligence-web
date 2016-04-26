@@ -176,6 +176,12 @@
         "Admin": true
     },
 
+    "team-conferences": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "teams": {
 
         "Super Admin": true,

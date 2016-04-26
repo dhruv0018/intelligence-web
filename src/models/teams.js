@@ -31,6 +31,30 @@ IntelligenceWebClient.factory('TeamsResource', [
                 method: 'GET',
                 url: url + '/analytics',
                 isArray: true
+            },
+            getAvailableConferences:{
+                method: 'GET',
+                url: url + '/candidate-conferences',
+                isArray: true
+            },
+            getConferences:{
+                method: 'GET',
+                url: url + '/conference-memberships',
+                isArray: true
+            },
+            createConference:{
+                method: 'POST',
+                url: url + '/conference-memberships'
+            },
+            deleteConference: {
+                method: 'DELETE',
+                url: url + '/conference-memberships/:conferenceId',
+                params: {id: '@id', conferenceId: '@conferenceId'}
+            },
+            updateConference: {
+                method: 'PUT',
+                url: url + '/conference-memberships/:conferenceId',
+                params: {id: '@id', conferenceId: '@conferenceId'}
             }
         };
 

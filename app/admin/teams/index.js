@@ -26,6 +26,7 @@ Teams.run([
         $templateCache.put('team-info.html', require('./team-info.html'));
         $templateCache.put('team-plans.html', require('./team-plans.html'));
         $templateCache.put('team-members.html', require('./team-members.html'));
+        $templateCache.put('team-conferences.html', require('./team-conferences.html'));
         $templateCache.put('school-dropdown-input.html', require('./school-dropdown-input.html'));
     }
 ]);
@@ -138,9 +139,75 @@ Teams.config([
                         controller: 'TeamController'
                     }
                 }
+            })
+
+            .state('team-conferences', {
+                url: '',
+                parent: 'team',
+                views: {
+                    'content@team': {
+                        templateUrl: 'team-conferences.html',
+                        controller: 'TeamConferencesController'
+                    }
+                },
+                resolve:{
+                    'Conference.Data':[
+                        '$stateParams', '$q', 'Conference.Data.Dependencies',
+                        function($stateParams, $q, ConferenceData){
+                            let teamId = $stateParams.id;
+                            let data = new ConferenceData(teamId);
+
+                            return $q.all(data);
+                        }
+                    ]
+                }
             });
     }
 ]);
+
+ConferenceDataDependencies.$inject = [
+    'SportsFactory',
+    'TeamsFactory',
+    'AssociationsFactory',
+    'ConferencesFactory'
+];
+
+function ConferenceDataDependencies(
+    sports,
+    teams,
+    associations,
+    conferencesfactory
+){
+    class ConferenceData{
+
+        constructor (teamId){
+            this.sports = sports.getMap();
+            this.availableConferences = [];
+            this.associations = associations.load();
+            teams.getAvailableConferences(teamId).then(conferences =>{
+                conferences.forEach(conference => {
+                    conference.fullName = conference.conference.name;
+                    conference.conferenceObj = conference.conference;
+                    conference.conference = conference.conference.code;
+                    this.availableConferences.push(conference);
+                });
+            });
+            this.teamConferences = [];
+            teams.getConferences(teamId).then(conferences =>{
+                conferences.forEach(conference => {
+                    conference.fullName = conference.conference.name;
+                    conference.conferenceObj = conference.conference;
+                    conference.conference = conference.conference.code;
+                    this.teamConferences.push(conference);
+                });
+            });
+        }
+    }
+
+    return ConferenceData;
+}
+
+Teams.service('Conference.Data.Dependencies', ConferenceDataDependencies);
 
 TeamDataDependencies.$inject = [
     'SportsFactory',
@@ -617,4 +684,211 @@ function TeamsController (
             $scope.searching = false;
         });
     };
+}
+
+/**
+ * Teams controller. Controls the view for displaying multiple teams.
+ * @module Teams
+ * @name TeamConferencesController
+ * @type {Controller}
+ */
+Teams.controller('TeamConferencesController', TeamConferencesController);
+
+TeamConferencesController.$inject = [
+    '$scope',
+    '$state',
+    '$stateParams',
+    'TeamsFactory',
+    'AssociationsFactory',
+    'Conference.Data',
+    '$q',
+    'BasicModals',
+    'AlertsService',
+    '$timeout'
+];
+
+function TeamConferencesController(
+    $scope,
+    $state,
+    $stateParams,
+    teams,
+    associations,
+    ConferenceData,
+    $q,
+    basicModals,
+    alerts,
+    $timeout
+){
+
+    let teamId = $stateParams.id;
+    let deleteItems = [];
+    let primaryConferenceSet = false;
+
+    $scope.addConferenceDisabled = true;
+    $scope.isSaving = false;
+
+    $scope.availableConferences = [];
+    $scope.teamConferences = ConferenceData.teamConferences;
+
+    //In the future the backend will take out the exisitng items, this may not be needed
+    angular.forEach(ConferenceData.availableConferences, function(item, idx){
+        let existIdx;
+        angular.forEach($scope.teamConferences, function(teamConference){
+            if(teamConference.fullName == item.fullName){
+                existIdx = idx;
+            }
+        });
+
+        if(typeof existIdx !== 'number'){
+            $scope.availableConferences.push(item);
+        }
+    });
+
+    angular.forEach($scope.teamConferences, function(item){
+        associations.loadCompetitionLevels(item.sportsAssociation).then(function(response){
+            item.lstCompetitionLevels = response;
+            angular.forEach(item.lstCompetitionLevels, function(level){
+                //add default, need to find correct attribute name for item.confernce.code
+                if(item.conferenceObj.competitionLevel == level.code){
+                    level.name += ' (Conference Default)';
+                    level.code = null;
+                }
+            });
+            if(!item.conferenceObj.competitionLevel){
+                item.lstCompetitionLevels.push({name: 'None', code: null});
+            }
+        });
+        if(item.isPrimary=== 'Y'){
+            primaryConferenceSet = true;
+        }
+        item.selectBoxInit = false;
+    });
+
+    $scope.changeLevel = function(item){
+        if(!item.competitionLevel && !item.selectBoxInit && item.id){
+            $scope.form.$setPristine();
+            item.selectBoxInit = true;
+        }
+    };
+
+    $scope.selConference = function(seletedConference){
+        $scope.newConference = seletedConference;
+        $scope.addConferenceDisabled = false;
+        $scope.form.$setDirty();
+    };
+
+    $scope.addConference = function(newConference){
+        let idx = $scope.availableConferences.indexOf(newConference);
+        newConference.teamId = teamId;
+        newConference.id = null;
+        newConference.isPrimary = null;
+        newConference.competitionLevel = null;
+        newConference.lstCompetitionLevels = associations.loadCompetitionLevels(newConference.sportsAssociation).then(function(response){
+            newConference.lstCompetitionLevels = response;
+            angular.forEach(newConference.lstCompetitionLevels, function(level){
+                //add default, need to find correct attribute name for item.confernce.code
+                if(newConference.conferenceObj.competitionLevel == level.code){
+                    level.name += ' (Conference Default)';
+                    level.code = null;
+                }
+            });
+            if(!newConference.conferenceObj.competitionLevel){
+                newConference.lstCompetitionLevels.push({name: 'None', code: null});
+            }
+        });
+        newConference.conferene = newConference.conferenceObj.code;
+        $scope.teamConferences.push(newConference);
+        $scope.availableConferences.splice(idx, 1);
+        $scope.addConferenceDisabled = true;
+        $scope.newConference = null;
+    };
+
+    $scope.removeConference = function(idx){
+        let curConference = $scope.teamConferences.splice(idx, 1);
+        let curConferenceId= curConference[0].id;
+        if(curConference[0].isPrimary == 'Y'){
+            primaryConferenceSet = false;
+        }
+        $scope.form.$setDirty();
+        if(curConference){
+            $scope.availableConferences.push(curConference[0]);
+        }
+        if(curConferenceId){
+            deleteItems.push(curConferenceId);
+        }
+    };
+
+    $scope.selPrimaryConference = function(idx){
+        $scope.form.$setDirty();
+        angular.forEach($scope.teamConferences, function(teamConference, i){
+            teamConference.isPrimary = (idx === i) ? 'Y' : null;
+        });
+        primaryConferenceSet = true;
+    };
+
+    $scope.cancel = function(){
+        $state.transitionTo($state.current, $stateParams, {
+            reload: true
+        });
+    };
+
+    $scope.saveAll = function(){
+        //delete items
+        $scope.isSaving = true;
+        let promises = [];
+        //check if on eprimary conferene is set
+        if(primaryConferenceSet === false && $scope.teamConferences.length >0){
+            $scope.isSaving = false;
+            //set alert message
+            let alertModal = basicModals.openForAlert({
+                title: 'Missing Primary Conference',
+                bodyText: 'Your changes could not be saved. One conference must be marked as the primary conference.',
+                buttonText: 'OK'
+            });
+            return false;
+        }
+
+        if(deleteItems.length > 0){
+            angular.forEach(deleteItems, function(conferenceId){
+                let delPromise = teams.deleteConference(teamId, conferenceId);
+                promises.push(delPromise.$promise);
+            });
+        }
+
+        angular.forEach($scope.teamConferences, function(teamConference, i){
+            if(!teamConference.id){
+                //need to add data
+                if(!teamConference.competitionLevel){
+                    teamConference.competitionLevel = null;
+                }
+                let addPromise = teams.addConference(teamId, teamConference).then(function(response){
+                    teamConference.id = response.id;
+                    teamConference.conferene = teamConference.conferenceObj;
+                });
+                promises.push(addPromise.$promise);
+            }else{
+                //update data
+                if(!teamConference.competitionLevel){
+                    teamConference.competitionLevel = null;
+                }
+                let updatePromise = teams.updateConference(teamId, teamConference);
+                promises.push(updatePromise.$promise);
+            }
+        });
+
+        $q.all(promises).then(function(response){
+            $scope.isSaving = false;
+            $scope.form.$setPristine();
+            alerts.add({
+                type: 'success',
+                message: 'Changes Saved!'
+            });
+        }).catch(function(response){
+            $scope.isSaving = false;
+            throw new Error('The changes can not be saved.');
+        }).finally(function(){
+
+        });
+    };
+
 }
