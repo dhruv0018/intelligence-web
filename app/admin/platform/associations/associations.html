@@ -44,9 +44,9 @@
 
                     <tr ng-repeat="association in associations">
 
-                        <td><a ui-sref="association-info({ id: association.id })">{{association.code}}</a></td>
+                        <td>{{association.code}}</td>
                         <td>{{association.acronym}}</td>
-                        <td>{{association.name}}</td>
+                        <td><a ui-sref="association-info({ id: association.id })">{{association.name}}</a></td>
 
                     </tr>
 
