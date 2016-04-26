@@ -160,6 +160,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     else return teams;
                 });
             },
+
             removeRole: function(role) {
 
                 /* Remove role from team. */
@@ -271,6 +272,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     }
                 });
             },
+
             getActivePlan: function() {
                 var self = this;
 
@@ -289,6 +291,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     }
                 }
             },
+
             getActivePackage: function() {
                 var self = this;
 
@@ -308,28 +311,41 @@ IntelligenceWebClient.factory('TeamsFactory', [
                     }
                 }
             },
+
+            getFilmExchanges: function(id, success, error) {
+                var self = this;
+                id = id || self.id;
+
+                var callback = function(filmExchanges) {
+                    return success ? success(filmExchanges) : filmExchanges;
+                };
+
+                error = error || function() {
+                    throw new Error('Could not get film exchanges for team');
+                };
+
+                var model = $injector.get(self.model);
+                return model.getFilmExchanges({ id: id }, callback, error).$promise;
+            },
+
             getRemainingBreakdowns: function(id, success, error) {
                 var self = this;
-
                 id = id || self.id;
 
                 var callback = function(remainingBreakdowns) {
-
                     return success ? success(remainingBreakdowns) : remainingBreakdowns;
                 };
 
                 error = error || function() {
-
                     throw new Error('Could not get remaining breakdowns for team');
                 };
 
                 var model = $injector.get(self.model);
-
                 return model.getRemainingBreakdowns({ id: id }, callback, error).$promise;
             },
+
             getMaxTurnaroundTime: function() {
                 var self = this;
-
                 var activePlan = self.getActivePlan();
 
                 if (activePlan) {
@@ -344,23 +360,21 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 //no plans or packages means no breakdowns
                 return 0;
             },
+
             generateStats: function(query) {
                 var self = this;
-
                 query.id = query.id || self.id;
 
                 var error = function() {
-
                     throw new Error('Could not get stats for team');
                 };
 
                 var model = $injector.get(self.model);
-
                 return model.generateStats(query).$promise;
             },
+
             getActivePlayerInfo: function() {
                 var self = this;
-
                 var activePlayerInfo = {};
 
                 angular.forEach(self.roster.playerInfo, function(playerInfo, playerId) {
@@ -371,9 +385,9 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 return activePlayerInfo;
             },
+
             hasActivePlayerInfo: function() {
                 var self = this;
-
                 var activePlayerInfo = self.getActivePlayerInfo();
 
                 return Object.keys(activePlayerInfo).length > 0;
@@ -391,9 +405,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
             addSubscription: function(subscription, team = this) {
 
                 switch (arguments.length) {
-
                     case 0:
-
                         throw new Error('Invoked TeamsFactory.addSubscription without any argument(s)');
                 }
 
@@ -410,11 +422,10 @@ IntelligenceWebClient.factory('TeamsFactory', [
              * Provides the most recently active subscription that is active today
              */
             getActiveSubscription: function(team = this) {
-
                 let mostRecent = team.subscriptions.first();
-
                 return (mostRecent.isActive ? mostRecent : undefined);
             },
+
             /**
              * @class Team
              * @method getSport

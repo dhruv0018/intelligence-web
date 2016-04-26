@@ -33,11 +33,23 @@
         <!-- Coach Menu -->
         <menu class="dropdown-menu" ng-if="currentUser.is(COACH)">
             <li ui-sref-active="active"><a id="mobile-menu-coach-film-home-cta" ui-sref="Coach.FilmHome">Film Home</a></li>
-            <li id="mobile-menu-coach-team-cta" ng-class="{active: $state.includes('Coach.Team')}" ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
+            <li id="mobile-menu-coach-team-cta" ng-class="{active: $state.includes('Coach.Team')}" ng-click="toggleSubMenu($event, 0)" class="mobile-submenu-toggle">
                 <a>Team</a>
-                <ul class="mobile-submenu" ng-show="subMenu">
+                <ul class="mobile-submenu" ng-show="subMenu[0]">
                     <li><a id="mobile-menu-coach-roster-cta" ui-sref="Coach.Team.Roster">Roster</a></li>
                     <li ng-if="currentUser.is(HEAD_COACH)"><a id="mobile-menu-coach-coaches-cta" ui-sref="Coach.Team.Assistants">Coaches</a></li>
+                </ul>
+            </li>
+            <li ng-if="filmExchanges && filmExchanges.length>0" id="mobile-menu-coach-film-exchange-cta" ng-class="{active: $state.includes('Coach.FilmExchange')}" ng-click="toggleSubMenu($event, 1)" class="mobile-submenu-toggle">
+                <a>Film Exchange</a>
+                <ul class="mobile-submenu" ng-show="subMenu[1]">
+                    <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'true' }"
+                        tooltip="Your team is temporarily suspended from this film exchange. Please contact the administrator about your access."
+                        tooltip-placement="bottom">
+                        <a class="mobile-suspended film-exchange">{{exchange.name}}</a>
+                    </li>
+
+                    <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'false' }"><a class="film-exchange">{{exchange.name}}</a></li>
                 </ul>
             </li>
             <li><a id="mobile-menu-coach-support-cta" ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
@@ -125,7 +137,19 @@
                 <li ng-if="currentUser.is(HEAD_COACH)"><a id="menu-coach-coaches-cta" ui-sref="Coach.Team.Assistants">Coaches</a></li>
                 <!--<li data-ng-hide="true"><a href="#">Sets</a></li>-->
             </ul>
+        </li>
+        <li ng-if="filmExchanges && filmExchanges.length>0" id="menu-coach-film-exchange-cta" class="header-dropdown" data-ng-class="{active: $state.includes('Coach.FilmExchange')}">
+            <a class="dropdown-toggle" dropdown-toggle>Film Exchange</a>
+            <ul class="dropdown-menu">
+                <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'true' }"
+                    tooltip="Your team is temporarily suspended from this film exchange. Please contact the administrator about your access."
+                    tooltip-placement="right"
+                    class="suspended">
+                    {{exchange.name}}
+                </li>
 
+                <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'false' }"><a class="film-exchange">{{exchange.name}}</a></li>
+            </ul>
         </li>
         <li><a id="menu-coach-support-cta" ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
         <li ui-sref-active="active"><button id="menu-coach-add-film-cta" class="btn btn-primary navbar-btn" ng-click="tabs.reset()" ui-sref="add-film" ui-sref-opts="{reload: true}">Add Film</button></li>

@@ -136,8 +136,15 @@ function HeaderController(
     $scope.account = account;
 
     let currentUser = session.getCurrentUser();
+    let currentRole = currentUser.getCurrentRole();
     $scope.currentUserIsAthleteRecruit = currentUser.isAthleteRecruit();
     $scope.canPickupGame = currentUser.canPickupGames();
+
+    if(currentRole.teamId){
+        teams.getFilmExchanges(currentRole.teamId).then(function(filmExchanges) {
+            $scope.filmExchanges = filmExchanges;
+        });
+    }
 
     //TODO: Create a getRolesOneAthlete that gets one athlete role
     let userRoles = currentUser.getRoles();
@@ -168,11 +175,16 @@ function HeaderController(
         }
     }
 
-    // This scope functionality limits a menu element to only one sub-menu
-    $scope.subMenu = false;
+    $scope.subMenu = {};
 
-    $scope.toggleSubMenu = function($event) {
+    $scope.toggleSubMenu = function($event, index) {
         $event.stopPropagation();
-        $scope.subMenu = !$scope.subMenu;
+
+        if(!$scope.subMenu[index]){
+            $scope.subMenu[index] = true;
+        }
+        else{
+            $scope.subMenu[index] = false;
+        }
     };
 }

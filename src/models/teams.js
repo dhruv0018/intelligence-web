@@ -23,6 +23,11 @@ IntelligenceWebClient.factory('TeamsResource', [
 
             create: { method: 'POST' },
             update: { method: 'PUT' },
+            getFilmExchanges: {
+                method: 'GET',
+                url: url + '/film-exchanges',
+                isArray: true
+            },
             getRemainingBreakdowns: {
                 method: 'GET',
                 url: url + '/remainingBreakdowns'

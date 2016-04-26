@@ -38,6 +38,13 @@
                 border: none;
                 height: 31px;
                 line-height: 31px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+
+            li.suspended{
+                border-bottom: 1px solid @navbar-default-border;
             }
         }
     }
@@ -236,6 +243,24 @@ and (min-width: 1280px) {
             height: @header-lg-height;
         }
     }
+
+    .tooltip-inner {
+        max-width: 330px;
+        width: 330px;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .suspended{
+        background-color: @gray-light;
+        padding: 0px 10px;
+        font-weight: 500;
+        cursor: default;
+    }
+
+    .film-exchange{
+        text-transform: none;
+    }
 }
 
 /* Screens under 480px high */
@@ -394,6 +419,15 @@ and (max-width: @screen-md-max) {
 
                     &:hover {
                         background-color: @navbar-default-link-hover-bg;
+                    }
+                }
+
+                .mobile-suspended{
+                    background-color: @gray-light;
+
+                    &:hover{
+                        background-color: @gray-light;
+                        color: @gray-dark;
                     }
                 }
             }
