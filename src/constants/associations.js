@@ -17,7 +17,7 @@ IntelligenceWebClient.constant('ASSOC_TYPES', ASSOC_TYPES);
 const ASSOC_AGE_LEVELS = [
     'Primary',
     'Secondary',
-    'Collegeiate',
+    'Collegiate',
     'Adult',
     'All Ages'
 ];
