@@ -44,33 +44,27 @@
                 </select>
 
                 <h3 class="required">Type</h3>
-                <select ng-model="association.type" required>
+                <select
+                    ng-model="association.type"
+                    ng-options="associationType for associationType in ASSOC_TYPES"
+                    required>
                     <option value="">Pick an Association Type</option>
-                    <option value="Scholastic">Scholastic</option>
-                    <option value="Recreational">Recreational</option>
-                    <option value="Coaching">Coaching</option>
-                    <option value="Sports">Sports</option>
-                    <option value="Promotional">Promotional</option>
-                    <option value="International">International</option>
-                    <option value="Other">Other</option>
                 </select>
 
                 <h3 class="required">Age Level</h3>
-                <select ng-model="association.ageLevel" required>
+                <select
+                    ng-model="association.ageLevel"
+                    ng-options="associationAgeLevel for associationAgeLevel in ASSOC_AGE_LEVELS"
+                    required>
                     <option value="">Pick an Age Level</option>
-                    <option value="Primary">Primary</option>
-                    <option value="Secondary">Secondary</option>
-                    <option value="Collegiate">Collegiate</option>
-                    <option value="Adult">Adult</option>
-                    <option value="All Ages">All Ages</option>
                 </select>
 
                 <h3 class="required">Amateur Status</h3>
-                <select ng-model="association.amateurPro" required>
+                <select
+                    ng-model="association.amateurPro"
+                    ng-options="associationAmateurStatus for associationAmateurStatus in ASSOC_AMATEUR_STATUSES"
+                    required>
                     <option value="">Pick an Amateur Status</option>
-                    <option value="Amateur">Amateur</option>
-                    <option value="Pro">Pro</option>
-                    <option value="Both">Both</option>
                 </select>
 
                 <h3>Description</h3>

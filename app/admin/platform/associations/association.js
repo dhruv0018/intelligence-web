@@ -9,7 +9,10 @@ AssociationController.$inject = [
     'ConferencesFactory',
     'Iso3166countriesFactory',
     'BasicModals',
-    'AlertsService'
+    'AlertsService',
+    'ASSOC_TYPES',
+    'ASSOC_AGE_LEVELS',
+    'ASSOC_AMATEUR_STATUSES'
 ];
 
 /**
@@ -23,10 +26,16 @@ function AssociationController(
     conferences,
     iso3166countries,
     basicModals,
-    alerts
+    alerts,
+    ASSOC_TYPES,
+    ASSOC_AGE_LEVELS,
+    ASSOC_AMATEUR_STATUSES
 ) {
 
     let associationId = Number($stateParams.id);
+    $scope.ASSOC_TYPES = ASSOC_TYPES;
+    $scope.ASSOC_AGE_LEVELS = ASSOC_AGE_LEVELS;
+    $scope.ASSOC_AMATEUR_STATUSES = ASSOC_AMATEUR_STATUSES;
     $scope.countries = iso3166countries.getList();
     $scope.isExistingAssociation = false;
     $scope.regions = [];
