@@ -14,6 +14,8 @@ IntelligenceWebClient.factory('ConferencesResource', [
 
         let url = `${config.api.uri}`;
 
+        let paramDefaults = {};
+
         let actions = {
             create: {
                 method: 'POST',
