@@ -51,6 +51,12 @@ function AssociationController(
         updateRegionList();
     }
 
+    $scope.association = $scope.association || associations.create({
+        isSanctioning: false,
+        isDefunct: false,
+        about: ''
+    });
+
     $scope.deleteAssocation = function() {
         if(associationId) {
             let deleteAssociationModal = basicModals.openForConfirm({
@@ -97,11 +103,6 @@ function AssociationController(
         if(n !== o){
             $scope.form.$setDirty();
         }
-    });
-
-    $scope.association = $scope.association || associations.create({
-        isSanctioning: false,
-        isDefunct: false
     });
 
     $scope.$on('delete-competition-level', () => {
