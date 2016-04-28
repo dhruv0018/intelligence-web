@@ -1,0 +1,68 @@
+.association-conference {
+    background-color: white;
+    border: thin solid @gray-border;
+    padding: 10px;
+    width: 100%;
+
+    .conference-header {
+        height: 60px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .conference-info {
+            width: 30%;
+
+            &:first-child {
+                width: 10%;
+            }
+        }
+
+        .icon {
+            margin-left: 10px;
+
+            &.icon-pencil,
+            &.icon-trash-o {
+                color: @brand-primary;
+            }
+        }
+    }
+
+    .conference-sports-container {
+        border-top: thin solid @gray-border;
+        padding: 10px;
+
+        .add-new-sport {
+            display: flex;
+            justify-content: space-between;
+            text-transform: capitalize;
+
+            .form-control {
+                width: 30%;
+            }
+
+            .add-sport-btn {
+                color: @brand-primary;
+            }
+
+            button {
+                margin-left: 10px;
+            }
+        }
+
+        .association-conference-sport {
+            margin-top: 10px;
+        }
+    }
+
+    .panel{
+        box-shadow: none;
+    }
+
+    .disabled {
+        opacity: .7;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}

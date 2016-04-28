@@ -1,0 +1,29 @@
+<section class="association">
+
+    <aside class="sidebar">
+
+        <header>
+
+            <h1 class="name" ng-if="association.name">{{ association.name }}</h1>
+            <h1 class="name" ng-if="!association.name">New Association</h1>
+            <h2 class="name" ng-if="association.acronym">{{ association.acronym }}</h2>
+
+        </header>
+
+        <nav role="navigation">
+
+            <ul class="nav nav-pills nav-stacked">
+
+                <li ui-sref-active="active"><a href ui-sref="association-info">Association Information</a></li>
+                <li ui-sref-active="active" ng-class="{disabled: !isExistingAssociation}"><a href ui-sref="competition-levels">Competition Levels</a></li>
+                <li ui-sref-active="active" ng-class="{disabled: !isExistingAssociation}"><a href ui-sref="conferences">Conferences</a></li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <main class="content" ui-view="content"></main>
+
+</section>

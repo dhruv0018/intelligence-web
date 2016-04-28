@@ -1,0 +1,39 @@
+<div class="row">
+
+    <h4>Add Conference</h4>
+
+    <form name="form" role="form" class="add-conference-container">
+        <div>
+            <span>Code*</span>
+            <input class="form-control" type="text" ng-model="newConference.code" required>
+            <span class="code-note">Must be unique within this association. <br/>Do not include spaces or + signs.</span>
+        </div>
+
+        <div class="new-conference-name">
+            <span>Name*</span>
+            <input class="form-control" type="text" ng-model="newConference.name" required>
+            <span class="code-note">Must be unique within this association.</span>
+        </div>
+
+        <div>
+            <span>Competition Level</span>
+            <select class="form-control" ng-model="newConference.competitionLevel" ng-options="competitionLevel.code as competitionLevel.name for competitionLevel in competitionLevels">
+                <option value="">None</option>
+            </select>
+        </div>
+
+        <button class="btn btn-default btn-add-conference" ng-click="addConference(newConference)" ng-disabled="form.$invalid || form.$pristine"><i class="icon icon-plus"></i> Add Conference</button>
+    </form>
+
+
+    <h4 ng-show="conferences.length">Existing Conferences</h4>
+
+    <accordion close-others="true">
+        <association-conference
+            ng-repeat="conference in conferences"
+            conference="conference"
+            new-code = "newConferenceCode"
+            competition-levels="competitionLevels">
+        </association-conference>
+    </accordion>
+</div>

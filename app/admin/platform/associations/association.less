@@ -1,0 +1,109 @@
+.association {
+    nav {
+        margin-right: -25px;
+    }
+
+    .form-info {
+
+        .form-horizontal;
+
+        .description {
+            margin-bottom: 20px;
+        }
+
+        select {
+            background-color: white;
+            padding-right: 30px;
+
+            &.disabled {
+                background-color: @content-bg;
+                opacity: .7;
+            }
+        }
+
+        .check-box {
+            margin-left: 10px;
+        }
+
+        .form-action-buttons {
+            display: flex;
+            align-items: center;
+
+            .delete-association {
+                color: @brand-danger;
+            }
+
+            .association-save-actions {
+                margin-left: auto;
+            }
+        }
+    }
+
+    .competition-level-container {
+        margin: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .form-control {
+            width: 40%;
+        }
+
+        .competition-level-code-input {
+            width: 20%;
+        }
+
+        a {
+            cursor: pointer;
+        }
+    }
+
+    .add-conference-container,
+    .add-competition-level-container {
+        max-width: 800px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 20px;
+        background-color: white;
+        border: thin solid @gray-border;
+
+        .code-note {
+            font-size: 12px;
+        }
+
+        button {
+            align-self: center;
+            margin-top: -4%;
+        }
+    }
+
+    .add-conference-container {
+        .new-conference-name {
+            width: 30%;
+        }
+    }
+
+    .add-competition-level-container{
+        div {
+            flex: 1;
+            margin-right: 5%;
+            &:nth-child(2){
+                flex: 2;
+                input.form-control{
+                    width: 85%;
+                }
+            }
+        }
+    }
+
+    .association-competition-level,
+    .association-conference {
+        max-width: 800px;
+        margin-bottom: 20px;
+    }
+
+    #cancel-association-cta{
+        margin: auto 15px;
+    }
+}

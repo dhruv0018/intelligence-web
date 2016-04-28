@@ -249,6 +249,36 @@
         "Super Admin": true
     },
 
+    "associations": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "association": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "association-info": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "competition-levels": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "conferences": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "IndexerGame": {
 
         "Indexer": true

@@ -1,0 +1,22 @@
+{
+    "name": "associations",
+    "templates": [
+        "association.html",
+        "associations.html",
+        "association-info.html",
+        "competition-levels.html",
+        "conferences.html"
+    ],
+    "scripts": [
+        "index.js",
+        "associations.js",
+        "association.js"
+    ],
+    "styles": [
+        "association.less",
+        "associations.less"
+    ],
+    "dependencies": {
+        "moment/moment": "2.9.0"
+    }
+}

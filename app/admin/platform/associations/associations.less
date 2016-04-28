@@ -1,0 +1,32 @@
+.associations {
+    .list {
+        overflow-y: hidden;
+        height: 100%;
+
+        .table-responsive {
+            height: calc(~"100% - 40px");
+            overflow-y: scroll;
+        }
+
+        .table {
+            td:first-child{
+                width: 25%;
+            }
+            td:nth-child(2){
+                width: 25%;
+            }
+
+            td:nth-child(3){
+                width: 50%;
+            }
+            margin-bottom: 0px;
+        }
+
+        .table-head {
+            tr {
+                background-color: @gray-lighter;
+                font-weight: bold;
+            }
+        }
+    }
+}

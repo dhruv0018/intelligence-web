@@ -101,6 +101,7 @@ require('./constants/feature-flags');
 require('./constants/cue-points');
 require('./constants/transcodeProfiles');
 require('./constants/self-editor');
+require('./constants/associations');
 import { PRIORITIES_IDS, PRIORITIES } from './constants/priorities';
 import { LABELS_IDS, LABELS } from './constants/labels';
 import EMAILS from './constants/emails';
@@ -123,6 +124,9 @@ require('./models/reels');
 require('./models/plans');
 require('./models/customtags');
 require('./models/formationlabels');
+require('./models/associations');
+require('./models/conferences');
+require('./models/iso3166countries');
 
 require('./storage/base');
 require('./storage/users');
@@ -141,6 +145,9 @@ require('./storage/positionsets');
 require('./storage/plans');
 require('./storage/customtags');
 require('./storage/formationlabels');
+require('./storage/associations');
+require('./storage/conferences');
+require('./storage/iso3166countries');
 
 require('./factories');
 require('./factories/base');
@@ -160,6 +167,9 @@ require('./factories/positionsets');
 require('./factories/plans');
 require('./factories/customtags');
 require('./factories/formationlabels');
+require('./factories/associations');
+require('./factories/conferences');
+require('./factories/iso3166countries');
 
 require('./emitters/emitter.js');
 require('./emitters/playlist');

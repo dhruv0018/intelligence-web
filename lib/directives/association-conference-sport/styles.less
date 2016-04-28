@@ -1,0 +1,25 @@
+.association-conference-sport {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &.isDefunct {
+        span, i {
+            opacity: .5;
+        }
+
+        i.icon-refresh {
+            opacity: 1;
+        }
+    }
+
+    .icon {
+        color: @brand-primary;
+        margin-left: 10px;
+    }
+
+    .form-control {
+        width: 30%;
+    }
+}

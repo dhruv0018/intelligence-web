@@ -1,5 +1,6 @@
 require('leagues');
 require('new-plan');
+require('associations');
 var moment = require('moment');
 
 /* Fetch angular from the browser scope */
@@ -13,7 +14,8 @@ var Platform = angular.module('platform', [
     'ui.router',
     'ui.bootstrap',
     'leagues',
-    'new-plan'
+    'new-plan',
+    'associations'
 ]);
 
 /* Cache the template file */
