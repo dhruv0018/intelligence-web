@@ -5,7 +5,7 @@
     <form name="form" role="form" class="add-conference-container">
         <div>
             <span>Code*</span>
-            <input class="form-control" type="text" ng-model="newConference.code" required>
+            <input class="form-control" type="text" ng-model="newConference.code" maxlength="20" required>
             <span class="code-note">Must be unique within this association. <br/>Do not include spaces or + signs.</span>
         </div>
 

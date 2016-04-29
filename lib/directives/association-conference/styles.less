@@ -12,10 +12,12 @@
         align-items: center;
 
         .conference-info {
-            width: 30%;
+            width: 20%;
 
-            &:first-child {
-                width: 10%;
+            &.conference-info-name {
+                width: 30%;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
             }
         }
 

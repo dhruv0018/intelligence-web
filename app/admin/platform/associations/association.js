@@ -90,7 +90,6 @@ function AssociationController(
     $scope.clickCheckBox = function(item) {
         $scope[item] = !$scope[item];
         $scope.form.$setDirty();
-        console.log($scope[item]);
     };
 
     $scope.$watch('association.isSanctioning', function(n, o) {
