@@ -1,3 +1,7 @@
+# v2.46#
+## Features##
+- Adds first cut Conferences / Associations
+
 # v2.45#
 ## Features##
 - Adds revert to indexer
