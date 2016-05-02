@@ -15,26 +15,36 @@ self-editing-playlist {
     }
 
     .playlist-tagging-controls {
+        background: white;
+        position: fixed;
+        width: 419px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         height: 60px;
         padding: 0 22px;
         border-bottom: 1px solid @gray-border;
+        border-right: 1px solid @gray-border;
+
+        @media (max-width: 1023px) {
+            width: 48%;
+        }
 
         .select-all {
             display: flex;
             align-items: center;
         }
     }
-
-    .playlist-item-container {
-        display: flex;
-        flex-direction: column;
-        border-bottom: 1px solid @gray-border;
-        align-items: baseline;
-        min-height: 60px;
-        padding: 15px;
+    .playlist-item-list {
+        padding-top: 60px;
+        .playlist-item-container {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid @gray-border;
+            align-items: baseline;
+            min-height: 60px;
+            padding: 15px;
+        }
     }
 
     .playlist-item-content {
