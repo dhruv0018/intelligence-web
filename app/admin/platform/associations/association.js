@@ -8,6 +8,7 @@ AssociationController.$inject = [
     'AssociationsFactory',
     'ConferencesFactory',
     'Iso3166countriesFactory',
+    'SportsFactory',
     'BasicModals',
     'AlertsService',
     'ASSOC_TYPES',
@@ -25,6 +26,7 @@ function AssociationController(
     associations,
     conferences,
     iso3166countries,
+    sports,
     basicModals,
     alerts,
     ASSOC_TYPES,
@@ -37,26 +39,70 @@ function AssociationController(
     $scope.ASSOC_AGE_LEVELS = ASSOC_AGE_LEVELS;
     $scope.ASSOC_AMATEUR_STATUSES = ASSOC_AMATEUR_STATUSES;
     $scope.countries = iso3166countries.getList();
+    $scope.sports = sports.getMap();
     $scope.isExistingAssociation = false;
     $scope.regions = [];
     $scope.competitionLevels = [];
+    $scope.conferences = [];
+    $scope.conferenceSports = [];
+    $scope.availableConferenceSports = [];
+    $scope.filmExchanges = [];
     $scope.newCompetitionLevel = {};
     $scope.newConference = {};
+    $scope.newFilmExchange = {};
+    $scope.updateRegionList = updateRegionList;
 
+    // Update association related info if existing association
     if (associationId) {
         $scope.association = associations.get(associationId);
         $scope.isExistingAssociation = true;
         updateCompetitionLevels();
         updateConferences();
         updateRegionList();
+        updateFilmExchanges();
     }
 
+    // Initialize association object
     $scope.association = $scope.association || associations.create({
         isSanctioning: false,
         isDefunct: false,
         about: ''
     });
 
+    $scope.$watch('association.isSanctioning', function(n, o) {
+        if(n !== o){
+            $scope.form.$setDirty();
+        }
+    });
+
+    $scope.$watch('association.isDefunct', function(n, o){
+        if(n !== o){
+            $scope.form.$setDirty();
+        }
+    });
+
+    $scope.$on('delete-competition-level', () => {
+        updateCompetitionLevels();
+    });
+
+    $scope.$on('delete-conference', () => {
+        updateConferences();
+    });
+
+    $scope.$on('delete-film-exchange', () => {
+        updateFilmExchanges();
+    });
+
+    $scope.$on('added-conference-sport', () => {
+        generateConferenceSportList();
+    });
+
+    $scope.clickCheckBox = function(item) {
+        $scope[item] = !$scope[item];
+        $scope.form.$setDirty();
+    };
+
+    // Association Info Related Methods
     $scope.deleteAssocation = function() {
         if(associationId) {
             let deleteAssociationModal = basicModals.openForConfirm({
@@ -87,33 +133,15 @@ function AssociationController(
         }
     };
 
-    $scope.clickCheckBox = function(item) {
-        $scope[item] = !$scope[item];
-        $scope.form.$setDirty();
-    };
-
-    $scope.$watch('association.isSanctioning', function(n, o) {
-        if(n !== o){
-            $scope.form.$setDirty();
+    function updateRegionList() {
+        if ($scope.association.country) {
+            iso3166countries.getRegions($scope.association.country).then((regionData) => {
+                $scope.regions = regionData;
+            });
         }
-    });
+    }
 
-    $scope.$watch('association.isDefunct', function(n, o){
-        if(n !== o){
-            $scope.form.$setDirty();
-        }
-    });
-
-    $scope.$on('delete-competition-level', () => {
-        updateCompetitionLevels();
-    });
-
-    $scope.$on('delete-conference', () => {
-        updateConferences();
-    });
-
-    $scope.updateRegionList = updateRegionList;
-
+    // Competition Level Related Methods
     $scope.addCompetitionLevel = function(competitionLevel) {
         if (competitionLevel.name && competitionLevel.code) {
             competitionLevel.sortOrder = 1;
@@ -127,6 +155,13 @@ function AssociationController(
         }
     };
 
+    function updateCompetitionLevels() {
+        associations.loadCompetitionLevels($scope.association.code).then(response => {
+            $scope.competitionLevels = response;
+        });
+    }
+
+    // Conference Related Methods
     $scope.addConference = function(newConference) {
         if (newConference.name && newConference.code) {
             let conference = conferences.create({
@@ -146,23 +181,64 @@ function AssociationController(
         }
     };
 
-    function updateRegionList() {
-        if ($scope.association.country) {
-            iso3166countries.getRegions($scope.association.country).then((regionData) => {
-                $scope.regions = regionData;
-            });
-        }
-    }
-
-    function updateCompetitionLevels() {
-        associations.loadCompetitionLevels($scope.association.code).then(response => {
-            $scope.competitionLevels = response;
-        });
-    }
-
     function updateConferences() {
         conferences.loadConferences($scope.association.code).then(response => {
             $scope.conferences = response.sort((a, b) => moment(b.createdAt).diff(a.createdAt));
+        });
+    }
+
+    // Film Exchange Related Methods
+    $scope.onSelectConferenceForFilmExchange = function(conferenceSport) {
+        $scope.newFilmExchange.sportsAssociation = conferenceSport.sportsAssociation;
+        $scope.newFilmExchange.conference = conferenceSport.conference.code;
+        $scope.newFilmExchange.gender = conferenceSport.gender;
+        $scope.newFilmExchange.sportId = conferenceSport.sportId;
+        $scope.newFilmExchange.isActive = false;
+        $scope.newFilmExchange.name = conferenceSport.name;
+    };
+
+    $scope.addFilmExchange = function(filmExchange) {
+        conferences.createFilmExchange(filmExchange).then(() =>{
+            $scope.newFilmExchange = {};
+            updateFilmExchanges();
+        });
+    };
+
+    $scope.getConferenceForFilmExchange = function(conferenceCode) {
+        return $scope.conferences.find(conference => conference.code === conferenceCode);
+    };
+
+    $scope.cancelFilmExchangeCreation = function() {
+        $scope.newFilmExchange = {};
+    };
+
+    function generateConferenceSportList() {
+        let usedConferenceSports = [];
+        conferences.getAllConferenceSportsForAssociation($scope.association.code).then(response => {
+            $scope.conferenceSports = response;
+            $scope.conferenceSports.forEach(conferenceSport => {
+                conferenceSport.name = conferenceSport.conference.name + ' - ' + conferenceSport.gender + ' ' + $scope.sports[conferenceSport.sportId].name;
+                $scope.filmExchanges.forEach(filmExchange => {
+                    if (conferenceSport.conference.code === filmExchange.conference &&
+                        conferenceSport.gender === filmExchange.gender &&
+                        conferenceSport.sportId === filmExchange.sportId) {
+                        usedConferenceSports.push(conferenceSport);
+                    }
+                });
+            });
+
+            $scope.availableConferenceSports = $scope.conferenceSports.filter(conferenceSport => {
+                if (!usedConferenceSports.some(usedConferenceSport => conferenceSport === usedConferenceSport)) {
+                    return conferenceSport;
+                }
+            });
+        });
+    }
+
+    function updateFilmExchanges() {
+        conferences.getAllFilmExchangesForAssociation($scope.association.code).then(response => {
+            $scope.filmExchanges = response.sort((a, b) => moment(b.createdAt).diff(a.createdAt));
+            generateConferenceSportList();
         });
     }
 }

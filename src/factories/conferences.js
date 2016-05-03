@@ -84,6 +84,60 @@ IntelligenceWebClient.factory('ConferencesFactory', [
                 let combinationCode = `${associationCode}+${conferenceCode}`;
                 let genderSport = `${gender}+${sportId}`;
                 return model.deleteConferenceSport({combinationCode, genderSport}).$promise;
+            },
+
+            getAllConferenceSportsForAssociation(sportsAssociation) {
+                const model = $injector.get(this.model);
+                return model.getAllConferenceSportsForAssociation({sportsAssociation}).$promise;
+            },
+
+            createFilmExchange(filmExchange) {
+                const model = $injector.get(this.model);
+                let associationCode = filmExchange.sportsAssociation;
+                let conferenceCode = filmExchange.conference;
+                let gender = filmExchange.gender;
+                let sportId = filmExchange.sportId;
+                let combinationCode = `${associationCode}+${conferenceCode}+${gender}+${sportId}`;
+                return model.createFilmExchange({combinationCode}, filmExchange).$promise;
+            },
+
+            loadFilmExchanges(associationCode, conferenceCode, gender, sportId) {
+                const model = $injector.get(this.model);
+                let combinationCode = `${associationCode}+${conferenceCode}+${gender}+${sportId}`;
+                return model.readFilmExchanges({combinationCode}).$promise;
+            },
+
+            updateFilmExchange(filmExchange) {
+                const model = $injector.get(this.model);
+                let associationCode = filmExchange.sportsAssociation;
+                let conferenceCode = filmExchange.conference;
+                let gender = filmExchange.gender;
+                let sportId = filmExchange.sportId;
+                let combinationCode = `${associationCode}+${conferenceCode}+${gender}+${sportId}`;
+                let filmExchangeId = filmExchange.id;
+                return model.updateFilmExchange({combinationCode, filmExchangeId}, filmExchange).$promise;
+            },
+
+            deleteFilmExchange(filmExchange) {
+                const model = $injector.get(this.model);
+                let associationCode = filmExchange.sportsAssociation;
+                let conferenceCode = filmExchange.conference;
+                let gender = filmExchange.gender;
+                let sportId = filmExchange.sportId;
+                let combinationCode = `${associationCode}+${conferenceCode}+${gender}+${sportId}`;
+                let filmExchangeId = filmExchange.id;
+                return model.deleteFilmExchange({combinationCode, filmExchangeId}).$promise;
+            },
+
+            getAllFilmExchangesForAssociation(sportsAssociation) {
+                const model = $injector.get(this.model);
+                return model.getAllFilmExchangesForAssociation({sportsAssociation}).$promise;
+            },
+
+            loadTeamsInFilmExchange(associationCode, conferenceCode, gender, sportId) {
+                const model = $injector.get(this.model);
+                let combinationCode = `${associationCode}+${conferenceCode}+${gender}+${sportId}`;
+                return model.getTeamsInFilmExchange({combinationCode}).$promise;
             }
 
         };

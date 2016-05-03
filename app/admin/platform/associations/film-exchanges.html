@@ -1,0 +1,47 @@
+<div class="row">
+
+    <h4>Add Film Exchange</h4>
+
+    <form name="form" role="form" class="add-film-exchange-container">
+        <div class="new-film-exchange-info">
+            <h4>Conference:</h4>
+            <search-dropdown
+                options="availableConferenceSports"
+                option-label="conference"
+                filter-criteria="name"
+                on-select="onSelectConferenceForFilmExchange"
+                ng-model="newFilmExchangeConference">
+            </search-dropdown>
+        </div>
+
+        <div class="new-film-exchange-info" ng-show="newFilmExchange.sportId">
+            <h4>Film Exchange:</h4>
+            <div class="name-input-container">
+                <input class="form-control" ng-model="newFilmExchange.name">
+                <span class="code-note">Default name is the conference gender sport. Can edit if necessary.</span>
+            </div>
+        </div>
+
+        <div class="new-film-exchange-info" ng-show="newFilmExchange.sportId">
+            <h4>Visible to Teams?</h4>
+            <check-box id="new-film-exchange-visible-cta" checked="newFilmExchange.isActive" ng-click="newFilmExchange.isActive = !newFilmExchange.isActive"></check-box>
+        </div>
+
+        <div class="new-film-exchange-save-actions">
+            <span ng-show="newFilmExchange.sportId" ng-click="cancelFilmExchangeCreation()">Cancel</span>
+            <button
+                class="btn btn-default btn-add-film-exchange"
+                ng-click="addFilmExchange(newFilmExchange)"
+                ng-disabled="!newFilmExchange.sportId || !newFilmExchange.name.length">
+            Add Film Exchange
+        </button>
+        </div>
+    </form>
+
+    <h4 ng-show="filmExchanges.length">Existing Film Exchanges</h4>
+    <association-film-exchange
+        ng-repeat="filmExchange in filmExchanges"
+        film-exchange="filmExchange"
+        conference="getConferenceForFilmExchange(filmExchange.conference)">
+    </association-film-exchange>
+</div>

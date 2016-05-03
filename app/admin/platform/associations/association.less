@@ -59,14 +59,19 @@
     }
 
     .add-conference-container,
-    .add-competition-level-container {
+    .add-competition-level-container,
+    .add-film-exchange-container {
         max-width: 800px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
         padding: 20px;
         background-color: white;
         border: thin solid @gray-border;
+    }
+
+    .add-conference-container,
+    .add-competition-level-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
 
         .code-note {
             font-size: 12px;
@@ -84,7 +89,7 @@
         }
     }
 
-    .add-competition-level-container{
+    .add-competition-level-container {
         div {
             flex: 1;
             margin-right: 5%;
@@ -97,8 +102,61 @@
         }
     }
 
+    .add-film-exchange-container {
+        .new-film-exchange-info {
+            display: flex;
+            
+            &:first-child {
+                margin-bottom: 10px;
+            }
+
+            h4 {
+                margin-right: 10px;
+            }
+
+            check-box {
+                align-self: center;
+                font-size: 20px;
+            }
+
+            search-dropdown {
+                flex: 1;
+
+                button {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                .search-dropdown-menu {
+                    width: 100%;
+                }
+            }
+
+            .name-input-container {
+                flex: 1;
+            }
+        }
+
+        .new-film-exchange-save-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            span {
+                color: @brand-primary;
+            }
+
+            button {
+                margin-left: 10px;
+            }
+        }
+    }
+
     .association-competition-level,
-    .association-conference {
+    .association-conference,
+    .association-film-exchange {
         max-width: 800px;
         margin-bottom: 20px;
     }

@@ -25,6 +25,7 @@ Associations.run([
         $templateCache.put('association-info.html', require('./association-info.html'));
         $templateCache.put('competition-levels.html', require('./competition-levels.html'));
         $templateCache.put('conferences.html', require('./conferences.html'));
+        $templateCache.put('film-exchanges.html', require('./film-exchanges.html'));
     }
 ]);
 
@@ -123,6 +124,16 @@ Associations.config([
                 views: {
                     'content@association': {
                         templateUrl: 'conferences.html'
+                    }
+                }
+            })
+
+            .state('film-exchanges', {
+                url: '',
+                parent: 'association',
+                views: {
+                    'content@association': {
+                        templateUrl: 'film-exchanges.html'
                     }
                 }
             });

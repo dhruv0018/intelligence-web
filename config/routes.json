@@ -280,6 +280,11 @@
         "Super Admin": true
     },
 
+    "film-exchanges": {
+
+        "Super Admin": true
+    },
+
     "IndexerGame": {
 
         "Indexer": true
