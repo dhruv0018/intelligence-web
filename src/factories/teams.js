@@ -437,7 +437,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 let model = $injector.get(self.model);
                 id = id || self.id;
 
-                return model.getAvailableConferences({id: id}).$promise;
+                return model.getAvailableConferences({teamId: id}).$promise;
 
             },
             /**

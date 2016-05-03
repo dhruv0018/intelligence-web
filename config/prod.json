@@ -18,6 +18,9 @@
     "api": {
         "uri": "/intelligence-api/v1/"
     },
+    "apiV2": {
+        "uri": "/intelligence-api/v2/"
+    },
     "kvs": {
     },
     "reels": {

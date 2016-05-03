@@ -12,7 +12,7 @@ IntelligenceWebClient.factory('ConferencesResource', [
         const conferencesBase = 'conferences';
         const conferenceSportsBase = 'conference-sports';
 
-        let url = `${config.api.uri}`;
+        let url = `${config.apiV2.uri}`;
 
         let paramDefaults = {};
 

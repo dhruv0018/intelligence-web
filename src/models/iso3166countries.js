@@ -10,7 +10,7 @@ IntelligenceWebClient.factory('Iso3166countriesResource', [
 
         const base = 'iso3166countries';
 
-        let url = `${config.api.uri}${base}`;
+        let url = `${config.apiV2.uri}${base}`;
 
         let paramDefaults = {
 

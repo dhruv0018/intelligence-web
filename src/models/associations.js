@@ -10,7 +10,7 @@ IntelligenceWebClient.factory('AssociationsResource', [
 
         const base = 'sports-associations';
 
-        let url = `${config.api.uri}${base}/:id`;
+        let url = `${config.apiV2.uri}${base}/:id`;
 
         let paramDefaults = {
 
@@ -23,22 +23,22 @@ IntelligenceWebClient.factory('AssociationsResource', [
             update: { method: 'PUT' },
             getCompetitionLevels: {
                 method: 'GET',
-                url: `${config.api.uri}${base}/:code/competition-levels`,
+                url: `${config.apiV2.uri}${base}/:code/competition-levels`,
                 isArray: true
             },
             createCompetitionLevel: {
                 method: 'POST',
-                url: `${config.api.uri}${base}/:code/competition-levels`,
+                url: `${config.apiV2.uri}${base}/:code/competition-levels`,
                 params: {code: '@code'}
             },
             updateCompetitionLevel: {
                 method: 'PUT',
-                url: `${config.api.uri}${base}/:associationCode/competition-levels/:compLevelCode`,
+                url: `${config.apiV2.uri}${base}/:associationCode/competition-levels/:compLevelCode`,
                 params: {associationCode: '@associationCode', compLevelCode: '@compLevelCode'}
             },
             deleteCompetitionLevel: {
                 method: 'DELETE',
-                url: `${config.api.uri}${base}/:associationCode/competition-levels/:compLevelCode`,
+                url: `${config.apiV2.uri}${base}/:associationCode/competition-levels/:compLevelCode`,
                 params: {associationCode: '@associationCode', compLevelCode: '@compLevelCode'}
             }
         };
