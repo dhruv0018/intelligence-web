@@ -196,7 +196,7 @@ function AssociationController(
         $scope.newFilmExchange.conference = conferenceSport.conference.code;
         $scope.newFilmExchange.gender = conferenceSport.gender;
         $scope.newFilmExchange.sportId = conferenceSport.sportId;
-        $scope.newFilmExchange.isActive = false;
+        $scope.newFilmExchange.isVisibleToTeams = false;
         $scope.newFilmExchange.name = conferenceSport.name;
     };
 
