@@ -37,6 +37,7 @@ else if (environment === 'buildserver') {
     config = require('../config/prod.json');
     config.oauth.uri = 'http://' + process.env.BUILDSERVER + '.v2.krossover.com/intelligence-api/oauth/';
     config.api.uri = 'http://' + process.env.BUILDSERVER + '.v2.krossover.com/intelligence-api/v1/';
+    config.apiV2.uri = 'http://' + process.env.BUILDSERVER + '.v2.krossover.com/intelligence-api/v2/';
 }
 
 else {
@@ -45,6 +46,7 @@ else {
     config = require('../config/prod.json');
     config.oauth.uri = `https://${window.location.host}${config.oauth.uri}`;
     config.api.uri = `https://${window.location.host}${config.api.uri}`;
+    config.apiV2.uri = `https://${window.location.host}${config.apiV2.uri}`;
 }
 
 config.environment = environment;
