@@ -764,6 +764,17 @@ function TeamConferencesController(
         item.selectBoxInit = false;
     });
 
+    function checkDuplicate(sportsAssociation){
+        let result = false;
+        angular.forEach($scope.teamConferences, function(tConference){
+            if(tConference.sportsAssociation == sportsAssociation){
+                result = true;
+            }
+        });
+
+        return result;
+    }
+
     $scope.changeLevel = function(item){
         if(!item.competitionLevel && !item.selectBoxInit && item.id){
             $scope.form.$setPristine();
@@ -779,28 +790,36 @@ function TeamConferencesController(
 
     $scope.addConference = function(newConference){
         let idx = $scope.availableConferences.indexOf(newConference);
-        newConference.teamId = teamId;
-        newConference.id = null;
-        newConference.isPrimary = null;
-        newConference.competitionLevel = null;
-        newConference.lstCompetitionLevels = associations.loadCompetitionLevels(newConference.sportsAssociation).then(function(response){
-            newConference.lstCompetitionLevels = response;
-            angular.forEach(newConference.lstCompetitionLevels, function(level){
-                //add default, need to find correct attribute name for item.confernce.code
-                if(newConference.conferenceObj.competitionLevel == level.code){
-                    level.name += ' (Conference Default)';
-                    level.code = null;
+        if(checkDuplicate(newConference.sportsAssociation)){
+            let alertModal = basicModals.openForAlert({
+                title: 'Action not allowed',
+                bodyText: 'A team cannot be a member of more than one conferences that are part of the same association.',
+                buttonText: 'OK'
+            });
+        }else{
+            newConference.teamId = teamId;
+            newConference.id = null;
+            newConference.isPrimary = null;
+            newConference.competitionLevel = null;
+            newConference.lstCompetitionLevels = associations.loadCompetitionLevels(newConference.sportsAssociation).then(function(response){
+                newConference.lstCompetitionLevels = response;
+                angular.forEach(newConference.lstCompetitionLevels, function(level){
+                    //add default, need to find correct attribute name for item.confernce.code
+                    if(newConference.conferenceObj.competitionLevel == level.code){
+                        level.name += ' (Conference Default)';
+                        level.code = null;
+                    }
+                });
+                if(!newConference.conferenceObj.competitionLevel){
+                    newConference.lstCompetitionLevels.push({name: 'None', code: null});
                 }
             });
-            if(!newConference.conferenceObj.competitionLevel){
-                newConference.lstCompetitionLevels.push({name: 'None', code: null});
-            }
-        });
-        newConference.conferene = newConference.conferenceObj.code;
-        $scope.teamConferences.push(newConference);
-        $scope.availableConferences.splice(idx, 1);
-        $scope.addConferenceDisabled = true;
-        $scope.newConference = null;
+            newConference.conference = newConference.conferenceObj.code;
+            $scope.teamConferences.push(newConference);
+            $scope.availableConferences.splice(idx, 1);
+            $scope.addConferenceDisabled = true;
+            $scope.newConference = null;
+        }
     };
 
     $scope.removeConference = function(idx){
@@ -836,7 +855,7 @@ function TeamConferencesController(
         //delete items
         $scope.isSaving = true;
         let promises = [];
-        //check if on eprimary conferene is set
+        //check if one primary conference is set
         if(primaryConferenceSet === false && $scope.teamConferences.length >0){
             $scope.isSaving = false;
             //set alert message
@@ -847,6 +866,7 @@ function TeamConferencesController(
             });
             return false;
         }
+
 
         if(deleteItems.length > 0){
             angular.forEach(deleteItems, function(conferenceId){
@@ -863,7 +883,7 @@ function TeamConferencesController(
                 }
                 let addPromise = teams.addConference(teamId, teamConference).then(function(response){
                     teamConference.id = response.id;
-                    teamConference.conferene = teamConference.conferenceObj;
+                    teamConference.conference = teamConference.conferenceObj;
                 });
                 promises.push(addPromise.$promise);
             }else{
