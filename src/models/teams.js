@@ -25,7 +25,7 @@ IntelligenceWebClient.factory('TeamsResource', [
             update: { method: 'PUT' },
             getFilmExchanges: {
                 method: 'GET',
-                url: url + '/film-exchanges',
+                url: config.apiV2.uri + base + '/:id' + '/film-exchanges',
                 isArray: true
             },
             getRemainingBreakdowns: {
