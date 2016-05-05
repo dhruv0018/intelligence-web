@@ -1,0 +1,81 @@
+<section class="film-exchange">
+    <aside class="sidebar">
+
+        <h3>Search for film:</h3>
+        <form role="form" ng-submit="search(filter)">
+
+            <div class="form-group">
+                <input class="form-control" name="name" placeholder="School Name and/or team name" ng-model="filter.name" type="text">
+            </div>
+
+            <div class="form-group">
+                <data-date data-id="date-played" data-ng-model="filter.date" data-max-date="todaysDate" placeholder="Date Played"></data-date>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" ng-model="filter.competitionLevel" ng-options="level.competitionLevel as level.name for level in teamCompetitionLevels">
+                    <option value="">Level of Competition</option>
+                </select>
+            </div>
+
+            <button id="search-associations-cta" class="btn-search" ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
+
+        </form>
+    </aside>
+    <div class="list" ng-class="{'coachView': currentUser.is(COACH)}">
+        <div id="film-exchange-header">
+            <div class="title-header">
+                <h3>IWLCA - Women’s Lacrosse</h3>
+                <button class="btn btn-default" ng-click="openFilmExchangeModal()" ng-if="!currentUser.is(COACH)">Edit Team Permisions</button>
+            </div>
+            <div class="table-header">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="team">Home</th>
+                            <th class="team">Away</th>
+                            <th class="score">Score</th>
+                            <th class="datePlayed">Date Played</th>
+                            <th class="dateAdded" ng-if="!currentUser.is(COACH)">Date Added</th>
+                            <th class="actions" ng-if="currentUser.is(COACH)"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div id="film-exchange-data">
+            <table class="table">
+                <tbody>
+                    <tr ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24]">
+                        <td class="team">
+                            <p>{{filmExchanges[0].homeTeam.name}}<span ng-if="filmExchanges[0].homeTeam.won"> (W)</span></p>
+                            <p class="competitionLevel subText">{{filmExchanges[0].homeTeam.primaryConference.competitionLevel}}</p>
+                        </td>
+                        <td class="team">
+                            <p>{{filmExchanges[0].awayTeam.name}}<span ng-if="!filmExchanges[0].homeTeam.won">(W)</span></p>
+                            <p class="competitionLevel subText">{{filmExchanges[0].awayTeam.primaryConference.competitionLevel}}</p>
+                        </td>
+                        <td class="score">
+                            <p>{{filmExchanges[0].homeTeam.score}} - {{filmExchanges[0].awayTeam.score}}</p>
+                        </td>
+                        <td class="datePlayed">
+                            <p>{{filmExchanges[0].createdAt|date:'dd-MMM-yyyy'}}</p>
+                            <p class="addedBy subText" ng-if="currentUser.is(COACH)">added by {{filmExchanges[0].addedByUser.firstName}} {{filmExchanges[0].addedByUser.lastName}}</p>
+                        </td>
+                        <td class="dateAdded" ng-if="!currentUser.is(COACH)">
+                            <p>{{filmExchanges[0].updatedAt|date:'dd-MMM-yyyy'}}</p>
+                            <p class="addedBy subText" ng-if="!currentUser.is(COACH)">added by <a href="mailto:{{filmExchanges[0].addedByUser.email}}" >{{filmExchanges[0].addedByUser.firstName}} {{filmExchanges[0].addedByUser.lastName}}</a></p>
+                        </td>
+                        <td class="actions" ng-if="currentUser.is(COACH)">
+                            <p ng-if="currentUser.getCurrentRole().teamId!=filmExchanges[0].addedByTeam.id"><i class="icon icon-copy"></i> Copy</p>
+                            <p ng-if="currentUser.getCurrentRole().teamId==filmExchanges[0].addedByTeam.id"><i class="icon icon-remove"></i> Remove</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center footer">
+            <pagination total-items="64" ng-model="currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
+        </div>
+    </div>
+</section>

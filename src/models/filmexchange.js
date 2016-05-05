@@ -33,6 +33,17 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                     url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/teams',
                     params: {is_suspended: 1},
                     isArray: true
+                },
+                getGames: {
+                    method: 'GET',
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/games',
+                    params: {start: '@start', count: '@count'},
+                    isArray: true
+                },
+                getAllConferences:{
+                    method: 'GET',
+                    url: config.apiV2.uri + 'conference-film-exchanges',
+                    isArray: true
                 }
             }
         );

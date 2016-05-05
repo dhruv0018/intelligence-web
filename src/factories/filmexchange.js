@@ -61,6 +61,25 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
                 let model = $injector.get(self.model);
 
                 return model.getSuspendedTeams({id: conferenceId}).$promise;
+            },
+            getGames: function(filmExchange) {
+                let self = this;
+                let model = $injector.get(self.model);
+                let key = filmExchange.id;
+                let count = filmExchange.count||14;
+                let start = filmExchange.page ? (filmExchange.page-1) * count : 0;
+
+                return model.getGames({
+                    id: key,
+                    start: start,
+                    count: count
+                }).$promise;
+            },
+            getAllConferences: function(){
+                let self = this;
+                let model = $injector.get(self.model);
+
+                return model.getAllConferences().$promise;
             }
         };
         angular.augment(FilmExchangeFactory, BaseFactory);

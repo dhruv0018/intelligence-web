@@ -1,0 +1,156 @@
+.film-exchange{
+    background-color: lighten(@gray-lighter, 5%);
+    padding: 20px;
+    .sidebar{
+        background-color: white;
+        border: 1px solid @gray-lighter;
+        box-shadow: 0px 0px 5px rgba(0,0,0,.1);
+        border-radius: 5px;
+        .pickdate{
+            li{
+                margin-left: 0px;
+                width: auto;
+            }
+            .dropdown-menu{
+                width: 100%;
+                table{
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .list{
+        padding: 0px 20px;
+        position: relative;
+        height: 100%;
+        &.coachView{
+            td.datePlayed{
+                width: 30%;
+            }
+        }
+        #film-exchange-data{
+            background: white;
+            border: 1px solid #ddd;
+            box-shadow: 0px 0px 5px rgba(0,0,0,.1);
+            margin-top: 105px;
+            height: calc(~"100% - 190px");
+            overflow-y: scroll;
+        }
+        .table{
+            margin-bottom: 0px;
+            &> thead > tr > th{
+                padding: 10px 20px;
+                &:first-child{
+                    border-top-left-radius: 10px;
+                }
+                &:last-child{
+                    border-top-right-radius: 10px;
+                }
+            }
+        }
+        td{
+            color: black;
+            padding: 10px 20px;
+            background-color: white;
+            p{
+                &.subText{
+                    color: #777;
+                    line-height: 0;
+                    font-size: 0.8em;
+                    margin-top: -10px;
+                }
+            }
+            &.actions{
+                color: @brand-primary;
+            }
+        }
+        td, th{
+            &.actions{
+                width: 20%;
+            }
+            &.datePlayed{
+                width: 25%;
+            }
+            &.team{
+                width: 20%;
+            }
+            &.score{
+                width: 15%;
+            }
+            &.dateAdded{
+                width: 25%;
+            }
+        }
+        tbody{
+            tr{
+                cursor: pointer;
+            }
+        }
+        thead{
+            background-color: @gray-lighter;
+        }
+        admin-queue-pagination{
+            margin-top: 20px;
+            border: none;
+        }
+    }
+    #film-exchange-header {
+        padding: 5px 0px;
+        width: 100%;
+        padding-right: 40px;
+        position: absolute;
+        top: 0;
+        .title-header{
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid @gray-lighter;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        h3{
+            margin: 10px 0px;
+        }
+        button {
+            float: right;
+            margin-bottom: 10px;
+        }
+    }
+    .footer{
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        padding-right: 20px;
+    }
+    .pagination{
+        & > li{
+                a{
+                    margin: 0px 0.3em;
+                    background-color: #ebebeb;
+                    color: #737474;
+                    border-color: #d9d9d8;
+                    border-radius: 2px;
+                    padding: 5px 12px;
+                    font-weight: bold;
+                }
+            &.active{
+                a{
+                    background-color: #d1330f;
+                    border-color: #c7300f;
+                    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                    color: white;
+                }
+            }
+            &.disabled{
+                a{
+                    opacity: .65;
+                }
+            }
+            &:first-child, &:last-child, &:nth-child(2), &:nth-last-child(2){
+                a{
+                    background-color: #ef4924;
+                    color: white;
+                }
+            }
+        }
+    }
+}

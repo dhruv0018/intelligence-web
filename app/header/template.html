@@ -49,7 +49,7 @@
                         <a class="mobile-suspended film-exchange">{{exchange.name}}</a>
                     </li>
 
-                    <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'false' }"><a class="film-exchange">{{exchange.name}}</a></li>
+                    <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'false' }"><a class="film-exchange" ui-sref="film-exchange">{{exchange.name}}</a></li>
                 </ul>
             </li>
             <li><a id="mobile-menu-coach-support-cta" ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
@@ -87,7 +87,8 @@
         <li ui-sref-active="active"><a id="menu-admin-schools-cta" ui-sref="schools">Schools</a></li>
         <li ui-sref-active="active"><a id="menu-admin-queue-cta" ui-sref="queue">Queue</a></li>
         <!--<li class="disabled" data-ui-sref-active="active"><a data-ui-sref="reports">Reports</a></li>-->
-        <li class="header-dropdown" ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN) "><a class="dropdown-toggle" dropdown-toggle>Platform</a>
+        <li ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN)" class="header-dropdown">
+            <a class="dropdown-toggle" dropdown-toggle>Platform</a>
             <ul class="dropdown-menu">
                 <li><a ui-sref="plan-defaults">Plan Defaults</a></li>
                 <li><a ui-sref="leagues">Leagues</a></li>
@@ -97,8 +98,11 @@
                 <!--<li data-ng-hide="true"><a href="#">Set Aside Times</a></li>-->
             </ul>
         </li>
-        <li ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN)">
-          <a id="menu-admin-film-exchange-cta" ui-sref="film-exchange">Film Exchange</a>
+        <li ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN)" ng-if="filmExchanges && filmExchanges.length>0" class="header-dropdown">
+            <a class="dropdown-toggle" dropdown-toggle>Film Exchange</a>
+            <ul class="dropdown-menu">
+                <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.name}}</a></li>
+            </ul>
         </li>
 
     </menu>
@@ -151,7 +155,7 @@
                     {{exchange.name}}
                 </li>
 
-                <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'false' }"><a class="film-exchange">{{exchange.name}}</a></li>
+                <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'false' }"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.name}}</a></li>
             </ul>
         </li>
         <li><a id="menu-coach-support-cta" ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
