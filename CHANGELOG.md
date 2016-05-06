@@ -1,3 +1,12 @@
+# v72.0#
+## Features##
+- Adds ability to assign a Team to a Conference
+- Adds stats export CSV to football and volleyball
+- updates indexer groups
+- makes Conferences admin available only to super users
+- makes self-editor drop down sticky
+- standardizes fonts of HTML players across browsers 
+
 # v2.46#
 ## Features##
 - Adds first cut Conferences / Associations
