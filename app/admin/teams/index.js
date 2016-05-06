@@ -186,7 +186,7 @@ function ConferenceDataDependencies(
             this.associations = associations.load();
             teams.getAvailableConferences(teamId).then(conferences =>{
                 conferences.forEach(conference => {
-                    conference.fullName = conference.conference.name;
+                    conference.fullName = conference.conference.name + ' ( ' + conference.sportsAssociation + ' )';
                     conference.conferenceObj = conference.conference;
                     conference.conference = conference.conference.code;
                     this.availableConferences.push(conference);
@@ -195,7 +195,7 @@ function ConferenceDataDependencies(
             this.teamConferences = [];
             teams.getConferences(teamId).then(conferences =>{
                 conferences.forEach(conference => {
-                    conference.fullName = conference.conference.name;
+                    conference.fullName = conference.conference.name + ' ( ' + conference.sportsAssociation + ' )';
                     conference.conferenceObj = conference.conference;
                     conference.conference = conference.conference.code;
                     this.teamConferences.push(conference);
