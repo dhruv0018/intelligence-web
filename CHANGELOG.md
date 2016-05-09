@@ -4,7 +4,6 @@
 - Adds stats export CSV to football and volleyball
 - updates indexer groups
 - makes Conferences admin available only to super users
-- makes self-editor drop down sticky
 - standardizes fonts of HTML players across browsers 
 
 # v2.46#
