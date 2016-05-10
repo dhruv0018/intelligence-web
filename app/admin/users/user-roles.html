@@ -4,10 +4,9 @@
     	data-ng-options="role as role.type.name for role in ROLES | EditableRolesByRole: currentUser.currentRole track by role.type.id">
 
         <option value="">Pick a Role</option>
-
     </select>
 
-    <a href id="add-user-role-cta" data-ng-click="addNewRole(newRole)"><i class="icon icon-plus-sign"></i> Add Role</a>
+    <a href id="add-user-role-cta" data-ng-click="addNewRole(newRole)"> Add Role</a>
 
 </div>
 
@@ -40,18 +39,10 @@
             <md-button
                 class="remove-role"
                 id="remove-user-role-cta"
-                ng-click="removeRole(user, role)"
+                ng-click="removeRole(role)"
             >Remove</md-button>
         </div>
 
     </li>
 
 </ul>
-<div class="roles-save">
-    <krossover-admin-resource-save
-        button-id="save-user-role-updates-cta"
-        resource="user"
-        disabled="!rolesChanged">
-    </krossover-admin-resource-save>
-    <a class="pull-right" id="cancel-user-role-updates-cta" href data-ui-sref="users">Cancel</a>
-</div>

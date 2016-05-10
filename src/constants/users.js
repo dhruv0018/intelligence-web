@@ -15,7 +15,8 @@ var ROLE_ID = {
     4: 'ASSISTANT_COACH',
     5: 'INDEXER',
     6: 'PARENT',
-    7: 'ATHLETE'
+    7: 'ATHLETE',
+    8: 'FILM_EXCHANGE_ADMIN'
 };
 
 IntelligenceWebClient.constant('ROLE_ID', ROLE_ID);
@@ -30,7 +31,8 @@ var ROLE_TYPE = {
     ASSISTANT_COACH: 4,
     INDEXER: 5,
     PARENT: 6,
-    ATHLETE: 7
+    ATHLETE: 7,
+    FILM_EXCHANGE_ADMIN: 8
 };
 
 IntelligenceWebClient.constant('ROLE_TYPE', ROLE_TYPE);
@@ -115,6 +117,15 @@ var ROLES = {
 
             id: ROLE_TYPE.ATHLETE,
             name: 'Athlete'
+        }
+    },
+
+    FILM_EXCHANGE_ADMIN: {
+
+        type: {
+
+            id: ROLE_TYPE.FILM_EXCHANGE_ADMIN,
+            name: 'Film Exchange Admin'
         }
     }
 };

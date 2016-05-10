@@ -3,6 +3,10 @@
     padding: 10px;
     width: 500px;
 
+    .no-padding {
+        padding: 0px;
+    }
+
     role-icon {
         .pull-left;
         margin-right: 20px;
@@ -16,6 +20,77 @@
             font-size: 18px;
             letter-spacing: 0;
             .capitalize;
+
+            .film-exchange-name{
+                max-width: 85%;
+                float: left;
+                padding-right: 5px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .film-exchange-dropdown-container{
+                width:45%;
+                float:left;
+            }
+
+            .add-film-exchange-container{
+                width:40%;
+                float:left;
+            }
+
+            .film-exchange-button-container{
+                width:15%;
+                float:left;
+            }
+
+            search-dropdown {
+                flex: 1;
+
+                button {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    span{
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                }
+
+                .search-dropdown-menu {
+                    width: 100%;
+                }
+            }
+        }
+
+        .role-info.full{
+            width: 400px;
+            height: 50px;
+        }
+
+        .role-info.full-width{
+            width: 400px;
+            height: 33px;
+        }
+
+        .top-margin{
+            margin-top:10px;
+        }
+
+        .top-margin-small{
+            margin-top:2px;
+        }
+
+        .bottom-margin{
+            margin-bottom:5px;
+        }
+
+        .left-margin{
+            margin-left: 10px;
         }
 
         .qa-status-toggle {

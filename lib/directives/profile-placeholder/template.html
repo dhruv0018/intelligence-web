@@ -1,3 +1,4 @@
 <div class="placeholder-picture" ng-class="{'small': (size === 'small')}">
-<i class="icon icon-user"></i>
+    <i data-ng-if="!role || !users.is(role, FILM_EXCHANGE_ADMIN)" class="icon icon-user"></i>
+    <i data-ng-if="role && users.is(role, FILM_EXCHANGE_ADMIN)" class="icon icon-film-exchange"></i>
 </div>

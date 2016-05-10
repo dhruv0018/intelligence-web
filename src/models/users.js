@@ -27,6 +27,22 @@ IntelligenceWebClient.factory('UsersResource', [
                 resendEmailChange: { method: 'PUT', url: config.api.uri + 'users/:id' + '/email-change' },
                 resetPassword: { method: 'POST', url: config.api.uri + 'users/password-reset/:token', params: {token: '@token'} },
                 confirmEmail: { method: 'POST', url: config.api.uri + 'users/email-change/:token', params: {token: '@token'} },
+                getFilmExchangePrivileges: {
+                    method: 'GET',
+                    url: config.apiV2.uri + 'roles/:roleId' + '/conference_film_exchange_privileges',
+                    params: {roleId: '@roleId'},
+                    isArray: true
+                },
+                addFilmExchangePrivilege: {
+                    method: 'POST',
+                    url: config.apiV2.uri + 'roles/:roleId' + '/conference_film_exchange_privileges',
+                    params: {roleId: '@roleId'}
+                },
+                deleteFilmExchangePrivilege: {
+                    method: 'DELETE',
+                    url: config.apiV2.uri + 'roles/:roleId' + '/conference_film_exchange_privileges/:privilegeId',
+                    params: {roleId: '@roleId', privilegeId: '@privilegeId'}
+                },
                 typeahead: { method: 'GET', url: config.api.uri + 'service/user-typeahead', isArray: true,
                     //transforms the resource into an array of user objects with extra properties used by the user typeahead
                     transformResponse: function(data) {

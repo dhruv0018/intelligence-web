@@ -19,8 +19,8 @@ var Users = angular.module('Users');
  * @type {Directive}
  */
 Users.directive('krossoverNewRole', [
-    'ROLES', 'ROLE_TYPE', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'INDEXER_GROUPS_ID',
-    function directive(ROLES, ROLE_TYPE, users, teams, sports, INDEXER_GROUPS_ID) {
+    'ROLES', 'ROLE_TYPE', 'UsersFactory', 'TeamsFactory', 'SportsFactory', 'INDEXER_GROUPS_ID', 'AlertsService',
+    function directive(ROLES, ROLE_TYPE, users, teams, sports, INDEXER_GROUPS_ID, alerts) {
 
         var role = {
 
@@ -57,21 +57,53 @@ Users.directive('krossoverNewRole', [
 
                 $scope.addRole = function(newRole) {
 
-                    /* Remove role from the newRoles array. */
-                    $scope.newRoles.splice($scope.newRoles.indexOf(newRole), 1);
-
                     let team = newRole.teamId ? teams.get(newRole.teamId): null;
 
                     /* Add role to the user roles array. */
                     // TODO: Pass in teamId directly rather than getting off the newRole
+                    let oldRoles = angular.copy($scope.user.roles);
                     $scope.user.addRole(newRole, team);
-
+                    $scope.saveOrRevertRoles(oldRoles);
+                    $scope.newRoles.splice($scope.newRoles.indexOf(newRole), 1);
                     element.remove();
                 };
 
                 $scope.removeRole = (newRole) => {
                     $scope.newRoles.splice($scope.newRoles.indexOf(newRole), 1);
                 };
+
+                // Takes a copy of the roles from before the local action was performed to revert to if it fails to save server side
+                $scope.saveOrRevertRoles = function (backupCopy) {
+
+                    return $scope.user.save().then(function(resource) {
+
+                        // TO-DO: Improve the way save errors are handled. Currently the user factory doesn't take
+                        // success and error function callbacks and when I modified it to take them and pass them
+                        // on to baseSave, it ended up calling both the success and error callbacks on error so
+                        // I changed it back for the time being until we can look into this further.
+                        if(!resource) {
+                            alerts.add({
+                                type: 'danger',
+                                message: 'Save Unsuccessful'
+                            });
+
+                            $scope.user.roles = backupCopy;
+                        }
+                        else {
+                            users.load($scope.user.id).then(function(data){
+                                $scope.$apply(function(){
+                                    $scope.user.roles = users.get($scope.user.id).roles;
+                                });
+                            });
+
+                            alerts.add({
+                                type: 'success',
+                                message: 'Changes Saved!'
+                            });
+                        }
+                    });
+                };
+
             }
         };
 

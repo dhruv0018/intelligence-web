@@ -274,6 +274,55 @@ IntelligenceWebClient.factory('UsersFactory', [
 
             /**
              * @class User
+             * @method
+             * Add film exchange privilege to Film Exchange Admin role
+             */
+            addFilmExchangePrivilege: function(roleId, privilege) {
+                var self = this;
+
+                var model = $injector.get(self.model);
+
+                return model.addFilmExchangePrivilege(
+                    {roleId: roleId},
+                    privilege).$promise;
+            },
+
+            /**
+             * @class User
+             * @method
+             * Add film exchange privilege to Film Exchange Admin role
+             */
+            deleteFilmExchangePrivilege: function(roleId, privilegeId) {
+                var self = this;
+
+                var model = $injector.get(self.model);
+
+                return model.deleteFilmExchangePrivilege(
+                    {
+                        roleId: roleId,
+                        privilegeId: privilegeId
+                    }
+                ).$promise;
+            },
+
+            /**
+             * @class User
+             * @method getFilmExchangePrivileges
+             * @description get the film exchange privileges on a film exchange admin role
+             * @returns {Object}
+             */
+            getFilmExchangePrivileges: function(roleId) {
+
+                let self = this;
+                let model = $injector.get(self.model);
+
+                return model.getFilmExchangePrivileges({
+                    roleId: roleId
+                }).$promise;
+            },
+
+            /**
+             * @class User
              * @method activateRole
              * @description Given a role that exists on the user, activate it by
              * setting a tenureStart if it does not exist, and setting tenureEnd to null

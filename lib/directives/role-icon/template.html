@@ -4,6 +4,12 @@
 
 </div>
 
+<div class="role-icon" data-ng-if="users.is(role, FILM_EXCHANGE_ADMIN)">
+
+    <profile-placeholder role="FILM_EXCHANGE_ADMIN"></profile-placeholder>
+
+</div>
+
 <div class="role-icon" data-ng-if="users.is(role, COACH)">
 
     <sport-placeholder data-sport="sports[leagues[teams[role.teamId].leagueId].sportId]"></sport-placeholder>
@@ -16,4 +22,3 @@
 	<img alt="profile image" class="role-profile-picture" data-ng-if="user.imageUrl" data-ng-src="{{user.imageUrl}}">
 
 </div>
-
