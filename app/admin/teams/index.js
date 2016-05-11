@@ -750,12 +750,11 @@ function TeamConferencesController(
             angular.forEach(item.lstCompetitionLevels, function(level){
                 //add default, need to find correct attribute name for item.confernce.code
                 if(item.conferenceObj.competitionLevel == level.code){
-                    level.name += ' (Conference Default)';
-                    level.code = null;
+                    item.nullName = level.name + ' (Conference Default)';
                 }
             });
             if(!item.conferenceObj.competitionLevel){
-                item.lstCompetitionLevels.push({name: 'None', code: null});
+                item.nullName = 'None';
             }
         });
         if(item.isPrimary=== 'Y'){
@@ -806,12 +805,11 @@ function TeamConferencesController(
                 angular.forEach(newConference.lstCompetitionLevels, function(level){
                     //add default, need to find correct attribute name for item.confernce.code
                     if(newConference.conferenceObj.competitionLevel == level.code){
-                        level.name += ' (Conference Default)';
-                        level.code = null;
+                        newConference.nullName = level.name + ' (Conference Default)';
                     }
                 });
                 if(!newConference.conferenceObj.competitionLevel){
-                    newConference.lstCompetitionLevels.push({name: 'None', code: null});
+                    newConference.nullName = 'None';
                 }
             });
             newConference.conference = newConference.conferenceObj.code;

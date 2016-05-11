@@ -23,6 +23,7 @@
                     Competition Level:
                 </span>
                 <select class="form-control" name="competitionLevels" id="competitionLevels-{{$index}}" ng-model="teamConference.competitionLevel" ng-change="changeLevel(teamConference)">
+                    <option value="null">{{teamConference.nullName}}</option>
                     <option value="{{level.code}}"
                             ng-repeat="level in teamConference.lstCompetitionLevels"
                             ng-selected="level.code == teamConference.competitionLevel">
