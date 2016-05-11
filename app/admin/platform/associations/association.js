@@ -52,6 +52,7 @@ function AssociationController(
     $scope.newCompetitionLevel = {};
     $scope.newConference = {};
     $scope.newFilmExchange = {};
+    $scope.newFilmExchangeConference = null;
     $scope.updateRegionList = updateRegionList;
 
     // Update association related info if existing association
@@ -202,6 +203,7 @@ function AssociationController(
     $scope.addFilmExchange = function(filmExchange) {
         conferences.createFilmExchange(filmExchange).then(() =>{
             $scope.newFilmExchange = {};
+            $scope.newFilmExchangeConference = null;
             updateFilmExchanges();
         });
     };
@@ -212,6 +214,7 @@ function AssociationController(
 
     $scope.cancelFilmExchangeCreation = function() {
         $scope.newFilmExchange = {};
+        $scope.newFilmExchangeConference = null;
     };
 
     function generateConferenceSportList() {
@@ -234,6 +237,7 @@ function AssociationController(
                     return conferenceSport;
                 }
             });
+            $scope.availableConferenceSports = $scope.availableConferenceSports.sort();
         });
     }
 

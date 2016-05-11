@@ -10,7 +10,7 @@
                 option-label="conference"
                 filter-criteria="name"
                 on-select="onSelectConferenceForFilmExchange"
-                ng-model="newFilmExchangeConference">
+                ng-model="$parent.newFilmExchangeConference">
             </search-dropdown>
         </div>
 
@@ -23,8 +23,8 @@
         </div>
 
         <div class="new-film-exchange-info" ng-show="newFilmExchange.sportId">
-            <h4>Visible to Teams?</h4>
-            <check-box id="new-film-exchange-visible-cta" checked="newFilmExchange.isActive" ng-click="newFilmExchange.isActive = !newFilmExchange.isActive"></check-box>
+            <h4>Visible to Teams</h4>
+            <check-box id="new-film-exchange-visible-cta" checked="newFilmExchange.isVisibleToTeams" ng-click="newFilmExchange.isVisibleToTeams = !newFilmExchange.isVisibleToTeams"></check-box>
         </div>
 
         <div class="new-film-exchange-save-actions">
