@@ -1,3 +1,12 @@
+# v74.0#
+## Features##
+- Adds ability to create and manage Film Exchanges, INTWEB-159
+- Makes use of the V2 Conference namespace, INTWEB-156
+
+## Fixes##
+- Fixes bug where self-editor drop down would not close, INTWEB-164
+- Corrects the self-editor list item header to be "sticky", INTWEB-163
+
 # v72.0#
 ## Features##
 - Adds ability to assign a Team to a Conference
