@@ -5,6 +5,7 @@ AssociationController.$inject = [
     '$scope',
     '$stateParams',
     '$state',
+    '$filter',
     'AssociationsFactory',
     'ConferencesFactory',
     'Iso3166countriesFactory',
@@ -23,6 +24,7 @@ function AssociationController(
     $scope,
     $stateParams,
     $state,
+    $filter,
     associations,
     conferences,
     iso3166countries,
@@ -217,7 +219,7 @@ function AssociationController(
         conferences.getAllConferenceSportsForAssociation($scope.association.code).then(response => {
             $scope.conferenceSports = response;
             $scope.conferenceSports.forEach(conferenceSport => {
-                conferenceSport.name = conferenceSport.conference.name + ' - ' + conferenceSport.gender + ' ' + $scope.sports[conferenceSport.sportId].name;
+                conferenceSport.name = conferenceSport.conference.name + ' - ' + $filter('formattedConferenceGender')(conferenceSport.gender) + ' ' + $scope.sports[conferenceSport.sportId].name;
                 $scope.filmExchanges.forEach(filmExchange => {
                     if (conferenceSport.conference.code === filmExchange.conference &&
                         conferenceSport.gender === filmExchange.gender &&

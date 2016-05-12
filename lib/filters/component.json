@@ -13,6 +13,7 @@
         "normalize",
         "height",
         "weight",
+        "gender",
         "games",
         "padding",
         "to-array",
