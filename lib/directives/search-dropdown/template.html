@@ -18,8 +18,6 @@
         </div>
 
         <div class="options-list">
-            <span class="option-selection-label" ng-hide="filters[filterCriteria]">All {{optionLabel}}s</span>
-            <span class="option-selection-label" ng-show="filters[filterCriteria]">Matching {{optionLabel}}s</span>
             <ul>
                 <li ng-repeat="option in matchingOptions = (options | filter: filters)" ng-click="selectOption(option)">
                     {{option[filterCriteria]}}

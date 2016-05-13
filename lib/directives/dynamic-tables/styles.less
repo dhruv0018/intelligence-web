@@ -1,31 +1,27 @@
 .dynamic-tables {
 
-    .stats-btn-group {
-        text-align: center;
+    h2{
+        margin-top:0px;
+    }
+
+    .stats-select {
         margin-bottom: 20px;
+        width: 300px;
 
-        .stats-btn {
-            .btn;
-            background-color: @gray-lighter;
-            font-weight: 400;
-            margin: 3px 5px;
-            border-radius: 4px;
-            padding-top: 4px;
-            padding-bottom: 4px;
-            font-size: 16px;
-            &.active,
-            &:active,
-            &:focus,
-            &:hover {
-                background-color: @brand-primary;
-                color: white;
-            }
+        select{
+            padding-right:30px;
         }
+    }
 
-        .active-stats-btn {
-            background-color: @brand-primary;
-            color: white;
-        }
+    .stats-select-header{
+        font-weight: 500;
+        color: @gray-darker;
+        margin-bottom: 2px;
+    }
+
+    .stats-select-container {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .table-responsive {

@@ -21,10 +21,10 @@ export default `
                         ng-model="filterQuery.gameType"
                         ng-change="generateStats()"
                     >
-                        <option value="">All Stats</option>
-                        <option value="{{GAME_TYPES.CONFERENCE.id}}">Conference Stats</option>
-                        <option value="{{GAME_TYPES.NON_CONFERENCE.id}}">Non-Conference Stats</option>
-                        <option value="{{GAME_TYPES.PLAYOFF.id}}">Playoffs Stats</option>
+                        <option value="">All Games</option>
+                        <option value="{{GAME_TYPES.CONFERENCE.id}}">Conference</option>
+                        <option value="{{GAME_TYPES.NON_CONFERENCE.id}}">Non-Conference</option>
+                        <option value="{{GAME_TYPES.PLAYOFF.id}}">Playoffs</option>
                     </select>
                 </div>
 
@@ -71,7 +71,7 @@ export default `
             >
 
                 <div class="analytics-tables-container" ng-hide="loadingTables">
-                    <dynamic-tables tables="stats" sport="sport"></dynamic-tables>
+                    <dynamic-tables tables="stats" sport="sport" width="90%"></dynamic-tables>
                 </div>
             </div>
 
