@@ -878,7 +878,7 @@ function TeamConferencesController(
         angular.forEach($scope.teamConferences, function(teamConference, i){
             if(!teamConference.id){
                 //need to add data
-                if(!teamConference.competitionLevel){
+                if(!teamConference.competitionLevel || teamConference.competitionLevel == 'null'){
                     teamConference.competitionLevel = null;
                 }
                 let addPromise = teams.addConference(teamId, teamConference).then(function(response){
@@ -888,7 +888,7 @@ function TeamConferencesController(
                 promises.push(addPromise.$promise);
             }else{
                 //update data
-                if(!teamConference.competitionLevel){
+                if(!teamConference.competitionLevel || teamConference.competitionLevel == 'null'){
                     teamConference.competitionLevel = null;
                 }
                 let updatePromise = teams.updateConference(teamId, teamConference);
