@@ -792,7 +792,7 @@ function TeamConferencesController(
         if(checkDuplicate(newConference.sportsAssociation)){
             let alertModal = basicModals.openForAlert({
                 title: 'Action not allowed',
-                bodyText: 'A team cannot be a member of more than one conferences that are part of the same association.',
+                bodyText: 'A team cannot be a member of more than one conference from the same association.',
                 buttonText: 'OK'
             });
         }else{
