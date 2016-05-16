@@ -43,7 +43,7 @@ const STATE_NAMES = {
     },
 
     'Games.SelfEditor': {
-        display: 'Self-Editor',
+        display: 'Film Editor',
         id: 'self-editor-cta'
     }
 };
