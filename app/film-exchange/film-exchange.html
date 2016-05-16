@@ -44,9 +44,9 @@
             </div>
         </div>
         <div id="film-exchange-data">
-            <table class="table">
-                <tbody>
-                    <tr ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24]">
+            <div class="film-exchange-data-div" ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24]">
+                <table>
+                    <tr >
                         <td class="team">
                             <p>{{filmExchanges[0].homeTeam.name}}<span ng-if="filmExchanges[0].homeTeam.won"> (W)</span></p>
                             <p class="competitionLevel subText">{{filmExchanges[0].homeTeam.primaryConference.competitionLevel}}</p>
@@ -71,8 +71,8 @@
                             <p ng-if="currentUser.getCurrentRole().teamId==filmExchanges[0].addedByTeam.id"><i class="icon icon-remove"></i> Remove</p>
                         </td>
                     </tr>
-                </tbody>
-            </table>
+                </table>
+            </div>
         </div>
         <div class="text-center footer">
             <pagination total-items="64" ng-model="currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>

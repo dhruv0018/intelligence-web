@@ -28,17 +28,18 @@
             td.datePlayed{
                 width: 30%;
             }
+            #film-exchange-data{
+                margin-top: 110px;
+            }
         }
         #film-exchange-data{
-            background: white;
-            border: 1px solid #ddd;
-            box-shadow: 0px 0px 5px rgba(0,0,0,.1);
-            margin-top: 110px;
+            margin-top: 115px;
             height: calc(~"100% - 190px");
             overflow-y: scroll;
         }
         .table{
-            margin-bottom: 0px;
+            margin: 0px auto;
+            width: 98%;
             &> thead > tr > th{
                 padding: 10px 20px;
                 &:first-child{
@@ -52,7 +53,8 @@
         td{
             color: black;
             padding: 10px 20px;
-            background-color: white;
+            background-color: transparent;
+            border: none;
             p{
                 &.subText{
                     color: #777;
@@ -79,16 +81,28 @@
                 width: 15%;
             }
             &.dateAdded{
-                width: 25%;
-            }
-        }
-        tbody{
-            tr{
-                cursor: pointer;
+                width: 20%;
             }
         }
         thead{
             background-color: @gray-lighter;
+        }
+        .film-exchange-data-div{
+            transition: transform linear 0.1s;
+            border: 1px solid #dddddd;
+            background-color: white;
+            width: 98%;
+            margin: 0px auto;
+            cursor: pointer;
+            border-top: none;
+            table{
+                width: 100%;
+            }
+            &:hover{
+                transform: scale(1.01);
+                box-shadow: 0px 0px 10px 1px rgba(0,0,0,.1);
+                z-index: 999;
+            }
         }
         admin-queue-pagination{
             margin-top: 20px;
