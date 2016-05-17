@@ -1,15 +1,19 @@
 <div class="basic-modal">
 	<header class="modal-header">
 		<h3 class="modal-title">{{title}}</h3>
-		<i class="icon icon-remove" data-ng-click="$dismiss()"></i>
+		<i class="icon icon-remove" ng-click="$dismiss()"></i>
 	</header>
 	<div class="modal-body">
 		<p>{{bodyText}}</p>
-		<textarea class="text-modal-input" data-ng-show="type === 'text'" data-ng-model="textValue"></textarea>
-		<button data-ng-show="type === 'text'" data-ng-click="ok(textValue)">{{buttonText}}</button>
-		<button data-ng-show="type === 'confirm'" data-ng-click="ok(true)">{{buttonText}}</button>
-		<button data-ng-show="type === 'confirm'" class="pull-right close-text" data-ng-click="$dismiss()">{{cancelButtonText}}</button>
-		<button data-ng-show="type === 'alert'" data-ng-click="ok(true)">{{buttonText}}</button>
-		<a href data-ng-show="type === 'text'" class="pull-right close-text" data-ng-click="$dismiss()">Cancel</a>
+		<textarea class="text-modal-input" ng-show="type === 'text'" ng-model="textValue"></textarea>
+		<div class="button-row">
+			<button class="btn btn-sm btn-primary" ng-show="type === 'text'" ng-click="ok(textValue)">{{buttonText}}</button>
+			<button class="btn btn-sm btn-default" ng-show="type === 'text'" ng-click="$dismiss()">Cancel</button>
+
+			<button class="btn btn-sm btn-primary" ng-show="type === 'confirm'" ng-click="ok(true)">{{buttonText}}</button>
+			<button class="btn btn-sm btn-default" ng-show="type === 'confirm'" ng-click="$dismiss()">{{cancelButtonText}}</button>
+
+			<button class="btn btn-sm btn-primary" ng-show="type === 'alert'" ng-click="ok(true)">{{buttonText}}</button>
+		</div>
 	</div>
 </div>
