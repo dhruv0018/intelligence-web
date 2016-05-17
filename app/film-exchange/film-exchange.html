@@ -5,15 +5,15 @@
         <form role="form" ng-submit="search(filter)">
 
             <div class="form-group">
-                <input class="form-control" name="name" placeholder="School Name and/or team name" ng-model="filter.name" type="text">
+                <input class="form-control" name="teamName" placeholder="School Name and/or team name" ng-model="filter.teamName" type="text">
             </div>
 
             <div class="form-group">
-                <data-date data-id="date-played" data-ng-model="filter.date" data-max-date="todaysDate" placeholder="Date Played"></data-date>
+                <data-date data-id="date-played" data-ng-model="filter.datePlayed" data-max-date="todaysDate" placeholder="Date Played"></data-date>
             </div>
 
             <div class="form-group">
-                <select class="form-control" ng-model="filter.competitionLevel" ng-options="level.competitionLevel as level.name for level in teamCompetitionLevels">
+                <select class="form-control" ng-model="filter.competitionLevel" ng-options="level.code as level.name for level in teamCompetitionLevels">
                     <option value="">Level of Competition</option>
                 </select>
             </div>
@@ -25,10 +25,10 @@
     <div class="list" ng-class="{'coachView': currentUser.is(COACH)}">
         <div id="film-exchange-header">
             <div class="title-header">
-                <h3>IWLCA - Women’s Lacrosse</h3>
+                <h3>{{conferenceTitle[0]}} {{conferenceTitle[1]}} - {{conferenceTitle[2]| formattedConferenceGender}} {{conferenceTitle[3].name}}</h3>
                 <button class="btn btn-default" ng-click="openFilmExchangeModal()" ng-if="!currentUser.is(COACH)">Edit Team Permisions</button>
             </div>
-            <div class="table-header">
+            <div class="table-header" ng-show="filmExchanges.length > 0">
                 <table class="table">
                     <thead>
                         <tr>
@@ -44,38 +44,41 @@
             </div>
         </div>
         <div id="film-exchange-data" class="force-scrollbar">
-            <div class="film-exchange-data-div" ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24]">
+            <div class="film-exchange-data-no text-center" ng-show="!filmExchanges.length">
+                There are no games in your film exchange yet.
+            </div>
+            <div class="film-exchange-data-div" ng-repeat="filmExchange in filmExchanges">
                 <table>
                     <tr >
                         <td class="team">
-                            <p>{{filmExchanges[0].homeTeam.name}}<span ng-if="filmExchanges[0].homeTeam.won"> (W)</span></p>
-                            <p class="competitionLevel subText">{{filmExchanges[0].homeTeam.primaryConference.competitionLevel}}</p>
+                            <p>{{filmExchange.homeTeam.name}}<span ng-if="filmExchange.homeTeam.won"> (W)</span></p>
+                            <p class="competitionLevel subText">{{filmExchange.homeTeam.primaryConference.competitionLevel}}</p>
                         </td>
                         <td class="team">
-                            <p>{{filmExchanges[0].awayTeam.name}}<span ng-if="!filmExchanges[0].homeTeam.won">(W)</span></p>
-                            <p class="competitionLevel subText">{{filmExchanges[0].awayTeam.primaryConference.competitionLevel}}</p>
+                            <p>{{filmExchange.awayTeam.name}}<span ng-if="!filmExchange.homeTeam.won">(W)</span></p>
+                            <p class="competitionLevel subText">{{filmExchange.awayTeam.primaryConference.competitionLevel}}</p>
                         </td>
                         <td class="score">
-                            <p>{{filmExchanges[0].homeTeam.score}} - {{filmExchanges[0].awayTeam.score}}</p>
+                            <p>{{filmExchange.homeTeam.score}} - {{filmExchange.awayTeam.score}}</p>
                         </td>
                         <td class="datePlayed">
-                            <p>{{filmExchanges[0].createdAt|date:'dd-MMM-yyyy'}}</p>
-                            <p class="addedBy subText" ng-if="currentUser.is(COACH)">added by {{filmExchanges[0].addedByUser.firstName}} {{filmExchanges[0].addedByUser.lastName}}</p>
+                            <p>{{filmExchange.datePlayed|date:'dd-MMM-yyyy'}}</p>
+                            <p class="addedBy subText" ng-if="currentUser.is(COACH)">added by {{filmExchange.addedByUser.firstName}} {{filmExchange.addedByUser.lastName}}</p>
                         </td>
                         <td class="dateAdded" ng-if="!currentUser.is(COACH)">
-                            <p>{{filmExchanges[0].updatedAt|date:'dd-MMM-yyyy'}}</p>
-                            <p class="addedBy subText" ng-if="!currentUser.is(COACH)">added by <a href="mailto:{{filmExchanges[0].addedByUser.email}}" >{{filmExchanges[0].addedByUser.firstName}} {{filmExchanges[0].addedByUser.lastName}}</a></p>
+                            <p>{{filmExchange.createdAt|date:'dd-MMM-yyyy'}}</p>
+                            <p class="addedBy subText" ng-if="!currentUser.is(COACH)">added by <a href="mailto:{{filmExchange.addedByUser.email}}" >{{filmExchange.addedByUser.firstName}} {{filmExchange.addedByUser.lastName}}</a></p>
                         </td>
                         <td class="actions" ng-if="currentUser.is(COACH)">
-                            <p ng-if="currentUser.getCurrentRole().teamId!=filmExchanges[0].addedByTeam.id"><i class="icon icon-copy"></i> Copy</p>
-                            <p ng-if="currentUser.getCurrentRole().teamId==filmExchanges[0].addedByTeam.id"><i class="icon icon-remove"></i> Remove</p>
+                            <p ng-if="currentUser.getCurrentRole().teamId!=filmExchange.addedByTeam.id"><i class="icon icon-copy"></i> Copy</p>
+                            <p ng-if="currentUser.getCurrentRole().teamId==filmExchange.addedByTeam.id"><i class="icon icon-remove"></i> Remove</p>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
-        <div class="text-center footer">
-            <pagination total-items="64" ng-model="currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
+        <div class="text-center footer" ng-show="filmExchanges.length > 0">
+            <pagination total-items="filmExchangesTotal.length" ng-model="currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
         </div>
     </div>
 </section>

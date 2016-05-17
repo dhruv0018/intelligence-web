@@ -8,7 +8,9 @@
     </header>
     <div class="modal-sub-header">
         <div class="icon icon-search"></div>
-        <input id="film-exchange-teams-search" type="text" placeholder="Search by school name, team name" />
+        <input id="film-exchange-teams-search" type="text" ng-model="filters.name" placeholder="Search by school name, team name"
+        ng-change="searchTeams(filters.name)"
+        ng-keydown="keyPressTracker($event, filters.name)"/>
         <label class="suspended-teams-toggle-label" for="suspended-teams-toggle">Suspended Teams Only</label>
         <input id="suspended-teams-toggle" type="checkbox" ng-click="toggleShowSuspendedTeams()" />
     </div>

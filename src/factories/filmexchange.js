@@ -24,11 +24,15 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
                 let key = conference.id;
                 let start = conference.start;
                 let count = conference.count;
+                let mascot = conference.mascot;
+                let schoolName = conference.schoolName;
 
                 return model.getTeams({
                     id: key,
                     start: start,
-                    count: count
+                    count: count,
+                    mascot: mascot,
+                    schoolName: schoolName
                 }).$promise;
             },
             suspendTeam: function(conferenceId, teamId) {
@@ -62,24 +66,29 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
 
                 return model.getSuspendedTeams({id: conferenceId}).$promise;
             },
-            getGames: function(filmExchange) {
+            getFilms: function(filter) {
                 let self = this;
                 let model = $injector.get(self.model);
-                let key = filmExchange.id;
-                let count = filmExchange.count||14;
-                let start = filmExchange.page ? (filmExchange.page-1) * count : 0;
-
-                return model.getGames({
-                    id: key,
-                    start: start,
-                    count: count
-                }).$promise;
+                if(filter.page && filter.count){
+                    filter.start = (filter.page-1) * filter.count;
+                }
+                if(filter.datePlayed && filter.datePlayed instanceof Date){
+                    filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
+                }
+                // console.log(filter);
+                return model.getFilms(filter).$promise;
             },
             getAllConferences: function(){
                 let self = this;
                 let model = $injector.get(self.model);
 
                 return model.getAllConferences().$promise;
+            },
+            getCompetitionLevel: function(conference){
+                let self = this;
+                let model = $injector.get(self.model);
+
+                return model.getCompetitionLevel({id: conference.id}).$promise;
             }
         };
         angular.augment(FilmExchangeFactory, BaseFactory);

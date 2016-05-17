@@ -16,7 +16,7 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                 getTeams: {
                     method: 'GET',
                     url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/teams',
-                    params: {start: '@start', count: '@count'},
+                    params: {start: '@start', count: '@count', mascot: '@mascot', schoolName: '@schoolName'},
                     isArray: true
                 },
                 postSuspendTeam: {
@@ -31,18 +31,23 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                 getSuspendedTeams: {
                     method: 'GET',
                     url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/teams',
-                    params: {is_suspended: 1},
+                    params: {isSuspended: 1},
                     isArray: true
                 },
-                getGames: {
+                getFilms: {
                     method: 'GET',
-                    url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/games',
-                    params: {start: '@start', count: '@count'},
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/films',
+                    params: {start: '@start', count: '@count', teamName: '@teamName', mascot: '@mascot', datePlayed: '@datePlayed', competitionLevel: '@competitionLevel'},
                     isArray: true
                 },
                 getAllConferences:{
                     method: 'GET',
                     url: config.apiV2.uri + 'conference-film-exchanges',
+                    isArray: true
+                },
+                getCompetitionLevel:{
+                    method: 'GET',
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id'+'/competition-levels',
                     isArray: true
                 }
             }

@@ -1,5 +1,6 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+const ITEMSPERPAGE = 25;
 
 /**
  * Film Exchange page module.
@@ -43,8 +44,14 @@ FilmExchange.config([
                     'FilmExchangeFactory','$stateParams',
                     function(filmExchange, $stateParams){
                         let exchangeId = $stateParams.id;
-                        let page = $stateParams.page||0;
-                        return filmExchange.getGames({id: exchangeId, page: page});
+                        return filmExchange.getFilms({id: exchangeId});
+                    }
+                ],
+                'CompetitionLevels.Data':[
+                    'FilmExchangeFactory', '$stateParams',
+                    function(filmExchange, $stateParams){
+                        let exchangeId = $stateParams.id;
+                        return filmExchange.getCompetitionLevel({id: exchangeId});
                     }
                 ]
             }
@@ -60,13 +67,31 @@ FilmExchange.config([
  * @type {Controller}
  */
 FilmExchange.controller('FilmExchangeController', [
-    '$rootScope', '$scope', '$state', 'FilmExchangeTeams.Modal', 'ROLES', 'FilmExchangeFactory', '$stateParams',
-    function controller($rootScope, $scope, $state, FilmExchangeTeamsModal, ROLES, filmExchange, $stateParams) {
+    '$rootScope', '$scope', '$state', 'FilmExchangeTeams.Modal', 'ROLES', 'FilmExchangeFactory', '$stateParams', '$filter','SportsFactory', 'CompetitionLevels.Data', 'Exchange.Data',
+    function controller($rootScope, $scope, $state, FilmExchangeTeamsModal, ROLES, filmExchange, $stateParams, $filter, sports, CompetitionLevels, exchanges) {
         $scope.COACH = ROLES.COACH;
         $scope.currentPage = $stateParams.page||1;
+        $scope.conferenceTitle = $stateParams.id.split('+');
+        $scope.conferenceTitle[3] = sports.getMap()[$scope.conferenceTitle[3]];
+        $scope.filter= {};
+        $scope.itemPerPage = ITEMSPERPAGE;
 
+        $scope.teamCompetitionLevels = CompetitionLevels;
+        $scope.filmExchangesTotal = exchanges;
+        $scope.todaysDate = Date.now();
+
+        if($stateParams.page){
+            $scope.filmExchanges = sliceData($stateParams.page);
+        }else{
+            $scope.filmExchanges = $scope.filmExchangesTotal.slice(0, ITEMSPERPAGE);
+        }
+
+        function sliceData(page){
+            return $scope.filmExchangesTotal.slice(ITEMSPERPAGE*(page-1), ITEMSPERPAGE*page);
+        }
         $scope.pageChanged = function(){
             $state.go('film-exchange', {page: $scope.currentPage}, {location: true, notify: false});
+            $scope.filmExchanges = sliceData($scope.currentPage);
         };
 
         $scope.openFilmExchangeModal = function() {
@@ -74,55 +99,18 @@ FilmExchange.controller('FilmExchangeController', [
         };
 
         $scope.search = function(filter){
-            console.log(filter);
+            filter.id = $stateParams.id;
+            if(filter.teamName){
+                filter.mascot = filter.teamName;
+            }
+            // console.log(filter);
+            filmExchange.getFilms(filter).then(function(data){
+                $state.go('film-exchange', {page: $scope.currentPage}, {location: true, notify: false});
+                $scope.filmExchangesTotal = data;
+                $scope.currentPage = 1;
+                $scope.filmExchanges = sliceData($scope.currentPage);
+            });
         };
 
-        $scope.todaysDate = Date.now();
-
-        $scope.teamCompetitionLevels = [
-            {id: 1, competitionLevel: 'D1', name: 'D1 level'},
-            {id: 2, competitionLevel: 'D2', name: 'D2 level'}
-        ];
-
-        //TODO: will be replaced with real data
-        $scope.filmExchanges = [
-            {
-                'id': 22353,
-                'datePlayed': '2012-12-28T08:00:00+00:00',
-                'homeTeam': {
-                    'id': 20777,
-                    'name': 'Arizona Wildcats',
-                    'primaryConference': {
-                        'sportsAssociation': 'US-NCAA',
-                        'Code': 'B1G',
-                        'competitionLevel': 'D1'
-                    },
-                    'score': 77,
-                    'won': true
-                },
-                'awayTeam': {
-                    'id': 20778,
-                    'name': 'Virginia Cavaliers',
-                    'primaryConference': {
-                        'sportsAssociation': 'US-NCAA',
-                        'Code': 'B1G',
-                        'competitionLevel': 'D1'
-                    },
-                    'score': 23
-                },
-                'addedByUser': {
-                    'id': 16090,
-                    'firstName': 'Devin',
-                    'lastName': 'Yunis',
-                    'email': 'devinyunis@icloud.com'
-                },
-                'addedByTeam': {
-                    'id': 20777,
-                    'name': 'NYU',
-                },
-                'createdAt': '2012-12-28T08:00:00+00:00',
-                'updatedAt': '2012-12-30T08:00:00+00:00'
-            }
-        ];
     }
 ]);
