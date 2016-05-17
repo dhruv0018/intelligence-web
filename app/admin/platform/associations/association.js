@@ -204,6 +204,7 @@ function AssociationController(
         conferences.createFilmExchange(filmExchange).then(() =>{
             $scope.newFilmExchange = {};
             $scope.newFilmExchangeConference = null;
+            $scope.$broadcast('clear-search-dropdown-filter');
             updateFilmExchanges();
         });
     };
@@ -215,6 +216,7 @@ function AssociationController(
     $scope.cancelFilmExchangeCreation = function() {
         $scope.newFilmExchange = {};
         $scope.newFilmExchangeConference = null;
+        $scope.$broadcast('clear-search-dropdown-filter');
     };
 
     function generateConferenceSportList() {
