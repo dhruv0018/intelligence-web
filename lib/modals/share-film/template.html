@@ -21,29 +21,57 @@
 
     </header>
 
-    <div class="modal-body">
+    <div class="modal-body" ng-class="{'four-options': showFilmExchangeOption && !withTeam && !withOtherUsers && !withPublic && !withFilmExchange}">
 
-        <div class="share-options-container" ng-show="!withTeam && !withOtherUsers && !withPublic">
+        <!-- View for selecting sharing method -->
+        <div class="share-options-container" ng-show="!withTeam && !withOtherUsers && !withPublic && !withFilmExchange">
         	<!--With Team Option for Game-->
-            <div class="share-options option-your-team" ng-show="isGame" ng-class="{'athlete-option': currentUser.is(ROLES.ATHLETE)}">
+            <div
+                class="share-options option-your-team"
+                ng-show="isGame"
+                ng-class="{'athlete-option': currentUser.is(ROLES.ATHLETE), 'small-options': showFilmExchangeOption}">
         		<h3><i class="icon icon-ok"></i>Shared With Your Team</h3>
         		<i class="icon icon-group"></i>
         	</div>
             <!--With Team Option for Reel-->
-            <div id="share-with-team-cta" class="share-options option-your-team-reels" ng-show="!isGame" ng-click="withTeam = true" ng-class="{'athlete-option': currentUserIsAthleteRecruit}">
+            <div
+                id="share-with-team-cta"
+                class="share-options option-your-team-reels"
+                ng-show="!isGame"
+                ng-click="withTeam = true"
+                ng-class="{'athlete-option': currentUserIsAthleteRecruit, 'small-options': showFilmExchangeOption}">
                 <h3>Your Team</h3>
                 <i class="icon icon-group"></i>
             </div>
-        	<div class="share-options middle-option" id="share-other-users-cta" ng-click="withOtherUsers = true" ng-class="{'athlete-option': currentUserIsAthleteRecruit}">
+        	<div
+                class="share-options"
+                id="share-other-users-cta"
+                ng-click="withOtherUsers = true"
+                ng-class="{'athlete-option': currentUserIsAthleteRecruit, 'small-options': showFilmExchangeOption}">
         		<h3>Other Krossover Users</h3>
         		<i class="icon icon-logo"></i>
         	</div>
-        	<div class="share-options" id="share-public-cta" ng-click="withPublic = true" ng-hide="currentUserIsAthleteRecruit">
+        	<div
+                class="share-options"
+                id="share-public-cta"
+                ng-click="withPublic = true"
+                ng-hide="currentUserIsAthleteRecruit"
+                ng-class="{'small-options': showFilmExchangeOption}">
         		<h3>Recruiters or others via public URL</h3>
         		<i class="icon icon-globe"></i>
         	</div>
+            <div
+                class="share-options"
+                id="share-film-exchange-cta"
+                ng-click="withFilmExchange = true"
+                ng-if="showFilmExchangeOption"
+                ng-class="{'small-options': showFilmExchangeOption}">
+                <h3>Your league or conference film exchange</h3>
+                <i class="icon icon-film-exchange"></i>
+            </div>
         </div>
 
+        <!-- View for sharing with your team -->
         <div class="sharing-with-team-container" ng-show="withTeam">
             <div class="info-box">
                 <span ng-show="currentUser.is(ROLES.COACH)">Reels are automatically shared amongst team coaches.<br/></span>
@@ -69,6 +97,7 @@
             </div>
         </div>
 
+        <!-- View for sharing with other Krossover users -->
         <div class="sharing-with-others-container" ng-show="withOtherUsers">
         	<div class="info-box">
         		<span ng-show="isGame">Games are automatically shared amongst team coaches and athletes on your active roster.<br/></span>
@@ -117,6 +146,7 @@
         	</div>
         </div>
 
+        <!-- View for public sharing -->
         <div class="sharing-with-public-container" ng-show="withPublic">
 
             <p class="public-share-option-title">How would you like to share?</p>

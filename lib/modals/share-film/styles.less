@@ -21,6 +21,10 @@
 
     .modal-body {
 
+        &.four-options {
+            padding: 20px 0;
+        }
+
         h3 {
             color: @brand-blue;
             font-size: 16px;
@@ -41,13 +45,23 @@
             .share-options {
 
                 display: table-cell;
-                width: 32%;
+                width: 33%;
+                border-right: thin solid @gray-border;
                 height: 200px;
                 padding: 10px;
                 cursor: pointer;
 
+
                 .icon-group {
                     margin-bottom: 30px;
+                }
+
+                &:last-child {
+                    border: none;
+                }
+
+                &.small-options {
+                    width: 25%;
                 }
 
                 &.option-your-team {
@@ -72,12 +86,6 @@
                             color: @brand-success;
                         }
                     }
-                }
-
-                &.middle-option {
-                    border-left: thin solid @gray-border;
-                    border-right: thin solid @gray-border;
-                    width: 33%;
                 }
 
                 &.athlete-option {
