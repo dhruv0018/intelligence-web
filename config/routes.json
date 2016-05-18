@@ -92,7 +92,8 @@
         "Indexer": true,
         "Head Coach": true,
         "Assistant Coach": true,
-        "Athlete": true
+        "Athlete": true,
+        "Film Exchange Admin": true
     },
 
     "Account.ContactInfo": {
@@ -103,7 +104,8 @@
         "Indexer": true,
         "Head Coach": true,
         "Assistant Coach": true,
-        "Athlete": true
+        "Athlete": true,
+        "Film Exchange Admin": true
     },
 
     "Account.TermsAndConditions": {
@@ -114,7 +116,8 @@
         "Indexer": true,
         "Head Coach": true,
         "Assistant Coach": true,
-        "Athlete": true
+        "Athlete": true,
+        "Film Exchange Admin": true
     },
 
     "Account.RolesList": {
@@ -125,7 +128,8 @@
         "Indexer": true,
         "Head Coach": true,
         "Assistant Coach": true,
-        "Athlete": true
+        "Athlete": true,
+        "Film Exchange Admin": true
     },
 
     "user": {
@@ -222,7 +226,8 @@
 
         "Super Admin": true,
         "Head Coach": true,
-        "Assistant Coach": true
+        "Assistant Coach": true,
+        "Film Exchange Admin": true
     },
 
     "report": {

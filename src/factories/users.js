@@ -611,7 +611,11 @@ IntelligenceWebClient.factory('UsersFactory', [
                 role = role || this.getCurrentRole();
 
                 if (!role) return false;
-                if (!match) throw new Error('No role to match specified');
+                if (!match){
+                    console.log(this, role, match);
+                    console.log(arguments);
+                    throw new Error('No role to match specified');
+                }
                 if (!role.type || !match.type) return false;
 
                 if(active) {

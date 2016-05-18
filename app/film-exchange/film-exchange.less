@@ -58,7 +58,7 @@
             p{
                 &.subText{
                     color: #777;
-                    line-height: 0;
+                    line-height: 1;
                     font-size: 0.8em;
                     margin-top: -10px;
                 }
@@ -170,5 +170,14 @@
                 }
             }
         }
+    }
+}
+
+// MOBILE
+@media only screen
+and (max-width: @screen-md-max) {
+
+    .film-exchange .list #film-exchange-data {
+        margin-top: 135px;
     }
 }

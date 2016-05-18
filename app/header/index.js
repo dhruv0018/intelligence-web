@@ -130,6 +130,7 @@ function HeaderController(
     $scope.HEAD_COACH = ROLES.HEAD_COACH;
     $scope.COACH = ROLES.COACH;
     $scope.ATHLETE = ROLES.ATHLETE;
+    $scope.FILM_EXCHANGE_ADMIN = ROLES.FILM_EXCHANGE_ADMIN;
 
     $scope.auth = auth;
     $scope.config = config;
@@ -143,15 +144,20 @@ function HeaderController(
     $scope.canPickupGame = currentUser.canPickupGames();
 
     if(currentRole.teamId){
+        //get only the active ones for coach
+        $scope.filmExchanges = [];
         teams.getFilmExchanges(currentRole.teamId).then(function(filmExchanges) {
-            $scope.filmExchanges = angular.forEach(filmExchanges, function(filmExchange){
-                filmExchange.id = filmExchange.sportsAssociation+'+'+filmExchange.conference+'+'+filmExchange.gender+'+'+filmExchange.sportId;
+            angular.forEach(filmExchanges, function(filmExchange){
+                if(!filmExchange.isSuspended){
+                    filmExchange.id = filmExchange.sportsAssociation+'+'+filmExchange.conference+'+'+filmExchange.gender+'+'+filmExchange.sportId;
+                    $scope.filmExchanges.push(filmExchange);
+                }
             });
         });
     }
 
     //TODO: If SUPER ADMIN or FILM EXCHANGE ADMIN GET ALL THE FILM EXCHANGE LIST
-    if(currentUser.is(ROLES.SUPER_ADMIN)){
+    if(currentUser.is(ROLES.SUPER_ADMIN)|| currentUser.is(ROLES.FILM_EXCHANGE_ADMIN)){
         filmExchange.getAllConferences().then(function(filmExchanges){
             $scope.filmExchanges = angular.forEach(filmExchanges, function(filmExchange){
                 filmExchange.id = filmExchange.sportsAssociation+'+'+filmExchange.conference+'+'+filmExchange.gender+'+'+filmExchange.sportId;

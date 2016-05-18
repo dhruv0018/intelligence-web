@@ -52,11 +52,11 @@
                     <tr >
                         <td class="team">
                             <p>{{filmExchange.homeTeam.name}}<span ng-if="filmExchange.homeTeam.won"> (W)</span></p>
-                            <p class="competitionLevel subText">{{filmExchange.homeTeam.primaryConference.competitionLevel}}</p>
+                            <p class="competitionLevel subText">{{filmExchange.homeTeam.primaryConference.competitionLevelName}}</p>
                         </td>
                         <td class="team">
                             <p>{{filmExchange.awayTeam.name}}<span ng-if="!filmExchange.homeTeam.won">(W)</span></p>
-                            <p class="competitionLevel subText">{{filmExchange.awayTeam.primaryConference.competitionLevel}}</p>
+                            <p class="competitionLevel subText">{{filmExchange.awayTeam.primaryConference.competitionLevelName}}</p>
                         </td>
                         <td class="score">
                             <p>{{filmExchange.homeTeam.score}} - {{filmExchange.awayTeam.score}}</p>

@@ -66,6 +66,15 @@ var ROLES = {
         }
     },
 
+    FILM_EXCHANGE_ADMIN: {
+
+        type: {
+
+            id: ROLE_TYPE.FILM_EXCHANGE_ADMIN,
+            name: 'Film Exchange Admin'
+        }
+    },
+
     INDEXER: {
 
         type: {
@@ -117,15 +126,6 @@ var ROLES = {
 
             id: ROLE_TYPE.ATHLETE,
             name: 'Athlete'
-        }
-    },
-
-    FILM_EXCHANGE_ADMIN: {
-
-        type: {
-
-            id: ROLE_TYPE.FILM_EXCHANGE_ADMIN,
-            name: 'Film Exchange Admin'
         }
     }
 };

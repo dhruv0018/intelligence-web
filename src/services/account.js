@@ -82,8 +82,12 @@ function AccountService (
 
             /* If the user is a super admin or an admin. */
             if (user.is(ROLES.SUPER_ADMIN) || user.is(ROLES.ADMIN)) {
-
                 return $state.go('users', null, { reload });
+            }
+
+            /* If the user is a film exchange admin. */
+            else if (user.is(ROLES.FILM_EXCHANGE_ADMIN)) {
+                return $state.go('Account.ContactInfo', null, { reload: reload });
             }
 
             /* If the user is an indexer. */
