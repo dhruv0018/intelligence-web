@@ -1,5 +1,5 @@
 <section class="film-exchange">
-    <aside class="sidebar">
+    <aside class="sidebar" ng-if="!noData">
 
         <h3>Search for film:</h3>
         <form role="form" ng-submit="search(filter)">
@@ -9,7 +9,7 @@
             </div>
 
             <div class="form-group">
-                <data-date data-id="date-played" data-ng-model="filter.datePlayed" data-max-date="todaysDate" placeholder="Date Played"></data-date>
+                <data-date data-id="date-played" data-ng-model="filter.datePlayed" data-max-date="todaysDate" format="dd-MMMM-yyyy" placeholder="Date Played"></data-date>
             </div>
 
             <div class="form-group">
@@ -22,11 +22,12 @@
 
         </form>
     </aside>
-    <div class="list" ng-class="{'coachView': currentUser.is(COACH)}">
+    <div class="list" ng-if="!noData" ng-class="{'coachView': currentUser.is(COACH)}">
+        <data-results ng-hide="filmExchanges.length" query="query"></data-results>
         <div id="film-exchange-header">
             <div class="title-header">
-                <h3>{{conferenceTitle[0]}} {{conferenceTitle[1]}} - {{conferenceTitle[2]| formattedConferenceGender}} {{conferenceTitle[3].name}}</h3>
-                <button class="btn btn-default" ng-click="openFilmExchangeModal()" ng-if="!currentUser.is(COACH)">Edit Team Permisions</button>
+                <h3>{{filmExchangeName}}</h3>
+                <button class="btn btn-default" ng-click="openFilmExchangeModal()" ng-if="!currentUser.is(COACH)">Manage Team Access</button>
             </div>
             <div class="table-header" ng-show="filmExchanges.length > 0">
                 <table class="table">
@@ -51,15 +52,19 @@
                 <table>
                     <tr >
                         <td class="team">
-                            <p>{{filmExchange.homeTeam.name}}<span ng-if="filmExchange.homeTeam.won"> (W)</span></p>
+                            <p class="teamName">{{filmExchange.homeTeam.name}}<span ng-if="filmExchange.homeTeam.won"> (W)</span></p>
                             <p class="competitionLevel subText">{{filmExchange.homeTeam.primaryConference.competitionLevelName}}</p>
                         </td>
                         <td class="team">
-                            <p>{{filmExchange.awayTeam.name}}<span ng-if="!filmExchange.homeTeam.won">(W)</span></p>
+                            <p class="teamName">{{filmExchange.awayTeam.name}}<span ng-if="!filmExchange.homeTeam.won"> (W)</span></p>
                             <p class="competitionLevel subText">{{filmExchange.awayTeam.primaryConference.competitionLevelName}}</p>
                         </td>
                         <td class="score">
-                            <p>{{filmExchange.homeTeam.score}} - {{filmExchange.awayTeam.score}}</p>
+                            <p>
+                                <span>{{filmExchange.homeTeam.won ? filmExchange.homeTeam.score : filmExchange.awayTeam.score}}</span>
+                                 -
+                                 <span>{{filmExchange.homeTeam.won ? filmExchange.awayTeam.score : filmExchange.homeTeam.score}}</span>
+                             </p>
                         </td>
                         <td class="datePlayed">
                             <p>{{filmExchange.datePlayed|date:'dd-MMM-yyyy'}}</p>
@@ -77,8 +82,13 @@
                 </table>
             </div>
         </div>
-        <div class="text-center footer" ng-show="filmExchanges.length > 0">
+        <div class="text-center footer" ng-show="filmExchanges.length > itemPerPage">
             <pagination total-items="filmExchangesTotal.length" ng-model="currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
         </div>
+
     </div>
+    <div ng-if="noData" class="noData text-center">
+        You currently have no active Film Exchanges to administer.
+    </div>
+
 </section>

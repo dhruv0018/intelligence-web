@@ -43,6 +43,7 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                 getAllConferences:{
                     method: 'GET',
                     url: config.apiV2.uri + 'conference-film-exchanges',
+                    params: {sportsAssociation: '@sportsAssociation', conference: '@conference', gender: '@gender', sportId: '@sportId'},
                     isArray: true
                 },
                 getCompetitionLevel:{

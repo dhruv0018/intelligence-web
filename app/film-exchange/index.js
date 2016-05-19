@@ -44,14 +44,14 @@ FilmExchange.config([
                     'FilmExchangeFactory','$stateParams',
                     function(filmExchange, $stateParams){
                         let exchangeId = $stateParams.id;
-                        return filmExchange.getFilms({id: exchangeId});
+                        return exchangeId ? filmExchange.getFilms({id: exchangeId}) : filmExchange.getAllConferences();
                     }
                 ],
                 'CompetitionLevels.Data':[
                     'FilmExchangeFactory', '$stateParams',
                     function(filmExchange, $stateParams){
                         let exchangeId = $stateParams.id;
-                        return filmExchange.getCompetitionLevel({id: exchangeId});
+                        return exchangeId ? filmExchange.getCompetitionLevel({id: exchangeId}) : [];
                     }
                 ]
             }
@@ -69,21 +69,41 @@ FilmExchange.config([
 FilmExchange.controller('FilmExchangeController', [
     '$rootScope', '$scope', '$state', 'FilmExchangeTeams.Modal', 'ROLES', 'FilmExchangeFactory', '$stateParams', '$filter','SportsFactory', 'CompetitionLevels.Data', 'Exchange.Data',
     function controller($rootScope, $scope, $state, FilmExchangeTeamsModal, ROLES, filmExchange, $stateParams, $filter, sports, CompetitionLevels, exchanges) {
-        $scope.COACH = ROLES.COACH;
-        $scope.currentPage = $stateParams.page||1;
-        $scope.conferenceTitle = $stateParams.id.split('+');
-        $scope.conferenceTitle[3] = sports.getMap()[$scope.conferenceTitle[3]];
-        $scope.filter= {};
-        $scope.itemPerPage = ITEMSPERPAGE;
+        $scope.noData = false;
+        if(!$stateParams.id){
+            //no id specified, go to first item
+            if(typeof exchanges[0] !== 'undefined'){
+                let exchangeId = exchanges[0].sportsAssociation+'+'+exchanges[0].conference+'+'+exchanges[0].gender+'+'+exchanges[0].sportId;
+                $state.go('film-exchange', {id: exchangeId});
+            }else{
+                $scope.noData = true;
+            }
+        }
+        if(!$scope.noData){
+            let titleFilter = {};
+            $scope.COACH = ROLES.COACH;
+            $scope.currentPage = $stateParams.page||1;
+            $scope.conferenceTitle = $stateParams.id.split('+');
+            titleFilter.sportsAssociation = $scope.conferenceTitle[0];
+            titleFilter.conference = $scope.conferenceTitle[1];
+            titleFilter.gender = $scope.conferenceTitle[2];
+            titleFilter.sportId = $scope.conferenceTitle[3];
+            filmExchange.getAllConferences(titleFilter).then(function(data){
+                $scope.filmExchangeName = data[0].name;
+            });
+            $scope.filter= {};
+            $scope.itemPerPage = ITEMSPERPAGE;
 
-        $scope.teamCompetitionLevels = CompetitionLevels;
-        $scope.filmExchangesTotal = exchanges;
-        $scope.todaysDate = Date.now();
 
-        if($stateParams.page){
-            $scope.filmExchanges = sliceData($stateParams.page);
-        }else{
-            $scope.filmExchanges = $scope.filmExchangesTotal.slice(0, ITEMSPERPAGE);
+            $scope.teamCompetitionLevels = CompetitionLevels;
+            $scope.filmExchangesTotal = exchanges;
+            $scope.todaysDate = Date.now();
+
+            if($stateParams.page){
+                $scope.filmExchanges = sliceData($stateParams.page);
+            }else{
+                $scope.filmExchanges = $scope.filmExchangesTotal.slice(0, ITEMSPERPAGE);
+            }
         }
 
         function sliceData(page){
@@ -99,16 +119,21 @@ FilmExchange.controller('FilmExchangeController', [
         };
 
         $scope.search = function(filter){
+            $scope.searching = true;
+            $scope.filmExchanges.length = 0;
+
             filter.id = $stateParams.id;
             if(filter.teamName){
                 filter.mascot = filter.teamName;
             }
-            // console.log(filter);
-            filmExchange.getFilms(filter).then(function(data){
+
+            $scope.query = filmExchange.getFilms(filter).then(function(data){
                 $state.go('film-exchange', {page: $scope.currentPage}, {location: true, notify: false});
                 $scope.filmExchangesTotal = data;
                 $scope.currentPage = 1;
                 $scope.filmExchanges = sliceData($scope.currentPage);
+            }).finally(function(){
+                $scope.searching = false;
             });
         };
 

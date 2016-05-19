@@ -25,14 +25,14 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
                 let start = conference.start;
                 let count = conference.count;
                 let mascot = conference.mascot;
-                let schoolName = conference.schoolName;
+                let teamName = conference.teamName;
 
                 return model.getTeams({
                     id: key,
                     start: start,
                     count: count,
                     mascot: mascot,
-                    schoolName: schoolName
+                    teamName: teamName
                 }).$promise;
             },
             suspendTeam: function(conferenceId, teamId) {
@@ -78,11 +78,11 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
                 // console.log(filter);
                 return model.getFilms(filter).$promise;
             },
-            getAllConferences: function(){
+            getAllConferences: function(filter){
                 let self = this;
                 let model = $injector.get(self.model);
 
-                return model.getAllConferences().$promise;
+                return model.getAllConferences(filter).$promise;
             },
             getCompetitionLevel: function(conference){
                 let self = this;
