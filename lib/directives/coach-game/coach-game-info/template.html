@@ -90,8 +90,8 @@
 
                                                 <td>
                                                     <h5 data-ng-if="game.isRegular()"> {{ teams[session.currentUser.currentRole.teamId].name }} </h5>
-                                                    <input required type="text" id="non-regular-team-name-cta" name="team" placeholder="Team" class="form-control" data-ng-if="game.isNonRegular()" data-ng-model="gameTeams.team.name">
-                                                    <!--<team-typeahead data-customer-teams="false" data-ng-if="game.isNonRegular()" data-team="gameTeams.team"></team-typeahead>-->
+                                                    <!--<input required type="text" id="non-regular-team-name-cta" name="team" placeholder="Team" class="form-control" data-ng-if="game.isNonRegular()" data-ng-model="gameTeams.team.name">-->
+                                                    <team-typeahead data-customer-teams="false" data-ng-if="game.isNonRegular()" data-team="gameTeams.team"></team-typeahead>
                                                 </td>
 
                                                 <td class="score">
@@ -146,8 +146,8 @@
                                             <tr>
 
                                                 <td>
-                                                    <!--<team-typeahead data-customer-teams="false" data-team="gameTeams.opposingTeam"></team-typeahead>-->
-                                                    <input required type="text" id="opposing-team-name-cta" name="opponent" class="form-control" placeholder="Opposing Team" data-ng-model="gameTeams.opposingTeam.name">
+                                                    <team-typeahead data-customer-teams="false" data-team="gameTeams.opposingTeam"></team-typeahead>
+                                                    <!--<input required type="text" id="opposing-team-name-cta" name="opponent" class="form-control" placeholder="Opposing Team" data-ng-model="gameTeams.opposingTeam.name">-->
                                                 </td>
 
                                                 <td class="score">

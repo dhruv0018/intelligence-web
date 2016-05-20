@@ -1,8 +1,26 @@
 .team-typeahead {
+    @input-height: 40px;
+    @typeahead-height: 190px;
     position: relative;
 
+    .dropdown-menu{
+        .active{
+            a {
+                background-color: @dropdown-link-hover-bg;
+                color: @dropdown-link-hover-color;
+                cursor: pointer;
+            }
+        }
+    }
+
+    input{
+        text-align: left !important;
+        height: @input-height;
+    }
+
     ul {
-        max-height: 292px;
+        width: 100%;
+        max-height: @typeahead-height;
         overflow-y: scroll;
     }
 
@@ -16,5 +34,35 @@
 
     .no-results {
         padding : 0;
+    }
+
+    .instructions{
+        position: absolute;
+        top: 100%;
+        left: 0%;
+        width: 100%;
+        height: @input-height;
+        line-height: @input-height;
+        border: 1px solid @gray;
+        color: @gray-light;
+        background-color: white;
+        text-align: left;
+        font-weight: 500;
+        padding: 0px 12px;
+    }
+
+    .new-team{
+        position: absolute;
+        top: @input-height + @typeahead-height;
+        left: 0%;
+        width: 100%;
+        height: @input-height;
+        line-height: @input-height;
+        border: 1px solid @gray;
+        color: @brand-primary;
+        background-color: white;
+        text-align: left;
+        font-weight: 500;
+        padding: 0px 12px;
     }
 }
