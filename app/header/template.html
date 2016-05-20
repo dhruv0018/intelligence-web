@@ -71,10 +71,10 @@
         <!-- Film Exchange admin menu -->
         <menu class="dropdown-menu" ng-if="currentUser.is(FILM_EXCHANGE_ADMIN)">
 
-            <li ui-sref-active="active" id="mobile-menu-filmexchange-admin-cta" ng-if="filmExchanges && filmExchanges.length>0" ng-click="toggleSubMenu($event)"  class="mobile-submenu-toggle">
+            <li ui-sref-active="active" id="mobile-menu-filmexchange-admin-cta" ng-click="toggleSubMenu($event)"  class="mobile-submenu-toggle">
                 <a>Film Exchange</a>
-                <ul class="mobile-submenu" ng-show="subMenu">
-                    <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.name}}</a></li>
+                <ul class="mobile-submenu" ng-show="subMenu" ng-if="filmExchanges && filmExchanges.length>0">
+                    <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.filmExchangeName}}</a></li>
                 </ul>
             </li>
         </menu>
@@ -120,10 +120,10 @@
     <!-- Film Exchange admin menu -->
     <menu class="nav navbar-nav" ng-if="currentUser.is(FILM_EXCHANGE_ADMIN)">
 
-        <li ui-sref-active="active" ng-if="filmExchanges && filmExchanges.length>0" class="header-dropdown">
+        <li ui-sref-active="active"  class="header-dropdown">
             <a class="dropdown-toggle" dropdown-toggle>Film Exchange</a>
-            <ul class="dropdown-menu">
-                <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.name}}</a></li>
+            <ul class="dropdown-menu" ng-if="filmExchanges && filmExchanges.length>0">
+                <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.filmExchangeName}}</a></li>
             </ul>
         </li>
     </menu>

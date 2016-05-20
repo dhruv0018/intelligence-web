@@ -156,9 +156,18 @@ function HeaderController(
         });
     }
 
-    //TODO: If SUPER ADMIN or FILM EXCHANGE ADMIN GET ALL THE FILM EXCHANGE LIST
-    if(currentUser.is(ROLES.SUPER_ADMIN)|| currentUser.is(ROLES.FILM_EXCHANGE_ADMIN)){
+    //If SUPER ADMIN GET ALL THE FILM EXCHANGE LIST
+    if(currentUser.is(ROLES.SUPER_ADMIN)){
         filmExchange.getAllConferences().then(function(filmExchanges){
+            $scope.filmExchanges = angular.forEach(filmExchanges, function(filmExchange){
+                filmExchange.id = filmExchange.sportsAssociation+'+'+filmExchange.conference+'+'+filmExchange.gender+'+'+filmExchange.sportId;
+            });
+        });
+    }
+
+    //If FILM EXCHANGE ADMIN GET ALL THE FILM EXCHANGE LIST THEY BELONG
+    if(currentUser.is(ROLES.FILM_EXCHANGE_ADMIN)){
+        currentUser.getFilmExchangePrivileges(currentRole.id).then(function(filmExchanges){
             $scope.filmExchanges = angular.forEach(filmExchanges, function(filmExchange){
                 filmExchange.id = filmExchange.sportsAssociation+'+'+filmExchange.conference+'+'+filmExchange.gender+'+'+filmExchange.sportId;
             });

@@ -41,10 +41,16 @@ FilmExchange.config([
             },
             resolve:{
                 'Exchange.Data':[
-                    'FilmExchangeFactory','$stateParams',
-                    function(filmExchange, $stateParams){
+                    'FilmExchangeFactory','$stateParams', 'SessionService',
+                    function(filmExchange, $stateParams, session){
                         let exchangeId = $stateParams.id;
-                        return exchangeId ? filmExchange.getFilms({id: exchangeId}) : filmExchange.getAllConferences();
+                        if(exchangeId){
+                            return filmExchange.getFilms({id: exchangeId});
+                        }else{
+                            let currentUser = session.getCurrentUser();
+                            let currentRole = currentUser.getCurrentRole();
+                            return currentUser.getFilmExchangePrivileges(currentRole.id);
+                        }
                     }
                 ],
                 'CompetitionLevels.Data':[
@@ -89,7 +95,7 @@ FilmExchange.controller('FilmExchangeController', [
             titleFilter.gender = $scope.conferenceTitle[2];
             titleFilter.sportId = $scope.conferenceTitle[3];
             filmExchange.getAllConferences(titleFilter).then(function(data){
-                $scope.filmExchangeName = data[0].name;
+                $scope.filmExchangeName = data[0] && data[0].name;
             });
             $scope.filter= {};
             $scope.itemPerPage = ITEMSPERPAGE;
