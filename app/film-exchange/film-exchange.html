@@ -23,7 +23,7 @@
         </form>
     </aside>
     <div class="list" ng-if="!noData" ng-class="{'coachView': currentUser.is(COACH)}">
-        <data-results ng-hide="filmExchanges.length" query="query"></data-results>
+        <data-results ng-hide="filmExchanges.length || isDefaultState" query="query"></data-results>
         <div id="film-exchange-header">
             <div class="title-header">
                 <h3>{{filmExchangeName}}</h3>

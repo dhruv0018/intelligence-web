@@ -76,6 +76,7 @@ FilmExchange.controller('FilmExchangeController', [
     '$rootScope', '$scope', '$state', 'FilmExchangeTeams.Modal', 'ROLES', 'FilmExchangeFactory', '$stateParams', '$filter','SportsFactory', 'CompetitionLevels.Data', 'Exchange.Data',
     function controller($rootScope, $scope, $state, FilmExchangeTeamsModal, ROLES, filmExchange, $stateParams, $filter, sports, CompetitionLevels, exchanges) {
         $scope.noData = false;
+        $scope.isDefaultState = true;
         if(!$stateParams.id){
             //no id specified, go to first item
             if(typeof exchanges[0] !== 'undefined'){
@@ -99,7 +100,6 @@ FilmExchange.controller('FilmExchangeController', [
             });
             $scope.filter= {};
             $scope.itemPerPage = ITEMSPERPAGE;
-
 
             $scope.teamCompetitionLevels = CompetitionLevels;
             $scope.filmExchangesTotal = exchanges;
@@ -127,6 +127,7 @@ FilmExchange.controller('FilmExchangeController', [
         $scope.search = function(filter){
             $scope.searching = true;
             $scope.filmExchanges.length = 0;
+            $scope.isDefaultState = false;
 
             filter.id = $stateParams.id;
             if(filter.teamName){
