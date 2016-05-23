@@ -25,6 +25,10 @@
             padding: 20px 0;
         }
 
+        &.film-exchange-body {
+            padding: 0;
+        }
+
         h3 {
             color: @brand-blue;
             font-size: 16px;
@@ -287,11 +291,6 @@
                 }
             }
 
-            .public-share-option-title {
-                font-weight: 500;
-                font-size: 18px;
-            }
-
             .public-link-box {
                 border: 2px solid @gray-border;
                 border-radius: 4px;
@@ -378,6 +377,42 @@
             .button-row {
                 margin-top: 30px;
             }
+        }
+
+        .sharing-with-film-exchange-container {
+            .share-option-title {
+                padding: 10px 20px;
+                margin: 0;
+            }
+
+            .film-exchange-options-container {
+                border-top: thin solid @gray-border;
+                border-bottom:  thin solid @gray-border;
+                padding: 10px 20px;
+                max-height: 200px;
+                overflow-y: auto;
+
+                .film-exchange-option {
+                    display: flex;
+                    align-items: center;
+                    font-size: 18px;
+
+                    .check-box {
+                        font-size: 20px;
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            .button-row {
+                margin: 0;
+                padding: 20px;
+            }
+        }
+
+        .share-option-title {
+            font-weight: 500;
+            font-size: 18px;
         }
 
         .button-row {

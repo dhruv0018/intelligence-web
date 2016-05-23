@@ -40,7 +40,7 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                     params: {start: '@start', count: '@count', teamName: '@teamName', mascot: '@mascot', datePlayed: '@datePlayed', competitionLevel: '@competitionLevel'},
                     isArray: true
                 },
-                getAllConferences:{
+                getAllConferences: {
                     method: 'GET',
                     url: config.apiV2.uri + 'conference-film-exchanges',
                     params: {sportsAssociation: '@sportsAssociation', conference: '@conference', gender: '@gender', sportId: '@sportId'},
@@ -50,6 +50,10 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                     method: 'GET',
                     url: config.apiV2.uri + 'conference-film-exchanges/:id'+'/competition-levels',
                     isArray: true
+                },
+                shareGameWithFilmExchange: {
+                    method: 'POST',
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/films'
                 }
             }
         );

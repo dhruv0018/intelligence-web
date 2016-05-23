@@ -75,7 +75,7 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
                 if(filter.datePlayed && filter.datePlayed instanceof Date){
                     filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
                 }
-                // console.log(filter);
+
                 return model.getFilms(filter).$promise;
             },
             getAllConferences: function(filter){
@@ -89,6 +89,11 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
                 let model = $injector.get(self.model);
 
                 return model.getCompetitionLevel({id: conference.id}).$promise;
+            },
+            shareGameWithFilmExchange: function(game) {
+                const model = $injector.get(this.model);
+                let filmExchangeId = game.sportsAssociation+'+'+game.conference+'+'+game.gender+'+'+game.sportId;
+                return model.shareGameWithFilmExchange({id: filmExchangeId}, game);
             }
         };
         angular.augment(FilmExchangeFactory, BaseFactory);
