@@ -1,6 +1,6 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
-const ITEMSPERPAGE = 25;
+const ITEMSPERPAGE = 25; //25
 
 /**
  * Film Exchange page module.
@@ -73,8 +73,8 @@ FilmExchange.config([
  * @type {Controller}
  */
 FilmExchange.controller('FilmExchangeController', [
-    '$rootScope', '$scope', '$state', 'FilmExchangeTeams.Modal', 'ROLES', 'FilmExchangeFactory', '$stateParams', '$filter','SportsFactory', 'CompetitionLevels.Data', 'Exchange.Data',
-    function controller($rootScope, $scope, $state, FilmExchangeTeamsModal, ROLES, filmExchange, $stateParams, $filter, sports, CompetitionLevels, exchanges) {
+    '$rootScope', '$scope', '$state', 'FilmExchangeTeams.Modal', 'ROLES', 'FilmExchangeFactory', '$stateParams', '$filter','SportsFactory', 'CompetitionLevels.Data', 'Exchange.Data', '$timeout',
+    function controller($rootScope, $scope, $state, FilmExchangeTeamsModal, ROLES, filmExchange, $stateParams, $filter, sports, CompetitionLevels, exchanges, $timeout) {
         $scope.noData = false;
         $scope.isDefaultState = true;
         if(!$stateParams.id){
