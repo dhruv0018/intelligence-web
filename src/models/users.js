@@ -29,19 +29,19 @@ IntelligenceWebClient.factory('UsersResource', [
                 confirmEmail: { method: 'POST', url: config.api.uri + 'users/email-change/:token', params: {token: '@token'} },
                 getFilmExchangePrivileges: {
                     method: 'GET',
-                    url: config.apiV2.uri + 'roles/:roleId' + '/conference_film_exchange_privileges',
-                    params: {roleId: '@roleId'},
+                    url: config.apiV2.uri + 'users/:userId' + '/conference_film_exchange_privileges',
+                    params: {userId: '@userId'},
                     isArray: true
                 },
                 addFilmExchangePrivilege: {
                     method: 'POST',
-                    url: config.apiV2.uri + 'roles/:roleId' + '/conference_film_exchange_privileges',
-                    params: {roleId: '@roleId'}
+                    url: config.apiV2.uri + 'users/:userId' + '/conference_film_exchange_privileges',
+                    params: {userId: '@userId'}
                 },
                 deleteFilmExchangePrivilege: {
                     method: 'DELETE',
-                    url: config.apiV2.uri + 'roles/:roleId' + '/conference_film_exchange_privileges/:privilegeId',
-                    params: {roleId: '@roleId', privilegeId: '@privilegeId'}
+                    url: config.apiV2.uri + 'users/:userId' + '/conference_film_exchange_privileges/:privilegeId',
+                    params: {userId: '@userId', privilegeId: '@privilegeId'}
                 },
                 typeahead: { method: 'GET', url: config.api.uri + 'service/user-typeahead', isArray: true,
                     //transforms the resource into an array of user objects with extra properties used by the user typeahead

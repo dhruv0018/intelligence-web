@@ -277,13 +277,13 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @method
              * Add film exchange privilege to Film Exchange Admin role
              */
-            addFilmExchangePrivilege: function(roleId, privilege) {
+            addFilmExchangePrivilege: function(userId, privilege) {
                 var self = this;
 
                 var model = $injector.get(self.model);
 
                 return model.addFilmExchangePrivilege(
-                    {roleId: roleId},
+                    {userId: userId},
                     privilege).$promise;
             },
 
@@ -292,14 +292,14 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @method
              * Add film exchange privilege to Film Exchange Admin role
              */
-            deleteFilmExchangePrivilege: function(roleId, privilegeId) {
+            deleteFilmExchangePrivilege: function(userId, privilegeId) {
                 var self = this;
 
                 var model = $injector.get(self.model);
 
                 return model.deleteFilmExchangePrivilege(
                     {
-                        roleId: roleId,
+                        userId: userId,
                         privilegeId: privilegeId
                     }
                 ).$promise;
@@ -311,13 +311,13 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @description get the film exchange privileges on a film exchange admin role
              * @returns {Object}
              */
-            getFilmExchangePrivileges: function(roleId) {
+            getFilmExchangePrivileges: function(userId) {
 
                 let self = this;
                 let model = $injector.get(self.model);
 
                 return model.getFilmExchangePrivileges({
-                    roleId: roleId
+                    userId: userId
                 }).$promise;
             },
 

@@ -49,7 +49,7 @@ FilmExchange.config([
                         }else{
                             let currentUser = session.getCurrentUser();
                             let currentRole = currentUser.getCurrentRole();
-                            return currentUser.getFilmExchangePrivileges(currentRole.id);
+                            return currentUser.getFilmExchangePrivileges(currentUser.id);
                         }
                     }
                 ],
