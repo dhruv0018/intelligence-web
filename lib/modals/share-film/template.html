@@ -199,17 +199,23 @@
 
         <!-- View for sharing with a film exchange -->
         <div class="sharing-with-film-exchange-container" ng-show="withFilmExchange">
-            <p class="share-option-title">Select the film exchanges that you would like to share this game with:</p>
-            <div class="film-exchange-options-container">
+            <p class="share-option-title" ng-hide="filmExchangeShareConfirm">Select the film exchanges that you would like to share this game with:</p>
+            <div class="film-exchange-options-container" ng-hide="filmExchangeShareConfirm">
                 <div class="film-exchange-option" ng-repeat="filmExchange in filmExchanges">
                     <check-box checked="filmExchange.gameIsShared" ng-click="filmExchange.gameIsShared = !filmExchange.gameIsShared"></check-box>
                     <span>{{filmExchange.name}}</span>
                 </div>
             </div>
 
-            <div class="button-row">
+            <div class="button-row" ng-hide="filmExchangeShareConfirm">
                 <button id="share-film-exchange-back-cta" class="btn btn-default" ng-click="withFilmExchange = false"><i class="icon icon-chevron-left"></i> Back</button>
                 <button id="share-film-exchange-done-cta" class="btn btn-primary" ng-click="shareGamesWithFilmExchange()">Share</button>
+            </div>
+
+            <!-- Confirmation that film has been shared with film exchange -->
+            <div class="film-exchange-share-confirmation" ng-show="filmExchangeShareConfirm">
+                <i class="icon icon-ok"></i>
+                <h4>Film shared</h4>
             </div>
         </div>
 
