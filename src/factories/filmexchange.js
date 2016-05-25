@@ -18,22 +18,11 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
 
             storage: 'FilmExchangeStorage',
 
-            getTeams: function(conference) {
+            getTeams: function(filter) {
                 let self = this;
                 let model = $injector.get(self.model);
-                let key = conference.id;
-                let start = conference.start;
-                let count = conference.count;
-                let mascot = conference.mascot;
-                let teamName = conference.teamName;
 
-                return model.getTeams({
-                    id: key,
-                    start: start,
-                    count: count,
-                    mascot: mascot,
-                    teamName: teamName
-                }).$promise;
+                return model.getTeams(filter).$promise;
             },
             suspendTeam: function(conferenceId, teamId) {
                 let self = this;

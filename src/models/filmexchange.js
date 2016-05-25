@@ -16,7 +16,7 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                 getTeams: {
                     method: 'GET',
                     url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/teams',
-                    params: {start: '@start', count: '@count', mascot: '@mascot', schoolName: '@schoolName'},
+                    params: {start: '@start', count: '@count', mascot: '@mascot', schoolName: '@schoolName', isSuspended: '@isSuspended'},
                     isArray: true
                 },
                 postSuspendTeam: {
