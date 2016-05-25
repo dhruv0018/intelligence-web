@@ -1605,6 +1605,21 @@ IntelligenceWebClient.factory('GamesFactory', [
                             tokenService.getAccessToken();
 
                 return url;
+            },
+
+            getFilmExchanges: function(id, success, error) {
+                id = id || this.id;
+
+                var callback = function(filmExchanges) {
+                    return success ? success(filmExchanges) : filmExchanges;
+                };
+
+                error = error || function() {
+                    throw new Error('Could not get film exchanges for this game');
+                };
+
+                const model = $injector.get(this.model);
+                return model.getFilmExchanges({ id: id }, callback, error).$promise;
             }
         };
 

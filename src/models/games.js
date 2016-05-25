@@ -59,6 +59,12 @@ IntelligenceWebClient.factory('GamesResource', [
                 method: 'GET',
                 isArray: true,
                 url: config.api.uri + base + '/:id/arena-events'
+            },
+
+            getFilmExchanges: {
+                method: 'GET',
+                url: config.apiV2.uri + base + '/:id/film-exchanges',
+                isArray: true
             }
         };
 
