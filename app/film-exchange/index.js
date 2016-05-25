@@ -106,7 +106,7 @@ FilmExchange.controller('FilmExchangeController', [
             angular.forEach($scope.teamCompetitionLevels, function(itm){
                 itm.nameUsed= itm.code;
             });
-            $scope.teamCompetitionLevels.unshift({'code': 0, 'nameUsed': 'None'});
+            $scope.teamCompetitionLevels.unshift({'code': 0, 'name': 'None'});
             $scope.filmExchangesTotal = exchanges;
             $scope.todaysDate = Date.now();
 
