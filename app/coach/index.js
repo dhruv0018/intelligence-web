@@ -79,14 +79,23 @@ Coach.service('Coach.Data.Dependencies', [
             },
 
             get teamsAndPlayers() {
-                // TODO: Add deferred promise so that it only returns after players load not just teams
-                var userId = session.currentUser.id;
+                let deferred = $q.defer();
+                let currentId = session.getCurrentUserId();
 
-                teams.load({ relatedUserId: userId }).then(function(){
-                    var team = teams.get(session.currentUser.currentRole.teamId);
+                // Load a fresh copy of the user to get the latest role ID
+                // TODO: Remove this once role IDs are locked down and user cache
+                //       problems with old, potentially changed role IDs are cleared
+                users.load(currentId).then(function(){
+                    let role = users.get(currentId).getCurrentRole();
 
-                    return players.load({ rosterId: team.roster.id });
+                    teams.load({ relatedRoleId: role.id }).then(function(){
+                        let team = teams.get(role.teamId);
+
+                        players.load({ rosterId: team.roster.id }).then(function(){deferred.resolve();});
+                    });
                 });
+
+                return deferred.promise;
             },
 
             get games() {
@@ -99,7 +108,7 @@ Coach.service('Coach.Data.Dependencies', [
                 users.load(currentId).then(function(){
                     let roleId = users.get(currentId).getCurrentRole().id;
 
-                    return games.load({ relatedRoleId: roleId }).then(function(){deferred.resolve();});
+                    games.load({ relatedRoleId: roleId }).then(function(){deferred.resolve();});
                 });
 
                 return deferred.promise;

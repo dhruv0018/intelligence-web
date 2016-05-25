@@ -58,8 +58,8 @@ Header.config([
 
 
 Header.factory('Header.Data.Dependencies', [
-    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory',
-    function(auth, session, sports, leagues, teams) {
+    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory', '$q', 'ROLE_TYPE',
+    function(auth, session, sports, leagues, teams, users, $q, ROLE_TYPE) {
 
         var Data = {
 
@@ -70,9 +70,29 @@ Header.factory('Header.Data.Dependencies', [
 
                 if (auth.isLoggedIn) {
 
-                    var userId = session.currentUser.id;
+                    let currentId = session.getCurrentUserId();
 
-                    return teams.load({ relatedUserId: userId });
+                    // Only use relatedRoleId call for coaches - Athletes need relatedUserId to ensure all teams are loaded
+                    if(session.getCurrentRoleTypeId() == ROLE_TYPE.HEAD_COACH || session.getCurrentRoleTypeId() == ROLE_TYPE.ASSISTANT_COACH){
+
+                        let deferred = $q.defer();
+
+                        // Load a fresh copy of the user to get the latest role ID
+                        // TODO: Remove this once role IDs are locked down and user cache
+                        //       problems with old, potentially changed role IDs are cleared
+                        users.load(currentId).then(function(){
+                            let role = users.get(currentId).getCurrentRole();
+
+                            teams.load({ relatedRoleId: role.id }).then(function(){deferred.resolve();});
+                        });
+
+                        return deferred.promise;
+                    }
+                    else
+                    {
+                        return teams.load({ relatedUserId: currentId });
+                    }
+
                 }
             }
         };
