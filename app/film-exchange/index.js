@@ -89,7 +89,8 @@ FilmExchange.controller('FilmExchangeController', [
         if(!$scope.noData){
             let titleFilter = {};
             $scope.COACH = ROLES.COACH;
-            $scope.currentPage = $stateParams.page||1;
+            $scope.page = {};
+            $scope.page.currentPage = $stateParams.page||1;
             $scope.conferenceTitle = $stateParams.id.split('+');
             titleFilter.sportsAssociation = $scope.conferenceTitle[0];
             titleFilter.conference = $scope.conferenceTitle[1];
@@ -102,6 +103,7 @@ FilmExchange.controller('FilmExchangeController', [
             $scope.itemPerPage = ITEMSPERPAGE;
 
             $scope.teamCompetitionLevels = CompetitionLevels;
+            $scope.teamCompetitionLevels.unshift({'code': 0, 'name': 'None'});
             $scope.filmExchangesTotal = exchanges;
             $scope.todaysDate = Date.now();
 
@@ -115,9 +117,11 @@ FilmExchange.controller('FilmExchangeController', [
         function sliceData(page){
             return $scope.filmExchangesTotal.slice(ITEMSPERPAGE*(page-1), ITEMSPERPAGE*page);
         }
+
         $scope.pageChanged = function(){
-            $state.go('film-exchange', {page: $scope.currentPage}, {location: true, notify: false});
-            $scope.filmExchanges = sliceData($scope.currentPage);
+            console.log('Page changed to: ' + $scope.page.currentPage);
+            $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
+            $scope.filmExchanges = sliceData($scope.page.currentPage);
         };
 
         $scope.openFilmExchangeModal = function() {
@@ -135,12 +139,14 @@ FilmExchange.controller('FilmExchangeController', [
             }
 
             $scope.query = filmExchange.getFilms(filter).then(function(data){
-                $state.go('film-exchange', {page: $scope.currentPage}, {location: true, notify: false});
+                $scope.page.currentPage = 1;
+                $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
                 $scope.filmExchangesTotal = data;
-                $scope.currentPage = 1;
-                $scope.filmExchanges = sliceData($scope.currentPage);
+                $scope.filmExchanges = sliceData($scope.page.currentPage);
             }).finally(function(){
-                $scope.searching = false;
+                $timeout(function(){
+                    $scope.searching = false;
+                },300);
             });
         };
 

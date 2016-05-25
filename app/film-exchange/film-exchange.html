@@ -48,16 +48,16 @@
             <div class="film-exchange-data-no text-center" ng-show="!filmExchanges.length">
                 There are no games in your film exchange yet.
             </div>
-            <div class="film-exchange-data-div" ng-repeat="filmExchange in filmExchanges">
+            <div class="film-exchange-data-div" ng-repeat="filmExchange in filmExchanges" ng-class="{searching: searching}" ng-if="filmExchanges.length">
                 <table>
                     <tr >
                         <td class="team">
                             <p class="teamName">{{filmExchange.homeTeam.name}}<span ng-if="filmExchange.homeTeam.won"> (W)</span></p>
-                            <p class="competitionLevel subText">{{filmExchange.homeTeam.primaryConference.competitionLevelName}}</p>
+                            <p class="competitionLevel subText">{{filmExchange.homeTeam.primaryConference.competitionLevel}}</p>
                         </td>
                         <td class="team">
                             <p class="teamName">{{filmExchange.awayTeam.name}}<span ng-if="!filmExchange.homeTeam.won"> (W)</span></p>
-                            <p class="competitionLevel subText">{{filmExchange.awayTeam.primaryConference.competitionLevelName}}</p>
+                            <p class="competitionLevel subText">{{filmExchange.awayTeam.primaryConference.competitionLevel}}</p>
                         </td>
                         <td class="score">
                             <p>
@@ -82,10 +82,9 @@
                 </table>
             </div>
         </div>
-        <div class="text-center footer" ng-show="filmExchanges.length > itemPerPage">
-            <pagination total-items="filmExchangesTotal.length" ng-model="currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
+        <div class="text-center footer" ng-show="filmExchangesTotal.length > itemPerPage">
+            <pagination total-items="filmExchangesTotal.length" ng-model="page.currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
         </div>
-
     </div>
     <div ng-if="noData" class="noData text-center">
         You currently have no active Film Exchanges to administer.
