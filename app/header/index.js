@@ -148,10 +148,8 @@ function HeaderController(
         $scope.filmExchanges = [];
         teams.getFilmExchanges(currentRole.teamId).then(function(filmExchanges) {
             angular.forEach(filmExchanges, function(filmExchange){
-                if(!filmExchange.isSuspended){
-                    filmExchange.id = filmExchange.sportsAssociation+'+'+filmExchange.conference+'+'+filmExchange.gender+'+'+filmExchange.sportId;
+                filmExchange.id = filmExchange.sportsAssociation+'+'+filmExchange.conference+'+'+filmExchange.gender+'+'+filmExchange.sportId;
                     $scope.filmExchanges.push(filmExchange);
-                }
             });
         });
     }

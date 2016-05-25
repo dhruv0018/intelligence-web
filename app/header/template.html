@@ -110,7 +110,7 @@
         </li>
         <li ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN)" ng-if="filmExchanges && filmExchanges.length>0" class="header-dropdown">
             <a class="dropdown-toggle" dropdown-toggle>Film Exchange</a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu film-exchange-menu">
                 <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.name}}</a></li>
             </ul>
         </li>
@@ -122,7 +122,7 @@
 
         <li ui-sref-active="active"  class="header-dropdown">
             <a class="dropdown-toggle" dropdown-toggle>Film Exchange</a>
-            <ul class="dropdown-menu" ng-if="filmExchanges && filmExchanges.length>0">
+            <ul class="dropdown-menu film-exchange-menu" ng-if="filmExchanges && filmExchanges.length>0">
                 <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.filmExchangeName}}</a></li>
             </ul>
         </li>
@@ -168,7 +168,7 @@
         </li>
         <li ng-if="filmExchanges && filmExchanges.length>0" id="menu-coach-film-exchange-cta" class="header-dropdown" data-ng-class="{active: $state.includes('Coach.FilmExchange')}">
             <a class="dropdown-toggle" dropdown-toggle>Film Exchange</a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu film-exchange-menu">
                 <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'true' }"
                     tooltip="Your team is temporarily suspended from this film exchange. Please contact the administrator about your access."
                     tooltip-placement="right"
