@@ -239,7 +239,7 @@ function AssociationController(
                     return conferenceSport;
                 }
             });
-            $scope.availableConferenceSports = $scope.availableConferenceSports.sort((a,b) => a.name > b.name);
+            $scope.availableConferenceSports = $scope.availableConferenceSports.sort();
         });
     }
 
