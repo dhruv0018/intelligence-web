@@ -77,6 +77,10 @@ FilmHome.controller('Coach.FilmHome.controller', [
         $scope.games = games.getCollection();
         $scope.reels = reels.getCollection();
 
+        //Get film exchanges for current user
+        $scope.filmExchanges = [];
+        teams.getFilmExchanges(teamId).then(response => $scope.filmExchanges = response);
+
         //used for search
         $scope.query = '';
 

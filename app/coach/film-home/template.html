@@ -58,7 +58,11 @@
         <!-- NG-REPEAT FILM DIRECTIVES -->
 
         <div ng-show="filteredFilmsList.length > 0 " class="films-area">
-            <krossover-film ng-repeat="film in filteredFilmsList = (filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate)" film="film"></krossover-film>
+            <krossover-film
+              ng-repeat="film in filteredFilmsList = (filmsList | nameOfTheFilm: query | isNotDeleted | sortByDate)"
+              film="film"
+              film-exchanges="filmExchanges">
+              </krossover-film>
         </div>
     </main>
 
