@@ -103,7 +103,10 @@ FilmExchange.controller('FilmExchangeController', [
             $scope.itemPerPage = ITEMSPERPAGE;
 
             $scope.teamCompetitionLevels = CompetitionLevels;
-            $scope.teamCompetitionLevels.unshift({'code': 0, 'name': 'None'});
+            angular.forEach($scope.teamCompetitionLevels, function(itm){
+                itm.nameUsed= itm.code;
+            });
+            $scope.teamCompetitionLevels.unshift({'code': 0, 'nameUsed': 'None'});
             $scope.filmExchangesTotal = exchanges;
             $scope.todaysDate = Date.now();
 
@@ -119,7 +122,6 @@ FilmExchange.controller('FilmExchangeController', [
         }
 
         $scope.pageChanged = function(){
-            console.log('Page changed to: ' + $scope.page.currentPage);
             $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
             $scope.filmExchanges = sliceData($scope.page.currentPage);
         };
