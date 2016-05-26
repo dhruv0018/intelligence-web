@@ -2,7 +2,7 @@ export default `
 
     <section class="reels-player-area">
 
-        <film-header film="reel" is-editable="canUserEdit" ng-show="$root.viewport.name === VIEWPORTS.DESKTOP.name"></film-header>
+        <film-header film="reel" game-for-reel="game" is-editable="canUserEdit" ng-show="$root.viewport.name === VIEWPORTS.DESKTOP.name"></film-header>
 
         <div class="reel-body">
 

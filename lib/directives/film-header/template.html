@@ -47,6 +47,7 @@
     <wsc-link
         ng-if="isGame && isBasketball && state.current.name === 'Games.Breakdown' && (isUploader || isOnUploaderTeam)"
         game-id="film.id"
+        league-id="currentLeagueId"
         teams="teams"
         is-scouting-game="isScoutingGame"
         feature="WSCLink"
@@ -55,6 +56,7 @@
     <wsc-link
         ng-if="isReel && isBasketball && (isUploader || isCoachOnUploaderTeam)"
         reel-id="film.id"
+        league-id="currentLeagueId"
         teams="teams"
         feature="WSCLink"
     ></wsc-link>
