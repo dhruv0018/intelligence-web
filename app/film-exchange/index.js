@@ -138,6 +138,9 @@ FilmExchange.controller('FilmExchangeController', [
             filter.id = $stateParams.id;
             if(filter.teamName){
                 filter.mascot = filter.teamName;
+            }else{
+                filter.mascot = null;
+                filter.teamName = null;
             }
 
             $scope.query = filmExchange.getFilms(filter).then(function(data){
