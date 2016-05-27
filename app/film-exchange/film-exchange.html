@@ -33,8 +33,8 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="team">Home</th>
                             <th class="team">Away</th>
+                            <th class="team">Home</th>
                             <th class="score">Score</th>
                             <th class="datePlayed">Date Played</th>
                             <th class="dateAdded" ng-if="!currentUser.is(COACH)">Date Added</th>
@@ -52,12 +52,12 @@
                 <table>
                     <tr >
                         <td class="team">
-                            <p class="teamName">{{filmExchange.homeTeam.name}}<span ng-if="filmExchange.homeTeam.won"> (W)</span></p>
-                            <p class="competitionLevel subText">{{filmExchange.homeTeam.primaryConference.competitionLevel}}</p>
-                        </td>
-                        <td class="team">
                             <p class="teamName">{{filmExchange.awayTeam.name}}<span ng-if="!filmExchange.homeTeam.won"> (W)</span></p>
                             <p class="competitionLevel subText">{{filmExchange.awayTeam.primaryConference.competitionLevel}}</p>
+                        </td>
+                        <td class="team">
+                            <p class="teamName">{{filmExchange.homeTeam.name}}<span ng-if="filmExchange.homeTeam.won"> (W)</span></p>
+                            <p class="competitionLevel subText">{{filmExchange.homeTeam.primaryConference.competitionLevel}}</p>
                         </td>
                         <td class="score">
                             <p>
