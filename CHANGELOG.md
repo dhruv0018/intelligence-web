@@ -1,3 +1,8 @@
+# v75.0#
+## Features##
+- Various UI improvements to Self Editor
+- Film Exchange and Conference Features
+
 # v74.0#
 ## Features##
 - Adds ability to create and manage Film Exchanges, INTWEB-159
