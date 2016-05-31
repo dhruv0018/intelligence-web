@@ -148,6 +148,11 @@ FilmExchange.controller('FilmExchangeController', [
             }).finally(function(){
                 $timeout(function(){
                     $scope.searching = false;
+                    //FIX TIMEZONE ISSUE FOR EARLY VERSION OF DATE PICKER: https://github.com/angular-ui/bootstrap/issues/2628
+                    if($scope.filter.datePlayed){
+                        $scope.filter.datePlayed = new Date($scope.filter.datePlayed);
+                        $scope.filter.datePlayed.setMinutes( $scope.filter.datePlayed.getMinutes() + $scope.filter.datePlayed.getTimezoneOffset() );
+                    }
                 },300);
             });
         };
