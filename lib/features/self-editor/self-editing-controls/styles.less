@@ -1,13 +1,35 @@
 self-editing-controls {
-    display: flex;
-    flex-direction: row-reverse;
+    flex: 0 0 80px;
     justify-content: center;
-    align-items: center;
     padding: 0 10%;
-    height: 100px;
+    position: relative;
+    text-align: center;
     width: 100%;
+}
 
-    .tag-button-container {
-        padding-left: 30px;
+.cancel-clip-button {
+    bottom: 5px;
+    color: white;
+    font-size: 12px;
+    left: 0px;
+    margin: auto;
+    top: 60px;
+    right: 0px;
+    position: absolute;
+}
+
+.tag-button-container {
+    margin-top: 10px;
+    text-align: center;
+    button {
+        div {
+            float: left;
+            font-size: 16px;
+            margin: 2px;
+        }
+
+        span {
+            margin: 0px 5px;
+        }
     }
 }
