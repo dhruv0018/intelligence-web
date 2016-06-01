@@ -73,20 +73,46 @@ FilmExchange.config([
  * @type {Controller}
  */
 FilmExchange.controller('FilmExchangeController', [
-    '$rootScope', '$scope', '$state', 'FilmExchangeTeams.Modal', 'ROLES', 'FilmExchangeFactory', '$stateParams', '$filter','SportsFactory', 'CompetitionLevels.Data', 'Exchange.Data', '$timeout',
-    function controller($rootScope, $scope, $state, FilmExchangeTeamsModal, ROLES, filmExchange, $stateParams, $filter, sports, CompetitionLevels, exchanges, $timeout) {
+    '$rootScope',
+    '$scope',
+    '$state',
+    '$stateParams',
+    '$filter',
+    '$timeout',
+    'CompetitionLevels.Data',
+    'Exchange.Data',
+    'FilmExchangeTeams.Modal',
+    'BasicModals',
+    'FilmExchangeFactory',
+    'SportsFactory',
+    'ROLES',
+    function controller(
+        $rootScope,
+        $scope,
+        $state,
+        $stateParams,
+        $filter,
+        $timeout,
+        CompetitionLevels,
+        exchanges,
+        FilmExchangeTeamsModal,
+        basicModals,
+        filmExchangeFactory,
+        sports,
+        ROLES
+    ) {
         $scope.noData = false;
         $scope.isDefaultState = true;
-        if(!$stateParams.id){
+        if (!$stateParams.id) {
             //no id specified, go to first item
-            if(typeof exchanges[0] !== 'undefined'){
+            if (typeof exchanges[0] !== 'undefined') {
                 let exchangeId = exchanges[0].sportsAssociation+'+'+exchanges[0].conference+'+'+exchanges[0].gender+'+'+exchanges[0].sportId;
                 $state.go('film-exchange', {id: exchangeId});
-            }else{
+            } else {
                 $scope.noData = true;
             }
         }
-        if(!$scope.noData){
+        if (!$scope.noData) {
             let titleFilter = {};
             $scope.COACH = ROLES.COACH;
             $scope.page = {};
@@ -96,7 +122,7 @@ FilmExchange.controller('FilmExchangeController', [
             titleFilter.conference = $scope.conferenceTitle[1];
             titleFilter.gender = $scope.conferenceTitle[2];
             titleFilter.sportId = $scope.conferenceTitle[3];
-            filmExchange.getAllConferences(titleFilter).then(function(data){
+            filmExchangeFactory.getAllConferences(titleFilter).then(function(data){
                 $scope.filmExchangeName = data[0] && data[0].name;
             });
             $scope.filter= {};
@@ -106,33 +132,34 @@ FilmExchange.controller('FilmExchangeController', [
             angular.forEach($scope.teamCompetitionLevels, function(itm){
                 itm.nameUsed= itm.code;
             });
-            $scope.teamCompetitionLevels.unshift({'code': 0, 'name': 'None'});
-            $scope.filmExchangesTotal = exchanges;
+            $scope.teamCompetitionLevels.unshift({'code': 0, 'nameUsed': 'None'});
+            $scope.allFilms = exchanges;
+            let removedFilms = [];
             $scope.todaysDate = Date.now();
 
             if($stateParams.page){
-                $scope.filmExchanges = sliceData($stateParams.page);
-            }else{
-                $scope.filmExchanges = $scope.filmExchangesTotal.slice(0, ITEMSPERPAGE);
+                $scope.filteredFilms = sliceData($stateParams.page);
+            } else{
+                $scope.filteredFilms = $scope.allFilms.slice(0, ITEMSPERPAGE);
             }
         }
 
-        function sliceData(page){
-            return $scope.filmExchangesTotal.slice(ITEMSPERPAGE*(page-1), ITEMSPERPAGE*page);
+        function sliceData(page) {
+            return $scope.allFilms.slice(ITEMSPERPAGE*(page-1), ITEMSPERPAGE*page);
         }
 
-        $scope.pageChanged = function(){
+        $scope.pageChanged = function() {
             $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
-            $scope.filmExchanges = sliceData($scope.page.currentPage);
+            $scope.filteredFilms = sliceData($scope.page.currentPage);
         };
 
         $scope.openFilmExchangeModal = function() {
             FilmExchangeTeamsModal.open($stateParams.id);
         };
 
-        $scope.search = function(filter){
+        $scope.search = function(filter) {
             $scope.searching = true;
-            $scope.filmExchanges.length = 0;
+            $scope.filteredFilms.length = 0;
             $scope.isDefaultState = false;
 
             filter.id = $stateParams.id;
@@ -143,13 +170,13 @@ FilmExchange.controller('FilmExchangeController', [
                 filter.teamName = null;
             }
 
-            $scope.query = filmExchange.getFilms(filter).then(function(data){
+            $scope.query = filmExchangeFactory.getFilms(filter).then(function(data) {
                 $scope.page.currentPage = 1;
                 $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
-                $scope.filmExchangesTotal = data;
-                $scope.filmExchanges = sliceData($scope.page.currentPage);
-            }).finally(function(){
-                $timeout(function(){
+                $scope.allFilms = data;
+                $scope.filteredFilms = sliceData($scope.page.currentPage);
+            }).finally(function() {
+                $timeout(function() {
                     $scope.searching = false;
                     //FIX TIMEZONE ISSUE FOR EARLY VERSION OF DATE PICKER: https://github.com/angular-ui/bootstrap/issues/2628
                     if($scope.filter.datePlayed){
@@ -158,6 +185,26 @@ FilmExchange.controller('FilmExchangeController', [
                     }
                 },300);
             });
+        };
+
+        $scope.removeFromFilmExchange = function(film) {
+            let removeFromFilmExchangeModal = basicModals.openForConfirm({
+                title: 'Remove Game',
+                bodyHeader: film.awayTeam.name+' @ '+film.homeTeam.name,
+                bodyText: 'Are you sure you want to remove this game from the film exchange?',
+                bodySubtext: 'Note: this game will remain on your film home',
+                buttonText: 'Remove'
+            });
+
+            removeFromFilmExchangeModal.result.then(() => {
+                filmExchangeFactory.removeGameFromFilmExchange($stateParams.id, film.idFilmExchangeFilm).then(response => {
+                    removedFilms.push(film);
+                });
+            });
+        };
+
+        $scope.isFilmRemoved = function(film) {
+            return removedFilms.some(removedFilm => film.idFilmExchangeFilm === removedFilm.idFilmExchangeFilm);
         };
 
     }

@@ -65,18 +65,15 @@
             padding: 10px 20px;
             background-color: transparent;
             border: none;
-            p{
-                &.subText{
-                    color: #777;
-                    line-height: 1;
-                    font-size: 0.8em;
-                    margin-top: -5px;
-                    margin-bottom: 0px;
-                }
-                &.teamName{
-                    line-height: 1.2;
-                }
+
+            .subText {
+                color: #777;
+                line-height: 1;
+                font-size: 0.8em;
+                margin-bottom: 0px;
+                display: block;
             }
+
             &.actions{
                 color: @brand-primary;
             }
@@ -101,31 +98,49 @@
         thead{
             background-color: @gray-lighter;
         }
-        .film-exchange-data-div{
+
+        .film-exchange-data-container{
             transition: transform linear 0.08s;
             border: 1px solid #dddddd;
             background-color: white;
             width: 98%;
+            max-height: 1000px;
             margin: 0px auto;
             cursor: pointer;
             border-top: none;
-            table{
+            -moz-transition: max-height .7s, border-width .7s;
+            -ms-transition: max-height .7s, border-width .7s;
+            -o-transition: max-height .7s, border-width .7s;
+            -webkit-transition: max-height .7s, border-width .7s;
+            transition: max-height .7s, border-width .7s;
+
+            table {
                 width: 100%;
             }
-            &:hover{
+
+            &:hover {
                 transform: scale(1.005);
                 box-shadow: 0px 0px 10px 1px rgba(0,0,0,.1);
                 z-index: 999;
             }
-            &.searching{
+
+            &.searching {
                 display: none;
             }
+
+            &.removed {
+                max-height: 0px;
+                border-width: 0px;
+                overflow: hidden;
+            }
         }
-        admin-queue-pagination{
+
+        admin-queue-pagination {
             margin-top: 20px;
             border: none;
         }
     }
+
     #film-exchange-header {
         padding: 5px 0px;
         width: 100%;

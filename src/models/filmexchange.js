@@ -15,7 +15,7 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
             }, {
                 getTeams: {
                     method: 'GET',
-                    url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/teams',
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id/teams',
                     params: {start: '@start', count: '@count', mascot: '@mascot', teamName: '@teamName', isSuspended: '@isSuspended'},
                     isArray: true
                 },
@@ -30,13 +30,13 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                 },
                 getSuspendedTeams: {
                     method: 'GET',
-                    url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/teams',
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id/teams',
                     params: {isSuspended: 1},
                     isArray: true
                 },
                 getFilms: {
                     method: 'GET',
-                    url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/films',
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id/films',
                     params: {start: '@start', count: '@count', teamName: '@teamName', mascot: '@mascot', datePlayed: '@datePlayed', competitionLevel: '@competitionLevel'},
                     isArray: true
                 },
@@ -48,12 +48,17 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                 },
                 getCompetitionLevel:{
                     method: 'GET',
-                    url: config.apiV2.uri + 'conference-film-exchanges/:id'+'/competition-levels',
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id/competition-levels',
                     isArray: true
                 },
                 shareGameWithFilmExchange: {
                     method: 'POST',
-                    url: config.apiV2.uri + 'conference-film-exchanges/:id' + '/films'
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id/films'
+                },
+                removeGameFromFilmExchange: {
+                    method: 'DELETE',
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id/films/:idFilmExchangeFilm',
+                    params: {idFilmExchangeFilm: '@idFilmExchangeFilm'}
                 }
             }
         );

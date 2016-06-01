@@ -83,6 +83,10 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
                 const model = $injector.get(this.model);
                 let filmExchangeId = game.sportsAssociation+'+'+game.conference+'+'+game.gender+'+'+game.sportId;
                 return model.shareGameWithFilmExchange({id: filmExchangeId}, game).$promise;
+            },
+            removeGameFromFilmExchange: function(filmExchangeId, idFilmExchangeFilm) {
+                const model = $injector.get(this.model);
+                return model.removeGameFromFilmExchange({id: filmExchangeId, idFilmExchangeFilm}).$promise;
             }
         };
         angular.augment(FilmExchangeFactory, BaseFactory);
