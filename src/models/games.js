@@ -65,6 +65,12 @@ IntelligenceWebClient.factory('GamesResource', [
                 method: 'GET',
                 url: config.apiV2.uri + base + '/:id/film-exchanges',
                 isArray: true
+            },
+
+            copyFromFilmExchange: {
+                method: 'POST',
+                url: config.apiV2.uri + base + '/:id/copy-to-team/:teamId',
+                params: {sportsAssociation: '@sportsAssociation', conference: '@conference', gender: '@gender', sportId: '@sportId'}
             }
         };
 

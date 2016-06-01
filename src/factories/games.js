@@ -1620,6 +1620,18 @@ IntelligenceWebClient.factory('GamesFactory', [
 
                 const model = $injector.get(this.model);
                 return model.getFilmExchanges({ id: id }, callback, error).$promise;
+            },
+
+            copyFromFilmExchange: function(copyInfo, gameId, teamId, filmExchange) {
+                const model = $injector.get(this.model);
+                return model.copyFromFilmExchange({
+                    id: gameId,
+                    teamId,
+                    sportsAssociation: filmExchange.sportsAssociation,
+                    conference: filmExchange.conference,
+                    gender: filmExchange.gender,
+                    sportId: filmExchange.sportId
+                }, copyInfo).$promise;
             }
         };
 

@@ -45,7 +45,8 @@ FilmExchange.config([
                     function(filmExchange, $stateParams, session){
                         let exchangeId = $stateParams.id;
                         if(exchangeId){
-                            return filmExchange.getFilms({id: exchangeId});
+                            let teamId = session.getCurrentTeamId();
+                            return filmExchange.getFilms({id: exchangeId, teamId});
                         }else{
                             let currentUser = session.getCurrentUser();
                             let currentRole = currentUser.getCurrentRole();
@@ -83,6 +84,8 @@ FilmExchange.controller('FilmExchangeController', [
     'Exchange.Data',
     'FilmExchangeTeams.Modal',
     'BasicModals',
+    'SessionService',
+    'GamesFactory',
     'FilmExchangeFactory',
     'SportsFactory',
     'ROLES',
@@ -97,6 +100,8 @@ FilmExchange.controller('FilmExchangeController', [
         exchanges,
         FilmExchangeTeamsModal,
         basicModals,
+        session,
+        games,
         filmExchangeFactory,
         sports,
         ROLES
@@ -211,6 +216,39 @@ FilmExchange.controller('FilmExchangeController', [
 
         $scope.isFilmRemoved = function(film) {
             return removedFilms.some(removedFilm => film.idFilmExchangeFilm === removedFilm.idFilmExchangeFilm);
+        };
+
+        $scope.copyFilm = function(film) {
+            let bodyText = '';
+            if (film.scoutingGame) {
+                bodyText = 'This game will be copied into your film home as a scouting game.';
+            } else {
+                bodyText = 'This game will be copied into your film home as one of your games.';
+            }
+
+            let copyFilmModal = basicModals.openForConfirm({
+                title: 'Copy Game',
+                bodyHeader: film.awayTeam.name+' @ '+film.homeTeam.name,
+                bodyText,
+                bodySubtext: 'Note: The game will be viewable by the coaching staff and all active players. You will be able to submit this game for breakdown from your film home.',
+                buttonText: 'Copy Film'
+            });
+
+            copyFilmModal.result.then(() => {
+                let filmExchangeData = {
+                    sportsAssociation: titleFilter.sportsAssociation,
+                    conference: titleFilter.conference,
+                    gender: titleFilter.gender,
+                    sportId: titleFilter.sportId
+                };
+                // TODO: copyWithoutTeams will eventually not have to be hardcoded
+                let copyInfo = {
+                    copiedFromTeamId: film.addedByTeam,
+                    copyWithoutTeams: false
+                };
+                let teamId = session.getCurrentTeamId();
+                games.copyFromFilmExchange(copyInfo, film.id, teamId, filmExchangeData);
+            });
         };
 
     }

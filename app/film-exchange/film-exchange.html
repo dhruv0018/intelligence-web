@@ -83,7 +83,8 @@
                         </td>
                         <td class="actions" ng-if="currentUser.is(COACH)">
                             <span
-                                ng-if="currentUser.getCurrentRole().teamId != film.addedByTeam.id">
+                                ng-if="currentUser.getCurrentRole().teamId != film.addedByTeam.id"
+                                ng-click="copyFilm(film)">
                                 <i class="icon icon-copy"></i> Copy
                             </span>
                             <span

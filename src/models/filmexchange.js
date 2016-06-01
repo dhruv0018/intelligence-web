@@ -37,7 +37,7 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                 getFilms: {
                     method: 'GET',
                     url: config.apiV2.uri + 'conference-film-exchanges/:id/films',
-                    params: {start: '@start', count: '@count', teamName: '@teamName', mascot: '@mascot', datePlayed: '@datePlayed', competitionLevel: '@competitionLevel'},
+                    params: {start: '@start', count: '@count', teamName: '@teamName', mascot: '@mascot', datePlayed: '@datePlayed', competitionLevel: '@competitionLevel', teamId: '@teamId'},
                     isArray: true
                 },
                 getAllConferences: {

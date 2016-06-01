@@ -4,9 +4,9 @@
 		<i class="icon icon-remove" ng-click="$dismiss()"></i>
 	</header>
 	<div class="modal-body">
-		<h3 ng-if="bodyHeader.length">{{bodyHeader}}</h3>
+		<h3 class="body-header" ng-if="bodyHeader.length">{{bodyHeader}}</h3>
 		<p>{{bodyText}}</p>
-		<p ng-if="bodySubtext.length">{{bodySubtext}}</p>
+		<span class="body-subtext" ng-if="bodySubtext.length">{{bodySubtext}}</span>
 		<textarea class="text-modal-input" ng-show="type === 'text'" ng-model="textValue"></textarea>
 		<div class="button-row">
 			<button class="btn btn-sm btn-primary" ng-show="type === 'text'" ng-click="ok(textValue)">{{buttonText}}</button>
