@@ -1,0 +1,40 @@
+<div class="canonical-team-typeahead" ng-class="{notAllowed: notAllowed}">
+    <input class="form-control"
+           ng-required="required"
+           type="text"
+           id = "{{elementId}}"
+           ng-focus="onFocus($event)"
+           ng-blur="searchFocus=false"
+           typeahead-no-results="noResults"
+           placeholder="Opponent"
+           ng-keydown="keyPressTracker($event, team)"
+           ng-model="team"
+           trigger-typeahead
+           typeahead-wait-ms="200"
+           typeahead-loading="loading"
+           typeahead-min-length="3"
+           typeahead-template-url="canonical-team-typeahead-dropdown.html"
+           typeahead-on-select="getId($item)"
+           typeahead="cTeam as cTeam.name for cTeam in findTeams() | filter: {result: $viewValue}">
+    <krossover-spinner ng-if="loading" size="25px"></krossover-spinner>
+    <div ng-show="showSticky" class="sticky-bottom" ng-click="addTeam()" ng-if="!team.displaySchool&&team" style="top: {{customTop}}px">
+        <a href="javascript:;"><i class="icon icon-plus"></i> Add <span class="newName">{{team}}</span> as a new team</a>
+    </div>
+    <div ng-show="searchFocus && team.length < 3" class="instructions">Enter School or Team (please add 3 characters minimum)</div>
+    <div ng-if="entered" class="enteredResult btn" ng-click="changeTeam()">
+        <div class="enteredWrapper">
+            <div class="enteredName">
+                <b ng-if="selectedTeam.displaySchool">{{selectedTeam.displaySchool.name}}</b>
+                <b ng-if="!selectedTeam.displaySchool">{{selectedTeam.name}}</b>
+            </div>
+            <div ng-if="selectedTeam.displaySchool" class="enteredDetail">
+                {{selectedTeam.name}} - {{selectedTeam.displaySchool.address.city}}, {{selectedTeam.displaySchool.address.regionCode}}
+            </div>
+            <div ng-if="!selectedTeam.displaySchool" class="enteredDetail">
+                Manually entered
+            </div>
+        </div>
+        <i class="icon icon-chevron-down"></i>
+    </div>
+    <div ng-if="!selectedTeam.displaySchool && team.length>3" class="alertMessage">Double check this entry is not listed in our available teams.</div>
+</div>

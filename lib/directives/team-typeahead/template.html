@@ -3,10 +3,8 @@
            ng-required="required"
            type="text"
            id = "{{elementId}}"
-           ng-focus="searchFocus=true"
-           ng-blur="searchFocus=false"
            typeahead-no-results="noResults"
-           placeholder="Opponent" ng-model="team"
+           placeholder="Team (please enter minimum of 3 letters)" ng-model="team"
            typeahead-wait-ms="200"
            typeahead-loading="loading"
            typeahead-min-length="3"
@@ -15,5 +13,5 @@
            typeahead-on-select="getId($item)"
            typeahead="team as team.name for team in findTeams() | filter: {result: $viewValue}">
     <krossover-spinner ng-if="loading" size="25px"></krossover-spinner>
-    <div ng-show="searchFocus && team.length < 3" class="instructions">Enter School or Team (please add 3 characters minimum)</div>
+    <div ng-show="team && team.length && team.length >= 3 && results === 0" class="no-results">No Results Found</div>
 </div>

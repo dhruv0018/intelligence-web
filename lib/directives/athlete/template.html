@@ -17,13 +17,13 @@
             <span class="athlete-last-access text-transform-none" ng-if="!athlete.userId">No email or account available</span>
         </div>
     </div>
-    <form name="athleteForm" ng-if="editable && !athlete.isUnknown">
+    <form name="athleteForm" ng-if="(editable && !athlete.isUnknown)" ng-submit="updateAthleteInformation()" ng-hide="!isHomeTeam && !rosterEntry.playerInfo.isActive">
         <table ng-class="{'deselected': !rosterEntry.playerInfo.isActive,
                                'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}"
                class="table">
             <tr>
 
-                <td class="athlete-column" ng-if="team.isCustomerTeam">
+                <td class="athlete-column" ng-if="team.isCustomerTeam && isHomeTeam">
 
                     <div ng-if="users[athlete.userId].imageUrl" class="profile-image-container">
                         <img ng-src="{{users[athlete.userId].imageUrl}}" alt="Avatar">
@@ -51,18 +51,16 @@
                 </td>
 
                 <td class="athlete-column">
-
                     <input
                      id="{{idHook}}-first-name-cta"
                      ng-change="updateAthleteInformation()"
                      ng-model-options="{updateOn: 'blur'}"
-                     ng-if="!team.isCustomerTeam"
+                     ng-if="canAdd()"
                      class="name"
                      placeholder="First Name"
                      ng-model="athlete.firstName"
                      ng-disabled="!rosterEntry.playerInfo.isActive || rosterEntry.playerInfo.jerseyNumber === ''">
-
-                    <span ng-if="team.isCustomerTeam"> {{athlete.firstName}}</span>
+                    <span ng-if="!canAdd()"> {{athlete.firstName}}</span>
 
                 </td>
 
@@ -72,13 +70,13 @@
                      id="{{idHook}}-last-name-cta"
                      ng-change="updateAthleteInformation()"
                      ng-model-options="{updateOn: 'blur'}"
-                     ng-if="!team.isCustomerTeam"
+                     ng-if="canAdd()"
                      class="name"
                      placeholder="Last Name"
                      ng-model="athlete.lastName"
                      ng-disabled="!rosterEntry.playerInfo.isActive || rosterEntry.playerInfo.jerseyNumber === ''">
 
-                    <span ng-if="team.isCustomerTeam"> {{athlete.lastName}} </span>
+                    <span ng-if="!canAdd()"> {{athlete.lastName}} </span>
 
                 </td>
 
@@ -91,11 +89,13 @@
                      data-player="athlete"
                      data-positionset="positionset"></data-positions-dropdown>
 
+                    <button class="fix-enter-key"></button>
+
                     <button
                      id="athlete-position-remove-cta"
                      ng-if="!isUserTeam"
                      class="remove btn btn-blank pull-right"
-                     ng-click="toggle(rosterEntry)">
+                     ng-click="toggle(rosterEntry); $event.stopPropagation();">
 
                         <i class="icon icon-remove"></i>
 
@@ -103,11 +103,12 @@
 
                 </td>
 
-                <td class="athlete-column" ng-if="team.isCustomerTeam" ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
+                <td class="athlete-column" ng-if="team.isCustomerTeam && isHomeTeam" ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
                     <i id="{{idHook}}-toggle-activation-off-cta" class="icon icon-check-square-o" ng-show="!rosterEntry.playerInfo.isActive"></i>
                     <i id="{{idHook}}-toggle-activation-on-cta" class="icon icon-check-empty" ng-show="rosterEntry.playerInfo.isActive"></i>
                 </td>
             </tr>
         </table>
+
     </form>
 </div>

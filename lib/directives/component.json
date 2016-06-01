@@ -49,6 +49,7 @@
         "open-modal-alert",
         "dynamic-table",
         "team-typeahead",
+        "canonical-team-typeahead",
         "user-typeahead",
         "role-typeahead",
         "verify-password",

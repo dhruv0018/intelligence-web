@@ -6,18 +6,17 @@
 
                 <thead>
                     <tr>
-                        <th ng-if="team.isCustomerTeam">Picture</th>
+                        <th ng-if="team.isCustomerTeam && isHomeTeam()">Picture</th>
                         <th>Jersey Number (* required)</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th ng-if="positionset.positions && positionset.positions.length > 0">Position</th>
-                        <th ng-if="team.isCustomerTeam">Did Not Play</th>
+                        <th ng-if="team.isCustomerTeam && isHomeTeam()">Did Not Play</th>
                     </tr>
                 </thead>
             </table>
 
-
-            <krossover-athlete  ng-repeat="rosterEntry in playerRosterEntries| activeStatus: filtering | filter: isUnknown track by $index"
+            <krossover-athlete  ng-repeat="rosterEntry in playerRosterEntries | filter: isUnknown"
                                 athlete="rosterEntry.player"
                                 roster-state="rosterState"
                                 roster="game.rosters[team.id]"
@@ -27,10 +26,9 @@
                                 game="game"
                                 team="team"
                                 editable="editable"></krossover-athlete>
-
             <div class="col-xs-2 controls">
                 <button
-                    ng-hide="team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
+                    ng-hide="(isHomeTeam() && team.isCustomerTeam) || game.isDelivered() || game.isBeingBrokenDown()"
                     class="add-player btn btn-default btn-block"
                     id="game-roster-add-new-player-cta"
                     ng-click="addNewPlayer()"
@@ -40,7 +38,7 @@
                 </button>
 
                 <a class="excel-upload"
-                   ng-hide="!game.rosters[team.id].id || team.isCustomerTeam || game.isDelivered() || game.isBeingBrokenDown()"
+                   ng-hide="(isHomeTeam() && team.isCustomerTeam) || game.isDelivered() || game.isBeingBrokenDown()"
                    href
                    id="upload-game-roster-excel-cta"
                    open-modal="ExcelUpload.Modal"

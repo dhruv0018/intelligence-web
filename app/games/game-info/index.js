@@ -42,7 +42,7 @@ GamesInfo.config([
 
                             Data.gamePlayerLists = {};
                             //Player lists
-                            if (Data.game.teamId && Data.game.rosters && Data.game.rosters[Data.game.teamId].id) {
+                            if (Data.game.teamId && Data.game.rosters && Data.game.rosters[Data.game.teamId] && Data.game.rosters[Data.game.teamId] && Data.game.rosters[Data.game.teamId].id) {
                                 Data.teamPlayerList = players.query({
                                     rosterId: Data.game.rosters[Data.game.teamId].id
                                 }).then(function(playerList) {
@@ -51,7 +51,7 @@ GamesInfo.config([
                                 });
                             }
 
-                            if (Data.game.opposingTeamId && Data.game.rosters && Data.game.rosters[Data.game.opposingTeamId].id) {
+                            if (Data.game.opposingTeamId && Data.game.rosters && Data.game.rosters[Data.game.opposingTeamId] && Data.game.rosters[Data.game.opposingTeamId].id) {
                                 Data.opposingTeamPlayerList = players.query({
                                     rosterId: Data.game.rosters[Data.game.opposingTeamId].id
                                 }).then(function(playerList) {
@@ -115,8 +115,8 @@ function GamesInfoController (
     $scope.remainingBreakdowns = Data.remainingBreakdowns;
 
     //Player List
-    $scope.teamPlayerList = ($scope.game.rosters && $scope.game.teamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.teamId].id }) : [];
-    $scope.opposingPlayerList = ($scope.game.rosters && $scope.game.opposingTeamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.opposingTeamId].id }) : [];
+    // $scope.teamPlayerList = ($scope.game.rosters && $scope.game.teamId) ? players.getList({rosterId: $scope.game.rosters[$scope.game.teamId].id }) : [];
+    // $scope.opposingPlayerList = ($scope.game.rosters && $scope.game.opposingTeamId && $scope.game.rosters[$scope.game.opposingTeamId]) ? players.getList({rosterId: $scope.game.rosters[$scope.game.opposingTeamId].id }) : [];
 }
 
 export default GamesInfo;

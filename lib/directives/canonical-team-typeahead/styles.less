@@ -1,0 +1,155 @@
+.canonical-team-typeahead {
+    @input-height: 40px;
+    @typeahead-height: 190px;
+    position: relative;
+
+    &.notAllowed{
+        cursor: none;
+        .icon.icon-chevron-down{
+            opacity: .5;
+        }
+    }
+    .alertMessage{
+        width: 100%;
+        text-align: left;
+        color: #ef4924;
+        font-size: 0.8em;
+        margin-top: -10px;
+        position: absolute;
+    }
+    .enteredResult.btn{
+        padding: 5px 25px 5px 5px;
+        text-align: left;
+        border: 1px solid @gray-lighter;
+        width: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: -6px;
+        left: 0;
+        background-color: white;
+        .enteredWrapper{
+            display: inline-block;
+            width: 90%;
+            vertical-align: middle;
+            &>div{
+                line-height: 20px;
+                font-size: 16px;
+                font-weight: normal;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+        .enteredName{
+            text-transform: capitalize;
+            b{
+                font-size: 18px;
+                font-weight: 500;
+            }
+        }
+        .icon{
+            float: right;
+            margin-top: 13px;
+            border-width: 8px;
+            vertical-align: middle;
+        }
+    }
+
+    .dropdown-menu{
+        padding-bottom: 5px;
+        .active{
+            a {
+                cursor: pointer;
+            }
+            & > a, & > a:hover, & >a:focus{
+                color: @dropdown-link-hover-color;
+                background-color: @dropdown-link-hover-bg;
+            }
+        }
+    }
+
+    input{
+        text-align: left !important;
+        height: @input-height;
+    }
+
+    ul {
+        width: 100%;
+        max-height: @typeahead-height;
+        overflow-y: scroll;
+    }
+
+    .spinner {
+        position: absolute;
+        top: 7px;
+        right: 7px;
+        margin: 0;
+        color: @brand-secondary;
+    }
+
+    .no-results {
+        padding : 0;
+    }
+
+    .instructions{
+        position: absolute;
+        left: 0%;
+        width: 100%;
+        height: @input-height;
+        line-height: @input-height;
+        border: 1px solid rgba(0,0,0,.15);
+        color: @gray-light;
+        background-color: white;
+        text-align: left;
+        font-weight: 500;
+        padding: 0px 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .new-team{
+        position: absolute;
+        top: @input-height + @typeahead-height;
+        left: 0%;
+        width: 100%;
+        height: @input-height;
+        line-height: @input-height;
+        border: 1px solid @gray;
+        color: @brand-primary;
+        background-color: white;
+        text-align: left;
+        font-weight: 500;
+        padding: 0px 12px;
+    }
+    .sticky-bottom{
+        transition: top linear 0s;
+        position: absolute;
+        z-index: 99999;
+        width: 100%;
+        top: 190px;
+        background-color: white;
+        height: 40px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        font-weight: bold;
+        line-height: 30px;
+        text-align: left;
+        padding: 3px 20px;
+        border-top: 1px solid black;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        &:hover{
+            background-color: #f1f6fc;
+        }
+        a{
+            color: #737474;
+            span{
+                font-weight: normal;
+            }
+            &:hover{
+                color: #ef4924;
+            }
+        }
+    }
+}

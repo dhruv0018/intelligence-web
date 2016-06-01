@@ -1,6 +1,5 @@
-<a ng-if="match.model.name">
-    <div><b>{{match.model.name}}</b></div>
-    <div>Hackettstown High School - Hackettstown, NJ</div>
+<a>
+    {{match.model.name}}
+    <span data-ng-if="match.model.displaySchool">, {{match.model.displaySchool.name}}</span>
+    <span data-ng-if="match.model.displayLeague">, {{match.model.displayLeague.name}}</span>
 </a>
-
-<a style="border-top: 1px solid black" ng-if="!match.model.name"><div style="height:50px; line-height: 50px; font-weight: bold">{{match.model.text}}</div></a>

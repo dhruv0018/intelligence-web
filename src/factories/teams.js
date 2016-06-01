@@ -105,6 +105,16 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 //     team.subscriptions = new List();
                 // }
+                //This is count for the added columns to the table on June, 2016
+                if(!team.type){
+                    team.type = 'Scholastic';
+                }
+                if(!team.ageLevel){
+                    team.ageLevel = 'Collegiate';
+                }
+                if(!team.amateurPro){
+                    team.amateurPro = 'Amateur';
+                }
 
                 angular.extend(team, self);
 
@@ -503,6 +513,22 @@ IntelligenceWebClient.factory('TeamsFactory', [
                 id = id || self.id;
 
                 return model.deleteConference({id: id, conferenceId: conferenceId}).$promise;
+
+            },
+            /**
+             * @class Team
+             * @method getOpponentTeam
+             *
+             * Gets all the opponent teams based on teamId and opponentTeamName search
+             */
+            getOpponentTeam: function(filter){
+                let self = this;
+                let model = $injector.get(self.model);
+                if(!filter.conferenceTeamId){
+                    throw new Error('Could not get opponent team without teamId');
+                }
+
+                return model.getOpponentTeam(filter).$promise;
 
             }
         };

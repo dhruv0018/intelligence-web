@@ -23,6 +23,12 @@ IntelligenceWebClient.factory('TeamsResource', [
 
             create: { method: 'POST' },
             update: { method: 'PUT' },
+            getOpponentTeam:{
+                method: 'GET',
+                url: config.apiV2.uri + base,
+                params: {conferenceTeamId: '@conferenceTeamId', opponentTeamName: '@opponentTeamName'},
+                isArray: true
+            },
             getFilmExchanges: {
                 method: 'GET',
                 url: config.apiV2.uri + base + '/:id' + '/film-exchanges',
