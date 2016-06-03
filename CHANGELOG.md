@@ -1,3 +1,9 @@
+# v76.0#
+## Features##
+- Improves film home performance (Teams)
+- Imrpove show/hide buttons on Self Editor
+- Film Exchange improvements
+
 # v75.0#
 ## Features##
 - Various UI improvements to Self Editor
