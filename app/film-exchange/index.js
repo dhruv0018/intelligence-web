@@ -157,7 +157,8 @@ FilmExchange.controller('FilmExchangeController', [
             FilmExchangeTeamsModal.open($stateParams.id);
         };
 
-        $scope.search = function(filter) {
+        $scope.searchFilms = searchFilms;
+        function searchFilms(filter) {
             $scope.searching = true;
             $scope.filteredFilms.length = 0;
             $scope.isDefaultState = false;
@@ -185,6 +186,11 @@ FilmExchange.controller('FilmExchangeController', [
                     }
                 },300);
             });
+        }
+
+        $scope.clearSearchFilter = function() {
+            $scope.filter = {};
+            searchFilms($scope.filter);
         };
 
         $scope.removeFromFilmExchange = function(film) {

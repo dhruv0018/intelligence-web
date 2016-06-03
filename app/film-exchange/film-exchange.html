@@ -1,8 +1,11 @@
 <section class="film-exchange">
     <aside class="sidebar" ng-if="!noData">
 
-        <h3>Search for film:</h3>
-        <form role="form" ng-submit="search(filter)">
+        <div class="search-header">
+            <h3>Search for film:</h3>
+            <a href ng-click="clearSearchFilter()">Reset</a>
+        </div>
+        <form role="form" ng-submit="searchFilms(filter)">
 
             <div class="form-group">
                 <input class="form-control" name="teamName" placeholder="School or Team Name" ng-model="filter.teamName" type="text">
