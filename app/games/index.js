@@ -194,7 +194,7 @@ GamesController.$inject = [
     'SPORT_IDS',
     'ROLES',
     'ROLE_TYPE',
-    'SELF_EDITOR_TEAM_ID_WHITELIST'
+    'GameStatesService'
 ];
 
 function GamesController(
@@ -215,7 +215,7 @@ function GamesController(
     SPORT_IDS,
     ROLES,
     ROLE_TYPE,
-    SELF_EDITOR_TEAM_ID_WHITELIST
+    gameStates
 ) {
 
     let gameId = Number($stateParams.id);
@@ -236,7 +236,6 @@ function GamesController(
     let isMobile = $rootScope.DEVICE === DEVICE.MOBILE;
     let isDelivered = game.isDelivered();
     let isTeamUploadersTeam = false;
-    let currentTeamIsOnSelfEditorWhitelist = SELF_EDITOR_TEAM_ID_WHITELIST.some(whitelistId => team.id === whitelistId);
 
     if (isCoach) {
         isTeamUploadersTeam = game.isTeamUploadersTeam(session.getCurrentTeamId());
@@ -290,65 +289,7 @@ function GamesController(
     }
 
     /* Define view selector states */
-
-    $scope.gameStates = [];
-
-    // Enable features for the game for coaches that are on the uploaders team
-    if (isTeamUploadersTeam && isCoach) {
-
-        // game information
-        $scope.gameStates.push({name: 'Games.Info'});
-    }
-
-    // statistics related states
-    if (isTeamUploadersTeam && isDelivered && sport.hasStatistics) {
-
-        $scope.gameStates.push({name: 'Games.Stats'});
-    }
-
-    if (isTeamUploadersTeam && isDelivered) {
-        // sport specific states
-        switch (sport.id) {
-            case SPORTS.BASKETBALL.id:
-                if (features.isEnabled('ArenaChart')) {
-                    $scope.gameStates.push({name: 'Games.ArenaChart'});
-                }
-                break;
-            case SPORTS.LACROSSE.id:
-                if (features.isEnabled('ArenaChart')) {
-                    $scope.gameStates.push({name: 'Games.ArenaChart'});
-                }
-                break;
-            case SPORTS.FOOTBALL.id:
-                if (isCoach) {
-                    $scope.gameStates.push({name: 'Games.Formations'}, {name: 'Games.DownAndDistance'});
-                }
-                break;
-        }
-    }
-
-    //video related states
-    if (transcodeCompleted) {
-
-        $scope.gameStates.unshift({name: 'Games.RawFilm'});
-
-        if (isDelivered) {
-
-            $scope.gameStates.unshift({name: 'Games.Breakdown'});
-
-            //handles public sharing
-            if (!breakdownShared && !isTeamUploadersTeam) {
-
-                $scope.gameStates.shift();
-            }
-        }
-    }
-
-    if (isTeamUploadersTeam && isCoach && features.isEnabled('SelfEditor') && currentTeamIsOnSelfEditorWhitelist) {
-
-        // self editor
-        $scope.gameStates.push({name: 'Games.SelfEditor'});
-    }
+    $scope.gameStates = gameStates.get(game);
 
 }
 

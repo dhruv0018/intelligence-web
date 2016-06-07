@@ -43,6 +43,16 @@
             <i class="icon icon-share"></i>Share
         </a>
 
+        <div class="dropdown" dropdown is-open="status.isopen" ng-if="gameStatesOptions.length">
+            <a class="dropdown-toggle" dropdown-toggle>
+                <i class="icon icon-ellipsis-h"></i>
+            </a>
+            <ul class="dropdown-menu pull-right">
+                <li ng-repeat="state in gameStatesOptions">
+                    <a ng-click="selectState(state)">{{STATE_NAMES[state.name].display}}</a>
+                </li>
+            </ul>
+        </div>
     </div>
 
 </div>

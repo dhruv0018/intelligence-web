@@ -69,6 +69,7 @@ require('./services/games-resolution/index');
 require('./services/admin-games');
 require('./services/indexer-games');
 require('./services/plan');
+require('./services/game-states');
 
 require('./constants/users');
 require('./constants/games');
