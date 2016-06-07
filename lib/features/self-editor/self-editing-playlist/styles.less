@@ -152,4 +152,25 @@ self-editing-playlist {
         justify-content: center;
     }
 
+    .add-tag-success {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: @state-success-bg;
+        border: thin solid @state-success-border;
+        color: @state-success-text;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 200px;
+        text-align: center;
+        animation: fadeout 2s;
+        -moz-animation: fadeout 2s;
+        -webkit-animation: fadeout 2s;
+        opacity: 0;
+
+        .icon-ok {
+            margin-right: 10px;
+        }
+    }
+
 }
