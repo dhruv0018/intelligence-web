@@ -1,3 +1,8 @@
+# v76.1#
+## Fixes##
+- Fixes minor linter issue
+- Updates background-color in self-editor
+
 # v76.0#
 ## Features##
 - Improves film home performance (Teams)
