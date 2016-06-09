@@ -82,16 +82,28 @@
                             <span class="addedBy subText" ng-if="!currentUser.is(COACH)">added by <a href="mailto:{{film.addedByUser.email}}">{{film.addedByUser.firstName}} {{film.addedByUser.lastName}}</a></span>
                         </td>
                         <td class="actions" ng-if="currentUser.is(COACH)">
-                            <span
-                                ng-if="currentUser.getCurrentRole().teamId != film.addedByTeam.id"
-                                ng-click="copyFilm(film)">
-                                <i class="icon icon-copy"></i> Copy
+                            <span ng-if="currentUser.getCurrentRole().teamId != film.addedByTeam.id">
+                                <a
+                                    href
+                                    ng-if="!film.isCopying && !film.copiedGame && !film.copyConfirm"
+                                    ng-click="copyFilm(film)">
+                                    <i class="icon icon-copy"></i> Copy
+                                </a>
+                                <krossover-spinner
+                                    ng-if="film.isCopying && !film.copiedGame && !film.copyConfirm"
+                                    size="'15px'">
+                                </krossover-spinner>
+                                <span ng-if="film.copyConfirm" class="copy-confirm">
+                                    <i class="icon icon-ok"></i> Copied
+                                </span>
+                                <span ng-if="!film.isCopying && film.copiedGame && !film.copyConfirm">Copied</span>
                             </span>
-                            <span
+                            <a
+                                href
                                 ng-if="currentUser.getCurrentRole().teamId === film.addedByTeam.id"
                                 ng-click="removeFromFilmExchange(film)">
                                 <i class="icon icon-trash-o"></i> Remove
-                            </span>
+                            </a>
                         </td>
                     </tr>
                 </table>

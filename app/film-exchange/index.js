@@ -231,10 +231,12 @@ FilmExchange.controller('FilmExchangeController', [
                 bodyHeader: film.awayTeam.name+' @ '+film.homeTeam.name,
                 bodyText,
                 bodySubtext: 'Note: The game will be viewable by the coaching staff and all active players. You will be able to submit this game for breakdown from your film home.',
-                buttonText: 'Copy Film'
+                buttonText: 'Copy Film',
+                successText: 'Game copied to your film home'
             });
 
             copyFilmModal.result.then(() => {
+                film.isCopying = true;
                 let filmExchangeData = {
                     sportsAssociation: titleFilter.sportsAssociation,
                     conference: titleFilter.conference,
@@ -247,7 +249,10 @@ FilmExchange.controller('FilmExchangeController', [
                     copyWithoutTeams: false
                 };
                 let teamId = session.getCurrentTeamId();
-                games.copyFromFilmExchange(copyInfo, film.id, teamId, filmExchangeData);
+                games.copyFromFilmExchange(copyInfo, film.id, teamId, filmExchangeData).then(response => {
+                    film.isCopying = false;
+                    film.copyConfirm = true;
+                });
             });
         };
 
