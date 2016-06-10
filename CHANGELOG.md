@@ -1,3 +1,8 @@
+# v77.0#
+## Features##
+- Remove a game from a film exchange
+- Self editor improvements
+
 # v76.2#
 ## Fixes##
 - Fix shot chart x-y coordinates for Chrome v51
