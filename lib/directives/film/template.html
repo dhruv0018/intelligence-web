@@ -32,7 +32,8 @@
         </div>
 
         <div class="user-info" data-ng-show="film.isCopied() && !isCopiedFromTeam">
-            Produced by Krossover
+            <span ng-hide="film.sportsAssociationConferenceFilmExchange">Produced by Krossover</span>
+            <span ng-if="film.sportsAssociationConferenceFilmExchange">Copied from {{film.sportsAssociationConferenceFilmExchange.name}}</span>
         </div>
 
         <a ng-attr-id="{{filmShareElemId}}"
