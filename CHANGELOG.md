@@ -1,3 +1,7 @@
+# v76.2#
+## Fixes##
+- Fix shot chart x-y coordinates for Chrome v51
+
 # v76.1#
 ## Fixes##
 - Fixes minor linter issue
