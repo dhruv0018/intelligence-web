@@ -43,7 +43,8 @@
 
     "SelfEditor": {
         "Head Coach": true,
-        "Assistant Coach": true
+        "Assistant Coach": true,
+        "Athlete": true
     },
 
     "SelfEditorReels": {

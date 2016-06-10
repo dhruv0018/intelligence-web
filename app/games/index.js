@@ -110,6 +110,8 @@ Games.config([
                     'TagsetsFactory',
                     'SessionService',
                     'AuthenticationService',
+                    'ROLES',
+                    'ROLE_TYPE',
                     function(
                         $q,
                         $stateParams,
@@ -122,7 +124,9 @@ Games.config([
                         customtags,
                         tagsets,
                         session,
-                        auth
+                        auth,
+                        ROLES,
+                        ROLE_TYPE
                     ) {
 
                         let gameId = Number($stateParams.id);
@@ -142,11 +146,20 @@ Games.config([
                                 tagsets: tagsets.load()
                             };
 
-                            //Load custom tags
-                            let teamId = session.getCurrentTeamId();
+                            let currentUser = session.getCurrentUser();
+                            let isCoach = currentUser.is(ROLES.COACH);
+                            let isAthlete = currentUser.is(ROLES.ATHLETE);
+                            let isTeamUploadersTeam = false;
 
-                            if (auth.isLoggedIn && teamId) {
-                                Data.customtags = customtags.load({ teamId: teamId });
+                            if (isCoach) {
+                                isTeamUploadersTeam = game.isTeamUploadersTeam(session.getCurrentTeamId());
+                            } else if (isAthlete) {
+                                let athleteRoles = currentUser.getRoles(ROLE_TYPE.ATHLETE);
+                                isTeamUploadersTeam = athleteRoles.some(role => game.isTeamUploadersTeam(role.teamId));
+                            }
+
+                            if (auth.isLoggedIn && isTeamUploadersTeam) {
+                                Data.customtags = customtags.load({ teamId: game.uploaderTeamId });
                             }
 
                             let userIds = [];

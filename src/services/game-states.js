@@ -109,7 +109,7 @@ function GameStatesService (
                     }
                 }
 
-                if (isTeamUploadersTeam && isCoach && features.isEnabled('SelfEditor') && uploaderTeamIsOnSelfEditorWhitelist) {
+                if (isTeamUploadersTeam && (isCoach || (isAthlete && game.isSelfEdited)) && features.isEnabled('SelfEditor') && uploaderTeamIsOnSelfEditorWhitelist) {
 
                     // self editor
                     states.push({name: 'Games.SelfEditor'});
