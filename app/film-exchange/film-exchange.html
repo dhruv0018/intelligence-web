@@ -77,7 +77,7 @@
                             <span>{{film.datePlayed|date:'MMM dd, yyyy'}}</span>
                             <span class="addedBy subText" ng-if="currentUser.is(COACH)">added by {{film.addedByUser.firstName}} {{film.addedByUser.lastName}}</span>
                         </td>
-                        <td class="dateAdded" ng-if="!currentUser.is(COACH)">span
+                        <td class="dateAdded" ng-if="!currentUser.is(COACH)">
                             <span>{{film.createdAt|date:'MMM dd, yyyy'}}</span>
                             <span class="addedBy subText" ng-if="!currentUser.is(COACH)">added by <a href="mailto:{{film.addedByUser.email}}">{{film.addedByUser.firstName}} {{film.addedByUser.lastName}}</a></span>
                         </td>
