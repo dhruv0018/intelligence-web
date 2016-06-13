@@ -59,11 +59,11 @@
                 <table>
                     <tr >
                         <td class="team">
-                            <span class="teamName">{{film.awayTeam.name}}<span ng-if="!film.homeTeam.won"> (W)</span></span>
+                            <span class="team-name">{{film.awayTeam.name}}<span class="team-won" ng-if="!film.homeTeam.won"> (W)</span></span>
                             <span class="competitionLevel subText">{{film.awayTeam.primaryConference.competitionLevel}}</span>
                         </td>
                         <td class="team">
-                            <span class="teamName">{{film.homeTeam.name}}<span ng-if="film.homeTeam.won"> (W)</span></span>
+                            <span class="team-name">{{film.homeTeam.name}}<span class="team-won" ng-if="film.homeTeam.won"> (W)</span></span>
                             <span class="competitionLevel subText">{{film.homeTeam.primaryConference.competitionLevel}}</span>
                         </td>
                         <td class="score">
