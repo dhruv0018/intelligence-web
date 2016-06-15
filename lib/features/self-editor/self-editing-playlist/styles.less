@@ -19,7 +19,7 @@ self-editing-playlist {
         position: fixed;
         width: 419px;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         height: 60px;
         padding: 0 22px;
@@ -35,6 +35,14 @@ self-editing-playlist {
         .select-all {
             display: flex;
             align-items: center;
+            width: 195px;
+        }
+
+        .btn{
+            margin: 0px 15px 0px 5px;
+            &.dropdown-toggle{
+                margin-left: 0px;
+            }
         }
     }
     .playlist-item-list {
