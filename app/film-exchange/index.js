@@ -106,6 +106,7 @@ FilmExchange.controller('FilmExchangeController', [
         sports,
         ROLES
     ) {
+        $scope.currentUser = session.getCurrentUser();
         $scope.noData = false;
         $scope.isDefaultState = true;
         if (!$stateParams.id) {
@@ -169,9 +170,10 @@ FilmExchange.controller('FilmExchangeController', [
             $scope.isDefaultState = false;
 
             filter.id = $stateParams.id;
-            if(filter.teamName){
+            if ($scope.currentUser.is(ROLES.COACH)) filter.teamId = session.getCurrentTeamId();
+            if (filter.teamName) {
                 filter.mascot = filter.teamName;
-            }else{
+            } else {
                 filter.mascot = null;
                 filter.teamName = null;
             }
