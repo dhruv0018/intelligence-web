@@ -14,21 +14,14 @@
       "browserify-shim"
     ]
   },
-  "browserify-shim": {
-  },
-  "browser": {
-  },
+  "browserify-shim": {},
+  "browser": {},
   "napa": {
     "angular-ui-unique": "angular-ui/ui-utils#unique-0.1.1",
     "angular-ui-showhide": "angular-ui/ui-utils#showhide-0.1.1",
     "angular-ui-validate": "angular-ui/ui-utils#validate-0.1.1",
     "svg-morpheus": "alexk111/svg-morpheus#v0.1.8",
     "Mousetrap": "ccampbell/mousetrap",
-    "videogular": "2fdevs/bower-videogular",
-    "videogular-controls": "krossoverintelligence/bower-videogular-controls",
-    "videogular-buffering": "2fdevs/bower-videogular-buffering",
-    "videogular-overlay-play": "2fdevs/bower-videogular-overlay-play",
-    "videogular-poster": "2fdevs/bower-videogular-poster",
     "fullscreen-api-polyfill": "https://github.com/neovov/Fullscreen-API-Polyfill.git",
     "svg.draggable.js": "https://github.com/krossoverintelligence/svg.draggable.js.git",
     "animate.css": "https://github.com/daneden/animate.css.git"
@@ -141,7 +134,12 @@
     "svg.js": "2.2.5",
     "time-grunt": "1.1.0",
     "traceur": "0.0.86",
-    "tv4": "1.1.12"
+    "tv4": "1.1.12",
+    "videogular": "^1.4.1",
+    "videogular-buffering": "^1.4.1",
+    "videogular-controls": "^1.4.1",
+    "videogular-overlay-play": "^1.4.1",
+    "videogular-poster": "^1.4.1"
   },
   "main": "./src/main.js",
   "scripts": {
