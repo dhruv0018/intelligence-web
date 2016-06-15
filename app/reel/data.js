@@ -6,6 +6,7 @@ ReelDataDependencies.$inject = [
     'GamesFactory',
     'TeamsFactory',
     'PlaysFactory',
+    'SelfEditedPlaysFactory',
     'PlayersFactory',
     'LeaguesFactory',
     'TagsetsFactory',
@@ -17,6 +18,7 @@ function ReelDataDependencies (
     games,
     teams,
     plays,
+    selfEditedPlays,
     players,
     leagues,
     tagsets,
@@ -36,6 +38,7 @@ function ReelDataDependencies (
             this.games = games.load({reelId});
             this.teams = teams.load({reelId});
             this.plays = plays.load({reelId});
+            this.selfEditedPlays = selfEditedPlays.load({reelId});
             this.playersByReelId = players.load({reelId});
             this.playersByUserId = players.load({userId});
         }
