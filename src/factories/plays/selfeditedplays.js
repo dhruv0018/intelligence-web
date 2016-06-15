@@ -12,8 +12,10 @@ const updateLocalResourceOnPUT = true;
 
 /* Self Edited plays factory is a child of plays factory */
 IntelligenceWebClient.factory('SelfEditedPlaysFactory', [
+    'KrossoverPlayFactory',
     'PlaysFactory',
     function(
+        KrossoverPlayFactory,
         PlaysFactory
     ) {
 
@@ -35,6 +37,16 @@ IntelligenceWebClient.factory('SelfEditedPlaysFactory', [
 
             setEndTime: function(endTime) {
                 this.endTime = endTime;
+            },
+
+            extend: function (play) {
+
+                play = KrossoverPlayFactory.create(play);
+                angular.augment(play, this);
+
+                play.isSelfEdited = true;
+
+                return play;
             }
 
         };

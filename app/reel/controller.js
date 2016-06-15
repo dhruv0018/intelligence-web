@@ -87,7 +87,7 @@ function ReelController(
     $scope.isReelsPlay = true;
     $scope.plays = plays;
     $scope.playManager = playManager;
-    $scope.video = plays[0].clip || game.video;
+    $scope.video = plays[0].isSelfEdited ? game.video : plays[0].clip;
     $scope.currentPlayId = play.id;
     $scope.game = game;
     $scope.league = league;

@@ -48,6 +48,8 @@ IntelligenceWebClient.factory('PlaysFactory', [
                 play = KrossoverPlayFactory.create(play);
                 angular.augment(play, this);
 
+                play.isSelfEdited = false;
+
                 return play;
             },
 
