@@ -16,6 +16,7 @@ ReelController.$inject = [
     'PlayManager',
     'GamesFactory',
     'PlaysFactory',
+    'SelfEditedPlaysFactory',
     'TeamsFactory',
     'LeaguesFactory',
     'PlaysManager',
@@ -49,6 +50,7 @@ function ReelController(
     playManager,
     gamesFactory,
     playsFactory,
+    selfEditedPlaysFactory,
     teamsFactory,
     leaguesFactory,
     playsManager,
@@ -85,7 +87,7 @@ function ReelController(
     $scope.isReelsPlay = true;
     $scope.plays = plays;
     $scope.playManager = playManager;
-    $scope.video = plays[0].clip;
+    $scope.video = plays[0].clip || game.video;
     $scope.currentPlayId = play.id;
     $scope.game = game;
     $scope.league = league;
@@ -99,8 +101,12 @@ function ReelController(
 
     /* TODO: reel.getPlays() */
     function mapPlays (playId, index) {
-
-        let play = playsFactory.get(playId);
+        let play = {};
+        try {
+            play = playsFactory.get(playId);
+        } catch (err) {
+            play = selfEditedPlaysFactory.get(playId);
+        }
 
         /* Record the position of the play in the reel. */
         play.index = index;
