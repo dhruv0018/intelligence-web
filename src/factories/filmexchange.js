@@ -7,8 +7,8 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory',
-    function($injector, BaseFactory) {
+IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory', 'Video',
+    function($injector, BaseFactory, Video) {
 
         var FilmExchangeFactory = {
 
@@ -87,6 +87,10 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
             removeGameFromFilmExchange: function(filmExchangeId, idFilmExchangeFilm) {
                 const model = $injector.get(this.model);
                 return model.removeGameFromFilmExchange({id: filmExchangeId, idFilmExchangeFilm}).$promise;
+            },
+            setVideoEntity: function(game) {
+                game.video = game.video ? new Video(game.video) : null;
+                return game;
             }
         };
         angular.augment(FilmExchangeFactory, BaseFactory);

@@ -55,7 +55,8 @@
                 class="film-exchange-data-container"
                 ng-repeat="film in filteredFilms"
                 ng-class="{searching: searching, removed: isFilmRemoved(film)}"
-                ng-if="filteredFilms.length">
+                ng-if="filteredFilms.length"
+                ng-click="openRawFilmModal(film)">
                 <table>
                     <tr >
                         <td class="team">

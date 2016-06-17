@@ -44,10 +44,12 @@ FilmExchange.config([
                     'FilmExchangeFactory','$stateParams', 'SessionService',
                     function(filmExchange, $stateParams, session){
                         let exchangeId = $stateParams.id;
-                        if(exchangeId){
+                        if (exchangeId) {
                             let teamId = session.getCurrentTeamId();
-                            return filmExchange.getFilms({id: exchangeId, teamId});
-                        }else{
+                            return filmExchange.getFilms({id: exchangeId, teamId}).then(films => {
+                                return films.map(film => filmExchange.setVideoEntity(film));
+                            });
+                        } else {
                             let currentUser = session.getCurrentUser();
                             let currentRole = currentUser.getCurrentRole();
                             return currentUser.getFilmExchangePrivileges(currentUser.id);
@@ -83,6 +85,7 @@ FilmExchange.controller('FilmExchangeController', [
     'CompetitionLevels.Data',
     'Exchange.Data',
     'FilmExchangeTeams.Modal',
+    'RawFilm.Modal',
     'BasicModals',
     'SessionService',
     'GamesFactory',
@@ -99,6 +102,7 @@ FilmExchange.controller('FilmExchangeController', [
         CompetitionLevels,
         exchanges,
         FilmExchangeTeamsModal,
+        RawFilmModal,
         basicModals,
         session,
         games,
@@ -109,6 +113,7 @@ FilmExchange.controller('FilmExchangeController', [
         $scope.currentUser = session.getCurrentUser();
         $scope.noData = false;
         $scope.isDefaultState = true;
+
         if (!$stateParams.id) {
             //no id specified, go to first item
             if (typeof exchanges[0] !== 'undefined') {
@@ -143,9 +148,9 @@ FilmExchange.controller('FilmExchangeController', [
             let removedFilms = [];
             $scope.todaysDate = Date.now();
 
-            if($stateParams.page){
+            if ($stateParams.page) {
                 $scope.filteredFilms = sliceData($stateParams.page);
-            } else{
+            } else {
                 $scope.filteredFilms = $scope.allFilms.slice(0, ITEMSPERPAGE);
             }
         }
@@ -260,6 +265,14 @@ FilmExchange.controller('FilmExchangeController', [
                     }, 2000);
                 });
             });
+        };
+
+        $scope.openRawFilmModal = function(film) {
+            /*games.load(film.id).then(response => {
+                let game = games.get(response[0].id);
+                RawFilmModal.open(game);
+            });*/
+            RawFilmModal.open(film);
         };
 
     }
