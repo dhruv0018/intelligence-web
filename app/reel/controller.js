@@ -89,6 +89,7 @@ function ReelController(
     $scope.playManager = playManager;
     $scope.video = plays[0].isSelfEdited ? game.video : plays[0].clip;
     $scope.currentPlayId = play.id;
+    $scope.isCurrentPlaySelfEdited = plays[0].isSelfEdited;
     $scope.game = game;
     $scope.league = league;
 
@@ -275,6 +276,7 @@ function ReelController(
 
             $scope.cuePoints = $scope.telestrationsEntity.getTelestrationCuePoints(play.id, play.startTime);
             $scope.currentPlayId = play.id;
+            $scope.isCurrentPlaySelfEdited = play.isSelfEdited;
         }
     }
 

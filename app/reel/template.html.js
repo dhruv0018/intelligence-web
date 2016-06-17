@@ -34,6 +34,7 @@ export default `
                     telestrations="telestrationsEntity"
                     telestrations-permissions="telestrationsPermissions"
                     play-id="currentPlayId"
+                    self-editing-mode="isCurrentPlaySelfEdited"
                 >
                 </video-player>
 
