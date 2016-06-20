@@ -14,7 +14,8 @@ const VIDEO_PLAYER_EVENTS = {
     'ON_CLIP_COMPLETE': 5,
     'PLAY': 6,
     'FULLSCREEN': 7,
-    'ON_FRAGMENT_END': 8
+    'ON_FRAGMENT_END': 8,
+    'ON_SOURCE_CHANGE': 9
 };
 
 IntelligenceWebClient.constant('VIDEO_PLAYER_EVENTS', VIDEO_PLAYER_EVENTS);
