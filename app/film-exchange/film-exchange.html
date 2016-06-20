@@ -87,7 +87,7 @@
                                 <a
                                     href
                                     ng-if="!film.isCopying && !film.copiedGame && !film.copyConfirm"
-                                    ng-click="copyFilm(film)">
+                                    ng-click="onCopyClick($event, film)">
                                     <i class="icon icon-copy"></i> Copy
                                 </a>
                                 <krossover-spinner
@@ -104,7 +104,7 @@
                             <a
                                 href
                                 ng-if="currentUser.getCurrentRole().teamId === film.addedByTeam.id"
-                                ng-click="removeFromFilmExchange(film)">
+                                ng-click="onRemoveClick($event, film)">
                                 <i class="icon icon-trash-o"></i> Remove
                             </a>
                         </td>

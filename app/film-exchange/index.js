@@ -205,7 +205,12 @@ FilmExchange.controller('FilmExchangeController', [
             searchFilms($scope.filter);
         };
 
-        $scope.removeFromFilmExchange = function(film) {
+        $scope.onRemoveClick = function($event, film) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            removeFromFilmExchange(film);
+        };
+        function removeFromFilmExchange(film) {
             let removeFromFilmExchangeModal = basicModals.openForConfirm({
                 title: 'Remove Game',
                 bodyHeader: film.awayTeam.name+' @ '+film.homeTeam.name,
@@ -219,13 +224,18 @@ FilmExchange.controller('FilmExchangeController', [
                     removedFilms.push(film);
                 });
             });
-        };
+        }
 
         $scope.isFilmRemoved = function(film) {
             return removedFilms.some(removedFilm => film.idFilmExchangeFilm === removedFilm.idFilmExchangeFilm);
         };
 
-        $scope.copyFilm = function(film) {
+        $scope.onCopyClick = function($event, film) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            removeFromFilmExchange(film);
+        };
+        function copyFilm(film) {
             let bodyText = '';
             if (film.scoutingGame) {
                 bodyText = 'This game will be copied into your film home as a scouting game.';
@@ -265,14 +275,14 @@ FilmExchange.controller('FilmExchangeController', [
                     }, 2000);
                 });
             });
-        };
+        }
 
         $scope.openRawFilmModal = function(film) {
             /*games.load(film.id).then(response => {
                 let game = games.get(response[0].id);
                 RawFilmModal.open(game);
             });*/
-            RawFilmModal.open(film);
+            RawFilmModal.open(film, removeFromFilmExchange, copyFilm);
         };
 
     }
