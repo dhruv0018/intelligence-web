@@ -44,5 +44,9 @@
     "SelfEditor": {
         "Head Coach": true,
         "Assistant Coach": true
+    },
+
+    "SelfEditorReels": {
+        "*": true
     }
 }
