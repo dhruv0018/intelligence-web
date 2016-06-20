@@ -233,7 +233,7 @@ FilmExchange.controller('FilmExchangeController', [
         $scope.onCopyClick = function($event, film) {
             $event.preventDefault();
             $event.stopPropagation();
-            removeFromFilmExchange(film);
+            copyFilm(film);
         };
         function copyFilm(film) {
             let bodyText = '';
