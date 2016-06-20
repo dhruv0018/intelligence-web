@@ -27,63 +27,51 @@
     .table-responsive {
 
         table {
-            width: auto;
+            width: 100%;
+            color: black;
             margin: auto;
             border-top: thin solid black;
         }
 
+        tr:hover {
+            font-weight: 500;
+        }
+
         td {
-            text-align: left;
+            font-size: 12px;
+            text-align: center;
+            word-wrap: break-word;
         }
 
         th {
-            font-weight: 400;
+            font-size: 14px;
+            font-weight: @table-header-font-weight;
             border:thin solid black;
             background-color: @brand-blue;
             color: white;
             text-align: center;
+            word-wrap: break-word;
+        }
+
+        th:first-child{
+            width: 15%;
+        }
+
+        .football{
+            th:first-child{
+                width: 20%;
+            }
+        }
+
+        .second-header {
+            border:thin solid @gray-light;
+            background-color: @gray-lighter;
+            color: black;
+            font-size: 12px;
         }
 
         .fixed-table {
             table-layout: fixed;
-        }
-
-        /*This is a temporary class that will be removed when this new
-        design is implemented for all sports.*/
-        .stats-redesign {
-
-            width: 100%;
-            color: black;
-
-            .second-header {
-                border:thin solid @gray-light;
-                background-color: @gray-lighter;
-                color: black;
-                font-size: 12px;
-            }
-
-            tr:hover {
-                font-weight: 500;
-            }
-
-            th, td {
-                word-wrap: break-word;
-            }
-
-            th {
-                font-size: 14px;
-                font-weight: @table-header-font-weight;
-            }
-
-            th:first-child{
-                width: 33%;
-            }
-
-            td {
-                font-size: 12px;
-                text-align: center;
-            }
-
         }
 
         .logheader {
