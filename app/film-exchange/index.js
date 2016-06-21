@@ -278,10 +278,6 @@ FilmExchange.controller('FilmExchangeController', [
         }
 
         $scope.openRawFilmModal = function(film) {
-            /*games.load(film.id).then(response => {
-                let game = games.get(response[0].id);
-                RawFilmModal.open(game);
-            });*/
             RawFilmModal.open(film, removeFromFilmExchange, copyFilm);
         };
 
