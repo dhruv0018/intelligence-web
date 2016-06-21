@@ -182,6 +182,10 @@ function $KrossoverPlay (
                 possessionTeamId: this.possessionTeamId
             };
 
+            if (this.createdByUserId) {
+                copy.createdByUserId = this.createdByUserId;
+            }
+
             return copy;
         }
     }

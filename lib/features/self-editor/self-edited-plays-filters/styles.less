@@ -1,0 +1,120 @@
+@filter-vertical-padding: 2px;
+@filter-vertical-margin: 7px;
+@filter-width: 160px;
+
+.self-edited-plays-filter{
+
+    a {
+        cursor: pointer;
+    }
+
+    .filter-dropdown{
+        margin-left: 20px;
+
+        .btn{
+            text-align: left;
+            border-radius: @border-radius-base;
+        }
+
+        .active-filter{
+            margin-left: 10px;
+            margin-right: 10px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            letter-spacing: normal;
+            font-weight: 400;
+
+            i {
+                margin-left: 5px;
+            }
+        }
+
+        .search-filter {
+            .form-control;
+            height: 28px;
+            width: @filter-width;
+            padding-top: @filter-vertical-padding;
+            padding-bottom: @filter-vertical-padding;
+            margin-bottom: @filter-vertical-margin;
+        }
+
+        ul{
+            padding-top: 25px;
+            display: flex;
+            background-color: rgba(255, 255, 255, .95);
+
+            li{
+                position: relative;
+                display: inline-block;
+                height: 315px;
+                vertical-align: top;
+                padding:0 20px 0 20px;
+                border-right: 1px solid @gray-lighter;
+                overflow-y: auto;
+                overflow-x: hidden;
+
+                a{
+                    width: @filter-width;
+                    margin-bottom: @filter-vertical-margin;
+                    padding-bottom: @filter-vertical-padding;
+                    padding-top: @filter-vertical-padding;
+                    border-radius:@border-radius-small;
+                    letter-spacing: normal;
+                    font-weight: 400;
+                    overflow-x: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+
+                    &.child {
+                        .btn-xs;
+                        margin-left: 10px;
+                        width: 150px;
+                    }
+
+                    &.btn-primary {
+                        color: white;
+                    }
+                }
+
+                &:last-of-type{
+                    border:none;
+                }
+
+                .no-results {
+                    display: inline-block;
+                    width: @filter-width;
+                    padding-top: 0px;
+
+                    i {
+                        font-size: 40px; //override no-results font sizes
+                    }
+
+                    h1 {
+                        font-size: 25px; //override no-results font sizes
+                        margin: 0px;
+                    }
+
+                    h2 {
+                        font-size: 14px; //override no-results font sizes
+                    }
+                }
+            }
+        }
+
+        .dropdown-toggle {
+            letter-spacing: normal;
+            text-decoration: none;
+            cursor: pointer;
+
+            .icon-chevron-down, .icon-chevron-up{
+                font-size: 12px;
+                margin-left: 5px;
+            }
+
+            .play-count {
+
+                color: initial;
+            }
+        }
+    }
+}

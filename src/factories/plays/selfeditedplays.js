@@ -39,6 +39,15 @@ IntelligenceWebClient.factory('SelfEditedPlaysFactory', [
                 this.endTime = endTime;
             },
 
+            setCreatedByUserId : function(userId) {
+                if (this.id) {
+                    console.error('adding createdByUserId is restricted on updates');
+                    return;
+                }
+
+                this.createdByUserId = userId;
+            },
+
             extend: function (play) {
 
                 play = KrossoverPlayFactory.create(play);

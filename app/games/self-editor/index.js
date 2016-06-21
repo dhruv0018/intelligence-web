@@ -23,14 +23,17 @@ GamesSelfEditor.config([
             },
             resolve: {
                 'Games.SelfEditor.Data': [
-                    '$stateParams', '$q', 'SelfEditedPlaysFactory',
-                    function($stateParams, $q, selfEditedPlays) {
+                    '$stateParams', '$q', 'SelfEditedPlaysFactory', 'UsersFactory', 'Utilities',
+                    function($stateParams, $q, selfEditedPlaysFactory, usersFactory, utilities) {
                         let gameId = Number($stateParams.id);
-                        let Data = {
-                            selfEditedPlays: selfEditedPlays.load({gameId})
-                        };
 
-                        return $q.all(Data);
+                        return selfEditedPlaysFactory.load({gameId}).then(function(selfEditedPlays){
+                            let Data = {};
+                            let userIds = selfEditedPlays.map(selfEditedPlay => selfEditedPlay.createdByUserId);
+                            userIds = utilities.unique(userIds);
+                            if (userIds.length) Data.users = usersFactory.load(userIds);
+                            return $q.all(Data);
+                        });
                     }
                 ]
             }
