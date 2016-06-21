@@ -1,3 +1,13 @@
+# v78.0#
+## Features##
+- Copy a game from a film exchange
+- Film Exchange Improvements
+- Self Editor Improvements
+- Move stat navigation buttons into singular dropdown
+
+## Fixes##
+- Fixes bug that caps number of film exchanges loaded by admin
+
 # v77.0#
 ## Features##
 - Remove a game from a film exchange
