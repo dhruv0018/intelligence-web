@@ -95,28 +95,41 @@
                 }
             }
         }
-        td, th{
-            &.actions{
+        td, th {
+            &.actions {
                 width: 20%;
             }
-            &.datePlayed{
+
+            &.datePlayed {
                 width: 25%;
             }
-            &.team{
+
+            &.team {
                 width: 20%;
 
                 .team-won {
                     font-weight: 600;
                 }
             }
-            &.score{
+
+            &.score {
                 width: 15%;
             }
-            &.dateAdded{
+
+            &.dateAdded {
                 width: 20%;
             }
+
+            &.film-status {
+                min-width: 60px;
+            }
         }
-        thead{
+
+        tr.film-processing {
+            background-color: @gray-lightest;
+        }
+
+        thead {
             background-color: @gray-lighter;
         }
 
