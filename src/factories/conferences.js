@@ -86,9 +86,10 @@ IntelligenceWebClient.factory('ConferencesFactory', [
                 return model.deleteConferenceSport({combinationCode, genderSport}).$promise;
             },
 
-            getAllConferenceSportsForAssociation(sportsAssociation) {
+            getAllConferenceSportsForAssociation(sportsAssociation, count) {
                 const model = $injector.get(this.model);
-                return model.getAllConferenceSportsForAssociation({sportsAssociation}).$promise;
+                count = count || 1000;
+                return model.getAllConferenceSportsForAssociation({sportsAssociation, count}).$promise;
             },
 
             createFilmExchange(filmExchange) {
@@ -129,9 +130,10 @@ IntelligenceWebClient.factory('ConferencesFactory', [
                 return model.deleteFilmExchange({combinationCode, filmExchangeId}).$promise;
             },
 
-            getAllFilmExchangesForAssociation(sportsAssociation) {
+            getAllFilmExchangesForAssociation(sportsAssociation, count) {
                 const model = $injector.get(this.model);
-                return model.getAllFilmExchangesForAssociation({sportsAssociation}).$promise;
+                count = count || 1000;
+                return model.getAllFilmExchangesForAssociation({sportsAssociation, count}).$promise;
             },
 
             loadTeamsInFilmExchange(associationCode, conferenceCode, gender, sportId) {
