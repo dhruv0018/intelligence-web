@@ -122,11 +122,15 @@
 
             &.film-status {
                 min-width: 60px;
-            }
-        }
 
-        tr.film-processing {
-            background-color: @gray-lightest;
+                .icon-clock-o {
+                    color: @brand-warning;
+                }
+
+                .icon-exclamation-circle {
+                    color: @brand-danger;
+                }
+            }
         }
 
         thead {
@@ -165,6 +169,19 @@
                 max-height: 0px;
                 border-width: 0px;
                 overflow: hidden;
+            }
+
+            &.film-not-processed {
+                cursor: default;
+
+                td, td > .subText {
+                    color: @gray-medium;
+                }
+
+                .actions > .copy-actions > a {
+                    color: @gray-medium;
+                    pointer-events: none;
+                }
             }
         }
 

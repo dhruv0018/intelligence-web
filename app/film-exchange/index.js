@@ -278,7 +278,9 @@ FilmExchange.controller('FilmExchangeController', [
         }
 
         $scope.openRawFilmModal = function(film) {
-            RawFilmModal.open(film, removeFromFilmExchange, copyFilm);
+            if (film.video.status === 4) {
+                RawFilmModal.open(film, removeFromFilmExchange, copyFilm);
+            }
         };
 
     }
