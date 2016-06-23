@@ -26,7 +26,8 @@ ReelController.$inject = [
     'TELESTRATION_PERMISSIONS',
     'TelestrationsVideoPlayerBroker',
     'PlaylistEventEmitter',
-    'EVENT'
+    'EVENT',
+    'ROLE_TYPE'
 ];
 
 /**
@@ -60,7 +61,8 @@ function ReelController(
     TELESTRATION_PERMISSIONS,
     TelestrationsVideoPlayerBroker,
     playlistEventEmitter,
-    EVENT
+    EVENT,
+    ROLE_TYPE
 ) {
 
     const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
