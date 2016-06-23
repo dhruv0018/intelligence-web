@@ -11,7 +11,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th ng-if="positionset.positions && positionset.positions.length > 0">Position</th>
-                        <th ng-if="team.isCustomerTeam && isHomeTeam()">Did Not Play</th>
+                        <th ng-if="team.isCustomerTeam && isHomeTeam() && isUserTeam">Did Not Play</th>
                     </tr>
                 </thead>
             </table>
