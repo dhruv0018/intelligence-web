@@ -71,7 +71,17 @@ function ReelController(
     let isUploader = reel.isUploader(currentUser.id);
     let isTeamUploadersTeam = reel.isTeamUploadersTeam(currentUser.currentRole.teamId);
     let isCoach = currentUser.is(ROLES.COACH);
+    let isAthlete = currentUser.is(ROLES.ATHLETE);
+    if (isAthlete) {
+        let athleteRoles = currentUser.getRoles(ROLE_TYPE.ATHLETE);
+        isTeamUploadersTeam = athleteRoles.some(role => reel.isTeamUploadersTeam(role.teamId));
+    }
     let plays = reel.plays.map(mapPlays);
+    /** filter out self edited plays for non users team */
+    if (!isTeamUploadersTeam) {
+        plays = plays.filter(play => !play.isSelfEdited);
+        reel.plays = plays.map(play => play.id);
+    }
     let play = plays[0];
     let game = gamesFactory.get(plays[0].gameId);
     let isTelestrationsSharedWithCurrentUser = reel.isTelestrationsSharedWithUser(currentUser);
