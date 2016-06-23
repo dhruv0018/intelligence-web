@@ -397,13 +397,15 @@
                     align-items: center;
                     font-size: 18px;
                     cursor: pointer;
+                    color: black;
 
                     &.already-shared {
                         pointer-events: none;
                         cursor: not-allowed;
+                        color: @gray-medium;
 
                         .check-box {
-                            color: @gray-dark;
+                            color: @gray-medium;
                         }
 
                         .already-shared-text {
@@ -444,6 +446,13 @@
         .share-option-title {
             font-weight: 500;
             font-size: 18px;
+            line-height: 1;
+
+            .share-option-subtitle {
+                font-weight: 400;
+                font-size: 14px;
+                color: @gray-medium;
+            }
         }
 
         .button-row {
