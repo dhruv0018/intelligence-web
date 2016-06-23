@@ -8,10 +8,10 @@
 
         <div class="raw-film-info" ng-if="isFilmExchangeVideo">
             <span>{{game.datePlayed|date:'MMM dd, yyyy'}}</span>
-            <p><span ng-class="{'team-won': game.awayTeam.won}">{{game.awayTeam.name}} {{game.awayTeam.score}}</span> @ <span ng-class="{'team-won': game.homeTeam.won}">{{game.homeTeam.score}} {{game.homeTeam.name}}</span></p>
+            <p>{{game.awayTeam.name}} {{game.awayTeam.score}}  @  {{game.homeTeam.score}} {{game.homeTeam.name}}</p>
         </div>
 
-        <div class="raw-player">
+        <div class="raw-player" ng-class="{'film-exchange-player': isFilmExchangeVideo}">
 
             <video-player video="video"></video-player>
 

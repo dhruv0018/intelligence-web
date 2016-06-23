@@ -121,7 +121,6 @@
         }
 
         .film-exchange-data-container{
-            transition: transform linear 0.08s;
             border: 1px solid #dddddd;
             background-color: white;
             width: 98%;
@@ -129,11 +128,11 @@
             margin: 0px auto;
             cursor: pointer;
             border-top: none;
-            -moz-transition: max-height .7s, border-width .7s;
-            -ms-transition: max-height .7s, border-width .7s;
-            -o-transition: max-height .7s, border-width .7s;
-            -webkit-transition: max-height .7s, border-width .7s;
-            transition: max-height .7s, border-width .7s;
+            -moz-transition: max-height .7s, border-width .7s, transform linear 0.08s;
+            -ms-transition: max-height .7s, border-width .7s, transform linear 0.08s;
+            -o-transition: max-height .7s, border-width .7s, transform linear 0.08s;
+            -webkit-transition: max-height .7s, border-width .7s, transform linear 0.08s;
+            transition: max-height .7s, border-width .7s, transform linear 0.08s;
 
             table {
                 width: 100%;
