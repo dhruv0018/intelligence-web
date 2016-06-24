@@ -186,7 +186,7 @@ FilmExchange.controller('FilmExchangeController', [
             $scope.query = filmExchangeFactory.getFilms(filter).then(function(data) {
                 $scope.page.currentPage = 1;
                 $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
-                $scope.allFilms = data;
+                $scope.allFilms = data.map(film => filmExchangeFactory.setVideoEntity(film));
                 $scope.filteredFilms = sliceData($scope.page.currentPage);
             }).finally(function() {
                 $timeout(function() {
