@@ -65,11 +65,11 @@
                             <i class="icon icon-exclamation-circle" ng-if="film.video.status === 8" tooltip="Error While Processing" tooltip-placement="right"></i>
                         </td>
                         <td class="team">
-                            <span class="team-name">{{film.awayTeam.name}}<span class="team-won" ng-if="!film.homeTeam.won"> (W)</span></span>
+                            <span class="team-name">{{film.awayTeam.name}} <i class="icon icon-play team-won" ng-if="film.awayTeam.won"></i></span>
                             <span class="competitionLevel subText">{{film.awayTeam.primaryConference.competitionLevel}}</span>
                         </td>
                         <td class="team">
-                            <span class="team-name">{{film.homeTeam.name}}<span class="team-won" ng-if="film.homeTeam.won"> (W)</span></span>
+                            <span class="team-name">{{film.homeTeam.name}} <i class="icon icon-play team-won" ng-if="film.homeTeam.won"></i></span>
                             <span class="competitionLevel subText">{{film.homeTeam.primaryConference.competitionLevel}}</span>
                         </td>
                         <td class="score">

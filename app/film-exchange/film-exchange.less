@@ -108,7 +108,15 @@
                 width: 20%;
 
                 .team-won {
-                    font-weight: 600;
+                    font-size: 8px;
+                    position: relative;
+
+                    &:before {
+                        transform: scale(-1, 1);
+                        position: absolute;
+                        top: 0px;
+                        left: 3px;
+                    }
                 }
             }
 
