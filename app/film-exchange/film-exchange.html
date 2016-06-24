@@ -85,7 +85,7 @@
                         </td>
                         <td class="dateAdded" ng-if="!currentUser.is(COACH)">
                             <span>{{film.createdAt|date:'MMM dd, yyyy'}}</span>
-                            <span class="addedBy subText" ng-if="!currentUser.is(COACH)">added by <a href="mailto:{{film.addedByUser.email}}?subject={{film.awayTeam.name}} @ {{film.homeTeam.name}} ({{film.datePlayed|date:'MMM dd, yyyy'}})" target="_blank">{{film.addedByUser.firstName}} {{film.addedByUser.lastName}}</a></span>
+                            <span class="addedBy subText" ng-if="!currentUser.is(COACH)">added by <a href="mailto:{{film.addedByUser.email}}?subject={{film.awayTeam.name}} @ {{film.homeTeam.name}} ({{film.datePlayed|date:'MMM dd, yyyy'}})" target="_blank" ng-click="$event.stopPropagation();">{{film.addedByUser.firstName}} {{film.addedByUser.lastName}}</a></span>
                         </td>
                         <td class="actions" ng-if="currentUser.is(COACH)">
                             <span class="copy-actions" ng-if="currentUser.getCurrentRole().teamId != film.addedByTeam.id">
