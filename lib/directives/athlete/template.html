@@ -1,11 +1,5 @@
 <div class="krossover-athlete">
     <div class="sidebar-athlete" ng-if="!editable">
-        <div class="athelete-profile-picture">
-            <div ng-if="users[athlete.userId].imageUrl" class="profile-image-container">
-                <img ng-src="{{users[athlete.userId].imageUrl}}" alt="Avatar">
-            </div>
-            <profile-placeholder ng-if="!users[athlete.userId].imageUrl" data-size="small"></profile-placeholder>
-        </div>
         <div class="athlete-profile-details">
             <span class="athlete-information" ng-show="team.roster.playerInfo[athlete.id].jerseyNumber">
             	#{{team.roster.playerInfo[athlete.id].jerseyNumber}}
@@ -23,15 +17,6 @@
                                'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}"
                class="table">
             <tr>
-
-                <td class="athlete-column" ng-if="team.isCustomerTeam && isHomeTeam">
-
-                    <div ng-if="users[athlete.userId].imageUrl" class="profile-image-container">
-                        <img ng-src="{{users[athlete.userId].imageUrl}}" alt="Avatar">
-                    </div>
-                    <profile-placeholder ng-if="!users[athlete.userId].imageUrl" data-size="small"></profile-placeholder>
-
-                </td>
 
                 <td class="athlete-column">
 

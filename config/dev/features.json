@@ -52,7 +52,7 @@
     },
 
     "CanonicalTypeahead": {
-        "*": false
+        "*": true
     },
 
     "AdminConferenceSearch": {

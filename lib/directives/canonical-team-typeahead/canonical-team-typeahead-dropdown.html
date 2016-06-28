@@ -1,12 +1,12 @@
 <a ng-if="!match.model.text">
-    <div><b>{{match.model.displaySchool.name}}</b></div>
     <div>
-        <span ng-if="match.model.name">{{match.model.name}} - </span>
+        <b ng-if="match.model.displaySchool">{{match.model.displaySchool.name}}</b>
+        <b ng-if="!match.model.displaySchool">{{match.model.name}}</b>
+    </div>
+    <div ng-if="match.model.displaySchool">
+        <span ng-if="match.model.name">{{match.model.name}} </span>
+        <span ng-if="match.model.displaySchool.address.city || match.model.displaySchool.address.regionCode">- </span>
         <span ng-if="match.model.displaySchool.address.city">{{match.model.displaySchool.address.city}}, </span>
         <span ng-if="match.model.displaySchool.address.regionCode">{{match.model.displaySchool.address.regionCode}}</span>
     </div>
 </a>
-
-<!--a ng-if="match.model.text">
-    <div>Add <span class="newName">{{match.model.text}}</span> as a new team</div>
-</a-->

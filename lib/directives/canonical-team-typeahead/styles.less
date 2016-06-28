@@ -1,6 +1,6 @@
 .canonical-team-typeahead {
     @input-height: 40px;
-    @typeahead-height: 190px;
+    @typeahead-height: 120px;
     position: relative;
 
     &.notAllowed{
@@ -11,6 +11,16 @@
         .enteredResult.btn{
             border: none;
             cursor: default;
+        }
+    }
+    &.keyPress{
+        .dropdown-menu{
+            li{
+                & > a:hover{
+                    color: #737474;
+                    background-color: white;
+                }
+            }
         }
     }
     .alertMessage{
@@ -30,6 +40,7 @@
         position: absolute;
         top: -6px;
         left: 0;
+        height: 50px;
         background-color: white;
         .enteredWrapper{
             display: inline-block;
@@ -49,6 +60,9 @@
             b{
                 font-size: 18px;
                 font-weight: 500;
+            }
+            &.noSchool{
+                margin-top: 8px;
             }
         }
         .icon{
@@ -79,7 +93,7 @@
 
     ul {
         width: 100%;
-        max-height: @typeahead-height;
+        height: @typeahead-height;
         overflow-y: scroll;
     }
 
@@ -99,17 +113,24 @@
         position: absolute;
         left: 0%;
         width: 100%;
-        height: @input-height;
-        line-height: @input-height;
+        height: @typeahead-height;
+        line-height: @input-height/2;
         border: 1px solid rgba(0,0,0,.15);
         color: @gray-light;
         background-color: white;
-        text-align: left;
+        text-align: center;
         font-weight: 500;
         padding: 0px 12px;
         overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        box-shadow: 5px 5px 5px rgba(0,0,0,.1);
+        z-index: 99;
+        span{
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
     }
 
     .new-team{
@@ -131,7 +152,7 @@
         position: absolute;
         z-index: 99999;
         width: 100%;
-        top: 190px;
+        top: 160px;
         background-color: white;
         height: 40px;
         border: 1px solid rgba(0, 0, 0, 0.15);
@@ -143,6 +164,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        box-shadow: 5px 5px 5px rgba(0,0,0,.1);
         &:hover{
             background-color: #f1f6fc;
         }
