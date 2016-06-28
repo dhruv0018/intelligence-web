@@ -1,5 +1,3 @@
-/* jshint node:true */
-
 'use strict';
 
 var es6ify = require('es6ify').configure(/^(?!.*node_modules)+.+\.js$/);
@@ -92,27 +90,12 @@ module.exports = function(grunt) {
             files: '<%= files.less %>'
         },
 
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc'
-            },
-            files: '<%= files.js %>'
-        },
-
         eslint: {
             options: {
                 config: '.eslintrc'
             },
             target: '<%= files.js %>'
         },
-
-        jscs: {
-            options: {
-                config: '.jscsrc'
-            },
-            files: '<%= files.js %>'
-        },
-
 
         /* Pre-minification */
 
@@ -355,6 +338,8 @@ module.exports = function(grunt) {
                     bundleOptions: {
                         debug: true,
                     },
+                    watch : true, // use watchify for incremental builds!
+                    // keepAlive : true, // watchify will exit unless task is kept alive
                     browserifyOptions: {
                         noParse: ['./build/build.js']
                     }
@@ -518,9 +503,6 @@ module.exports = function(grunt) {
 
         plato: {
             report: {
-                options : {
-                    jshint: grunt.file.readJSON('.jshintrc')
-                },
                 files: {
                     'test/report': ['src/**/*.js', 'lib/**/*.js']
                 }
@@ -588,7 +570,7 @@ module.exports = function(grunt) {
             },
             config: {
                 files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['componentbuild:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             index: {
                 files: ['src/index.html'],
@@ -596,7 +578,7 @@ module.exports = function(grunt) {
             },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
-                tasks: ['newer:htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:htmlhint', 'componentbuild:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             css: {
                 files: ['app/**/*.css', 'lib/**/*.css'],
@@ -612,19 +594,19 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'componentbuild:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             unit: {
                 files: ['test/unit/**/*.js', '!test/unit/helpers/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'karma']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'karma']
             },
             integration: {
                 files: ['test/integration/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:jshint', 'newer:eslint', 'protractor']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'protractor']
             }
         },
 
@@ -676,7 +658,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['build', 'karma']);
-    grunt.registerTask('lint', ['trimtrailingspaces', 'lintspaces', 'htmlhint', 'jshint', 'eslint']);
+    grunt.registerTask('lint', ['trimtrailingspaces', 'lintspaces', 'htmlhint', 'eslint']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);
     grunt.registerTask('report', ['plato']);

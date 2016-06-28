@@ -69,6 +69,8 @@
         "key-spacing": false,
         "semi-spacing": false,
         "comma-spacing": false,
-        "no-multi-spaces": false
+        "no-multi-spaces": false,
+        "indent": ["error", 4]
+
     }
 }
