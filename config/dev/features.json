@@ -48,5 +48,9 @@
 
     "SelfEditorReels": {
         "*": true
+    },
+
+    "CanonicalTypeahead": {
+        "*": false
     }
 }

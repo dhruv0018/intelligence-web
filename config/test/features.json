@@ -40,6 +40,9 @@
     },
 
     "SelfEditorReels": {
-        "*": true
+    },
+
+    "CanonicalTypeahead": {
+        "*": false
     }
 }
