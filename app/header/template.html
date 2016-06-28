@@ -39,7 +39,7 @@
                     <li ng-if="currentUser.is(HEAD_COACH)"><a id="mobile-menu-coach-coaches-cta" ui-sref="Coach.Team.Assistants">Coaches</a></li>
                 </ul>
             </li>
-            <li ng-if="filmExchanges && filmExchanges.length>0" id="mobile-menu-coach-film-exchange-cta" ng-class="{active: $state.includes('Coach.FilmExchange')}" ng-click="toggleSubMenu($event, 1)" class="mobile-submenu-toggle">
+            <li ng-if="filmExchanges && filmExchanges.length>0" id="mobile-menu-coach-film-exchange-cta" ng-click="toggleSubMenu($event, 1)" class="mobile-submenu-toggle" ng-class="{active: $state.includes('film-exchange')}">
                 <a>Film Exchange</a>
                 <ul class="mobile-submenu" ng-show="subMenu[1]">
                     <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'true' }"
@@ -71,7 +71,7 @@
         <!-- Film Exchange admin menu -->
         <menu class="dropdown-menu" ng-if="currentUser.is(FILM_EXCHANGE_ADMIN)">
 
-            <li ui-sref-active="active" id="mobile-menu-filmexchange-admin-cta" ng-click="toggleSubMenu($event)"  class="mobile-submenu-toggle">
+            <li id="mobile-menu-filmexchange-admin-cta" ng-click="toggleSubMenu($event)"  class="mobile-submenu-toggle" ng-class="{active: $state.includes('film-exchange')}">
                 <a>Film Exchange</a>
                 <ul class="mobile-submenu" ng-show="subMenu" ng-if="filmExchanges && filmExchanges.length>0">
                     <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.filmExchangeName}}</a></li>
@@ -108,11 +108,8 @@
                 <!--<li data-ng-hide="true"><a href="#">Set Aside Times</a></li>-->
             </ul>
         </li>
-        <li ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN)" ng-if="filmExchanges && filmExchanges.length>0" class="header-dropdown">
-            <a class="dropdown-toggle" dropdown-toggle>Film Exchange</a>
-            <ul class="dropdown-menu film-exchange-menu">
-                <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.name}}</a></li>
-            </ul>
+        <li ui-sref-active="active">
+            <a id="menu-admin-conferences-cta" ui-sref="conferences-list">Conferences</a>
         </li>
 
     </menu>
@@ -120,7 +117,7 @@
     <!-- Film Exchange admin menu -->
     <menu class="nav navbar-nav" ng-if="currentUser.is(FILM_EXCHANGE_ADMIN)">
 
-        <li ui-sref-active="active"  class="header-dropdown">
+        <li class="header-dropdown" ng-class="{active: $state.includes('film-exchange')}">
             <a class="dropdown-toggle" dropdown-toggle>Film Exchange</a>
             <ul class="dropdown-menu film-exchange-menu" ng-if="filmExchanges && filmExchanges.length>0">
                 <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.filmExchangeName}}</a></li>
@@ -166,7 +163,7 @@
                 <!--<li data-ng-hide="true"><a href="#">Sets</a></li>-->
             </ul>
         </li>
-        <li ng-if="filmExchanges && filmExchanges.length>0" id="menu-coach-film-exchange-cta" class="header-dropdown" data-ng-class="{active: $state.includes('Coach.FilmExchange')}">
+        <li ng-if="filmExchanges && filmExchanges.length>0" id="menu-coach-film-exchange-cta" class="header-dropdown" data-ng-class="{active: $state.includes('film-exchange')}">
             <a class="dropdown-toggle" dropdown-toggle>Film Exchange</a>
             <ul class="dropdown-menu film-exchange-menu">
                 <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'true' }"
