@@ -20,7 +20,7 @@
         <div class="options-list">
             <ul>
                 <li ng-repeat="option in matchingOptions = (options | filter: filters)" ng-click="selectOption(option)">
-                    {{option[filterCriteria]}}
+                    {{option[filterCriteria]}} <span class="secondary-label" ng-if="secondaryLabel && !option[hideSecondaryLabel]">({{secondaryLabel}})</span>
                 </li>
             </ul>
             <p ng-hide="matchingOptions.length">No {{optionLabel}}s match your search</p>
