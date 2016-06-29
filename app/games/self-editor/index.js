@@ -23,8 +23,8 @@ GamesSelfEditor.config([
             },
             resolve: {
                 'Games.SelfEditor.Data': [
-                    '$stateParams', '$q', 'SelfEditedPlaysFactory', 'UsersFactory', 'Utilities',
-                    function($stateParams, $q, selfEditedPlaysFactory, usersFactory, utilities) {
+                    '$stateParams', '$q', 'SelfEditedPlaysFactory', 'UsersFactory', 'Utilities', 'TeamsFactory', 'SessionService',
+                    function($stateParams, $q, selfEditedPlaysFactory, usersFactory, utilities, teams, session) {
                         let gameId = Number($stateParams.id);
 
                         return selfEditedPlaysFactory.load({gameId}).then(function(selfEditedPlays){
@@ -32,6 +32,13 @@ GamesSelfEditor.config([
                             let userIds = selfEditedPlays.map(selfEditedPlay => selfEditedPlay.createdByUserId);
                             userIds = utilities.unique(userIds);
                             if (userIds.length) Data.users = usersFactory.load(userIds);
+                            let teamId = session.getCurrentTeamId();
+                            if (teamId) {
+                                Data.remainingBreakdowns = teams.getRemainingBreakdowns(teamId).then(function(breakdownData) {
+                                    session.currentUser.remainingBreakdowns = breakdownData;
+                                    return breakdownData;
+                                });
+                            }
                             return $q.all(Data);
                         });
                     }
