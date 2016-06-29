@@ -1,0 +1,16 @@
+{
+    "name": "conferences",
+    "templates": [
+        "conferences.html",
+        "conference.html"
+    ],
+    "scripts": [
+        "index.js",
+        "conferences.js",
+        "conference.js"
+    ],
+    "styles": [
+        "conferences.less",
+        "conference.less"
+    ]
+}

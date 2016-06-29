@@ -1,0 +1,80 @@
+.conferences{
+    .sidebar{
+        .search-header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    .list{
+        position: relative;
+        overflow-y: auto;
+
+        .table-head-wrapper{
+            width: 100%;
+            padding-right: 11px;
+            background-color: @gray-lighter;
+        }
+        .table{
+            margin-bottom: 0px;
+            td{
+                &.conference-gender-sport{
+                    width: 35%;
+                }
+                &.conference-name{
+                    width: 20%;
+                }
+                &.association-code{
+                    width: 15%;
+                }
+                &.filmexchange-status{
+                    width: 20%;
+                    .visible {
+                        color: @brand-success;
+                    }
+                    .not-visible {
+                        color: @brand-danger;
+                    }
+                }
+                &.conference-action{
+                    width: 10%;
+
+                    a {
+                        display: flex;
+                        align-items: center;
+
+                        i {
+                            margin-left: 5px;
+                        }
+                    }
+                }
+                &:first-child{
+                    padding-left: 20px;
+                }
+            }
+        }
+
+        .table-head {
+            tr {
+                background-color: @gray-lighter;
+                font-weight: bold;
+            }
+        }
+        #conference-data{
+            height: calc(~"100% - 120px");
+            overflow-y: scroll;
+        }
+        .footer{
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+        }
+    }
+}
+
+// MOBILE
+@media only screen
+and (max-width: @screen-md-max) {
+
+}

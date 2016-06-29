@@ -9,7 +9,8 @@
         "schools",
         "queue",
         "platform",
-        "film-exchange"
+        "film-exchange",
+        "conferences"
     ],
     "scripts": [
         "index.js"

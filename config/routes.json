@@ -225,9 +225,22 @@
     "film-exchange": {
 
         "Super Admin": true,
+        "Admin": true,
         "Head Coach": true,
         "Assistant Coach": true,
         "Film Exchange Admin": true
+    },
+
+    "conferences-list": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "conference": {
+
+        "Super Admin": true,
+        "Admin": true
     },
 
     "report": {

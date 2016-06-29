@@ -114,7 +114,6 @@ HeaderController.$inject = [
     'UsersFactory',
     'LeaguesFactory',
     'TeamsFactory',
-    'FilmExchangeFactory',
     'SPORTS',
     'SPORT_IDS',
     'SUBSCRIPTIONS'
@@ -139,7 +138,6 @@ function HeaderController(
     users,
     leagues,
     teams,
-    filmExchange,
     SPORTS,
     SPORT_IDS,
     SUBSCRIPTIONS
@@ -170,15 +168,6 @@ function HeaderController(
             angular.forEach(filmExchanges, function(filmExchange){
                 filmExchange.id = filmExchange.sportsAssociation+'+'+filmExchange.conference+'+'+filmExchange.gender+'+'+filmExchange.sportId;
                     $scope.filmExchanges.push(filmExchange);
-            });
-        });
-    }
-
-    //If SUPER ADMIN GET ALL THE FILM EXCHANGE LIST
-    if(currentUser.is(ROLES.SUPER_ADMIN)){
-        filmExchange.getAllConferences().then(function(filmExchanges){
-            $scope.filmExchanges = angular.forEach(filmExchanges, function(filmExchange){
-                filmExchange.id = filmExchange.sportsAssociation+'+'+filmExchange.conference+'+'+filmExchange.gender+'+'+filmExchange.sportId;
             });
         });
     }

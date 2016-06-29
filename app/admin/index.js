@@ -4,6 +4,7 @@ require('schools');
 require('queue');
 require('platform');
 require('film-exchange');
+require('conferences');
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -18,7 +19,8 @@ var Admin = angular.module('Admin', [
     'schools',
     'queue',
     'platform',
-    'filmExchange'
+    'filmExchange',
+    'Conferences'
 ]);
 
 /**
