@@ -64,6 +64,23 @@ IntelligenceWebClient.service('AnalyticsService', [
                     Sport          : sportId,
                     CurrentSeason  : '' // TODO: need this!
                 });
+
+                Appcues.identify(user.id, {
+                    WebVersion       : pkg.version,
+                    AccountCreated   : moment.utc(user.createdAt).format('MM/YY'),
+                    RoleCreated      : moment.utc(user.currentRole.createdAt).format('MM/YY'),
+                    RoleName         : user.currentRole.type.name,
+                    Sport            : sportId,
+                    LeagueID         : leagueId,
+                    RegionCode       : regionCode,
+                    PlanName         : planName,
+                    PlanActive       : planActive,
+                    PackageActive    : packageActive,
+                    RoleID           : user.currentRole.type.id,
+                    RoleTeam         : teamId,
+                    Email            : user.email,
+                    SchoolType       : schoolType
+                });
             },
 
             /**

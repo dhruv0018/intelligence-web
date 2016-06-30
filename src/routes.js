@@ -144,6 +144,7 @@ IntelligenceWebClient.run([
 
             /* Identify the user for analytics */
             analytics.identify();
+            Appcues.start();
 
             /* Store previous state */
             $previousState = fromState;
