@@ -11,7 +11,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th ng-if="positionset.positions && positionset.positions.length > 0">Position</th>
-                        <th ng-if="team.isCustomerTeam && isHomeTeam() && isUserTeam">Did Not Play</th>
+                        <th ng-if="team.id == currentUser.currentRole.teamId">Did Not Play</th>
                     </tr>
                 </thead>
             </table>
@@ -28,7 +28,7 @@
                                 editable="editable"></krossover-athlete>
             <div class="col-xs-2 controls">
                 <button
-                    ng-hide="(isHomeTeam() && team.isCustomerTeam) || game.isDelivered() || game.isBeingBrokenDown()"
+                    ng-hide="isUserTeam || game.isDelivered() || game.isBeingBrokenDown()"
                     class="add-player btn btn-default btn-block"
                     id="game-roster-add-new-player-cta"
                     ng-click="addNewPlayer()"
@@ -38,7 +38,7 @@
                 </button>
 
                 <a class="excel-upload"
-                   ng-hide="(isHomeTeam() && team.isCustomerTeam) || game.isDelivered() || game.isBeingBrokenDown()"
+                   ng-hide="isUserTeam || game.isDelivered() || game.isBeingBrokenDown()"
                    href
                    id="upload-game-roster-excel-cta"
                    open-modal="ExcelUpload.Modal"
