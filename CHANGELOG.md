@@ -1,3 +1,13 @@
+# v79.0#
+## Features##
+- Self Editor Improvements
+- Film Exchange Video Sharing and Loading
+- Film Upload Typeahead(Feature Flagged Off)
+- Film Upload Roster Improvements
+
+## Fixes##
+- Remove links to old krossover site
+
 # v78.0#
 ## Features##
 - Copy a game from a film exchange
@@ -48,7 +58,7 @@
 - Adds stats export CSV to football and volleyball
 - updates indexer groups
 - makes Conferences admin available only to super users
-- standardizes fonts of HTML players across browsers 
+- standardizes fonts of HTML players across browsers
 
 # v2.46#
 ## Features##
@@ -86,7 +96,7 @@
 
 # v2.42.1#
 ## Fixes##
-- Unhides season-highlights button 
+- Unhides season-highlights button
 
 # v2.42.0#
 ## Features##
