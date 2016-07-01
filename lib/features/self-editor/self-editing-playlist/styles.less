@@ -1,13 +1,33 @@
 self-editing-playlist {
+    .breakdown-empty-state {
+        margin-top: 60%;
+    }
 
     font-weight: 500;
 
     .playlist-empty-state {
         font-weight: @headings-font-weight;
-        font-size: @font-size-large;
         padding: 20px;
-        margin-top: 50px;
+        margin-top: 10px;
         text-align: center;
+
+        h3 {
+            text-align: center;
+        }
+
+        tr {
+            height: 70px;
+        }
+
+        p {
+            margin: 0px;
+            line-height: 1.7em;
+        }
+
+        i {
+            font-size: 35px;
+            margin: 15px 15px 15px 0px;
+        }
 
         .editor-empty-state {
             text-align: left;
@@ -70,7 +90,7 @@ self-editing-playlist {
     .play-saved-tag {
         visibility: visible;
         position: absolute;
-        right: 10px;
+        right: 99999px;
         top: 15px;
         background: @brand-success;
         border-radius: 4px;
@@ -95,12 +115,19 @@ self-editing-playlist {
     @keyframes fadeout {
         0% {
             opacity: 1;
+            right: 10px;
         }
         50% {
             opacity: 1;
+            right: 10px;
+        }
+        99% {
+            opacity: 0;
+            right: 10px;
         }
         100% {
             opacity: 0;
+            right: 99999px;
         }
     }
     @-moz-keyframes fadeout {

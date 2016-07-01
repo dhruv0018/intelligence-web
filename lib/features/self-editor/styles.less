@@ -80,13 +80,48 @@ self-editor {
             .clips-header {
                 background: white;
                 border-right: none;
+                border-bottom: 1px solid @gray-border;
                 border-top-left-radius: 6px;
                 border-top-right-radius: 6px;
                 padding: 0px 20px;
                 position: fixed;
                 width: 418px;
-                z-index: 1;
-
+                z-index: 10;
+                h3 {
+                    float: left;
+                }
+                i {
+                    float: right;
+                    margin-top: 15px;
+                    color: #ef4924;
+                    font-size: 22px;
+                    cursor: pointer;
+                }
+                .tooltip-inner {
+                    max-width: 330px;
+                    padding: 10px 10px 15px;
+                    width: 330px;
+                    h3 {
+                        text-align: center;
+                        width: 100%;
+                    }
+                    table {
+                        text-align: left;
+                        tr {
+                            td {
+                                i {
+                                    color: white;
+                                    margin-top: 0px;
+                                    padding: 20px 15px 20px 10px;
+                                }
+                                p {
+                                    margin: 0px;
+                                    line-height: 15px;
+                                }
+                            }
+                        }
+                    }
+                }
                 @media (max-width: 1023px) {
                     width: 46%;
                 }

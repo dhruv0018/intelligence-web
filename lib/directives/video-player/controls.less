@@ -160,6 +160,16 @@ videogular vg-play-pause-button {
     vertical-align: middle;
     text-align: center;
     cursor: pointer;
+    button {
+        .icon-play {
+            @media (max-width:  @screen-sm) {
+                font-size: 20px;
+            }
+        }
+        @media (max-width:  @screen-sm) {
+            margin-top: 5px;
+        }
+    }
 }
 videogular vg-volume {
     display: inline-block;
@@ -281,8 +291,13 @@ videogular vg-mute-button .level0:before {
     content: "\f027";
 }
 
-videogular vg-mute-button .mute:before {
-    content: "\f026";
+videogular vg-mute-button {
+    .mute:before {
+        content: "\f026";
+    }
+    .exit:before {
+        content: "\f066";
+    }
 }
 
 videogular vg-fullscreen-button .enter:before {
