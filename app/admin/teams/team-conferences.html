@@ -42,6 +42,15 @@
                     </check-box>
                 </span>
             </div>
+            <div ng-if="teamConference.filmExchange" class="exchange-info">
+                &nbsp; <!-- Empty left flex space-->
+
+                <span>
+                    Film Exchange
+                    <span class="exchange-visible" ng-show="teamConference.filmExchange.isVisibleToTeams">(Visible)</span>
+                    <span class="exchange-hidden" ng-hide="teamConference.filmExchange.isVisibleToTeams">(Not Visible)</span>
+                </span>
+            </div>
         </div>
         <div class="team-conference-footer">
             <a href ng-click="cancel()">Cancel</a>
