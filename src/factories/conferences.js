@@ -140,6 +140,15 @@ IntelligenceWebClient.factory('ConferencesFactory', [
                 const model = $injector.get(this.model);
                 let combinationCode = `${associationCode}+${conferenceCode}+${gender}+${sportId}`;
                 return model.getTeamsInFilmExchange({combinationCode}).$promise;
+            },
+
+            getConferencesList: function(filter) {
+                let model = $injector.get(this.model);
+                if(filter.page && filter.count) {
+                    filter.start = (filter.page-1) * filter.count;
+                }
+
+                return model.getConferencesList(filter).$promise;
             }
 
         };

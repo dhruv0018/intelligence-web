@@ -1,6 +1,6 @@
 <section class="conferences">
 
-    <aside class="sidebar" ng-if="!noData">
+    <aside class="sidebar">
 
         <div class="search-header">
             <h3>Search conferences:</h3>
@@ -13,27 +13,27 @@
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="conferenceCode" placeholder="Conference Code" ng-model="filter.conferenceCode" type="text">
+                <input class="form-control" name="conferenceCode" placeholder="Conference Code" ng-model="filter.conference" type="text">
             </div>
 
             <div class="form-group">
-                <select class="form-control" ng-model="filter.gender" ng-options="level.code as level.nameUsed for level in teamCompetitionLevels">
-                    <option value="">Gender</option>
+                <select class="form-control" ng-model="filter.gender" ng-options="gender.value as gender.name for gender in genders">
+                    <option value>Gender</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <select class="form-control" ng-model="filter.sport" ng-options="level.code as level.nameUsed for level in teamCompetitionLevels">
-                    <option value="">Sport</option>
+                <select class="form-control" ng-model="filter.sportId" ng-options="sport.id as sport.name for sport in sports">
+                    <option value>Sport</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <input class="form-control" name="associationCode" placeholder="Association Code" ng-model="filter.associationCode" type="text">
+                <input class="form-control" name="associationCode" placeholder="Association Code" ng-model="filter.sportsAssociation" type="text">
             </div>
 
             <div class="form-group">
-                <input type="checkbox" ng-model="filter.filmExchangeOnly"/> Film Exchanges Only
+                <input type="checkbox" ng-model="filter.filmExchange"/> Film Exchanges Only
             </div>
 
             <button id="search-conference-cta" class="btn-search" ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
@@ -41,7 +41,7 @@
         </form>
     </aside>
 
-    <div class="list" ng-if="!noData">
+    <div class="list" ng-show="allConferences.length">
         <div class="table-head-wrapper">
             <table class="table table-head">
                 <tr>
@@ -54,11 +54,11 @@
             </table>
         </div>
 
-        <div class="table-responsive force-scrollbar" id="conference-data">
+        <div class="table-responsive force-scrollbar" id="conference-data" ng-class="{'no-pagination': allConferences.length <= itemPerPage}">
             <table class="table table-striped table-hover">
                 <tbody>
                     <tr ng-repeat="conference in filteredConferences">
-                        <td class="conference-gender-sport"><a ui-sref="conference({id: conference.id})">{{conference.conference.name}} - {{conference.gender | formattedConferenceGender}} {{sports[conference.sportId].name}}</a></td>
+                        <td class="conference-gender-sport"><a ui-sref="conference({id: conference.id})">{{conference.conference.name}} - {{conference.gender | formattedConferenceGender}} {{sports[conference.sportId-1].name}}</a></td>
                         <td class="conference-name">{{conference.conference.name}}</td>
                         <td class="association-code">{{conference.sportsAssociation}}</td>
                         <td class="filmexchange-status">
@@ -80,4 +80,5 @@
             <pagination total-items="allConferences.length" ng-model="page.currentPage" boundary-links="true" class="krossover-pagination pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
         </div>
     </div>
+    <data-results ng-hide="allConferences.length" query="query"></data-results>
 </section>

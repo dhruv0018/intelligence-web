@@ -98,6 +98,12 @@ IntelligenceWebClient.factory('ConferencesResource', [
                 url: `${url}${filmExchangeBase}/:combinationCode/teams`,
                 params: {combinationCode: '@combinationCode'},
                 isArray: true
+            },
+            getConferencesList: {
+                method: 'GET',
+                url: `${url}${conferenceSportsBase}`,
+                params: {conferenceName: '@conferenceName', conference: '@conference', gender: '@gender', sport: '@sport', sportsAssociation: '@sportsAssociation', filmExchange: '@filmExchange'},
+                isArray: true
             }
         };
 

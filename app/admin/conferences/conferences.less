@@ -1,34 +1,34 @@
-.conferences{
-    .sidebar{
-        .search-header{
+.conferences {
+    .sidebar {
+        .search-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
     }
 
-    .list{
+    .list {
         position: relative;
         overflow-y: auto;
 
-        .table-head-wrapper{
+        .table-head-wrapper {
             width: 100%;
             padding-right: 11px;
             background-color: @gray-lighter;
         }
-        .table{
+        .table {
             margin-bottom: 0px;
             td{
-                &.conference-gender-sport{
+                &.conference-gender-sport {
                     width: 35%;
                 }
-                &.conference-name{
+                &.conference-name {
                     width: 20%;
                 }
-                &.association-code{
+                &.association-code {
                     width: 15%;
                 }
-                &.filmexchange-status{
+                &.filmexchange-status {
                     width: 20%;
                     .visible {
                         color: @brand-success;
@@ -37,7 +37,7 @@
                         color: @brand-danger;
                     }
                 }
-                &.conference-action{
+                &.conference-action {
                     width: 10%;
 
                     a {
@@ -49,7 +49,7 @@
                         }
                     }
                 }
-                &:first-child{
+                &:first-child {
                     padding-left: 20px;
                 }
             }
@@ -61,11 +61,15 @@
                 font-weight: bold;
             }
         }
-        #conference-data{
+        #conference-data {
             height: calc(~"100% - 120px");
             overflow-y: scroll;
+
+            &.no-pagination {
+                height: calc(~"100% - 39px");
+            }
         }
-        .footer{
+        .footer {
             position: absolute;
             bottom: 0px;
             width: 100%;
