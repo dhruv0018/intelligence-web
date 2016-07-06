@@ -1,3 +1,8 @@
+# v80.0#
+## Features##
+- Self Editor Improvements
+- Admin conference management improvements
+
 # v79.0#
 ## Features##
 - Self Editor Improvements
