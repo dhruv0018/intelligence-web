@@ -44,5 +44,9 @@
 
     "CanonicalTypeahead": {
         "*": false
+    },
+
+    "AdminConferenceSearch": {
+        "*": true
     }
 }

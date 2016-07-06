@@ -52,5 +52,9 @@
 
     "CanonicalTypeahead": {
         "*": false
+    },
+
+    "AdminConferenceSearch": {
+        "*": true
     }
 }
