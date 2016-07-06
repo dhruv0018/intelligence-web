@@ -72,10 +72,18 @@
         padding-bottom: 20px;
 
         .table-responsive {
+            width: 90%;
+            margin: auto;
+
+            .table-body-container {
+                height: 375px;
+                overflow-y: auto;
+                -webkit-mask-image: -webkit-gradient(linear, left 85%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+                padding-bottom: 60px;
+            }
 
             table {
-                width: 90%;
-                margin: auto;
+                width: 100%;
                 border-top: thin solid black;
 
                 td {
@@ -100,6 +108,17 @@
 
                 tr:hover {
                     background-color: rgb(241, 246, 252);
+                }
+
+                .hidden-header{
+                    th {
+                        height: 0;
+                        line-height: 0;
+                        padding-top: 0;
+                        padding-bottom: 0;
+                        border: none;
+                        color: transparent;
+                    }
                 }
             }
 

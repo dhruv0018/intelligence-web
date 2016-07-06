@@ -26,6 +26,13 @@
 
     .table-responsive {
 
+        .table-body-container {
+            height: 375px;
+            overflow-y: auto;
+            -webkit-mask-image: -webkit-gradient(linear, left 85%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+            padding-bottom: 60px;
+        }
+
         table {
             width: 100%;
             color: black;
@@ -63,11 +70,15 @@
             }
         }
 
-        .second-header {
-            border:thin solid @gray-light;
-            background-color: @gray-lighter;
-            color: black;
-            font-size: 12px;
+        .hidden-header{
+            th {
+                height: 0;
+                line-height: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                border: none;
+                color: transparent;
+            }
         }
 
         .fixed-table {
