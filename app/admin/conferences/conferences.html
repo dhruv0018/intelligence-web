@@ -46,7 +46,7 @@
             <table class="table table-head">
                 <tr>
                     <td class="conference-gender-sport">Conference Gender Sport</td>
-                    <td class="conference-name">Conference Name</td>
+                    <td class="conference-code">Conference Code</td>
                     <td class="association-code">Association Code</td>
                     <td class="filmexchange-status">Film Exchange (Status)</td>
                     <td class="conference-action">&nbsp;</td>
@@ -59,7 +59,7 @@
                 <tbody>
                     <tr ng-repeat="conference in filteredConferences">
                         <td class="conference-gender-sport"><a ui-sref="conference({id: conference.id})">{{conference.conference.name}} - {{conference.gender | formattedConferenceGender}} {{sports[conference.sportId-1].name}}</a></td>
-                        <td class="conference-name">{{conference.conference.name}}</td>
+                        <td class="conference-code">{{conference.conference.code}}</td>
                         <td class="association-code">{{conference.sportsAssociation}}</td>
                         <td class="filmexchange-status">
                             <span ng-if="conference.filmExchange">
