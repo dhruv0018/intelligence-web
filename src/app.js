@@ -17,8 +17,6 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'KrossoverBlurOnSelect',
     'ngSanitize',
     'ngResource',
-    'angulartics',
-    'angulartics.segment.io',
     'ui.router',
     'ui.bootstrap',
     'config',

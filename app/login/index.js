@@ -393,7 +393,7 @@ function LoginController(
             if (user) {
 
                 /* Track the event for MixPanel */
-                analytics.track({
+                analytics.track('Login', {
                     category : 'Login',
                     action   : 'Selected',
                     label    : 'SignIn'
@@ -464,7 +464,7 @@ function LoginController(
             if (user) {
 
                 /* Track the event for MixPanel */
-                analytics.track({
+                analytics.track('Login', {
                     category : 'Login',
                     action   : 'Selected',
                     label    : 'SignIn'

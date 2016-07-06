@@ -12,8 +12,6 @@ require('angular-ui-showhide/showhide');
 require('angular-ui-validate/validate');
 require('angular-ui-router/release/angular-ui-router');
 require('angular-multiselect/src/multiselect');
-require('angulartics/src/angulartics');
-require('angulartics/src/angulartics-segmentio');
 require('Mousetrap');
 require('Mousetrap/plugins/pause/mousetrap-pause');
 require('svg.js/dist/svg');
