@@ -7,8 +7,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('ReelsFactory', [
-    'ROLES', 'Utilities', 'BaseFactory', 'SessionService', 'ReelTelestrationEntity',
-    function(ROLES, utilities, BaseFactory, session, reelTelestrationEntity) {
+    '$injector', 'ROLES', 'Utilities', 'BaseFactory', 'SessionService', 'ReelTelestrationEntity',
+    function($injector, ROLES, utilities, BaseFactory, session, reelTelestrationEntity) {
 
         var ReelsFactory = {
 
@@ -72,6 +72,23 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 });
 
                 return copy;
+            },
+
+            batchSave: function(reels) {
+                let model = $injector.get(this.model);
+                let storage = $injector.get(this.storage);
+                let parameters = {};
+                reels = reels.map(reel => {
+                    return this.unextend(reel);
+                });
+                let batchUpdate = model.batchUpdate(parameters, reels);
+                return batchUpdate.$promise.then(reels => {
+                    return reels.map(reel => {
+                        reel = this.extend(reel);
+                        storage.set(reel);
+                        return reel;
+                    });
+                });
             },
 
             getByUploaderUserId: function(userId) {

@@ -1,11 +1,11 @@
-.custom-tags-dropdown {
+.add-reels-dropdown {
     position: relative;
 
-    .tags-dropdown-menu {
+    .reels-dropdown-menu {
         position: absolute;
-        left: -227px;
-        top: 35px;
-        width: 300px;
+        left: -130px;
+        top: 40px;
+        width: 320px;
         padding: 0;
         box-shadow: 2px 2px 10px @gray-light;
         font-weight: 500;
@@ -26,34 +26,21 @@
             border-left: 11px solid transparent;
             border-right: 11px solid transparent;
             margin-left: -11px;
-            right: 30px;
+            right: 140px;
             top: -11px;
         }
 
         &:after {
 
             border-bottom: 10px solid @content-bg;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
             margin-left: -10px;
-            right: 31px;
+            right: 142px;
             top: -10px;
         }
 
-        &.tags-are-selected {
-            &:after {
-                border-bottom: 10px solid white;
-            }
-        }
-
-        .selected-tags {
-            border-bottom: thin solid @gray-border;
-            padding: 5px;
-            max-height: 100px;
-            overflow: auto;
-        }
-
-        .search-tags {
+        .search-reels {
             border-bottom: thin solid @gray-border;
             padding: 10px;
             position: relative;
@@ -74,18 +61,59 @@
             }
         }
 
-        .tags-list {
-            padding: 5px;
+        .no-results {
+            padding-top: 0px;
+
+            i {
+                font-size: 40px; //override no-results font sizes
+            }
+
+            h1 {
+                font-size: 25px; //override no-results font sizes
+                margin: 0px;
+            }
+
+            h2 {
+                font-size: 14px; //override no-results font sizes
+            }
+        }
+
+        .successfully-added {
+            .successfully-added-header {
+                padding: 20px;
+                font-size: 20px;
+                font-weight: 600px;
+                color: @brand-success;
+                .icon {
+                    font-size: 20px;
+                    border: 3px solid @brand-success;
+                    border-radius: 50%;
+                    padding: 5px;
+                }
+                span {
+                    position: relative;
+                    top: -3px;
+                    padding-left: 25px;
+                }
+            }
+            .successfully-added-body {
+                padding: 0 20px;
+                color: @brand-blue;
+            }
+        }
+
+        .reels-list {
+            padding: 10px;
             max-height: 250px;
             overflow-y: auto;
 
-            .tag-selection-label {
+            .reels-selection-label {
                 display: block;
                 color: @brand-blue;
                 text-transform: uppercase;
             }
 
-            .new-tag {
+            .new-reel {
                 margin: 0;
                 cursor: pointer;
                 overflow-wrap: break-word;
@@ -100,6 +128,7 @@
                 list-style: none;
                 padding-left: 0px;
                 font-weight: 500;
+                margin-bottom: 0px;
 
                 li {
                     padding: 2px 0px;
@@ -115,7 +144,7 @@
             }
         }
 
-        .tag-action-buttons {
+        .reel-action-buttons {
             border-top: thin solid @gray-border;
             padding: 5px;
 
@@ -126,6 +155,18 @@
 
             .applying {
                 .pull-right;
+            }
+        }
+
+        .create-new-reel-button {
+            border-bottom: thin solid @gray-border;
+            padding: 5px;
+            a {
+                color: @brand-blue;
+            }
+            &:hover,
+            &.focused {
+                color: @brand-blue;
             }
         }
     }

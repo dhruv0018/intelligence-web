@@ -1,0 +1,26 @@
+.reel-pills {
+    @reel-pill-background: rgb(169,169,169);
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding : 0 0 5px 5px;
+
+    .reel-pill {
+        background-color: @reel-pill-background;
+        color: white;
+        border: thin solid @gray-border;
+        font-size: 12px;
+        padding: 4px;
+        border-radius: 10px;
+        margin-right: 5px;
+        margin-top: 5px;
+        white-space: nowrap;
+
+        .icon-remove {
+            cursor: pointer;
+            margin-left: 5px;
+        }
+    }
+}

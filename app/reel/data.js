@@ -34,13 +34,20 @@ function ReelDataDependencies (
             /* Load data. */
             this.tagset = tagsets.load();
             this.leagues = leagues.load();
-            this.reel = reels.load(reelId);
             this.games = games.load({reelId});
             this.teams = teams.load({reelId});
             this.plays = plays.load({reelId});
             this.selfEditedPlays = selfEditedPlays.load({reelId});
             this.playersByReelId = players.load({reelId});
             this.playersByUserId = players.load({userId});
+
+            /* load reels by relatedUserId for logged in users,
+            else when user refresh's the related reels is lost */
+            if (userId) {
+                this.reels = reels.load({ relatedUserId: userId });
+            } else {
+                this.reel = reels.load(reelId);
+            }
         }
     }
 

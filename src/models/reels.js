@@ -30,6 +30,11 @@ IntelligenceWebClient.factory('ReelsResource', [
                 params: {
                     isDeleted: false
                 }
+            },
+            batchUpdate: {
+                method: 'POST',
+                url: config.api.uri + base + '/batch',
+                isArray: true
             }
         };
 

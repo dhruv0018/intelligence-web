@@ -10,7 +10,12 @@
         <span ng-show="selectedPlays.length">{{selectedPlays.length}} Selected</span>
     </div>
 
-    <button feature="SelectPlays" class="btn btn-sm btn-default" open-modal="AddReel.Modal" modal-options="options" ng-disabled="isReelDisabled()" ng-if="isTeamMember">Add to Reel</button>
+    <add-reel-dropdown
+        feature="SelectPlays"
+        disabled="isReelDisabled()"
+        plays="selectedPlays"
+        ng-if="isTeamMember">
+    </add-reel-dropdown>
 
     <custom-tags-dropdown feature="CustomTags" disabled="isTagDisabled()" plays="selectedPlays" ng-if="!isReel&&isTeamMember"></custom-tags-dropdown>
 

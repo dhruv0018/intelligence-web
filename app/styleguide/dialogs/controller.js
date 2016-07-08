@@ -4,7 +4,6 @@ const angular = window.angular;
 StyleguideDialogsController.$inject = [
     'PlaysFactory',
     'AddProfileTeam.Modal',
-    'AddReel.Modal',
     'AdminManagement.Modal',
     'ChangePassword.Modal',
     'DeleteGame.Modal',
@@ -28,7 +27,6 @@ StyleguideDialogsController.$inject = [
 function StyleguideDialogsController (
     playsFactory,
     AddProfileTeamModal,
-    AddReelModal,
     AdminManagementModal,
     ChangePasswordModal,
     DeleteGameModal,
@@ -60,13 +58,6 @@ function StyleguideDialogsController (
         {
             name: 'Add Profile Team',
             controller: AddProfileTeamModal,
-            type: 'UI-Bootstrap modal',
-            enabled: false,
-            args: []
-        },
-        {
-            name: 'Add Reel',
-            controller: AddReelModal,
             type: 'UI-Bootstrap modal',
             enabled: false,
             args: []
