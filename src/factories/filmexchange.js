@@ -91,6 +91,10 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
             setVideoEntity: function(game) {
                 game.video = game.video ? new Video(game.video) : null;
                 return game;
+            },
+            getFilmExchangeAdmins: function(filmExchangeId) {
+                const model = $injector.get(this.model);
+                return model.getFilmExchangeAdmins({id: filmExchangeId}).$promise;
             }
         };
         angular.augment(FilmExchangeFactory, BaseFactory);

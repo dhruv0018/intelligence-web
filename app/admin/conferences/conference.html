@@ -1,4 +1,49 @@
-<section class="conferences">
-conference detail
+<section class="conference-detail">
+
+    <aside class="sidebar">
+
+        <header>
+
+            <h1>{{conference.conference.name}} ({{conference.sportsAssociation}})</h1>
+            <h2>{{conference.gender | formattedConferenceGender}} {{sport.name}}</h2>
+            <p>{{conference.conference.competitionLevel}}</p>
+
+        </header>
+
+    </aside>
+
+    <main class="content">
+        <div class="member-teams-container">
+            <div class="conference-content-header">
+                <h3>Member Teams</h3>
+                <div class="search-container">
+                    <i class="icon icon-search"></i>
+                    <input ng-model="filter.teamName" placeholder="Search by school or team">
+                </div>
+            </div>
+            <p ng-show="!teams.length && !matchingTeams.length">This conference has no member teams</p>
+            <p ng-show="teams.length && !matchingTeams.length">No member teams match your search</p>
+            <div ng-show="teams.length && matchingTeams.length" class="member-list">
+                <a ng-repeat="team in matchingTeams = (teams | filter: filter) | orderBy: 'teamName'" ui-sref="team-info({ id: team.teamId})">{{team.teamName}}</a>
+            </div>
+        </div>
+        <div class="film-exchange-overview-container">
+            <div class="conference-content-header">
+                <h3>Film Exchange Overview</h3>
+                <a href class="go-to-film-exchange" ui-sref="film-exchange({id: conferenceStringId})" ng-if="conference.filmExchange"><span>Go To</span> <i class="icon icon-sign-out"></i></a>
+            </div>
+            <p ng-hide="conference.filmExchange">This conference is not a film exchange</p>
+            <p class="conference-film-exchange-label" ng-show="conference.filmExchange">Name:</p>
+            <p ng-show="conference.filmExchange">{{conference.filmExchange.name}}</p>
+            <p class="conference-film-exchange-label" ng-show="conference.filmExchange">Status:</p>
+            <p class="film-exchange-visible" ng-show="conference.filmExchange.isVisibleToTeams && conference.filmExchange">Visible to Teams</p>
+            <p class="film-exchange-not-visible" ng-hide="conference.filmExchange.isVisibleToTeams || !conference.filmExchange">Not Visible to Teams</p>
+            <p class="conference-film-exchange-label" ng-show="conference.filmExchange">Film Exchange Admins:</p>
+            <p ng-hide="filmExchangeAdmins.length">This film exchange has no admins</p>
+            <div class="member-list" ng-show="conference.filmExchange && filmExchangeAdmins.length">
+                <a ng-repeat="admin in filmExchangeAdmins | orderBy: 'lastName'" ui-sref="user-roles({ id: admin.id})">{{admin.firstName}} {{admin.lastName}}</a>
+            </div>
+        </div>
+    </main>
 
 </section>

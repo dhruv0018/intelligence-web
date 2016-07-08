@@ -58,7 +58,7 @@
             <table class="table table-striped table-hover">
                 <tbody>
                     <tr ng-repeat="conference in filteredConferences">
-                        <td class="conference-gender-sport"><a ui-sref="conference({id: conference.id})">{{conference.conference.name}} - {{conference.gender | formattedConferenceGender}} {{sports[conference.sportId-1].name}}</a></td>
+                        <td class="conference-gender-sport"><a ui-sref="conference({id: conference.stringID})">{{conference.conference.name}} - {{conference.gender | formattedConferenceGender}} {{sports[conference.sportId-1].name}}</a></td>
                         <td class="conference-code">{{conference.conference.code}}</td>
                         <td class="association-code">{{conference.sportsAssociation}}</td>
                         <td class="filmexchange-status">

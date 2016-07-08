@@ -59,6 +59,11 @@ IntelligenceWebClient.factory('FilmExchangeResource', [
                     method: 'DELETE',
                     url: config.apiV2.uri + 'conference-film-exchanges/:id/films/:idFilmExchangeFilm',
                     params: {idFilmExchangeFilm: '@idFilmExchangeFilm'}
+                },
+                getFilmExchangeAdmins: {
+                    method: 'GET',
+                    url: config.apiV2.uri + 'conference-film-exchanges/:id/administrators',
+                    isArray: true
                 }
             }
         );

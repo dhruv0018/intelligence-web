@@ -43,9 +43,9 @@ Conferences.config([
                 }
             },
             resolve:{
-                'Conference.Data':[
+                'Conferences.Data':[
                     'ConferencesFactory',
-                    function(conferences){
+                    function(conferences) {
                         return conferences.getAllConferenceSportsForAssociation();
                     }
                 ]
@@ -60,6 +60,49 @@ Conferences.config([
                     templateUrl: 'conference.html',
                     controller: ConferenceController
                 }
+            },
+            resolve:{
+                'Conference.Data':[
+                    '$q', '$stateParams', 'ConferencesFactory', 'FilmExchangeFactory',
+                    function($q, $stateParams, conferences, filmExchanges) {
+                        let conferenceFilter = {
+                            sportsAssociation: $stateParams.id.split('+')[0],
+                            conference: $stateParams.id.split('+')[1],
+                            gender: $stateParams.id.split('+')[2],
+                            sportId: $stateParams.id.split('+')[3]
+                        };
+
+                        let conferencesList = conferences.getConferencesList(conferenceFilter);
+
+                        let Data = {
+                            conference: conferencesList.then(conferencesListResponse => {
+                                return conferencesListResponse[0];
+                            }),
+
+                            teams: conferencesList.then(conferencesListResponse => {
+                                if (conferencesListResponse[0].filmExchange) {
+                                    return filmExchanges.getTeams({id: $stateParams.id}).then(teams => {
+                                        return teams;
+                                    });
+                                } else {
+                                    return undefined;
+                                }
+                            }),
+
+                            filmExchangeAdmins: conferencesList.then(conferencesListResponse => {
+                                if (conferencesListResponse[0].filmExchange) {
+                                    return filmExchanges.getFilmExchangeAdmins($stateParams.id).then(admins => {
+                                        return admins;
+                                    });
+                                } else {
+                                    return undefined;
+                                }
+                            })
+                        };
+
+                        return $q.all(Data);
+                    }
+                ]
             }
         });
     }

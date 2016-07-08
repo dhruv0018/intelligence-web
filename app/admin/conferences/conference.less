@@ -1,5 +1,91 @@
-.conference{
+.conference-detail {
+    .sidebar {
+        h2 {
+            margin-top: 5px;
+        }
+    }
 
+    .content {
+        display: flex;
+        padding: 0;
+
+        .member-teams-container {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            padding: 0px 20px;
+            border-right: thin solid @gray-border;
+        }
+
+        .film-exchange-overview-container {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            padding: 0px 20px;
+
+            p {
+                margin: 0px;
+                line-height: normal;
+            }
+
+            .conference-film-exchange-label {
+                font-weight: 500;
+                margin: 5px 0px;
+            }
+
+            .film-exchange-visible {
+                color: @brand-success;
+            }
+
+            .film-exchange-not-visible {
+                color: @brand-danger;
+            }
+        }
+
+        .conference-content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .search-container {
+                position: relative;
+                width: 60%;
+
+                input {
+                    width: 100%;
+                    border: thin solid @gray-border;
+                    border-radius: 5px;
+                    padding-left: 22px;
+                }
+
+                .icon-search {
+                    position: absolute;
+                    left: 5px;
+                    top: 4px;
+                    color: @gray-light;
+                }
+            }
+
+            .go-to-film-exchange {
+                display: flex;
+                align-items: center;
+
+                i {
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        .member-list {
+            flex: 1;
+            overflow-y: auto;
+
+            a {
+                display: block;
+                margin-top: 10px;
+            }
+        }
+    }
 }
 
 // MOBILE

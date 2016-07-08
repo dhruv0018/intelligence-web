@@ -7,7 +7,7 @@ ConferencesController.$inject = [
     '$stateParams',
     'SportsFactory',
     'ConferencesFactory',
-    'Conference.Data'
+    'Conferences.Data'
 ];
 
 /**
@@ -84,7 +84,7 @@ function ConferencesController(
     function populateConferencesList(conferences) {
         $scope.allConferences = [];
         conferences.forEach(conference => {
-            conference.stringID = (conference.filmExchange) ?  conference.filmExchange.sportsAssociation+'+'+conference.filmExchange.conference+'+'+conference.filmExchange.gender+'+'+conference.filmExchange.sportId : '';
+            conference.stringID = conference.sportsAssociation+'+'+conference.conference.code+'+'+conference.gender+'+'+conference.sportId;
             $scope.allConferences.push(conference);
         });
     }
