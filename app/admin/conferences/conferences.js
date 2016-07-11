@@ -1,5 +1,5 @@
 const angular = window.angular;
-const CONFEREENCEPERPAGE = 18; //18
+const CONFEREENCEPERPAGE = 30; //max number of conferences shown per page
 
 ConferencesController.$inject = [
     '$scope',
