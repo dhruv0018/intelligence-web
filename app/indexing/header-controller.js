@@ -121,11 +121,13 @@ Indexing.controller('Indexing.Header.Controller', [
         $scope.launchSendToQaModal = function() {
             let isBasketballGame = $scope.league.sportId === SPORTS.BASKETBALL.id;
             let isLacrosseGame = $scope.league.sportId === SPORTS.LACROSSE.id;
+            let isFootballGame = $scope.league.sportId === SPORTS.FOOTBALL.id;
+            let isVolleyballGame = $scope.league.sportId === SPORTS.VOLLEYBALL.id;
             let locals = {
                 'sendToQa': $scope.sendToQa,
                 'flagsUrl': $scope.game.getFlagsUrl(),
-                //show the flags only for basketball
-                'showFlags': isBasketballGame || isLacrosseGame
+                //show the flags only for supported sports
+                'showFlags': isBasketballGame || isLacrosseGame || isFootballGame || isVolleyballGame
             };
             let modal = SendToQaDialogService.show(locals);
         };
