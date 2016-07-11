@@ -161,6 +161,7 @@ FilmExchange.controller('FilmExchangeController', [
 
         $scope.pageChanged = function() {
             $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
+            document.getElementById('film-exchange-data').scrollTop = 0;
             $scope.filteredFilms = sliceData($scope.page.currentPage);
         };
 
