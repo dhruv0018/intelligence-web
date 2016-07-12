@@ -1,3 +1,9 @@
+# v81.0#
+## Features##
+- Self Editor Improvements
+- Conference Search page for Admins
+- Updates for FB and VB flags
+
 # v80.0#
 ## Features##
 - Self Editor Improvements
