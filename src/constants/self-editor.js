@@ -4,6 +4,8 @@ const angular = window.angular;
 const IntelligenceWebClient = angular.module(pkg.name);
 
 const SELF_EDITOR_TEAM_ID_WHITELIST = [
+    493207,
+    493208,
     12576,
     313111,
     119883,
