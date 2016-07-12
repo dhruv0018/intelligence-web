@@ -181,13 +181,26 @@ IntelligenceWebClient.service('PlaysManager', [
             /* Sort the events by time. */
             play.events.sort(utilities.compareTimes);
 
-            for (let event of play.events) {
+            for (let i=0; i<play.events.length; i++) {
+                let event = play.events[i];
+                let fields = event.fields;
 
-                calculateEvent(play, event);
+                // Workaround for adding player/team information to service error events
+
+                // TODO: Find a cleaner way to do this - either attaching this information
+                // to the event on the backend instead of relying on the previous event or
+                // making a more generic solution for pulling information from previous
+                // events when needed.
+                if(event.tagId == 202 && i>0){
+                    let previousEvent = play.events[i-1];
+                    fields = previousEvent.fields;
+                }
+
+                calculateEvent(play, event, fields);
             }
         }
 
-        function calculateEvent (play, event) {
+        function calculateEvent (play, event, fields) {
 
             let teamId;
             let game = games.get(play.gameId);
@@ -204,12 +217,12 @@ IntelligenceWebClient.service('PlaysManager', [
             /* Look at the first position script field. */
             /* TODO: Clear up once fields are indexed by position and not the
              * tag variable ID. */
-            if (!event.fields) return;
+            if (!fields) return;
 
-            let firstField = event.fields[1];
+            let firstField = fields[1];
             if (!firstField) return;
             let firstFieldId = firstField.index;
-            let field = event.fields[firstFieldId];
+            let field = fields[firstFieldId];
 
             /* If the event is a period event, then reset the period value. */
             if (event.isPeriodTag) {
