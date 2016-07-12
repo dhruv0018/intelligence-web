@@ -104,7 +104,10 @@
             "type": "array",
             // TODO: Add telestration schema
             // "items": { "$ref": "telestration" }
-        }
+        },
+        "selfEditedTelestrations": {
+          "type": "array"
+        },
     },
     "additionalProperties": false
 }

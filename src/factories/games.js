@@ -10,8 +10,8 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity', 'Video',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, teams, users, $q, playTelestrationEntity, rawTelestrationEntity, Video) {
+    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity', 'SelfEditTelestrationEntity', 'Video',
+    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, teams, users, $q, playTelestrationEntity, rawTelestrationEntity, selfEditTelestrationEntity, Video) {
 
         var GamesFactory = {
 
@@ -124,9 +124,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                 // Extend Telestration Entities
                 game.rawTelestrations = game.rawTelestrations || [];
                 game.playTelestrations = game.playTelestrations || [];
+                game.selfEditedTelestrations = game.selfEditedTelestrations || [];
 
                 if (!game.rawTelestrations.unextend) rawTelestrationEntity(game.rawTelestrations, game.id);
                 if (!game.playTelestrations.unextend) playTelestrationEntity(game.playTelestrations, game.id);
+                if (!game.selfEditedTelestrations.unextend) selfEditTelestrationEntity(game.selfEditedTelestrations, game.id);
 
                 return game;
             },

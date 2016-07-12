@@ -6,7 +6,8 @@ GamesSelfEditorController.$inject = [
     'SessionService',
     '$stateParams',
     'GamesFactory',
-    'ROLES'
+    'ROLES',
+    'TelestrationsVideoPlayerBroker'
 ];
 
 function GamesSelfEditorController (
@@ -14,7 +15,8 @@ function GamesSelfEditorController (
     session,
     $stateParams,
     games,
-    ROLES
+    ROLES,
+    TelestrationsVideoPlayerBroker
 ) {
     $scope.hideHeaders = false;
     $scope.hideEditingOptions = false;
@@ -30,6 +32,10 @@ function GamesSelfEditorController (
     $scope.$watch('hideHeaders', () => {
         $scope.$emit('toggleHeaderDisplay', $scope.hideHeaders);
     });
+
+
+    /* telestrations */
+    const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
 }
 
 export default GamesSelfEditorController;

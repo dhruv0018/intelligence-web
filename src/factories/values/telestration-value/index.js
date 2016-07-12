@@ -25,6 +25,7 @@ IntelligenceWebClient.factory('TelestrationValue', require('./telestration-value
 IntelligenceWebClient.factory('PlayTelestrationValue', require('./play-telestration-value'));
 IntelligenceWebClient.factory('RawTelestrationValue', require('./raw-telestration-value'));
 IntelligenceWebClient.factory('ReelTelestrationValue', require('./reel-telestration-value'));
+IntelligenceWebClient.factory('SelfEditTelestrationValue', require('./self-edit-telestration-value'));
 
 
 /* Constants */

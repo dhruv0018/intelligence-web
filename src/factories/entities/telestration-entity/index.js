@@ -22,3 +22,4 @@ IntelligenceWebClient.factory('TelestrationEntity', require('./telestration-enti
 IntelligenceWebClient.factory('RawTelestrationEntity', require('./raw-telestration-entity'));
 IntelligenceWebClient.factory('PlayTelestrationEntity', require('./play-telestration-entity'));
 IntelligenceWebClient.factory('ReelTelestrationEntity', require('./reel-telestration-entity'));
+IntelligenceWebClient.factory('SelfEditTelestrationEntity', require('./self-edit-telestration-entity'));
