@@ -29,8 +29,8 @@ IntelligenceWebClient.factory('UsersResource', [
                 confirmEmail: { method: 'POST', url: config.api.uri + 'users/email-change/:token', params: {token: '@token'} },
                 getFilmExchangePrivileges: {
                     method: 'GET',
-                    url: config.apiV2.uri + 'users/:userId' + '/conference_film_exchange_privileges?onlyVisible=0',
-                    params: {userId: '@userId'},
+                    url: config.apiV2.uri + 'users/:userId' + '/conference_film_exchange_privileges',
+                    params: {userId: '@userId', onlyVisible: '@onlyVisible'},
                     isArray: true
                 },
                 addFilmExchangePrivilege: {

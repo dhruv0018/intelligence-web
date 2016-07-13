@@ -311,14 +311,16 @@ IntelligenceWebClient.factory('UsersFactory', [
              * @description get the film exchange privileges on a film exchange admin role
              * @returns {Object}
              */
-            getFilmExchangePrivileges: function(userId) {
+            getFilmExchangePrivileges: function(userId, viewAll) {
 
                 let self = this;
                 let model = $injector.get(self.model);
+                let onlyVisible = viewAll ? 0 : 1;
 
-                return model.getFilmExchangePrivileges({
-                    userId: userId
-                }).$promise;
+                return model.getFilmExchangePrivileges(
+                    {userId: userId},
+                    {onlyVisible: onlyVisible}
+                ).$promise;
             },
 
             /**
