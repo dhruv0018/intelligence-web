@@ -1,3 +1,7 @@
+# v81.1#
+## Fixes##
+- Show member teams for conferences that are not film exchanges
+
 # v81.0#
 ## Features##
 - Self Editor Improvements
