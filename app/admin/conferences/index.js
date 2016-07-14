@@ -73,20 +73,15 @@ Conferences.config([
                         };
 
                         let conferencesList = conferences.getConferencesList(conferenceFilter);
+                        let conferenceTeamsList = conferences.loadTeamsInConference({combinationCode: $stateParams.id});
 
                         let Data = {
                             conference: conferencesList.then(conferencesListResponse => {
                                 return conferencesListResponse[0];
                             }),
 
-                            teams: conferencesList.then(conferencesListResponse => {
-                                if (conferencesListResponse[0].filmExchange) {
-                                    return filmExchanges.getTeams({id: $stateParams.id}).then(teams => {
-                                        return teams;
-                                    });
-                                } else {
-                                    return undefined;
-                                }
+                            teams: conferenceTeamsList.then(teams => {
+                                return teams;
                             }),
 
                             filmExchangeAdmins: conferencesList.then(conferencesListResponse => {

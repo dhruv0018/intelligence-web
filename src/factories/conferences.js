@@ -136,10 +136,9 @@ IntelligenceWebClient.factory('ConferencesFactory', [
                 return model.getAllFilmExchangesForAssociation({sportsAssociation, count}).$promise;
             },
 
-            loadTeamsInFilmExchange(associationCode, conferenceCode, gender, sportId) {
+            loadTeamsInConference(filter) {
                 const model = $injector.get(this.model);
-                let combinationCode = `${associationCode}+${conferenceCode}+${gender}+${sportId}`;
-                return model.getTeamsInFilmExchange({combinationCode}).$promise;
+                return model.getTeamsInConference(filter).$promise;
             },
 
             getConferencesList: function(filter) {

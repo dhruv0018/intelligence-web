@@ -93,7 +93,7 @@ IntelligenceWebClient.factory('ConferencesResource', [
                 params: {sportsAssociation: '@sportsAssociation', count: '@count'},
                 isArray: true
             },
-            getTeamsInFilmExchange: {
+            getTeamsInConference: {
                 method: 'GET',
                 url: `${url}${filmExchangeBase}/:combinationCode/teams`,
                 params: {combinationCode: '@combinationCode'},
