@@ -1,4 +1,4 @@
-<div class="delete-film">
+<div class="delete-game-modal">
 
     <header class="modal-header">
 
@@ -8,17 +8,21 @@
     </header>
 
     <div class="modal-body">
-        <p class="warning">
-            Deleting this game will delete all the information associated with it.
-        </p>
+        <p>Deleting this game will delete all the information associated with it.</p>
 
-        <button ng-click="deleteGame()" class="btn btn-danger">
-            Yes, I understand
-        </button>
+        <p ng-show="sharedFilmExchanges.length">This game will also be removed from the following film exchanges:</p>
+        <ul>
+            <li ng-show="sharedFilmExchanges.length" ng-repeat="filmExchange in sharedFilmExchanges">{{filmExchange.name}}</li>
+        </ul>
 
-        <a class="pull-right" ng-click="$close()">
-            <i class="icon icon-remove"></i> No, don't delete my game
-        </a>
+        <div class="button-row">
+            <button class="btn btn-sm btn-primary" ng-click="deleteGame()">
+                Yes, I understand
+            </button>
+            <button class="btn btn-sm btn-default" ng-click="$close()">
+                Cancel
+            </button>
+        </div>
     </div>
 
 </div>
