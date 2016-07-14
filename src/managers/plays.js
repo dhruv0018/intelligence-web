@@ -239,12 +239,18 @@ IntelligenceWebClient.service('PlaysManager', [
             if (angular.isDefined(field) && angular.isDefined(field.value)) {
 
                 /* If its a team field. */
-                teamId = field.value.teamId;
+                if(field.value.type == FIELD_TYPE.TEAM){
+                    teamId = field.value.id;
+                }
+                else{
+                    teamId = field.value.teamId;
+                }
+
 
                 /* If its a player field. */
                 if (!teamId) {
 
-                    let playerId = field.value.playerId;
+                    let playerId = field.value.id;
                     teamId = playerId && game.isPlayerOnTeam(playerId) ? game.teamId : game.opposingTeamId;
 
                     if (!teamId) {
