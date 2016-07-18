@@ -149,40 +149,36 @@
         }
 
         .film-exchange-data-container{
-            border: 1px solid #dddddd;
             background-color: white;
             width: 98%;
-            max-height: 1000px;
             margin: 0px auto;
-            cursor: pointer;
-            border-top: none;
-            -moz-transition: max-height .7s, border-width .7s, transform linear 0.08s;
-            -ms-transition: max-height .7s, border-width .7s, transform linear 0.08s;
-            -o-transition: max-height .7s, border-width .7s, transform linear 0.08s;
-            -webkit-transition: max-height .7s, border-width .7s, transform linear 0.08s;
-            transition: max-height .7s, border-width .7s, transform linear 0.08s;
 
             table {
                 width: 100%;
+                border: 1px solid #dddddd;
+                max-height: 1000px;
+                cursor: pointer;
+                border-top: none;
+                -moz-transition: max-height .7s, border-width .7s, transform linear 0.08s;
+                -ms-transition: max-height .7s, border-width .7s, transform linear 0.08s;
+                -o-transition: max-height .7s, border-width .7s, transform linear 0.08s;
+                -webkit-transition: max-height .7s, border-width .7s, transform linear 0.08s;
+                transition: max-height .7s, border-width .7s, transform linear 0.08s;
+
+                &:hover {
+                    transform: scale(1.005);
+                    box-shadow: 0px 0px 10px 1px rgba(0,0,0,.1);
+                    z-index: 999;
+                }
             }
 
-            &:hover {
-                transform: scale(1.005);
-                box-shadow: 0px 0px 10px 1px rgba(0,0,0,.1);
-                z-index: 999;
-            }
-
-            &.searching {
-                display: none;
-            }
-
-            &.removed {
+            &.removed > table {
                 max-height: 0px;
                 border-width: 0px;
                 overflow: hidden;
             }
 
-            &.film-not-processed {
+            &.film-not-processed > table {
                 cursor: default;
 
                 td, td > .subText {

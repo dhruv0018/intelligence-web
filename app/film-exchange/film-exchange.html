@@ -32,7 +32,7 @@
                 <h3>{{filmExchangeName}}</h3>
                 <button class="btn btn-default" ng-click="openFilmExchangeModal()" ng-if="!currentUser.is(COACH)">Manage Team Access</button>
             </div>
-            <div class="table-header" ng-show="filteredFilms.length > 0">
+            <div class="table-header" ng-show="filteredFilms.length > 0 && !searching">
                 <table class="table">
                     <thead>
                         <tr>
@@ -55,8 +55,8 @@
             <div
                 class="film-exchange-data-container"
                 ng-repeat="film in filteredFilms"
-                ng-class="{searching: searching, removed: isFilmRemoved(film), 'film-not-processed': film.video.status !== 4}"
-                ng-if="filteredFilms.length"
+                ng-class="{'removed': isFilmRemoved(film), 'film-not-processed': film.video.status !== 4}"
+                ng-show="filteredFilms.length && !searching"
                 ng-click="openRawFilmModal(film)">
                 <table>
                     <tr>

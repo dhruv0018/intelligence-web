@@ -113,6 +113,7 @@ FilmExchange.controller('FilmExchangeController', [
         $scope.currentUser = session.getCurrentUser();
         $scope.noData = false;
         $scope.isDefaultState = true;
+        $scope.displayTableAnimations = true;
 
         if (!$stateParams.id) {
             //no id specified, go to first item
@@ -174,6 +175,9 @@ FilmExchange.controller('FilmExchangeController', [
             $scope.searching = true;
             $scope.filteredFilms.length = 0;
             $scope.isDefaultState = false;
+            $scope.displayTableAnimations = false;
+            $scope.allFilms = [];
+            $scope.filteredFilms = [];
 
             filter.id = $stateParams.id;
             if ($scope.currentUser.is(ROLES.COACH)) filter.teamId = session.getCurrentTeamId();
@@ -190,14 +194,13 @@ FilmExchange.controller('FilmExchangeController', [
                 $scope.allFilms = data.map(film => filmExchangeFactory.setVideoEntity(film));
                 $scope.filteredFilms = sliceData($scope.page.currentPage);
             }).finally(function() {
-                $timeout(function() {
-                    $scope.searching = false;
-                    //FIX TIMEZONE ISSUE FOR EARLY VERSION OF DATE PICKER: https://github.com/angular-ui/bootstrap/issues/2628
-                    if($scope.filter.datePlayed){
-                        $scope.filter.datePlayed = new Date($scope.filter.datePlayed);
-                        $scope.filter.datePlayed.setMinutes( $scope.filter.datePlayed.getMinutes() + $scope.filter.datePlayed.getTimezoneOffset() );
-                    }
-                },300);
+                $scope.searching = false;
+
+                //FIX TIMEZONE ISSUE FOR EARLY VERSION OF DATE PICKER: https://github.com/angular-ui/bootstrap/issues/2628
+                if($scope.filter.datePlayed){
+                    $scope.filter.datePlayed = new Date($scope.filter.datePlayed);
+                    $scope.filter.datePlayed.setMinutes( $scope.filter.datePlayed.getMinutes() + $scope.filter.datePlayed.getTimezoneOffset() );
+                }
             });
         }
 
