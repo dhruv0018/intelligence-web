@@ -1607,19 +1607,12 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return url;
             },
 
-            getFilmExchanges: function(id, success, error) {
+            getFilmExchanges: function(id, excludeCopiedGames) {
                 id = id || this.id;
-
-                var callback = function(filmExchanges) {
-                    return success ? success(filmExchanges) : filmExchanges;
-                };
-
-                error = error || function() {
-                    throw new Error('Could not get film exchanges for this game');
-                };
+                excludeCopiedGames = excludeCopiedGames || 0;
 
                 const model = $injector.get(this.model);
-                return model.getFilmExchanges({ id: id }, callback, error).$promise;
+                return model.getFilmExchanges({id, excludeCopiedGames}).$promise;
             },
 
             copyFromFilmExchange: function(copyInfo, gameId, teamId, filmExchange) {

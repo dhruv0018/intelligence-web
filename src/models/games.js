@@ -64,6 +64,7 @@ IntelligenceWebClient.factory('GamesResource', [
             getFilmExchanges: {
                 method: 'GET',
                 url: config.apiV2.uri + base + '/:id/film-exchanges',
+                params: {excludeCopiedGames: '@excludeCopiedGames'},
                 isArray: true
             },
 
