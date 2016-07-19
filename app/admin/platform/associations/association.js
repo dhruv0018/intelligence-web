@@ -197,7 +197,7 @@ function AssociationController(
         $scope.newFilmExchange.gender = conferenceSport.gender;
         $scope.newFilmExchange.sportId = conferenceSport.sportId;
         $scope.newFilmExchange.isVisibleToTeams = false;
-        $scope.newFilmExchange.name = conferenceSport.name;
+        $scope.newFilmExchange.name = conferenceSport.conference.code + ' - ' + $filter('formattedConferenceGender')(conferenceSport.gender) + ' ' + $scope.sports[conferenceSport.sportId].name;
     };
 
     $scope.addFilmExchange = function(filmExchange) {
