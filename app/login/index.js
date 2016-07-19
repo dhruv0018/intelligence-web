@@ -408,10 +408,8 @@ function LoginController(
                 user.save();
 
                 /* Once successfully logged in, determine the user's home state.
-                 * Then, track user in analytics (user may not have a default
-                 * roll yet). */
-                account.gotoUsersHomeState(user)
-                .then(analytics.identify);
+                 */
+                account.gotoUsersHomeState(user);
             }
         }, function(error) {
 
@@ -475,10 +473,8 @@ function LoginController(
                 user.save();
 
                 /* Once successfully logged in, determine the user's home state.
-                 * Then, track user in analytics (user may not have a default
-                 * roll yet). */
-                account.gotoUsersHomeState(user)
-                .then(analytics.identify);
+                */
+                account.gotoUsersHomeState(user);
             }
         }, function(error) {
 
