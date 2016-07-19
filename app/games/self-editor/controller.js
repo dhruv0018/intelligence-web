@@ -33,7 +33,6 @@ function GamesSelfEditorController (
         $scope.$emit('toggleHeaderDisplay', $scope.hideHeaders);
     });
 
-
     /* telestrations */
     const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
 }
