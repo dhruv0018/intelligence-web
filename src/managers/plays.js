@@ -22,9 +22,12 @@ IntelligenceWebClient.service('PlaysManager', [
     'EventManager',
     'PlaysFactory',
     'GamesFactory',
+    'TeamsFactory',
     'TagsetsFactory',
     'PlaylistEventEmitter',
     'EVENT',
+    'SPORT_IDS',
+    'SPORTS',
     function service(
         $injector,
         utilities,
@@ -35,15 +38,20 @@ IntelligenceWebClient.service('PlaysManager', [
         eventManager,
         plays,
         games,
+        teams,
         tagsets,
         playlistEventEmitter,
-        EVENT
+        EVENT,
+        SPORT_IDS,
+        SPORTS
     ) {
 
         var period;
         var indexing;
-        var indexedScore;
+        var indexedScore; // For sports based on sets, this is the number of sets won
         var opposingIndexedScore;
+        var runningScore; // For sports based on sets, this is the score within the set
+        var opposingRunningScore;
 
         this.plays = [];
 
@@ -155,7 +163,9 @@ IntelligenceWebClient.service('PlaysManager', [
         this.calculatePlays = function() {
             period = 0;
             indexedScore = 0;
+            runningScore = 0;
             opposingIndexedScore = 0;
+            opposingRunningScore = 0;
 
             this.plays.sort(utilities.compareStartTimes);
             this.plays.forEach(calculatePlay);
@@ -181,6 +191,9 @@ IntelligenceWebClient.service('PlaysManager', [
 
             let teamId;
             let game = games.get(play.gameId);
+            let team = teams.get(game.teamId);
+            let sport = team.getSport();
+            let scoreBySets = SPORTS[sport.name.toUpperCase()].scoreBySets;
 
             /* Set the period of the play. */
             play.period = period;
@@ -202,6 +215,11 @@ IntelligenceWebClient.service('PlaysManager', [
             if (event.isPeriodTag) {
                 period = field.value.name;
                 play.period = period;
+
+                if(scoreBySets){
+                    runningScore = 0;
+                    opposingRunningScore = 0;
+                }
             }
 
             /* If the field value is defined. */
@@ -231,6 +249,18 @@ IntelligenceWebClient.service('PlaysManager', [
                  * possession for the remainder of the play. */
                 if (!play.possessionTeamId) play.possessionTeamId = teamId;
 
+                // If the sport is scored by sets and a set won tag is encountered,
+                // increment the proper team's indexed score.
+                if(event.tagId == 19 && scoreBySets) {
+
+                    if (game.teamId == teamId) {
+                        indexedScore++;
+                    }
+                    else{
+                        opposingIndexedScore++;
+                    }
+                }
+
                 /* If the tag has points to assign. */
                 if (event.pointsAssigned) {
 
@@ -241,14 +271,22 @@ IntelligenceWebClient.service('PlaysManager', [
                         if (event.assignThisTeam) {
 
                             /* Assign the points to this team. */
-                            indexedScore += event.pointsAssigned;
+                            runningScore += event.pointsAssigned;
+
+                            if(!scoreBySets){
+                                indexedScore += event.pointsAssigned;
+                            }
                         }
 
                         /* If the points should be assigned to the other team. */
                         else {
 
                             /* Assign the points to the other team. */
-                            opposingIndexedScore += event.pointsAssigned;
+                            opposingRunningScore += event.pointsAssigned;
+
+                            if(!scoreBySets){
+                                opposingIndexedScore += event.pointsAssigned;
+                            }
                         }
                     }
 
@@ -259,14 +297,22 @@ IntelligenceWebClient.service('PlaysManager', [
                         if (event.assignThisTeam) {
 
                             /* Assign the points to this team. */
-                            opposingIndexedScore += event.pointsAssigned;
+                            opposingRunningScore += event.pointsAssigned;
+
+                            if(!scoreBySets){
+                                opposingIndexedScore += event.pointsAssigned;
+                            }
                         }
 
                         /* If the points should be assigned to the other team. */
                         else {
 
                             /* Assign the points to the other team. */
-                            indexedScore += event.pointsAssigned;
+                            runningScore += event.pointsAssigned;
+
+                            if(!scoreBySets){
+                                indexedScore += event.pointsAssigned;
+                            }
                         }
                     }
                 }
@@ -274,7 +320,9 @@ IntelligenceWebClient.service('PlaysManager', [
 
             /* Set scores on the play. */
             play.indexedScore = indexedScore;
+            play.runningScore = runningScore;
             play.opposingIndexedScore = opposingIndexedScore;
+            play.opposingRunningScore = opposingRunningScore;
         }
     }
 ]);

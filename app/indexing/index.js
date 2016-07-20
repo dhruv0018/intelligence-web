@@ -39,11 +39,12 @@ Indexing.run([
  * @type {service}
  */
 Indexing.service('Indexing.Data.Dependencies', [
-    'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'TagsetsFactory',
-    function(session, games, teams, leagues, tagsets) {
+    'SessionService', 'GamesFactory', 'TeamsFactory', 'LeaguesFactory', 'TagsetsFactory', 'SportsFactory',
+    function(session, games, teams, leagues, tagsets, sports) {
 
         var Data = {
 
+            sports: sports.load(),
             leagues: leagues.load(),
             tagsets: tagsets.load(),
 
