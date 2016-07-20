@@ -32,22 +32,20 @@
                 <h3>{{filmExchangeName}}</h3>
                 <button class="btn btn-default" ng-click="openFilmExchangeModal()" ng-if="!currentUser.is(COACH)">Manage Team Access</button>
             </div>
-            <div class="table-header" ng-show="filteredFilms.length > 0 && !searching">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="film-status"></th>
-                            <th class="team">Away</th>
-                            <th class="team">Home</th>
-                            <th class="score">Score</th>
-                            <th class="datePlayed">Date Played</th>
-                            <th class="dateAdded" ng-if="!currentUser.is(COACH)">Date Added</th>
-                            <th class="actions" ng-if="currentUser.is(COACH)"></th>
-                        </tr>
-                    </thead>
-                </table>
+        </div>
+
+        <div class="table-header-container" ng-show="filteredFilms.length > 0 && !searching">
+            <div class="table-header">
+                <div class="header-cell film-status"></div>
+                <div class="header-cell team">Away</div>
+                <div class="header-cell team">Home</div>
+                <div class="header-cell score">Score</div>
+                <div class="header-cell datePlayed">Date Played</div>
+                <div class="header-cell dateAdded" ng-if="!currentUser.is(COACH)">Date Added</div>
+                <div class="header-cell actions" ng-if="currentUser.is(COACH)"></div>
             </div>
         </div>
+
         <div id="film-exchange-data" class="force-scrollbar">
             <div class="film-exchange-data-no text-center" ng-show="!filteredFilms.length">
                 There are no games in your film exchange yet.
@@ -58,63 +56,61 @@
                 ng-class="{'removed': isFilmRemoved(film), 'film-not-processed': film.video.status !== 4}"
                 ng-show="filteredFilms.length && !searching"
                 ng-click="openRawFilmModal(film)">
-                <table>
-                    <tr>
-                        <td class="film-status">
-                            <i class="icon icon-clock-o" ng-if="film.video.status === 1 || film.video.status === 2" tooltip="Film Processing" tooltip-placement="right"></i>
-                            <i class="icon icon-exclamation-circle" ng-if="film.video.status === 8" tooltip="Error While Processing" tooltip-placement="right"></i>
-                        </td>
-                        <td class="team">
-                            <span class="team-name">{{film.awayTeam.name}} <i class="icon icon-play team-won" ng-if="film.awayTeam.won"></i></span>
-                            <span class="competitionLevel subText">{{film.awayTeam.primaryConference.competitionLevel}}</span>
-                        </td>
-                        <td class="team">
-                            <span class="team-name">{{film.homeTeam.name}} <i class="icon icon-play team-won" ng-if="film.homeTeam.won"></i></span>
-                            <span class="competitionLevel subText">{{film.homeTeam.primaryConference.competitionLevel}}</span>
-                        </td>
-                        <td class="score">
-                            <span>
-                                <span>{{film.awayTeam.score}}</span>
-                                 -
-                                 <span>{{film.homeTeam.score}}</span>
-                             </span>
-                        </td>
-                        <td class="datePlayed">
-                            <span>{{film.datePlayed|date:'MMM dd, yyyy'}}</span>
-                            <span class="addedBy subText" ng-if="currentUser.is(COACH)">added by <span ng-hide="film.addedByUser.id === currentUser.id">{{film.addedByUser.firstName}} {{film.addedByUser.lastName}}</span><span ng-show="film.addedByUser.id === currentUser.id">you</span></span>
-                        </td>
-                        <td class="dateAdded" ng-if="!currentUser.is(COACH)">
-                            <span>{{film.createdAt|date:'MMM dd, yyyy'}}</span>
-                            <span class="addedBy subText" ng-if="!currentUser.is(COACH)">added by <a href="mailto:{{film.addedByUser.email}}?subject={{film.awayTeam.name}} @ {{film.homeTeam.name}} ({{film.datePlayed|date:'MMM dd, yyyy'}})" target="_blank" ng-hide="film.addedByUser.id === currentUser.id" ng-click="$event.stopPropagation();">{{film.addedByUser.firstName}} {{film.addedByUser.lastName}}</a><span ng-show="film.addedByUser.id === currentUser.id">you</span></span>
-                        </td>
-                        <td class="actions" ng-if="currentUser.is(COACH)">
-                            <span class="copy-actions" ng-if="currentUser.getCurrentRole().teamId != film.addedByTeam.id">
-                                <a
-                                    href
-                                    ng-if="!film.isCopying && !film.copiedGame && !film.copyConfirm"
-                                    ng-click="onCopyClick($event, film)">
-                                    <i class="icon icon-copy"></i> Copy
-                                </a>
-                                <krossover-spinner
-                                    ng-if="film.isCopying && !film.copiedGame && !film.copyConfirm"
-                                    size="'15px'">
-                                </krossover-spinner>
-                                <span ng-if="film.copyConfirm" class="copy-confirm">
-                                    <i class="icon icon-ok"></i> Copied
-                                </span>
-                                <span ng-if="!film.isCopying && film.copiedGame && !film.copyConfirm">
-                                    <i class="icon icon-copy"></i> Copied
-                                </span>
-                            </span>
+                <div class="body-row">
+                    <div class="body-cell film-status">
+                        <i class="icon icon-clock-o" ng-if="film.video.status === 1 || film.video.status === 2" tooltip="Film Processing" tooltip-placement="right"></i>
+                        <i class="icon icon-exclamation-circle" ng-if="film.video.status === 8" tooltip="Error While Processing" tooltip-placement="right"></i>
+                    </div>
+                    <div class="body-cell team">
+                        <span class="team-name"><span>{{film.awayTeam.name}}</span> <i class="icon icon-play team-won" ng-if="film.awayTeam.won"></i></span>
+                        <span class="competitionLevel subText">{{film.awayTeam.primaryConference.competitionLevel}}</span>
+                    </div>
+                    <div class="body-cell team">
+                        <span class="team-name"><span>{{film.homeTeam.name}}</span> <i class="icon icon-play team-won" ng-if="film.homeTeam.won"></i></span>
+                        <span class="competitionLevel subText">{{film.homeTeam.primaryConference.competitionLevel}}</span>
+                    </div>
+                    <div class="body-cell score">
+                        <span>
+                            <span>{{film.awayTeam.score}}</span>
+                             -
+                             <span>{{film.homeTeam.score}}</span>
+                         </span>
+                    </div>
+                    <div class="body-cell datePlayed">
+                        <span>{{film.datePlayed|date:'MMM dd, yyyy'}}</span>
+                        <span class="addedBy subText" ng-if="currentUser.is(COACH)">added by <span ng-hide="film.addedByUser.id === currentUser.id">{{film.addedByUser.firstName}} {{film.addedByUser.lastName}}</span><span ng-show="film.addedByUser.id === currentUser.id">you</span></span>
+                    </div>
+                    <div class="body-cell dateAdded" ng-if="!currentUser.is(COACH)">
+                        <span>{{film.createdAt|date:'MMM dd, yyyy'}}</span>
+                        <span class="addedBy subText" ng-if="!currentUser.is(COACH)">added by <a href="mailto:{{film.addedByUser.email}}?subject={{film.awayTeam.name}} @ {{film.homeTeam.name}} ({{film.datePlayed|date:'MMM dd, yyyy'}})" target="_blank" ng-hide="film.addedByUser.id === currentUser.id" ng-click="$event.stopPropagation();">{{film.addedByUser.firstName}} {{film.addedByUser.lastName}}</a><span ng-show="film.addedByUser.id === currentUser.id">you</span></span>
+                    </div>
+                    <div class="body-cell actions" ng-if="currentUser.is(COACH)">
+                        <span class="copy-actions" ng-if="currentUser.getCurrentRole().teamId != film.addedByTeam.id">
                             <a
                                 href
-                                ng-if="currentUser.getCurrentRole().teamId === film.addedByTeam.id"
-                                ng-click="onRemoveClick($event, film)">
-                                <i class="icon icon-trash-o"></i> Remove
+                                ng-if="!film.isCopying && !film.copiedGame && !film.copyConfirm"
+                                ng-click="onCopyClick($event, film)">
+                                <i class="icon icon-copy"></i> Copy
                             </a>
-                        </td>
-                    </tr>
-                </table>
+                            <krossover-spinner
+                                ng-if="film.isCopying && !film.copiedGame && !film.copyConfirm"
+                                size="'15px'">
+                            </krossover-spinner>
+                            <span ng-if="film.copyConfirm" class="copy-confirm">
+                                <i class="icon icon-ok"></i> Copied
+                            </span>
+                            <span ng-if="!film.isCopying && film.copiedGame && !film.copyConfirm">
+                                <i class="icon icon-copy"></i> Copied
+                            </span>
+                        </span>
+                        <a
+                            href
+                            ng-if="currentUser.getCurrentRole().teamId === film.addedByTeam.id"
+                            ng-click="onRemoveClick($event, film)">
+                            <i class="icon icon-trash-o"></i> Remove
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="text-center footer" ng-show="allFilms.length > itemPerPage">
