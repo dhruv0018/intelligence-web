@@ -77,7 +77,7 @@
             </table>
         </div>
         <div class="text-center footer" ng-show="allConferences.length > itemPerPage">
-            <pagination total-items="allConferences.length" ng-model="page.currentPage" boundary-links="true" class="krossover-pagination pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
+            <pagination total-items="allConferences.length" ng-model="page.currentPage" boundary-links="true" class="pagination pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
         </div>
     </div>
     <data-results ng-hide="allConferences.length" query="query"></data-results>
