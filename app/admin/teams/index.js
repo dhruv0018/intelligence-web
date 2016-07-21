@@ -150,12 +150,43 @@ Teams.config([
                         controller: 'TeamConferencesController'
                     }
                 },
-                resolve:{
-                    'Conference.Data':[
-                        '$stateParams', '$q', 'Conference.Data.Dependencies',
-                        function($stateParams, $q, ConferenceData){
+                resolve: {
+                    'Conference.Data': [
+                        '$stateParams',
+                        '$q',
+                        'SportsFactory',
+                        'TeamsFactory',
+                        'AssociationsFactory',
+                        function(
+                            $stateParams,
+                            $q,
+                            sports,
+                            teams,
+                            associations
+                        ) {
                             let teamId = $stateParams.id;
-                            let data = new ConferenceData(teamId);
+                            //let data = new ConferenceData(teamId);
+                            let data = {
+                                sports: sports.getMap(),
+                                associations: associations.load()
+                            };
+
+                            data.availableConferences = teams.getAvailableConferences(teamId).then(conferences => {
+                                return conferences.map(conference => {
+                                    conference.fullName = conference.conference.name + ' ( ' + conference.sportsAssociation + ' )';
+                                    conference.conferenceObj = conference.conference;
+                                    conference.conference = conference.conference.code;
+                                    return conference;
+                                });
+                            });
+                            data.teamConferences = teams.getConferences(teamId).then(conferences => {
+                                return conferences.map(conference => {
+                                    conference.fullName = conference.conference.name + ' ( ' + conference.sportsAssociation + ' )';
+                                    conference.conferenceObj = conference.conference;
+                                    conference.conference = conference.conference.code;
+                                    return conference;
+                                });
+                            });
 
                             return $q.all(data);
                         }
@@ -164,50 +195,6 @@ Teams.config([
             });
     }
 ]);
-
-ConferenceDataDependencies.$inject = [
-    'SportsFactory',
-    'TeamsFactory',
-    'AssociationsFactory',
-    'ConferencesFactory'
-];
-
-function ConferenceDataDependencies(
-    sports,
-    teams,
-    associations,
-    conferencesfactory
-){
-    class ConferenceData{
-
-        constructor (teamId){
-            this.sports = sports.getMap();
-            this.availableConferences = [];
-            this.associations = associations.load();
-            teams.getAvailableConferences(teamId).then(conferences =>{
-                conferences.forEach(conference => {
-                    conference.fullName = conference.conference.name + ' ( ' + conference.sportsAssociation + ' )';
-                    conference.conferenceObj = conference.conference;
-                    conference.conference = conference.conference.code;
-                    this.availableConferences.push(conference);
-                });
-            });
-            this.teamConferences = [];
-            teams.getConferences(teamId).then(conferences =>{
-                conferences.forEach(conference => {
-                    conference.fullName = conference.conference.name + ' ( ' + conference.sportsAssociation + ' )';
-                    conference.conferenceObj = conference.conference;
-                    conference.conference = conference.conference.code;
-                    this.teamConferences.push(conference);
-                });
-            });
-        }
-    }
-
-    return ConferenceData;
-}
-
-Teams.service('Conference.Data.Dependencies', ConferenceDataDependencies);
 
 TeamDataDependencies.$inject = [
     'SportsFactory',
