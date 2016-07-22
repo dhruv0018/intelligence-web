@@ -21,8 +21,7 @@ GameStatesService.$inject = [
     'SPORTS',
     'SPORT_IDS',
     'ROLES',
-    'ROLE_TYPE',
-    'SELF_EDITOR_TEAM_ID_WHITELIST'
+    'ROLE_TYPE'
 ];
 
 function GameStatesService (
@@ -33,8 +32,7 @@ function GameStatesService (
     SPORTS,
     SPORT_IDS,
     ROLES,
-    ROLE_TYPE,
-    SELF_EDITOR_TEAM_ID_WHITELIST
+    ROLE_TYPE
 ) {
 
     return {
@@ -48,7 +46,6 @@ function GameStatesService (
             let uploaderTeam = teams.get(game.uploaderTeamId);
             let league = leagues.get(uploaderTeam.leagueId);
             let sport = SPORTS[SPORT_IDS[league.sportId]];
-            let uploaderTeamIsOnSelfEditorWhitelist = SELF_EDITOR_TEAM_ID_WHITELIST.some(whitelistId => uploaderTeam.id === whitelistId);
             let isDelivered = game.isDelivered();
             let transcodeCompleted = game.video.isComplete();
             let breakdownShared = game.publicShare && game.publicShare.isBreakdownShared || game.isBreakdownSharedWithCurrentUser();
@@ -109,7 +106,7 @@ function GameStatesService (
                     }
                 }
 
-                if (isTeamUploadersTeam && (isCoach || (isAthlete && game.isSelfEdited)) && features.isEnabled('SelfEditor') && uploaderTeamIsOnSelfEditorWhitelist) {
+                if (isTeamUploadersTeam && (isCoach || (isAthlete && game.isSelfEdited)) && features.isEnabled('SelfEditor')) {
 
                     // self editor
                     states.push({name: 'Games.SelfEditor'});
