@@ -43,6 +43,21 @@ IntelligenceWebClient.factory('LeaguesFactory', [
                 return seasons[0];
             },
 
+            getSeasonForWSC: function() {
+                /* For WSC, if the latest season is less than halfway through, get the previous one */
+                let currentDate = moment().valueOf();
+                let seasons = this.seasons.sort((a, b) => moment(b.startDate).diff(a.startDate));
+                return seasons.find(season => {
+                    let seasonStartDate = moment(season.startDate).valueOf();
+                    let seasonEndDate = moment(season.endDate).valueOf();
+                    let dateDifference = (moment(season.endDate).valueOf() - moment(season.startDate).valueOf()) / 2;
+                    let seasonMidPoint = moment(season.endDate).valueOf() - dateDifference;
+                    if (currentDate > seasonMidPoint) {
+                        return season;
+                    }
+                });
+            },
+
             belongsToYardFormatWhitelist(league = this) {
 
                 return config.yardFormatLeagueIdsWhitelist.indexOf(league.id) >= 0;
