@@ -14,8 +14,8 @@ const IntelligenceWebClient = angular.module(pkg.name);
  */
 
 IntelligenceWebClient.service('AnalyticsService', [
-    'SessionService', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', '$location',
-    function (session, teams, sports, leagues, schools, $location) {
+    'SessionService', 'DetectDeviceService', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', '$location',
+    function (session, deviceDetect, teams, sports, leagues, schools, $location) {
 
         return {
 
@@ -28,21 +28,26 @@ IntelligenceWebClient.service('AnalyticsService', [
                 let pageView      = $location.path().split('/').pop();
                 let user          = session.retrieveCurrentUser() || {id:'', email:''};
                 let teamId        = '';
+                let teamName      = '';
                 let leagueId      = '';
                 let sportId       = '';
                 let sportName     = '';
                 let leagueName    = '';
+                let gender        = '';
                 let regionCode    = '';
                 let schoolType    = '';
                 let planName      = '';
                 let planActive    = false;
                 let packageActive = false;
                 let school        = null;
+                let device        = deviceDetect.getDevice();
+                let browser       = navigator.userAgent;
 
                 teamId = session.getCurrentTeamId() || '';
 
                 if (teamId) {
                     let team = teams.get(teamId);
+                    teamName = team.name;
 
                     if(team){
                         let activePlan = team.getActivePlan();
@@ -78,18 +83,21 @@ IntelligenceWebClient.service('AnalyticsService', [
                         sportId  = leagues.get(leagueId).sportId || '';
                         sportName  = sports.get(sportId).name || '';
                         leagueName = leagues.get(leagueId).name || '';
+                        gender = leagues.get(leagueId).gender || '';
                     }
                 }
 
                 mixpanel.register({
                     'Email'           : user.email,
                     'User ID'         : user.id,
+                    'User Name'       : user.firstName+' '+user.lastName,
                     'Web Version'     : pkg.version,
                     'Account Created' : moment.utc(user.createdAt).format('MM/YY'),
                     'Role Created'    : moment.utc(user.currentRole.createdAt).format('MM/YY'),
                     'Role Name'       : user.currentRole.type.name,
                     'Role ID'         : user.currentRole.type.id,
                     'League ID'       : leagueId,
+                    'Gender'          : gender,
                     'Sport'           : sportId,
                     'Region Code'     : regionCode,
                     'School Type'     : schoolType,
@@ -100,6 +108,9 @@ IntelligenceWebClient.service('AnalyticsService', [
                     'Customer Type'   : planName,
                     'Page View'       : pageView,
                     'Team ID'         : teamId,
+                    'Team Name'       : teamName,
+                    'Device'          : device,
+                    'Browser'         : browser,
                     'Current Season'  : '' // TODO: need this!
                 });
 

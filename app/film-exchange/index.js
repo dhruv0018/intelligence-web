@@ -88,6 +88,7 @@ FilmExchange.controller('FilmExchangeController', [
     'RawFilm.Modal',
     'BasicModals',
     'SessionService',
+    'AnalyticsService',
     'GamesFactory',
     'FilmExchangeFactory',
     'SportsFactory',
@@ -105,6 +106,7 @@ FilmExchange.controller('FilmExchangeController', [
         RawFilmModal,
         basicModals,
         session,
+        analytics,
         games,
         filmExchangeFactory,
         sports,
@@ -224,6 +226,12 @@ FilmExchange.controller('FilmExchangeController', [
             });
 
             removeFromFilmExchangeModal.result.then(() => {
+                /* Track the event for MixPanel */
+                analytics.track('Game Removed', {
+                    'Film Exchange ID': $stateParams.id,
+                    'Film Exchange Name': $scope.filmExchangeName
+                });
+
                 filmExchangeFactory.removeGameFromFilmExchange($stateParams.id, film.idFilmExchangeFilm).then(response => {
                     removedFilms.push(film);
                 });
@@ -258,12 +266,20 @@ FilmExchange.controller('FilmExchangeController', [
 
             copyFilmModal.result.then(() => {
                 film.isCopying = true;
+
                 let filmExchangeData = {
                     sportsAssociation: titleFilter.sportsAssociation,
                     conference: titleFilter.conference,
                     gender: titleFilter.gender,
                     sportId: titleFilter.sportId
                 };
+
+                /* Track the event for MixPanel */
+                analytics.track('Game Copied', {
+                    'Film Exchange ID': $stateParams.id,
+                    'Film Exchange Name': $scope.filmExchangeName
+                });
+
                 // TODO: copyWithoutTeams will eventually not have to be hardcoded
                 let copyInfo = {
                     copiedFromTeamId: film.addedByTeam,
@@ -283,9 +299,25 @@ FilmExchange.controller('FilmExchangeController', [
 
         $scope.openRawFilmModal = function(film) {
             if (film.video.status === 4) {
-                RawFilmModal.open(film, removeFromFilmExchange, copyFilm);
+                RawFilmModal.open(film, removeFromFilmExchange, copyFilm, trackEmailClick);
             }
         };
 
+        $scope.onUserEmailClick = function(film, $event) {
+            $event.stopPropagation();
+            trackEmailClick(film);
+        };
+
+        function trackEmailClick(film) {
+            /* Track the event for MixPanel */
+            analytics.track('Coach Contacted', {
+                'Contact Name': film.addedByUser.firstName+film.addedByUser.lastName,
+                'Contact Email': film.addedByUser.email,
+                'Contact Team ID': film.addedByTeam.id,
+                'Contact Team Name': film.addedByTeam.name,
+                'Film Exchange ID': $stateParams.id,
+                'Film Exchange Name': $scope.filmExchangeName
+            });
+        }
     }
 ]);

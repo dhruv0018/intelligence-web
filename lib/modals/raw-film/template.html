@@ -41,7 +41,7 @@
         </div>
 
         <div class="film-exchange-actions" ng-if="isFilmExchangeVideo && (currentUser.is(ROLES.FILM_EXCHANGE_ADMIN) || currentUser.is(ROLES.ADMIN) || currentUser.is(ROLES.SUPER_ADMIN))">
-            <span ng-hide="game.addedByUser.id === currentUser.id">Problem with this game? <a href="mailto:{{game.addedByUser.email}}?subject={{game.awayTeam.name}} @ {{game.homeTeam.name}} ({{game.datePlayed|date:'MMM dd, yyyy'}})" target="_blank">Contact {{game.addedByUser.firstName}} {{game.addedByUser.lastName}}</a></span>
+            <span ng-hide="game.addedByUser.id === currentUser.id">Problem with this game? <a href="mailto:{{game.addedByUser.email}}?subject={{game.awayTeam.name}} @ {{game.homeTeam.name}} ({{game.datePlayed|date:'MMM dd, yyyy'}})" target="_blank" ng-click="onEmailClick()">Contact {{game.addedByUser.firstName}} {{game.addedByUser.lastName}}</a></span>
             <span ng-show="game.addedByUser.id === currentUser.id">This film was added by you</span>
         </div>
 
