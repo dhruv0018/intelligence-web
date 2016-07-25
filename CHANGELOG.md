@@ -1,3 +1,7 @@
+# v82.1#
+## Fixes##
+- Use previous season for WSC if current season is less than half complete
+
 # v81.1#
 ## Fixes##
 - Show member teams for conferences that are not film exchanges
