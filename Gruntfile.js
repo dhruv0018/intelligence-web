@@ -570,7 +570,7 @@ module.exports = function(grunt) {
             },
             config: {
                 files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
-                tasks: ['componentbuild:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             index: {
                 files: ['src/index.html'],
@@ -578,7 +578,7 @@ module.exports = function(grunt) {
             },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
-                tasks: ['newer:htmlhint', 'componentbuild:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             css: {
                 files: ['app/**/*.css', 'lib/**/*.css'],
@@ -594,11 +594,11 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['src/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'componentbuild:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             unit: {
                 files: ['test/unit/**/*.js', '!test/unit/helpers/**/*.js'],
