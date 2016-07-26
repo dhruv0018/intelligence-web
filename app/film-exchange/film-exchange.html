@@ -88,27 +88,36 @@
                         <span class="copy-actions" ng-if="currentUser.getCurrentRole().teamId != film.addedByTeam.id">
                             <a
                                 href
-                                ng-if="!film.isCopying && !film.copiedGame && !film.copyConfirm"
+                                ng-if="!film.isPerformingAction && !film.copiedGame && !film.copyConfirm"
                                 ng-click="onCopyClick($event, film)">
                                 <i class="icon icon-copy"></i> Copy
                             </a>
                             <krossover-spinner
-                                ng-if="film.isCopying && !film.copiedGame && !film.copyConfirm"
+                                ng-if="film.isPerformingAction && !film.copiedGame && !film.copyConfirm"
                                 size="'15px'">
                             </krossover-spinner>
                             <span ng-if="film.copyConfirm" class="copy-confirm">
                                 <i class="icon icon-ok"></i> Copied
                             </span>
-                            <span ng-if="!film.isCopying && film.copiedGame && !film.copyConfirm">
+                            <span ng-if="!film.isPerformingAction && film.copiedGame && !film.copyConfirm">
                                 <i class="icon icon-copy"></i> Copied
                             </span>
                         </span>
-                        <a
-                            href
-                            ng-if="currentUser.getCurrentRole().teamId === film.addedByTeam.id"
-                            ng-click="onRemoveClick($event, film)">
-                            <i class="icon icon-trash-o"></i> Remove
-                        </a>
+                        <span class="remove-actions" ng-if="currentUser.getCurrentRole().teamId === film.addedByTeam.id">
+                            <a
+                                href
+                                ng-if="!film.isPerformingAction && !isFilmRemoved(film)"
+                                ng-click="onRemoveClick($event, film)">
+                                <i class="icon icon-trash-o"></i> Remove
+                            </a>
+                            <krossover-spinner
+                                ng-if="film.isPerformingAction && !isFilmRemoved(film)"
+                                size="'15px'">
+                            </krossover-spinner>
+                            <span ng-if="!film.isPerformingAction && isFilmRemoved(film)">
+                                <i class="icon icon-trash-o"></i> Removed
+                            </span>
+                        </span>
                     </div>
                 </div>
             </div>

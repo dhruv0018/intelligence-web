@@ -20,10 +20,10 @@
         <div class="film-exchange-actions" ng-if="isFilmExchangeVideo && currentUser.is(ROLES.COACH)">
 
             <span class="copy-buttons" ng-if="currentUser.getCurrentRole().teamId !== game.addedByTeam.id">
-                <button class="btn btn-primary" ng-if="!game.isCopying && !game.copiedGame && !game.copyConfirm" ng-click="copyGameFromFilmExchange()">
+                <button class="btn btn-primary" ng-if="!game.isPerformingAction && !game.copiedGame && !game.copyConfirm" ng-click="copyGameFromFilmExchange()">
                     Copy to your film home
                 </button>
-                <button class="btn btn-primary btn-copy-confirm" ng-if="game.isCopying && !game.copiedGame && !game.copyConfirm">
+                <button class="btn btn-primary btn-copy-confirm" ng-if="game.isPerformingAction && !game.copiedGame && !game.copyConfirm">
                     <krossover-spinner size="'15px'"></krossover-spinner>
                 </button>
                 <button class="btn btn-primary btn-copy-confirm" ng-if="game.copyConfirm">
@@ -31,7 +31,7 @@
                         <i class="icon icon-ok"></i> Copied
                     </span>
                 </button>
-                <button class="btn btn-default" ng-disabled="true" ng-if="!game.isCopying && game.copiedGame && !game.copyConfirm">
+                <button class="btn btn-default" ng-disabled="true" ng-if="!game.isPerformingAction && game.copiedGame && !game.copyConfirm">
                     Copied to your film home
                 </button>
             </span>

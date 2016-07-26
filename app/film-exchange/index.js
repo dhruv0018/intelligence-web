@@ -226,6 +226,7 @@ FilmExchange.controller('FilmExchangeController', [
             });
 
             removeFromFilmExchangeModal.result.then(() => {
+                film.isPerformingAction = true;
                 /* Track the event for MixPanel */
                 analytics.track('Game Removed', {
                     'Film Exchange ID': $stateParams.id,
@@ -234,6 +235,7 @@ FilmExchange.controller('FilmExchangeController', [
 
                 filmExchangeFactory.removeGameFromFilmExchange($stateParams.id, film.idFilmExchangeFilm).then(response => {
                     removedFilms.push(film);
+                    film.isPerformingAction = false;
                 });
             });
         }
@@ -265,7 +267,7 @@ FilmExchange.controller('FilmExchangeController', [
             });
 
             copyFilmModal.result.then(() => {
-                film.isCopying = true;
+                film.isPerformingAction = true;
 
                 let filmExchangeData = {
                     sportsAssociation: titleFilter.sportsAssociation,
@@ -287,7 +289,7 @@ FilmExchange.controller('FilmExchangeController', [
                 };
                 let teamId = session.getCurrentTeamId();
                 games.copyFromFilmExchange(copyInfo, film.id, teamId, filmExchangeData).then(response => {
-                    film.isCopying = false;
+                    film.isPerformingAction = false;
                     film.copyConfirm = true;
                     $timeout(() => {
                         film.copyConfirm = false;
