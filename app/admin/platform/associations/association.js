@@ -160,7 +160,7 @@ function AssociationController(
 
     function updateCompetitionLevels() {
         associations.loadCompetitionLevels($scope.association.code).then(response => {
-            $scope.competitionLevels = response;
+            $scope.competitionLevels = response.sort((a, b) => moment(b.createdAt).diff(a.createdAt));
         });
     }
 
