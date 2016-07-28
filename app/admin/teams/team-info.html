@@ -3,18 +3,50 @@
     <div class="form-group">
 
         <h3 class="required">Sport</h3>
-        <select class="form-control" name="sport" data-ng-model="sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
+        <select class="form-control" name="sport" data-ng-model="team.sportId" data-ng-options="sport.id as sport.name for sport in sports" required>
             <option value="">Pick a Sport</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <h3 class="required">League</h3>
+        <select class="form-control" name="league" data-ng-model="team.leagueId" data-ng-options="league.id as league.name for league in leagues | filter:{'sportId':team.sportId}: true" data-ng-disabled="!team.sportId" required>
+            <option value="">Pick a League</option>
         </select>
 
     </div>
 
+    <div class="form-group">
+
+        <h3 class="required">Gender</h3>
+        <select class="form-control" name="gender" data-ng-model="team.gender" data-ng-options="gender.name as gender.name for gender in genders" required data-ng-disabled="true">
+            <option value="">Pick a Gender</option>
+        </select>
+    </div>
 
     <div class="form-group">
 
-        <h3 class="required">League</h3>
-        <select class="form-control" name="league" data-ng-model="team.leagueId" data-ng-options="league.id as league.name for league in leagues | filter:{'sportId':sportId}" data-ng-disabled="!sportId" required>
-            <option value="">League Name</option>
+        <h3 class="required">Type</h3>
+        <select class="form-control" name="type" data-ng-model="team.type" data-ng-options="type.name as type.name for type in types" required>
+            <option value="">Pick a Type</option>
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <h3 class="required">Age Level</h3>
+        <select class="form-control" name="ageLevel" data-ng-model="team.ageLevel" data-ng-options="ageLevel.name as ageLevel.name for ageLevel in ageLevels" required>
+            <option value="">Pick an Age Level</option>
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <h3 class="required">Amateur / Pro</h3>
+        <select class="form-control" name="amateurPro" data-ng-model="team.amateurPro" data-ng-options="amateurPro.name as amateurPro.name for amateurPro in amateurPros" required>
+            <option value="">Pick a Competition Level</option>
         </select>
 
     </div>
@@ -46,6 +78,18 @@
     <p>For schools, enter just the mascot name. E.g. "Bears"</p>
 
     <p>For all others, enter full team name. E.g. "Cleveland Cavilers"</p>
+
+    <div class="form-group">
+
+        <h3>
+            Is This Team Canonical?
+        </h3>
+        <check-box
+            id="team-isCanonical-cta"
+            checked="team.isCanonical"
+            ng-click="team.isCanonical = !team.isCanonical">
+        </check-box> Yes
+    </div>
 
     <hr>
 

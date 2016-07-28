@@ -442,7 +442,13 @@ TeamController.$inject = [
     'TeamsFactory',
     'PRIORITIES',
     'UsersFactory',
-    'EMAILS'
+    'EMAILS',
+    'TEAM_GENDERS',
+    'TEAM_TYPES',
+    'TEAM_AGE_LEVELS',
+    'TEAM_AMATEURPROS',
+    'SPORTS',
+    'SPORT_IDS'
 ];
 
 function TeamController (
@@ -460,7 +466,13 @@ function TeamController (
     teams,
     PRIORITIES,
     users,
-    EMAILS
+    EMAILS,
+    TEAM_GENDERS,
+    TEAM_TYPES,
+    TEAM_AGE_LEVELS,
+    TEAM_AMATEURPROS,
+    SPORTS,
+    SPORT_IDS
 ) {
 
     $scope.PRIORITIES = PRIORITIES;
@@ -479,7 +491,30 @@ function TeamController (
     $scope.schoolName = '';
     $scope.rolesChanged = false;
 
+    $scope.genders = Object.keys(TEAM_GENDERS).map(key => TEAM_GENDERS[key]);
+    $scope.types = Object.keys(TEAM_TYPES).map(key => TEAM_TYPES[key]);
+    $scope.ageLevels = Object.keys(TEAM_AGE_LEVELS).map(key => TEAM_AGE_LEVELS[key]);
+    $scope.amateurPros = Object.keys(TEAM_AMATEURPROS).map(key => TEAM_AMATEURPROS[key]);
 
+    $scope.$watch('team.isCanonical', function(n, o){
+        if(n !== o && o !== undefined){
+            $scope.form.$setDirty();
+        }
+    });
+
+    $scope.$watch('team.leagueId', function(nVal, oVal){
+        if(nVal && typeof nVal =='number'){
+            let curLeague = leagues.get(nVal);
+            $scope.team.gender = curLeague.gender.substr(0,1).toUpperCase()+curLeague.gender.substr(1);
+        }
+    });
+
+    $scope.$watch('team.sportId', function(nVal, oVal){
+        if(nVal && oVal && nVal !== oVal){
+            $scope.team.leagueId = null;
+            $scope.team.gender = null;
+        }
+    });
 
     $scope.clearSearchTerm = function() {
         $scope.searchTerm = '';
@@ -524,7 +559,6 @@ function TeamController (
             teams.fetch(teamId).then(team => {
                 angular.extend($scope.team, team);
                 $scope.team.members = data.members;
-                $scope.sportId = leagues.get(team.leagueId).sportId;
                 $scope.updateTeamAddress();
             });
         }
