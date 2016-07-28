@@ -1,5 +1,6 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const moment = require('moment');
 require('team-plan');
 require('team-package');
 
@@ -715,7 +716,7 @@ function TeamConferencesController(
     $scope.isSaving = false;
 
     $scope.availableConferences = [];
-    $scope.teamConferences = ConferenceData.teamConferences;
+    $scope.teamConferences = ConferenceData.teamConferences.sort((a, b) => moment(b.createdAt).diff(a.createdAt));
 
     //In the future the backend will take out the exisitng items, this may not be needed
     angular.forEach(ConferenceData.availableConferences, function(item, idx){
