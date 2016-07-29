@@ -1,3 +1,8 @@
+# v84.0#
+## Features##
+- Various updates to film exchange
+- Canonical team typahead for game info page
+
 # v82.1#
 ## Fixes##
 - Use previous season for WSC if current season is less than half complete
