@@ -189,19 +189,30 @@ FilmExchange.controller('FilmExchangeController', [
                 filter.mascot = null;
                 filter.teamName = null;
             }
-
+            if(new Date().getTimezoneOffset()<0 && $scope.filter.datePlayedTmp){
+                //FIX old version of date picker at different timeZone INTWEB-308
+                filter.datePlayedTmp.setDate(filter.datePlayedTmp.getDate()+1);
+            }
             $scope.query = filmExchangeFactory.getFilms(filter).then(function(data) {
                 $scope.page.currentPage = 1;
                 $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
+                //FIX old version of date picker at different timeZone INTWEB-308, by filtering datePlayed here insteadof endpoint
+                if(filter.datePlayedTmp){
+                    let search = {};
+                    search.datePlayed = new Date(filter.datePlayedTmp);
+                    search.datePlayed.setMinutes(search.datePlayed.getMinutes()+search.datePlayed.getTimezoneOffset());
+                    search.datePlayed = $filter('date')(search.datePlayed, 'MMMM dd, yyyy');
+                    data = data.filter(film => film.datePlayed == search.datePlayed);
+                }
                 $scope.allFilms = data.map(film => filmExchangeFactory.setVideoEntity(film));
                 $scope.filteredFilms = sliceData($scope.page.currentPage);
             }).finally(function() {
                 $scope.searching = false;
 
                 //FIX TIMEZONE ISSUE FOR EARLY VERSION OF DATE PICKER: https://github.com/angular-ui/bootstrap/issues/2628
-                if($scope.filter.datePlayed){
-                    $scope.filter.datePlayed = new Date($scope.filter.datePlayed);
-                    $scope.filter.datePlayed.setMinutes( $scope.filter.datePlayed.getMinutes() + $scope.filter.datePlayed.getTimezoneOffset() );
+                if($scope.filter.datePlayedTmp){
+                    $scope.filter.datePlayedTmp = new Date($scope.filter.datePlayedTmp);
+                    $scope.filter.datePlayedTmp.setMinutes( $scope.filter.datePlayedTmp.getMinutes() + $scope.filter.datePlayedTmp.getTimezoneOffset() );
                 }
             });
         }

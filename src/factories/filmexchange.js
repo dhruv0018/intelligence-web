@@ -7,8 +7,8 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory', 'Video',
-    function($injector, BaseFactory, Video) {
+IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory', 'Video', '$filter',
+    function($injector, BaseFactory, Video, $filter) {
 
         var FilmExchangeFactory = {
 
@@ -61,11 +61,16 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
                 if(filter.page && filter.count){
                     filter.start = (filter.page-1) * filter.count;
                 }
-                if(filter.datePlayed && filter.datePlayed instanceof Date){
-                    filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
+                if(filter.datePlayedTmp && filter.datePlayedTmp instanceof Date){
+                    filter.datePlayedTmp = (filter.datePlayedTmp.toISOString()).slice(0,10);
                 }
-
-                return model.getFilms(filter).$promise;
+                // return model.getFilms(filter).$promise;
+                return model.getFilms(filter).$promise.then(films => {
+                    return films.map(film => {
+                        film.datePlayed = $filter('date')(film.datePlayed, 'MMMM dd, yyyy');
+                        return film;
+                    });
+                });
             },
             getAllConferences: function(filter){
                 let self = this;
