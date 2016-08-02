@@ -129,6 +129,7 @@ require('./models/associations');
 require('./models/conferences');
 require('./models/iso3166countries');
 require('./models/filmexchange');
+require('./models/indexer');
 
 require('./storage/base');
 require('./storage/users');
@@ -151,6 +152,7 @@ require('./storage/associations');
 require('./storage/conferences');
 require('./storage/iso3166countries');
 require('./storage/filmexchange');
+require('./storage/indexer');
 
 require('./factories');
 require('./factories/base');
@@ -174,6 +176,7 @@ require('./factories/associations');
 require('./factories/conferences');
 require('./factories/iso3166countries');
 require('./factories/filmexchange');
+require('./factories/indexer');
 
 require('./emitters/emitter.js');
 require('./emitters/playlist');

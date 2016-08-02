@@ -38,6 +38,7 @@ else if (environment === 'buildserver') {
     config.oauth.uri = 'http://' + process.env.BUILDSERVER + '.v2.krossover.com/intelligence-api/oauth/';
     config.api.uri = 'http://' + process.env.BUILDSERVER + '.v2.krossover.com/intelligence-api/v1/';
     config.apiV2.uri = 'http://' + process.env.BUILDSERVER + '.v2.krossover.com/intelligence-api/v2/';
+    config.apiV3.uri = 'http://' + process.env.BUILDSERVER + '.v2.krossover.com/intelligence-api/v3/';
 }
 
 else {
@@ -47,6 +48,7 @@ else {
     config.oauth.uri = `https://${window.location.host}${config.oauth.uri}`;
     config.api.uri = `https://${window.location.host}${config.api.uri}`;
     config.apiV2.uri = `https://${window.location.host}${config.apiV2.uri}`;
+    config.apiV3.uri = `https://${window.location.host}${config.apiV3.uri}`;
 }
 
 config.environment = environment;

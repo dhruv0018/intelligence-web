@@ -21,6 +21,9 @@
     "apiV2": {
         "uri": "https://v2-qa.krossover.com/intelligence-api/v2/"
     },
+    "apiV3": {
+        "uri": "https://v2-qa.krossover.com/intelligence-api/v3/"
+    },
     "kvs": {
     },
     "reels": {

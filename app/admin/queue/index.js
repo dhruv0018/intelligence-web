@@ -39,7 +39,8 @@ AdminQueueDataDependencies.$inject = [
     'LeaguesFactory',
     'AdminGamesService',
     'AdminQueueDashboardService',
-    'GamesFactory'
+    'GamesFactory',
+    'IndexerFactory'
 ];
 
 function AdminQueueDataDependencies (
@@ -49,7 +50,8 @@ function AdminQueueDataDependencies (
     leagues,
     AdminGames,
     AdminQueueDashboardService,
-    games
+    games,
+    indexerFactory
 ) {
 
     class AdminQueueData{
@@ -63,8 +65,10 @@ function AdminQueueDataDependencies (
                 games: AdminGames.query(),
                 sports: sports.load(),
                 leagues: leagues.load(),
-                filterCounts: games.getQueueDashboardCounts()
+                filterCounts: games.getQueueDashboardCounts(),
+                indexerGroups: indexerFactory.getIndexerGroups()
             };
+
             return Data;
         }
     }
@@ -196,6 +200,7 @@ function QueueController (
     $scope.SelectIndexerModal = SelectIndexerModal;
     $scope.data = data;
     $scope.dashboardFilterCounts = data.filterCounts;
+    $scope.indexerGroups = data.indexerGroups.data;
     $scope.sports = sports.getCollection();
     $scope.leagues = leagues.getCollection();
     $scope.teams = teams.getCollection();
@@ -221,6 +226,22 @@ function QueueController (
             $scope.queue = games;
         }
     });
+
+    $scope.filterByIndexerGroup = function(selectedIndexerGroup) {
+        let filter = {
+            'status[]': [
+                GAME_STATUSES.READY_FOR_INDEXING.id,
+                GAME_STATUSES.READY_FOR_QA.id,
+                GAME_STATUSES.INDEXING.id,
+                GAME_STATUSES.QAING.id
+            ]
+        };
+        if (selectedIndexerGroup) {
+            filter.indexerGroupId = selectedIndexerGroup.id;
+        }
+
+        $scope.search(filter);
+    };
 
     $scope.search = function(filter) {
 

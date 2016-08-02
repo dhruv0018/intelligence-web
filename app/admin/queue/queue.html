@@ -75,6 +75,14 @@
             filter-counts="dashboardFilterCounts"
         ></admin-queue-dashboard>
 
+        <div class="group-distribution-container">
+            <h4>Group</h4>
+            <select class="form-control" ng-model="selectedIndexerGroup" ng-options="indexerGroup.attributes.name for indexerGroup in indexerGroups" ng-change="filterByIndexerGroup(selectedIndexerGroup)">
+                <option value="">All</option>
+            </select>
+            <button class="btn btn-default">Run Distribution</button>
+        </div>
+
         <div class="results" ng-show="AdminGames.isQuerying">
 
             <h1>Loading...</h1>

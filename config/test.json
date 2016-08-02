@@ -21,6 +21,9 @@
     "apiV2": {
         "uri": "http://localhost:4436/intelligence-api/v2/"
     },
+    "apiV3": {
+        "uri": "http://localhost:4436/intelligence-api/v3/"
+    },
     "kvs": {
     },
     "reels": {
