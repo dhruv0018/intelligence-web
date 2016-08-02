@@ -1,3 +1,12 @@
+# v85.0#
+## Features##
+- Opens Film Editor to all users
+- General Film Editor improvements
+- Updated UX for adding plays to a reel
+
+## Fixes##
+- Bug fixes for VB tagging
+
 # v84.0#
 ## Features##
 - Various updates to film exchange
