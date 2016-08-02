@@ -80,8 +80,8 @@
             </div>
 
             <div class="team-share-options">
-                <a id="share-film-team-select-all" ng-click="selectAllPlayers()">Select All</a>
-                <a id="share-film-team-deselect-all" ng-click="deselectAllPlayers()">Deselect All</a>
+                <a id="share-film-team-select-all" ng-click="selectAllPlayers()" ng-class="{'disabled': getAllPlayersSharedWith().length === playersWithAccounts.length}">Select All</a>
+                <a id="share-film-team-deselect-all" ng-click="deselectAllPlayers()" ng-class="{'disabled': getAllPlayersSharedWith().length === 0}">Deselect All</a>
                 <select ng-show="currentUser.is(ROLES.ATHLETE) && teams.length > 1" ng-model="team" ng-options="currentTeam.name for currentTeam in teams"></select>
             </div>
 

@@ -126,6 +126,12 @@
                     cursor: pointer;
                     margin-right: 10px;
                     line-height: 37px;
+
+                    &.disabled {
+                        cursor: default;
+                        pointer-events: none;
+                        color: @gray-dark;
+                    }
                 }
 
                 select {
