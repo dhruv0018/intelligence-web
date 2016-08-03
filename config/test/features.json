@@ -44,7 +44,7 @@
     },
 
     "CanonicalTypeahead": {
-        "*": false
+        "*": true
     },
 
     "AdminConferenceSearch": {
