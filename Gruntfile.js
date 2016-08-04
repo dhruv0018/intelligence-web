@@ -338,7 +338,7 @@ module.exports = function(grunt) {
                     bundleOptions: {
                         debug: true,
                     },
-                    watch : true, // use watchify for incremental builds!
+                    //watch : true, // use watchify for incremental builds!
                     // keepAlive : true, // watchify will exit unless task is kept alive
                     browserifyOptions: {
                         noParse: ['./build/build.js']
