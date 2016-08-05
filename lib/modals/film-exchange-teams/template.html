@@ -15,21 +15,23 @@
         <input id="suspended-teams-toggle" type="checkbox" ng-click="toggleShowSuspendedTeams()" />
     </div>
     <div class="modal-body" ng-show="teams.length > 0">
-        <div class="teams-list" infinite-scroll="loadMore()">
+        <div class="teams-list">
             <table id="table-header">
                 <tr>
                     <th>Team Name</th>
                     <th>Access</th>
                 </tr>
             </table>
-            <table id="table-body">
-                <tr data-ng-repeat="team in teams">
-                    <td>{{team.teamName}}</td>
-                    <td>
-                        <fancy-toggle ng-click="toggleSuspend(team.teamId)"></fancy-toggle>
-                    </td>
-                </tr>
-            </table>
+            <div class="teams-list-inner" infinite-scroll="loadMore()">
+                <table id="table-body">
+                    <tr data-ng-repeat="team in teams">
+                        <td>{{team.teamName}}</td>
+                        <td>
+                            <fancy-toggle ng-click="toggleSuspend(team.teamId)"></fancy-toggle>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <div class="table-wait" ng-show="loadingResult == true">
           <krossover-spinner class="spinner" size="'40px'"></krossover-spinner>
