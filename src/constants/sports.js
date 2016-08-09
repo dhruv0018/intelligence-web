@@ -37,6 +37,14 @@ var SPORTS = {
         hasAnalytics: true,
         hasStatistics: true,
         scoreBySets: true
+    },
+
+    SOCCER: {
+        id: 5,
+        name: 'Soccer',
+        hasAnalytics: true,
+        hasStatistics: true,
+        scoreBySets: false
     }
 };
 
@@ -44,7 +52,8 @@ var SPORT_IDS = {
     1: 'BASKETBALL',
     2: 'FOOTBALL',
     3: 'LACROSSE',
-    4: 'VOLLEYBALL'
+    4: 'VOLLEYBALL',
+    5: 'SOCCER'
 };
 
 IntelligenceWebClient.constant('SPORT_IDS', SPORT_IDS);
