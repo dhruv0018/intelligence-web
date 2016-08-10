@@ -90,13 +90,14 @@
 
                                                 <td width="60%">
                                                     <h5 data-ng-if="game.isRegular()"> {{ teams[session.currentUser.currentRole.teamId].name }} </h5>
-                                                    <!--input required type="text" id="non-regular-team-name-cta" name="team" placeholder="Team" class="form-control" data-ng-if="game.isNonRegular()" data-ng-model="gameTeams.team.name"-->
+                                                    <input required type="text" id="non-regular-team-name-cta" name="team" placeholder="Team" class="form-control" data-ng-if="game.isNonRegular() && !teams[session.currentUser.currentRole.teamId].isCanonical" data-ng-model="gameTeams.team.name">
                                                     <canonical-team-typeahead
                                                     data-customer-teams="false"
-                                                    data-ng-if="game.isNonRegular()"
+                                                    data-ng-if="game.isNonRegular() && teams[session.currentUser.currentRole.teamId].isCanonical"
                                                     data-team="gameTeams.team"
-                                                    data-not-allowed="game.isDelivered() || game.isBeingBrokenDown()"
+                                                    txt-placeholder="Team"
                                                     feature="CanonicalTypeahead"
+                                                    data-not-allowed="game.isDelivered() || game.isBeingBrokenDown()"
                                                     ></canonical-team-typeahead>
                                                     <input type="hidden" name="homeTeam" id="home-team-cta"
                                                     feature="CanonicalTypeahead"
@@ -159,13 +160,16 @@
                                                     data-customer-teams="false"
                                                     element-id = "{{gameTeams.team.id}}"
                                                     data-team="gameTeams.opposingTeam"
+                                                    txt-placeholder="Opposing Team"
                                                     data-not-allowed="game.isDelivered() || game.isBeingBrokenDown()"
                                                     feature="CanonicalTypeahead"
+                                                    ng-if="teams[session.currentUser.currentRole.teamId].isCanonical"
                                                     ></canonical-team-typeahead>
                                                     <input type="hidden" name="opposingTeam" id="oppsing-team-cta"
                                                     feature="CanonicalTypeahead"
                                                     ng-model="gameTeams.opposingTeam">
-                                                    <!--input required type="text" id="opposing-team-name-cta" name="opponent" class="form-control" placeholder="Opposing Team" data-ng-model="gameTeams.opposingTeam.name"-->
+                                                    <input required type="text" id="opposing-team-name-cta" name="opponent" class="form-control" placeholder="Opposing Team" data-ng-model="gameTeams.opposingTeam.name"
+                                                    ng-if="!teams[session.currentUser.currentRole.teamId].isCanonical">
                                                 </td>
 
                                                 <td class="score">

@@ -6,7 +6,7 @@
            ng-focus="onFocus($event)"
            ng-blur="searchFocus=false"
            typeahead-no-results="noResults"
-           placeholder="Opponent"
+           placeholder="{{txtPlaceholder||'Opponent'}}"
            ng-keydown="keyPressTracker($event, team)"
            ng-model="team"
            trigger-typeahead
@@ -23,6 +23,11 @@
     <div ng-show="searchFocus" class="instructions">
         <span>
             Enter School or Team (please add 3 characters minimum)
+        </span>
+    </div>
+    <div ng-show="noResults" class="instructions noResults">
+        <span>
+            Can’t find what you’re looking for? Add a team to this game below.
         </span>
     </div>
     <div ng-show="entered" class="enteredResult btn" ng-click="changeTeam()">
