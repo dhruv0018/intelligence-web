@@ -80,7 +80,7 @@
             <select class="form-control" ng-model="selectedIndexerGroup" ng-options="indexerGroup.attributes.name for indexerGroup in indexerGroups" ng-change="filterByIndexerGroup(selectedIndexerGroup)">
                 <option value="">All</option>
             </select>
-            <button class="btn btn-default">Run Distribution</button>
+            <button class="btn btn-default" ng-if="hasDistributionPermissions">Run Distribution</button>
         </div>
 
         <div class="results" ng-show="AdminGames.isQuerying">

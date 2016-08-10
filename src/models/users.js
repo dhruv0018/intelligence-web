@@ -71,6 +71,10 @@ IntelligenceWebClient.factory('UsersResource', [
                             });
                         }
                     }
+                },
+                getUserPermissions: {
+                    method: 'GET',
+                    url: config.apiV3.uri + 'users/:id/permissions'
                 }
             }
         );

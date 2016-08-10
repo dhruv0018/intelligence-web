@@ -225,3 +225,23 @@ const ATHLETE_PROFILE_TEAM_START_YEARS = {
 };
 
 IntelligenceWebClient.constant('ATHLETE_PROFILE_TEAM_START_YEARS', ATHLETE_PROFILE_TEAM_START_YEARS);
+
+const USER_PERMISSIONS = {
+    EXECUTE_DISTRIBUTION: {
+        module: 'indexing-distribution',
+        scope: 'all',
+        action: 'execute'
+    },
+    ALLOCATION_SETTINGS: {
+        module: 'indexing-distribution',
+        scope: 'all',
+        action: 'view-edit-allocations'
+    },
+    DAILY_LOGS: {
+        module: 'indexing-distribution',
+        scope: 'all',
+        action: 'view-logs'
+    }
+};
+
+IntelligenceWebClient.constant('USER_PERMISSIONS', USER_PERMISSIONS);

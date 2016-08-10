@@ -1024,6 +1024,11 @@ IntelligenceWebClient.factory('UsersFactory', [
                 return model.cancelEmailChange({
                     id: id
                 }).$promise;
+            },
+            getUserPermissions: function() {
+                let id = this.id;
+                let model = $injector.get(this.model);
+                return model.getUserPermissions({id});
             }
         };
 

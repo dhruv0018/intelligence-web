@@ -38,6 +38,7 @@ AdminQueueDataDependencies.$inject = [
     'SportsFactory',
     'LeaguesFactory',
     'AdminGamesService',
+    'SessionService',
     'AdminQueueDashboardService',
     'GamesFactory',
     'IndexerFactory'
@@ -49,6 +50,7 @@ function AdminQueueDataDependencies (
     sports,
     leagues,
     AdminGames,
+    session,
     AdminQueueDashboardService,
     games,
     indexerFactory
@@ -61,12 +63,14 @@ function AdminQueueDataDependencies (
             let filter = Object.assign({}, AdminQueueDashboardService.ALL_QUEUE_GAMES);
             AdminGames.queryFilter = filter;
             AdminGames.start = 0;
+            let currentUser = session.getCurrentUser();
             var Data = {
                 games: AdminGames.query(),
                 sports: sports.load(),
                 leagues: leagues.load(),
                 filterCounts: games.getQueueDashboardCounts(),
-                indexerGroups: indexerFactory.getIndexerGroups()
+                indexerGroups: indexerFactory.getIndexerGroups(),
+                userPermissions: currentUser.getUserPermissions()
             };
 
             return Data;
@@ -163,7 +167,8 @@ QueueController.$inject = [
     'AdminQueueDashboardService',
     'GamesResolutionEventEmitter',
     'EVENT',
-    'VIDEO_STATUSES'
+    'VIDEO_STATUSES',
+    'USER_PERMISSIONS'
 ];
 
 function QueueController (
@@ -190,7 +195,8 @@ function QueueController (
     AdminQueueDashboardService,
     GamesResolutionEventEmitter,
     EVENT,
-    VIDEO_STATUSES
+    VIDEO_STATUSES,
+    USER_PERMISSIONS
 ) {
 
     $scope.ROLE_TYPE = ROLE_TYPE;
@@ -212,6 +218,11 @@ function QueueController (
     $scope.QUERY_SIZE = VIEWS.QUEUE.GAME.QUERY_SIZE;
     $scope.AdminGames = AdminGames;
     $scope.queue = data.games;
+
+    //User permissions
+    $scope.hasDistributionPermissions = data.userPermissions.data.some(permission => {
+        return permission.attributes.action === USER_PERMISSIONS.EXECUTE_DISTRIBUTION.action;
+    });
 
     $scope.emptyOutQueue = () => {
         $scope.queue = [];
