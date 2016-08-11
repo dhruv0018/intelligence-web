@@ -1,3 +1,14 @@
+# v86.0#
+## Features##
+- Improvements to BB tagging
+- Adds soccer to list of sports
+
+## Fixes##
+- Shows regular input for non-canonical teams
+- Fixes mixpanel bug when selecting all teammates to share with
+- Display appcues on game breakdown page
+- Film Exchange UI bug fixes
+
 # v85.0#
 ## Features##
 - Opens Film Editor to all users
