@@ -238,6 +238,8 @@ function QueueController (
         }
     });
 
+    $scope.$on('select-dashboard-filter', event => $scope.selectedIndexerGroup = null);
+
     $scope.filterByIndexerGroup = function(selectedIndexerGroup) {
         let filter = {
             'status[]': [
@@ -251,6 +253,11 @@ function QueueController (
             filter.indexerGroupId = selectedIndexerGroup.id;
         }
 
+        $scope.search(filter);
+    };
+
+    $scope.onSearchClick = function(filter) {
+        $scope.selectedIndexerGroup = null;
         $scope.search(filter);
     };
 
