@@ -62,15 +62,6 @@ AllocationSettings.config([
                         template: GeneralAllocationSettingsTemplate,
                         controller: GeneralAllocationSettingsController
                     }
-                },
-                resolve: {
-                    'AllocationSettings.General.Data': [
-                        '$q', 'AllocationSettingsDataDependencies',
-                        function($q, GeneralAllocationSettingsData) {
-                            let data = new GeneralAllocationSettingsData();
-                            return $q.all(data);
-                        }
-                    ]
                 }
             })
 
@@ -82,15 +73,6 @@ AllocationSettings.config([
                         template: WeeklyAllocationSettingsTemplate,
                         controller: WeeklyAllocationSettingsController
                     }
-                },
-                resolve: {
-                    'AllocationSettings.Weekly.Data': [
-                        '$q', 'AllocationSettingsDataDependencies',
-                        function($q, WeeklyAllocationSettingsData) {
-                            let data = new WeeklyAllocationSettingsData();
-                            return $q.all(data);
-                        }
-                    ]
                 }
             });
         }
