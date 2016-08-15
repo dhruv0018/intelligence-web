@@ -20,7 +20,8 @@ var Admin = angular.module('Admin', [
     'queue',
     'platform',
     'filmExchange',
-    'Conferences'
+    'Conferences',
+    'AllocationSettings'
 ]);
 
 /**

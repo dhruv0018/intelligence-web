@@ -58,8 +58,9 @@ Header.config([
 
 
 Header.factory('Header.Data.Dependencies', [
-    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory', 'SchoolsFactory', '$q', 'ROLE_TYPE',
-    function(auth, session, sports, leagues, teams, users, schools, $q, ROLE_TYPE) {
+
+    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory', 'SchoolsFactory', '$q', 'ROLE_TYPE', 'ROLES',
+    function(auth, session, sports, leagues, teams, users, schools, $q, ROLE_TYPE, ROLES) {
 
         var Data = {
 
@@ -93,15 +94,25 @@ Header.factory('Header.Data.Dependencies', [
                     return deferred.promise;
                 }
             },
+            get userPermissions() {
+                if (auth.isLoggedIn) {
+                    let currentUser = session.getCurrentUser();
+                    if (currentUser.is(ROLES.SUPER_ADMIN) || currentUser.is(ROLES.ADMIN)) {
+                        let userPermissions = currentUser.getUserPermissions();
+                        return userPermissions;
+                    }
+                }
+            },
 
             get teams() {
 
                 if (auth.isLoggedIn) {
 
-                    let currentId = session.getCurrentUserId();
+                    let currentUser = session.getCurrentUser();
+                    let currentId = currentUser.id;
 
                     // Only use relatedRoleId call for coaches - Athletes need relatedUserId to ensure all teams are loaded
-                    if(session.getCurrentRoleTypeId() == ROLE_TYPE.HEAD_COACH || session.getCurrentRoleTypeId() == ROLE_TYPE.ASSISTANT_COACH){
+                    if(currentUser.is(ROLES.COACH)){
 
                         let deferred = $q.defer();
 
@@ -144,7 +155,9 @@ HeaderController.$inject = [
     'TeamsFactory',
     'SPORTS',
     'SPORT_IDS',
-    'SUBSCRIPTIONS'
+    'SUBSCRIPTIONS',
+    'USER_PERMISSIONS',
+    'Header.Data'
 ];
 
 /**
@@ -168,7 +181,9 @@ function HeaderController(
     teams,
     SPORTS,
     SPORT_IDS,
-    SUBSCRIPTIONS
+    SUBSCRIPTIONS,
+    USER_PERMISSIONS,
+    data
 ) {
     $scope.SUPER_ADMIN = ROLES.SUPER_ADMIN;
     $scope.ADMIN = ROLES.ADMIN;
@@ -206,6 +221,16 @@ function HeaderController(
             $scope.filmExchanges = angular.forEach(filmExchanges, function(filmExchange){
                 filmExchange.id = filmExchange.sportsAssociation+'+'+filmExchange.conference+'+'+filmExchange.gender+'+'+filmExchange.sportId;
             });
+        });
+    }
+
+    //User permissions for admin roles
+    if(currentUser.is(ROLES.SUPER_ADMIN) || currentUser.is(ROLES.ADMIN)) {
+        $scope.hasAllocationSettingsPermissions = data.userPermissions.data.some(permission => {
+            return permission.attributes.action === USER_PERMISSIONS.ALLOCATION_SETTINGS.action;
+        });
+        $scope.hasDailyLogsPermissions = data.userPermissions.data.some(permission => {
+            return permission.attributes.action === USER_PERMISSIONS.DAILY_LOGS.action;
         });
     }
 

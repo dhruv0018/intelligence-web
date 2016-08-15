@@ -22,6 +22,7 @@ import Embed from '../app/embed/index.js';
 import Indexer from '../app/indexer/index.js';
 import Styleguide from '../app/styleguide/index.js';
 import Analytics from '../app/analytics/index.js';
+import AllocationSettings from '../app/admin/allocation-settings/index.js';
 import Lib from '../lib';
 
 /* App dependencies */

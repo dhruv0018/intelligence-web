@@ -11,7 +11,19 @@
             <li ui-sref-active="active"><a id="mobile-menu-admin-users-cta" ui-sref="users">Users</a></li>
             <li ui-sref-active="active"><a id="mobile-menu-admin-teams-cta" ui-sref="teams">Teams</a></li>
             <li ui-sref-active="active"><a id="mobile-menu-admin-schools-cta" ui-sref="schools">Schools</a></li>
-            <li ui-sref-active="active"><a id="mobile-menu-admin-queue-cta" ui-sref="queue">Queue</a></li>
+            <li ui-sref-active="active" ng-hide="hasAllocationSettingsPermissions">
+                <a id="mobile-menu-admin-queue-cta" ui-sref="queue">Queue</a>
+            </li>
+            <li
+                ui-sref-active="active"
+                ng-show="hasAllocationSettingsPermissions"
+                ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
+                <a>Queue</a>
+                <ul class="mobile-submenu" ng-show="subMenu">
+                    <li><a ui-sref="queue">Queue</a></li>
+                    <li><a ui-sref="GeneralAllocationSettings">Allocation Settings</a></li>
+                </ul>
+            </li>
             <li ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN)" ng-click="toggleSubMenu($event)" class="mobile-submenu-toggle">
                 <a>Platform</a>
                 <ul class="mobile-submenu" ng-show="subMenu">
@@ -101,7 +113,16 @@
         <li ui-sref-active="active"><a id="menu-admin-users-cta" ui-sref="users">Users</a></li>
         <li ui-sref-active="active"><a id="menu-admin-teams-cta" ui-sref="teams">Teams</a></li>
         <li ui-sref-active="active"><a id="menu-admin-schools-cta" ui-sref="schools">Schools</a></li>
-        <li ui-sref-active="active"><a id="menu-admin-queue-cta" ui-sref="queue">Queue</a></li>
+        <li ui-sref-active="active" ng-hide="hasAllocationSettingsPermissions">
+            <a id="menu-admin-queue-cta" ui-sref="queue">Queue</a>
+        </li>
+        <li ui-sref-active="active" ng-show="hasAllocationSettingsPermissions" class="header-dropdown">
+            <a class="dropdown-toggle">Queue</a>
+            <ul class="dropdown-menu">
+                <li><a ui-sref="queue">Queue</a></li>
+                <li><a ui-sref="GeneralAllocationSettings">Allocation Settings</a></li>
+            </ul>
+        </li>
         <!--<li class="disabled" data-ui-sref-active="active"><a data-ui-sref="reports">Reports</a></li>-->
         <li ui-sref-active="active" ng-show="currentUser.is(SUPER_ADMIN)" class="header-dropdown">
             <a class="dropdown-toggle" dropdown-toggle>Platform</a>

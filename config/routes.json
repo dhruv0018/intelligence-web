@@ -222,6 +222,24 @@
         "Admin": true
     },
 
+    "AllocationSettings": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "GeneralAllocationSettings": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
+    "WeeklyAllocationSettings": {
+
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "film-exchange": {
 
         "Super Admin": true,
