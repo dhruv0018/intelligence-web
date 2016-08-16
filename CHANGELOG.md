@@ -1,3 +1,10 @@
+# v87.0#
+## Features##
+- Adds Is Canonical fields to team admin page
+
+## Fixes##
+- Disables save button for conference and competition level names when blank
+
 # v86.0#
 ## Features##
 - Improvements to BB tagging
