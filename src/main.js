@@ -76,6 +76,7 @@ require('./constants/games');
 require('./constants/event');
 require('./constants/events');
 require('./constants/schools');
+require('./constants/stat-types');
 require('./constants/videos');
 require('./constants/tagsets');
 require('./constants/filtersets');

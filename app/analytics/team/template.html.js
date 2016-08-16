@@ -51,7 +51,7 @@ export default `
                 class="analytics-tables-container"
                 ng-hide="loadingTables"
             >
-                <dynamic-tables tables="stats" sport="sport" width="90%"></dynamic-tables>
+                <dynamic-tables tables="stats" sport="sport" glossary="glossary" width="90%"></dynamic-tables>
             </div>
         </div>
     </section>

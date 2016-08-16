@@ -72,8 +72,8 @@ GamesStats.config([
 ]);
 
 GamesStats.controller('GamesStats.controller', [
-    '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'GamesFactory', 'TeamsFactory',
-    function controller($scope, $state, $stateParams, data, games, teams) {
+    '$scope', '$state', '$stateParams', 'Games.Stats.Data', 'GamesFactory', 'TeamsFactory', 'STAT_TYPES',
+    function controller($scope, $state, $stateParams, data, games, teams, STAT_TYPES) {
         let gameId = Number($stateParams.id);
         $scope.stats               = data.stats;
         $scope.game                = games.get(gameId);
@@ -82,6 +82,19 @@ GamesStats.controller('GamesStats.controller', [
         const team = teams.get($scope.game.teamId);
         $scope.sport = team.getSport();
 
+        $scope.glossary = [];
+
+        games.getStatsGlossary($scope.sport.id,STAT_TYPES.GAME).then(function(data){
+            let arr = data.data;
+            let temp = [];
+
+            for(var i=0; i<arr.length; i++) {
+                let term = arr[i].attributes;
+                temp[term.name] = term.description;
+            }
+
+            $scope.glossary = temp;
+        });
     }
 ]);
 

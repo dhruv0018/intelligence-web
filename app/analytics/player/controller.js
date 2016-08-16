@@ -9,8 +9,10 @@ PlayerAnalyticsController.$inject = [
     'TeamsFactory',
     'PlayersFactory',
     'LeaguesFactory',
+    'GamesFactory',
     'GAME_TYPES',
-    'ROLES'
+    'ROLES',
+    'STAT_TYPES'
 ];
 
 /**
@@ -23,8 +25,10 @@ function PlayerAnalyticsController(
     teams,
     players,
     leagues,
+    games,
     GAME_TYPES,
-    ROLES
+    ROLES,
+    STAT_TYPES
 ) {
 
     const team = teams.get(session.getCurrentTeamId());
@@ -78,6 +82,21 @@ function PlayerAnalyticsController(
         seasonId: league.seasons[0].id,
         gameType: ''
     };
+
+    $scope.glossary = [];
+
+    games.getStatsGlossary($scope.sport.id,STAT_TYPES.PLAYER).then(function(data){
+        let arr = data.data;
+        let temp = [];
+
+        for(var i=0; i<arr.length; i++) {
+            let term = arr[i].attributes;
+            temp[term.name] = term.description;
+        }
+
+        // This is done to avoid a glossary update being called multiple times in the directive's watch statement
+        $scope.glossary = temp;
+    });
 
     if (!$scope.currentUserIsAthlete) {
         // Set filter criteria to jersey number, first initial, last name

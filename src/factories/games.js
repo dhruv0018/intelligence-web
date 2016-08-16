@@ -364,6 +364,12 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return model.generateStats({ id: id }, callback, error).$promise;
             },
 
+            getStatsGlossary: function(sportId, type) {
+                let self = this;
+                let model = $injector.get(self.model);
+                return model.getStatsGlossary({sportId, type}).$promise;
+            },
+
             getStatus: function() {
 
                 var self = this;

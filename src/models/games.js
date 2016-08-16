@@ -44,6 +44,12 @@ IntelligenceWebClient.factory('GamesResource', [
                 isArray: true
             },
 
+            getStatsGlossary: {
+                method: 'GET',
+                url: config.apiV3.uri + 'stats-glossary',
+                params: {sportId: '@sportId', type: '@type'}
+            },
+
             copy: {
                 method: 'POST',
                 url: config.api.uri + base + '/actions/copy',

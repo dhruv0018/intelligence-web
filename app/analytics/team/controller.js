@@ -8,7 +8,9 @@ TeamAnalyticsController.$inject = [
     'SessionService',
     'LeaguesFactory',
     'TeamsFactory',
-    'GAME_TYPES'
+    'GamesFactory',
+    'GAME_TYPES',
+    'STAT_TYPES'
 ];
 
 /**
@@ -20,7 +22,9 @@ function TeamAnalyticsController(
     session,
     leagues,
     teams,
-    GAME_TYPES
+    games,
+    GAME_TYPES,
+    STAT_TYPES
 ) {
 
     const team = teams.get(session.getCurrentTeamId());
@@ -55,6 +59,20 @@ function TeamAnalyticsController(
         seasonId: league.seasons[0].id,
         gameType: ''
     };
+
+    $scope.glossary = [];
+
+    games.getStatsGlossary($scope.sport.id,STAT_TYPES.TEAM).then(function(data){
+        let arr = data.data;
+        let temp = [];
+
+        for(var i=0; i<arr.length; i++) {
+            let term = arr[i].attributes;
+            temp[term.name] = term.description;
+        }
+
+        $scope.glossary = temp;
+    });
 
     // FIXME: Network request in the controller
     // Request team stats for most recent season
