@@ -187,7 +187,7 @@ IntelligenceWebClient.run([
         });
 
         // Calls the Appcues start function to show dialogs with an n-second delay
-        // Used because some dialogs are linked to elements on the page which display 
+        // Used because some dialogs are linked to elements on the page which display
         // after certain data is loaded by the controller.
         function startAppcues(delay){
             setTimeout(function(){
