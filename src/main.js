@@ -105,6 +105,7 @@ require('./constants/cue-points');
 require('./constants/transcodeProfiles');
 require('./constants/associations');
 require('./constants/teams');
+require('./constants/indexer-groups');
 import { PRIORITIES_IDS, PRIORITIES } from './constants/priorities';
 import { LABELS_IDS, LABELS } from './constants/labels';
 import EMAILS from './constants/emails';
