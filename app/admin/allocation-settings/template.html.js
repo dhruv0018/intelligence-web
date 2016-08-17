@@ -6,9 +6,9 @@ export default `
             <select class="form-control" ng-model="selectedSport" ng-options="sport as sport.name for sport in sports"></select>
         </div>
 
-        <div class="allocation-nav">
-            <div class="allocation-nav-btn" ui-sref-active="active"><a ui-sref="GeneralAllocationSettings">General Settings</a></div>
-            <div class="allocation-nav-btn" ui-sref-active="active"><a ui-sref="WeeklyAllocationSettings">Weekly Settings</a></div>
+        <div class="allocation-nav state-tabs">
+            <div class="allocation-nav-btn state-tab" ui-sref-active="active-state"><a ui-sref="GeneralAllocationSettings">General Settings</a></div>
+            <div class="allocation-nav-btn state-tab" ui-sref-active="active-state"><a ui-sref="WeeklyAllocationSettings">Weekly Settings</a></div>
         </div>
         <main class="content" ui-view="content"></main>
     </div>
