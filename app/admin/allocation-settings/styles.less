@@ -17,8 +17,8 @@
         padding: 20px 20px 0px;
     }
 
-    .week-select-container {
-        margin-bottom: 40px;
+    .week-select-container{
+        margin-bottom: 20px;
     }
 
     .allocation-nav {
@@ -130,20 +130,56 @@
         }
     }
 
+    .weekly-allocation-settings{
+        height: 1680px;
+    }
     .weekly-allocation-wrapper{
         width: 100%;
+        height: 1500px;
         .weekly-allocation-div{
             display: inline-block;
-            width: 30%;
-            margin: 0px 2%;
+            margin: 0px 40px 20px 0px;
             &.active{
                 color: black;
+                .table{
+                    .allocation{
+                        background-color: @gray-lighter;
+                    }
+                }
             }
-            &:first-child, &:nth-child(4), &:nth-child(7){
-                margin-left: 0px;
+            &.inactive{
+                .table{
+                    background-color: @gray-lighter;
+                    tr{
+                        height: 44px;
+                    }
+                }
             }
             .table{
                 border: 1px solid @gray-light;
+                .group{
+                    width: 160px;
+                }
+                .percent{
+                    width: 40px;
+                    text-align: center;
+                    input{
+                        margin: 0px;
+                        width: 100%;
+                    }
+                }
+                .allocation{
+                    width: 100px;
+                    text-align: center;
+                }
+                .cap{
+                    width: 50px;
+                    text-align: center;
+                    input{
+                        margin: 0px;
+                        width: 100%;
+                    }
+                }
             }
             tfoot{
                 background-color: @gray-lighter;

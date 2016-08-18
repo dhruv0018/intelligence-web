@@ -43,6 +43,17 @@ IntelligenceWebClient.factory('IndexerResource', [
             updateWeeklyIndexingProjections: {
                 method: 'PUT',
                 url: `${url}indexing-projections/:sportId`
+            },
+
+            getIndexingWeeklySettings: {
+                method: 'GET',
+                url: `${url}indexer-group-allocations/:sportId`,
+                params: {sportId: '@sportId', startDate: '@startDate', endDate: '@endDate'}
+            },
+
+            updateIndexingWeeklySettings: {
+                method: 'PUT',
+                url: `${url}indexer-group-allocations/:sportId`
             }
         };
 

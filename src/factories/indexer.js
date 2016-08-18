@@ -15,6 +15,8 @@ IntelligenceWebClient.factory('IndexerFactory', [
         BaseFactory
     ) {
 
+        const RESOURCE = $injector.get(model);
+
         const IndexerFactory = {
 
             description,
@@ -22,30 +24,73 @@ IntelligenceWebClient.factory('IndexerFactory', [
             storage,
 
             getIndexerGroups() {
-                const model = $injector.get(this.model);
-                return model.getIndexerGroups().$promise;
+                return RESOURCE.getIndexerGroups().$promise;
             },
 
             getIndexerGroupAllocationTypes() {
-                const model = $injector.get(this.model);
-                return model.getIndexerGroupAllocationTypes().$promise;
+                return RESOURCE.getIndexerGroupAllocationTypes().$promise;
             },
 
             getIndexerGroupsAllocationPermissions(sportId) {
-                const model = $injector.get(this.model);
-                return model.getIndexerGroupsAllocationPermissions({sportId}).$promise;
+                return RESOURCE.getIndexerGroupsAllocationPermissions({sportId}).$promise;
             },
 
             updateIndexerGroupsAllocationPermissions(updatedPermissions) {
-                const model = $injector.get(this.model);
-                return model.updateIndexerGroupsAllocationPermissions(updatedPermissions).$promise;
+                return RESOURCE.updateIndexerGroupsAllocationPermissions(updatedPermissions).$promise;
             },
 
             getWeeklyIndexingProjections(filter) {
-                const model = $injector.get(this.model);
-                return model.getWeeklyIndexingProjections(filter).$promise;
-            }
+                return RESOURCE.getWeeklyIndexingProjections(filter).$promise;
+            },
 
+            getIndexingWeeklySettings(filter) {
+                return RESOURCE.getIndexingWeeklySettings(filter).$promise;
+            },
+
+            updateWeeklyIndexingProjections(filter, updatedProjections){
+                return RESOURCE.updateWeeklyIndexingProjections(filter, updatedProjections).$promise;
+            },
+
+            extendWeeklySettings(filter){
+                let self = this;
+                let indexers = [];
+                let projectionIDs = [];
+                let formattedSettings = [];
+
+                return self.getIndexerGroups()
+                    .then(function(indexerGroups){
+                        indexerGroups.data.forEach(function(indexerGroup){
+                            indexers.push(indexerGroup.attributes.name);
+                        });
+                        return self.getWeeklyIndexingProjections(filter);
+                    })
+                    .then(function(projections){
+                        projections.data.forEach(function(projection){
+                            projectionIDs.push(projection.id);
+                        });
+                        return self.getIndexingWeeklySettings(filter);
+                    })
+                    .then(function(weeklySettings){
+                        weeklySettings.data.forEach(function(setting){
+                            setting.attributes.indexerGroup = indexers[setting.attributes.indexerGroupId-1];
+                        });
+                        for(let i=0; i< 14; i++){ //14 days for two weeks
+                            let item = {};
+                            item.date = weeklySettings.data[i*indexers.length].attributes.date;
+                            item.setting = weeklySettings.data.slice(i*indexers.length,(i+1)*indexers.length);
+                            formattedSettings.push(item);
+                        }
+                        return formattedSettings;
+                    });
+            },
+
+            updateIndexingWeeklySettings(filter, updatedSettings){
+                let weeklySettings = [];
+                angular.forEach(updatedSettings, function(updatedSetting){
+                    weeklySettings.push(...updatedSetting.setting);
+                });
+                return RESOURCE.updateIndexingWeeklySettings(filter, {'data': weeklySettings}).$promise;
+            }
         };
 
         angular.augment(IndexerFactory, BaseFactory);

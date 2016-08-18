@@ -16,6 +16,7 @@ function AllocationSettingsController(
     sports
 ) {
     $scope.sports = sports.getList();
+
     $scope.selectedSportId = $scope.sports[0].id;
     $scope.isLoadingNewSport = false;
 
@@ -23,6 +24,7 @@ function AllocationSettingsController(
         $scope.isLoadingNewSport = true;
         $scope.$broadcast('on-sport-selected', event);
     };
+
 }
 
 export default AllocationSettingsController;
