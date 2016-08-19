@@ -15,6 +15,10 @@ export default `
             <div class="allocation-nav-btn state-tab" ui-sref-active="active-state"><a ui-sref="GeneralAllocationSettings">General Settings</a></div>
             <div class="allocation-nav-btn state-tab" ui-sref-active="active-state"><a ui-sref="WeeklyAllocationSettings">Weekly Settings</a></div>
         </div>
-        <main class="content" ui-view="content"></main>
+        <main class="content" ui-view="content" ng-hide="isLoadingNewSport"></main>
+        <div class="loading-content" ng-show="isLoadingNewSport">
+            <krossover-spinner size="40px"></krossover-spinner>
+            <p>Loading Permissions</p>
+        </div>
     </div>
 `;

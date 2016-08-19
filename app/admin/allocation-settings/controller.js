@@ -6,6 +6,7 @@ AllocationSettingsController.$inject = [
     'AllocationSettings.Data',
     'IndexerFactory',
     'SportsFactory',
+    'AlertsService',
     'ALLOCATION_TYPES'
 ];
 
@@ -17,25 +18,29 @@ function AllocationSettingsController(
     data,
     indexerFactory,
     sports,
+    alerts,
     ALLOCATION_TYPES
 ) {
     $scope.sports = sports.getList();
     $scope.selectedSportId = $scope.sports[0].id;
+    $scope.isLoadingNewSport = false;
 
     //For General Settings
     $scope.indexerGroups = data.indexerGroups.data;
     $scope.indexerGroupAllocationTypes = data.indexerGroupAllocationTypes.data;
-    $scope.indexerGroupsAllocationPermissions = data.indexerGroupsAllocationPermissions.data;
+    $scope.indexerGroupsAllocationPermissions = data.indexerGroupsAllocationPermissions;
     $scope.ALLOCATION_TYPES = ALLOCATION_TYPES;
 
     $scope.onChangeSelectedSportId = function() {
+        $scope.isLoadingNewSport = true;
         indexerFactory.getIndexerGroupsAllocationPermissions($scope.selectedSportId).then(response => {
-            $scope.indexerGroupsAllocationPermissions = response.data;
+            $scope.indexerGroupsAllocationPermissions.data = response.data;
+            $scope.isLoadingNewSport = false;
         });
     };
 
     $scope.groupHasPermission = function(indexerGroup, allocationTypeId) {
-        return $scope.indexerGroupsAllocationPermissions.some(permission => {
+        return $scope.indexerGroupsAllocationPermissions.data.some(permission => {
             if (permission.attributes.name === indexerGroup.attributes.name && permission.attributes.sports[$scope.selectedSportId]) {
                 return permission.attributes.sports[$scope.selectedSportId].some(permissionId => {
                     return permissionId === allocationTypeId;
@@ -46,14 +51,14 @@ function AllocationSettingsController(
 
     $scope.toggleGroupPermission = function(indexerGroup, allocationTypeId) {
         if ($scope.groupHasPermission(indexerGroup, allocationTypeId)) {
-            $scope.indexerGroupsAllocationPermissions.forEach(permission => {
+            $scope.indexerGroupsAllocationPermissions.data.forEach(permission => {
                 if (permission.attributes.name === indexerGroup.attributes.name) {
                     let index = permission.attributes.sports[$scope.selectedSportId].indexOf(allocationTypeId);
                     permission.attributes.sports[$scope.selectedSportId].splice(index, 1);
                 }
             });
         } else {
-            $scope.indexerGroupsAllocationPermissions.forEach(permission => {
+            $scope.indexerGroupsAllocationPermissions.data.forEach(permission => {
                 if (permission.attributes.name === indexerGroup.attributes.name) {
                     if (permission.attributes.sports[$scope.selectedSportId]) {
                         permission.attributes.sports[$scope.selectedSportId].push(allocationTypeId);
@@ -66,7 +71,12 @@ function AllocationSettingsController(
     };
 
     $scope.saveGroupPermissions = function() {
-        indexerFactory.updateIndexerGroupsAllocationPermissions($scope.indexerGroupsAllocationPermissions);
+        indexerFactory.updateIndexerGroupsAllocationPermissions($scope.indexerGroupsAllocationPermissions).then(response => {
+            alerts.add({
+                type: 'success',
+                message: 'Permissions saved successfully!'
+            });
+        });
     };
 }
 

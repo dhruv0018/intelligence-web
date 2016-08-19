@@ -19,68 +19,68 @@ export default `
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="indexerGroup in indexerGroups">
+                    <tr ng-repeat="indexerGroup in indexerGroups" ng-class="{'not-allowed': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                         <td>{{indexerGroup.attributes.name}}</td>
                         <td>
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)">
                             </check-box>
-                        <td>
+                        <td ng-class="{'disabled': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.URGENCY_LATE.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.URGENCY_LATE.id)">
                             </check-box>
                         </td>
-                        <td>
+                        <td ng-class="{'disabled': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.URGENCY_NEAR_DEADLINE.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.URGENCY_NEAR_DEADLINE.id)">
                             </check-box>
                         </td>
-                        <td>
+                        <td ng-class="{'disabled': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_HIGHEST.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_HIGHEST.id)">
                             </check-box>
                         </td>
-                        <td>
+                        <td ng-class="{'disabled': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_HIGH.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_HIGH.id)">
                             </check-box>
                         </td>
-                        <td>
+                        <td ng-class="{'disabled': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.HYPER_TURNAROUND.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.HYPER_TURNAROUND.id)">
                             </check-box>
                         </td>
-                        <td>
+                        <td ng-class="{'disabled': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.COACH_COMPLAINT.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.COACH_COMPLAINT.id)">
                             </check-box>
                         </td>
-                        <td>
+                        <td ng-class="{'disabled': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.KROSSOVER_LITE.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.KROSSOVER_LITE.id)">
                             </check-box>
                         </td>
-                        <td>
+                        <td ng-class="{'disabled': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.COACH_BREAKDOWN.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.COACH_BREAKDOWN.id)">
                             </check-box>
                         </td>
-                        <td>
+                        <td ng-class="{'disabled': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.CUSTOM_1.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.CUSTOM_1.id)">
                             </check-box>
                         </td>
-                        <td>
+                        <td ng-class="{'disabled': !groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
                             <check-box
                                 checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.CUSTOM_2.id)"
                                 ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.CUSTOM_2.id)">

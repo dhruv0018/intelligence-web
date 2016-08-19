@@ -59,6 +59,14 @@
         }
     }
 
+    .loading-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+
     .content {
         padding: 20px;
         height: calc(~"100% - 94px");
@@ -87,6 +95,10 @@
                 background-color: white;
             }
 
+            tr.not-allowed {
+                background-color: @gray-lightest;
+            }
+
             th:not(:first-child), td:not(:first-child) {
                 text-align: center;
             }
@@ -95,6 +107,16 @@
                 border: none;
                 vertical-align: middle;
                 line-height: normal;
+            }
+
+            td.disabled {
+                pointer-events: none;
+                cursor: not-allowed;
+                opacity: .3;
+
+                .check-box {
+                    color: @gray-dark;
+                }
             }
 
             check-box {
