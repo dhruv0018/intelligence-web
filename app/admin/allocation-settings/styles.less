@@ -1,5 +1,6 @@
 .allocation-settings {
     height: 100%;
+
     .sport-select-container, .week-select-container {
         display: flex;
         align-items: center;
@@ -12,11 +13,11 @@
         }
     }
 
-    .sport-select-container{
+    .sport-select-container {
         padding: 20px 20px 0px;
     }
 
-    .week-select-container{
+    .week-select-container {
         margin-bottom: 40px;
     }
 
@@ -26,10 +27,12 @@
         display: flex;
         justify-content: flex-start;
         align-items: flex-end;
-        border-bottom: thin solid @gray-light;
-        &.state-tabs{
-            margin: -10px 0px 0px 20px;
+        border-bottom: thin solid @gray-border;
+
+        &.state-tabs {
+            margin: 0;
         }
+
         .allocation-nav-btn {
             width: 110px;
             height: 100%;
@@ -43,20 +46,22 @@
                 text-decoration: none;
             }
 
-            &.active {
-                background-color: @gray-medium;
+            &:first-child {
+                margin-left: 20px;
+            }
+
+            &.active-state {
 
                 a {
-                    color: white;
+                    color: @brand-primary;
                 }
             }
         }
     }
 
     .content {
-        background-color: @gray-lightest;
         padding: 20px;
-        height: 100%;
+        height: calc(~"100% - 94px");
 
         .table{
             thead{
@@ -67,21 +72,42 @@
             }
         }
     }
-    .general-allocation-wrapper{
+
+    .general-allocation-wrapper {
         margin-bottom: 20px;
-        .btn.btn-primary{
+
+        .btn.btn-primary {
             padding: 6px 24px;
         }
-        tbody{
-            border: 1px solid @gray-light;
-        }
-        th:not(:first-child), td:not(:first-child){
-            text-align: center;
-        }
-        th, td{
-            padding: 10px;
+
+        .table {
+            border: thin solid @gray-lighter;
+
+            tbody {
+                background-color: white;
+            }
+
+            th:not(:first-child), td:not(:first-child) {
+                text-align: center;
+            }
+
+            th, td {
+                border: none;
+                vertical-align: middle;
+                line-height: normal;
+            }
+
+            check-box {
+                width: 20px;
+                font-size: 20px;
+                margin: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
     }
+
     .weekly-allocation-wrapper{
         width: 100%;
         .weekly-allocation-div{

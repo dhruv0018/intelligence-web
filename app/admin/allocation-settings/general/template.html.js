@@ -4,103 +4,92 @@ export default `
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>Group</th>
-                        <th>Allowed</th>
-                        <th>Late</th>
-                        <th><2hrs</th>
-                        <th>Coach Complaint</th>
-                        <th>Hyper Turnaround</th>
-                        <th>Highest Priority</th>
-                        <th>High Priority</th>
-                        <th>Krossover Lite</th>
-                        <th>Coach Breakdown</th>
-                        <th>Custom 1</th>
-                        <th>Custom 2</th>
+                        <th>Name</th>
+                        <th>{{ALLOCATION_TYPES.PRIORITY_NORMAL.display}}</th>
+                        <th>{{ALLOCATION_TYPES.URGENCY_LATE.display}}</th>
+                        <th>{{ALLOCATION_TYPES.URGENCY_NEAR_DEADLINE.display}}</th>
+                        <th>{{ALLOCATION_TYPES.PRIORITY_HIGHEST.display}}</th>
+                        <th>{{ALLOCATION_TYPES.PRIORITY_HIGH.display}}</th>
+                        <th>{{ALLOCATION_TYPES.HYPER_TURNAROUND.display}}</th>
+                        <th>{{ALLOCATION_TYPES.COACH_COMPLAINT.display}}</th>
+                        <th>{{ALLOCATION_TYPES.KROSSOVER_LITE.display}}</th>
+                        <th>{{ALLOCATION_TYPES.COACH_BREAKDOWN.display}}</th>
+                        <th>{{ALLOCATION_TYPES.CUSTOM_1.display}}</th>
+                        <th>{{ALLOCATION_TYPES.CUSTOM_2.display}}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]">
-                        <td>Us Marketplace</td>
+                    <tr ng-repeat="indexerGroup in indexerGroups">
+                        <td>{{indexerGroup.attributes.name}}</td>
                         <td>
                             <check-box
-                                id="priority+1-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)">
                             </check-box>
                         <td>
                             <check-box
-                                id="urgency+Late-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.URGENCY_LATE.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.URGENCY_LATE.id)">
                             </check-box>
                         </td>
                         <td>
                             <check-box
-                                id="urgency+near-deadline-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.URGENCY_NEAR_DEADLINE.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.URGENCY_NEAR_DEADLINE.id)">
                             </check-box>
                         </td>
                         <td>
                             <check-box
-                                id="label+1-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_HIGHEST.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_HIGHEST.id)">
                             </check-box>
                         </td>
                         <td>
                             <check-box
-                                id="label+2-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_HIGH.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.PRIORITY_HIGH.id)">
                             </check-box>
                         </td>
                         <td>
                             <check-box
-                                id="priority+3-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.HYPER_TURNAROUND.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.HYPER_TURNAROUND.id)">
                             </check-box>
                         </td>
                         <td>
                             <check-box
-                                id="priority+2-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.COACH_COMPLAINT.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.COACH_COMPLAINT.id)">
                             </check-box>
                         </td>
                         <td>
                             <check-box
-                                id="label+3-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.KROSSOVER_LITE.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.KROSSOVER_LITE.id)">
                             </check-box>
                         </td>
                         <td>
                             <check-box
-                                id="label+4-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.COACH_BREAKDOWN.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.COACH_BREAKDOWN.id)">
                             </check-box>
                         </td>
                         <td>
                             <check-box
-                                id="label+5-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.CUSTOM_1.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.CUSTOM_1.id)">
                             </check-box>
                         </td>
                         <td>
                             <check-box
-                                id="label+6-cta"
-                                checked="true"
-                                ng-click="">
+                                checked="groupHasPermission(indexerGroup, ALLOCATION_TYPES.CUSTOM_2.id)"
+                                ng-click="toggleGroupPermission(indexerGroup, ALLOCATION_TYPES.CUSTOM_2.id)">
                             </check-box>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <button class="btn btn-primary pull-right">SAVE</button>
+        <button class="btn btn-primary pull-right" ng-click="saveGroupPermissions()">SAVE</button>
     </div>
 `;

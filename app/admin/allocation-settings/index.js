@@ -59,8 +59,7 @@ AllocationSettings.config([
                 parent: 'AllocationSettings',
                 views: {
                     'content@AllocationSettings': {
-                        template: GeneralAllocationSettingsTemplate,
-                        controller: GeneralAllocationSettingsController
+                        template: GeneralAllocationSettingsTemplate
                     }
                 }
             })

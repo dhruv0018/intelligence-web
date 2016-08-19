@@ -25,13 +25,13 @@ IntelligenceWebClient.factory('IndexerResource', [
 
             getIndexerGroupsAllocationPermissions: {
                 method: 'GET',
-                url: `${url}indexer-groups-allocation-permissions`,
+                url: `${url}indexer-group-allocation-permissions`,
                 params: {sportId: '@sportId'}
             },
 
             updateIndexerGroupsAllocationPermissions: {
                 method: 'POST',
-                url: `${url}indexer-groups-allocation-permissions`
+                url: `${url}indexer-group-allocation-permissions`
             },
 
             getWeeklyIndexingProjections: {

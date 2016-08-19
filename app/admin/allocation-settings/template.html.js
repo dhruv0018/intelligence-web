@@ -3,7 +3,12 @@ export default `
     <div class="allocation-settings">
         <div class="sport-select-container">
             <h4>Sport</h4>
-            <select class="form-control" ng-model="selectedSport" ng-options="sport as sport.name for sport in sports"></select>
+            <select
+                class="form-control"
+                ng-model="selectedSportId"
+                ng-options="sport.id as sport.name for sport in sports"
+                ng-change="onChangeSelectedSportId()">
+            </select>
         </div>
 
         <div class="allocation-nav state-tabs">

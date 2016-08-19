@@ -5,14 +5,16 @@ AllocationSettingsDataDependencies.$inject = [
     '$q',
     'SportsFactory',
     'IndexerFactory',
-    'SessionService'
+    'SessionService',
+    'SPORTS'
 ];
 
 function AllocationSettingsDataDependencies (
     $q,
     sports,
     indexerFactory,
-    session
+    session,
+    SPORTS
 ) {
 
     class AllocationSettingsData {
@@ -20,7 +22,9 @@ function AllocationSettingsDataDependencies (
         constructor () {
             /* Load data. */
             this.sports = sports.load();
+            this.indexerGroups = indexerFactory.getIndexerGroups();
             this.indexerGroupAllocationTypes = indexerFactory.getIndexerGroupAllocationTypes();
+            this.indexerGroupsAllocationPermissions = indexerFactory.getIndexerGroupsAllocationPermissions(SPORTS.BASKETBALL.id);
         }
     }
 
