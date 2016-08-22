@@ -5,7 +5,6 @@ AllocationSettingsDataDependencies.$inject = [
     '$q',
     'SportsFactory',
     'IndexerFactory',
-    'SessionService',
     'SPORTS'
 ];
 
@@ -13,7 +12,6 @@ function AllocationSettingsDataDependencies (
     $q,
     sports,
     indexerFactory,
-    session,
     SPORTS
 ) {
 
