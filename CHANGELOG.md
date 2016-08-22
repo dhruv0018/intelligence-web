@@ -1,3 +1,7 @@
+# v87.1#
+## Fixes##
+- Fixes issue where coaches get removed from teams during upload process
+
 # v87.0#
 ## Features##
 - Adds Is Canonical fields to team admin page
