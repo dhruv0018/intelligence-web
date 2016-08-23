@@ -1,3 +1,8 @@
+# v88.0#
+## Features##
+- Adds filter for Indexer Group on game queue
+- Assigning indexer to a game also assigns the group that indexer is a part of
+
 # v87.1#
 ## Fixes##
 - Fixes issue where coaches get removed from teams during upload process
