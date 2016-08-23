@@ -162,6 +162,7 @@ QueueController.$inject = [
     'GamesFactory',
     'Admin.Queue.Data',
     'SelectIndexer.Modal',
+    'RunDistribution.Modal',
     'Utilities',
     'AdminGamesService',
     'AdminQueueDashboardService',
@@ -190,6 +191,7 @@ function QueueController (
     games,
     data,
     SelectIndexerModal,
+    RunDistributionModal,
     utilities,
     AdminGames,
     AdminQueueDashboardService,
@@ -296,4 +298,8 @@ function QueueController (
         AdminGames.queryFilter = null;
         AdminGames.start = 0;
     });
+
+    $scope.openDistrubutionModal = function() {
+        RunDistributionModal.open();
+    };
 }
