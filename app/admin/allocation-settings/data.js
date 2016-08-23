@@ -36,7 +36,6 @@ function AllocationSettingsDataDependencies (
                 return indexingProjections;
             });
 
-            this.indexerGroups = indexerFactory.getIndexerGroups();
             this.weeklyIndexingSettings = indexerFactory.extendWeeklySettings({'sportId': SPORTS.BASKETBALL.id});
 
         }

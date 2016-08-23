@@ -8,7 +8,6 @@ export default `
                     <option value="next">Next</option>
                 </select>
             </div>
-
             <div class="weekly-allocation-wrapper">
                 <div ng-repeat="(i, projection) in projections" ng-show="i >= startKey && i < startKey+7" class="weekly-allocation-div" ng-class="{'active': projection.isActive, 'inactive': !projection.isActive}">
                     <div class="weekly-allocation-header">
@@ -33,16 +32,22 @@ export default `
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="weeklySetting in weeklyIndexingSettings[i].setting">
-                                <td class="group">{{weeklySetting.attributes.indexerGroup}}</td>
-                                <td class="percent">
-                                    <span ng-if="!projection.isActive">{{weeklySetting.attributes.percentage}}</span>
-                                    <input type="text" ng-model="weeklySetting.attributes.percentage" ng-if="projection.isActive" ng-change="checkPercentage(i)" min="0" max="100" integer>
+                            <tr ng-repeat="weeklySetting in weeklyIndexingSettings[i].setting" ng-class="{'disabled': !groupHasPermission(weeklySetting.attributes.indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)}">
+                                <td class="group">
+                                    {{weeklySetting.attributes.indexerGroup}}
                                 </td>
-                                <td class="allocation">{{projection.attributes.projectedBreakdowns * weeklySetting.attributes.percentage/100}}</td>
+                                <td class="percent">
+                                    <span ng-if="!projection.isActive || !groupHasPermission(weeklySetting.attributes.indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)">
+                                        {{weeklySetting.attributes.percentage}}
+                                    </span>
+                                    <input type="text" ng-model="weeklySetting.attributes.percentage" ng-if="projection.isActive && groupHasPermission(weeklySetting.attributes.indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)" ng-change="checkPercentage(i)" min="0" max="100" integer>
+                                </td>
+                                <td class="allocation">{{projection.attributes.projectedBreakdowns * weeklySetting.attributes.percentage/100|number: 0}}</td>
                                 <td class="cap">
-                                    <span ng-if="!projection.isActive">{{weeklySetting.attributes.cap}}</span>
-                                    <input type="text" ng-model="weeklySetting.attributes.cap" ng-if="projection.isActive" integer>
+                                    <span ng-if="!projection.isActive || !groupHasPermission(weeklySetting.attributes.indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)">
+                                        {{weeklySetting.attributes.cap}}
+                                    </span>
+                                    <input type="text" ng-model="weeklySetting.attributes.cap" ng-if="projection.isActive && groupHasPermission(weeklySetting.attributes.indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)" integer>
                                 </td>
                             </tr>
                         </tbody>
@@ -50,16 +55,21 @@ export default `
                             <tr>
                                 <th class="group">Total</th>
                                 <th class="percent">
-                                    {{Total(i, 'percentage')}}
+                                    {{Total(i, 'percentage')}}<sup>*</sup>
+                                    <input type="hidden" id="totalPercent-{{i}}" name="totalPercent-{{i}}"  ng-pattern="regex" ng-model="projection.percentage">
                                 </th>
                                 <th class="allocation">{{Total(i, 'allocation')}}</th>
                                 <th class="cap">{{Total(i, 'cap')}}</th>
                             </tr>
                         </tfoot>
                     </table>
+                    <div class="setting-footer"><sup>*</sup>Allocation % must add up to 100</div>
                 </div>
             </div>
-            <button id="save-weeklysetting-cta" class="btn btn-primary pull-right" ng-disabled="formSetting.$invalid || formSetting.$pristine" ng-click="saveSettings()">SAVE</button>
+            <button id="save-weeklysetting-cta" class="btn btn-primary pull-right" ng-disabled="formSetting.$invalid || formSetting.$pristine || preSaving" ng-click="saveSettings()">\
+                <span ng-show="!preSaving">SAVE</span>
+                <span ng-show="preSaving" class="icon icon-spinner spinner"></span>
+            </button>
         </form>
     </div>
 `;
