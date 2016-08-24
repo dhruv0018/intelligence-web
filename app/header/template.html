@@ -156,6 +156,9 @@
                         ui-sref="PlayerAnalytics"
                     >Player Analytics</a>
                 </li>
+                <li ng-if="SPORTS[SPORT_IDS[league.sportId]].hasInsights">
+                    <a ng-href="{{config.links.insights.uri}}" target="_blank">Insights</a>
+                </li>
             </ul>
         </li>
         <li id="menu-coach-team-cta" class="header-dropdown" data-ng-class="{active: $state.includes('Coach.Team')}">

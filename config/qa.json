@@ -104,6 +104,9 @@
             "pc": "http://support.krossover.com/customer/portal/articles/1642640-turning-off-your-computer-s-sleep-settings"
         },
         "speedTest": "http://support.krossover.com/customer/portal/articles/1642636-testing-your-upload-speed",
+        "insights": {
+            "uri": "http://insights.krossover.com"
+        },
         "finalCutPro": " http://vimeo.com/41165826"
     },
     "defaultVideoId": 2,

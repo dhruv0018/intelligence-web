@@ -12,6 +12,7 @@ var SPORTS = {
         name: 'Basketball',
         hasAnalytics: true,
         hasStatistics: true,
+        hasInsights: false,
         scoreBySets: false
     },
 
@@ -20,6 +21,7 @@ var SPORTS = {
         name: 'Football',
         hasAnalytics: true,
         hasStatistics: true,
+        hasInsights: true,
         scoreBySets: false
     },
 
@@ -28,6 +30,7 @@ var SPORTS = {
         name: 'Lacrosse',
         hasAnalytics: true,
         hasStatistics: true,
+        hasInsights: false,
         scoreBySets: false
     },
 
@@ -36,6 +39,7 @@ var SPORTS = {
         name: 'Volleyball',
         hasAnalytics: true,
         hasStatistics: true,
+        hasInsights: true,
         scoreBySets: true
     },
 
