@@ -300,6 +300,6 @@ function QueueController (
     });
 
     $scope.openDistrubutionModal = function() {
-        RunDistributionModal.open();
+        RunDistributionModal.open($scope.indexerGroups);
     };
 }
