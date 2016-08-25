@@ -45,6 +45,7 @@ function GeneralAllocationSettingsController(
                 }
             });
         }
+        $scope.frmGeneral.$setDirty();
     };
 
     $scope.saveGroupPermissions = function() {
@@ -53,6 +54,7 @@ function GeneralAllocationSettingsController(
                 type: 'success',
                 message: 'Permissions saved successfully!'
             });
+            $scope.frmGeneral.$setPristine();
         });
     };
 }

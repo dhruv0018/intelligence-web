@@ -78,6 +78,7 @@ function WeeklyAllocationSettingsController(
                     message: 'Weekly settings are saved successfully!'
                 });
             }else if(error){
+                $scope.preSaving = false;
                 alerts.add({
                     type: 'danger',
                     message: 'There\'s error saving weekly setting.'
