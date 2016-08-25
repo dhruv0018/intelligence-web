@@ -30,7 +30,9 @@ module.exports = function(config) {
             transform: ['es6ify']
         },
 
-        browsers: ['Chrome'],
+        browsers: ['chromenosandbox'],
+        
+        customLaunchers: {chromenosandbox: {base:'Chrome', flags: ['--no-sandbox']}},
 
         reporters: ['progress', 'coverage', 'osx'],
 

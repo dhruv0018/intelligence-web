@@ -1,0 +1,70 @@
+#set your language below
+language: node_js
+
+#specify which services you need. This is only valid if you use the default Shippable image for your build
+services:
+
+env:
+  - NPM_TOKEN=82a7e16c-72b1-4cfe-bd45-a41e4b53a0d7 GITHUB_USERNAME=krossoverbuild GITHUB_PASSWORD=Popcorn23 NODE_ENV="" DISPLAY=:99
+
+matrix:
+
+build:
+    #commands in this section run on your build machine and not inside your CI container.
+    pre_ci:
+
+    pre_ci_boot:
+        image_name: 116065022286.dkr.ecr.us-east-1.amazonaws.com/shippable-web
+        image_tag: latest
+        pull: true
+        options: "-e HOME=/root"
+    #commands in this section run inside your CI container. In addition, any commands such as ls, in this section can be used to skip default processing for CI.
+    ci:
+      - npm install
+      - node_modules/.bin/napa
+      - npm install worker-farm --save-dev
+      - npm install component --save-dev
+      - node_modules/component/bin/component install -t 500000
+      - Xvfb :99 -ac -nolisten tcp&
+      - grunt test
+      - rm -rf deploy
+      - mkdir deploy
+      - cd deploy
+      - ssh-agent bash -c 'ssh-add /home/git.key; git clone git@bitbucket.org:krossoverintelligence/deployer-builder.git'
+      - cd deployer-builder/intelligence-web-client
+      - if [[ $IS_PULL_REQUEST == "true" ]]; then export GIT_BRANCH=$HEAD_BRANCH export BUILDER_METHOD="-p $PULL_REQUEST -b $HEAD_BRANCH"; elif [[ $IS_GIT_TAG == "true" ]]; then export GIT_BRANCH="TAG-COMMIT" export BUILDER_METHOD="-c $COMMIT -b master"; else export GIT_BRANCH=$BRANCH export BUILDER_METHOD="-c $COMMIT -b $BRANCH"; fi; echo "GIT_BRANCH=$GIT_BRANCH BUILDER_METHOD=$BUILDER_METHOD";
+      - if [[ $GIT_BRANCH == build-* ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g "buildserver --buildserver $GIT_BRANCH"'; else echo "Not Building"; fi;
+      - if [[ $GIT_BRANCH == fix-* ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g uat'; else echo "Not Building"; fi;
+      - if [[ $GIT_BRANCH == feature-* ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g uat'; else echo "Not Building"; fi;
+      - if [[ $GIT_BRANCH == master ]]; then if [[ $IS_GIT_TAG == "true" ]]; then export AUTODEPLOY="-a 58"; else export AUTODEPLOY=""; fi; ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs $AUTODEPLOY'; else echo "Not Building"; fi;
+      - if [[ $IS_GIT_TAG == "true" ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -a 58'; else echo "Not Building"; fi;
+    post_ci:
+    on_success:
+    on_failure:
+    cache: true
+    #commands in this section run on your build machine and not inside your CI container.
+    push:
+
+integrations:
+  hub:
+    - integrationName: krossover-devops
+      type: ecr
+    
+  notifications:
+      - integrationName: email
+        type: email
+        recipients:
+          - frontend@krossover.com
+          - joshb@krossover.com
+          - yang@krossover.com
+        on_success: change
+        on_failure: always
+
+      - integrationName: HipChat Eng Notifications
+        type: hipchat
+        recipients:
+          - Engineering Notifications
+        on_success: always
+        on_failure: always
+
+region: us-east-1

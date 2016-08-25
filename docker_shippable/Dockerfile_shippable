@@ -1,0 +1,19 @@
+#
+# Dockerfile for shippable CI
+#
+FROM nodesource/jessie:4.2.2
+MAINTAINER Joshua Banton "joshb@krossover.com"
+
+COPY npmrc /root/.npmrc
+COPY git.key /home/git.key
+RUN chmod 0600 /home/git.key
+RUN mkdir -p /root/.ssh; ssh-keyscan -H github.com >> /root/.ssh/known_host
+RUN npm install -g grunt-cli
+RUN apt-get clean && apt-get update; apt-get -y install python-pip wget build-essential chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev unzip
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN bash -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+RUN apt-get clean && apt-get update; apt-get -y install --fix-missing google-chrome-stable xvfb
+RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"; unzip awscli-bundle.zip; ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+RUN pip install boto python-dateutil
+
+WORKDIR /home
