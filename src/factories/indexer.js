@@ -54,19 +54,12 @@ IntelligenceWebClient.factory('IndexerFactory', [
             extendWeeklySettings(filter){
                 let self = this;
                 let indexers = [];
-                let projectionIDs = [];
                 let formattedSettings = [];
 
                 return self.getIndexerGroups()
                     .then(function(indexerGroups){
                         indexerGroups.data.forEach(function(indexerGroup){
                             indexers.push(indexerGroup.attributes.name);
-                        });
-                        return self.getWeeklyIndexingProjections(filter);
-                    })
-                    .then(function(projections){
-                        projections.data.forEach(function(projection){
-                            projectionIDs.push(projection.id);
                         });
                         return self.getIndexingWeeklySettings(filter);
                     })

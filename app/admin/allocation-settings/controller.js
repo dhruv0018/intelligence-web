@@ -1,10 +1,12 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const moment = require('moment');
 
 AllocationSettingsController.$inject = [
     '$scope',
     'AllocationSettings.Data',
     'SportsFactory',
+    'IndexerFactory',
     'ALLOCATION_TYPES'
 ];
 
@@ -15,17 +17,58 @@ function AllocationSettingsController(
     $scope,
     data,
     sports,
+    indexerFactory,
     ALLOCATION_TYPES
 ) {
     $scope.ALLOCATION_TYPES = ALLOCATION_TYPES;
     $scope.sports = sports.getList();
 
     $scope.selectedSportId = $scope.sports[0].id;
+    $scope.indexerGroups = data.indexerGroups.data;
+    $scope.indexerGroupAllocationTypes = data.indexerGroupAllocationTypes.data;
+    $scope.indexerGroupsAllocationPermissions = data.indexerGroupsAllocationPermissions;
+
+    $scope.projections = data.weeklyIndexingProjections.data;
+    $scope.weeklyIndexingSettings = data.weeklyIndexingSettings;
+
     $scope.isLoadingNewSport = false;
+
+    $scope.indexerPercentage = indexerPercentage($scope.weeklyIndexingSettings);
+
+    function indexerPercentage(settings){
+        let percentages = {};
+        settings.forEach(weeklySetting =>{
+            for(let i=0; i< $scope.indexerGroups.length; i++){
+                if (!percentages[weeklySetting.setting[i].attributes.indexerGroup] && weeklySetting.setting[i].attributes.percentage >0) {
+                    percentages[weeklySetting.setting[i].attributes.indexerGroup] = true;
+                }
+            }
+        });
+        return percentages;
+    }
 
     $scope.onChangeSelectedSportId = function() {
         $scope.isLoadingNewSport = true;
-        $scope.$broadcast('on-sport-selected', event);
+
+        indexerFactory.getIndexerGroupsAllocationPermissions($scope.selectedSportId).then(response => {
+            $scope.indexerGroupsAllocationPermissions.data = response.data;
+        });
+
+        let today = moment.utc(new Date().toJSON().slice(0,10));
+        indexerFactory.getWeeklyIndexingProjections({'sportId': $scope.selectedSportId}).then(function(indexingProjections){
+            angular.forEach(indexingProjections.data, function(item){
+                item.isActive = moment(item.attributes.date).isAfter(today) || moment(item.attributes.date).isSame(today);
+                item.dateString = (item.attributes.date).toString().slice(0,10);
+            });
+            $scope.projections = indexingProjections.data;
+
+            indexerFactory.extendWeeklySettings({'sportId': $scope.selectedSportId}).then(function(weeklySettings){
+                $scope.weeklyIndexingSettings = weeklySettings;
+                $scope.indexerPercentage = indexerPercentage($scope.weeklyIndexingSettings);
+                $scope.isLoadingNewSport = false;
+            });
+
+        });
     };
 
     $scope.groupHasPermission = function(indexerGroup, allocationTypeId) {

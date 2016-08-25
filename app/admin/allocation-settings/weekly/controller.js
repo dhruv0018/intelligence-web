@@ -20,11 +20,7 @@ function WeeklyAllocationSettingsController(
     allocationData,
     alerts
 ) {
-
     $scope.selectedWeek = 'current';
-    $scope.projections = allocationData.weeklyIndexingProjections.data;
-    $scope.weeklyIndexingSettings = allocationData.weeklyIndexingSettings;
-
     $scope.regex = '0|100';
 
     $scope.$watch('selectedWeek', function(newV, oldV){
@@ -33,24 +29,6 @@ function WeeklyAllocationSettingsController(
         }else{
             $scope.startKey = 0;
         }
-    });
-
-    //fetch data based on selected sport id
-    $scope.$on('on-sport-selected', event => {
-        let today = moment.utc(new Date().toJSON().slice(0,10));
-        indexerFactory.getWeeklyIndexingProjections({'sportId': $scope.selectedSportId}).then(function(indexingProjections){
-            angular.forEach(indexingProjections.data, function(item){
-                item.isActive = moment(item.attributes.date).isAfter(today) || moment(item.attributes.date).isSame(today);
-                item.dateString = (item.attributes.date).toString().slice(0,10);
-            });
-            $scope.projections = indexingProjections.data;
-
-            indexerFactory.extendWeeklySettings({'sportId': $scope.selectedSportId}).then(function(weeklySettings){
-                $scope.weeklyIndexingSettings = weeklySettings;
-                $scope.isLoadingNewSport = false;
-            });
-
-        });
     });
 
     //count the total number

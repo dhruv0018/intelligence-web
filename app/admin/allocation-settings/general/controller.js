@@ -17,18 +17,16 @@ function GeneralAllocationSettingsController(
     indexerFactory,
     alerts
 ) {
-    $scope.indexerGroups = data.indexerGroups.data;
-    $scope.indexerGroupAllocationTypes = data.indexerGroupAllocationTypes.data;
-    $scope.indexerGroupsAllocationPermissions = data.indexerGroupsAllocationPermissions;
-
-    $scope.$on('on-sport-selected', event => {
-        indexerFactory.getIndexerGroupsAllocationPermissions($scope.selectedSportId).then(response => {
-            $scope.indexerGroupsAllocationPermissions.data = response.data;
-            $scope.isLoadingNewSport = false;
-        });
-    });
 
     $scope.toggleGroupPermission = function(indexerGroup, allocationTypeId) {
+        if($scope.indexerPercentage[indexerGroup.attributes.name] && $scope.groupHasPermission(indexerGroup, allocationTypeId)){
+            alerts.add({
+                type: 'danger',
+                message: 'Update can not be saved. Please adjust weekly allocation % before removing permission from indexer group(s)'
+            });
+
+            return;
+        }
         if ($scope.groupHasPermission(indexerGroup, allocationTypeId)) {
             $scope.indexerGroupsAllocationPermissions.data.forEach(permission => {
                 if (permission.attributes.name === indexerGroup.attributes.name) {
