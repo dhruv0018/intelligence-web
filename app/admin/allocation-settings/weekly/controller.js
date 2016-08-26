@@ -4,6 +4,7 @@ const moment = require('moment');
 
 WeeklyAllocationSettingsController.$inject = [
     '$scope',
+    '$rootScope',
     '$filter',
     'IndexerFactory',
     'AllocationSettings.Data',
@@ -15,6 +16,7 @@ WeeklyAllocationSettingsController.$inject = [
  */
 function WeeklyAllocationSettingsController(
     $scope,
+    $rootScope,
     $filter,
     indexerFactory,
     allocationData,
@@ -39,7 +41,7 @@ function WeeklyAllocationSettingsController(
             if(key == 'allocation'){
                 total += $scope.projections[i].attributes.projectedBreakdowns * item.attributes.percentage/100;
             }else{
-                total += parseInt(item.attributes[key]);
+                total += parseInt(item.attributes[key])||0;
             }
         });
         total = Math.round(total);
@@ -49,6 +51,12 @@ function WeeklyAllocationSettingsController(
     $scope.checkPercentage = function(idx){
         $scope.projections[idx].percentage = $scope.Total(idx, 'percentage');
     };
+
+    $scope.$watch('formSetting.$pristine', function(newV, oldV){
+        if(!newV){
+            $scope.$parent.formSettingChanged = true;
+        }
+    });
 
     $scope.saveSettings = function(){
         $scope.preSaving = true;
@@ -72,11 +80,13 @@ function WeeklyAllocationSettingsController(
         }, function(newV, oldV){
             if(newV){
                 $scope.preSaving = false;
+                $scope.$parent.formSettingChanged = false;
                 $scope.formSetting.$setPristine();
                 alerts.add({
                     type: 'success',
                     message: 'Weekly settings are saved successfully!'
                 });
+                $rootScope.$broadcast('weeklySettings-saved', $scope.weeklyIndexingSettings);
             }else if(error){
                 $scope.preSaving = false;
                 alerts.add({

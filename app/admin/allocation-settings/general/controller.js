@@ -3,9 +3,11 @@ const angular = window.angular;
 
 GeneralAllocationSettingsController.$inject = [
     '$scope',
+    '$rootScope',
     'AllocationSettings.Data',
     'IndexerFactory',
-    'AlertsService'
+    'AlertsService',
+    'ALLOCATION_TYPES'
 ];
 
 /**
@@ -13,16 +15,18 @@ GeneralAllocationSettingsController.$inject = [
  */
 function GeneralAllocationSettingsController(
     $scope,
+    $rootScope,
     data,
     indexerFactory,
-    alerts
+    alerts,
+    ALLOCATION_TYPES
 ) {
 
     $scope.toggleGroupPermission = function(indexerGroup, allocationTypeId) {
-        if($scope.indexerPercentage[indexerGroup.attributes.name] && $scope.groupHasPermission(indexerGroup, allocationTypeId)){
+        if($scope.indexerPercentage[indexerGroup.attributes.name] && (allocationTypeId == ALLOCATION_TYPES.PRIORITY_NORMAL.id) && $scope.groupHasPermission(indexerGroup, allocationTypeId)){
             alerts.add({
                 type: 'danger',
-                message: 'Update can not be saved. Please adjust weekly allocation % before removing permission from indexer group(s)'
+                message: 'Please adjust weekly allocation % before removing permission from indexer group(s)'
             });
 
             return;
@@ -45,6 +49,7 @@ function GeneralAllocationSettingsController(
                 }
             });
         }
+        $scope.$parent.frmGeneralChanged = true;
         $scope.frmGeneral.$setDirty();
     };
 
@@ -54,9 +59,11 @@ function GeneralAllocationSettingsController(
                 type: 'success',
                 message: 'Permissions saved successfully!'
             });
+            $scope.$parent.frmGeneralChanged = false;
             $scope.frmGeneral.$setPristine();
         });
     };
+
 }
 
 export default GeneralAllocationSettingsController;

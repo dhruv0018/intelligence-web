@@ -40,7 +40,7 @@ export default `
                                     <span ng-if="!projection.isActive || !groupHasPermission(weeklySetting.attributes.indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)">
                                         {{weeklySetting.attributes.percentage}}
                                     </span>
-                                    <input type="text" ng-model="weeklySetting.attributes.percentage" ng-if="projection.isActive && groupHasPermission(weeklySetting.attributes.indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)" ng-change="checkPercentage(i)" min="0" max="100" integer>
+                                    <input type="text" ng-model="weeklySetting.attributes.percentage" ng-if="projection.isActive && groupHasPermission(weeklySetting.attributes.indexerGroup, ALLOCATION_TYPES.PRIORITY_NORMAL.id)" ng-change="checkPercentage(i)" min="0" max="100" integer size="3" maxlength="3">
                                 </td>
                                 <td class="allocation">{{projection.attributes.projectedBreakdowns * weeklySetting.attributes.percentage/100|number: 0}}</td>
                                 <td class="cap">
@@ -66,7 +66,7 @@ export default `
                     <div class="setting-footer"><sup>*</sup>Allocation % must add up to 100</div>
                 </div>
             </div>
-            <button id="save-weeklysetting-cta" class="btn btn-primary pull-right" ng-disabled="formSetting.$invalid || formSetting.$pristine || preSaving" ng-click="saveSettings()">\
+            <button id="save-weeklysetting-cta" class="btn btn-primary pull-right" ng-disabled="formSetting.$invalid || formSetting.$pristine || preSaving" ng-click="saveSettings()" name="btnSave">
                 <span ng-show="!preSaving">SAVE</span>
                 <span ng-show="preSaving" class="icon icon-spinner spinner"></span>
             </button>

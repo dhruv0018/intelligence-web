@@ -7,7 +7,8 @@ AllocationSettingsController.$inject = [
     'AllocationSettings.Data',
     'SportsFactory',
     'IndexerFactory',
-    'ALLOCATION_TYPES'
+    'ALLOCATION_TYPES',
+    'BasicModals'
 ];
 
 /**
@@ -18,7 +19,8 @@ function AllocationSettingsController(
     data,
     sports,
     indexerFactory,
-    ALLOCATION_TYPES
+    ALLOCATION_TYPES,
+    basicModals
 ) {
     $scope.ALLOCATION_TYPES = ALLOCATION_TYPES;
     $scope.sports = sports.getList();
@@ -34,6 +36,33 @@ function AllocationSettingsController(
     $scope.isLoadingNewSport = false;
 
     $scope.indexerPercentage = indexerPercentage($scope.weeklyIndexingSettings);
+
+    $scope.frmGeneralChanged = false;
+    $scope.formSettingChanged = false;
+
+    $scope.$on('weeklySettings-saved', function(event, weeklySettings){
+        $scope.weeklyIndexingSettings = weeklySettings;
+        $scope.indexerPercentage = indexerPercentage(weeklySettings);
+    });
+
+    $scope.checkState = function($event){
+        if($scope.frmGeneralChanged){
+            $event.preventDefault();
+            let saveModal = basicModals.openForAlert({
+                title: 'Please Save the General Settings',
+                bodyText: 'You need to save the current change for general settings before switching to weekly settings.',
+                buttonText: 'Yes'
+            });
+        }
+        if($scope.formSettingChanged){
+            $event.preventDefault();
+            let saveModal = basicModals.openForAlert({
+                title: 'Please Save the Weekly Settings',
+                bodyText: 'You need to save the current change for weekly settings before switching to general settings.',
+                buttonText: 'Yes'
+            });
+        }
+    };
 
     function indexerPercentage(settings){
         let percentages = {};
