@@ -76,10 +76,10 @@
         },
         "indexerFAQ": {
             "football": {
-                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/uat/krossover-football-formations.pdf"
+                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/krossover-football-formations-08-28-2016.pdf"
             },
             "volleyball": {
-                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/uat/Krossover-volleyball-rotation-position.pdf"
+                "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/Krossover-volleyball-rotation-position-08-28-2016.pdf"
             },
             "basketball": {
                 "uri": "http://krossover-com-docs.s3-website-us-east-1.amazonaws.com/pdf/uat/basketball-guide.pdf"
