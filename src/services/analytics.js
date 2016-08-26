@@ -63,7 +63,13 @@ IntelligenceWebClient.service('AnalyticsService', [
                         }
 
                         if(team.schoolId){
-                            school = schools.get(team.schoolId);
+
+                            try{
+                                school = schools.get(team.schoolId);
+                            }
+                            catch(err){
+                                school = undefined;
+                            }
 
                             if(school){
                                 if(school.address){

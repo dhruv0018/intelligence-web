@@ -58,13 +58,41 @@ Header.config([
 
 
 Header.factory('Header.Data.Dependencies', [
-    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory', '$q', 'ROLE_TYPE',
-    function(auth, session, sports, leagues, teams, users, $q, ROLE_TYPE) {
+    'AuthenticationService', 'SessionService', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory', 'SchoolsFactory', '$q', 'ROLE_TYPE',
+    function(auth, session, sports, leagues, teams, users, schools, $q, ROLE_TYPE) {
 
         var Data = {
 
             get sports() { return sports.load(); },
             get leagues() { return leagues.load(); },
+            get school() {
+                let teamId = session.getCurrentTeamId();
+
+                if (teamId) {
+                    let deferred = $q.defer();
+
+                    teams.load(teamId).then(function(){
+                        let team = teams.get(teamId);
+
+                        if(team.schoolId){
+                            try{
+                                schools.load(team.schoolId).then(function(){
+                                    deferred.resolve();
+                                });
+                            }
+                            catch(err){
+                                deferred.resolve();
+                            }
+                        }else{
+                            deferred.resolve();
+                        }
+
+
+                    });
+
+                    return deferred.promise;
+                }
+            },
 
             get teams() {
 
