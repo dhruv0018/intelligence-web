@@ -21,7 +21,8 @@ var Admin = angular.module('Admin', [
     'platform',
     'filmExchange',
     'Conferences',
-    'AllocationSettings'
+    'AllocationSettings',
+    'DistributionLog'
 ]);
 
 /**

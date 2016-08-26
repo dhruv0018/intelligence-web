@@ -1,0 +1,55 @@
+<section class="distribution-log">
+    <aside class="sidebar">
+        <div class="search-header">
+            <h3>Date</h3>
+            <a href ng-click="clearSearchFilter()">Reset</a>
+        </div>
+        <form role="form" ng-submit="searchLogs(filter)">
+
+            <div class="form-group">
+                <data-date data-id="date-played" data-ng-model="filter.dateTmp" data-max-date="todaysDate" format="MMMM dd, yyyy" placeholder="Pick a Date"></data-date>
+            </div>
+
+            <button id="search-film-cta" class="btn-search" ng-disabled="searching" type="submit"><i class="icon icon-search"></i></button>
+
+        </form>
+    </aside>
+    <div class="list">
+        <data-results ng-hide="logs.logs || isDefaultState" query="query"></data-results>
+        <div class="distribution-log-header">
+            <div class="title-header">
+                <h3>Distribution Log: {{logs.id|date: 'MMM d, y'}}</h3>
+            </div>
+        </div>
+        <div class="distribution-log-wrapper">
+            <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Group</th>
+                            <th ng-repeat="sport in sports">{{sport.name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="log in logs.logs">
+                            <td>
+                                {{log.label}}
+                            </td>
+                            <td ng-repeat="sport in sports">
+                                {{log[sport.id]['today+distribute']}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+        <div class="distribution-batch-history">
+            <div class="history-header">
+                <h3>Distribution Batch History</h3>
+            </div>
+            <div class="history-list">
+                <div ng-repeat="batch in logs.attributes.distributionBatches">
+                    <a href="">{{batch.executedAt|date: 'MMM d y h:mm:ss a'}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

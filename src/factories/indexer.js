@@ -95,6 +95,40 @@ IntelligenceWebClient.factory('IndexerFactory', [
 
             getDistributionBatchHistory(id) {
                 return RESOURCE.getDistributionBatchHistory({id}).$promise;
+            },
+
+            getDistributionLog(date){
+                return RESOURCE.getDistributionLog({date}).$promise;
+            },
+            extendDistributionLog(filter){
+                let self = this;
+                let logs = {};
+                let date = filter.date;
+
+                return self.getIndexerGroups()
+                    .then(function(indexerGroup){
+                        indexerGroup.data.forEach(function(indexerGroup){
+                            logs[indexerGroup.id] = {};
+                            logs[indexerGroup.id].label = indexerGroup.attributes.name;
+                        });
+
+                        return self.getDistributionLog(date);
+                    })
+                    .then(function(DistributionLogs){
+                        let data = DistributionLogs.data.attributes;
+                        for(var key in data){
+                            let sport = key.toString();
+                            for(var indexer in data[sport]){
+                                if(logs[indexer]){
+                                    logs[indexer][sport] = {};
+                                    logs[indexer][sport]['today+distribute'] = DistributionLogs.data.attributes[sport][indexer]['today+distribute'];
+                                    logs[indexer][sport]['this+reserve'] = DistributionLogs.data.attributes[sport][indexer]['this+reserve'];
+                                }
+                            }
+                        }
+                        DistributionLogs.data.logs = logs;
+                        return DistributionLogs;
+                    });
             }
         };
 

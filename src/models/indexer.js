@@ -71,6 +71,12 @@ IntelligenceWebClient.factory('IndexerResource', [
                 method: 'GET',
                 url: `${url}breakdown-distribution-batches/:id`,
                 params: {id: '@id'}
+            },
+
+            getDistributionLog: {
+                method: 'GET',
+                url: `${url}distribution-logs`,
+                params: {date: '@date'}
             }
         };
 

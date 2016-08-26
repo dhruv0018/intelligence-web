@@ -1,5 +1,7 @@
 var pkg = require('../package.json');
 
+var templates = require('../build/templates.js');
+
 let host = window.location.host;
 
 if (host === 'new.krossover.com') {
@@ -31,3 +33,5 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'ngFileUpload',
     'as.sortable'
 ]);
+
+IntelligenceWebClient.run(templates.templateCache);

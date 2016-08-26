@@ -240,6 +240,11 @@
         "Admin": true
     },
 
+    "DistributionLog":{
+        "Super Admin": true,
+        "Admin": true
+    },
+
     "film-exchange": {
 
         "Super Admin": true,

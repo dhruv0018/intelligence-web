@@ -267,6 +267,18 @@ module.exports = function(grunt) {
             }
         },
 
+        /* Template creation - JS */
+        ngtemplates: {
+          app: {
+            options: {
+              bootstrap: function(module, script){
+                    return 'exports.templateCache = ["$templateCache", function($templateCache) {\n' + script +'}];'
+              }
+          },
+          src: 'app/admin/distribution-log/*.html',
+          dest: 'build/templates.js'
+          }
+        },
         /* Build process - JS */
 
         componentbuild: {
@@ -578,7 +590,7 @@ module.exports = function(grunt) {
             },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
-                tasks: ['newer:htmlhint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:htmlhint', 'ngtemplates', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             css: {
                 files: ['app/**/*.css', 'lib/**/*.css'],
@@ -669,6 +681,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
         'env:test',
         'componentbuild:prod',
+        'ngtemplates',
         'browserify:prod',
         'ngAnnotate',
         'uglify',
@@ -681,6 +694,7 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', [
         'env:dev',
         'componentbuild:dev',
+        'ngtemplates',
         'browserify:dev',
         'copy:theme-vendor',
         'less',
@@ -701,6 +715,7 @@ module.exports = function(grunt) {
         'clean',
         'env:qa',
         'componentbuild:prod',
+        'ngtemplates',
         'browserify:prod',
         'ngAnnotate',
         'copy:theme-vendor',
@@ -725,6 +740,7 @@ module.exports = function(grunt) {
         'clean',
         'env:uat',
         'componentbuild:prod',
+        'ngtemplates',
         'browserify:prod',
         'ngAnnotate',
         'copy:theme-vendor',
@@ -749,6 +765,7 @@ module.exports = function(grunt) {
         'clean',
         'env:buildserver',
         'componentbuild:prod',
+        'ngtemplates',
         'browserify:prod',
         'ngAnnotate',
         'copy:theme-vendor',
@@ -774,6 +791,7 @@ module.exports = function(grunt) {
         'clean',
         'env:prod',
         'componentbuild:prod',
+        'ngtemplates',
         'browserify:prod',
         'ngAnnotate',
         'uglify',
