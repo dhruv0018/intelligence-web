@@ -83,6 +83,18 @@ IntelligenceWebClient.factory('IndexerFactory', [
                     weeklySettings.push(...updatedSetting.setting);
                 });
                 return RESOURCE.updateIndexingWeeklySettings(filter, {'data': weeklySettings}).$promise;
+            },
+
+            createDistriubtionBatchReservation() {
+                return RESOURCE.createDistriubtionBatchReservation().$promise;
+            },
+
+            runIndexerGroupDistribution(id) {
+                return RESOURCE.runIndexerGroupDistribution({id}).$promise;
+            },
+
+            getDistributionBatchHistory(id) {
+                return RESOURCE.getDistributionBatchHistory({id}).$promise;
             }
         };
 

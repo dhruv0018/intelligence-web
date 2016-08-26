@@ -54,6 +54,23 @@ IntelligenceWebClient.factory('IndexerResource', [
             updateIndexingWeeklySettings: {
                 method: 'PUT',
                 url: `${url}indexer-group-allocations/:sportId`
+            },
+
+            createDistriubtionBatchReservation: {
+                method: 'POST',
+                url: `${url}breakdown-distribution-batches/`
+            },
+
+            runIndexerGroupDistribution: {
+                method: 'PUT',
+                url: `${url}breakdown-distribution-batches/:id`,
+                params: {id: '@id'}
+            },
+
+            getDistributionBatchHistory: {
+                method: 'GET',
+                url: `${url}breakdown-distribution-batches/:id`,
+                params: {id: '@id'}
             }
         };
 
