@@ -35,6 +35,9 @@
         <!-- Coach Menu -->
         <menu class="dropdown-menu" ng-if="currentUser.is(COACH)">
             <li ui-sref-active="active"><a id="mobile-menu-coach-film-home-cta" ui-sref="Coach.FilmHome">Film Home</a></li>
+            <li ng-if="SPORTS[SPORT_IDS[league.sportId]].hasInsights">
+                <a ng-href="{{config.links.insights.uri}}" target="_blank">Insights</a>
+            </li>
             <li id="mobile-menu-coach-team-cta" ng-class="{active: $state.includes('Coach.Team')}" ng-click="toggleSubMenu($event, 0)" class="mobile-submenu-toggle">
                 <a>Team</a>
                 <ul class="mobile-submenu" ng-show="subMenu[0]">
@@ -156,10 +159,10 @@
                         ui-sref="PlayerAnalytics"
                     >Player Analytics</a>
                 </li>
-                <li ng-if="SPORTS[SPORT_IDS[league.sportId]].hasInsights">
-                    <a ng-href="{{config.links.insights.uri}}" target="_blank">Insights</a>
-                </li>
             </ul>
+        </li>
+        <li ng-if="SPORTS[SPORT_IDS[league.sportId]].hasInsights">
+            <a ng-href="{{config.links.insights.uri}}" target="_blank">Insights</a>
         </li>
         <li id="menu-coach-team-cta" class="header-dropdown" data-ng-class="{active: $state.includes('Coach.Team')}">
             <a class="dropdown-toggle" dropdown-toggle>Team</a>
