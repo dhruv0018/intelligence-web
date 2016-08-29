@@ -1,10 +1,10 @@
-<div class="role-icon" data-ng-if="users.is(role, SUPER_ADMIN) || users.is(role, ADMIN) || users.is(role, INDEXER)">
+<div class="role-icon" ng-if="users.is(role, SUPER_ADMIN) || users.is(role, ADMIN) || users.is(role, INDEXER)">
 
-    <profile-placeholder></profile-placeholder>
+    <i class="icon icon-user"></i>
 
 </div>
 
-<div class="role-icon" data-ng-if="users.is(role, FILM_EXCHANGE_ADMIN)">
+<div class="role-icon" ng-if="users.is(role, FILM_EXCHANGE_ADMIN)">
 
     <div class="placeholder-sport" ng-class="{'small': (size === 'small')}">
         <i class="icon icon-film-exchange"></i>
@@ -12,15 +12,15 @@
 
 </div>
 
-<div class="role-icon" data-ng-if="users.is(role, COACH)">
+<div class="role-icon" ng-if="users.is(role, COACH)">
 
-    <sport-placeholder data-sport="sports[leagues[teams[role.teamId].leagueId].sportId]"></sport-placeholder>
+    <sport-placeholder sport="sports[leagues[teams[role.teamId].leagueId].sportId]"></sport-placeholder>
 
 </div>
 
-<div class="role-icon" data-ng-if="user.is(role, ATHLETE)">
+<div class="role-icon" ng-if="user.is(role, ATHLETE)">
 
-	<profile-placeholder data-ng-if="!user.imageUrl"></profile-placeholder>
-	<img alt="profile image" class="role-profile-picture" data-ng-if="user.imageUrl" data-ng-src="{{user.imageUrl}}">
+	<i ng-if="!user.imageUrl" class="icon icon-user"></i>
+	<img alt="profile image" class="role-profile-picture" ng-if="user.imageUrl" ng-src="{{user.imageUrl}}">
 
 </div>

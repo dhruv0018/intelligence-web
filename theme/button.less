@@ -170,6 +170,44 @@
     }
 }
 
+.btn-outline {
+    color: @brand-primary;
+    padding: 5px 10px;
+    border: 1px solid @brand-primary;
+    border-radius: @border-radius-base;
+    background: transparent;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .8px;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        color: darken(@brand-primary, 10%);
+        border-color: darken(@brand-primary, 10%);
+    }
+}
+
+.btn-outline-white {
+    color: white;
+    padding: 5px 10px;
+    border: 1px solid white;
+    border-radius: @border-radius-base;
+    background: transparent;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .8px;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        color: darken(white, 10%);
+        border-color: darken(white, 10%);
+    }
+}
+
 .btn-simple-cancel {
     color: @brand-danger;
     letter-spacing: normal;

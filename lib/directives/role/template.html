@@ -1,40 +1,39 @@
 <div class="role">
 
-    <role-icon data-user="user" data-role="role"></role-icon>
+    <role-icon user="user" role="role"></role-icon>
 
-    <div class="sport"></div>
+    <div class="role-descriptors">
+        <div class="role-title">
 
-    <div class="role-title">
-
-        <span class="head-coach" data-ng-if="users.is(role, HEAD_COACH)">
-            <span class="title">
-                <span class="title-prefix">Head</span>
-                Coach
+            <span class="head-coach" ng-if="users.is(role, HEAD_COACH)">
+                <span class="title">
+                    <span class="title-prefix">Head</span>
+                    Coach
+                </span>
+                <span class="first-name">{{user.firstName}}</span>
+                <span class="last-name">{{user.lastName}}</span>
             </span>
-            <span class="first-name">{{user.firstName}}</span>
-            <span class="last-name">{{user.lastName}}</span>
-        </span>
 
-        <span data-ng-if="users.is(role, ASSISTANT_COACH)">
-              <span class="title">
-                  Assist Coach
-              </span>
-            {{user.firstName}} {{user.lastName}}
-        </span>
+            <span ng-if="users.is(role, ASSISTANT_COACH)">
+                  <span class="title">
+                      Assist Coach
+                  </span>
+                {{user.firstName}} {{user.lastName}}
+            </span>
 
-        <span data-ng-if="!users.is(role, COACH)">
-            {{user.firstName}}  {{user.lastName}}
-        </span>
+            <span ng-if="!users.is(role, COACH)">
+                {{user.firstName}}  {{user.lastName}}
+            </span>
 
+        </div>
+
+        <div class="role-name">
+
+            <span ng-if="user.id && users.is(role, COACH)">{{teams[role.teamId].name}}</span>
+            <span ng-if="user.id && !users.is(role, COACH)">{{role.type.name || 'Inactive'}}</span>
+            <span ng-if="!user.id">New User</span>
+
+        </div>
     </div>
-
-    <div class="role-name">
-
-        <span data-ng-if="user.id && users.is(role, COACH)">{{teams[role.teamId].name}}</span>
-        <span data-ng-if="user.id && !users.is(role, COACH)">{{role.type.name || 'Inactive'}}</span>
-        <span data-ng-if="!user.id">New User</span>
-
-    </div>
-
 </div>
 

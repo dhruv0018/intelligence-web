@@ -18,13 +18,20 @@
         margin-right: 5px;
     }
 
-    .form-control {
-        width: 90%;
-    }
+    &.season-highlight {
+        flex-direction: row;
+        align-items: center;
 
-    .btn-blue {
-        text-transform: uppercase;
-        margin-top: auto;
-        align-self: flex-end;
+        .season-highlight-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-right: 20px;
+        }
+
+        .form-control {
+            width: 20%;
+            margin-right: 20px;
+        }
     }
 }

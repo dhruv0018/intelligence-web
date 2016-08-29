@@ -1,16 +1,12 @@
-/* Fetch angular from the browser scope */
 const angular = window.angular;
 
-/* Templates */
+import AccountController from './controller';
+import ContactInfoController from './contact-info/controller';
 
-const accountTemplate               = require('./template.html');
-const accountTemplateUrl            = 'account/template.html';
-const contactInfoTemplate           = require('./contact-info.html');
-const contactInfoTemplateUrl        = 'account/contact-info.html';
-const rolesListTemplate             = require('./roles-list.html');
-const rolesListTemplateUrl          = 'account/roles-list.html';
-const termsAndConditionsTemplate    = require('./terms-and-conditions.html');
-const termsAndConditionsTemplateUrl = 'account/terms-and-conditions.html';
+/* Template paths */
+const AccountTemplateUrl = 'app/account/template.html';
+const ContactInfoTemplateUrl = 'app/account/contact-info/template.html';
+const TermsAndConditionsTemplateUrl = 'app/account/terms-and-conditions/template.html';
 
 /**
  * Account page module.
@@ -20,18 +16,6 @@ var Account = angular.module('Account', [
     'ui.router',
     'ui.bootstrap',
     'ui.validate'
-]);
-
-/* Cache the template file */
-Account.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put(accountTemplateUrl, accountTemplate);
-        $templateCache.put(contactInfoTemplateUrl, contactInfoTemplate);
-        $templateCache.put(rolesListTemplateUrl, rolesListTemplate);
-        $templateCache.put(termsAndConditionsTemplateUrl, termsAndConditionsTemplate);
-    }
 ]);
 
 /**
@@ -58,8 +42,8 @@ Account.config([
 
                 'main@root': {
 
-                    templateUrl: accountTemplateUrl,
-                    controller: 'Account.controller'
+                    templateUrl: AccountTemplateUrl,
+                    controller: AccountController
                 }
             }
         })
@@ -72,8 +56,8 @@ Account.config([
 
                 'content@Account': {
 
-                    templateUrl: contactInfoTemplateUrl,
-                    controller: 'Account.ContactInfo.controller'
+                    templateUrl: ContactInfoTemplateUrl,
+                    controller: ContactInfoController
                 }
             }
         })
@@ -86,38 +70,9 @@ Account.config([
 
                 'content@Account': {
 
-                    templateUrl: termsAndConditionsTemplateUrl
-                }
-            }
-        })
-
-        .state('Account.RolesList', {
-
-            parent: 'Account',
-            views: {
-
-                'content@Account': {
-
-                    templateUrl: rolesListTemplateUrl,
-                    controller: 'Account.RolesList.controller'
+                    templateUrl: TermsAndConditionsTemplateUrl
                 }
             }
         });
     }
 ]);
-
-/**
- * Account controller.
- * @module Account
- * @name Account.controller
- * @type {controller}
- */
-Account.controller('Account.controller', [
-    function controller() {
-
-    }
-]);
-
-/* File dependencies. */
-require('./contact-info');
-require('./roles-list');

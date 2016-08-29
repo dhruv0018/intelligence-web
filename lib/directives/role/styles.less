@@ -1,73 +1,74 @@
 .role {
-    display: block;
+    display: flex;
+    align-items: center;
 
     role-icon {
-        .pull-left;
         margin-right: 20px;
     }
-}
 
-.role-title {
-    font-size: 18px;
-    font-weight: 400;
-    letter-spacing: 0;
-    .capitalize;
-}
+    .role-title {
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0;
+        .capitalize;
+    }
 
-.account-roles {
-    background-color: #fff;
-}
+    .account-roles {
+        background-color: #fff;
+    }
 
-.role-groups {
-    margin-left: -15px;
-    margin-right: -15px;
-    margin-bottom: 0;
-    border: 1px solid @gray-lighter;
-    .role-group {
-        border-bottom: 1px solid @gray-lighter;
-        padding: 0px;
-        .role {
-            margin-bottom: 0;
-            width: 100%;
-            .role-list-item.current {
-                color: @gray;
+    .role-groups {
+        margin-left: -15px;
+        margin-right: -15px;
+        margin-bottom: 0;
+        border: 1px solid @gray-lighter;
+        .role-group {
+            border-bottom: 1px solid @gray-lighter;
+            padding: 0px;
+            .role {
+                margin-bottom: 0;
+                width: 100%;
+                .role-list-item.current {
+                    color: @gray;
+                }
+                .role-list-item {
+                    border-bottom: 1px solid @gray-lighter;
+                    padding-bottom: 20px;
+                    margin-bottom: 20px;
+                    color: @gray-light;
+                    .role-team {
+                        font-size: 20px;
+                        letter-spacing: 0;
+                    }
+                }
             }
-            .role-list-item {
-                border-bottom: 1px solid @gray-lighter;
-                padding-bottom: 20px;
-                margin-bottom: 20px;
-                color: @gray-light;
-                .role-team {
-                    font-size: 20px;
-                    letter-spacing: 0;
+            .role:last-child .role-list-item {
+                border: none;
+                margin-bottom: 0;
+            }
+            h3 {
+                color:  @brand-blue;
+                margin: 20px 0 20px;
+                &.teamlessRole {
+                    margin-bottom: 0;
                 }
             }
         }
-        .role:last-child .role-list-item {
+        .role-group:last-child {
             border: none;
-            margin-bottom: 0;
         }
-        h3 {
-            color:  @brand-blue;
-            margin: 20px 0 20px;
-            &.teamlessRole {
-                margin-bottom: 0;
-            }
+        .role-group:nth-child(even) {
+            background-color: #fbfbfb;
         }
     }
-    .role-group:last-child {
-        border: none;
-    }
-    .role-group:nth-child(even) {
-        background-color: #fbfbfb;
-    }
-}
 
-.role-name {
+    .role-name {
 
-    font-size: 20px;
-    font-weight: 200;
-    letter-spacing: 0;
-    .capitalize;
-    .text-overflow;
+        font-size: 14px;
+        font-weight: 200;
+        letter-spacing: 0;
+        .capitalize;
+        .text-overflow;
+    }
+
 }

@@ -721,4 +721,22 @@
         "Assistant Coach": true,
         "Athlete": true
     },
+
+    "FilmHome": {
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
+    },
+
+    "FilmHomeGames": {
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
+    },
+
+    "FilmHomeReels": {
+        "Head Coach": true,
+        "Assistant Coach": true,
+        "Athlete": true
+    }
 }

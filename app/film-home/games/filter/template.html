@@ -1,0 +1,26 @@
+<div class="btn-group" dropdown is-open="status.isopen">
+  <button id="single-button" type="button" class="btn btn-filter btn-default" dropdown-toggle ng-disabled="disabled">
+    <span ng-show="filters.all">Filters </span>
+    <span ng-show="!filters.all">{{filters|numKeys}} Selected </span>
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+    <li role="menuitem" ng-click="toggleFilter($event, 'all')"> <check-box checked="filters.all" indeterminate="checkIndeterminate()"></check-box> All Games ({{gameLength}}) </li>
+    <!--li role="menutitle"> Seasons </li>
+    <li role="submenuitem"> <check-box checked="filters['2015']" ng-click="toggleFilter($event, '2015')"></check-box> 2015 - 2016 </li>
+    <li role="submenuitem"> <check-box checked="filters['2014']" ng-click="toggleFilter($event, '2014')"></check-box> 2014 - 2015 </li-->
+    <li role="menutitle"> Game Types </li>
+    <li role="submenuitem" ng-click="toggleFilter($event, 'my')"> <check-box checked="filters.my"></check-box> <span>My Games</span> </li>
+    <li role="submenuitem" ng-click="toggleFilter($event, 'scouting')"> <check-box checked="filters.scouting"></check-box> <span> Scouting Games </span></li>
+    <li role="submenuitem" ng-click="toggleFilter($event, 'conference')"> <check-box checked="filters.conference"></check-box> <span> Conference Games </span></li>
+    <li role="menuitem" ng-click="toggleFilter($event, 'breakdown')"> <check-box checked="filters.breakdown"></check-box> <span> Breakdowns </span></li>
+    <li role="menuitem" ng-click="toggleFilter($event, 'shared')"> <check-box checked="filters.shared"></check-box> <span> Shared with me </span></li>
+    <li role="menuitem" ng-click="toggleFilter($event, 'selfEditor')"> <check-box checked="filters.selfEditor"></check-box> <span> Used Film Editor </span></li>
+    <li class="divider"> </li>
+    <li role="footer"><a href="javascript:;" class="btnCancel" ng-click="cancel()">Cancel</a> <button class="btn btn-save" ng-disabled="applyDisabled" ng-click="applyFilter()">Apply</button></li>
+  </ul>
+</div>
+<button class="btn-reset btn" ng-disabled="!checkIndeterminate()" ng-click="reset()">
+    <i class="icon icon-reset"></i>
+    RESET
+</button>

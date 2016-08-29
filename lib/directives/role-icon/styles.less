@@ -1,16 +1,17 @@
 .role-icon {
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgb(225,225,225);
+    width: 30px;
+    height: 30px;
+    border: thin solid @gray-border;
     border-radius: @border-radius-small;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .placeholder-picture,
     .role-profile-picture {
         max-width: 100%;
         border: none;
-        line-height: 40px;
-        font-size: 35px;
-        text-align: center;
+        font-size: 20px;
     }
 }

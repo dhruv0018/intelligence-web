@@ -46,10 +46,10 @@ IntelligenceWebClient.service('AnalyticsService', [
                 teamId = session.getCurrentTeamId() || '';
 
                 if (teamId) {
-                    let team = teams.get(teamId);
-                    teamName = team.name;
+                    let team = teams.get(teamId) || '';
 
                     if(team){
+                        teamName = team.name;
                         let activePlan = team.getActivePlan();
                         let activePackage = team.getActivePackage();
 

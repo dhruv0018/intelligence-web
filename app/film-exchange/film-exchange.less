@@ -66,6 +66,7 @@
     }
 
     .flex-table {
+        height: calc(~"100% - 62px");
 
         .header-cell {
 
@@ -73,6 +74,14 @@
             &.datePlayed,
             &.dateAdded {
                 padding-left: 8px !important;
+            }
+        }
+
+        .flex-data-container {
+            height: calc(~"100% - 123px");
+
+            &.no-pagination {
+                height: calc(~"100% - 42px");
             }
         }
 

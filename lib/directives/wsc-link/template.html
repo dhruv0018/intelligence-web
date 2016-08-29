@@ -1,0 +1,30 @@
+<div class="wsc-link-container" ng-class="{'season-highlight': seasonId}">
+    <h3 class="wsc-highlight-title" ng-show="gameId || reelId">New Premium Highlights</h3>
+    <span class="wsc-highlight-info" ng-show="gameId">
+        We customize your best clips from this game.
+    </span>
+    <span class="wsc-highlight-info" ng-show="reelId">
+        We customize these clips into a premium highlight reel.
+    </span>
+
+    <div class="season-highlight-info" ng-show="seasonId">
+        <h3 class="wsc-highlight-title">New Season Highlights</h3>
+        <span class="wsc-highlight-info" ng-show="isCoach">
+            We customize your best clips from this season.
+        </span>
+        <span class="wsc-highlight-info" ng-show="isAthlete">
+            We customize your best basketball clips from this season.
+        </span>
+    </div>
+
+    <select
+        class="form-control"
+        ng-show="isAthlete && seasonId && teams.length > 1"
+        ng-options="team as team.name for team in teams"
+        ng-model="selectedTeam"></select>
+    <button
+        id="wsc-highlight-cta"
+        class="btn btn-sm"
+        ng-class="{'btn-primary': reelId || gameId, 'btn-outline': seasonId}"
+        ng-click="createWSCHighlight()">Order Now</button>
+</div>

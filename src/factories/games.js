@@ -10,8 +10,54 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('GamesFactory', [
-    'config', '$injector', '$sce', 'ROLES', 'GAME_STATUSES', 'GAME_STATUS_IDS', 'GAME_TYPES_IDS', 'GAME_TYPES', 'VIDEO_STATUSES', 'Utilities', 'SessionService', 'BaseFactory', 'GamesResource', 'PlayersFactory', 'TeamsFactory', 'UsersFactory', '$q', 'PlayTelestrationEntity', 'RawTelestrationEntity', 'SelfEditTelestrationEntity', 'Video',
-    function(config, $injector, $sce, ROLES, GAME_STATUSES, GAME_STATUS_IDS, GAME_TYPES_IDS, GAME_TYPES, VIDEO_STATUSES, utilities, session, BaseFactory, GamesResource, players, teams, users, $q, playTelestrationEntity, rawTelestrationEntity, selfEditTelestrationEntity, Video) {
+    'config',
+    '$injector',
+    '$sce',
+    'ROLES',
+    'GAME_STATUSES',
+    'GAME_STATUS_IDS',
+    'GAME_TYPES_IDS',
+    'GAME_TYPES',
+    'VIDEO_STATUSES',
+    'Utilities',
+    'SessionService',
+    'GameStatesService',
+    'BaseFactory',
+    'GamesResource',
+    'PlayersFactory',
+    'TeamsFactory',
+    'SchoolsFactory',
+    'UsersFactory',
+    '$q',
+    'PlayTelestrationEntity',
+    'RawTelestrationEntity',
+    'SelfEditTelestrationEntity',
+    'Video',
+    function(
+        config,
+        $injector,
+        $sce,
+        ROLES,
+        GAME_STATUSES,
+        GAME_STATUS_IDS,
+        GAME_TYPES_IDS,
+        GAME_TYPES,
+        VIDEO_STATUSES,
+        utilities,
+        session,
+        gameStates,
+        BaseFactory,
+        GamesResource,
+        players,
+        teams,
+        schools,
+        users,
+        $q,
+        playTelestrationEntity,
+        rawTelestrationEntity,
+        selfEditTelestrationEntity,
+        Video
+    ) {
 
         var GamesFactory = {
 
@@ -68,6 +114,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                     copy.video.videoTranscodeProfiles = copy.video.videoTranscodeProfiles.map(profile => Object.assign({}, profile.toJSON()));
                 }
 
+                delete game.states;
+                delete copy.score;
                 return copy;
             },
             extend: function(game) {
@@ -130,7 +178,79 @@ IntelligenceWebClient.factory('GamesFactory', [
                 if (!game.playTelestrations.unextend) playTelestrationEntity(game.playTelestrations, game.id);
                 if (!game.selfEditedTelestrations.unextend) selfEditTelestrationEntity(game.selfEditedTelestrations, game.id);
 
+                game.states = gameStates.get(game);
+
+                game.score = (function(game) {
+                    let inputtedGameScoresUnavailable = (game.finalScore === 0) && (game.opposingFinalScore === 0);
+                    let indexedGameScoresAvailable = angular.isDefined(game.indexedScore) && angular.isDefined(game.opposingIndexedScore);
+
+                    let teamScore = (typeof game.finalScore !== "undefined") ? game.finalScore : null;
+                    let opposingTeamScore = (typeof game.opposingFinalScore !== "undefined") ? game.opposingFinalScore :null;
+
+                    if(inputtedGameScoresUnavailable && indexedGameScoresAvailable){
+                        teamScore = game.indexedScore;
+                        opposingTeamScore = game.opposingIndexedScore;
+                    }
+                    if(opposingTeamScore !== null && teamScore !== null){
+                        if (game.isHomeGame) {
+                            return opposingTeamScore.toString() + ' - ' + teamScore.toString();
+                        } else {
+                            return teamScore.toString() + ' - ' + opposingTeamScore.toString();
+                        }
+                    }else{
+                        return '';
+                    }
+                })(game);
+
                 return game;
+            },
+
+            getHomeTeamName: function() {
+                let homeTeam;
+                let school;
+                if (this.isHomeGame && this.teamId) {
+                    homeTeam = teams.get(this.teamId);
+                } else if (!this.isHomeGame && this.opposingTeamId) {
+                    homeTeam = teams.get(this.opposingTeamId);
+                }
+
+                if (homeTeam && homeTeam.schoolId) {
+                    try {
+                        school = schools.get(homeTeam.schoolId);
+                    } catch(error) {
+                        console.error(error);
+                    }
+                }
+
+                if (school) {
+                    return schools.get(homeTeam.schoolId).name + ' ' + homeTeam.name;
+                } else {
+                    return (homeTeam) ? homeTeam.name : 'Home';
+                }
+            },
+
+            getAwayTeamName: function() {
+                let awayTeam;
+                let school;
+                if (this.isHomeGame && this.opposingTeamId) {
+                    awayTeam = teams.get(this.opposingTeamId);
+                } else if (!this.isHomeGame && this.teamId) {
+                    awayTeam = teams.get(this.teamId);
+                }
+
+                if (awayTeam && awayTeam.schoolId) {
+                    try {
+                        school = schools.get(awayTeam.schoolId);
+                    } catch(error) {
+                        console.error(error);
+                    }
+                }
+
+                if (school) {
+                    return schools.get(awayTeam.schoolId).name + ' ' + awayTeam.name;
+                } else {
+                    return (awayTeam) ? awayTeam.name : 'Away';
+                }
             },
 
             getByUploaderUserId: function(userId) {
@@ -1180,7 +1300,8 @@ IntelligenceWebClient.factory('GamesFactory', [
                 var self = this;
                 return self.status === GAME_STATUSES.FINALIZED.id;
             },
-            isShared: function() {
+            isNotIndexed: function() {
+                var self = this;
                 return self.status === GAME_STATUSES.NOT_INDEXED.id;
             },
             isBeingBrokenDown: function() {

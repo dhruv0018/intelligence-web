@@ -1,361 +1,333 @@
 .header-default {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: thin solid @gray-border;
 
-    .navbar-header {
+    /* Color rules for Admins and Indexers */
+    &.admin-role,
+    &.super-admin-role,
+    &.indexer-role,
+    &.film-exchange-admin-role {
 
-        .navbar-brand {
+        background-color: @brand-secondary;
+        color: white;
+        border-bottom: none;
 
-            width: 60px;
-            padding: 15px;
+        .header-desktop-menu {
 
-            .icon-krossover-symbol {
-
-                width: 100%;
-                height: 100%;
-                background-size: contain;
-                background-position: center center;
+            li:hover {
+                background-color: darken(@brand-secondary, 10%);
             }
-        }
-    }
 
-    .header-dropdown {
-
-        .dropdown;
-
-        .dropdown-toggle {
-            color: @gray-dark;
+            li, .logo-container {
+                border-right: thin solid darken(@brand-secondary, 10%);
+            }
         }
 
         .dropdown-menu {
-            width: 136px;
-            min-width: 136px;
-            margin-left: -1px;
-            border-top: 1px solid rgb(216, 216, 216);
-            box-shadow: inset 0 1px 3px rgb(230, 229, 228);
-            &.film-exchange-menu{
-                width: 200px;
-                li, a{
-                    width: 198px;
+            li > a {
+                color: @brand-secondary;
+            }
+        }
+
+        .mobile-nav > .dropdown-menu > li {
+            &:hover, &.active {
+                a {
+                    color: @brand-secondary;
+                }
+
+            }
+        }
+
+        .role-dropdown {
+
+            .role {
+                .role-icon {
+                    color: @brand-secondary;
                 }
             }
 
-            li, a {
-                width: 134px;
-                margin: 0px;
-                border: none;
-                height: 31px;
-                line-height: 31px;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-            }
+            .dropdown-menu {
 
-            li.suspended{
-                border-bottom: 1px solid @navbar-default-border;
-            }
-        }
-    }
+                li {
+                    border-bottom: thin solid @gray-border;
 
-    .header-dropdown:hover .dropdown-menu {
-        display: block;
-    }
+                    a {
+                        color: @gray-dark;
+                    }
 
-    .hide-option {
-        display: none;
-    }
+                    &:hover > a {
+                        color: @brand-secondary;
+                    }
+                }
 
-    .public-view {
-        line-height: 61px;
-        padding: 0px 20px;
-        letter-spacing: normal;
+                footer > button {
+                    color: @gray-dark;
 
-        .go-to-login {
-            margin-right: 10px;
-            padding-right: 10px;
-            border-right: thin solid @gray-border;
-        }
-    }
-
-    .role-dropdown {
-
-        .dropdown;
-
-        padding-left: 25px;
-
-        .role-title {
-            .head-coach {
-                .title{
-                    .title-prefix {
-                        display: none;
+                    &:hover {
+                        color: @brand-secondary;
                     }
                 }
             }
-            font-weight: 500;
         }
+    }
 
-        .role-name {
+    /* Color rules for coaches */
+    &.head-coach-role,
+    &.assistant-coach-role {
 
-            font-size: 16px;
-        }
+        background-color: @brand-primary;
+        color: white;
+        border-bottom: none;
 
-        .dropdown-toggle {
+        .header-desktop-menu {
 
-            .btn;
-            .btn-blank;
-            margin: 0;
-            padding: 0;
-            text-align: left;
-            color: @gray-dark;
-
-            &:hover {
-
-                color: @brand-primary;
+            li:hover {
+                background-color: darken(@brand-primary, 10%);
             }
 
-            &:active, &focus, &:active:focus {
-                outline: 0;
+            li, .logo-container {
+                border-right: thin solid darken(@brand-primary, 10%);
             }
-
-            .icon-chevron-up,
-            .icon-chevron-down {
-                position: absolute;
-                top: 50%;
-                right: 0;
-                margin-top: -10.5px;
-            }
-
-        }
-
-        .open .dropdown-toggle {
-
-            color: @navbar-default-link-active-color;
-            background-color: @navbar-default-link-active-bg;
         }
 
         .dropdown-menu {
-
-            padding: 0;
-            margin-top: 0;
-            border-top: 1px solid rgb(216, 216, 216);
-            box-shadow: inset 0 1px 3px rgb(230, 229, 228);
-
-            .dropdown-roles-container {
-                max-height: 600px;
-                overflow: auto;
+            li > a {
+                color: @brand-primary;
             }
+        }
 
-            li {
-
-                border-bottom: 1px solid @navbar-default-border;
-            }
-
-            footer button:first-child {
-
-                border-right: 1px solid @navbar-default-border;
-            }
-
-            footer button {
-
-                .btn;
-                .btn-blank;
-                width: 49%;
-                margin: 0;
-                color: @brand-blue;
-
-                &:hover {
-
+        .mobile-nav > .dropdown-menu > li {
+            &:hover, &.active {
+                a {
                     color: @brand-primary;
                 }
             }
         }
-    }
-}
 
+        .role-dropdown {
 
-/* Responsive display */
+            .role {
+                .role-icon {
+                    color: @brand-primary;
+                }
+            }
 
+            .dropdown-menu {
 
-/* Hidden by default */
+                li {
+                    border-bottom: thin solid @gray-border;
 
-.header-default {
+                    a {
+                        color: @gray-dark;
+                    }
 
-    .role-dropdown > .dropdown-toggle {
+                    &:hover > a {
+                        color: @brand-primary;
+                    }
+                }
 
-        .role-title,
-        .role-name {
+                footer > button {
+                    color: @gray-dark;
 
-            display: none;
-        }
-    }
-}
-
-/* Screens over 1280px */
-@media only screen
-and (min-width: 1280px) {
-
-    .header-default {
-
-        .role-dropdown > .dropdown-toggle {
-
-            .role-title,
-            .role-name {
-
-                display: block;
+                    &:hover {
+                        color: @brand-primary;
+                    }
+                }
             }
         }
     }
-}
 
-/* Screens over 769px high and 1280px wide*/
-@media only screen
-and (min-height: 769px)
-and (min-width: 1280px) {
+    /* Color rules for athletes */
+    &.parent-role,
+    &.athlete-role {
 
-    .header-default {
+        background-color: @brand-blue;
+        color: white;
+        border-bottom: none;
 
-        .role-dropdown > .dropdown-toggle {
+        .header-desktop-menu {
 
-            .role-name {
+            li:hover {
+                background-color: darken(@brand-blue, 10%);
+            }
 
-                display: block;
+            li, .logo-container {
+                border-right: thin solid darken(@brand-blue, 10%);
             }
         }
-    }
-}
-
-
-/* Responsive sizes */
-
-
-/* All screens */
-
-.header-default {
-
-    menu li {
-
-        width: 135px;
-    }
-
-    .role-dropdown {
-
-        margin-right: 25px;
 
         .dropdown-menu {
-
-            width: @dropdown-full-width;
+            li > a {
+                color: @brand-blue;
+            }
         }
 
-        .dropdown-menu li a {
+        .mobile-nav > .dropdown-menu > li {
+            &:hover, &.active {
+                a {
+                    color: @brand-blue;
+                }
 
-            height: @header-lg-height;
-        }
-    }
-
-    .tooltip-inner {
-        max-width: 330px;
-        width: 330px;
-        padding: 10px;
-        text-align: left;
-    }
-
-    .suspended{
-        background-color: @gray-light;
-        padding: 0px 10px;
-        font-weight: 500;
-        cursor: default;
-    }
-
-    .film-exchange{
-        text-transform: none;
-    }
-}
-
-/* Screens under 480px high */
-@media only screen
-and (max-height: 480px) {
-
-    .header-default {
-
-        .navbar-header {
-
-            width: auto;
+            }
         }
 
-        .public-view {
-            line-height: 31px;
-        }
+        .role-dropdown {
 
-        .role-title {
+            .role {
+                .role-icon {
+                    color: @brand-blue;
+                }
+            }
 
-            line-height: @header-sm-height;
-        }
-    }
-}
+            .dropdown-menu {
 
-/* Screens over 481px high */
-@media only screen
-and (min-height: 481px) {
+                li {
+                    border-bottom: thin solid @gray-border;
 
-    .header-default {
+                    a {
+                        color: @gray-dark;
+                    }
 
-        .role-dropdown > .dropdown-menu {
+                    &:hover > a {
+                        color: @brand-blue;
+                    }
+                }
 
-            li a {
+                footer > button {
+                    color: @gray-dark;
 
-                padding-top: 7.5px;
-                padding-bottom: 7.5px;
+                    &:hover {
+                        color: @brand-blue;
+                    }
+                }
             }
         }
     }
-}
 
-/* Screens over 1280px wide */
-@media only screen
-and (min-width: 1280px) {
+    /* Color rules for inactive users and public view */
+    &.anonymous-role {
+    }
 
-    .header-default {
+    .header-desktop-menu {
+        height: 100%;
+        padding: 0;
 
-        .role-dropdown,
-        .role-dropdown > .dropdown-toggle {
+        li {
+            height: 100%;
+            width: 135px;
+            list-style-type: none;
 
-            width: @dropdown-full-width;
+            &.header-dropdown {
+
+                .dropdown;
+
+                &:hover .dropdown-menu {
+                    display: block;
+                }
+
+                .dropdown-menu {
+                    width: 136px;
+                    min-width: 136px;
+                    margin-left: -1px;
+
+                    &.film-exchange-menu {
+                        width: 200px;
+                        li, a {
+                            width: 198px;
+                        }
+                    }
+                    .tooltip-inner{
+                        width: 330px !important;
+                    }
+                    li {
+                        width: 134px;
+                        margin: 0px;
+                        height: 31px;
+                        line-height: 31px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        border-right: none;
+
+                        &:hover {
+                            background-color: @navbar-default-link-hover-bg;
+                        }
+
+                        &.suspended {
+                            background-color: @gray-light;
+                            padding: 0px 10px;
+                            font-weight: 500;
+                            cursor: default;
+                        }
+
+                        .tooltip-inner {
+                            max-width: 330px;
+                            width: 330px;
+                            padding: 10px;
+                            text-align: left;
+                        }
+                    }
+
+                    a {
+                        display: block;
+                        width: 100%;
+                        padding: 3px 10px;
+                        cursor: pointer;
+                        background-color: transparent;
+                    }
+
+                    li.suspended {
+                        border-bottom: 1px solid @navbar-default-border;
+                    }
+                }
+            }
+
+            &.header-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:hover {
+                    background-color: transparent;
+                }
+            }
+
+            a {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-transform: uppercase;
+                color: white;
+                font-weight: 500;
+                font-size: 14px;
+                letter-spacing: .8px;
+                cursor: pointer;
+
+                .icon-caret-down {
+                    margin-left: 5px;
+                }
+
+                &.film-exchange {
+                    text-transform: none;
+                }
+            }
         }
-    }
-}
 
-@menu-item-indent: 49px;
-@submenu-item-indent: @menu-item-indent + 30px;
+        .logo-container {
+            height: 100%;
+            width: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+        }
 
-/* Screens less than this size */
-@media only screen
-and (max-width: @screen-md-max) {
-
-    menu.navbar-nav,
-    .public-view {
-        display: none;
-    }
-
-    .navbar-left {
-        position: static !important;
-    }
-
-    .navbar-header {
-        /*
-         * Hack to center logo
-         * window.width: 100%,
-         * .navbar-left: 95px,
-         * .navbar-header: 60px,
-         * .navbar-right: 111px
-         */
-        margin-left: calc(~"(100% - 111px - 60px - 111px)/2");
-        border-right: none !important; // Remove default styling
-
-        &.navbar-brand-lg {
-            /*
-             * Hack to center logo
-             * window.width: 100%,
-             * .navbar-brand-lg: 185px
-             */
-            margin-left: calc(~"(100% - 185px)/2");
+        .icon-krossover-symbol {
+            align-self: center;
+            margin-left: 20px;
         }
     }
 
@@ -370,7 +342,7 @@ and (max-width: @screen-md-max) {
         }
 
         .dropdown-menu {
-            width: @screen-xs;
+            width: 300px;
             margin: 0 auto;
             padding: 0; // Remove default styling
             border-top: 1px solid @gray-border;
@@ -389,13 +361,21 @@ and (max-width: @screen-md-max) {
                 }
 
                 a {
+                    height: 45px;
                     padding-left: @menu-item-indent;
-                    text-align: left;
+                    color: @gray-dark;
+                    display: flex;
+                    align-items: center;
+                    text-transform: uppercase;
+                    letter-spacing: .8px;
+
+                    .icon-caret-down {
+                        margin-left: 5px;
+                    }
                 }
 
                 &.active a {
                     background-color: @navbar-default-link-hover-bg;
-                    color: @brand-primary;
                 }
             }
         }
@@ -416,10 +396,8 @@ and (max-width: @screen-md-max) {
                 }
 
                 a {
-                    display: block;
                     padding: 3px 20px; // Standardize <li> height
                     padding-left: @submenu-item-indent;
-                    color: @gray-dark;
                     text-align: left;
                     text-decoration: none;
 
@@ -433,7 +411,6 @@ and (max-width: @screen-md-max) {
 
                     &:hover{
                         background-color: @gray-light;
-                        color: @gray-dark;
                     }
                 }
             }
@@ -443,30 +420,261 @@ and (max-width: @screen-md-max) {
             margin: 15px 0; // Standardize <li> height
         }
     }
+
+    .hide-option {
+        display: none;
+    }
+
+    .public-view {
+        width: 100%;
+        padding: 0px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .go-to-login {
+            margin-right: 10px;
+            padding-right: 10px;
+            border-right: thin solid @gray-border;
+        }
+    }
+
+    .icon-krossover-symbol {
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+    }
+
+    .role-dropdown {
+
+        .dropdown;
+        flex: 1;
+        margin-right: 25px;
+        padding-left: 20px;
+        max-width: 300px;
+
+        .role-title {
+            font-weight: 500;
+
+            .head-coach {
+                .title{
+                    .title-prefix {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .dropdown-toggle {
+
+            display: flex;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            outline: 0;
+            cursor: pointer;
+
+            .current-role-container {
+                height: 100%;
+
+                .role {
+                    height: 100%;
+                }
+
+                .role-icon {
+                    border: thin solid white;
+                    background-color: white;
+                }
+            }
+
+        }
+
+        .dropdown-menu {
+
+            padding: 0;
+            margin-top: 0;
+            width: 300px;
+            left: initial;
+            right: 0px;
+
+            .dropdown-roles-container {
+                max-height: 600px;
+                overflow: auto;
+            }
+
+            li {
+                border-bottom: thin solid @gray-border;
+
+                &:hover {
+                    background-color: @navbar-default-link-hover-bg;
+                }
+
+                a {
+
+                    .role-icon {
+                        border: thin solid @gray-border;
+                    }
+                }
+            }
+
+            footer {
+                display: flex;
+
+                button {
+                    .btn-blank;
+                    flex: 1;
+                    margin: 0;
+
+                    &:hover {
+                        background-color: @active-bg;
+                    }
+
+                    &:first-child {
+                        border-right: thin solid @gray-border;
+                    }
+                }
+            }
+        }
+    }
+
+    .mobile-logo-container {
+        height: 100%;
+        width: 70px;
+        justify-content: center;
+        align-items: center;
+        font-size: 25px;
+    }
 }
 
-/* Screens >= @screen-lg wide */
+
+/* Responsive styles */
+
+
+/* Default display */
+
+.header-default {
+
+    .role-dropdown > .dropdown-toggle {
+        justify-content: flex-end;
+
+        .current-role-container {
+            flex: 0;
+            margin-right: 0;
+
+            .role-title,
+            .role-name {
+
+                display: none;
+            }
+        }
+    }
+
+    .mobile-logo-container {
+        display: none;
+    }
+}
+
+/* Screens over 1280px */
+@media only screen
+and (min-width: 1280px) {
+
+    .header-default {
+
+        .role-dropdown > .dropdown-toggle {
+            justify-content: space-between;
+
+            .current-role-container {
+                flex: 1;
+                margin-right: auto;
+
+                .role-title,
+                .role-name {
+
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+@menu-item-indent: 49px;
+@submenu-item-indent: @menu-item-indent + 30px;
+
+/* Screens less than 1024px */
+@media only screen
+and (max-width: @screen-md-max) {
+
+    .header-default {
+        justify-content: space-between;
+
+        .header-desktop-menu,
+        .public-view {
+            display: none;
+        }
+
+        .mobile-nav {
+            display: flex;
+        }
+
+        .mobile-logo-container {
+            display: flex;
+        }
+
+        .role-dropdown {
+            flex: 0;
+        }
+    }
+}
+
+/* Screens larger than 1024px */
 @media only screen
 and (min-width: @screen-lg) {
+
+    .header-desktop-menu {
+        display: flex;
+    }
 
     .mobile-nav {
         display: none;
     }
 }
 
-.navbar-header.public {
-    display: none;
+
+/* Screens larger than 1024px and less than 1280px */
+/* Max 4 menu items can still show the full profil info */
+@media only screen
+and (min-width: @screen-lg)
+and (max-width: 1280px) {
+
+    .header-default {
+        &.menuS{
+            .role-dropdown > .dropdown-toggle {
+                justify-content: space-between;
+
+                .current-role-container {
+                    flex: 1;
+                    margin-right: auto;
+
+                    .role-title,
+                    .role-name {
+
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
 }
 
-.navbar-brand-lg {
-    border-right: none !important;
+@media only screen
+and (max-width: 1104px)
+and (min-width: 1024px) {
 
-    .navbar-brand {
-        width: 185px !important;
-        padding: 10px !important;
-    }
-
-    .icon-krossover-logo-tagline {
-        height: 40px;
+    .header-default{
+        .header-desktop-menu.menuB{
+            li{
+                width: 120px;
+            }
+        }
     }
 }

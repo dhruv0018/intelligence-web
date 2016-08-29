@@ -8,8 +8,6 @@
         "root",
         "login",
         "logout",
-        "header",
-        "account",
         "admin",
         "indexing",
         "coach",

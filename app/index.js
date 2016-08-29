@@ -2,8 +2,6 @@ require('updated-terms-and-conditions');
 require('root');
 require('login');
 require('logout');
-require('header');
-require('account');
 require('admin');
 require('coach');
 require('athlete');
@@ -27,6 +25,7 @@ var App = angular.module('App', [
     'Admin',
     'Indexer',
     'Indexing',
+    'FilmHome',
     'Coach',
     'Athlete',
     'Games',

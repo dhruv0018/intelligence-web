@@ -276,8 +276,15 @@ module.exports = function(grunt) {
               }
           },
           src: [
+                'app/account/*.html',
+                'app/account/**/*.html',
                 'app/admin/distribution-log/*.html',
                 'app/admin/allocation-settings/**/*.html',
+                'app/film-home/*.html',
+                'app/film-home/games/**/*.html',
+                'app/film-home/reels/*.html',
+                'app/header/*.html',
+                'lib/directives/wsc-link/*.html'
           ],
           dest: 'build/templates.js'
           }

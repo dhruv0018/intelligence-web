@@ -1,5 +1,6 @@
 // Flex table - should be used for most, if not all, table based UI going forward
 .flex-table {
+    height: 100%;
 
     .flex-header-container {
         padding-right: 10px;
@@ -15,13 +16,14 @@
             border-top-right-radius: 10px;
 
             .header-cell {
-                font-weight: bold;
+                font-weight: 500;
+                font-size: 14px;
+                letter-spacing: 1px;
             }
         }
     }
 
     .flex-data-container {
-        height: calc(~"100% - 190px");
         overflow-y: scroll;
 
         .flex-data-none {
@@ -50,6 +52,7 @@
                 transition: max-height .7s, border-width .7s, transform linear 0.08s;
 
                 &:hover {
+                    background-color: @active-bg;
                     transform: scale(1.005);
                     box-shadow: 0px 0px 10px 1px rgba(0,0,0,.1);
                     z-index: 999;

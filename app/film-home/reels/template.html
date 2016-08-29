@@ -1,0 +1,58 @@
+<div class="film-home-reels">
+    <div class="film-home-actions-container" ng-show="!NoData">
+        <form class="film-search">
+            <i class="icon icon-search"></i>
+            <input type="text" id="reel-search-cta" class="form-control" ng-model="filters.name" placeholder="Search by name of the reel" ng-change="search()"/>
+        </form>
+    </div>
+    <div class="empty-state" ng-show="NoData">
+        <span class="circle-border"><i class="icon icon-whistle"></i></span>
+        <h4>Reels are customized playlists you can create, watch and share</h4>
+    </div>
+    <div class="flex-table" ng-show="!NoData">
+        <div class="flex-header-container">
+            <div class="flex-header">
+                <div class="header-cell name">Name</div>
+                <div class="header-cell numClips"># of Clips</div>
+                <div class="header-cell duration">Duration</div>
+                <div class="header-cell date-created">Date Created</div>
+                <div class="header-cell date-updated">Date Updated</div>
+                <div class="header-cell actions"></div>
+                <div class="header-cell share-container"></div>
+            </div>
+        </div>
+        <div class="flex-data-container force-scrollbar">
+            <div class="flex-data-none text-center" ng-show="reels.length == 0">
+                <p>No results found.</p>
+                <h4>Try adjusting your search or filter to find what you're looking for</h4>
+            </div>
+
+            <div class="flex-data">
+                <div ng-repeat="reel in reels | orderBy: '-updatedAt'">
+                    <div class="body-row" ui-sref="Reel({id: reel.id})">
+                        <div class="body-cell name">
+                            {{reel.name}}
+                        </div>
+                        <div class="body-cell numClips">
+                            {{reel.plays.length}}
+                        </div>
+                        <div class="body-cell duration">
+
+                        </div>
+                        <div class="body-cell date-created">
+                            {{reel.createdAt|date:'MMM dd, yyyy'}}
+                            <span class="subtext">Created by {{getUploaderName(reel)}}</span>
+                        </div>
+                        <div class="body-cell date-updated">
+                            {{reel.updatedAt|date:'MMM dd, yyyy'}}
+                        </div>
+                        <div class="body-cell actions"></div>
+                        <div class="body-cell share-container" ng-click="openShareModal($event, reel)">
+                            <i class="icon icon-share-thin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
