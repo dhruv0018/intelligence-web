@@ -33,6 +33,14 @@ function WeeklyAllocationSettingsController(
         }
     });
 
+    $scope.onChangeWeek = function(newV, oldV){
+        if($scope.$parent.formSettingChanged){
+            $scope.selectedWeek = oldV;
+            $scope.$parent.checkState();
+            return;
+        }
+    };
+
     //count the total number
     $scope.Total = function(i, key){
         let total = 0;

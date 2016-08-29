@@ -7,7 +7,7 @@ export default `
                 class="form-control"
                 ng-model="selectedSportId"
                 ng-options="sport.id as sport.name for sport in sports"
-                ng-change="onChangeSelectedSportId()">
+                ng-change="onChangeSelectedSportId(selectedSportId, {{selectedSportId}})">
             </select>
         </div>
         <div class="allocation-nav state-tabs">

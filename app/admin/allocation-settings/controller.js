@@ -46,20 +46,12 @@ function AllocationSettingsController(
     });
 
     $scope.checkState = function($event){
-        if($scope.frmGeneralChanged){
-            $event.preventDefault();
+        if($scope.frmGeneralChanged || $scope.formSettingChanged){
+            if ($event) {$event.preventDefault();}
             let saveModal = basicModals.openForAlert({
-                title: 'Please Save the General Settings',
-                bodyText: 'You need to save the current change for general settings before switching to weekly settings.',
-                buttonText: 'Yes'
-            });
-        }
-        if($scope.formSettingChanged){
-            $event.preventDefault();
-            let saveModal = basicModals.openForAlert({
-                title: 'Please Save the Weekly Settings',
-                bodyText: 'You need to save the current change for weekly settings before switching to general settings.',
-                buttonText: 'Yes'
+                title: 'Unsaved Changes',
+                bodyText: 'You have unsaved changes on this page. Please save your settings before continuing.',
+                buttonText: 'Ok'
             });
         }
     };
@@ -76,7 +68,12 @@ function AllocationSettingsController(
         return percentages;
     }
 
-    $scope.onChangeSelectedSportId = function() {
+    $scope.onChangeSelectedSportId = function(newV, oldV) {
+        if($scope.frmGeneralChanged || $scope.formSettingChanged){
+            $scope.selectedSportId = oldV;
+            $scope.checkState();
+            return;
+        }
         $scope.isLoadingNewSport = true;
 
         indexerFactory.getIndexerGroupsAllocationPermissions($scope.selectedSportId).then(response => {

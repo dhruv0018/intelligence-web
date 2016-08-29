@@ -1,13 +1,13 @@
 export default `
     <div class="weekly-allocation-settings">
+        <div class="week-select-container">
+            <h4>Week</h4>
+            <select class="form-control" ng-model="selectedWeek" ng-change="onChangeWeek(selectedWeek,'{{selectedWeek}}')">
+                <option value="current">Current</option>
+                <option value="next">Next</option>
+            </select>
+        </div>
         <form role="form" name="formSetting">
-            <div class="week-select-container">
-                <h4>Week</h4>
-                <select class="form-control" ng-model="selectedWeek">
-                    <option value="current">Current</option>
-                    <option value="next">Next</option>
-                </select>
-            </div>
             <div class="weekly-allocation-wrapper">
                 <div ng-repeat="(i, projection) in projections" ng-show="i >= startKey && i < startKey+7" class="weekly-allocation-div" ng-class="{'active': projection.isActive, 'inactive': !projection.isActive}">
                     <div class="weekly-allocation-header">
