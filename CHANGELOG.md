@@ -1,3 +1,6 @@
+# v88.1#
+- Moves outgoing Insights link to header nav
+
 # v88.0#
 ## Features##
 - Adds filter for Indexer Group on game queue
