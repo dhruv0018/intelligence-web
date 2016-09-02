@@ -164,6 +164,7 @@ QueueController.$inject = [
     'SelectIndexer.Modal',
     'RunDistribution.Modal',
     'Utilities',
+    'AlertsService',
     'AdminGamesService',
     'AdminQueueDashboardService',
     'GamesResolutionEventEmitter',
@@ -193,6 +194,7 @@ function QueueController (
     SelectIndexerModal,
     RunDistributionModal,
     utilities,
+    alerts,
     AdminGames,
     AdminQueueDashboardService,
     GamesResolutionEventEmitter,
@@ -300,7 +302,7 @@ function QueueController (
     });
 
     $scope.openDistrubutionModal = function() {
-        RunDistributionModal.open($scope.indexerGroups).result(() => {
+        RunDistributionModal.open($scope.indexerGroups).result.then(() => {
             $scope.filterByIndexerGroup();
         });
     };

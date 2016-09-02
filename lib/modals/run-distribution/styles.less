@@ -3,6 +3,8 @@
         button {
             margin-left: auto;
             margin-right: 20px;
+            box-sizing: content-box;
+            width: 91px;
         }
     }
 
@@ -16,8 +18,11 @@
         overflow-y: auto;
 
         &.loading-summary {
-            max-height: 200px;
-            padding-top: 40px;
+            max-height: 400px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
 
             .loading-display {
                 display: flex;
@@ -27,8 +32,17 @@
             }
         }
 
+        .no-games-to-distribute {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
         .summary-report-title {
             text-align: center;
+            margin: 0px;
         }
 
         .summary-report-container {
