@@ -1,9 +1,6 @@
 /* Component dependencies */
-import AllocationSettingsTemplate from './template.html';
 import AllocationSettingsController from './controller';
-import GeneralAllocationSettingsTemplate from './general/template.html';
 import GeneralAllocationSettingsController from './general/controller';
-import WeeklyAllocationSettingsTemplate from './weekly/template.html';
 import WeeklyAllocationSettingsController from './weekly/controller';
 import AllocationSettingsDataDependencies from './data';
 
@@ -39,7 +36,7 @@ AllocationSettings.config([
                 abstract: true,
                 views: {
                     'main@root': {
-                        template: AllocationSettingsTemplate,
+                        templateUrl: 'app/admin/allocation-settings/template.html',
                         controller: AllocationSettingsController
                     }
                 },
@@ -59,7 +56,7 @@ AllocationSettings.config([
                 parent: 'AllocationSettings',
                 views: {
                     'content@AllocationSettings': {
-                        template: GeneralAllocationSettingsTemplate,
+                        templateUrl: 'app/admin/allocation-settings/general/template.html',
                         controller: GeneralAllocationSettingsController
                     }
                 }
@@ -70,7 +67,7 @@ AllocationSettings.config([
                 parent: 'AllocationSettings',
                 views: {
                     'content@AllocationSettings': {
-                        template: WeeklyAllocationSettingsTemplate,
+                        templateUrl: 'app/admin/allocation-settings/weekly/template.html',
                         controller: WeeklyAllocationSettingsController
                     }
                 }

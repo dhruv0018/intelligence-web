@@ -275,7 +275,10 @@ module.exports = function(grunt) {
                     return 'exports.templateCache = ["$templateCache", function($templateCache) {\n' + script +'}];'
               }
           },
-          src: 'app/admin/distribution-log/*.html',
+          src: [
+                'app/admin/distribution-log/*.html',
+                'app/admin/allocation-settings/**/*.html',
+          ],
           dest: 'build/templates.js'
           }
         },
