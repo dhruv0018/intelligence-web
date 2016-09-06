@@ -5,7 +5,8 @@ DistributionLogController.$inject = [
     '$scope',
     'DistributionLog.Data',
     'IndexerFactory',
-    'SportsFactory'
+    'SportsFactory',
+    'RunDistribution.Modal'
 ];
 
 /**
@@ -15,7 +16,8 @@ function DistributionLogController(
     $scope,
     data,
     IndexerFactory,
-    SportsFactory
+    SportsFactory,
+    RunDistributionModal
 ) {
     $scope.logs = data.logs.data;
 
@@ -40,6 +42,11 @@ function DistributionLogController(
 
         }).finally(function(){
             $scope.searching = false;
+        });
+    };
+
+    $scope.openBatchHistory = function(id){
+        RunDistributionModal.open(id).result.then(() => {
         });
     };
 }

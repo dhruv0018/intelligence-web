@@ -47,7 +47,7 @@
             </div>
             <div class="history-list">
                 <div ng-repeat="batch in logs.attributes.distributionBatches">
-                    <a href="">{{batch.executedAt|date: 'MMM d y h:mm:ss a'}}</a>
+                    <a href="javascript:;" ng-click="openBatchHistory(batch.id)">{{batch.executedAt|date: 'MMM d y h:mm:ss a'}}</a>
                 </div>
             </div>
         </div>

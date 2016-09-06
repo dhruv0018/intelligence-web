@@ -37,9 +37,7 @@ DistributionLog.config([
 
                             let Data = {
                                 sports: SportsFactory.load(),
-
-                                // logs: indexerFactory.getDistributionLog({date: new Date().toJSON().slice(0,10)})
-                                logs: indexerFactory.extendDistributionLog({date: '2016-08-30'})
+                                logs: indexerFactory.extendDistributionLog({date: new Date().toJSON().slice(0,10)})
                             };
 
                             return $q.all(Data);
