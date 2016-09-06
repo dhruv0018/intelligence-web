@@ -116,6 +116,7 @@ IntelligenceWebClient.factory('IndexerFactory', [
                     })
                     .then(function(DistributionLogs){
                         let data = DistributionLogs.data.attributes;
+                        let total = 0;
                         for(var key in data){
                             let sport = key.toString();
                             for(var indexer in data[sport]){
@@ -123,10 +124,12 @@ IntelligenceWebClient.factory('IndexerFactory', [
                                     logs[indexer][sport] = {};
                                     logs[indexer][sport]['today+distribute'] = DistributionLogs.data.attributes[sport][indexer]['today+distribute'];
                                     logs[indexer][sport]['this+reserve'] = DistributionLogs.data.attributes[sport][indexer]['this+reserve'];
+                                    total += DistributionLogs.data.attributes[sport][indexer]['today+distribute'] || 0;
                                 }
                             }
                         }
                         DistributionLogs.data.logs = logs;
+                        DistributionLogs.data.total = total;
                         return DistributionLogs;
                     });
             }

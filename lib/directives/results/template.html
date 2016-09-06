@@ -1,11 +1,11 @@
 <div class="results">
 
     <h1 ng-show="!queried && !error">Search<span ng-show="querying">ing…</span></h1>
-    <h1 ng-show="!querying && queried && !error && !results.length">No Results Found</h1>
+    <h1 ng-show="!querying && queried && !error && !results.length">{{nodata||'No Results Found'}}</h1>
     <h1 ng-show="!querying && queried && error">Could not search</h1>
 
     <h2 ng-hide="querying || queried">Enter your search.</h2>
-    <h2 ng-show="queried">Try your search again.</h2>
+    <h2 ng-show="queried && !nodata">Try your search again.</h2>
 
     <krossover-spinner ng-if="querying" size="80px"></krossover-spinner>
 </div>

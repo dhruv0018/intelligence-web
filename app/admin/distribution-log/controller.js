@@ -27,13 +27,24 @@ function DistributionLogController(
         return sportIds.indexOf(sport.id.toString()) > -1;
     });
 
+    IndexerFactory.getIndexerGroups().then(function(response){
+        $scope.indexerGroups = response.data;
+    });
+
+    $scope.todaysDate = new Date();
+
     $scope.searchLogs = function(filter){
         $scope.searching = true;
         $scope.isDefaultState = false;
         $scope.logs = [];
+        let searchDate = {};
+        if(filter.dateTmp){
+            searchDate.date = filter.dateTmp.toJSON().slice(0,10);
+        }else{
+            searchDate.date = new Date().toJSON().slice(0,10);
+        }
 
-        filter.date = filter.dateTmp.toJSON().slice(0,10);
-        $scope.query = IndexerFactory.extendDistributionLog(filter).then(function(distributionLog){
+        $scope.query = IndexerFactory.extendDistributionLog(searchDate).then(function(distributionLog){
             $scope.logs = distributionLog.data;
             sportIds = Object.keys($scope.logs.logs["1"]);
             $scope.sports = data.sports.filter(function(sport){
@@ -46,8 +57,13 @@ function DistributionLogController(
     };
 
     $scope.openBatchHistory = function(id){
-        RunDistributionModal.open(id).result.then(() => {
+        RunDistributionModal.open($scope.indexerGroups, id).result.then(() => {
         });
+    };
+
+    $scope.clearSearchFilter = function(){
+        $scope.filter = {};
+        $scope.searchLogs({});
     };
 }
 
