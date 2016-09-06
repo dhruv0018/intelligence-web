@@ -54,12 +54,14 @@ function GeneralAllocationSettingsController(
     };
 
     $scope.saveGroupPermissions = function() {
+        $scope.preSaving = true;
         indexerFactory.updateIndexerGroupsAllocationPermissions($scope.indexerGroupsAllocationPermissions).then(response => {
             alerts.add({
                 type: 'success',
                 message: 'Permissions saved successfully!'
             });
             $scope.$parent.frmGeneralChanged = false;
+            $scope.preSaving = false;
             $scope.frmGeneral.$setPristine();
         });
     };

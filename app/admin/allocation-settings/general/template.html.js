@@ -91,7 +91,10 @@ export default `
                     </tbody>
                 </table>
             </div>
-            <button class="btn btn-primary pull-right" ng-disabled="frmGeneral.$invalid || frmGeneral.$pristine" ng-click="saveGroupPermissions()">SAVE</button>
+            <button class="btn btn-primary pull-right" ng-disabled="frmGeneral.$invalid || frmGeneral.$pristine || preSaving" ng-click="saveGroupPermissions()">
+                <span ng-show="!preSaving">SAVE</span>
+                <span ng-show="preSaving" class="icon icon-spinner spinner"></span>
+            </button>
         </form>
     </div>
 `;
