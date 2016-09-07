@@ -54,7 +54,7 @@
                         <a class="mobile-suspended film-exchange">{{exchange.name}}</a>
                     </li>
 
-                    <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'false' }"><a class="film-exchange" ui-sref="film-exchange">{{exchange.name}}</a></li>
+                    <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'false' }"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.name}}</a></li>
                 </ul>
             </li>
             <li><a id="mobile-menu-coach-support-cta" ng-href="{{config.links.support.uri}}" target="_blank">Support <i class="icon icon-external-link"></i></a></li>
@@ -126,7 +126,11 @@
         <li class="header-dropdown" ng-class="{active: $state.includes('film-exchange')}">
             <a class="dropdown-toggle" dropdown-toggle>Film Exchange</a>
             <ul class="dropdown-menu film-exchange-menu" ng-if="filmExchanges && filmExchanges.length>0">
-                <li ng-repeat="exchange in filmExchanges"><a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">{{exchange.filmExchangeName}}</a></li>
+                <li ng-repeat="exchange in filmExchanges">
+                    <a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">
+                        {{exchange.filmExchangeName}}
+                    </a>
+                </li>
             </ul>
         </li>
     </menu>
