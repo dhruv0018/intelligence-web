@@ -1,13 +1,19 @@
+@options-height: 81px;
+
 .analytics {
 
     flex-direction: column;
     overflow-y: auto;
 
+    dynamic-tables {
+        height: 100%;
+    }
+
     .analytics-options {
 
         width: 100%;
-        margin-bottom: 20px;
-        padding: 20px 5%;
+        height: @options-height;
+        padding: 20px 60px;
         border: thin solid @gray-border;
         background-color: @content-bg;
         letter-spacing: normal;
@@ -35,7 +41,7 @@
     }
 
     .all-center {
-
+        margin-top: 20px;
         display: flex;
         justify-content: space-between;
         flex-direction: column;
@@ -67,136 +73,16 @@
         }
     }
 
+    .analytics-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        height: calc(100% - @options-height);
+    }
+
     .analytics-tables-container {
-
-        padding-bottom: 20px;
-
-        .table-responsive {
-            width: 90%;
-            margin: auto;
-
-            .table-body-container {
-                height: 375px;
-                overflow-y: auto;
-                overflow-x: hidden;
-                -webkit-mask-image: -webkit-gradient(linear, left 85%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-                padding-bottom: 60px;
-            }
-
-            table {
-                width: 100%;
-                border-top: thin solid black;
-
-                td {
-                    text-align: center;
-                }
-
-                th {
-                    font-weight: @table-header-font-weight;
-                    border:thin solid black;
-                    background-color: @brand-blue;
-                    color: white;
-                    text-align: center;
-                }
-
-                tr:nth-of-type(even) {
-                    background-color: #f7f7fa;
-                }
-
-                tr:nth-of-type(odd) {
-                    background-color: #fff;
-                }
-
-                tr:hover {
-                    background-color: rgb(241, 246, 252);
-                }
-
-                .hidden-header{
-                    th {
-                        height: 0;
-                        line-height: 0;
-                        padding-top: 0;
-                        padding-bottom: 0;
-                        border: none;
-                        color: transparent;
-                    }
-                }
-            }
-
-            .fixed-table {
-                table-layout: fixed;
-            }
-
-            .logheader {
-
-                color: white;
-
-                .topth {
-                    font-weight: @table-header-font-weight;
-                    border:thin solid black;
-                    background-color: @brand-blue;
-                }
-            }
-
-            .statcell {
-                border-right: none;
-                border-left: none;
-            }
-
-            .setnumber {
-                font-size: 30px;
-                color: black;
-                vertical-align: middle;
-            }
-
-            .firstrow {
-
-                color: white;
-
-                .topth {
-                    font-weight: @table-header-font-weight;
-                    border: thin solid black;
-                    border-bottom: none;
-                    background-color: @brand-blue;
-                }
-
-                td {
-                    border-bottom: none;
-                }
-            }
-
-            .secondrow {
-
-                color: white;
-
-                .startsection {
-                    border-left: thin solid black;
-                }
-
-                th {
-                    font-weight: @table-header-font-weight;
-                    border-top: none;
-                    border-left: none;
-                    border-right: none;
-                    border-bottom: thin solid black;
-                    background-color: @brand-blue;
-                }
-
-                .endsection {
-                    border-right: thin solid black;
-                }
-
-                td {
-                    border-bottom: none;
-                    border-top: none;
-                }
-            }
-
-            .contentrow {
-                td:first-child {
-                    border: none;
-                }
-            }
-        }
+        padding: 40px 60px;
+        height: 100%;
+        overflow-y: auto;
     }
 }

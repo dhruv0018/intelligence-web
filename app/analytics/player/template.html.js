@@ -1,7 +1,7 @@
 export default `
 
     <section class="analytics">
-        <div>
+
             <div class="analytics-options">
 
                 <div class="analytics-option">
@@ -65,17 +65,15 @@ export default `
                 <p>Loading Statistics...</p>
             </div>
 
-            <div
-                class="analytics-tables-container"
-                ng-hide="loadingTables"
-            >
-
-                <div class="analytics-tables-container" ng-hide="loadingTables">
-                    <dynamic-tables tables="stats" sport="sport" glossary="glossary" width="90%"></dynamic-tables>
+            <div class="analytics-content">
+                <div
+                    class="analytics-tables-container"
+                    ng-hide="loadingTables"
+                >
+                    <dynamic-tables tables="stats" sport="sport" glossary="glossary"></dynamic-tables>
                 </div>
             </div>
 
-        </div>
     </section>
 
 `;
