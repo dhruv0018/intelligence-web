@@ -1,3 +1,11 @@
+# v90.0#
+## Features##
+- Updates Indexer FAQs for football and volleyball
+- Adds Shippable
+
+## Fixes##
+- Film editor no longer breaks when there is no score or team
+
 # v89.1#
 ## Fixes##
 - Fixes mobile menu for film exchange
