@@ -36,8 +36,8 @@ build:
       - if [[ $GIT_BRANCH == build-* ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g "buildserver --buildserver $GIT_BRANCH"'; else echo "Not Building"; fi;
       - if [[ $GIT_BRANCH == fix-* ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g uat'; else echo "Not Building"; fi;
       - if [[ $GIT_BRANCH == feature-* ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g uat'; else echo "Not Building"; fi;
-      - if [[ $GIT_BRANCH == master ]]; then if [[ $IS_GIT_TAG == "true" ]]; then export AUTODEPLOY="-a 58"; else export AUTODEPLOY=""; fi; ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs $AUTODEPLOY'; else echo "Not Building"; fi;
-      - if [[ $IS_GIT_TAG == "true" ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -a 58'; else echo "Not Building"; fi;
+      - if [[ $GIT_BRANCH == master ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g prod'; else echo "Not Building"; fi;
+      - if [[ $IS_GIT_TAG == "true" ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -a 58 -g prod'; else echo "Not Building"; fi;
     post_ci:
     on_success:
     on_failure:

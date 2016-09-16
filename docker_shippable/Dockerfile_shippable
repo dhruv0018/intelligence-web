@@ -15,5 +15,6 @@ RUN bash -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /e
 RUN apt-get clean && apt-get update; apt-get -y install --fix-missing google-chrome-stable xvfb
 RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"; unzip awscli-bundle.zip; ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 RUN pip install boto python-dateutil
+RUN npm config set registry http://registry.npmjs.org/;
 
 WORKDIR /home
