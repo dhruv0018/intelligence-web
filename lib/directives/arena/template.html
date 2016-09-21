@@ -33,6 +33,12 @@
         ng-model="region"
     ></ice-hockey-arena>
 
+    <!-- Soccer -->
+    <soccer-arena
+        ng-if="type.indexOf('SOCCER') >= 0"
+        ng-model="region"
+    ></soccer-arena>
+
     <ng-transclude></ng-transclude>
 
 </div>

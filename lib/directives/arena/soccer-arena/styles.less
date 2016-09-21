@@ -1,0 +1,44 @@
+.soccer-arena {
+
+    width: 100%;
+    height: 100%;
+
+    .indexable-region {
+        fill: #92B286;
+    }
+
+    .unindexable-region{
+        pointer-events: none;
+    }
+
+    .stroke {
+        stroke-width: 2;
+    }
+
+    .field {
+        fill: #92B286;
+    }
+}
+
+// FIXME: reduce LESS nesting
+.krossover-arena {
+
+    &.highlight-regions {
+
+        .soccer-arena .indexable-region {
+            &:hover,
+            &:active,
+            &:focus {
+                fill: darken(#92B286, 10%);
+                transition: fill 0.3s;
+            }
+        }
+    }
+}
+
+// Selector for all .soccer-INSERT_LEAGE-arena elements
+div[class^="soccer"] div[class$="arena"] {
+
+    height: 100%;
+    width: 100%;
+}

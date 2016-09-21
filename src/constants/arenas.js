@@ -82,7 +82,14 @@ var ARENA_TYPES = {
         name: 'V1 Basketball',
         type: 'BASKETBALL_V1',
         orientation: 'landscape'
-    }
+    },
+
+    11: {
+        id: 11,
+        name: 'Soccer',
+        type: 'SOCCER',
+        orientation: 'landscape'
+    },
 };
 
 IntelligenceWebClient.constant('ARENA_TYPES', ARENA_TYPES);
@@ -98,7 +105,8 @@ var ARENA_IDS = {
     7: 'FOOTBALL',
     8: 'VOLLEYBALL',
     9: 'ICE_HOCKEY',
-    10: 'BASKETBALL_V1'
+    10: 'BASKETBALL_V1',
+    11: 'SOCCER'
 };
 
 IntelligenceWebClient.constant('ARENA_IDS', ARENA_IDS);
@@ -215,6 +223,25 @@ var ARENA_REGIONS = {
             name: 'Outside the zone',
             description: 'from outside the zone'
         }
+    },
+
+    SOCCER: {
+
+        'SIX_YARD_BOX': {
+            id: 18,
+            name: '6 Yard Box',
+            description: '6 Yard Box'
+        },
+        'PENALTY_AREA': {
+            id: 19,
+            name: 'Penalty Area',
+            description: 'Penalty Area'
+        },
+        'OUT_OF_BOX': {
+            id: 20,
+            name: 'Outside of Box',
+            description: 'Outside of Box'
+        }
     }
 };
 
@@ -238,7 +265,10 @@ var ARENA_REGIONS_BY_ID = {
     14: ARENA_REGIONS.ICE_HOCKEY.WING,
     15: ARENA_REGIONS.ICE_HOCKEY.BLUE_LINE,
     16: ARENA_REGIONS.ICE_HOCKEY.OUTSIDE_THE_ZONE,
-    17: ARENA_REGIONS.BASKETBALL_V1.COURT
+    17: ARENA_REGIONS.BASKETBALL_V1.COURT,
+    18: ARENA_REGIONS.SOCCER.SIX_YARD_BOX,
+    19: ARENA_REGIONS.SOCCER.PENALTY_AREA,
+    20: ARENA_REGIONS.SOCCER.OUT_OF_BOX
 };
 
 IntelligenceWebClient.constant('ARENA_REGIONS_BY_ID', ARENA_REGIONS_BY_ID);
