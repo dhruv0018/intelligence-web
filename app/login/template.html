@@ -3,9 +3,9 @@
 
     <header ui-view="header"></header>
 
-    <div class="login-container">
+    <div class="login-container" ng-class="{'center-page': hideBanner}">
 
-        <div class="icon icon-krossover-logo"></div>
+        <div class="icon icon-krossover-logo" ng-hide="hideBanner"></div>
 
         <!-- Mobile App Download Messaging -->
         <section ng-if="isMobile" class="login__app-downloads">

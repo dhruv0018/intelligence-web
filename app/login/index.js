@@ -319,6 +319,7 @@ function LoginController(
 
     $scope.config = config;
     $scope.isMobile = ($rootScope.DEVICE.ANDROID || $rootScope.DEVICE.IOS) && $rootScope.viewport.name == 'Mobile';
+    $scope.hideBanner = $state.current.name === 'maintenance';
 
     let currentUser = session.retrieveCurrentUser();
 
