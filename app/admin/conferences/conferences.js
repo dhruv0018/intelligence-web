@@ -27,8 +27,9 @@ function ConferencesController(
     $scope.filter = {};
     $scope.page = {};
     $scope.page.currentPage = $stateParams.page || 1;
+    $scope.totalCount = conferencesData.count;
     $scope.sports = sports.getList();
-    populateConferencesList(conferencesData);
+    $scope.filteredConferences = conferencesData.data;
 
     $scope.genders = [
         {
@@ -43,21 +44,17 @@ function ConferencesController(
         }
     ];
 
-    if ($stateParams.page) {
-        $scope.filteredConferences = sliceData($stateParams.page);
-    } else {
-        $scope.filteredConferences = $scope.allConferences.slice(0, CONFEREENCEPERPAGE);
-    }
-
-    function sliceData(page) {
-        return $scope.allConferences.slice(CONFEREENCEPERPAGE*(page-1), CONFEREENCEPERPAGE*page);
-    }
-
     $scope.pageChanged = pageChanged;
     function pageChanged() {
-        $state.go('conferences-list', {page: $scope.page.currentPage}, {location: true, notify: false});
         document.getElementById('conference-data').scrollTop = 0;
-        $scope.filteredConferences = sliceData($scope.page.currentPage);
+        let filter = angular.copy($scope.filter);
+        filter.page = $scope.page.currentPage;
+        conferencesFactory.getConferencesList(filter, false).then(responses =>{
+            if(responses.count){
+                $scope.totalCount = responses.count;
+            }
+            $scope.filteredConferences = responses.data;
+        });
     }
 
     $scope.searchConferences = searchConferences;
@@ -66,11 +63,14 @@ function ConferencesController(
         $scope.filteredConferences.length = 0;
 
         if (filter.filmExchange === false) delete filter.filmExchange;
+        filter.start = 0;
 
-        $scope.query = conferencesFactory.getConferencesList(filter).then(data => {
+        $scope.query = conferencesFactory.getConferencesList(filter).then(responses => {
             $scope.page.currentPage = 1;
-            populateConferencesList(data);
-            pageChanged();
+            if(responses.count){
+                $scope.totalCount = responses.count;
+            }
+            $scope.filteredConferences = responses.data;
         }).finally(function() {
             $scope.searching = false;
         });
@@ -81,13 +81,6 @@ function ConferencesController(
         searchConferences($scope.filter);
     };
 
-    function populateConferencesList(conferences) {
-        $scope.allConferences = [];
-        conferences.forEach(conference => {
-            conference.stringID = conference.sportsAssociation+'+'+conference.conference.code+'+'+conference.gender+'+'+conference.sportId;
-            $scope.allConferences.push(conference);
-        });
-    }
 }
 
 export default ConferencesController;

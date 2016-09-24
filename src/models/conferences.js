@@ -63,7 +63,7 @@ IntelligenceWebClient.factory('ConferencesResource', [
             getAllConferenceSportsForAssociation: {
                 method: 'GET',
                 url: `${url}${conferenceSportsBase}`,
-                params: {sportsAssociation: '@sportsAssociation', count: '@count'},
+                params: {sportsAssociation: '@sportsAssociation', count: '@count', start: '@start'},
                 isArray: true
             },
             createFilmExchange: {

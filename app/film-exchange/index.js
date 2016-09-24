@@ -44,11 +44,11 @@ FilmExchange.config([
                     'FilmExchangeFactory','$stateParams', 'SessionService',
                     function(filmExchange, $stateParams, session){
                         let exchangeId = $stateParams.id;
+                        let start = ITEMSPERPAGE*($stateParams.page-1) || 0;
+                        let count = ITEMSPERPAGE;
                         if (exchangeId) {
                             let teamId = session.getCurrentTeamId();
-                            return filmExchange.getFilms({id: exchangeId, teamId}).then(films => {
-                                return films.map(film => filmExchange.setVideoEntity(film));
-                            });
+                            return filmExchange.getFilms({id: exchangeId, teamId, start, count});
                         } else {
                             let currentUser = session.getCurrentUser();
                             let currentRole = currentUser.getCurrentRole();
@@ -130,6 +130,7 @@ FilmExchange.controller('FilmExchangeController', [
             let titleFilter = {};
             $scope.COACH = ROLES.COACH;
             $scope.page = {};
+            $scope.totalCount = exchanges.count;
             $scope.page.currentPage = $stateParams.page||1;
             $scope.conferenceTitle = $stateParams.id.split('+');
             titleFilter.sportsAssociation = $scope.conferenceTitle[0];
@@ -147,25 +148,41 @@ FilmExchange.controller('FilmExchangeController', [
                 itm.nameUsed= itm.code;
             });
             $scope.teamCompetitionLevels.unshift({'code': 0, 'nameUsed': 'None'});
-            $scope.allFilms = exchanges;
+            $scope.filteredFilms = exchanges.data;
             let removedFilms = [];
             $scope.todaysDate = Date.now();
 
-            if ($stateParams.page) {
-                $scope.filteredFilms = sliceData($stateParams.page);
-            } else {
-                $scope.filteredFilms = $scope.allFilms.slice(0, ITEMSPERPAGE);
-            }
         }
 
-        function sliceData(page) {
-            return $scope.allFilms.slice(ITEMSPERPAGE*(page-1), ITEMSPERPAGE*page);
+        function fetchData(filter, getHead = true){
+            filter.id = $stateParams.id;
+            filter.count = ITEMSPERPAGE;
+            return filmExchangeFactory.getFilms(filter, getHead);
         }
 
         $scope.pageChanged = function() {
-            $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
+            // $state.go('film-exchange', {page: $scope.page.currentPage}, {location: 'replace', notify: false, reload: false, inherit: true});
             document.getElementById('film-exchange-data').scrollTop = 0;
-            $scope.filteredFilms = sliceData($scope.page.currentPage);
+            let filter = {};
+            if($scope.filter.teamName && $scope.filter.teamName.length>0){
+                filter.mascot = $scope.filter.teamName;
+                filter.teamName = $scope.filter.teamName;
+            }
+            if($scope.filter.competitionLevel && $scope.filter.competitionLevel.length>0){
+                filter.competitionLevel = $scope.filter.competitionLevel;
+            }
+            if($scope.filter.datePlayedTmp){
+                filter.datePlayed = angular.copy($scope.filter.datePlayedTmp);
+                filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
+            }
+            filter.page = $scope.page.currentPage;
+            if ($scope.currentUser.is(ROLES.COACH)) filter.teamId = session.getCurrentTeamId();
+            fetchData(filter, false).then(responses=>{
+                if(responses.count){
+                    $scope.totalCount = responses.count;
+                }
+                $scope.filteredFilms = responses.data;
+            });
         };
 
         $scope.openFilmExchangeModal = function() {
@@ -173,47 +190,40 @@ FilmExchange.controller('FilmExchangeController', [
         };
 
         $scope.searchFilms = searchFilms;
-        function searchFilms(filter) {
+        function searchFilms(query) {
             $scope.searching = true;
             $scope.filteredFilms.length = 0;
             $scope.isDefaultState = false;
             $scope.displayTableAnimations = false;
             $scope.allFilms = [];
             $scope.filteredFilms = [];
-
-            filter.id = $stateParams.id;
+            let filter = {};
             if ($scope.currentUser.is(ROLES.COACH)) filter.teamId = session.getCurrentTeamId();
-            if (filter.teamName) {
-                filter.mascot = filter.teamName;
+            if (query.teamName) {
+                filter.mascot = query.teamName;
+                filter.teamName = query.teamName;
             } else {
                 filter.mascot = null;
                 filter.teamName = null;
             }
-            if(new Date().getTimezoneOffset()<0 && $scope.filter.datePlayedTmp){
-                //FIX old version of date picker at different timeZone INTWEB-308
-                filter.datePlayedTmp.setDate(filter.datePlayedTmp.getDate()+1);
+            if($scope.filter.datePlayedTmp){
+                filter.datePlayed = angular.copy($scope.filter.datePlayedTmp);
+                filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
             }
-            $scope.query = filmExchangeFactory.getFilms(filter).then(function(data) {
-                $scope.page.currentPage = 1;
-                $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
-                //FIX old version of date picker at different timeZone INTWEB-308, by filtering datePlayed here insteadof endpoint
-                if(filter.datePlayedTmp){
-                    let search = {};
-                    search.datePlayed = new Date(filter.datePlayedTmp);
-                    search.datePlayed.setMinutes(search.datePlayed.getMinutes()+search.datePlayed.getTimezoneOffset());
-                    search.datePlayed = $filter('date')(search.datePlayed, 'MMMM dd, yyyy');
-                    data = data.filter(film => film.datePlayed == search.datePlayed);
-                }
-                $scope.allFilms = data.map(film => filmExchangeFactory.setVideoEntity(film));
-                $scope.filteredFilms = sliceData($scope.page.currentPage);
-            }).finally(function() {
-                $scope.searching = false;
 
-                //FIX TIMEZONE ISSUE FOR EARLY VERSION OF DATE PICKER: https://github.com/angular-ui/bootstrap/issues/2628
-                if($scope.filter.datePlayedTmp){
-                    $scope.filter.datePlayedTmp = new Date($scope.filter.datePlayedTmp);
-                    $scope.filter.datePlayedTmp.setMinutes( $scope.filter.datePlayedTmp.getMinutes() + $scope.filter.datePlayedTmp.getTimezoneOffset() );
+            if(query.competitionLevel && query.competitionLevel.length>0){
+                filter.competitionLevel = query.competitionLevel;
+            }
+
+            filter.page = 0;
+            $scope.query = fetchData(filter).then(responses=>{
+                $scope.page.currentPage = 1;
+                // $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
+                if(responses.count){
+                    $scope.totalCount = responses.count;
                 }
+                $scope.filteredFilms = responses.data;
+                $scope.searching = false;
             });
         }
 

@@ -1,5 +1,6 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const CONFEREENCEPERPAGE = 30; //max number of conferences shown per page
 
 import ConferencesController from './conferences';
 import ConferenceController from './conference';
@@ -44,9 +45,13 @@ Conferences.config([
             },
             resolve:{
                 'Conferences.Data':[
-                    'ConferencesFactory',
-                    function(conferences) {
-                        return conferences.getAllConferenceSportsForAssociation();
+                    'ConferencesFactory', '$stateParams',
+                    function(conferences, $stateParams) {
+                        if($stateParams.page){
+                            return conferences.getConferencesList({page: $stateParams.page});
+                        }else{
+                            return conferences.getConferencesList();
+                        }
                     }
                 ]
             }

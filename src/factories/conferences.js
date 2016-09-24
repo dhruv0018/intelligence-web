@@ -10,9 +10,13 @@ const updateLocalResourceOnPUT = true;
 
 IntelligenceWebClient.factory('ConferencesFactory', [
     '$injector',
+    '$q',
+    'config',
     'BaseFactory',
     function(
         $injector,
+        $q,
+        config,
         BaseFactory
     ) {
 
@@ -86,10 +90,36 @@ IntelligenceWebClient.factory('ConferencesFactory', [
                 return model.deleteConferenceSport({combinationCode, genderSport}).$promise;
             },
 
-            getAllConferenceSportsForAssociation(sportsAssociation, count) {
+            getConferencesList(filter, getHead = true) {
                 const model = $injector.get(this.model);
-                count = count || 1000;
-                return model.getAllConferenceSportsForAssociation({sportsAssociation, count}).$promise;
+                let query = filter || {};
+                query.count = (filter && filter.count) ? filter.count :  30;
+                query.start = (filter && filter.page) ? (filter.page-1) * query.count : 0;
+                delete query.page;
+                let conferenePromises = model.getConferencesList(query).$promise.then(
+                    conferences =>{
+                        return conferences.map(conference =>{
+                            conference.stringID = conference.sportsAssociation+'+'+conference.conference.code+'+'+conference.gender+'+'+conference.sportId;
+                            return conference;
+                        });
+                    }
+                );
+                let promises = [conferenePromises];
+                if(getHead){
+                    let url = `${config.apiV2.uri}conference-sports`;
+                    let countPromises = this.totalCount(query, url);
+                    promises.push(countPromises);
+                }
+                return $q.all(promises).then(
+                    data =>{
+                        let conferences = {};
+                        conferences.data = data[0];
+                        if(getHead){
+                            conferences.count = data[1];
+                        }
+                        return conferences;
+                    }
+                );
             },
 
             createFilmExchange(filmExchange) {
@@ -139,15 +169,6 @@ IntelligenceWebClient.factory('ConferencesFactory', [
             loadTeamsInConference(filter) {
                 const model = $injector.get(this.model);
                 return model.getTeamsInConference(filter).$promise;
-            },
-
-            getConferencesList: function(filter) {
-                let model = $injector.get(this.model);
-                if(filter.page && filter.count) {
-                    filter.start = (filter.page-1) * filter.count;
-                }
-
-                return model.getConferencesList(filter).$promise;
             }
 
         };

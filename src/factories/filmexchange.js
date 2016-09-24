@@ -7,8 +7,8 @@ var angular = window.angular;
 
 var IntelligenceWebClient = angular.module(pkg.name);
 
-IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory', 'Video', '$filter',
-    function($injector, BaseFactory, Video, $filter) {
+IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory', 'Video', '$filter', 'config', '$q',
+    function($injector, BaseFactory, Video, $filter, config, $q) {
 
         var FilmExchangeFactory = {
 
@@ -55,22 +55,44 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
 
                 return model.getSuspendedTeams({id: conferenceId}).$promise;
             },
-            getFilms: function(filter) {
+            getFilms: function(filter, getHead = true) {
                 let self = this;
                 let model = $injector.get(self.model);
                 if(filter.page && filter.count){
                     filter.start = (filter.page-1) * filter.count;
+                }else{
+                    filter.start = 0;
                 }
                 if(filter.datePlayedTmp && filter.datePlayedTmp instanceof Date){
                     filter.datePlayedTmp = (filter.datePlayedTmp.toISOString()).slice(0,10);
                 }
-                // return model.getFilms(filter).$promise;
-                return model.getFilms(filter).$promise.then(films => {
+                delete filter.page;
+                let url = `${config.apiV2.uri}conference-film-exchanges/${filter.id}/films`;
+                let query = angular.copy(filter);
+                delete query.id;
+
+                let filmPromises = model.getFilms(filter).$promise.then(films =>{
                     return films.map(film => {
                         film.datePlayed = $filter('date')(film.datePlayed, 'MMMM dd, yyyy');
+                        film.video = film.video ? new Video(film.video) : null;
                         return film;
                     });
                 });
+                let promises = [filmPromises];
+                if(getHead){
+                    let countPromises = this.totalCount(query, url);
+                    promises.push(countPromises);
+                }
+                return $q.all(promises).then(
+                    data => {
+                        let films = {};
+                        films.data = data[0];
+                        if(getHead){
+                            films.count = data[1];
+                        }
+                        return films;
+                    }
+                );
             },
             getAllConferences: function(filter){
                 let self = this;
