@@ -124,9 +124,8 @@
                 </div>
             </div>
         </div>
-
-        <div class="text-center footer" ng-show="allFilms.length > itemPerPage">
-            <pagination total-items="allFilms.length" ng-model="page.currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
+        <div class="text-center footer" ng-show="totalCount > itemPerPage">
+            <pagination total-items="totalCount" ng-model="page.currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
         </div>
     </div>
     <div ng-if="noData" class="noData text-center">

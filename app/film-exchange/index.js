@@ -173,15 +173,11 @@ FilmExchange.controller('FilmExchangeController', [
             }
             if($scope.filter.datePlayedTmp){
                 filter.datePlayed = angular.copy($scope.filter.datePlayedTmp);
-                let year = filter.datePlayed.toString().substr(11, 4);
-                let month = (filter.datePlayed.getMonth() + 1).toString();
-                if(month.length == 1) {month = "0"+month; }
-                let day = filter.datePlayed.toString().substr(8, 2);
-                filter.datePlayed = year+'-'+month+'-'+day;
+                filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
             }
-            filter.page = $scope.page.currentPage;
-            if ($scope.currentUser.is(ROLES.COACH)) filter.teamId = session.getCurrentTeamId();
+            filter.start = ITEMSPERPAGE*($scope.page.currentPage-1);
             fetchData(filter, false).then(responses=>{
+                // console.log(responses);
                 if(responses.count){
                     $scope.totalCount = responses.count;
                 }
@@ -212,21 +208,14 @@ FilmExchange.controller('FilmExchangeController', [
             }
             if($scope.filter.datePlayedTmp){
                 filter.datePlayed = angular.copy($scope.filter.datePlayedTmp);
-                let year = filter.datePlayed.toString().substr(11, 4);
-                let month = (filter.datePlayed.getMonth() + 1).toString();
-                if(month.length == 1) {month = "0"+month; }
-                let day = filter.datePlayed.toString().substr(8, 2);
-                filter.datePlayed = year+'-'+month+'-'+day;
+                filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
             }
 
-            if(query.competitionLevel && query.competitionLevel.length>0){
-                filter.competitionLevel = query.competitionLevel;
-            }
-
-            filter.page = 0;
+            filter.start = 0;
             $scope.query = fetchData(filter).then(responses=>{
                 $scope.page.currentPage = 1;
                 // $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
+                // console.log(responses);
                 if(responses.count){
                     $scope.totalCount = responses.count;
                 }
