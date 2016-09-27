@@ -106,7 +106,7 @@ IntelligenceWebClient.factory('BaseFactory', [
 
                 let serializedQuery = serialize(query);
                 let headRequest = `${config.api.uri}${this.description}`;
-                if(arguments[1].length > 0){
+                if(arguments[1] && arguments[1].length > 0){
                     headRequest = arguments[1];
                 }
                 if (Object.keys(query).length > 0) {

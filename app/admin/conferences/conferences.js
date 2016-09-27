@@ -49,7 +49,6 @@ function ConferencesController(
         document.getElementById('conference-data').scrollTop = 0;
         let filter = angular.copy($scope.filter);
         filter.page = $scope.page.currentPage;
-        filter.count = CONFEREENCEPERPAGE;
         conferencesFactory.getConferencesList(filter, false).then(responses =>{
             if(responses.count){
                 $scope.totalCount = responses.count;
@@ -65,7 +64,6 @@ function ConferencesController(
 
         if (filter.filmExchange === false) delete filter.filmExchange;
         filter.start = 0;
-        filter.count = CONFEREENCEPERPAGE;
 
         $scope.query = conferencesFactory.getConferencesList(filter).then(responses => {
             $scope.page.currentPage = 1;
