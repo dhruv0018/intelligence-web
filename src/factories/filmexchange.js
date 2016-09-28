@@ -66,9 +66,11 @@ IntelligenceWebClient.factory('FilmExchangeFactory', ['$injector', 'BaseFactory'
                 if(filter.datePlayedTmp && filter.datePlayedTmp instanceof Date){
                     filter.datePlayedTmp = (filter.datePlayedTmp.toISOString()).slice(0,10);
                 }
+                delete filter.page;
                 let url = `${config.apiV2.uri}conference-film-exchanges/${filter.id}/films`;
                 let query = angular.copy(filter);
                 delete query.id;
+
                 let filmPromises = model.getFilms(filter).$promise.then(films =>{
                     return films.map(film => {
                         film.datePlayed = $filter('date')(film.datePlayed, 'MMMM dd, yyyy');

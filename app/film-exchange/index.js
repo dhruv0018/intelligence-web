@@ -175,9 +175,9 @@ FilmExchange.controller('FilmExchangeController', [
                 filter.datePlayed = angular.copy($scope.filter.datePlayedTmp);
                 filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
             }
-            filter.start = ITEMSPERPAGE*($scope.page.currentPage-1);
+            filter.page = $scope.page.currentPage;
+            if ($scope.currentUser.is(ROLES.COACH)) filter.teamId = session.getCurrentTeamId();
             fetchData(filter, false).then(responses=>{
-                // console.log(responses);
                 if(responses.count){
                     $scope.totalCount = responses.count;
                 }
@@ -211,11 +211,14 @@ FilmExchange.controller('FilmExchangeController', [
                 filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
             }
 
-            filter.start = 0;
+            if(query.competitionLevel && query.competitionLevel.length>0){
+                filter.competitionLevel = query.competitionLevel;
+            }
+
+            filter.page = 0;
             $scope.query = fetchData(filter).then(responses=>{
                 $scope.page.currentPage = 1;
                 // $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
-                // console.log(responses);
                 if(responses.count){
                     $scope.totalCount = responses.count;
                 }
