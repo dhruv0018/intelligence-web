@@ -101,7 +101,6 @@ import EMAILS from './constants/emails';
 import ARENA_CHART from './constants/arena-chart';
 require('./constants/film-exchange');
 
-
 require('./models/users');
 require('./models/sports');
 require('./models/teams');
@@ -207,6 +206,15 @@ require('./aggregates');
 require('./values');
 
 require('./entities');
+
+require('./v3/models/v3Resource');
+require('./v3/models/v3Example');
+require('./v3/factories/v3Base');
+require('./v3/factories/v3Example');
+require('./v3/factories/v3Conferences');
+require('./v3/factories/v3DataParser');
+require('./v3/factories/v3IndexerGroups');
+require('./v3/factories/v3IndexerGroupAllocationPermissions');
 
 import CustomTagsEvent from './events/customtags';
 

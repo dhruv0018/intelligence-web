@@ -47,7 +47,6 @@ Conferences.config([
                 ]
             }
         })
-
         .state('conference', {
             url: '/conference/:id',
             parent: 'base',
