@@ -12,7 +12,7 @@ var SPORTS = {
         name: 'Basketball',
         hasAnalytics: true,
         hasStatistics: true,
-        hasInsights: false,
+        hasInsights: true,
         scoreBySets: false
     },
 
