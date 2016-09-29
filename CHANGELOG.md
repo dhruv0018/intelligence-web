@@ -1,4 +1,9 @@
+# v92.1#
+## Fixes##
+- Fixes stats not displaying for old version of chrome
+
 # v91.0#
+## Features##
 - Updates maintenance page
 
 # v90.0#
