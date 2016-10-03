@@ -9,12 +9,12 @@ if (environment === 'development') {
 
 else if (environment === 'qa') {
 
-    baseUrl = 'http://v2-qa.krossover.com/intelligence/';
+    baseUrl = 'https://v2-qa.krossover.com/intelligence/';
 }
 
 else if (environment === 'uat') {
 
-    baseUrl = 'http://v2-uat.krossover.com/intelligence/';
+    baseUrl = 'https://v2-uat.krossover.com/intelligence/';
 }
 
 exports.config = {
@@ -43,4 +43,3 @@ exports.config = {
         }
     }
 }
-

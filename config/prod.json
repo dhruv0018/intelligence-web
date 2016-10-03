@@ -36,7 +36,7 @@
     },
     "links": {
         "signup": {
-            "uri": "http://www.krossover.com/get-started"
+            "uri": "https://www.krossover.com/get-started"
         },
         "intelligence": {
             "uri": "https://app.krossover.com"
