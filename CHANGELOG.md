@@ -1,3 +1,10 @@
+# v93.0#
+## Features##
+- Updates site to use HTTPS
+
+## Fixes##
+- Fixes pagination on film exchange and conferences
+
 # v92.2#
 ## Features##
 - Turn on Insights for basketball
