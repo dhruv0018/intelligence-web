@@ -1,3 +1,7 @@
+# v92.2#
+## Features##
+- Turn on Insights for basketball
+
 # v92.1#
 ## Fixes##
 - Fixes stats not displaying for old version of chrome
