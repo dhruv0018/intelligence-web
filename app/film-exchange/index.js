@@ -143,7 +143,7 @@ FilmExchange.controller('FilmExchangeController', [
             $scope.filter= {};
             $scope.itemPerPage = ITEMSPERPAGE;
 
-            $scope.teamCompetitionLevels = CompetitionLevels;
+            $scope.teamCompetitionLevels = CompetitionLevels.filter(item => item.code != null);
             angular.forEach($scope.teamCompetitionLevels, function(itm){
                 itm.nameUsed= itm.code;
             });
