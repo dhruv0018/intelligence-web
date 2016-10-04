@@ -77,7 +77,7 @@
                          </span>
                     </div>
                     <div class="body-cell datePlayed">
-                        <span>{{film.datePlayed|date:'MMM dd, yyyy'}}</span>
+                        <span>{{film.datePlayed|date:'MMM dd, yyyy': 'UTC'}}</span>
                         <span class="addedBy subText" ng-if="currentUser.is(COACH)">added by <span ng-hide="film.addedByUser.id === currentUser.id">{{film.addedByUser.firstName}} {{film.addedByUser.lastName}}</span><span ng-show="film.addedByUser.id === currentUser.id">you</span></span>
                     </div>
                     <div class="body-cell dateAdded" ng-if="!currentUser.is(COACH)">

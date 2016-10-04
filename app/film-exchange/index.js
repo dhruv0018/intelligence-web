@@ -173,7 +173,11 @@ FilmExchange.controller('FilmExchangeController', [
             }
             if($scope.filter.datePlayedTmp){
                 filter.datePlayed = angular.copy($scope.filter.datePlayedTmp);
-                filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
+                let year = filter.datePlayed.toString().substr(11, 4);
+                let month = (filter.datePlayed.getMonth() + 1).toString();
+                if(month.length == 1) {month = "0"+month; }
+                let day = filter.datePlayed.toString().substr(8, 2);
+                filter.datePlayed = year+'-'+month+'-'+day;
             }
             filter.page = $scope.page.currentPage;
             if ($scope.currentUser.is(ROLES.COACH)) filter.teamId = session.getCurrentTeamId();
@@ -208,7 +212,11 @@ FilmExchange.controller('FilmExchangeController', [
             }
             if($scope.filter.datePlayedTmp){
                 filter.datePlayed = angular.copy($scope.filter.datePlayedTmp);
-                filter.datePlayed = (filter.datePlayed.toISOString()).slice(0,10);
+                let year = filter.datePlayed.toString().substr(11, 4);
+                let month = (filter.datePlayed.getMonth() + 1).toString();
+                if(month.length == 1) {month = "0"+month; }
+                let day = filter.datePlayed.toString().substr(8, 2);
+                filter.datePlayed = year+'-'+month+'-'+day;
             }
 
             if(query.competitionLevel && query.competitionLevel.length>0){
