@@ -221,8 +221,8 @@ function AssociationController(
 
     function generateConferenceSportList() {
         let usedConferenceSports = [];
-        conferences.getAllConferenceSportsForAssociation($scope.association.code).then(response => {
-            $scope.conferenceSports = response;
+        conferences.getConferencesList({sportsAssociation : $scope.association.code}, false).then(response => {
+            $scope.conferenceSports = response.data;
             $scope.conferenceSports.forEach(conferenceSport => {
                 conferenceSport.name = conferenceSport.conference.name + ' - ' + $filter('formattedConferenceGender')(conferenceSport.gender) + ' ' + $scope.sports[conferenceSport.sportId].name;
                 $scope.filmExchanges.forEach(filmExchange => {
@@ -233,7 +233,6 @@ function AssociationController(
                     }
                 });
             });
-
             $scope.availableConferenceSports = $scope.conferenceSports.filter(conferenceSport => {
                 if (!usedConferenceSports.some(usedConferenceSport => conferenceSport === usedConferenceSport)) {
                     return conferenceSport;
