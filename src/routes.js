@@ -139,13 +139,13 @@ IntelligenceWebClient.run([
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
+            $timeout(function() {
+                analytics.identify();
+                Appcues.start();
+            }, 0, false);
+
             /* Clear any alerts. */
             alerts.clear();
-            analytics.identify();
-
-            for(var i=0; i<5; i++){
-                startAppcues(i);
-            }
 
             /* Store previous state */
             $previousState = fromState;
@@ -185,14 +185,5 @@ IntelligenceWebClient.run([
                 $state.go('Account.ContactInfo');
             }
         });
-
-        // Calls the Appcues start function to show dialogs with an n-second delay
-        // Used because some dialogs are linked to elements on the page which display
-        // after certain data is loaded by the controller.
-        function startAppcues(delay){
-            setTimeout(function(){
-                Appcues.start();
-            }, delay*1000);
-        }
     }
 ]);
