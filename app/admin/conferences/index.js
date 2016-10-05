@@ -77,12 +77,12 @@ Conferences.config([
                             sportId: $stateParams.id.split('+')[3]
                         };
 
-                        let conferencesList = conferences.getConferencesList(conferenceFilter);
+                        let conferencesList = conferences.getConferencesList(conferenceFilter, false);
                         let conferenceTeamsList = conferences.loadTeamsInConference({combinationCode: $stateParams.id});
 
                         let Data = {
                             conference: conferencesList.then(conferencesListResponse => {
-                                return conferencesListResponse[0];
+                                return conferencesListResponse.data[0];
                             }),
 
                             teams: conferenceTeamsList.then(teams => {
@@ -90,7 +90,7 @@ Conferences.config([
                             }),
 
                             filmExchangeAdmins: conferencesList.then(conferencesListResponse => {
-                                if (conferencesListResponse[0].filmExchange) {
+                                if (conferencesListResponse.data[0].filmExchange) {
                                     return filmExchanges.getFilmExchangeAdmins($stateParams.id).then(admins => {
                                         return admins;
                                     });
