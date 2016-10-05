@@ -33,14 +33,15 @@ function DistributionLogController(
 
     $scope.todaysDate = new Date();
 
-    $scope.searchLogs = function(filter){
+    $scope.searchLogs = function(filter) {
+        filter = filter || {};
         $scope.searching = true;
         $scope.isDefaultState = false;
         $scope.logs = [];
         let searchDate = {};
-        if(filter.dateTmp){
+        if (filter.dateTmp) {
             searchDate.date = filter.dateTmp.toJSON().slice(0,10);
-        }else{
+        } else {
             searchDate.date = new Date().toJSON().slice(0,10);
         }
 
