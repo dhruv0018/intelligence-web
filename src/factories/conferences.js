@@ -93,7 +93,7 @@ IntelligenceWebClient.factory('ConferencesFactory', [
             getConferencesList(filter, getHead = true) {
                 const model = $injector.get(this.model);
                 let query = filter || {};
-                query.count = (filter && filter.count) ? filter.count :  30;
+                query.count = (filter && filter.count) ? filter.count :  1000;
                 query.start = (filter && filter.page) ? (filter.page-1) * query.count : 0;
                 delete query.page;
                 let conferenePromises = model.getConferencesList(query).$promise.then(

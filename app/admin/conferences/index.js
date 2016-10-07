@@ -48,9 +48,9 @@ Conferences.config([
                     'ConferencesFactory', '$stateParams',
                     function(conferences, $stateParams) {
                         if($stateParams.page){
-                            return conferences.getConferencesList({page: $stateParams.page});
+                            return conferences.getConferencesList({page: $stateParams.page, count: CONFEREENCEPERPAGE});
                         }else{
-                            return conferences.getConferencesList();
+                            return conferences.getConferencesList({page: 0, count: CONFEREENCEPERPAGE});
                         }
                     }
                 ]
