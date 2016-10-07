@@ -199,29 +199,34 @@ IntelligenceWebClient.service('PlayManager', [
                 var firstEvent = this.current.events[0];
                 var lastEvent = this.current.events[this.current.events.length - 1];
 
-                /* Lookup tag buffer. */
-                var tagId = event.tagId;
-                var tag = this.tagset.tags[tagId];
-                var buffer = tag.buffer;
-
                 /* If the event was the first event in the play. */
                 if (wasFirstEvent) {
 
+                    /* Lookup the new first event's tag buffer. */
+                    var firstTagId = firstEvent.tagId;
+                    var firstTag = this.tagset.tags[firstTagId];
+                    var firstBuffer = firstTag.buffer;
+
                     /* Set the play start time to the new first event. */
                     this.current.startTime = firstEvent.time;
+
+                    /* Adjust the play time by the tag buffer. */
+                    if (firstBuffer < 0) this.current.startTime += firstBuffer;
                 }
 
                 /* If the event was the last event in the play. */
                 if (wasLastEvent) {
 
+                    /* Lookup the new last event's tag buffer. */
+                    var lastTagId = lastEvent.tagId;
+                    var lastTag = this.tagset.tags[lastTagId];
+                    var lastBuffer = lastTag.buffer;
+
                     /* Set the play end time to the new last event. */
                     this.current.endTime = lastEvent.time;
+
+                    if (lastBuffer > 0) this.current.endTime += lastBuffer;
                 }
-
-                /* Adjust the play times by the tag buffer. */
-                if (buffer < 0) this.current.startTime -= buffer;
-                if (buffer > 0) this.current.endTime -= buffer;
-
 
                 /* If the play has been saved before. */
                 if (this.current.id) {
