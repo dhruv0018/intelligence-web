@@ -1,3 +1,7 @@
+# v93.1#
+## Fixes##
+- Updates WSC link to use HTTPS
+
 # v93.0#
 ## Features##
 - Updates site to use HTTPS
