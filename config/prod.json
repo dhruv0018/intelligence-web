@@ -137,8 +137,8 @@
         "dragdrop":true
     },
     "wsc": {
-        "authorizeUrl": "http://krossover.clipro.tv/api/requests",
-        "redirectUrl": "http://krossover.clipro.tv/index.aspx",
+        "authorizeUrl": "https://krossover.clipro.tv/api/requests",
+        "redirectUrl": "https://krossover.clipro.tv/index.aspx",
         "payBypassUserID": 999
     }
 }
