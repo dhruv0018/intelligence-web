@@ -1,3 +1,7 @@
+# v94.0#
+## Features##
+- Add Distribution Feature and bug on conferences
+
 # v93.1#
 ## Fixes##
 - Updates WSC link to use HTTPS
