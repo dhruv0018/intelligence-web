@@ -22,7 +22,7 @@
 
             <div class="form-group">
 
-                <select class="form-control" name="league" data-ng-model="filter.leagueId" data-ng-options="league.id as league.name for league in leagues | unique:'name' | orderBy:'name'">
+                <select class="form-control" name="league" data-ng-model="filter.leagueId" data-ng-options="league.id as league.name for league in leagues | unique:'name' | orderBy:'name' | filter: (filter.sportId || '') && {sportId: filter.sportId}">
                     <option value="">League Name</option>
                 </select>
 
@@ -77,4 +77,3 @@
     <data-results data-ng-hide="teams.length" data-query="query"></data-results>
 
 </section>
-

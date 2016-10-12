@@ -687,7 +687,19 @@ function TeamsController (
     };
 
     $scope.findSchoolsByName = function() {
-        return schools.query({name: $scope.filter.schoolName, count: 10}).then(function(schools) {
+        let params = {};
+        params["name"] = $scope.filter.schoolName;
+        params["count"] = 10;
+
+        if($scope.filter.leagueId) {
+            params["leagueId"] = $scope.filter.leagueId;
+        }
+
+        if($scope.filter.sportId) {
+            params["sportId"] = $scope.filter.sportId;
+        }
+
+        return schools.query(params).then(function(schools) {
             return $filter('orderBy')(schools, 'name');
         });
     };
