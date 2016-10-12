@@ -105,14 +105,17 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 //     team.subscriptions = new List();
                 // }
+
                 //This is count for the added columns to the table on June, 2016
-                if(!team.type){
+                // The check for undefined specifically is because in some cases, the default value is desired to be ""
+
+                if(team.type === undefined){
                     team.type = 'Scholastic';
                 }
-                if(!team.ageLevel){
+                if(team.ageLevel === undefined){
                     team.ageLevel = 'Collegiate';
                 }
-                if(!team.amateurPro){
+                if(team.amateurPro === undefined){
                     team.amateurPro = 'Amateur';
                 }
 

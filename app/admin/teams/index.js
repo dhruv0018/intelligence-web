@@ -552,7 +552,7 @@ function TeamController (
 
     /* If no team is stored locally, then get the team from the server. */
     if (!team) {
-        $scope.team = teams.create();
+        $scope.team = teams.create({type: '', ageLevel: '', amateurPro: ''});
         var teamId = $stateParams.id;
 
         if (teamId) {
