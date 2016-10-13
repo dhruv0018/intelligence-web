@@ -704,19 +704,49 @@ function TeamsController (
         });
     };
 
+    $scope.schoolSelected = function(item){
+        $scope.filter.city = item.address.city;
+        $scope.filter.region = item.address.regionCode;
+    };
+
     $scope.search = function(query) {
 
+        let params = angular.copy(query);
         $scope.searching = true;
         $scope.teams.length = 0;
 
-        $scope.query = teams.search(query).then(function(teams) {
+        if(params.id) {
+            let deferred = $q.defer();
+            $scope.query = deferred.promise;
 
-            $scope.teams = teams;
+            teams.load(params.id)
+            .then(function(){
+                $state.go('team-info', { id: params.id });
+            })
+            .finally(function(){
+                $scope.teams = [];
+                $scope.searching = false;
+                deferred.resolve();
+            });
+        }
+        else {
+            if(params.isCanonical) {
+                params.isCanonical = 1;
+            }
+            else {
+                delete params.isCanonical;
+            }
 
-        }).finally(function() {
+            $scope.query = teams.search(params).then(function(teams) {
 
-            $scope.searching = false;
-        });
+                $scope.teams = teams;
+
+            }).finally(function() {
+
+                $scope.searching = false;
+            });
+        }
+
     };
 }
 

@@ -1,3 +1,48 @@
 .teams {
+    .sidebar {
+        overflow-y: auto;
+    }
 
+    .search-checkbox {
+        margin-right: 5px;
+    }
+
+    .list {
+        td:first-child, th:first-child {
+            padding-left: 50px;
+        }
+
+        td:last-child, th:last-child {
+            padding-right: 50px;
+        }
+    }
+
+    .hidden-cell {
+        td, th {
+            height: 0;
+            line-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            border-top: none;
+            border-bottom: none;
+            border-color: transparent;
+            color: transparent;
+            visibility: hidden;
+        }
+    }
+
+    .fixed-header {
+        margin-bottom: 0px;
+    }
+
+    .table-responsive {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .scroll-remaining-height {
+        height: 100%;
+        overflow-y: auto;
+    }
 }
