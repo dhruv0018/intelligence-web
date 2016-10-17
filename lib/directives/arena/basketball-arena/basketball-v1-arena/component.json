@@ -1,9 +1,0 @@
-{
-    "name": "basketball-v1-arena",
-    "templates": [
-        "template.html"
-    ],
-    "scripts": [
-        "index.js"
-    ]
-}

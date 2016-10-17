@@ -1,26 +1,14 @@
-/* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Schools page module.
  * @module Schools
  */
-var Schools = angular.module('schools', [
+const Schools = angular.module('schools', [
     'ui.router',
     'ui.bootstrap',
     'ui.unique',
     'ui.showhide'
-]);
-
-/* Cache the template file */
-Schools.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('school.html', require('./school.html'));
-        $templateCache.put('schools.html', require('./schools.html'));
-        $templateCache.put('school-info.html', require('./school-info.html'));
-    }
 ]);
 
 /**
@@ -39,7 +27,7 @@ Schools.config([
                 parent: 'base',
                 views: {
                     'main@root': {
-                        templateUrl: 'schools.html',
+                        templateUrl: 'app/admin/schools/schools.html',
                         controller: 'SchoolsController'
                     }
                 }
@@ -51,7 +39,7 @@ Schools.config([
                 abstract: true,
                 views: {
                     'main@root': {
-                        templateUrl: 'school.html',
+                        templateUrl: 'app/admin/schools/school/school.html',
                         controller: 'SchoolController'
                     }
                 },
@@ -81,7 +69,7 @@ Schools.config([
                 parent: 'school',
                 views: {
                     'content@school': {
-                        templateUrl: 'school-info.html',
+                        templateUrl: 'app/admin/schools/school/school-info.html',
                         controller: 'SchoolController'
                     }
                 }
@@ -179,3 +167,5 @@ Schools.controller('SchoolsController', [
         }
     }
 ]);
+
+export default Schools;

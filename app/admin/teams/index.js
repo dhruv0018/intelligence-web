@@ -1,8 +1,9 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 const moment = require('moment');
-require('team-plan');
-require('team-package');
+
+import TeamPackage from './team-package';
+import TeamPlan from './team-plan';
 
 /**
  * Teams page module.
@@ -15,21 +16,6 @@ const Teams = angular.module('teams', [
     'ui.showhide',
     'team-plan',
     'team-package'
-]);
-
-/* Cache the template file */
-Teams.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('team.html', require('./team.html'));
-        $templateCache.put('teams.html', require('./teams.html'));
-        $templateCache.put('team-info.html', require('./team-info.html'));
-        $templateCache.put('team-plans.html', require('./team-plans.html'));
-        $templateCache.put('team-members.html', require('./team-members.html'));
-        $templateCache.put('team-conferences.html', require('./team-conferences.html'));
-        $templateCache.put('school-dropdown-input.html', require('./school-dropdown-input.html'));
-    }
 ]);
 
 /**
@@ -48,7 +34,7 @@ Teams.config([
                 parent: 'base',
                 views: {
                     'main@root': {
-                        templateUrl: 'teams.html',
+                        templateUrl: 'app/admin/teams/teams.html',
                         controller: 'TeamsController'
                     }
                 },
@@ -68,7 +54,7 @@ Teams.config([
                 abstract: true,
                 views: {
                     'main@root': {
-                        templateUrl: 'team.html',
+                        templateUrl: 'app/admin/teams/team.html',
                         controller: 'TeamController'
                     }
                 },
@@ -90,7 +76,7 @@ Teams.config([
                 parent: 'team',
                 views: {
                     'content@team': {
-                        templateUrl: 'team-info.html',
+                        templateUrl: 'app/admin/teams/team-info.html',
                         controller: 'TeamController'
                     }
                 },
@@ -109,7 +95,7 @@ Teams.config([
                 parent: 'team',
                 views: {
                     'content@team': {
-                        templateUrl: 'team-plans.html',
+                        templateUrl: 'app/admin/teams/team-plans.html',
                         controller: 'TeamPlansController'
                     }
                 },
@@ -136,7 +122,7 @@ Teams.config([
                 parent: 'team',
                 views: {
                     'content@team': {
-                        templateUrl: 'team-members.html',
+                        templateUrl: 'app/admin/teams/team-members.html',
                         controller: 'TeamController'
                     }
                 }
@@ -147,7 +133,7 @@ Teams.config([
                 parent: 'team',
                 views: {
                     'content@team': {
-                        templateUrl: 'team-conferences.html',
+                        templateUrl: 'app/admin/teams/team-conferences.html',
                         controller: 'TeamConferencesController'
                     }
                 },
@@ -326,7 +312,7 @@ function TeamPlansController (
         var modalInstance = $modal.open({
             scope: $scope,
             size: 'sm',
-            templateUrl: 'app/admin/teams/team-package/team-package.html',
+            templateUrl: 'app/admin/teams/team-package/template.html',
             controller: 'TeamPackageController',
             resolve: {
                 Team: function() { return $scope.team; },
@@ -342,7 +328,7 @@ function TeamPlansController (
 
     var openTeamPlanModal = function(teamPlanIndex) {
         var modalInstance = $modal.open({
-            templateUrl: 'app/admin/teams/team-plan/team-plan.html',
+            templateUrl: 'app/admin/teams/team-plan/template.html',
             controller: 'TeamPlanController',
             resolve: {
                 Team: function() { return $scope.team; },
@@ -1053,3 +1039,5 @@ function TeamConferencesController(
     };
 
 }
+
+export default Teams;

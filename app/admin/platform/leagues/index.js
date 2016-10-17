@@ -1,33 +1,21 @@
-/* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Leagues page module.
  * @module Leagues
  */
-var Leagues = angular.module('leagues', [
+const Leagues = angular.module('leagues', [
     'ui.router',
     'ui.bootstrap',
     'ui.unique',
     'ui.showhide'
 ]);
 
-/* Cache the template file */
-Leagues.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('league.html', require('./league.html'));
-        $templateCache.put('leagues.html', require('./leagues.html'));
-        $templateCache.put('league-info.html', require('./league-info.html'));
-    }
-]);
-
 Leagues.service('League.Data.Dependencies', [
     'LeaguesFactory', 'SportsFactory', 'TagsetsFactory', 'FiltersetsFactory', 'PositionsetsFactory',
     function service(leagues, sports, tagsets, filtersets, positionsets) {
 
-        var Data = {
+        const Data = {
 
             sports: sports.load(),
             leagues: leagues.load(),
@@ -45,7 +33,7 @@ Leagues.service('Leagues.Data.Dependencies', [
     'LeaguesFactory', 'SportsFactory', 'TagsetsFactory', 'PositionsetsFactory', 'FiltersetsFactory',
     function service(leagues, sports, tagsets, positionsets) {
 
-        var Data = {
+        const Data = {
 
             sports: sports.load(),
             leauges: leagues.load()
@@ -71,7 +59,7 @@ Leagues.config([
                 parent: 'base',
                 views: {
                     'main@root': {
-                        templateUrl: 'leagues.html',
+                        templateUrl: 'app/admin/platform/leagues/leagues.html',
                         controller: 'LeaguesController'
                     }
                 },
@@ -91,7 +79,7 @@ Leagues.config([
                 abstract: true,
                 views: {
                     'main@root': {
-                        templateUrl: 'league.html',
+                        templateUrl: 'app/admin/platform/leagues/league/league.html',
                         controller: 'LeagueController'
                     }
                 },
@@ -110,7 +98,7 @@ Leagues.config([
                 parent: 'league',
                 views: {
                     'content@league': {
-                        templateUrl: 'league-info.html'
+                        templateUrl: 'app/admin/platform/leagues/league/league-info.html'
                     }
                 }
             });
@@ -181,3 +169,5 @@ Leagues.controller('LeaguesController', [
         };
     }
 ]);
+
+export default Leagues;

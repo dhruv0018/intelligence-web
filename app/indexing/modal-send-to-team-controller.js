@@ -1,30 +1,28 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Indexing page module.
- * @module Indexing
- */
-var Indexing = angular.module('Indexing');
+IndexingModalSendToTeamController.$inject = [
+    '$scope',
+    '$modalInstance'
+];
 
 /**
  * Modal controller. Controls the modal view.
  * @module Indexing
- * @name Modal.SendToTeam.Controller
+ * @name IndexingModalSendToTeamController
  * @type {Controller}
  */
-Indexing.controller('Indexing.Modal.SendToTeam.Controller', [
-    '$scope', '$modalInstance',
-    function controller($scope, $modalInstance) {
+function IndexingModalSendToTeamController($scope, $modalInstance) {
 
-        $scope.yes = function() {
+    $scope.yes = function() {
 
-            $modalInstance.close();
-        };
+        $modalInstance.close();
+    };
 
-        $scope.no = function() {
+    $scope.no = function() {
 
-            $modalInstance.dismiss('no');
-        };
-    }
-]);
+        $modalInstance.dismiss('no');
+    };
+}
+
+export default IndexingModalSendToTeamController;

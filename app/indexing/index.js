@@ -1,6 +1,17 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+import IndexingHeaderController from './header-controller';
+import IndexingMainController from './main-controller';
+import IndexingSidebarNotesController from './sidebar-notes-controller';
+import IndexingSidebarPlaylistController from './sidebar-playlist-controller';
+
+/* Template paths */
+const IndexingTemplateUrl = 'app/indexing/template.html';
+const IndexingHeaderTemplateUrl = 'app/indexing/header.html';
+const IndexingSideBarNotesTemplateUrl = 'app/indexing/sidebar-notes.html';
+const IndexingSideBarPlayListTemplateUrl = 'app/indexing/sidebar-playlist.html';
+
 /* Fetch Mousetrap from the browser scope */
 var Mousetrap = window.Mousetrap;
 
@@ -16,21 +27,6 @@ var Indexing = angular.module('Indexing', [
     'Events',
     'Play',
     'Playlist'
-]);
-
-/* Cache the template file */
-Indexing.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('indexing/template.html', require('./template.html'));
-        $templateCache.put('indexing/header.html', require('./header.html'));
-        $templateCache.put('indexing/sidebar-notes.html', require('./sidebar-notes.html'));
-        $templateCache.put('indexing/sidebar-playlist.html', require('./sidebar-playlist.html'));
-        $templateCache.put('indexing/modal-delete-play.html', require('./modal-delete-play.html'));
-        $templateCache.put('indexing/modal-send-to-team.html', require('./modal-send-to-team.html'));
-        $templateCache.put('indexing/modal-add-indexer-note.html', require('./modal-add-indexer-note.html'));
-    }
 ]);
 
 /**
@@ -83,21 +79,21 @@ Indexing.config([
                 parent: 'root',
                 views: {
                     'header@root': {
-                        templateUrl: 'indexing/header.html',
-                        controller: 'Indexing.Header.Controller'
+                        templateUrl: IndexingHeaderTemplateUrl,
+                        controller: IndexingHeaderController
                     },
                     'main@root': {
-                        templateUrl: 'indexing/template.html',
-                        controller: 'Indexing.Main.Controller',
+                        templateUrl: IndexingTemplateUrl,
+                        controller: IndexingMainController,
                         controllerAs: 'main'
                     },
                     'sidebar-notes@indexing': {
-                        templateUrl: 'indexing/sidebar-notes.html',
-                        controller: 'Indexing.Sidebar.Notes.Controller'
+                        templateUrl: IndexingSideBarNotesTemplateUrl,
+                        controller: IndexingSidebarNotesController
                     },
                     'sidebar-playlist@indexing': {
-                        templateUrl: 'indexing/sidebar-playlist.html',
-                        controller: 'Indexing.Sidebar.Playlist.Controller'
+                        templateUrl: IndexingSideBarPlayListTemplateUrl,
+                        controller: IndexingSidebarPlaylistController
                     }
                 },
                 resolve: {
@@ -237,12 +233,3 @@ Indexing.value('Indexing.Sidebar', {
     notes: false,
     playlist: true
 });
-
-/* File dependencies. */
-require('./header-controller');
-require('./main-controller');
-require('./sidebar-notes-controller');
-require('./sidebar-playlist-controller');
-require('./modal-delete-play-controller');
-require('./modal-send-to-team-controller');
-require('./modal-add-indexer-note-controller');

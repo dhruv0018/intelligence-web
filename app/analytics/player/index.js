@@ -5,7 +5,6 @@ const PlayerAnalytics = angular.module('PlayerAnalytics', []);
 /* Module imports */
 import AnalyticsDataDependencies from '../data';
 import PlayerAnalyticsController from './controller';
-import template from './template.html';
 
 PlayerAnalytics.factory('AnalyticsDataDependencies', AnalyticsDataDependencies);
 PlayerAnalytics.controller('PlayerAnalyticsController', PlayerAnalyticsController);
@@ -26,7 +25,7 @@ PlayerAnalytics.config([
             parent: 'Analytics',
             views: {
                 'main@root': {
-                    template,
+                    templateUrl: 'app/analytics/player/template.html',
                     controller: PlayerAnalyticsController
                 }
             },

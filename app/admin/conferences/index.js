@@ -3,7 +3,7 @@ const angular = window.angular;
 const CONFEREENCEPERPAGE = 30; //max number of conferences shown per page
 
 import ConferencesController from './conferences';
-import ConferenceController from './conference';
+import ConferenceController from './conference/conference';
 
 /**
  * conferences page module.
@@ -14,15 +14,6 @@ const Conferences = angular.module('Conferences', [
     'ui.bootstrap',
     'ui.unique',
     'ui.showhide'
-]);
-
-/* Cache the template file */
-Conferences.run([
-    '$templateCache',
-    function run($templateCache) {
-        $templateCache.put('conferences.html', require('./conferences.html'));
-        $templateCache.put('conference.html', require('./conference.html'));
-    }
 ]);
 
 /**
@@ -39,7 +30,7 @@ Conferences.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: 'conferences.html',
+                    templateUrl: 'app/admin/conferences/conferences.html',
                     controller: ConferencesController
                 }
             },
@@ -62,7 +53,7 @@ Conferences.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: 'conference.html',
+                    templateUrl: 'app/admin/conferences/conference/conference.html',
                     controller: ConferenceController
                 }
             },
@@ -107,3 +98,5 @@ Conferences.config([
         });
     }
 ]);
+
+export default Conferences;

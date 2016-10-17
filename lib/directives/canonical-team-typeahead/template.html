@@ -13,7 +13,7 @@
            typeahead-wait-ms="200"
            typeahead-loading="loading"
            typeahead-min-length="3"
-           typeahead-template-url="canonical-team-typeahead-dropdown.html"
+           typeahead-template-url="lib/directives/canonical-team-typeahead/dropdown.html"
            typeahead-on-select="getId($item)"
            typeahead="cTeam as cTeam.name for cTeam in findTeams() | filter: {result: $viewValue}">
     <krossover-spinner ng-if="loading" size="25px"></krossover-spinner>

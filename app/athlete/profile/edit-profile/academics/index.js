@@ -1,9 +1,8 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const EditProfileAcademicsTemplateUrl = 'app/athlete/profile/edit-profile/academics/template.html';
 
-const templateUrl = 'athlete/edit-profile/academics/template.html';
-
-const template = require('./template.html');
+import AthleteProfileEditProfileAcademicsController from './controller';
 
 /**
  * Academics page module.
@@ -16,15 +15,25 @@ const Academics = angular.module('Athlete.Profile.EditProfile.Academics', [
     'no-results'
 ]);
 
-/* Cache the template files */
-Academics.run([
-    '$templateCache',
-    function run($templateCache) {
 
-        $templateCache.put(templateUrl, template);
+/**
+ * EditProfile.Academics page state router.
+ * @module EditProfile.Academics
+ * @type {UI-Router}
+ */
+Academics.config([
+    '$stateProvider',
+    function config($stateProvider) {
+
+        $stateProvider
+
+        .state('Athlete.Profile.EditProfile.Academics', {
+            views: {
+                'content@Athlete.Profile.EditProfile': {
+                    templateUrl: EditProfileAcademicsTemplateUrl,
+                    controller: AthleteProfileEditProfileAcademicsController
+                }
+            }
+        });
     }
 ]);
-
-/* File dependencies */
-require('./controller');
-require('./config');

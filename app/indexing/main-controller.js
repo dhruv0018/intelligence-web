@@ -1,19 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Indexing page module.
- * @module Indexing
- */
-var Indexing = angular.module('Indexing');
-
-/**
- * Indexing controller.
- * @module Indexing
- * @name Main.Controller
- * @type {Controller}
- */
-Indexing.controller('Indexing.Main.Controller', [
+IndexingMainController.$inject = [
     'config',
     '$rootScope',
     '$scope',
@@ -34,63 +22,71 @@ Indexing.controller('Indexing.Main.Controller', [
     'TeamsFactory',
     'GamesFactory',
     'PlaysFactory',
-    'VideoPlayer',
-    function controller(config,
-                        $rootScope,
-                        $scope,
-                        $modal,
-                        basicModal,
-                        $stateParams,
-                        session,
-                        indexing,
-                        tags,
-                        playlistManager,
-                        playsManager,
-                        play,
-                        event,
-                        sidebar,
-                        data,
-                        leagues,
-                        tagsets,
-                        teams,
-                        games,
-                        plays,
-                        videoPlayer
-                        ) {
+    'VideoPlayer'
+];
 
-        var gameId = Number($stateParams.id);
+/**
+ * Indexing controller.
+ * @module Indexing
+ * @name IndexingMainController
+ * @type {Controller}
+ */
+function IndexingMainController(config,
+                    $rootScope,
+                    $scope,
+                    $modal,
+                    basicModal,
+                    $stateParams,
+                    session,
+                    indexing,
+                    tags,
+                    playlistManager,
+                    playsManager,
+                    play,
+                    event,
+                    sidebar,
+                    data,
+                    leagues,
+                    tagsets,
+                    teams,
+                    games,
+                    plays,
+                    videoPlayer
+                    ) {
 
-        $scope.tags = tags;
-        $scope.play = play;
-        $scope.plays = playsManager.plays;
-        $scope.event = event;
-        $scope.sidebar = sidebar;
-        $scope.indexing = indexing;
-        $scope.game = games.get(gameId);
-        $scope.team = teams.get($scope.game.teamId);
-        $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
-        $scope.teamPlayers = data.teamPlayers;
-        $scope.opposingTeamPlayers = data.opposingTeamPlayers;
-        $scope.league = leagues.get($scope.team.leagueId);
-        $scope.tagset = tagsets.get($scope.league.tagSetId);
-        $scope.videoPlayer = videoPlayer;
+    var gameId = Number($stateParams.id);
 
-        //Watch for fullscreen change
-        $scope.$watch(videoPlayerFullScreenWatch.bind(this));
+    $scope.tags = tags;
+    $scope.play = play;
+    $scope.plays = playsManager.plays;
+    $scope.event = event;
+    $scope.sidebar = sidebar;
+    $scope.indexing = indexing;
+    $scope.game = games.get(gameId);
+    $scope.team = teams.get($scope.game.teamId);
+    $scope.opposingTeam = teams.get($scope.game.opposingTeamId);
+    $scope.teamPlayers = data.teamPlayers;
+    $scope.opposingTeamPlayers = data.opposingTeamPlayers;
+    $scope.league = leagues.get($scope.team.leagueId);
+    $scope.tagset = tagsets.get($scope.league.tagSetId);
+    $scope.videoPlayer = videoPlayer;
 
-        var playsList = plays.getList({ gameId: gameId });
+    //Watch for fullscreen change
+    $scope.$watch(videoPlayerFullScreenWatch.bind(this));
 
-        indexing.reset($scope.tagset, $scope.game, playsList);
+    var playsList = plays.getList({ gameId: gameId });
 
-        playlistManager.isEditable = true;
+    indexing.reset($scope.tagset, $scope.game, playsList);
 
-        /**
-         * Watch for video player full screen changes.
-         */
-        function videoPlayerFullScreenWatch () {
-            $scope.fullScreenEnabled = videoPlayer.isFullScreen;
-        }
+    playlistManager.isEditable = true;
 
+    /**
+     * Watch for video player full screen changes.
+     */
+    function videoPlayerFullScreenWatch () {
+        $scope.fullScreenEnabled = videoPlayer.isFullScreen;
     }
 
-]);
+}
+
+export default IndexingMainController;

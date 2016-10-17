@@ -1,11 +1,11 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Indexing page module.
- * @module Indexing
- */
-var Indexing = angular.module('Indexing');
+IndexingModalDeletePlayController.$inject = [
+    '$scope',
+    '$modal',
+    '$modalInstance'
+];
 
 /**
  * Modal controller. Controls the modal view.
@@ -13,18 +13,17 @@ var Indexing = angular.module('Indexing');
  * @name Modal.DeletePlay.Controller
  * @type {Controller}
  */
-Indexing.controller('Indexing.Modal.DeletePlay.Controller', [
-    '$scope', '$modal', '$modalInstance',
-    function controller($scope, $modal, $modalInstance) {
+function IndexingModalDeletePlayController($scope, $modal, $modalInstance) {
 
-        $scope.ok = function() {
+    $scope.ok = function() {
 
-            $modalInstance.close();
-        };
+        $modalInstance.close();
+    };
 
-        $scope.cancel = function() {
+    $scope.cancel = function() {
 
-            $modalInstance.dismiss('cancel');
-        };
-    }
-]);
+        $modalInstance.dismiss('cancel');
+    };
+}
+
+export default IndexingModalDeletePlayController;

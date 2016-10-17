@@ -8,7 +8,7 @@
            typeahead-wait-ms="200"
            typeahead-loading="loading"
            typeahead-min-length="3"
-           typeahead-template-url="team-typeahead-dropdown.html"
+           typeahead-template-url="lib/directives/team-typeahead/team-typeahead-dropdown.html"
            typeahead-input-formatter="$model.name"
            typeahead-on-select="getId($item)"
            typeahead="team as team.name for team in findTeams() | filter: {result: $viewValue}">

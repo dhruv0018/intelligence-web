@@ -2,15 +2,9 @@
 const angular = window.angular;
 
 /**
- * Profile.About page module.
- * @module Profile.About
- */
-const About = angular.module('Athlete.Profile.About');
-
-/**
  * Profile.About dependencies
  */
-AboutController.$inject = [
+AthleteProfileAboutController.$inject = [
     '$scope',
     '$state',
     '$stateParams',
@@ -25,7 +19,7 @@ AboutController.$inject = [
  * @name Profile.About.controller
  * @type {controller}
  */
-function AboutController (
+function AthleteProfileAboutController (
     $scope,
     $state,
     $stateParams,
@@ -45,6 +39,4 @@ function AboutController (
     });
 }
 
-About.controller('Athlete.Profile.About.controller', AboutController);
-
-export default AboutController;
+export default AthleteProfileAboutController;

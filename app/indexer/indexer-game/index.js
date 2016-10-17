@@ -4,7 +4,6 @@ const IndexerGame = angular.module('IndexerGame', []);
 
 import IndexerDataDependencies from '../data';
 import IndexerGameController from './controller';
-import template from './template.html';
 
 IndexerGame.factory('IndexerDataDependencies', IndexerDataDependencies);
 IndexerGame.controller('IndexerGameController', IndexerGameController);
@@ -25,7 +24,7 @@ IndexerGame.config([
                 parent: 'Indexer',
                 views: {
                     'main@root': {
-                        template,
+                        templateUrl: 'app/indexer/indexer-game/template.html',
                         controller: IndexerGameController
                     }
                 },

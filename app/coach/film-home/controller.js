@@ -1,19 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * FilmHome page module.
- * @module FilmHome
- */
-var FilmHome = angular.module('Coach.FilmHome');
-
-/**
- * FilmHome controller.
- * @module FilmHome
- * @name FilmHome.controller
- * @type {controller}
- */
-FilmHome.controller('Coach.FilmHome.controller', [
+CoachFilmHomeController.$inject = [
     '$rootScope',
     '$scope',
     '$state',
@@ -26,73 +14,82 @@ FilmHome.controller('Coach.FilmHome.controller', [
     'PlayersFactory',
     'SessionService',
     'ROLES',
-    'SPORTS',
-    function controller(
-        $rootScope,
-        $scope,
-        $state,
-        $filter,
-        reels,
-        games,
-        teams,
-        users,
-        leagues,
-        players,
-        session,
-        ROLES,
-        SPORTS
-    ) {
+    'SPORTS'
+];
 
-        var currentUser = session.currentUser;
-        var currentRole = currentUser.currentRole;
-        var userId = currentUser.id;
-        var teamId = currentRole.teamId;
+/**
+ * FilmHome controller.
+ * @module FilmHome
+ * @name FilmHome.controller
+ * @type {controller}
+ */
+function CoachFilmHomeController(
+    $rootScope,
+    $scope,
+    $state,
+    $filter,
+    reels,
+    games,
+    teams,
+    users,
+    leagues,
+    players,
+    session,
+    ROLES,
+    SPORTS
+) {
 
-        //Constants
-        $scope.ROLES = ROLES;
+    var currentUser = session.currentUser;
+    var currentRole = currentUser.currentRole;
+    var userId = currentUser.id;
+    var teamId = currentRole.teamId;
 
-        //team related
-        $scope.team = teams.get(teamId);
-        $scope.roster = $scope.team.roster;
-        $scope.teamPlayers = $filter('toArray')($scope.roster.playerInfo);
+    //Constants
+    $scope.ROLES = ROLES;
 
-        //league related
-        let league = leagues.get($scope.team.leagueId);
-        let season = league.getSeasonForWSC();
-        if (season) $scope.seasonId = season.id;
+    //team related
+    $scope.team = teams.get(teamId);
+    $scope.roster = $scope.team.roster;
+    $scope.teamPlayers = $filter('toArray')($scope.roster.playerInfo);
 
-        // Sport related
-        let sport = $scope.team.getSport();
-        $scope.isBasketball = sport.id === SPORTS.BASKETBALL.id;
+    //league related
+    let league = leagues.get($scope.team.leagueId);
+    let season = league.getSeasonForWSC();
+    if (season) $scope.seasonId = season.id;
 
-        var gamesList = games.getByRelatedRole();
-        var reelsList = reels.getByRelatedRole();
+    // Sport related
+    let sport = $scope.team.getSport();
+    $scope.isBasketball = sport.id === SPORTS.BASKETBALL.id;
 
-        $scope.filmsList = gamesList.concat(reelsList);
+    var gamesList = games.getByRelatedRole();
+    var reelsList = reels.getByRelatedRole();
 
-        //Collections of resources
-        $scope.players =  players.getCollection();
-        $scope.users = users.getCollection();
-        $scope.teams = teams.getCollection();
-        $scope.games = games.getCollection();
-        $scope.reels = reels.getCollection();
+    $scope.filmsList = gamesList.concat(reelsList);
 
-        //Get film exchanges for current user
-        $scope.filmExchanges = [];
-        teams.getFilmExchanges(teamId).then(response => $scope.filmExchanges = response);
+    //Collections of resources
+    $scope.players =  players.getCollection();
+    $scope.users = users.getCollection();
+    $scope.teams = teams.getCollection();
+    $scope.games = games.getCollection();
+    $scope.reels = reels.getCollection();
 
-        //used for search
-        $scope.query = '';
+    //Get film exchanges for current user
+    $scope.filmExchanges = [];
+    teams.getFilmExchanges(teamId).then(response => $scope.filmExchanges = response);
 
-        //specific members of the team
-        $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team);
-        $scope.headCoach = users.findByRole(ROLES.HEAD_COACH, $scope.team)[0];
+    //used for search
+    $scope.query = '';
 
-        //ui
-        $scope.filteredFilmsList = $scope.filmsList;
+    //specific members of the team
+    $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team);
+    $scope.headCoach = users.findByRole(ROLES.HEAD_COACH, $scope.team)[0];
 
-        $scope.getPlayerJerseysAsNumbers = function(playerInfo) {
-            return Number(playerInfo.jerseyNumber);
-        };
-    }
-]);
+    //ui
+    $scope.filteredFilmsList = $scope.filmsList;
+
+    $scope.getPlayerJerseysAsNumbers = function(playerInfo) {
+        return Number(playerInfo.jerseyNumber);
+    };
+}
+
+export default CoachFilmHomeController;

@@ -1,16 +1,10 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-/**
- * EditProfile.Physical page module.
- * @module EditProfile.Physical
- */
-const Physical = angular.module('Athlete.Profile.EditProfile.Physical');
-
 /*
 * EditProfile.Physical dependencies
 */
-PhysicalController.$inject = [
+AthleteProfileEditProfilePhysicalController.$inject = [
     '$scope',
     '$timeout',
     '$filter',
@@ -25,7 +19,7 @@ PhysicalController.$inject = [
  * @name EditProfile.Physical.controller
  * @type {controller}
  */
-function PhysicalController (
+function AthleteProfileEditProfilePhysicalController (
     $scope,
     $timeout,
     $filter,
@@ -100,6 +94,4 @@ function PhysicalController (
     };
 }
 
-Physical.controller('Athlete.Profile.EditProfile.Physical.controller', PhysicalController);
-
-export default PhysicalController;
+export default AthleteProfileEditProfilePhysicalController;

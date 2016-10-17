@@ -10,17 +10,7 @@ var Logout = angular.module('logout', [
     'ui.bootstrap'
 ]);
 
-const templateUrl = 'logout.html';
-const template    = require('./template.html');
-
-/* Cache the template file */
-Logout.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put(templateUrl, template);
-    }
-]);
+const LogoutTemplateUrl = 'app/logout/template.html';
 
 /**
  * Logout state router.
@@ -37,7 +27,7 @@ Logout.config([
                 url: '/logout',
                 views: {
                     'root': {
-                        templateUrl: templateUrl,
+                        templateUrl: LogoutTemplateUrl,
                         controller: 'LogoutController'
                     }
                 },

@@ -2,6 +2,17 @@
 const angular = window.angular;
 const moment  = require('moment');
 
+/* Template paths */
+const LoginSignupTemplateUrl = 'app/login/signup.html';
+const LoginTemplateUrl = 'app/login/template.html';
+const LoginLoginTemplateUrl = 'app/login/login.html';
+const LoginMaintenanceTemplateUrl = 'app/login/maintenance.html';
+const LoginLockedTemplateUrl = 'app/login/locked.html';
+const LoginForgotTemplateUrl = 'app/login/forgot.html';
+const LoginResetTemplateUrl = 'app/login/reset.html';
+const LoginNewUserTemplateUrl = 'app/login/new-user.html';
+const LoginNewUserErrorTemplateUrl = 'app/login/new-user-error.html';
+
 /**
  * Login module for managing user logins.
  * @module Login
@@ -9,23 +20,6 @@ const moment  = require('moment');
 const Login = angular.module('login', [
     'ui.router',
     'ui.bootstrap'
-]);
-
-/* Cache the template file */
-Login.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('signup.html', require('./signup.html'));
-        $templateCache.put('template.html', require('./template.html'));
-        $templateCache.put('maintenance.html', require('./maintenance.html'));
-        $templateCache.put('login.html', require('./login.html'));
-        $templateCache.put('locked.html', require('./locked.html'));
-        $templateCache.put('forgot.html', require('./forgot.html'));
-        $templateCache.put('reset.html', require('./reset.html'));
-        $templateCache.put('new-user.html', require('./new-user.html'));
-        $templateCache.put('new-user-error.html', require('./new-user-error.html'));
-    }
 ]);
 
 /**
@@ -45,10 +39,10 @@ Login.config([
                 parent: 'login',
                 views: {
                     'header@login': {
-                        templateUrl: 'signup.html'
+                        templateUrl: LoginSignupTemplateUrl
                     },
                     'main@login': {
-                        templateUrl: 'maintenance.html',
+                        templateUrl: LoginMaintenanceTemplateUrl,
                         controller: 'LoginController'
                     }
                 }
@@ -58,14 +52,14 @@ Login.config([
                 url: '/login?{emailConfirmation:string}',
                 views: {
                     'header@login': {
-                        templateUrl: 'signup.html'
+                        templateUrl: LoginSignupTemplateUrl
                     },
                     'root': {
-                        templateUrl: 'template.html',
+                        templateUrl: LoginTemplateUrl,
                         controller: 'LoginController'
                     },
                     'main@login': {
-                        templateUrl: 'login.html',
+                        templateUrl: LoginLoginTemplateUrl,
                         controller: 'LoginController'
                     }
                 },
@@ -92,7 +86,7 @@ Login.config([
                         template: ''
                     },
                     'main@login': {
-                        templateUrl: 'locked.html',
+                        templateUrl: LoginLockedTemplateUrl,
                         controller: 'LoginController'
                     }
                 }
@@ -103,10 +97,10 @@ Login.config([
                 parent: 'login',
                 views: {
                     'header@login': {
-                        templateUrl: 'signup.html'
+                        templateUrl: LoginSignupTemplateUrl
                     },
                     'main@login': {
-                        templateUrl: 'forgot.html',
+                        templateUrl: LoginForgotTemplateUrl,
                         controller: 'LoginController'
                     }
                 }
@@ -117,10 +111,10 @@ Login.config([
                 parent: 'login',
                 views: {
                     'header@login': {
-                        templateUrl: 'signup.html'
+                        templateUrl: LoginSignupTemplateUrl
                     },
                     'main@login': {
-                        templateUrl: 'reset.html',
+                        templateUrl: LoginResetTemplateUrl,
                         controller: 'LoginController'
                     }
                 },
@@ -145,10 +139,10 @@ Login.config([
                 parent: 'login',
                 views: {
                     'header@login': {
-                        templateUrl: 'signup.html'
+                        templateUrl: LoginSignupTemplateUrl
                     },
                     'main@login': {
-                        templateUrl: 'new-user.html',
+                        templateUrl: LoginNewUserTemplateUrl,
                         controller: 'LoginController'
                     }
                 },
@@ -258,10 +252,10 @@ Login.config([
                 parent: 'login',
                 views: {
                     'header@login': {
-                        templateUrl: 'signup.html'
+                        templateUrl: LoginSignupTemplateUrl
                     },
                     'main@login': {
-                        templateUrl: 'new-user-error.html',
+                        templateUrl: LoginNewUserErrorTemplateUrl,
                         controller: 'LoginController'
                     }
                 },

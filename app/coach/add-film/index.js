@@ -2,6 +2,7 @@
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+const CoachAddFilmTemplateUrl = 'app/coach/add-film/template.html';
 
 /**
  * Add Film page module.
@@ -11,15 +12,6 @@ var AddFilm = angular.module('add-film', [
     'ui.router',
     'ui.bootstrap',
     'plan'
-]);
-
-/* Cache the template file */
-AddFilm.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('coach/add-film/template.html', require('./template.html'));
-    }
 ]);
 
 /**
@@ -102,7 +94,7 @@ AddFilm.config([
             parent: 'Coach',
             views: {
                 'main@root': {
-                    templateUrl: 'coach/add-film/template.html',
+                    templateUrl: CoachAddFilmTemplateUrl,
                     controller: 'AddFilmController'
                 }
             },

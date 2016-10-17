@@ -1,6 +1,8 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+const CoachTeamAssistantsTemplateUrl = 'app/coach/coach-team/assistants/template.html';
 
+import CoachTeamAssistantsController from './controller';
 /**
  * TeamAssistants page module.
  * @module TeamAssistants
@@ -8,15 +10,6 @@ var angular = window.angular;
 var TeamAssistants = angular.module('coach-team-assistants', [
     'ui.router',
     'ui.bootstrap'
-]);
-
-/* Cache the template file */
-TeamAssistants.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('coach/team/assistants/template.html', require('./template.html'));
-    }
 ]);
 
 /**
@@ -33,12 +26,10 @@ TeamAssistants.config([
             url: '/assistants',
             views: {
                 'manager@Coach.Team': {
-                    templateUrl: 'coach/team/assistants/template.html',
-                    controller: 'Coach.Team.Assistants.controller'
+                    templateUrl: CoachTeamAssistantsTemplateUrl,
+                    controller: CoachTeamAssistantsController
                 }
             }
         });
     }
 ]);
-
-require('./controller');

@@ -1,7 +1,0 @@
-{
-    "name": "video-player-seeking-controls",
-    "templates": [],
-    "scripts": [
-        "index.js"
-    ]
-}

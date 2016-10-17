@@ -1,7 +1,7 @@
 #
 # Dockerfile for shippable CI
 #
-FROM nodesource/jessie:4.2.2
+FROM nodesource/jessie:4.4.3
 MAINTAINER Joshua Banton "joshb@krossover.com"
 
 COPY npmrc /root/.npmrc

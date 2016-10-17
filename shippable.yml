@@ -15,7 +15,7 @@ build:
 
     pre_ci_boot:
         image_name: 116065022286.dkr.ecr.us-east-1.amazonaws.com/shippable-web
-        image_tag: latest
+        image_tag: feature-web-clean
         pull: true
         options: "-e HOME=/root"
     #commands in this section run inside your CI container. In addition, any commands such as ls, in this section can be used to skip default processing for CI.
@@ -23,8 +23,8 @@ build:
       - npm install
       - node_modules/.bin/napa
       - npm install worker-farm --save-dev
-      - npm install component --save-dev
-      - node_modules/component/bin/component install -t 500000
+    #   - npm install component --save-dev
+    #   - node_modules/component/bin/component install -t 500000
       - Xvfb :99 -ac -nolisten tcp&
       - grunt test
       - rm -rf deploy
@@ -32,6 +32,7 @@ build:
       - cd deploy
       - ssh-agent bash -c 'ssh-add /home/git.key; git clone git@bitbucket.org:krossoverintelligence/deployer-builder.git'
       - cd deployer-builder/intelligence-web-client
+      - git checkout no-component
       - if [[ $IS_PULL_REQUEST == "true" ]]; then export GIT_BRANCH=$HEAD_BRANCH export BUILDER_METHOD="-p $PULL_REQUEST -b $HEAD_BRANCH"; elif [[ $IS_GIT_TAG == "true" ]]; then export GIT_BRANCH="TAG-COMMIT" export BUILDER_METHOD="-c $COMMIT -b master"; else export GIT_BRANCH=$BRANCH export BUILDER_METHOD="-c $COMMIT -b $BRANCH"; fi; echo "GIT_BRANCH=$GIT_BRANCH BUILDER_METHOD=$BUILDER_METHOD";
       - if [[ $GIT_BRANCH == build-* ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g "buildserver --buildserver $GIT_BRANCH"'; else echo "Not Building"; fi;
       - if [[ $GIT_BRANCH == fix-* ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g uat'; else echo "Not Building"; fi;
@@ -49,7 +50,7 @@ integrations:
   hub:
     - integrationName: krossover-devops
       type: ecr
-    
+
   notifications:
       - integrationName: email
         type: email

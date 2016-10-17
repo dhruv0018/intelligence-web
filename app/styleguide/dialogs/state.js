@@ -1,4 +1,3 @@
-import template from './template';
 import controller from './controller';
 
 /**
@@ -14,7 +13,7 @@ function StyleguideDialogsState ($stateProvider) {
 
     const views = {
         'content@Styleguide': {
-            template,
+            templateUrl: 'app/styleguide/dialogs/template.html',
             controller
         }
     };

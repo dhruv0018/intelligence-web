@@ -1,9 +1,0 @@
-{
-    "name": "play-summaries",
-    "styles": [
-        "styles.less"
-    ],
-    "scripts": [
-        "index.js"
-    ]
-}

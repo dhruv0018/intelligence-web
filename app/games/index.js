@@ -11,9 +11,6 @@ import GamesFormations from './formations';
 import GamesArenaChart from './arena-chart';
 import GamesSelfEditor from './self-editor';
 
-import template from './template.html.js';
-import restricted from './restricted.html.js';
-
 /**
 * Coach game area raw film page module.
 * @module Games
@@ -52,7 +49,7 @@ Games.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    template: restricted
+                    templateUrl: 'app/games/restricted.html'
                 }
             }
         };
@@ -92,7 +89,7 @@ Games.config([
             ],
             views: {
                 'main@root': {
-                    template,
+                    templateUrl: 'app/games/template.html',
                     controller: 'Games.controller'
                 }
             },

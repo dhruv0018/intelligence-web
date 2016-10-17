@@ -1,9 +1,0 @@
-{
-    "name": "circle-spotlight-glyph-tool",
-    "templates": [
-        "template.html"
-    ],
-    "scripts": [
-        "index.js"
-    ]
-}

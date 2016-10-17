@@ -1,9 +1,0 @@
-{
-    "name": "root",
-    "templates": [
-        "template.html"
-    ],
-    "scripts": [
-        "index.js"
-    ]
-}

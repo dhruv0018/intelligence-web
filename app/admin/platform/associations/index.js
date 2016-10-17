@@ -1,7 +1,6 @@
 const angular = window.angular;
 
-
-import AssociationController from './association';
+import AssociationController from './association/association';
 import AssociationsController from './associations';
 
 /**
@@ -13,20 +12,6 @@ const Associations = angular.module('associations', [
     'ui.bootstrap',
     'ui.unique',
     'ui.showhide'
-]);
-
-/* Cache the template file */
-Associations.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('association.html', require('./association.html'));
-        $templateCache.put('associations.html', require('./associations.html'));
-        $templateCache.put('association-info.html', require('./association-info.html'));
-        $templateCache.put('competition-levels.html', require('./competition-levels.html'));
-        $templateCache.put('association-conferences.html', require('./association-conferences.html'));
-        $templateCache.put('film-exchanges.html', require('./film-exchanges.html'));
-    }
 ]);
 
 /**
@@ -49,7 +34,7 @@ Associations.config([
                 parent: 'base',
                 views: {
                     'main@root': {
-                        templateUrl: 'associations.html',
+                        templateUrl: 'app/admin/platform/associations/associations.html',
                         controller: AssociationsController
                     }
                 }
@@ -61,7 +46,7 @@ Associations.config([
                 abstract: true,
                 views: {
                     'main@root': {
-                        templateUrl: 'association.html',
+                        templateUrl: 'app/admin/platform/associations/association/association.html',
                         controller: AssociationController
                     }
                 },
@@ -103,7 +88,7 @@ Associations.config([
                 parent: 'association',
                 views: {
                     'content@association': {
-                        templateUrl: 'association-info.html'
+                        templateUrl: 'app/admin/platform/associations/association/association-info.html'
                     }
                 }
             })
@@ -113,7 +98,7 @@ Associations.config([
                 parent: 'association',
                 views: {
                     'content@association': {
-                        templateUrl: 'competition-levels.html'
+                        templateUrl: 'app/admin/platform/associations/association/competition-levels.html'
                     }
                 }
             })
@@ -123,7 +108,7 @@ Associations.config([
                 parent: 'association',
                 views: {
                     'content@association': {
-                        templateUrl: 'association-conferences.html'
+                        templateUrl: 'app/admin/platform/associations/association/association-conferences.html'
                     }
                 }
             })
@@ -133,7 +118,7 @@ Associations.config([
                 parent: 'association',
                 views: {
                     'content@association': {
-                        templateUrl: 'film-exchanges.html'
+                        templateUrl: 'app/admin/platform/associations/association/film-exchanges.html'
                     }
                 }
             });

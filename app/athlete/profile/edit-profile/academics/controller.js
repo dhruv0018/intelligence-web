@@ -1,16 +1,10 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-/**
- * EditProfile.Academics page module.
- * @module EditProfile.Academics
- */
-const Academics = angular.module('Athlete.Profile.EditProfile.Academics');
-
 /*
 * EditProfile.Academics dependencies
 */
-AcademicsController.$inject = [
+AthleteProfileEditProfileAcademicsController.$inject = [
     '$scope',
     'UsersFactory',
     'SessionService'
@@ -22,7 +16,7 @@ AcademicsController.$inject = [
  * @name EditProfile.Academics.controller
  * @type {controller}
  */
-function AcademicsController (
+function AthleteProfileEditProfileAcademicsController (
     $scope,
     users,
     session
@@ -30,6 +24,5 @@ function AcademicsController (
     $scope.athlete = session.getCurrentUser();
 }
 
-Academics.controller('Athlete.Profile.EditProfile.Academics.controller', AcademicsController);
 
-export default AcademicsController;
+export default AthleteProfileEditProfileAcademicsController;

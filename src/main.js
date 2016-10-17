@@ -13,22 +13,6 @@ var angular = window.angular;
 /* Extend Angular core */
 require('./extensions');
 
-/* Components */
-require('../build/build');
-
-import Account from '../app/account/index.js';
-import Games from '../app/games/index.js';
-import Reel from '../app/reel/index.js';
-import Embed from '../app/embed/index.js';
-import Header from '../app/header/index.js';
-import Indexer from '../app/indexer/index.js';
-import Styleguide from '../app/styleguide/index.js';
-import Analytics from '../app/analytics/index.js';
-import AllocationSettings from '../app/admin/allocation-settings/index.js';
-import DistributionLog from '../app/admin/distribution-log/index.js';
-import FilmHome from '../app/film-home/index.js';
-import Lib from '../lib';
-
 /* App dependencies */
 require('./config');
 

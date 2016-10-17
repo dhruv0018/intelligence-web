@@ -1,9 +1,8 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const ProfileStatsTemplateUrl = 'app/athlete/profile/stats/template.html';
 
-const templateUrl = 'athlete/profile/stats/template.html';
-
-const template = require('./template.html');
+import AthleteProfileStatsController from './controller';
 
 /**
  * Stats page module.
@@ -16,16 +15,24 @@ const Stats = angular.module('Athlete.Profile.Stats', [
     'no-results'
 ]);
 
-/* Cache the template files */
-Stats.run([
-    '$templateCache',
-    function run($templateCache) {
+/**
+ * Profile.Stats page state router.
+ * @module Profile.Stats
+ * @type {UI-Router}
+ */
+Stats.config([
+    '$stateProvider',
+    function config($stateProvider) {
 
-        $templateCache.put(templateUrl, template);
+        $stateProvider
+
+        .state('Athlete.Profile.Stats', {
+            views: {
+                'stats@Athlete.Profile': {
+                    templateUrl: ProfileStatsTemplateUrl,
+                    controller: AthleteProfileStatsController
+                }
+            }
+        });
     }
 ]);
-
-
-/* File dependencies */
-require('./controller');
-require('./config');

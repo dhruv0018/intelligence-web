@@ -1,9 +1,0 @@
-{
-    "name": "button-video-step-backward",
-    "templates": [
-        "template.html"
-    ],
-    "scripts": [
-        "index.js"
-    ]
-}

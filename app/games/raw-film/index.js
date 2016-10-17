@@ -3,8 +3,6 @@ const angular = window.angular;
 
 const GamesRawFilm = angular.module('Games.RawFilm', []);
 
-import template from './template.html';
-
 GamesRawFilm.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
@@ -15,7 +13,7 @@ GamesRawFilm.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    template,
+                    templateUrl: 'app/games/raw-film/template.html',
                     controller: 'Games.Rawfilm.controller'
                 }
             },

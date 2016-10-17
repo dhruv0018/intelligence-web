@@ -4,10 +4,6 @@ const angular = window.angular;
 import EmbedDataDependencies from './data.js';
 import EmbedController from './controller.js';
 
-import template from './template.html.js';
-import restricted from './restricted.html.js';
-import deleted from './deleted.html.js';
-
 /**
  * Embed module.
  * @module Embed
@@ -49,7 +45,7 @@ Embed.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    template: restricted
+                    templateUrl: 'app/embed/restricted.html'
                 }
             }
         };
@@ -60,7 +56,7 @@ Embed.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    template: deleted
+                    templateUrl: 'app/embed/deleted.html'
                 }
             }
         };
@@ -71,7 +67,7 @@ Embed.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    template,
+                    templateUrl: 'app/embed/template.html',
                     controller: EmbedController
                 }
             },

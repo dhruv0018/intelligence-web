@@ -1,9 +1,9 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-const templateUrl = 'athlete/edit-profile/physical/template.html';
+const AthleteProfileEditProfilePhysicalTemplateUrl = 'app/athlete/profile/edit-profile/physical/template.html';
 
-const template = require('./template.html');
+import AthleteProfileEditProfilePhysicalController from './controller';
 
 /**
  * Physical page module.
@@ -16,15 +16,24 @@ const Physical = angular.module('Athlete.Profile.EditProfile.Physical', [
     'no-results'
 ]);
 
-/* Cache the template files */
-Physical.run([
-    '$templateCache',
-    function run($templateCache) {
+/**
+ * EditProfile.Physical page state router.
+ * @module EditProfile.Physical
+ * @type {UI-Router}
+ */
+Physical.config([
+    '$stateProvider',
+    function config($stateProvider) {
 
-        $templateCache.put(templateUrl, template);
+        $stateProvider
+
+        .state('Athlete.Profile.EditProfile.Physical', {
+            views: {
+                'content@Athlete.Profile.EditProfile': {
+                    templateUrl: AthleteProfileEditProfilePhysicalTemplateUrl,
+                    controller: AthleteProfileEditProfilePhysicalController
+                }
+            }
+        });
     }
 ]);
-
-/* File dependencies */
-require('./controller');
-require('./config');

@@ -1,5 +1,3 @@
-import template from './template.html';
-
 /**
  * Styleguide Colors state config.
  * @module StyleguideColors
@@ -13,7 +11,7 @@ function StyleguideColorsState ($stateProvider) {
 
     const views = {
         'content@Styleguide': {
-            template
+            templateUrl: 'app/styleguide/colors/template.html'
         }
     };
 

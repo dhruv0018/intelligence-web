@@ -1,10 +1,8 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const AthleteProfileAboutTemplateUrl = 'app/athlete/profile/about/template.html';
 
-const templateUrl = 'athlete/profile/about/template.html';
-
-const template = require('./template.html');
-
+import AthleteProfileAboutController from './controller';
 /**
  * About page module.
  * @module About
@@ -16,16 +14,25 @@ const About = angular.module('Athlete.Profile.About', [
     'no-results'
 ]);
 
-/* Cache the template files */
-About.run([
-    '$templateCache',
-    function run($templateCache) {
 
-        $templateCache.put(templateUrl, template);
+/**
+ * Profile.About page state router.
+ * @module Profile.About
+ * @type {UI-Router}
+ */
+About.config([
+    '$stateProvider',
+    function config($stateProvider) {
+
+        $stateProvider
+
+        .state('Athlete.Profile.About', {
+            views: {
+                'about@Athlete.Profile': {
+                    templateUrl: AthleteProfileAboutTemplateUrl,
+                    controller: AthleteProfileAboutController
+                }
+            }
+        });
     }
 ]);
-
-
-/* File dependencies */
-require('./controller');
-require('./config');

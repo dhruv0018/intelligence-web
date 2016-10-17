@@ -1,9 +1,0 @@
-{
-    "name": "humanize",
-    "scripts": [
-        "index.js"
-    ],
-    "dependencies": {
-        "moment/moment": "2.9.0"
-    }
-}

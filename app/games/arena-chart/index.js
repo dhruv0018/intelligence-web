@@ -3,8 +3,6 @@ const angular = window.angular;
 
 const GamesArenaChart = angular.module('Games.ArenaChart', []);
 
-import template from './template.html';
-
 GamesArenaChart.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
@@ -15,7 +13,7 @@ GamesArenaChart.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    template
+                    templateUrl: 'app/games/arena-chart/template.html'
                 }
             },
             resolve: {

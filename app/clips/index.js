@@ -1,6 +1,9 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+const ClipsTemplateUrl = 'app/clips/template.html';
+const ClipsRestrictedTemplateUrl = 'app/clips/restricted.html';
+
 /**
  * Public clips page module.
  * @module Clips
@@ -8,15 +11,6 @@ var angular = window.angular;
 var Clips = angular.module('Clips', [
     'ui.router',
     'ui.bootstrap'
-]);
-
-Clips.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('clips/template.html', require('./template.html'));
-        $templateCache.put('clips/restricted.html', require('./restricted.html'));
-    }
 ]);
 
 Clips.config([
@@ -42,7 +36,7 @@ Clips.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: 'clips/restricted.html'
+                    templateUrl: ClipsRestrictedTemplateUrl
                 }
             }
         };
@@ -53,7 +47,7 @@ Clips.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: 'clips/template.html',
+                    templateUrl: ClipsTemplateUrl,
                     controller: 'Clips.controller'
                 }
             },

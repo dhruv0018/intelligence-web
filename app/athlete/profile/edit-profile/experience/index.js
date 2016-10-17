@@ -1,10 +1,9 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-const templateUrl = 'athlete/edit-profile/experience/template.html';
+const AthleteProfileEditProfileExperienceTemplateUrl = 'app/athlete/profile/edit-profile/experience/template.html';
 
-const template = require('./template.html');
-
+import AthleteProfileEditProfileExperienceController from './controller';
 /**
  * Experience page module.
  * @module Experience
@@ -16,15 +15,24 @@ const Experience = angular.module('Athlete.Profile.EditProfile.Experience', [
     'no-results'
 ]);
 
-/* Cache the template files */
-Experience.run([
-    '$templateCache',
-    function run($templateCache) {
+/**
+ * EditProfile.Experience page state router.
+ * @module EditProfile.Experience
+ * @type {UI-Router}
+ */
+Experience.config([
+    '$stateProvider',
+    function config($stateProvider) {
 
-        $templateCache.put(templateUrl, template);
+        $stateProvider
+
+        .state('Athlete.Profile.EditProfile.Experience', {
+            views: {
+                'content@Athlete.Profile.EditProfile': {
+                    templateUrl: AthleteProfileEditProfileExperienceTemplateUrl,
+                    controller: AthleteProfileEditProfileExperienceController
+                }
+            }
+        });
     }
 ]);
-
-/* File dependencies */
-require('./controller');
-require('./config');

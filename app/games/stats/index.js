@@ -3,8 +3,6 @@ const angular = window.angular;
 
 const GamesStats = angular.module('Games.Stats', []);
 
-import template from './template.html';
-
 GamesStats.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
@@ -15,7 +13,7 @@ GamesStats.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    template,
+                    templateUrl: 'app/games/stats/template.html',
                     controller: 'GamesStats.controller'
                 }
             },

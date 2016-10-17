@@ -1,8 +1,9 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+const CoachTeamTemplateUrl = 'app/coach/coach-team/template.html';
 
-require('roster');
-require('assistants');
+import CoachTeamAssistants from './assistants/index.js';
+import CoachTeamRoster from './roster/index.js';
 
 /**
  * Team page module.
@@ -13,15 +14,6 @@ var Team = angular.module('Coach.Team', [
     'ui.bootstrap',
     'coach-team-roster',
     'coach-team-assistants'
-]);
-
-/* Cache the template file */
-Team.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('coach/team/template.html', require('./template.html'));
-    }
 ]);
 
 /**
@@ -97,7 +89,7 @@ Team.config([
                 },
                 views: {
                     'main@root': {
-                        templateUrl: 'coach/team/template.html'
+                        templateUrl: CoachTeamTemplateUrl
                     }
                 }
             });

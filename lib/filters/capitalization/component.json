@@ -1,9 +1,0 @@
-{
-    "name": "capitalization",
-    "scripts": [
-        "index.js"
-    ],
-    "dependencies": {
-        "moment/moment": "2.9.0"
-    }
-}

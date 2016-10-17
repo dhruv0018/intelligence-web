@@ -3,7 +3,6 @@ const angular = window.angular;
 const GamesSelfEditor = angular.module('Games.SelfEditor', []);
 
 import GamesSelfEditorController from './controller.js';
-import template from './template.html';
 
 GamesSelfEditor.controller('Games.SelfEditor.controller', GamesSelfEditorController);
 
@@ -17,7 +16,7 @@ GamesSelfEditor.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    template,
+                    templateUrl: 'app/games/self-editor/template.html',
                     controller: 'Games.SelfEditor.controller'
                 }
             },

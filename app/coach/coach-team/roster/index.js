@@ -1,5 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+const CoachTeamRosterTemplateUrl = 'app/coach/coach-team/roster/template.html';
+import CoachTeamRosterController from './controller';
 
 /**
  * TeamRoster page module.
@@ -8,15 +10,6 @@ var angular = window.angular;
 var TeamRoster = angular.module('coach-team-roster', [
     'ui.router',
     'ui.bootstrap'
-]);
-
-/* Cache the template file */
-TeamRoster.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('coach/team/roster/template.html', require('./template.html'));
-    }
 ]);
 
 /**
@@ -33,12 +26,10 @@ TeamRoster.config([
             url: '/roster',
             views: {
                 'manager@Coach.Team': {
-                    templateUrl: 'coach/team/roster/template.html',
-                    controller: 'Coach.Team.Roster.controller'
+                    templateUrl: CoachTeamRosterTemplateUrl,
+                    controller: CoachTeamRosterController
                 }
             }
         });
     }
 ]);
-
-require('./controller');

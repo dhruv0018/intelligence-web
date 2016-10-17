@@ -1,9 +1,0 @@
-{
-	"name": "count-label",
-	"templates": [
-		"template.html"
-	],
-	"scripts": [
-		"index.js"
-	]
-}

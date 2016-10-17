@@ -1,5 +1,5 @@
 /* Component resources */
-var template = require('./template.html');
+const RootTemplateUrl = 'app/root/template.html';
 
 /* Fetch angular from the browser scope */
 var angular = window.angular;
@@ -10,14 +10,6 @@ var angular = window.angular;
  */
 var Root = angular.module('root', []);
 
-/* Cache the template file */
-Root.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('root.html', template);
-    }
-]);
 
 Root.config([
     '$stateProvider',
@@ -30,7 +22,7 @@ Root.config([
                 abstract: true,
                 views: {
                     'root': {
-                        templateUrl: 'root.html',
+                        templateUrl: RootTemplateUrl,
                         controller: 'RootController'
                     }
                 }

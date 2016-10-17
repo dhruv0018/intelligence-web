@@ -2,15 +2,9 @@
 const angular = window.angular;
 
 /**
- * Profile.Highlights page module.
- * @module Profile.Highlights
- */
-const Highlights = angular.module('Athlete.Profile.Highlights');
-
-/**
  * Profile.Highlights dependencies
  */
-HighlightsController.$inject = [
+AthleteHighlightsController.$inject = [
     '$scope',
     '$stateParams',
     'config',
@@ -29,7 +23,7 @@ HighlightsController.$inject = [
  * @name Profile.Highlights.controller
  * @type {controller}
  */
-function HighlightsController (
+function AthleteHighlightsController (
     $scope,
     $stateParams,
     config,
@@ -82,6 +76,4 @@ function HighlightsController (
         };
 }
 
-Highlights.controller('Athlete.Profile.Highlights.controller', HighlightsController);
-
-export default HighlightsController;
+export default AthleteHighlightsController;

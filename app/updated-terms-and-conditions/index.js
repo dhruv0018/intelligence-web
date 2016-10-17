@@ -13,17 +13,7 @@ const UpdatedTermsAndConditions = angular.module('UpdatedTermsAndConditions', [
     'ui.bootstrap'
 ]);
 
-const templateUrl = 'updated-terms-and-conditions/template.html';
-const template    = require('./template.html');
-
-/* Cache the template file */
-UpdatedTermsAndConditions.run([
-    '$templateCache',
-    function run ($templateCache) {
-
-        $templateCache.put(templateUrl, template);
-    }
-]);
+const TermsTemplateUrl = 'app/updated-terms-and-conditions/template.html';
 
 /**
  * Terms And Conditions state router. Router for the re-accepting of the Terms
@@ -46,7 +36,7 @@ UpdatedTermsAndConditions.config([
 
                 'root': {
 
-                    templateUrl,
+                    templateUrl: TermsTemplateUrl,
                     controller: UpdatedTermsAndConditionsController
                 }
             }

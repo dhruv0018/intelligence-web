@@ -1,5 +1,3 @@
-import template from './template.html';
-
 /**
  * Styleguide state config.
  * @module Styleguide
@@ -13,7 +11,7 @@ function StyleguideState ($stateProvider) {
 
     const views = {
         'main@root': {
-            template
+            templateUrl: 'app/styleguide/template.html'
         }
     };
 

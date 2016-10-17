@@ -1,5 +1,8 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+const CoachFilmHomeTemplateUrl  = 'app/coach/film-home/template.html';
+
+import CoachFilmHomeController from './controller';
 
 /**
  * FilmHome page module.
@@ -11,15 +14,6 @@ var FilmHome = angular.module('Coach.FilmHome', [
     'coach-info',
     'film',
     'no-results'
-]);
-
-/* Cache the template files */
-FilmHome.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('coach/film-home/template.html', require('./template.html'));
-    }
 ]);
 
 /**
@@ -41,8 +35,8 @@ FilmHome.config([
             url: '/film-home',
             views: {
                 'main@root': {
-                    templateUrl: 'coach/film-home/template.html',
-                    controller: 'Coach.FilmHome.controller'
+                    templateUrl: CoachFilmHomeTemplateUrl,
+                    controller: CoachFilmHomeController
                 }
             },
             resolve: {
@@ -57,6 +51,3 @@ FilmHome.config([
         });
     }
 ]);
-
-/* File dependencies */
-require('./controller');

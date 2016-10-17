@@ -3,8 +3,6 @@ const angular = window.angular;
 
 const GamesFormations = angular.module('Games.Formations', []);
 
-import template from './template.html';
-
 GamesFormations.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
@@ -15,7 +13,7 @@ GamesFormations.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    template,
+                    templateUrl: 'app/games/formations/template.html',
                     controller: 'GamesFormations.controller'
                 }
             },

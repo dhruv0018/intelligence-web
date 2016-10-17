@@ -2,12 +2,6 @@
 var angular = window.angular;
 
 /**
- * Indexing page module.
- * @module Indexing
- */
-var Indexing = angular.module('Indexing');
-
-/**
  * Indexing playlist sidebar controller.
  * @module Indexing
  * @name Sidebar.Playlist.Controller
@@ -64,4 +58,4 @@ function IndexingSidebarPlaylistController(
     }
 }
 
-Indexing.controller('Indexing.Sidebar.Playlist.Controller', IndexingSidebarPlaylistController);
+export default IndexingSidebarPlaylistController;

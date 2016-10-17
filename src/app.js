@@ -2,6 +2,9 @@ var pkg = require('../package.json');
 
 var templates = require('../build/templates.js');
 
+import App from '../app';
+import Lib from '../lib';
+
 let host = window.location.host;
 
 if (host === 'new.krossover.com') {

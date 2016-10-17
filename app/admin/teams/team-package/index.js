@@ -1,25 +1,12 @@
-/* Component resources */
-var template = require('./template.html');
-
-/* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Team Package page module.
  * @module Team Package
  */
-var TeamPackage = angular.module('team-package', [
+const TeamPackage = angular.module('team-package', [
     'ui.router',
     'ui.bootstrap'
-]);
-
-/* Cache the template file */
-TeamPackage.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('app/admin/teams/team-package/team-package.html', template);
-    }
 ]);
 
 /**
@@ -70,3 +57,5 @@ TeamPackage.controller('TeamPackageController', [
         };
     }
 ]);
+
+export default TeamPackage;

@@ -1,16 +1,10 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-/**
- * EditProfile.Experience page module.
- * @module EditProfile.Experience
- */
-const Experience = angular.module('Athlete.Profile.EditProfile.Experience');
-
 /*
 * EditProfile.Experience dependencies
 */
-ExperienceController.$inject = [
+AthleteProfileEditProfileExperienceController.$inject = [
     '$scope',
     '$filter',
     'TeamsFactory',
@@ -29,7 +23,7 @@ ExperienceController.$inject = [
  * @name EditProfile.Experience.controller
  * @type {controller}
  */
-function ExperienceController (
+function AthleteProfileEditProfileExperienceController (
     $scope,
     $filter,
     teams,
@@ -85,6 +79,4 @@ function ExperienceController (
     };
 }
 
-Experience.controller('Athlete.Profile.EditProfile.Experience.controller', ExperienceController);
-
-export default ExperienceController;
+export default AthleteProfileEditProfileExperienceController;

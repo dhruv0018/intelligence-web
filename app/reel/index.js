@@ -4,9 +4,6 @@ const angular = window.angular;
 import ReelDataDependencies from './data.js';
 import ReelController from './controller.js';
 
-import template from './template.html.js';
-import restricted from './restricted.html.js';
-
 /**
  * Reel module.
  * @module Reel
@@ -48,7 +45,7 @@ Reel.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    template: restricted
+                    templateUrl: 'app/reel/restricted.html'
                 }
             }
         };
@@ -59,7 +56,7 @@ Reel.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    template,
+                    templateUrl: 'app/reel/template.html',
                     controller: ReelController
                 }
             },

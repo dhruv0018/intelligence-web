@@ -1,10 +1,8 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const AthleteProfileAcademicsTemplateUrl = 'app/athlete/profile/academics/template.html';
 
-const templateUrl = 'athlete/profile/academics/template.html';
-
-const template = require('./template.html');
-
+import AthleteProfileAcademicsController from './controller';
 /**
  * Academics page module.
  * @module Academics
@@ -16,16 +14,24 @@ const Academics = angular.module('Athlete.Profile.Academics', [
     'no-results'
 ]);
 
-/* Cache the template files */
-Academics.run([
-    '$templateCache',
-    function run($templateCache) {
+/**
+ * Profile.Academics page state router.
+ * @module Profile.Academics
+ * @type {UI-Router}
+ */
+Academics.config([
+    '$stateProvider',
+    function config($stateProvider) {
 
-        $templateCache.put(templateUrl, template);
+        $stateProvider
+
+        .state('Athlete.Profile.Academics', {
+            views: {
+                'academics@Athlete.Profile': {
+                    templateUrl: AthleteProfileAcademicsTemplateUrl ,
+                    controller: AthleteProfileAcademicsController
+                }
+            }
+        });
     }
 ]);
-
-
-/* File dependencies */
-require('./controller');
-require('./config');

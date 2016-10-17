@@ -1,11 +1,9 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Profile.Stats page module.
- * @module Profile.Stats
- */
-var Stats = angular.module('Athlete.Profile.Stats');
+AthleteProfileStatsController.$inject = [
+    '$scope'
+];
 
 /**
  * Profile.Stats controller.
@@ -13,9 +11,9 @@ var Stats = angular.module('Athlete.Profile.Stats');
  * @name Profile.Stats.controller
  * @type {controller}
  */
-Stats.controller('Athlete.Profile.Stats.controller', [
-    '$scope',
-    function controller($scope) {
 
-    }
-]);
+function AthleteProfileStatsController($scope) {
+
+}
+
+export default AthleteProfileStatsController;

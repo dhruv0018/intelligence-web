@@ -1,5 +1,3 @@
-import template from './template.html';
-
 /**
  * Styleguide Typography state config.
  * @module StyleguideTypography
@@ -13,7 +11,7 @@ function StyleguideTypographyState ($stateProvider) {
 
     const views = {
         'content@Styleguide': {
-            template
+            templateUrl: 'app/styleguide/typography/template.html'
         }
     };
 

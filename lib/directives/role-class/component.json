@@ -1,7 +1,0 @@
-{
-	"name": "role-class",
-	"scripts": [
-		"index.js",
-        "controller.js"
-	]
-}

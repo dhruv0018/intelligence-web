@@ -1,25 +1,12 @@
-/* Component resources */
-var template = require('./template.html');
-
-/* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Team Plan page module.
  * @module team Plan
  */
-var TeamPlan = angular.module('team-plan', [
+const TeamPlan = angular.module('team-plan', [
     'ui.router',
     'ui.bootstrap'
-]);
-
-/* Cache the template file */
-TeamPlan.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('app/admin/teams/team-plan/team-plan.html', template);
-    }
 ]);
 
 /**
@@ -94,3 +81,5 @@ TeamPlan.controller('TeamPlanController', [
 
     }
 ]);
+
+export default TeamPlan;

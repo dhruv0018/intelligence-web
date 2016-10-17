@@ -276,94 +276,24 @@ module.exports = function(grunt) {
               }
           },
           src: [
-                'app/account/*.html',
-                'app/account/**/*.html',
-                'app/admin/distribution-log/*.html',
-                'app/admin/allocation-settings/**/*.html',
-                'app/film-home/*.html',
-                'app/film-home/games/**/*.html',
-                'app/film-home/reels/*.html',
-                'app/header/*.html',
-                'lib/directives/wsc-link/*.html'
+                'app/**/*.html',
+                'lib/dialogs/**/*.html',
+                'lib/directives/**/*.html',
+                'lib/modals/**/*.html',
+                'lib/features/**/*.html'
           ],
           dest: 'build/templates.js'
           }
-        },
-        /* Build process - JS */
-
-        componentbuild: {
-            install: {
-                options: {
-                    install: true
-                },
-                src: '.',
-                dest: './build'
-            },
-            files: {
-                options: {
-                    copy: true,
-                    scripts: false,
-                    styles: false,
-                    files: true
-                },
-                src: '.',
-                dest: './build/assets'
-            },
-            dev: {
-                options: {
-                    development: false,
-                    standalone: true,
-                    require: true,
-                    verbose: true,
-                    copy: false,
-                    scripts: true,
-                    styles: false,
-                    files: false
-                },
-                src: '.',
-                dest: './build'
-            },
-            prod: {
-                options: {
-                    development: false,
-                    standalone: true,
-                    require: true,
-                    verbose: true,
-                    copy: false,
-                    scripts: true,
-                    styles: false,
-                    files: false
-                },
-                src: '.',
-                dest: './build'
-            },
-            buildserver: {
-                options: {
-                    development: false,
-                    standalone: true,
-                    require: true,
-                    verbose: true,
-                    copy: false,
-                    scripts: true,
-                    styles: false,
-                    files: false
-                },
-                src: '.',
-                dest: './build'
-            }
         },
 
         browserify: {
             dev: {
                 options: {
-                    transform: [es6ify],
-                    bundleOptions: {
-                        debug: true,
-                    },
-                    //watch : true, // use watchify for incremental builds!
-                    // keepAlive : true, // watchify will exit unless task is kept alive
                     browserifyOptions: {
-                        noParse: ['./build/build.js']
+                        debug: true,
+                        paths: ['./node_modules', './components'],
+                        transform: [es6ify],
+                        noParse: ['./build/templates.js']
                     }
                 },
                 files: {
@@ -586,13 +516,9 @@ module.exports = function(grunt) {
                 files: ['package.json'],
                 tasks: ['install', 'dev', 'notify:build']
             },
-            componentjson: {
-                files: ['component.json'],
-                tasks: ['componentbuild:install', 'dev', 'notify:build']
-            },
             config: {
                 files: ['config/*.json', 'app/**/*.json', 'lib/**/*.json'],
-                tasks: ['componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             index: {
                 files: ['src/index.html'],
@@ -600,7 +526,7 @@ module.exports = function(grunt) {
             },
             html: {
                 files: ['app/**/*.html', 'lib/**/*.html'],
-                tasks: ['newer:htmlhint', 'ngtemplates', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:htmlhint', 'ngtemplates', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             css: {
                 files: ['app/**/*.css', 'lib/**/*.css'],
@@ -620,7 +546,7 @@ module.exports = function(grunt) {
             },
             components: {
                 files: ['app/**/*.js', 'lib/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'componentbuild:dev', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'browserify:dev', 'copy:dev', 'copy:build', 'manifests', 'notify:build']
             },
             unit: {
                 files: ['test/unit/**/*.js', '!test/unit/helpers/**/*.js'],
@@ -690,7 +616,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', [
         'env:test',
-        'componentbuild:prod',
         'ngtemplates',
         'browserify:prod',
         'ngAnnotate',
@@ -703,7 +628,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dev', [
         'env:dev',
-        'componentbuild:dev',
         'ngtemplates',
         'browserify:dev',
         'copy:theme-vendor',
@@ -712,7 +636,6 @@ module.exports = function(grunt) {
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
-        'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
         'copy:dev',
@@ -724,7 +647,6 @@ module.exports = function(grunt) {
     grunt.registerTask('qa', [
         'clean',
         'env:qa',
-        'componentbuild:prod',
         'ngtemplates',
         'browserify:prod',
         'ngAnnotate',
@@ -734,7 +656,6 @@ module.exports = function(grunt) {
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
-        'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
         'copy:dev',
@@ -749,7 +670,6 @@ module.exports = function(grunt) {
     grunt.registerTask('uat', [
         'clean',
         'env:uat',
-        'componentbuild:prod',
         'ngtemplates',
         'browserify:prod',
         'ngAnnotate',
@@ -759,7 +679,6 @@ module.exports = function(grunt) {
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
-        'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
         'copy:dev',
@@ -774,7 +693,6 @@ module.exports = function(grunt) {
     grunt.registerTask('buildserver', [
         'clean',
         'env:buildserver',
-        'componentbuild:prod',
         'ngtemplates',
         'browserify:prod',
         'ngAnnotate',
@@ -784,7 +702,6 @@ module.exports = function(grunt) {
         'grunticon',
         'concat:unprefixed',
         'autoprefixer',
-        'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
         'copy:dev',
@@ -800,7 +717,6 @@ module.exports = function(grunt) {
     grunt.registerTask('prod', [
         'clean',
         'env:prod',
-        'componentbuild:prod',
         'ngtemplates',
         'browserify:prod',
         'ngAnnotate',
@@ -813,7 +729,6 @@ module.exports = function(grunt) {
         'autoprefixer',
         'cssmin',
         'htmlmin',
-        'componentbuild:files',
         'copy:theme-assets',
         'copy:assets',
         'copy:build',

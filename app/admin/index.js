@@ -1,25 +1,25 @@
-require('users');
-require('teams');
-require('schools');
-require('queue');
-require('platform');
-require('film-exchange');
-require('conferences');
+import AllocationSettings from './allocation-settings';
+import Conferences from './conferences';
+import DistributionLog from './distribution-log';
+import Platform from './platform';
+import Queue from './queue';
+import Schools from './schools';
+import Teams from './teams';
+import Users from './users';
 
 /* Fetch angular from the browser scope */
-var angular = window.angular;
+const angular = window.angular;
 
 /**
  * Admin module.
  * @module Admin
  */
-var Admin = angular.module('Admin', [
+const Admin = angular.module('Admin', [
     'Users',
     'teams',
     'schools',
     'queue',
     'platform',
-    'filmExchange',
     'Conferences',
     'AllocationSettings',
     'DistributionLog'
@@ -34,7 +34,7 @@ Admin.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
 
-        var admin = {
+        const admin = {
             name: 'admin',
             url: '/admin',
             parent: 'base',
@@ -44,3 +44,5 @@ Admin.config([
         $stateProvider.state(admin);
     }
 ]);
+
+export default Admin;

@@ -43,7 +43,7 @@
                        data-typeahead-min-length="3"
                        data-typeahead-focus-first="false"
                        data-typeahead-loading="loading"
-                       data-typeahead-template-url="school-dropdown-input.html"
+                       data-typeahead-template-url="app/admin/teams/school-dropdown-input.html"
                        data-typeahead="school.name for school in findSchoolsByName() | filter: {name: $viewValue}"
                        data-typeahead-on-select="schoolSelected($item)">
                 <krossover-spinner ng-if="loading" size="25px"></krossover-spinner>

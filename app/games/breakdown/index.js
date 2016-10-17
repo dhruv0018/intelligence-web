@@ -3,8 +3,6 @@ const angular = window.angular;
 
 const GamesBreakdown = angular.module('Games.Breakdown', []);
 
-import template from './template.html';
-
 GamesBreakdown.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
@@ -15,7 +13,7 @@ GamesBreakdown.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    template,
+                    templateUrl: 'app/games/breakdown/template.html',
                     controller: 'Games.Breakdown.controller'
                 }
             },

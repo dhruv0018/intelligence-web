@@ -1,16 +1,10 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-/**
- * EditProfile.BasicInfo page module.
- * @module EditProfile.BasicInfo
- */
-const BasicInfo = angular.module('Athlete.Profile.EditProfile.BasicInfo');
-
 /*
 * EditProfile.BasicInfo dependencies
 */
-BasicInfoController.$inject = [
+AthleteProfileEditProfileBasicInfoController.$inject = [
     '$scope',
     '$http',
     '$timeout',
@@ -28,7 +22,7 @@ BasicInfoController.$inject = [
  * @name EditProfile.BasicInfo.controller
  * @type {controller}
  */
-function BasicInfoController (
+function AthleteProfileEditProfileBasicInfoController (
     $scope,
     $http,
     $timeout,
@@ -100,6 +94,4 @@ function BasicInfoController (
     };
 }
 
-BasicInfo.controller('Athlete.Profile.EditProfile.BasicInfo.controller', BasicInfoController);
-
-export default BasicInfoController;
+export default AthleteProfileEditProfileBasicInfoController;

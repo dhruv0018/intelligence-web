@@ -5,7 +5,6 @@ const TeamAnalytics = angular.module('TeamAnalytics', []);
 /* Module imports */
 import AnalyticsDataDependencies from '../data';
 import TeamAnalyticsController from './controller';
-import template from './template.html';
 
 TeamAnalytics.factory('AnalyticsDataDependencies', AnalyticsDataDependencies);
 TeamAnalytics.controller('TeamAnalyticsController', TeamAnalyticsController);
@@ -26,7 +25,7 @@ TeamAnalytics.config([
             parent: 'Analytics',
             views: {
                 'main@root': {
-                    template,
+                    templateUrl: 'app/analytics/team/template.html',
                     controller: TeamAnalyticsController
                 }
             },

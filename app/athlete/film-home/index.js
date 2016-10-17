@@ -1,6 +1,10 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+import AthleteFilmHomeController from './controller';
+
+/* Template paths */
+const AthleteFilmHomeTemplateUrl = 'app/athlete/film-home/template.html';
 /**
  * FilmHome page module.
  * @module FilmHome
@@ -10,15 +14,6 @@ var FilmHome = angular.module('Athlete.FilmHome', [
     'ui.bootstrap',
     'film',
     'no-results'
-]);
-
-/* Cache the template files */
-FilmHome.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('athlete/film-home/template.html', require('./template.html'));
-    }
 ]);
 
 /**
@@ -36,8 +31,8 @@ FilmHome.config([
             url: '/film-home',
             views: {
                 'main@root': {
-                    templateUrl: 'athlete/film-home/template.html',
-                    controller: 'Athlete.FilmHome.controller'
+                    templateUrl: AthleteFilmHomeTemplateUrl,
+                    controller: AthleteFilmHomeController
                 }
             },
             resolve: {
@@ -102,6 +97,3 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
         return Data;
     }
 ]);
-
-/* File dependencies */
-require('./controller');

@@ -1,6 +1,7 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 const ITEMSPERPAGE = 10; //25
+const FilmExchangeTemplateUrl = 'app/film-exchange/film-exchange.html';
 
 /**
  * Film Exchange page module.
@@ -11,14 +12,6 @@ var FilmExchange = angular.module('filmExchange', [
     'ui.bootstrap',
     'ui.unique',
     'ui.showhide'
-]);
-
-/* Cache the template file */
-FilmExchange.run([
-    '$templateCache',
-    function run($templateCache) {
-        $templateCache.put('film-exchange.html', require('./film-exchange.html'));
-    }
 ]);
 
 /**
@@ -35,7 +28,7 @@ FilmExchange.config([
             parent: 'base',
             views: {
                 'main@root': {
-                    templateUrl: 'film-exchange.html',
+                    templateUrl: FilmExchangeTemplateUrl,
                     controller: 'FilmExchangeController'
                 }
             },
@@ -352,3 +345,5 @@ FilmExchange.controller('FilmExchangeController', [
         }
     }
 ]);
+
+export default FilmExchange;

@@ -1,9 +1,0 @@
-{
-    "name": "lacrosse-mens-outdoor-arena",
-    "templates": [
-        "template.html"
-    ],
-    "scripts": [
-        "index.js"
-    ]
-}

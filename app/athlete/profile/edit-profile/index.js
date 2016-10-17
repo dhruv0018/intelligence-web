@@ -1,16 +1,16 @@
 /* Component dependencies */
-require('basic-info');
-require('academics');
-require('experience');
-require('physical');
-require('contact');
+import AthleteProfileEditProfileContact from './contact/index.js';
+import AthleteProfileEditProfilePhysical from './physical/index.js';
+import AthleteProfileEditProfileExperience from './experience/index.js';
+import AthleteProfileEditProfileBasciInfo from './basic-info/index.js';
+import AthleteProfileEditProfileAcademics from './academics/index.js';
+
+import AthleteProfileEditProfileController from './controller';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
+const AthleteProfileEditProfileTemplateUrl = 'app/athlete/profile/edit-profile/template.html';
 
-const templateUrl = 'athlete/edit-profile/template.html';
-
-const template = require('./template.html');
 
 /**
  * Edit Profile page module.
@@ -26,15 +26,6 @@ const EditProfile = angular.module('Athlete.Profile.EditProfile', [
     'ui.bootstrap',
     'ngMaterial',
     'no-results'
-]);
-
-/* Cache the template files */
-EditProfile.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put(templateUrl, template);
-    }
 ]);
 
 /**
@@ -65,6 +56,34 @@ EditProfile.service('Athlete.Profile.EditProfile.Data.Dependencies', [
     }
 ]);
 
-/* File dependencies */
-require('./config');
-require('./controller');
+/**
+ * Edit Profile page state router.
+ * @module Edit Profile
+ * @type {UI-Router}
+ */
+EditProfile.config([
+    '$stateProvider', '$urlRouterProvider',
+    function config($stateProvider, $urlRouterProvider) {
+
+        $stateProvider
+
+        .state('Athlete.Profile.EditProfile', {
+            url: '/edit-profile',
+            abstract: true,
+            views: {
+                'main@root': {
+                    templateUrl: AthleteProfileEditProfileTemplateUrl,
+                    controller: AthleteProfileEditProfileController
+                }
+            },
+            resolve: {
+                'Athlete.Profile.EditProfile.Data': [
+                    '$q', 'Athlete.Profile.EditProfile.Data.Dependencies',
+                    function($q, data) {
+                        return $q.all(data);
+                    }
+                ]
+            }
+        });
+    }
+]);

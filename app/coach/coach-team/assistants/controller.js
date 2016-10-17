@@ -1,46 +1,52 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
-/**
- * Team page module.
- * @module Team
- */
-var TeamRoster = angular.module('coach-team-assistants');
+CoachTeamAssistantsController.$inject = [
+    '$rootScope',
+    '$scope',
+    '$state',
+    '$stateParams',
+    '$filter',
+    'config',
+    'ROLES',
+    'PlayersFactory',
+    'UsersFactory',
+    'TeamsFactory',
+    'LeaguesFactory',
+    'SessionService'
+];
 
 /**
  * TeamRoster controller.
  * @module Team
- * @name Team.controller
+ * @name CoachTeamAssistantsController
  * @type {controller}
  */
-TeamRoster.controller('Coach.Team.Assistants.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'config', 'ROLES', 'PlayersFactory', 'UsersFactory', 'TeamsFactory', 'LeaguesFactory', 'SessionService',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, config, ROLES, players, users, teams, leagues, session) {
-        $scope.ROLES = ROLES;
-        $scope.HEAD_COACH = ROLES.HEAD_COACH;
-        $scope.config = config;
-        $scope.playersFactory = players;
-        $scope.usersFactory = users;
+function CoachTeamAssistantsController($rootScope, $scope, $state, $stateParams, $filter, config, ROLES, players, users, teams, leagues, session) {
+    $scope.ROLES = ROLES;
+    $scope.HEAD_COACH = ROLES.HEAD_COACH;
+    $scope.config = config;
+    $scope.playersFactory = players;
+    $scope.usersFactory = users;
 
-        //Collections
-        $scope.teams = teams.getCollection();
-        $scope.leagues = leagues.getCollection();
-        $scope.users = users.getCollection();
+    //Collections
+    $scope.teams = teams.getCollection();
+    $scope.leagues = leagues.getCollection();
+    $scope.users = users.getCollection();
 
-        $scope.team = teams.get(session.currentUser.currentRole.teamId);
+    $scope.team = teams.get(session.currentUser.currentRole.teamId);
 
-        const ACTIVE = true;
-        $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, ACTIVE);
-        $scope.assistantCoaches = $scope.assistantCoaches.concat(users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, !ACTIVE));
+    const ACTIVE = true;
+    $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, ACTIVE);
+    $scope.assistantCoaches = $scope.assistantCoaches.concat(users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, !ACTIVE));
 
-        //toggles between assistant views
-        $scope.filtering = [
-            {type: 'active'},
-            {type: 'inactive'}
-        ];
+    //toggles between assistant views
+    $scope.filtering = [
+        {type: 'active'},
+        {type: 'inactive'}
+    ];
 
-        $scope.displayFilter = $scope.filtering[0];
-    }
-]);
+    $scope.displayFilter = $scope.filtering[0];
+}
 
-require('./controller');
+export default CoachTeamAssistantsController;

@@ -388,20 +388,6 @@
     "Coach.Team.Assistants": {
         "Head Coach": true
     },
-    "Coach.Team.Info": {
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "Coach.Team.Info.Information": {
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
-    "Coach.Team.Info.Plans": {
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
 
     "Coach.Team.All": {
 

@@ -1,6 +1,0 @@
-{
-    "name": "verify-password",
-    "scripts": [
-        "index.js"
-    ]
-}

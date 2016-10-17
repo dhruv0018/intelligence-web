@@ -5,8 +5,6 @@ const GamesDownAndDistance = angular.module('Games.DownAndDistance', [
     'am.multiselect'
 ]);
 
-import template from './template.html';
-
 GamesDownAndDistance.config([
     '$stateProvider', '$urlRouterProvider',
     function config($stateProvider, $urlRouterProvider) {
@@ -17,7 +15,7 @@ GamesDownAndDistance.config([
             parent: 'Games',
             views: {
                 'gameView@Games': {
-                    template,
+                    templateUrl: 'app/games/down-and-distance/template.html',
                     controller: 'GamesDownAndDistance.controller'
                 }
             },

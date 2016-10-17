@@ -1,9 +1,7 @@
-/* File dependencies. */
-require('./game.js');
-var moment = require('moment');
+const moment = require('moment');
+const angular = window.angular;
 
-/* Fetch angular from the browser scope */
-var angular = window.angular;
+import Game from './game';
 
 /**
  * Queue page module.
@@ -13,16 +11,6 @@ var Queue = angular.module('queue', [
     'ui.router',
     'ui.bootstrap',
     'game'
-]);
-
-/* Cache the template file */
-Queue.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('queue.html', require('./queue.html'));
-        $templateCache.put('select-indexer.html', require('./select-indexer.html'));
-    }
 ]);
 
 /**
@@ -95,7 +83,7 @@ Queue.config([
                 parent: 'base',
                 views: {
                     'main@root': {
-                        templateUrl: 'queue.html',
+                        templateUrl: 'app/admin/queue/queue.html',
                         controller: 'QueueController'
                     }
                 },
@@ -109,28 +97,6 @@ Queue.config([
                     ]
                 }
             });
-    }
-]);
-
-/**
- * Modal controller. Controls the modal views.
- * @module Queue
- * @name ModalController
- * @type {Controller}
- */
-Queue.controller('ModalController', [
-    '$rootScope', '$scope', '$state', '$modal', '$modalInstance', 'ROLE_TYPE', 'GAME_STATUS_IDS', 'GAME_STATUSES', 'GamesFactory', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $modal, $modalInstance, ROLE_TYPE, GAME_STATUS_IDS, GAME_STATUSES, games, sports, leagues, teams, users) {
-
-        $scope.ok = function() {
-
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function() {
-
-            $modalInstance.dismiss('cancel');
-        };
     }
 ]);
 
@@ -307,3 +273,5 @@ function QueueController (
         });
     };
 }
+
+export default Queue;

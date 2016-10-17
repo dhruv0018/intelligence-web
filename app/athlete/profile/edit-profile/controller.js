@@ -1,16 +1,10 @@
 /* Fetch angular from the browser scope */
 const angular = window.angular;
 
-/**
- * Edit Profile page module.
- * @module Edit Profile
- */
-const EditProfile = angular.module('Athlete.Profile.EditProfile');
-
 /*
 * Edit Profile dependencies
 */
-EditProfileController.$inject = [
+AthleteProfileEditProfileController.$inject = [
     '$scope',
     '$state',
     'UsersFactory',
@@ -24,7 +18,7 @@ EditProfileController.$inject = [
  * @name EditProfile.controller
  * @type {controller}
  */
-function EditProfileController (
+function AthleteProfileEditProfileController (
     $scope,
     $state,
     users,
@@ -34,6 +28,5 @@ function EditProfileController (
     $scope.athlete = session.getCurrentUser();
 }
 
-EditProfile.controller('Athlete.Profile.EditProfile.controller', EditProfileController);
 
-export default EditProfileController;
+export default AthleteProfileEditProfileController;

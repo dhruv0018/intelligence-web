@@ -1,31 +1,20 @@
-require('leagues');
-require('new-plan');
-require('associations');
-var moment = require('moment');
+import Leagues from './leagues';
+import NewPlan from './new-plan';
+import Associations from './associations';
 
-/* Fetch angular from the browser scope */
-var angular = window.angular;
+const moment = require('moment');
+const angular = window.angular;
 
 /**
  * Platform module.
  * @module Platform
  */
-var Platform = angular.module('platform', [
+const Platform = angular.module('platform', [
     'ui.router',
     'ui.bootstrap',
     'leagues',
     'new-plan',
     'associations'
-]);
-
-/* Cache the template file */
-Platform.run([
-    '$templateCache',
-    function run($templateCache) {
-
-        $templateCache.put('platform.html', require('./platform.html'));
-        $templateCache.put('plan-defaults.html', require('./plan-defaults.html'));
-    }
 ]);
 
 /**
@@ -45,7 +34,7 @@ Platform.config([
                 abstract: true,
                 views: {
                     'main@root': {
-                        templateUrl: 'platform.html',
+                        templateUrl: 'app/admin/platform/platform.html',
                         controller: 'PlatformController'
                     }
                 },
@@ -64,7 +53,7 @@ Platform.config([
                 parent: 'platform',
                 views: {
                     'content@platform': {
-                        templateUrl: 'plan-defaults.html'
+                        templateUrl: 'app/admin/platform/plan-defaults.html'
                     }
                 }
             });
@@ -155,3 +144,5 @@ Platform.controller('PlatformController', [
         };
     }
 ]);
+
+export default Platform;

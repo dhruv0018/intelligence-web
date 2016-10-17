@@ -4,7 +4,6 @@ const IndexerHistory = angular.module('IndexerHistory', []);
 
 import IndexerDataDependencies from '../data';
 import controller from './controller';
-import template from './template.html';
 
 IndexerHistory.factory('IndexerDataDependencies', IndexerDataDependencies);
 
@@ -19,7 +18,7 @@ IndexerHistory.config([
                 parent: 'Indexer',
                 views: {
                     'main@root': {
-                        template,
+                        templateUrl: 'app/indexer/indexer-history/template.html',
                         controller
                     }
                 },
