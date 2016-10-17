@@ -265,8 +265,21 @@ IntelligenceWebClient.service('PlaysManager', [
                 }
 
                 /* Consider the first team to take possession in a play to have
-                 * possession for the remainder of the play. */
-                if (!play.possessionTeamId) play.possessionTeamId = teamId;
+                 * possession for the remainder of the play except for four soccer events. */
+                if (!play.possessionTeamId) {
+                    let tag = event.tagId;
+
+                    // TODO: This is a temporary workaround solution to non posession sports displaying
+                    // the correct team in the play header. Handles Throw-In, Goal Kick, Kickoff, and Restart
+                    // events for soccer.
+
+                    if(tag == 268 || tag == 269 || tag == 270 || tag == 271) {
+                        play.possessionTeamId = event.fields[2]._value.teamId;
+                    }
+                    else {
+                        play.possessionTeamId = teamId;
+                    }
+                }
 
                 // If the sport is scored by sets and a set won tag is encountered,
                 // increment the proper team's indexed score.
