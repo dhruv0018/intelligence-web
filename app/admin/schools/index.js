@@ -126,8 +126,8 @@ Schools.controller('SchoolController', [
  * @type {Controller}
  */
 Schools.controller('SchoolsController', [
-    '$rootScope', '$scope', '$state', 'SchoolsFactory', 'AdminSearchService',
-    function controller($rootScope, $scope, $state, schools, searchService) {
+    '$rootScope', '$scope', '$state', '$q', 'SchoolsFactory', 'AdminSearchService',
+    function controller($rootScope, $scope, $state, $q, schools, searchService) {
 
         $scope.schools = [];
         $scope.filter = searchService.schools.filter;
@@ -141,14 +141,30 @@ Schools.controller('SchoolsController', [
             $scope.searching = true;
             $scope.schools.length = 0;
 
-            $scope.query = schools.query(filter).then(function(schools) {
+            if (filter.id) {
+                let deferred = $q.defer();
+                $state.query = deferred.promise;
 
-                $scope.schools = schools;
+                schools.load(filter.id)
+                .then(function() {
+                    $state.go('school-info', { id: filter.id });
+                })
+                .finally(function() {
+                    $scope.schools = [];
+                    $scope.searching = false;
+                    deferred.resolve();
+                });
+            }
+            else {
+                $scope.query = schools.query(filter).then(function(schools) {
 
-            }).finally(function() {
+                    $scope.schools = schools;
 
-                $scope.searching = false;
-            });
+                }).finally(function() {
+
+                    $scope.searching = false;
+                });
+            }
         };
 
         $scope.clearSearchFilter = function() {

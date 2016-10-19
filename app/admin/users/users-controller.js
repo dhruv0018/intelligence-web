@@ -14,8 +14,8 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.Users.Controller', [
-    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'AccountService', 'ROLES', 'Admin.Users.Data', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory', 'AdminSearchService',
-    function controller($rootScope, $scope, $state, $modal, $stateParams, session, account, ROLES, data, sports, leagues, teams, users, searchService) {
+    '$rootScope', '$scope', '$state', '$q', '$modal', '$stateParams', 'SessionService', 'AccountService', 'ROLES', 'Admin.Users.Data', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory', 'AdminSearchService',
+    function controller($rootScope, $scope, $state, $q, $modal, $stateParams, session, account, ROLES, data, sports, leagues, teams, users, searchService) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
@@ -42,14 +42,30 @@ Users.controller('Users.Users.Controller', [
             $scope.searching = true;
             $scope.users.length = 0;
 
-            $scope.query = users.search(filter).then(function(users) {
+            if (filter.id) {
+                let deferred = $q.defer();
+                $scope.query = deferred.promise;
 
-                $scope.users = users;
+                users.load(filter.id)
+                .then(function() {
+                    $state.go('user-info', { id: filter.id});
+                })
+                .finally(function() {
+                    $scope.teams = [];
+                    $scope.searching = false;
+                    deferred.resolve();
+                });
+            }
+            else {
+                $scope.query = users.search(filter).then(function(users) {
 
-            }).finally(function() {
+                    $scope.users = users;
 
-                $scope.searching = false;
-            });
+                }).finally(function() {
+
+                    $scope.searching = false;
+                });
+            }
         };
 
         $scope.clearSearchFilter = function() {

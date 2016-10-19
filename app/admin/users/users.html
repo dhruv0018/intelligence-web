@@ -12,6 +12,10 @@
         <form role="form" data-ng-submit="search(filter)">
 
             <div class="form-group">
+                <input id="search-user-id-cta" class="form-control" placeholder="User ID" data-ng-model="filter.id" type="number">
+            </div>
+
+            <div class="form-group">
                 <input id="search-user-email-cta" class="form-control" placeholder="Email" data-ng-model="filter.email" type="text">
             </div>
 
@@ -49,63 +53,137 @@
     </aside>
 
     <div class="list" data-ng-class="{nosidebar: !sidebar}" data-ng-show="users.length">
-
         <div class="table-responsive">
+            <div>
+                <table class="table table-striped table-hover fixed-header">
+                    <!-- Hidden table body for the purpose of spacing fixed header cells above to match the visible
+                          table below -->
+                    <tbody>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Last Signed In</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
 
-            <table class="table table-striped table-hover">
+                        <tr class="hidden-cell" data-ng-repeat="user in users | rolesFilter: filter track by user.id">
 
-                <tbody>
+                            <td>{{user.id}}</td>
 
-                    <tr data-ng-repeat="user in users | rolesFilter: filter track by user.id">
+                            <td><div class="email">{{user.email}}</div></td>
 
-                        <td><div class="email">{{user.email}}</div></td>
+                            <td><div class="name"><a data-ui-sref="user-roles({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></div></td>
 
-                        <td><div class="name"><a id="user-select-cta-user-{{$index}}" data-ui-sref="user-roles({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></div></td>
+                            <td class="roles">
 
-                        <td class="roles">
+                                <ul>
 
-                            <ul>
+                                    <li data-ng-repeat="role in user.getActiveRoles()">
+                                        <!--only show the roles which have not ended-->
+                                        <span data-ng-show="!role.tenureEnd">
+                                            <span data-ng-if="Users.is(role, HEAD_COACH)">Head Coach, {{ teams[role.teamId].name }}</span>
+                                            <span data-ng-if="Users.is(role, ASSISTANT_COACH)">Assist. Coach, {{ teams[role.teamId].name }}</span>
+                                            <span data-ng-if="Users.is(role, ATHLETE)">Athlete, {{ sports[leagues[teams[role.teamId].leagueId].sportId].name }}</span>
+                                            <span data-ng-if="!Users.is(role, HEAD_COACH) && !Users.is(role, ASSISTANT_COACH) && !Users.is(role, ATHLETE)">{{role.type.name}}</span>
+                                        </span>
+                                    </li>
 
-                                <li data-ng-repeat="role in user.getActiveRoles()">
-                                    <!--only show the roles which have not ended-->
-                                    <span data-ng-show="!role.tenureEnd">
-                                        <span data-ng-if="Users.is(role, HEAD_COACH)">Head Coach, {{ teams[role.teamId].name }}</span>
-                                        <span data-ng-if="Users.is(role, ASSISTANT_COACH)">Assist. Coach, {{ teams[role.teamId].name }}</span>
-                                        <span data-ng-if="Users.is(role, ATHLETE)">Athlete, {{ sports[leagues[teams[role.teamId].leagueId].sportId].name }}</span>
-                                        <span data-ng-if="!Users.is(role, HEAD_COACH) && !Users.is(role, ASSISTANT_COACH) && !Users.is(role, ATHLETE)">{{role.type.name}}</span>
-                                    </span>
-                                </li>
+                                </ul>
 
-                            </ul>
+                            </td>
 
-                        </td>
+                            <td>
+                                <div>{{ user.lastAccessed | date:'short' }}</div>
+                            </td>
 
-                        <td>
-                            <div>{{ user.lastAccessed | date:'short' }}</div>
-                        </td>
+                            <td>
 
-                        <td>
+                                <div class="active" data-ng-if="!user.hasNoRoles() && !user.isLocked">Active</div>
+                                <div class="inactive" data-ng-if="user.hasNoRoles() && !user.isLocked">Inactive</div>
+                                <div class="status-locked" data-ng-if="user.isLocked"><i class="icon icon-lock"></i> Locked</div>
 
-                            <div class="active" data-ng-if="!user.hasNoRoles() && !user.isLocked">Active</div>
-                            <div class="inactive" data-ng-if="user.hasNoRoles() && !user.isLocked">Inactive</div>
-                            <div class="status-locked" data-ng-if="user.isLocked"><i class="icon icon-lock"></i> Locked</div>
+                            </td>
+                            <td>
+                                <go-to-as
+                                    data-ng-if="user.hasNoRoles() || !user.has([ROLES.SUPER_ADMIN, ROLES.ADMIN])"
+                                    user="user">
+                                </go-to-as>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-                        </td>
-                        <td>
-                            <go-to-as
-                                data-ng-if="user.hasNoRoles() || !user.has([ROLES.SUPER_ADMIN, ROLES.ADMIN])"
-                                id="user-go-to-as-cta-user-{{$index}}"
-                                user="user">
-                            </go-to-as>
-                        </td>
-                    </tr>
+            <div class="scroll-remaining-height">
 
-                </tbody>
+                <table class="table table-striped table-hover">
 
-            </table>
+                    <tbody>
+                        <tr class="hidden-cell">
+                            <th>User ID</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Last Signed In</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
 
+                        <tr data-ng-repeat="user in users | rolesFilter: filter track by user.id">
+
+                            <td>{{user.id}}</td>
+
+                            <td><div class="email">{{user.email}}</div></td>
+
+                            <td><div class="name"><a id="user-select-cta-user-{{$index}}" data-ui-sref="user-roles({ id: user.id })">{{user.firstName}} {{user.lastName}}</a></div></td>
+
+                            <td class="roles">
+
+                                <ul>
+
+                                    <li data-ng-repeat="role in user.getActiveRoles()">
+                                        <!--only show the roles which have not ended-->
+                                        <span data-ng-show="!role.tenureEnd">
+                                            <span data-ng-if="Users.is(role, HEAD_COACH)">Head Coach, {{ teams[role.teamId].name }}</span>
+                                            <span data-ng-if="Users.is(role, ASSISTANT_COACH)">Assist. Coach, {{ teams[role.teamId].name }}</span>
+                                            <span data-ng-if="Users.is(role, ATHLETE)">Athlete, {{ sports[leagues[teams[role.teamId].leagueId].sportId].name }}</span>
+                                            <span data-ng-if="!Users.is(role, HEAD_COACH) && !Users.is(role, ASSISTANT_COACH) && !Users.is(role, ATHLETE)">{{role.type.name}}</span>
+                                        </span>
+                                    </li>
+
+                                </ul>
+
+                            </td>
+
+                            <td>
+                                <div>{{ user.lastAccessed | date:'short' }}</div>
+                            </td>
+
+                            <td>
+
+                                <div class="active" data-ng-if="!user.hasNoRoles() && !user.isLocked">Active</div>
+                                <div class="inactive" data-ng-if="user.hasNoRoles() && !user.isLocked">Inactive</div>
+                                <div class="status-locked" data-ng-if="user.isLocked"><i class="icon icon-lock"></i> Locked</div>
+
+                            </td>
+                            <td>
+                                <go-to-as
+                                    data-ng-if="user.hasNoRoles() || !user.has([ROLES.SUPER_ADMIN, ROLES.ADMIN])"
+                                    id="user-go-to-as-cta-user-{{$index}}"
+                                    user="user">
+                                </go-to-as>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
         </div>
-
     </div>
 
     <data-results data-ng-hide="users.length" data-query="query"></data-results>
