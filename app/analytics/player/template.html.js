@@ -51,7 +51,7 @@ export default `
 
             <div
                 class="all-center unselected-player"
-                ng-show="!player"
+                ng-show="!player && !currentUserIsAthlete"
             >
                 <i class="icon icon-bar-chart-o"></i>
                 <h4>Please select a player to view analytics</h4>

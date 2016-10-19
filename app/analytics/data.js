@@ -7,7 +7,9 @@ AnalyticsDataDependencies.$inject = [
     'UsersFactory',
     'TeamsFactory',
     'LeaguesFactory',
-    'PlayersFactory'
+    'PlayersFactory',
+    'ROLES',
+    'ROLE_TYPE'
 ];
 
 function AnalyticsDataDependencies (
@@ -16,7 +18,9 @@ function AnalyticsDataDependencies (
     users,
     teams,
     leagues,
-    players
+    players,
+    ROLES,
+    ROLE_TYPE
 ) {
 
     class AnalyticsData {
@@ -25,29 +29,29 @@ function AnalyticsDataDependencies (
             /* Load data. */
             this.userId = session.getCurrentUserId();
             this.leagues = leagues.load();
-            this.users = users.load({ relatedUserId: this.userId });
+            this.teamsAndPlayers = teamsAndPlayers(this);
 
-            let relatedTeams = teams.load({ relatedUserId: this.userId });
+            function teamsAndPlayers(outer) {
+                let deferred = $q.defer();
+                let currentUser = session.getCurrentUser();
 
-            this.teams = relatedTeams;
-            this.players = relatedTeams.then(function(relatedTeams) {
-                let rosters = [];
-                let teamIds = session.currentUser.getTeamIds();
+                if(currentUser.is(ROLES.ATHLETE)) {
+                    players.load({ userId: outer.userId }).then(deferred.resolve());
+                }
+                else {
+                    users.load(outer.userId).then(function(){
+                        let role = users.get(outer.userId).getCurrentRole();
 
-                relatedTeams
+                        teams.load({ relatedRoleId: role.id }).then(function(){
+                            let team = teams.get(role.teamId);
 
-                .filter(function(team) {
+                            players.load({ rosterId: team.roster.id }).then(function(){deferred.resolve();});
+                        });
+                    });
+                }
 
-                    return !teamIds.indexOf(team.id);
-                })
-
-                .forEach(function(team) {
-
-                    rosters.push(players.load({ rosterId: team.roster.id }));
-                });
-
-                return $q.all(rosters);
-            });
+                return deferred.promise;
+            }
 
         }
     }
