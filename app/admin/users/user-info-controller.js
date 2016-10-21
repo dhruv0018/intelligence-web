@@ -59,28 +59,5 @@ Users.controller('Users.User.Info.Controller', [
             .then(onSend)
             .finally(onFinish);
         };
-
-        /* Watch the users lock status. */
-        $scope.$watch('user.isLocked', function(newValue, oldValue) {
-
-            /* Only update when there is a change. */
-            if (newValue !== oldValue) {
-
-                /* If the user is locked; add alert. */
-                if (newValue) {
-
-                    alerts.add({
-
-                        type: 'danger',
-                        message: 'This user is locked'
-                    });
-
-                /* When the users is unlocked; clear alert. */
-                } else {
-
-                    alerts.clear();
-                }
-            }
-        });
     }
 ]);
