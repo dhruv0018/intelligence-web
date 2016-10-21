@@ -653,7 +653,8 @@ TeamsController.$inject = [
     'LeaguesFactory',
     'SchoolsFactory',
     'TeamsFactory',
-    'Teams.Data'
+    'Teams.Data',
+    'AdminSearchService'
 ];
 
 function TeamsController (
@@ -666,15 +667,13 @@ function TeamsController (
     leagues,
     schools,
     teams,
-    data
+    data,
+    searchService
 ) {
 
     $scope.teams = [];
 
-    //TODO potential candiate for changing filter to true instead of 1 if the backend begins to support it
-    $scope.filter = {
-        isCustomerTeam: 1
-    };
+    $scope.filter = searchService.teams.filter;
 
     $scope.sports = sports.getList();
     $scope.indexedSports = sports.getCollection();
@@ -748,6 +747,18 @@ function TeamsController (
         }
 
     };
+
+    $scope.clearSearchFilter = function() {
+        searchService.teams.clear();
+        $scope.filter = searchService.teams.filter;
+        $scope.teams = [];
+    };
+
+    // Restore the state of the previous search from the service
+    // Checking for length > 1 since one property is set by default in searchService
+    if (Object.keys($scope.filter).length > 1 && !$scope.filter.id) {
+        $scope.search($scope.filter);
+    }
 }
 
 /**

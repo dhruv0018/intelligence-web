@@ -4,7 +4,10 @@
 
         <x-button-add-new data-elem-id="add-new-user-cta">Add a new user</x-button-add-new>
 
-        <h3>Search</h3>
+        <div class="search-header">
+            <h3>Search</h3>
+            <a href ng-click="clearSearchFilter()">Reset</a>
+        </div>
 
         <form role="form" data-ng-submit="search(filter)">
 

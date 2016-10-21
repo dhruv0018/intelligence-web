@@ -126,10 +126,11 @@ Schools.controller('SchoolController', [
  * @type {Controller}
  */
 Schools.controller('SchoolsController', [
-    '$rootScope', '$scope', '$state', 'SchoolsFactory',
-    function controller($rootScope, $scope, $state, schools) {
+    '$rootScope', '$scope', '$state', 'SchoolsFactory', 'AdminSearchService',
+    function controller($rootScope, $scope, $state, schools, searchService) {
 
         $scope.schools = [];
+        $scope.filter = searchService.schools.filter;
 
         $scope.add = function() {
             $state.go('school-info');
@@ -149,5 +150,16 @@ Schools.controller('SchoolsController', [
                 $scope.searching = false;
             });
         };
+
+        $scope.clearSearchFilter = function() {
+            searchService.schools.clear();
+            $scope.filter = {};
+            $scope.schools = [];
+        };
+
+        // Restore the state of the previous search from the service
+        if (Object.keys($scope.filter).length && !$scope.filter.id) {
+            $scope.search($scope.filter);
+        }
     }
 ]);

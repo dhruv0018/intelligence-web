@@ -14,8 +14,8 @@ var Users = angular.module('Users');
  * @type {Controller}
  */
 Users.controller('Users.Users.Controller', [
-    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'AccountService', 'ROLES', 'Admin.Users.Data', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory',
-    function controller($rootScope, $scope, $state, $modal, $stateParams, session, account, ROLES, data, sports, leagues, teams, users) {
+    '$rootScope', '$scope', '$state', '$modal', '$stateParams', 'SessionService', 'AccountService', 'ROLES', 'Admin.Users.Data', 'SportsFactory', 'LeaguesFactory', 'TeamsFactory', 'UsersFactory', 'AdminSearchService',
+    function controller($rootScope, $scope, $state, $modal, $stateParams, session, account, ROLES, data, sports, leagues, teams, users, searchService) {
 
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
@@ -33,7 +33,7 @@ Users.controller('Users.Users.Controller', [
         $scope.leagues = leagues.getCollection();
         $scope.teams = teams.getCollection();
 
-        $scope.filter = {};
+        $scope.filter = searchService.users.filter;
 
         $scope.add = () => $state.go('user-info', {location: true});
 
@@ -51,6 +51,17 @@ Users.controller('Users.Users.Controller', [
                 $scope.searching = false;
             });
         };
+
+        $scope.clearSearchFilter = function() {
+            searchService.users.clear();
+            $scope.filter = {};
+            $scope.users = [];
+        };
+
+        // Restore the state of the previous search from the service
+        if (Object.keys($scope.filter).length && !$scope.filter.id) {
+            $scope.search($scope.filter);
+        }
     }
 ]);
 

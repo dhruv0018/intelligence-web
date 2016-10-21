@@ -7,7 +7,8 @@ ConferencesController.$inject = [
     '$stateParams',
     'SportsFactory',
     'ConferencesFactory',
-    'Conferences.Data'
+    'Conferences.Data',
+    'AdminSearchService'
 ];
 
 /**
@@ -19,12 +20,13 @@ function ConferencesController(
     $stateParams,
     sports,
     conferencesFactory,
-    conferencesData
+    conferencesData,
+    searchService
 ) {
     $scope.allConferences = [];
     $scope.filteredConferences = [];
     $scope.itemPerPage = CONFEREENCEPERPAGE;
-    $scope.filter = {};
+    $scope.filter = searchService.conferences.filter;
     $scope.page = {};
     $scope.page.currentPage = $stateParams.page || 1;
     $scope.totalCount = conferencesData.count;
@@ -77,10 +79,15 @@ function ConferencesController(
     }
 
     $scope.clearSearchFilter = function() {
+        searchService.conferences.clear();
         $scope.filter = {};
         searchConferences($scope.filter);
     };
 
+    // Restore the state of the previous search from the service
+    if (Object.keys($scope.filter).length) {
+        $scope.searchConferences($scope.filter);
+    }
 }
 
 export default ConferencesController;
