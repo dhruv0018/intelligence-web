@@ -99,6 +99,7 @@ import { PRIORITIES_IDS, PRIORITIES } from './constants/priorities';
 import { LABELS_IDS, LABELS } from './constants/labels';
 import EMAILS from './constants/emails';
 import ARENA_CHART from './constants/arena-chart';
+require('./constants/film-exchange');
 
 
 require('./models/users');

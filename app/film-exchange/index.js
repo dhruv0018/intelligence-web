@@ -86,6 +86,7 @@ FilmExchange.controller('FilmExchangeController', [
     'FilmExchangeFactory',
     'SportsFactory',
     'ROLES',
+    'EXCHANGE_TYPES',
     function controller(
         $rootScope,
         $scope,
@@ -103,7 +104,8 @@ FilmExchange.controller('FilmExchangeController', [
         games,
         filmExchangeFactory,
         sports,
-        ROLES
+        ROLES,
+        EXCHANGE_TYPES
     ) {
         $scope.currentUser = session.getCurrentUser();
         $scope.noData = false;
@@ -131,6 +133,7 @@ FilmExchange.controller('FilmExchangeController', [
             titleFilter.gender = $scope.conferenceTitle[2];
             titleFilter.sportId = $scope.conferenceTitle[3];
             filmExchangeFactory.getAllConferences(titleFilter).then(function(data){
+                $scope.filmExchangeType = data[0] && data[0].exchangeType;
                 $scope.filmExchangeName = data[0] && data[0].name;
             });
             $scope.filter= {};
@@ -279,11 +282,16 @@ FilmExchange.controller('FilmExchangeController', [
                 bodyText = 'This game will be copied into your film home as one of your games.';
             }
 
+            let bodySubtext = 'Note: The game will be viewable by the coaching staff and all active players.';
+            if ($scope.filmExchangeType == EXCHANGE_TYPES.FILM_EXCHANGE) {
+                bodySubtext += ' You will be able to submit this game for breakdown from your film home.';
+            }
+
             let copyFilmModal = basicModals.openForConfirm({
                 title: 'Copy Game',
                 bodyHeader: film.awayTeam.name+' @ '+film.homeTeam.name,
                 bodyText,
-                bodySubtext: 'Note: The game will be viewable by the coaching staff and all active players. You will be able to submit this game for breakdown from your film home.',
+                bodySubtext,
                 buttonText: 'Copy',
                 successText: 'Game copied to your film home'
             });
