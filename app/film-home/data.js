@@ -34,20 +34,24 @@ export function FilmHomeGames (
         },
 
         get games(){
-            let currentUser = session.getCurrentUser();
-            let currentRoleId = currentUser.getCurrentRole().id;
+            let currentUserId = session.getCurrentUserId();
             let deferred = $q.defer();
-            leaguesFactory.load().then( response =>{
-                if(currentUser.is(ROLES.ATHLETE)){
-                    return gamesFactory.load({ relatedUserId: currentUser.id }).then(response =>{
-                        deferred.resolve(gamesFactory.getByRelatedRole());
-                    });
-                }else{
-                    return gamesFactory.load({ relatedRoleId: currentRoleId }).then(response =>{
-                        deferred.resolve(response);
-                    });
-                }
+            usersFactory.load(currentUserId).then(userResponse => {
+                let user = usersFactory.get(currentUserId);
+                let currentRoleId = user.getCurrentRole().id;
+                leaguesFactory.load().then(response =>{
+                    if(user.is(ROLES.ATHLETE)){
+                        return gamesFactory.load({ relatedUserId: currentUserId }).then(response =>{
+                            deferred.resolve(gamesFactory.getByRelatedRole());
+                        });
+                    }else{
+                        return gamesFactory.load({ relatedRoleId: currentRoleId }).then(response =>{
+                            deferred.resolve(response);
+                        });
+                    }
+                });
             });
+
             return deferred.promise;
         },
 
