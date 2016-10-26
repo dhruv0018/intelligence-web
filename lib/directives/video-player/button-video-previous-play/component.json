@@ -1,0 +1,9 @@
+{
+    "name": "button-video-previous-play",
+    "templates": [
+        "template.html"
+    ],
+    "scripts": [
+        "index.js"
+    ]
+}

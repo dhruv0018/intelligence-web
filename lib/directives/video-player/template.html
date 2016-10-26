@@ -50,6 +50,10 @@
                     <button-video-step-backward
                         krossover-blur-on-select
                     ></button-video-step-backward>
+                    <button-video-previous-play
+                        ng-show="isFullscreen && videoPlayer.playId !== undefined"
+                        krossover-blur-on-select
+                    ></button-video-previous-play>
                     <button-video-fast-backward
                         krossover-blur-on-select
                     ></button-video-fast-backward>
@@ -65,6 +69,10 @@
                     <button-video-fast-forward
                         krossover-blur-on-select
                     ></button-video-fast-forward>
+                    <button-video-next-play
+                        ng-show="isFullscreen && videoPlayer.playId !== undefined"
+                        krossover-blur-on-select
+                    ></button-video-next-play>
                     <button-video-step-forward
                         krossover-blur-on-select
                     ></button-video-step-forward>
