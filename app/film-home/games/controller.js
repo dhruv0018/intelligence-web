@@ -49,7 +49,7 @@ function FilmHomeGamesController(
     /* League and Season info for WSC highlights */
     if (currentUser.is(ROLES.COACH)) {
         /* Coach gets all games relevant to team unless it's a shared film with incomplete video */
-        $scope.games = data.games.filter(game => {
+        $scope.games = gamesFactory.getByRelatedRole().filter(game => {
             if (isShared(game)) {
                 return game.video.isComplete();
             } else {
@@ -76,7 +76,7 @@ function FilmHomeGamesController(
     } else if (currentUser.is(ROLES.ATHLETE)) {
         /* Athlete gets all games relevent to team with completed video */
         $scope.NoData = (data.games.length == 0) ? true : false;
-        $scope.games = data.games.filter(game => {
+        $scope.games = gamesFactory.getByRelatedRole().filter(game => {
             if (game.video) {
                 return game.video.isComplete();
             }
