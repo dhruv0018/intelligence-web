@@ -41,15 +41,16 @@
                         </div>
                         <div class="body-cell date-created">
                             {{reel.createdAt|date:'MMM dd, yyyy'}}
-                            <span class="subtext">Created by {{getUploaderName(reel)}}</span>
+                            <span class="subtext">{{getUploaderName(reel)}}</span>
                         </div>
                         <div class="body-cell date-updated">
                             {{reel.updatedAt|date:'MMM dd, yyyy'}}
                         </div>
                         <div class="body-cell actions"></div>
-                        <div class="body-cell share-container" ng-click="openShareModal($event, reel)">
+                        <div class="body-cell share-container" ng-click="openShareModal($event, reel)" ng-hide="hideShareButton(reel)">
                             <i class="icon icon-share-thin"></i>
                         </div>
+                        <div class="body-cell share-container" ng-show="hideShareButton(reel)"></div>
                     </div>
                 </div>
             </div>
