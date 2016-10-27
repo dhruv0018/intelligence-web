@@ -10,7 +10,7 @@
 
     <div class="empty-state" ng-show="NoData">
         <span class="circle-border"><i class="icon icon-whistle"></i></span>
-        <h4 ng-show="currentUser.is(ROLES.COACH)">Welcome to your 2015 - 2016 season!</h4>
+        <h4 ng-show="currentUser.is(ROLES.COACH)">Welcome to your new season!</h4>
         <h4 ng-show="currentUser.is(ROLES.ATHLETE)">There are no games in your account yet.</h4>
         <p ng-show="currentUser.is(ROLES.COACH)">There aren't any games in your account yet.</p>
         <p ng-show="currentUser.is(ROLES.ATHLETE)">Tell your coach to add games so you can start watching film and making reels!</p>
@@ -47,9 +47,11 @@
                                 <span class="icon-placeholder" ng-if="!game.video.isFailed()&& !game.video.isIncomplete() && !game.video.isUploaded()"></span>
                             </div>
                             <div class="body-cell thumbnail-container">
-                                <img class="thumbnail-img" ng-if="game.video.isComplete()" ng-src="{{game.video.thumbnail}}" alt="Game"/>
-                                <img class="thumbnail-img" ng-if="!game.video.isComplete() && sportName" ng-src="assets/{{sportName}}-stock.png" alt="Game"/>
-                                <img class="thumbnail-img" ng-if="!game.video.isComplete() && game.sportName" ng-src="assets/{{game.sportName}}-stock.png" alt="Game"/>
+                                <a ui-sref="Games({id:game.id})">
+                                    <img class="thumbnail-img" ng-if="game.video.isComplete()" ng-src="{{game.video.thumbnail}}" alt="Game"/>
+                                    <img class="thumbnail-img" ng-if="!game.video.isComplete() && sportName" ng-src="assets/{{sportName}}-stock.png" alt="Game"/>
+                                    <img class="thumbnail-img" ng-if="!game.video.isComplete() && game.sportName" ng-src="assets/{{game.sportName}}-stock.png" alt="Game"/>
+                                </a>
                             </div>
                             <div class="body-cell team">
                                 {{game.getAwayTeamName()}}
