@@ -10,7 +10,7 @@ export default `
 
                 <div class="reel-edit-controls">
 
-                    <a id="reels-edit-clips-cta" href ng-hide="editFlag" ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Clips</a>
+                    <a id="reels-edit-clips-cta" href ng-hide="editFlag" ng-click="toggleEditMode()"><i class="icon icon-edit"></i> Edit Plays</a>
                     <a id="reels-edit-clips-save-cta" href ng-show="editFlag" ng-click="saveReels()" class="save-edit"><i class="icon icon-download"></i> Save Changes</a>
                     <a id="reels-edit-clips-cancel-cta" href ng-show="editFlag" ng-click="toggleEditMode()">Cancel</a>
 

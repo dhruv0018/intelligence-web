@@ -131,15 +131,6 @@ function ReelController(
         return play;
     }
 
-    // Store the reel order on the play
-    $scope.$watchCollection('plays', function sortPlays(newVals) {
-
-        $scope.plays.forEach(function indexPlays(play, index) {
-
-            play.index = index;
-        });
-    });
-
     /* TODO: MOVE PLAY/GAME RESTRICTIONS TO A SERVICE */
     // Editing config
 
@@ -240,6 +231,11 @@ function ReelController(
 
         $scope.editFlag = false;
         editAllowed = false;
+
+        $scope.plays.forEach(function indexPlays(play, index) {
+
+            play.index = index;
+        });
 
         // Update reel locally
         var reelPlayIds = $scope.plays.map(function getPlayId(play) {
