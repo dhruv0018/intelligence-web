@@ -199,7 +199,7 @@
 
         <!-- View for sharing with a film exchange -->
         <div class="sharing-with-film-exchange-container" ng-show="withFilmExchange">
-            <p class="share-option-title" ng-hide="filmExchangeShareConfirm">Select the film exchanges that you would like to share this game with: <br/><span class="share-option-subtitle">*Note: This will share raw film only.</span></p>
+            <p class="share-option-title" ng-hide="filmExchangeShareConfirm">Select the film exchanges that you would like to share this game with: <br/><span class="share-option-subtitle" ng-if="!hasBreakdownLibraryToShare">*Note: This will share raw film only.</span></p>
             <div class="film-exchange-options-container" ng-hide="filmExchangeShareConfirm">
                 <div
                     class="film-exchange-option"
