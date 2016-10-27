@@ -131,6 +131,40 @@ function AccountService (
             }
         },
 
+        gotoUsersReelState: function(user, reload) {
+
+            user = user || session.currentUser;
+
+            /* If the user is a coach. */
+            if (user.is(ROLES.COACH)) {
+
+                return teamsFactory.load(user.currentRole.teamId).then(response => {
+                    let team = teamsFactory.get(user.currentRole.teamId);
+                    if (team.sportId === SPORTS.FOOTBALL.id || team.sportId === SPORTS.VOLLEYBALL.id) {
+                        return $state.go('Coach.FilmHome', null, { reload });
+                    } else {
+                        return $state.go('FilmHomeReels', null, { reload });
+                    }
+                });
+            }
+
+            /* If the user is an athlete. */
+            else if (user.is(ROLES.ATHLETE)) {
+                return teamsFactory.load(user.currentRole.teamId).then(response => {
+                    let team = teamsFactory.get(user.currentRole.teamId);
+                    if (team.sportId === SPORTS.FOOTBALL.id || team.sportId === SPORTS.VOLLEYBALL.id) {
+                        return $state.go('Athlete.FilmHome', null, { reload });
+                    } else {
+                        return $state.go('FilmHomeReels', null, { reload });
+                    }
+                });
+            }
+
+            else {
+                throw new Error('Only coach or athlete can go to reels page.');
+            }
+        },
+
         gotoAsUser: function(user) {
 
             session.storePreviousUser(session.currentUser, false);

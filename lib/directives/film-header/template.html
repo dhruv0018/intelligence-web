@@ -33,6 +33,18 @@
 
         </a>
 
+        <a
+         id="remove-share-cta"
+         class="share-game"
+         data-ng-click="removeShare()"
+         data-ng-if="shareWithMe">
+
+            <i class="icon icon-remove"></i>
+            <span ng-if="!removingShare">Remove Share</span>
+            <span ng-if="removingShare">Removing...</span>
+
+        </a>
+
         <span
          id="reels-delete-cta"
          class="delete-reel"

@@ -333,6 +333,23 @@ IntelligenceWebClient.factory('ReelsFactory', [
 
                 return this.getShareByTeamId(team.id);
             },
+            /**
+             * get reel sharing by logged in user
+             * @return {Object}
+             */
+            getShareByCurrentUser: function() {
+
+                let currentUser = session.getCurrentUser();
+                if (this.isSharedWithUser(currentUser)) {
+                    return this.getShareByUser(currentUser);
+                }
+
+                const teamId = session.getCurrentTeamId();
+                if ((currentUser.is(ROLES.COACH)) && this.isSharedWithTeamId(teamId)) {
+                    return this.getShareByTeamId(teamId);
+                }
+
+            },
             getShareByUserId: function(userId) {
                 var self = this;
 
