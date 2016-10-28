@@ -33,6 +33,7 @@ IntelligenceWebClient.factory('GamesFactory', [
     'RawTelestrationEntity',
     'SelfEditTelestrationEntity',
     'Video',
+    'EXCHANGE_TYPES',
     function(
         config,
         $injector,
@@ -56,7 +57,8 @@ IntelligenceWebClient.factory('GamesFactory', [
         playTelestrationEntity,
         rawTelestrationEntity,
         selfEditTelestrationEntity,
-        Video
+        Video,
+        EXCHANGE_TYPES
     ) {
 
         var GamesFactory = {
@@ -1795,6 +1797,16 @@ IntelligenceWebClient.factory('GamesFactory', [
                     gender: filmExchange.gender,
                     sportId: filmExchange.sportId
                 }, copyInfo).$promise;
+            },
+
+            /**
+             * Determine if the game is copied from a break down library
+             * @returns {boolean}
+             */
+            isCopiedFromBreakdownLibrary: function () {
+                return (this.isCopied()
+                    && this.sportsAssociationConferenceFilmExchange
+                    && this.sportsAssociationConferenceFilmExchange.exchangeType === EXCHANGE_TYPES.BREAKDOWN_LIBRARY);
             }
         };
 

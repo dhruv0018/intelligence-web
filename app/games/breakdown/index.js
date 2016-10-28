@@ -186,6 +186,7 @@ function GamesBreakdownController (
         let uploader = users.get($scope.game.uploaderUserId);
         let gameId = $stateParams.id;
         $scope.game = games.get(gameId);
+        $scope.disableDownload = ($scope.game.isCopiedFromBreakdownLibrary() && !session.currentUser.is(ROLES.COACH));
 
         $scope.posterImage = {
             url: $scope.game.video.thumbnail
