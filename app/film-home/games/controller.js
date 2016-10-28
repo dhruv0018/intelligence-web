@@ -146,7 +146,7 @@ function FilmHomeGamesController(
                         result = true;
                     }
                 }
-                if ($scope.filters['shared'] && game.isSharedWithUser(currentUser)) {
+                if ($scope.filters['shared'] && (game.isSharedWithUser(currentUser) || game.isSharedWithTeamId(currentUser.currentRole.teamId))) {
                     result = true;
                 }
                 if ($scope.filters['selfEditor'] && game.isSelfEdited) {
