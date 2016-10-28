@@ -1,3 +1,7 @@
+# v99.1#
+## Fixes##
+- Fixes "Shared with me" filter on film home
+
 # v99.0#
 ## Features##
 - Adds Soccer arena
