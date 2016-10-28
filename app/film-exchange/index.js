@@ -219,7 +219,7 @@ FilmExchange.controller('FilmExchangeController', [
             $scope.query = fetchData(filter).then(responses=>{
                 $scope.page.currentPage = 1;
                 // $state.go('film-exchange', {page: $scope.page.currentPage}, {location: true, notify: false});
-                if(responses.count){
+                if('count' in responses){
                     $scope.totalCount = responses.count;
                 }
                 $scope.filteredFilms = responses.data;
