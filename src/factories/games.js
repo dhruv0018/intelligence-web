@@ -195,7 +195,11 @@ IntelligenceWebClient.factory('GamesFactory', [
                         if (game.isHomeGame) {
                             return opposingTeamScore.toString() + ' - ' + teamScore.toString();
                         } else {
-                            return teamScore.toString() + ' - ' + opposingTeamScore.toString();
+                            if(game.gameType === GAME_TYPES.SCOUTING.id || game.gameType === GAME_TYPES.SCRIMMAGE.id){
+                                return opposingTeamScore.toString() + ' - ' + teamScore.toString();
+                            }else{
+                                return teamScore.toString() + ' - ' + opposingTeamScore.toString();
+                            }
                         }
                     }else{
                         return '';
@@ -210,8 +214,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 let school;
                 if (this.isHomeGame && this.teamId) {
                     homeTeam = teams.get(this.teamId);
-                } else if (!this.isHomeGame && this.opposingTeamId) {
-                    homeTeam = teams.get(this.opposingTeamId);
+                } else if (!this.isHomeGame) {
+                    //for scouting/scrimmage game don't flip the home/away team
+                    if((this.gameType === GAME_TYPES.SCOUTING.id || this.gameType === GAME_TYPES.SCRIMMAGE.id)) {
+                        if(this.teamId){
+                            homeTeam = teams.get(this.teamId);
+                        }
+                    }else if(this.opposingTeamId){
+                        homeTeam = teams.get(this.opposingTeamId);
+                    }
                 }
 
                 if (homeTeam && homeTeam.schoolId) {
@@ -234,8 +245,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 let school;
                 if (this.isHomeGame && this.opposingTeamId) {
                     awayTeam = teams.get(this.opposingTeamId);
-                } else if (!this.isHomeGame && this.teamId) {
-                    awayTeam = teams.get(this.teamId);
+                } else if (!this.isHomeGame) {
+                    //for scouting/scrimmage game don't flip the home/away team
+                    if((this.gameType === GAME_TYPES.SCOUTING.id || this.gameType === GAME_TYPES.SCRIMMAGE.id)){
+                        if(this.opposingTeamId){
+                            awayTeam = teams.get(this.opposingTeamId);
+                        }
+                    }else if(this.teamId){
+                        awayTeam = teams.get(this.teamId);
+                    }
                 }
 
                 if (awayTeam && awayTeam.schoolId) {
