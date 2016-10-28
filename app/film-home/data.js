@@ -34,18 +34,27 @@ export function FilmHomeGames (
         },
 
         get games(){
-            let currentUserId = session.getCurrentUserId();
+            let currentUser = session.getCurrentUser();
             let deferred = $q.defer();
-            usersFactory.load(currentUserId).then(userResponse => {
-                let user = usersFactory.get(currentUserId);
-                let currentRoleId = user.getCurrentRole().id;
+            usersFactory.load(currentUser.id).then(userResponse => {
+                /* TODO: this is a temporary measure to ensure we get the games for the right role
+                 * Update this when we can trust the roleId to be consistent
+                 */
+                let user = usersFactory.get(currentUser.id);
+                let sessionCurrentRole = currentUser.getCurrentRole();
+                let currentRole = user.roles.filter(role => {
+                    if (role.teamId === sessionCurrentRole.teamId && role.type.id === sessionCurrentRole.type.id && !role.tenureEnd) {
+                        return role;
+                    }
+                })[0];
+
                 leaguesFactory.load().then(response =>{
-                    if(user.is(ROLES.ATHLETE)){
-                        return gamesFactory.load({ relatedUserId: currentUserId }).then(response =>{
-                            deferred.resolve(gamesFactory.getByRelatedRole());
+                    if(currentRole.type.id === ROLES.ATHLETE.type.id){
+                        return gamesFactory.load({ relatedUserId: currentUser.id }).then(response =>{
+                            deferred.resolve(response);
                         });
                     }else{
-                        return gamesFactory.load({ relatedRoleId: currentRoleId }).then(response =>{
+                        return gamesFactory.load({ relatedRoleId: currentRole.id }).then(response =>{
                             deferred.resolve(response);
                         });
                     }
