@@ -121,7 +121,8 @@
                             <div
                                 class="body-cell share-container"
                                 ng-click="openShareModal($event, game)"
-                                ng-hide="isShared(game) || game.video.isFailed()">
+                                ng-hide="isShared(game) || game.video.isFailed()
+                                || (currentUser.is(ROLES.ATHLETE) && game.isCopiedFromBreakdownLibrary())">
                                 <i class="icon icon-share-thin"></i>
                                 <span class="action-label">Share</span>
                             </div>
