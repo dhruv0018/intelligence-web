@@ -1497,6 +1497,29 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             /**
+            * check game is uploaded by the current user or his team
+            **/
+            isMyGame: function(){
+                var self = this;
+
+                var currentUser = session.getCurrentUser();
+                var userId = session.getCurrentUserId();
+                var teamId = session.getCurrentTeamId();
+                if(currentUser.is(ROLES.ATHLETE)){
+                    if(self.uploaderUserId === userId || currentUser.getAthleteTeamIds().indexOf(self.uploaderTeamId) > -1){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }else{
+                    if(self.uploaderUserId === userId || self.uploaderTeamId === teamId){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            },
+            /**
              * check game shared with team
              * @param {Object} team - shared with team
              * @return {boolean}

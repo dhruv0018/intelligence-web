@@ -489,7 +489,27 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 return teamIds;
             },
+            /**
+            * @class User
+            * @method
+            * @returns {Array} an array on team ISs associated with the
+            * Athlete.
+            */
+            getAthleteTeamIds: function() {
 
+                var roles = this.roles;
+
+                var teamIds = [];
+
+                roles.forEach(function(role) {
+                    if (role.teamId && role.type.id === ROLES.ATHLETE.type.id) {
+
+                        teamIds.push(role.teamId);
+                    }
+                });
+
+                return teamIds;
+            },
             /**
              * @class User
              * @method getRoles

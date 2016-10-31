@@ -122,20 +122,28 @@ function FilmHomeGamesController(
 
     //applyFilter function, you can call multiple places
     function applyFilter() {
+        angular.forEach($scope.filters, (value, key)=>{
+            if(!value){
+                delete $scope.filters[key];
+            }
+        });
         angular.forEach($scope.games, function(game, index) {
-            let result = false;
+            let result = 0;
             game.hide = true;
             if ($scope.filters['all']) {
-                result = true;
+                result = 1;
             } else {
-                if ($scope.filters['my'] && game.uploaderUserId === currentUser.id) {
-                    result = true;
+                if ($scope.filters['my'] && game.isMyGame()) {
+                    result++;
                 }
                 if ($scope.filters['scouting'] && game.gameType === GAME_TYPES.SCOUTING.id) {
-                    result = true;
+                    result++;
+                }
+                if ($scope.filters['scrimmage'] && game.gameType === GAME_TYPES.SCRIMMAGE.id) {
+                    result++;
                 }
                 if ($scope.filters['conference'] && game.gameType === GAME_TYPES.CONFERENCE.id) {
-                    result = true;
+                    result++;
                 }
                 if ($scope.filters['breakdown'] && game.isDelivered()) {
                     let breakdownIsAvailable =
@@ -143,19 +151,19 @@ function FilmHomeGamesController(
                         game.isBreakdownSharedWithCurrentUser() :
                         true;
                     if(breakdownIsAvailable){
-                        result = true;
+                        result++;
                     }
                 }
                 if ($scope.filters['shared'] && (game.isSharedWithUser(currentUser) || game.isSharedWithTeamId(currentUser.currentRole.teamId))) {
-                    result = true;
+                    result++;
                 }
                 if ($scope.filters['selfEditor'] && game.isSelfEdited) {
                     if(!game.isSharedWithCurrentUser()){
-                        result = true;
+                        result++;
                     }
                 }
             }
-            if (result) {
+            if (result === Object.keys($scope.filters).length) {
                 game.hide = false;
             }
             if(index == $scope.games.length -1 && $scope.filtering){
