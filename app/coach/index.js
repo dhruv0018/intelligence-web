@@ -108,7 +108,7 @@ Coach.service('Coach.Data.Dependencies', [
                 users.load(currentId).then(function(){
                     let roleId = users.get(currentId).getCurrentRole().id;
 
-                    games.load({ relatedRoleId: roleId }).then(function(){deferred.resolve();});
+                    games.load({ relatedRoleId: roleId, exclude: 'allTelestrations' }).then(function(){deferred.resolve();});
                 });
 
                 return deferred.promise;

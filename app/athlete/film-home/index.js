@@ -70,7 +70,7 @@ FilmHome.service('Athlete.FilmHome.Data.Dependencies', [
             positionsets: positionsets.load(),
             users: users.load({ relatedUserId: userId }),
             teams: teams.load({ relatedUserId: userId }),
-            games: games.load({ relatedUserId: userId }),
+            games: games.load({ relatedUserId: userId, exclude: 'allTelestrations' }),
             reels: reels.load({ relatedUserId: userId})
         };
 

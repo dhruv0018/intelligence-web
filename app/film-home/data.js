@@ -50,11 +50,11 @@ export function FilmHomeGames (
 
                 leaguesFactory.load().then(response =>{
                     if(currentRole.type.id === ROLES.ATHLETE.type.id){
-                        return gamesFactory.load({ relatedUserId: currentUser.id }).then(response =>{
+                        return gamesFactory.load({ relatedUserId: currentUser.id, exclude: 'allTelestrations' }).then(response =>{
                             deferred.resolve(response);
                         });
                     }else{
-                        return gamesFactory.load({ relatedRoleId: currentRole.id }).then(response =>{
+                        return gamesFactory.load({ relatedRoleId: currentRole.id, exclude: 'allTelestrations' }).then(response =>{
                             deferred.resolve(response);
                         });
                     }
