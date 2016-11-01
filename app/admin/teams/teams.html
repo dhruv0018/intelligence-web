@@ -34,16 +34,19 @@
 
             </div>
 
-            <div class="form-group">
+            <div class="form-group school-typeahead">
                 <input class="form-control"
                        id="search-team-school-name-cta"
                        placeholder="School Name" data-ng-model="filter.schoolName"
-                       data-typeahead-wait-ms="200"
+                       ng-keydown="schoolKeyPressTracker($event, team)"
+                       data-typeahead-wait-ms="0"
                        data-typeahead-min-length="3"
+                       data-typeahead-focus-first="false"
                        data-typeahead-loading="loading"
                        data-typeahead-template-url="school-dropdown-input.html"
                        data-typeahead="school.name for school in findSchoolsByName() | filter: {name: $viewValue}"
                        data-typeahead-on-select="schoolSelected($item)">
+                <krossover-spinner ng-if="loading" size="25px"></krossover-spinner>
             </div>
 
             <div class="form-group">

@@ -695,7 +695,7 @@ function TeamsController (
     $scope.findSchoolsByName = function() {
         let params = {};
         params["name"] = $scope.filter.schoolName;
-        params["count"] = 10;
+        params["count"] = 50;
 
         if($scope.filter.leagueId) {
             params["leagueId"] = $scope.filter.leagueId;
@@ -791,6 +791,41 @@ function TeamsController (
 
             $scope.searching = false;
         });
+    };
+
+    $scope.schoolKeyPressTracker = function(keyEvent, name) {
+        var input = document.getElementById('search-team-school-name-cta');
+        var list = input.parentElement.getElementsByTagName('li');
+        var currentEl = input.parentElement.querySelector('li.active');
+        var currentIdx = Array.prototype.indexOf.call(list, currentEl);
+
+        if (list.length && list[currentIdx]) {
+            let listHeightThreshold = list[0].parentNode.clientHeight - (list[0].clientHeight * 2);
+            // Down arrow key
+            if (keyEvent.keyCode === 40) {
+                if (currentIdx === list.length - 1) {
+                    // Down arrow pressed and it was on the last item.  Scrolling to top of list
+                    list[0].parentNode.scrollTop = 0;
+                }
+                else if ((list[0].parentNode.scrollTop + listHeightThreshold) < list[currentIdx].offsetTop) {
+                    // Item is out of view, need to scroll to it
+                    list[currentIdx].parentNode.scrollTop = list[currentIdx].offsetTop;
+                }
+            }
+            else if(keyEvent.keyCode === 38) {
+                // press arrow up key and the highlighted item would be out of view
+                if (currentIdx === 0) {
+                    // Up arrow pressed and it was on the first item.  Scrolling to last item
+                    list[0].parentNode.scrollTop = list[list.length - 1].offsetTop;
+                }
+                else if (list[0].parentNode.scrollTop >= (list[currentIdx].offsetTop - list[currentIdx].clientHeight)) {
+                    // Item is out of view, need to scroll to it
+                    list[currentIdx].parentNode.scrollTop = list[0].parentNode.scrollTop - list[currentIdx].clientHeight >= 0
+                    ? list[0].parentNode.scrollTop - listHeightThreshold
+                    : 0;
+                }
+            }
+        }
     };
 }
 

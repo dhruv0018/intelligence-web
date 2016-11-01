@@ -1,11 +1,38 @@
 .teams {
     .sidebar {
+        overflow-x: visible;
         overflow-y: auto;
 
         .search-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .school-typeahead {
+
+            .dropdown-menu {
+                overflow-x: hidden;
+                overflow-y: auto;
+                max-height: 300px;
+
+                li {
+                    width: auto;
+                }
+            }
+
+            krossover-spinner {
+                position: fixed;
+            }
+
+            .spinner {
+                position: relative;
+                float: right;
+                top: -30px;
+                right: -280px;
+                margin: 0;
+                color: @brand-secondary;
+            }
         }
     }
 
@@ -66,5 +93,14 @@
     .scroll-remaining-height {
         height: 100%;
         overflow-y: auto;
+    }
+}
+
+@media only screen
+and (max-height: @screen-height-sm) {
+    .teams {
+        .school-typeahead .dropdown-menu {
+            max-height: 190px;
+        }
     }
 }
