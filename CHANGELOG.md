@@ -1,3 +1,13 @@
+# v100.0#
+## Features##
+- Admin usability updates
+- Fullscreen video improvements
+
+## Fixes##
+- Fixes expand all button on reels
+- Athletes should not be able to edit telestrations made with film editor
+- Fixes player analytics page
+
 # v99.1#
 ## Fixes##
 - Fixes "Shared with me" filter on film home
