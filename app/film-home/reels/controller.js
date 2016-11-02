@@ -21,9 +21,14 @@ function FilmHomeReelsController(
     shareFilmModal
 ) {
     let currentUser = session.getCurrentUser();
-    $scope.reels = reels.getByRelatedRole();
+    //getByRelatedRole try to filter from the memory variable, which does not exclude the reels just got deleted
+    $scope.reels = reels.getByRelatedRole().filter(reel=>{
+        return !reel.isDeleted;
+    });
     $scope.NoData = ($scope.reels.length === 0)? true: false;
-    let reelsCopy = angular.copy($scope.reels);
+    let reelsCopy = reels.getByRelatedRole().filter(reel=>{
+        return !reel.isDeleted;
+    });
 
     $scope.getUploaderName = function(reel) {
         if (reel.uploaderUserId === currentUser.id) {
