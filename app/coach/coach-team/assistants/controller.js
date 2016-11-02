@@ -14,8 +14,8 @@ var TeamRoster = angular.module('coach-team-assistants');
  * @type {controller}
  */
 TeamRoster.controller('Coach.Team.Assistants.controller', [
-    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'PlayersFactory', 'UsersFactory', 'TeamsFactory', 'LeaguesFactory', 'SessionService',
-    function controller($rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, players, users, teams, leagues, session) {
+    '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'config', 'ROLES', 'PlayersFactory', 'UsersFactory', 'TeamsFactory', 'LeaguesFactory', 'SessionService',
+    function controller($rootScope, $scope, $state, $stateParams, $filter, config, ROLES, players, users, teams, leagues, session) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
@@ -40,12 +40,6 @@ TeamRoster.controller('Coach.Team.Assistants.controller', [
         ];
 
         $scope.displayFilter = $scope.filtering[0];
-
-        alerts.add({
-            type: 'warning',
-            message: 'All game film is automatically shared amongst all active Coaches of the team.'
-        });
-
     }
 ]);
 

@@ -15,8 +15,8 @@ var TeamRoster = angular.module('coach-team-roster');
  */
 
 TeamRoster.controller('Coach.Team.Roster.controller', [
-    '$q', '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'AlertsService', 'config', 'ROLES', 'LeaguesFactory', 'PositionsetsFactory', 'TeamsFactory', 'PlayersFactory', 'UsersFactory', 'SessionService',
-    function controller($q, $rootScope, $scope, $state, $stateParams, $filter, alerts, config, ROLES, leagues, positionsets, teams, players, users, session) {
+    '$q', '$rootScope', '$scope', '$state', '$stateParams', '$filter', 'config', 'ROLES', 'LeaguesFactory', 'PositionsetsFactory', 'TeamsFactory', 'PlayersFactory', 'UsersFactory', 'SessionService',
+    function controller($q, $rootScope, $scope, $state, $stateParams, $filter, config, ROLES, leagues, positionsets, teams, players, users, session) {
         $scope.ROLES = ROLES;
         $scope.HEAD_COACH = ROLES.HEAD_COACH;
         $scope.config = config;
@@ -72,10 +72,5 @@ TeamRoster.controller('Coach.Team.Roster.controller', [
         }
 
         $scope.rosterId = $scope.team.roster.id;
-
-        alerts.add({
-            type: 'warning',
-            message: 'All game film is automatically shared with Athletes on your active roster.'
-        });
     }
 ]);
