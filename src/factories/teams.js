@@ -14,6 +14,7 @@ var IntelligenceWebClient = angular.module(pkg.name);
 IntelligenceWebClient.factory('TeamsFactory', [
     '$injector',
     '$rootScope',
+    '$q',
     'ROLES',
     'ROLE_ID',
     'SchoolsResource',
@@ -22,9 +23,11 @@ IntelligenceWebClient.factory('TeamsFactory', [
     'UsersFactory',
     'LeaguesFactory',
     'SportsFactory',
+    'config',
     function(
         $injector,
         $rootScope,
+        $q,
         ROLES,
         ROLE_ID,
         schools,
@@ -32,7 +35,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
         BaseFactory,
         users,
         leagues,
-        sports
+        sports,
+        config
     ) {
 
         var TeamsFactory = {
@@ -533,7 +537,45 @@ IntelligenceWebClient.factory('TeamsFactory', [
 
                 return model.getOpponentTeam(filter).$promise;
 
-            }
+            },
+            /**
+             * @class Team
+             * @method getTeamsList
+             *
+             * Gets all the teams based on the filter and page requested.
+             *
+             * @param {Object} filter - Filter to query by
+             * @param {bool} getHead - Whether or not to add the total count to the response.
+             * @returns {Object} - contains teams data attribute and a count arribute if requested
+             *
+             */
+            getTeamsList(filter, getHead = true) {
+                const model = $injector.get(this.model);
+                let query = filter || {};
+                query.count = (filter && filter.count) ? filter.count :  30;
+                query.start = (filter && filter.page) ? (filter.page-1) * query.count : 0;
+                delete query.page;
+                let teamPromises = model.getTeamsList(query).$promise.then(function (teams) {
+                    return teams;
+                });
+                let promises = [teamPromises];
+
+                if(getHead) {
+                    let url = `${config.api.uri}teams`;
+                    let countPromises = this.totalCount(query, url);
+                    promises.push(countPromises);
+                }
+                return $q.all(promises).then(
+                    data =>{
+                        let teams = {};
+                        teams.data = data[0];
+                        if(getHead) {
+                            teams.count = data[1];
+                        }
+                        return teams;
+                    }
+                );
+            },
         };
 
         angular.augment(TeamsFactory, BaseFactory);

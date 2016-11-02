@@ -647,6 +647,7 @@ TeamsController.$inject = [
     '$rootScope',
     '$scope',
     '$state',
+    '$stateParams',
     '$q',
     '$filter',
     'SportsFactory',
@@ -661,6 +662,7 @@ function TeamsController (
     $rootScope,
     $scope,
     $state,
+    $stateParams,
     $q,
     $filter,
     sports,
@@ -670,6 +672,7 @@ function TeamsController (
     data,
     searchService
 ) {
+    const TEAMSPERPAGE = 30; //max number of teams shown per page
 
     $scope.teams = [];
 
@@ -680,6 +683,10 @@ function TeamsController (
     $scope.schools = schools.getCollection();
     $scope.leagues = leagues.getList();
     $scope.indexedLeagues = leagues.getCollection();
+    $scope.page = {};
+    $scope.page.currentPage = $stateParams.page || 1;
+    $scope.totalCount = data.count;
+    $scope.itemPerPage = TEAMSPERPAGE;
 
     $scope.add = function() {
         $state.go('team-info');
@@ -714,6 +721,7 @@ function TeamsController (
         $scope.searching = true;
         $scope.teams.length = 0;
 
+
         if(params.id) {
             let deferred = $q.defer();
             $scope.query = deferred.promise;
@@ -736,9 +744,15 @@ function TeamsController (
                 delete params.isCanonical;
             }
 
-            $scope.query = teams.search(params).then(function(teams) {
+            query.count = TEAMSPERPAGE;
+            $scope.page.currentPage = 1;
 
-                $scope.teams = teams;
+            $scope.query = teams.getTeamsList(query).then(function(teams) {
+                if(teams.count) {
+                    $scope.totalCount = teams.count;
+                }
+
+                $scope.teams = teams.data;
 
             }).finally(function() {
 
@@ -759,6 +773,25 @@ function TeamsController (
     if (Object.keys($scope.filter).length > 1 && !$scope.filter.id) {
         $scope.search($scope.filter);
     }
+
+    $scope.pageChanged = function () {
+        document.getElementById('team-data').scrollTop = 0;
+
+        let filter = angular.copy($scope.filter);
+        filter.page = $scope.page.currentPage;
+
+        $scope.searching = true;
+        $scope.teams.length = 0;
+
+        $scope.query = teams.getTeamsList(filter, false).then(function(teams) {
+
+            $scope.teams = teams.data;
+
+        }).finally(function() {
+
+            $scope.searching = false;
+        });
+    };
 }
 
 /**

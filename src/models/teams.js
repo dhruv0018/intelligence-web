@@ -67,6 +67,10 @@ IntelligenceWebClient.factory('TeamsResource', [
                 method: 'PUT',
                 url: config.apiV2.uri + base + '/:id' + '/conference-memberships/:conferenceId',
                 params: {id: '@id', conferenceId: '@conferenceId'}
+            },
+            getTeamsList: {
+                method: 'GET',
+                isArray: true
             }
         };
 
