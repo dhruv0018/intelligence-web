@@ -96,7 +96,7 @@ IntelligenceWebClient.factory('PlayersFactory', [
 
                 const jerseyNumber = this.getJerseyNumber(roster, padLength);
 
-                return jerseyNumber ? `${jerseyNumber} ${this.shortName}` : this.shortName;
+                return jerseyNumber.trim() ? `#${jerseyNumber} ${this.shortName}` : this.shortName;
             },
 
             resendEmail: function(userId, teamId) {
@@ -150,6 +150,23 @@ IntelligenceWebClient.factory('PlayersFactory', [
             loadPlayersFromTeam(team) {
                 return this.load({ rosterId: team.roster.id });
             }
+        };
+
+        /* Static Methods */
+        PlayersFactory.sortPlayerList = (playerList, roster) => {
+            // Pull out unknown players to be added at end of array
+            let unknownPlayerList = playerList.filter(player => player.isUnknown);
+            playerList = playerList.filter(player => !player.isUnknown);
+
+            // Sort array by jersey number
+            playerList.sort((a, b) => {
+                return Number(roster.playerInfo[a.id].jerseyNumber) - Number(roster.playerInfo[b.id].jerseyNumber);
+            });
+
+            // Add unknown players back into player list
+            playerList = playerList.concat(unknownPlayerList);
+
+            return playerList;
         };
 
         angular.augment(PlayersFactory, BaseFactory);

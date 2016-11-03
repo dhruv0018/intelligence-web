@@ -30,7 +30,6 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'OnFileChange',
     'FitElement',
     'KrossoverCheckbox',
-    'KrossoverMultiselect',
     'Pills',
     'KrossoverTags',
     'ngFileUpload',

@@ -39,7 +39,8 @@ const EVENT = {
     ARENA_CHART: {
 
         FILTERS: {
-            RESET: 'RESET'
+            RESET: 'RESET',
+            UPDATE: 'UPDATE'
         }
     },
 

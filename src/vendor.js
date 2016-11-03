@@ -25,7 +25,6 @@ require('fullscreen-api-polyfill/fullscreen-api-polyfill');
 require('object.observe/dist/object-observe');
 require('@krossover/fit-element');
 require('@krossover/krossover-checkbox');
-require('@krossover/krossover-multiselect');
 require('@krossover/pills');
 require('@krossover/krossover-blur-on-select');
 require('@krossover/krossover-tags');
