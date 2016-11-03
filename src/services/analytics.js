@@ -14,10 +14,12 @@ const IntelligenceWebClient = angular.module(pkg.name);
  */
 
 IntelligenceWebClient.service('AnalyticsService', [
-    'SessionService', 'DetectDeviceService', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', '$location',
-    function (session, deviceDetect, teams, sports, leagues, schools, $location) {
+    'SessionService', 'config', 'DetectDeviceService', 'TeamsFactory', 'SportsFactory', 'LeaguesFactory', 'SchoolsFactory', '$location',
+    function (session, config, deviceDetect, teams, sports, leagues, schools, $location) {
 
         return {
+
+            mixpanelInit: false,
 
             /**
              * Identifies the current user (email, userID, roles, team,
@@ -91,6 +93,17 @@ IntelligenceWebClient.service('AnalyticsService', [
                         leagueName = leagues.get(leagueId).name || '';
                         gender = leagues.get(leagueId).gender || '';
                     }
+                }
+
+                if (this.mixpanelInit === false) {
+                    if (config.environment === 'production') {
+                        mixpanel.init("06fdd4c1e4d1baf096d98290f074ada0");
+                    }
+                    else {
+                        mixpanel.init("57bd88dde32a14e2cc7927512974f37c");
+                    }
+
+                    this.mixpanelInit  = true;
                 }
 
                 mixpanel.register({
