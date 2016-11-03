@@ -1,3 +1,10 @@
+# v101.0#
+## Features##
+- Admin usability updates for schools and teams pages
+
+## Fixes##
+- Fixes multiple minor regressions on film exchange and film home
+
 # v100.0#
 ## Features##
 - Admin usability updates
