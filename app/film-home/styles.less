@@ -495,29 +495,31 @@ and (min-width: 1281px) {
 /* Screens smaller than 1280px */
 @media only screen
 and (max-width: 1280px) {
-    .flex-table {
-        .body-cell,
-        .header-cell {
-            padding: 10px;
-        }
+    .film-home-page {
+        .flex-table {
+            .body-cell,
+            .header-cell {
+                padding: 10px;
+            }
 
-        .thumbnail-container {
-            padding: 10px 20px;
-        }
+            .thumbnail-container {
+                padding: 10px 20px;
+            }
 
-        .actions {
-            justify-content: center;
+            .actions {
+                justify-content: center;
 
-            &.game-states-container {
-                padding-right: 0px;
-                padding-left: 0px;
-                justify-content: space-around;
+                &.game-states-container {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    justify-content: space-around;
 
-                .state-container {
-                    padding: 10px 0px;
+                    .state-container {
+                        padding: 10px 0px;
 
-                    .dropdown-menu {
-                        right: -100%;
+                        .dropdown-menu {
+                            right: -100%;
+                        }
                     }
                 }
             }
@@ -528,9 +530,11 @@ and (max-width: 1280px) {
 /* Screens larger than 1024px */
 @media only screen
 and (min-width: @screen-lg) {
-    .flex-table {
-        .actions {
-            display: flex;
+    .film-home-page {
+        .flex-table {
+            .actions {
+                display: flex;
+            }
         }
     }
 }
@@ -538,9 +542,11 @@ and (min-width: @screen-lg) {
 /* Screens smaller than 1024px */
 @media only screen
 and (max-width: @screen-md-max) {
-    .flex-table {
-        .actions, .thumbnail-container {
-            display: none;
+    .film-home-page {
+        .flex-table {
+            .actions, .thumbnail-container {
+                display: none;
+            }
         }
     }
 }
