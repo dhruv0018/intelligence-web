@@ -28,6 +28,7 @@
                         href data-ng-disabled="form.$invalid" data-ng-click="addRole(role)">
                         Add New Role
                     </button>
+                    <krossover-spinner ng-if="loading" size="30px"></krossover-spinner>
                     <a id="cancel-role-addition-coach-cta" class="cancel-role-addition" ng-click="removeRole(role)">Cancel</a>
                 </div>
             </div>

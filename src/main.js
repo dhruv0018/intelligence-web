@@ -201,6 +201,12 @@ require('./directives/focus');
 require('./directives/autofocus');
 require('./directives/autotab');
 
+require('./v3/factories/v3teams');
+require('./v3/factories/v3schools');
+require('./v3/factories/v3leagues');
+
+require('./v3/models/v3teams');
+
 require('./aggregates');
 
 require('./values');

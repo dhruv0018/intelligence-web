@@ -1,5 +1,3 @@
 <a>
-    {{match.model.name}}
-    <span data-ng-if="match.model.displaySchool">, {{match.model.displaySchool.name}}</span>
-    <span data-ng-if="match.model.displayLeague">, {{match.model.displayLeague.name}}</span>
+    {{match.model.attributes.name}}<span data-ng-if="match.model.getSchool()">, {{match.model.getSchool().attributes.name}}</span><span data-ng-if="match.model.getLeague()">, {{match.model.getLeague().attributes.name}}</span>
 </a>

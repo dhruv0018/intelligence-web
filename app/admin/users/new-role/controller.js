@@ -4,6 +4,7 @@ NewRoleController.$inject = [
     'UsersFactory',
     'TeamsFactory',
     'SportsFactory',
+    'SchoolsFactory',
     'AlertsService',
     'INDEXER_GROUPS_ID',
     'ROLES',
@@ -16,6 +17,7 @@ function NewRoleController (
     users,
     teams,
     sports,
+    schools,
     alerts,
     INDEXER_GROUPS_ID,
     ROLES,
@@ -40,16 +42,38 @@ function NewRoleController (
     $scope.sportsList = sports.getList();
 
     $scope.addRole = function(newRole) {
+        $scope.loading = true;
 
-        let team = newRole.teamId ? teams.get(newRole.teamId): null;
+        function addNewRole (team = null) {
+            $scope.loading = false;
+            /* Add role to the user roles array. */
+            // TODO: Pass in teamId directly rather than getting off the newRole
+            let oldRoles = angular.copy($scope.user.roles);
+            $scope.user.addRole(newRole, team);
+            $scope.saveOrRevertRoles(oldRoles);
+            $scope.newRoles.splice($scope.newRoles.indexOf(newRole), 1);
+            $element.remove();
+        }
 
-        /* Add role to the user roles array. */
-        // TODO: Pass in teamId directly rather than getting off the newRole
-        let oldRoles = angular.copy($scope.user.roles);
-        $scope.user.addRole(newRole, team);
-        $scope.saveOrRevertRoles(oldRoles);
-        $scope.newRoles.splice($scope.newRoles.indexOf(newRole), 1);
-        $element.remove();
+        if (newRole.teamId) {
+            teams.load(newRole.teamId).then(function (teamData) {
+                let team = teamData[0] || null;
+                if (team) {
+
+                    if (team.schoolId) {
+                        schools.load(team.schoolId).then(function () {
+                            addNewRole(team);
+                        });
+                    }
+                    else {
+                        addNewRole(team);
+                    }
+                }
+            });
+        }
+        else {
+            addNewRole();
+        }
     };
 
     $scope.removeRole = (newRole) => {

@@ -14,7 +14,6 @@ var IntelligenceWebClient = angular.module(pkg.name);
 IntelligenceWebClient.factory('TeamsFactory', [
     '$injector',
     '$rootScope',
-    '$q',
     'ROLES',
     'ROLE_ID',
     'SchoolsResource',
@@ -24,10 +23,10 @@ IntelligenceWebClient.factory('TeamsFactory', [
     'LeaguesFactory',
     'SportsFactory',
     'config',
+    '$q',
     function(
         $injector,
         $rootScope,
-        $q,
         ROLES,
         ROLE_ID,
         schools,
@@ -36,7 +35,8 @@ IntelligenceWebClient.factory('TeamsFactory', [
         users,
         leagues,
         sports,
-        config
+        config,
+        $q
     ) {
 
         var TeamsFactory = {
@@ -575,7 +575,7 @@ IntelligenceWebClient.factory('TeamsFactory', [
                         return teams;
                     }
                 );
-            },
+            }
         };
 
         angular.augment(TeamsFactory, BaseFactory);

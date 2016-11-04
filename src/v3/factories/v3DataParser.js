@@ -5,7 +5,8 @@ const angular = window.angular;
 const IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('v3DataParser', [
-    function(){
+    '$injector',
+    function($injector){
         let findInIncludes;
 
         function includedGenerator(included = []) {
@@ -40,7 +41,6 @@ IntelligenceWebClient.factory('v3DataParser', [
             let includes = {};
 
             for(let rel in relationships){
-
                 if(relationships.hasOwnProperty(rel)){
                     linkageProperty = relationships[rel]['data'];
                 }
