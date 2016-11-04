@@ -11,7 +11,6 @@ import AthleteProfileEditProfileAcademicsController from './controller';
 const Academics = angular.module('Athlete.Profile.EditProfile.Academics', [
     'ui.router',
     'ui.bootstrap',
-    'ngMaterial',
     'no-results'
 ]);
 

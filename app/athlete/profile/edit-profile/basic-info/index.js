@@ -10,7 +10,6 @@ import AthleteProfileEditProfileBasicInfoController from './controller';
 const BasicInfo = angular.module('Athlete.Profile.EditProfile.BasicInfo', [
     'ui.router',
     'ui.bootstrap',
-    'ngMaterial',
     'no-results'
 ]);
 

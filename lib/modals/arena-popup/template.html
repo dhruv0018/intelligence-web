@@ -1,0 +1,17 @@
+<div class="modal-body"
+    ng-blur="onBlur()"
+    aria-label="Arena Modal"
+>
+        <xy-coordinates
+            class="{{arena.type}}"
+            ng-model="displayValue.coordinates"
+        >
+
+            <krossover-arena
+                game="game"
+                type="arena.type"
+                ng-model="displayValue.region"
+            ></krossover-arena>
+
+        </xy-coordinates>
+</div>

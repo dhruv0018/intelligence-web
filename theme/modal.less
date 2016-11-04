@@ -129,49 +129,6 @@
     }
 }
 
-/* Angular Material Overrides */
-
-/* Place the dialog above the loading Spinner */
-.md-dialog-container {
-
-    z-index: @zindex-modal;
-
-    /* Prevent Angular Material from pushing the modal down on iOS Safari. */
-    .mobile({
-
-        top: 0 !important;
-    });
-}
-
-/* Set the modal backdrop to blue */
-md-backdrop.md-opaque.md-default-theme {
-
-    background-color: fade(@brand-blue, 80%);
-}
-
-/* On mobile, make the modal dialog full screen */
-md-dialog.md-default-theme {
-
-    @full-screen-modal: {
-
-        display: block;
-        top: @mobile-pad;
-        left: @mobile-pad;
-        bottom: @mobile-pad;
-        right: @mobile-pad;
-        position: absolute;
-        max-width: 100%;
-        max-height: calc(~"100% - @{mobile-pad} - @{mobile-pad}");
-        min-width: 0;
-        min-height: 0;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    };
-
-    .phone(@full-screen-modal);
-    .phone-landscape(@full-screen-modal);
-}
-
 .modal-dialog {
     position: fixed;
     top: 0;

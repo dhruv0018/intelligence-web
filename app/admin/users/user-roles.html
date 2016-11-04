@@ -35,12 +35,11 @@
             class="role-options"
             ng-show="currentUser.hasAccess(role)"
         >
-            <!-- TODO: Remove Angular Material -->
-            <md-button
-                class="remove-role"
+            <a
+                class="btn btn-link"
                 id="remove-user-role-cta"
                 ng-click="removeRole(role)"
-            >Remove</md-button>
+            >REMOVE</a>
         </div>
 
     </li>

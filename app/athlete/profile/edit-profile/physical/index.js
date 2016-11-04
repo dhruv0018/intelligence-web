@@ -12,7 +12,6 @@ import AthleteProfileEditProfilePhysicalController from './controller';
 const Physical = angular.module('Athlete.Profile.EditProfile.Physical', [
     'ui.router',
     'ui.bootstrap',
-    'ngMaterial',
     'no-results'
 ]);
 

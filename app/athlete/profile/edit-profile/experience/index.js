@@ -11,7 +11,6 @@ import AthleteProfileEditProfileExperienceController from './controller';
 const Experience = angular.module('Athlete.Profile.EditProfile.Experience', [
     'ui.router',
     'ui.bootstrap',
-    'ngMaterial',
     'no-results'
 ]);
 

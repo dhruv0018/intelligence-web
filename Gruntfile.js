@@ -257,7 +257,6 @@ module.exports = function(grunt) {
                     'icons.css',
                     'build/icons.data.svg.css',
                     'node_modules/angular-multi-select/angular-multi-select.css',
-                    'node_modules/angular-material/angular-material.css',
                     'node_modules/angular-bootstrap-colorpicker/css/colorpicker.css',
                     'build/build.css',
                     'build/components.css',
@@ -277,7 +276,6 @@ module.exports = function(grunt) {
           },
           src: [
                 'app/**/*.html',
-                'lib/dialogs/**/*.html',
                 'lib/directives/**/*.html',
                 'lib/modals/**/*.html',
                 'lib/features/**/*.html'

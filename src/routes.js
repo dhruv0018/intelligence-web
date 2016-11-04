@@ -18,7 +18,7 @@ IntelligenceWebClient.value('$previousState', {});
 IntelligenceWebClient.run([
     '$timeout',
     'DetectDeviceService',
-    'MobileAppDialog.Service',
+    'MobileAppPopup.Modal',
     'ANONYMOUS_USER',
     '$rootScope',
     '$urlRouter',
@@ -36,7 +36,7 @@ IntelligenceWebClient.run([
     function run(
         $timeout,
         detectDevice,
-        MobileAppDialog,
+        MobileAppModal,
         ANONYMOUS_USER,
         $rootScope,
         $urlRouter,
@@ -172,7 +172,7 @@ IntelligenceWebClient.run([
                 /* If a new user, then only show the mobile app promo dialog. */
                 if (isMobile) {
 
-                    $timeout(MobileAppDialog.show);
+                    MobileAppModal.open();
                 }
             }
         });

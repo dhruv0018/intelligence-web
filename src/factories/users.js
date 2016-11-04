@@ -678,8 +678,6 @@ IntelligenceWebClient.factory('UsersFactory', [
 
                 if (!role) return false;
                 if (!match){
-                    console.log(this, role, match);
-                    console.log(arguments);
                     throw new Error('No role to match specified');
                 }
                 if (!role.type || !match.type) return false;

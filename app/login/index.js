@@ -289,7 +289,7 @@ LoginController.$inject = [
     'AlertsService',
     'UsersFactory',
     'AnalyticsService',
-    'TermsDialog.Service',
+    'TermsPopup.Modal',
     'EMAIL_REQUEST_TYPES'
 ];
 
@@ -307,7 +307,7 @@ function LoginController(
     alerts,
     users,
     analytics,
-    TermsDialog,
+    TermsModal,
     EMAIL_REQUEST_TYPES
 ) {
 
@@ -636,6 +636,6 @@ function LoginController(
     $scope.showTerms = function showTerms (event) {
 
         event.stopPropagation();
-        TermsDialog.show();
+        TermsModal.open();
     };
 }

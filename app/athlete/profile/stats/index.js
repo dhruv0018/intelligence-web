@@ -11,7 +11,6 @@ import AthleteProfileStatsController from './controller';
 const Stats = angular.module('Athlete.Profile.Stats', [
     'ui.router',
     'ui.bootstrap',
-    'ngMaterial',
     'no-results'
 ]);
 

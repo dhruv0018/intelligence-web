@@ -11,7 +11,6 @@ import AthleteProfileEditProfileContactController from './controller';
 const Contact = angular.module('Athlete.Profile.EditProfile.Contact', [
     'ui.router',
     'ui.bootstrap',
-    'ngMaterial',
     'no-results'
 ]);
 

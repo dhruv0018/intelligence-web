@@ -10,7 +10,6 @@ import AthleteProfileAboutController from './controller';
 const About = angular.module('Athlete.Profile.About', [
     'ui.router',
     'ui.bootstrap',
-    'ngMaterial',
     'no-results'
 ]);
 

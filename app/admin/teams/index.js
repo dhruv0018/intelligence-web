@@ -435,7 +435,8 @@ TeamController.$inject = [
     'TEAM_AGE_LEVELS',
     'TEAM_AMATEURPROS',
     'SPORTS',
-    'SPORT_IDS'
+    'SPORT_IDS',
+    'LABELS'
 ];
 
 function TeamController (
@@ -459,7 +460,8 @@ function TeamController (
     TEAM_AGE_LEVELS,
     TEAM_AMATEURPROS,
     SPORTS,
-    SPORT_IDS
+    SPORT_IDS,
+    LABELS
 ) {
 
     $scope.PRIORITIES = PRIORITIES;
@@ -482,6 +484,8 @@ function TeamController (
     $scope.types = Object.keys(TEAM_TYPES).map(key => TEAM_TYPES[key]);
     $scope.ageLevels = Object.keys(TEAM_AGE_LEVELS).map(key => TEAM_AGE_LEVELS[key]);
     $scope.amateurPros = Object.keys(TEAM_AMATEURPROS).map(key => TEAM_AMATEURPROS[key]);
+    $scope.labelOptions = Object.keys(LABELS).map(key => LABELS[key]);
+    $scope.priorityOptions = Object.keys(PRIORITIES).map(key => PRIORITIES[key]);
 
     $scope.$watch('team.isCanonical', function(n, o){
         if(n !== o && o !== undefined){

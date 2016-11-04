@@ -25,9 +25,8 @@ IndexingHeaderController.$inject = [
     'PlaysManager',
     'PlaylistEventEmitter',
     'EVENT',
-    'SendToQaDialog.Service',
-    'AlertsService',
-    '$mdDialog'
+    'SendToQa.Modal',
+    'AlertsService'
 ];
 
 /**
@@ -54,9 +53,8 @@ function IndexingHeaderController(
     playsManager,
     playlistEventEmitter,
     EVENT,
-    SendToQaDialogService,
-    alerts,
-    $mdDialog
+    SendToQaModal,
+    alerts
 ) {
 
     $scope.GAME_STATUSES = GAME_STATUSES;
@@ -102,7 +100,7 @@ function IndexingHeaderController(
         $scope.game.finishAssignment(userId);
         const onSuccess = (game) => {
             $scope.game.extend(game);
-            $mdDialog.hide();
+
             $state.go('IndexerGamesAssigned').then( () => {
                 alerts.add({
                     type: 'success',
@@ -127,12 +125,16 @@ function IndexingHeaderController(
         let isVolleyballGame = $scope.league.sportId === SPORTS.VOLLEYBALL.id;
         let isSoccerGame = $scope.league.sportId === SPORTS.SOCCER.id;
         let locals = {
-            'sendToQa': $scope.sendToQa,
             'flagsUrl': $scope.game.getFlagsUrl(),
             //show the flags only for supported sports
             'showFlags': isBasketballGame || isLacrosseGame || isFootballGame || isVolleyballGame || isSoccerGame
         };
-        let modal = SendToQaDialogService.show(locals);
+
+        SendToQaModal.open(locals).result.then(function(result){
+            if(result) {
+                $scope.sendToQa();
+            }
+        });
     };
 
     $scope.sendToTeam = function() {

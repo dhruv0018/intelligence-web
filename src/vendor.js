@@ -1,11 +1,9 @@
 require('angular/angular');
 require('angular-sanitize/angular-sanitize');
 require('angular-resource/angular-resource');
-require('angular-material/angular-material');
 require('angular-aria/angular-aria');
 require('angular-animate/angular-animate');
 require('angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module');
-require('angular-material-icons/angular-material-icons');
 require('@krossover/angular-bootstrap/dist/ui-bootstrap-tpls');
 require('angular-ui-unique/unique');
 require('angular-ui-showhide/showhide');

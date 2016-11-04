@@ -10,7 +10,6 @@ import AthleteHighlightsController from './controller';
 const Highlights = angular.module('Athlete.Profile.Highlights', [
     'ui.router',
     'ui.bootstrap',
-    'ngMaterial',
     'no-results'
 ]);
 

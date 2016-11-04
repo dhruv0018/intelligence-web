@@ -4,7 +4,7 @@ const angular = window.angular;
 UpdatedTermsAndConditionsController.$inject = [
     'AccountService',
     'SessionService',
-    'TermsDialog.Service',
+    'TermsPopup.Modal',
     '$state',
     '$scope'
 ];
@@ -12,7 +12,7 @@ UpdatedTermsAndConditionsController.$inject = [
 function UpdatedTermsAndConditionsController (
     account,
     session,
-    TermsDialog,
+    TermsPopup,
     $state,
     $scope
 ) {
@@ -21,7 +21,7 @@ function UpdatedTermsAndConditionsController (
 
         /* Show the Terms & Conditions Modal */
         event.stopPropagation();
-        TermsDialog.show();
+        TermsPopup.open();
     };
 
     $scope.acceptTerms = function () {

@@ -24,7 +24,6 @@ const EditProfile = angular.module('Athlete.Profile.EditProfile', [
     'Athlete.Profile.EditProfile.Contact',
     'ui.router',
     'ui.bootstrap',
-    'ngMaterial',
     'no-results'
 ]);
 

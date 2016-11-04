@@ -16,10 +16,10 @@ StyleguideDialogsController.$inject = [
     'RawFilm.Modal',
     'SelectIndexer.Modal',
     'FilmExchangeTeams.Modal',
-    'ArenaDialog.Service',
-    'MobileAppDialog.Service',
-    'TermsDialog.Service',
-    'BreakdownDialog.Service',
+    'ArenaPopup.Modal',
+    'MobileAppPopup.Modal',
+    'TermsPopup.Modal',
+    'BreakdownPopup.Modal',
     '$state',
     '$scope'
 ];
@@ -39,20 +39,20 @@ function StyleguideDialogsController (
     RawFilmModal,
     SelectIndexerModal,
     FilmExchangeTeamsModal,
-    ArenaDialog,
-    MobileAppDialog,
-    TermsDialog,
-    BreakdownDialog,
+    ArenaPopupModal,
+    MobileAppModal,
+    TermsPopup,
+    BreakdownModal,
     $state,
     $scope
 ) {
 
     const dialogs = [
         {
-            name: 'Arena Field',
-            controller: ArenaDialog,
+            name: 'Arena Popup',
+            controller: ArenaPopupModal,
             enabled: false,
-            type: 'Material Dialog',
+            type: 'UI-Bootstrap modal',
             args: []
         },
         {
@@ -148,22 +148,22 @@ function StyleguideDialogsController (
         },
         {
             name: 'Mobile App',
-            controller: MobileAppDialog,
-            type: 'Material Dialog',
+            controller: MobileAppModal,
+            type: 'UI-Bootstrap modal',
             enabled: true,
             args: []
         },
         {
             name: 'Terms',
-            controller: TermsDialog,
-            type: 'Material Dialog',
+            controller: TermsPopup,
+            type: 'UI-Bootstrap modal',
             enabled: true,
             args: []
         },
         {
             name: 'Breakdown',
-            controller: BreakdownDialog,
-            type: 'Material Dialog',
+            controller: BreakdownPopup,
+            type: 'UI-Bootstrap modal',
             enabled: false,
             args: []
         }

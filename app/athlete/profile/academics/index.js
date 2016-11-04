@@ -10,7 +10,6 @@ import AthleteProfileAcademicsController from './controller';
 const Academics = angular.module('Athlete.Profile.Academics', [
     'ui.router',
     'ui.bootstrap',
-    'ngMaterial',
     'no-results'
 ]);
 

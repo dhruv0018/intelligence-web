@@ -121,7 +121,7 @@
     },
     "defaultVideoId": 2,
     "athleteProfile": {
-        "isEnabled": true
+        "isEnabled": false
     },
     "videoplayer": {
         "playbackRate": {

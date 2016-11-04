@@ -27,7 +27,7 @@
                     <tr data-ng-repeat="team in teams">
                         <td>{{team.teamName}}</td>
                         <td>
-                            <fancy-toggle ng-click="toggleSuspend(team.teamId)"></fancy-toggle>
+                            <fancy-toggle model="team.isSuspended" ng-click="toggleSuspend(team.teamId)"></fancy-toggle>
                         </td>
                     </tr>
                 </table>

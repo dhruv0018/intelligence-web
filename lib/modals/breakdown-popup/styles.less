@@ -1,0 +1,37 @@
+.breakdown-dialog {
+
+    display: flex;
+    flex-basis: 100%;
+    height: 100%;
+
+    .modal-lg {
+        width: 80%;
+    }
+
+    .modal-content {
+        height: 100%;
+    }
+
+    .modal-body {
+        height: calc(~'100% - @{modal-header-height}');
+        padding: 0px;
+    }
+
+    // Ensures that the playlist can scroll and maxes out it's height
+    // to the dialog-content
+    .krossover-sidebar,
+    .krossover-playlist {
+        height: 100%;
+    }
+
+    .modal-body {
+        display: flex;
+        flex: 1;
+    }
+
+    .modal-header {
+
+        display: flex;
+        justify-content: space-between;
+    }
+}

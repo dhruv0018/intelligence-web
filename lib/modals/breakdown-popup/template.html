@@ -1,0 +1,19 @@
+<header class="modal-header">
+    <h3 class="modal-title">Play Breakdown</h3>
+    <i class="icon icon-remove pull-right" ng-click="closeModal()"></i>
+</header>
+
+<div class="modal-body">
+
+    <!-- TODO: Temporarily hides sidebar on md-min screensize. Should use
+    flex-direction: column-reverse once the video-player
+    can render an accurate height in the DOM. Look into this. -->
+    <krossover-sidebar class="screen-md-min">
+
+        <krossover-playlist></krossover-playlist>
+
+    </krossover-sidebar>
+
+    <video-player video="video"></video-player>
+
+</div>

@@ -46,9 +46,13 @@
     .navbar-header {
 
         .btn-indexing-back {
-
+            line-height: 0px;
             width: 60px;
             color: @brand-primary;
+
+            &:hover {
+                background-color: @gray-lighter;
+            }
         }
     }
 
@@ -57,18 +61,6 @@
         font-size: 18px;
         font-weight: 400;
         letter-spacing: -0.01em;
-    }
-
-    a.navbar-brand {
-
-        line-height: 65px;
-
-        &,
-        &:hover,
-        &:focus {
-
-            color: @brand-primary;
-        }
     }
 
     .info {

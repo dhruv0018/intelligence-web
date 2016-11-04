@@ -15,8 +15,7 @@ const Users = angular.module('Users', [
     'ui.router',
     'ui.bootstrap',
     'ui.unique',
-    'ui.showhide',
-    'ngMaterial'
+    'ui.showhide'
 ]);
 
 Users.directive('newRole', NewRoleDirective);
