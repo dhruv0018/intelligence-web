@@ -35,12 +35,14 @@ Team.service('Coach.Team.Data.Dependencies', [
     'PlayersFactory',
     'TeamsFactory',
     'SessionService',
+    '$q',
     function(
         users,
         positionsets,
         players,
         teams,
-        session
+        session,
+        $q
     ) {
 
         var Data = {
@@ -56,13 +58,16 @@ Team.service('Coach.Team.Data.Dependencies', [
 
             get teamsAndPlayers() {
 
+                let deferred = $q.defer();
                 var user  = session.getCurrentUser();
 
                 teams.load(user.currentRole.teamId).then(function(){
                     var team = teams.get(session.currentUser.currentRole.teamId);
 
-                    return players.load({ rosterId: team.roster.id });
+                    return players.load({ rosterId: team.roster.id }).then(function(){deferred.resolve();});
                 });
+
+                return deferred.promise;
             }
         };
 
