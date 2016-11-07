@@ -120,7 +120,7 @@ function HeaderController(
             $scope.SPORTS = SPORTS;
             $scope.SPORT_IDS = SPORT_IDS;
             $scope.showOldFilmHome = team.sportId === SPORTS.FOOTBALL.id || team.sportId === SPORTS.VOLLEYBALL.id;
-            if(SPORTS[SPORT_IDS[$scope.league.sportId]].hasInsights && $scope.showOldFilmHome && SPORTS[SPORT_IDS[$scope.league.sportId]].hasAnalytics){
+            if(SPORT_IDS[$scope.league.sportId] && SPORTS[SPORT_IDS[$scope.league.sportId]].hasInsights && $scope.showOldFilmHome && SPORTS[SPORT_IDS[$scope.league.sportId]].hasAnalytics){
                 $scope.isMaxMenu = true;
             }else{
                 $scope.isMaxMenu = false;
