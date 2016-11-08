@@ -13,7 +13,11 @@ var Root = angular.module('root', []);
 
 Root.config([
     '$stateProvider',
-    function config($stateProvider) {
+    '$urlMatcherFactoryProvider',
+    function config($stateProvider, $urlMatcherFactoryProvider) {
+        //allow trailing slashes
+        //https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions#how-to-make-a-trailing-slash-optional-for-all-routes
+        $urlMatcherFactoryProvider.strictMode(false);
 
         $stateProvider
 
