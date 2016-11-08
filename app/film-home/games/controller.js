@@ -1,9 +1,13 @@
 const angular = window.angular;
+const ITEMSPERPAGE = 25;
 
 FilmHomeGamesController.$inject = [
+    '$q',
     '$scope',
     '$filter',
     '$state',
+    '$stateParams',
+    'config',
     'UsersFactory',
     'GamesFactory',
     'TeamsFactory',
@@ -15,6 +19,7 @@ FilmHomeGamesController.$inject = [
     'ShareFilm.Modal',
     'STATE_NAMES',
     'ROLES',
+    'GAME_STATUSES',
     'GAME_TYPES',
     'SPORTS'
 ];
@@ -23,9 +28,12 @@ FilmHomeGamesController.$inject = [
  * Film Home Games page controller
  */
 function FilmHomeGamesController(
+    $q,
     $scope,
     $filter,
     $state,
+    $stateParams,
+    config,
     usersFactory,
     gamesFactory,
     teamsFactory,
@@ -37,25 +45,24 @@ function FilmHomeGamesController(
     shareFilmModal,
     STATE_NAMES,
     ROLES,
+    GAME_STATUSES,
     GAME_TYPES,
     SPORTS
 ) {
+
     let currentUser = session.getCurrentUser();
     $scope.currentUser = currentUser;
     $scope.ROLES = ROLES;
     $scope.STATE_NAMES = STATE_NAMES;
     $scope.teams = [];
     let gamesCopy = [];
-    /* League and Season info for WSC highlights */
+    $scope.games = data.games.data;
+    $scope.gamesTotalCount = data.games.count;
+    $scope.itemsPerPage = ITEMSPERPAGE;
+    $scope.isFiltered = false;
+    let timeout = null;
+
     if (currentUser.is(ROLES.COACH)) {
-        /* Coach gets all games relevant to team unless it's a shared film with incomplete video */
-        $scope.games = gamesFactory.getByRelatedRole().filter(game => {
-            if (isShared(game)) {
-                return game.video.isComplete();
-            } else {
-                return game;
-            }
-        });
         gamesCopy = angular.copy($scope.games);
         $scope.NoData = (gamesCopy.length == 0) ? true : false;
         let team = teamsFactory.get(session.getCurrentTeamId());
@@ -73,14 +80,16 @@ function FilmHomeGamesController(
         if (season) $scope.seasonId = season.id;
         $scope.leagueId = league.id;
         $scope.currentTeamIsBasketball = sport.id === SPORTS.BASKETBALL.id;
+
+        if (!$scope.NoData) {
+            let currentPage = $stateParams.page||1;
+            $scope.page = {
+                currentPage
+            };
+        }
     } else if (currentUser.is(ROLES.ATHLETE)) {
         /* Athlete gets all games relevent to team with completed video */
         $scope.NoData = (data.games.length == 0) ? true : false;
-        $scope.games = gamesFactory.getByRelatedRole().filter(game => {
-            if (game.video) {
-                return game.video.isComplete();
-            }
-        });
         gamesCopy = [];
         //For athlete the type of sport might be different
         $scope.games.forEach(game =>{
@@ -117,59 +126,70 @@ function FilmHomeGamesController(
     $scope.$on('applyFilter', function(event, data){
         $scope.filtering = true;
         $scope.filters = data;
-        applyFilter();
+        $scope.page.currentPage = 1; // Revert back to first page when filtering
+        let start = 0;
+        applyFilter(start);
     });
 
-    //applyFilter function, you can call multiple places
-    function applyFilter() {
+    // Query the games endpoint with an updated filter
+    function applyFilter(start) {
+        let filter = {start};
+
+        if ($scope.query && $scope.query.length) {
+            filter.schoolOrTeamName = $scope.query;
+        }
+
         angular.forEach($scope.filters, (value, key)=>{
             if(!value){
                 delete $scope.filters[key];
             }
         });
-        angular.forEach($scope.games, function(game, index) {
-            let result = 0;
-            game.hide = true;
-            if ($scope.filters['all']) {
-                result = 1;
-            } else {
-                if ($scope.filters['my'] && game.isMyGame()) {
-                    result++;
-                }
-                if ($scope.filters['scouting'] && game.gameType === GAME_TYPES.SCOUTING.id) {
-                    result++;
-                }
-                if ($scope.filters['scrimmage'] && game.gameType === GAME_TYPES.SCRIMMAGE.id) {
-                    result++;
-                }
-                if ($scope.filters['conference'] && game.gameType === GAME_TYPES.CONFERENCE.id) {
-                    result++;
-                }
-                if ($scope.filters['breakdown'] && game.isDelivered()) {
-                    let breakdownIsAvailable =
-                        game.isSharedWithCurrentUser() ?
-                        game.isBreakdownSharedWithCurrentUser() :
-                        true;
-                    if(breakdownIsAvailable){
-                        result++;
-                    }
-                }
-                if ($scope.filters['shared'] && (game.isSharedWithUser(currentUser) || game.isSharedWithTeamId(currentUser.currentRole.teamId))) {
-                    result++;
-                }
-                if ($scope.filters['selfEditor'] && game.isSelfEdited) {
-                    if(!game.isSharedWithCurrentUser()){
-                        result++;
-                    }
+        if ($scope.filters['all']) {
+                $scope.isFiltered = false;
+                queryGames(filter);
+        } else {
+            if ($scope.filters['my']) {
+                if (currentUser.is(ROLES.ATHLETE)) {
+                    filter.uploaderTeamId = teamIds;
+                } else {
+                    filter.uploaderTeamId = team.id;
                 }
             }
-            if (result === Object.keys($scope.filters).length) {
-                game.hide = false;
+            if ($scope.filters['scouting']) {
+                if (!filter['gameType[]']) filter['gameType[]'] = [];
+                filter['gameType[]'].push(GAME_TYPES.SCOUTING.id);
             }
-            if(index == $scope.games.length -1 && $scope.filtering){
-                $scope.filtering = false;
+            if ($scope.filters['scrimmage']) {
+                if (!filter['gameType[]']) filter['gameType[]'] = [];
+                filter['gameType[]'].push(GAME_TYPES.SCRIMMAGE.id);
             }
-        });
+            if ($scope.filters['conference']) {
+                if (!filter['gameType[]']) filter['gameType[]'] = [];
+                filter['gameType[]'].push(GAME_TYPES.CONFERENCE.id);
+            }
+            if ($scope.filters['breakdown']) {
+                filter.status = GAME_STATUSES.FINALIZED.id;
+            }
+            if ($scope.filters['shared']) {
+                if (currentUser.is(ROLES.ATHLETE)) {
+                    filter.sharedWithUserId = currentUser.id;
+                } else {
+                    filter.sharedWithUserOrTeam = currentUser.getCurrentRole().id;
+                }
+            }
+            if ($scope.filters['selfEditor']) {
+                if (currentUser.is(ROLES.ATHLETE)) {
+                    filter.uploaderTeamId = teamIds;
+                    filter.selfEdited = true;
+                } else {
+                    filter.uploaderTeamId = team.id;
+                    filter.selfEdited = true;
+                }
+            }
+
+            $scope.isFiltered = true;
+            queryGames(filter);
+        }
     }
 
     $scope.isNoResult = function() {
@@ -185,18 +205,12 @@ function FilmHomeGamesController(
     };
 
     $scope.search = function() {
-        if ($scope.query.length >= 1) {
-            $scope.games = gamesCopy.filter(function(game){
-                let homeTeam = game.getHomeTeamName(game).toLowerCase();
-                let awayTeam = game.getAwayTeamName(game).toLowerCase();
-                let keywords = angular.copy($scope.query).toLowerCase();
-                return (homeTeam.indexOf(keywords) > -1 || awayTeam.indexOf(keywords) > -1);
-            });
-            applyFilter();
-        } else if ($scope.query.length === 0) {
-            $scope.games = gamesCopy;
-            applyFilter();
-        }
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            $scope.filtering = true;
+            let start = 0;
+            applyFilter(start);
+        }, 500);
     };
 
     $scope.showBreakdown = function(game) {
@@ -287,6 +301,34 @@ function FilmHomeGamesController(
         };
         $state.go(stateName, stateParams);
     };
+
+    $scope.pageChanged = function() {
+        document.getElementById('film-home-games-data').scrollTop = 0;
+        let start = ($scope.page.currentPage - 1) * ITEMSPERPAGE;
+        applyFilter(start);
+    };
+
+    function queryGames(filter = {}) {
+        filter.count = ITEMSPERPAGE;
+        filter.exclude = 'allTelestrations';
+        filter.isDeleted = false;
+        filter.sortBy = 'datePlayed';
+        filter.sortOrder = 'desc';
+
+        if (currentUser.is(ROLES.ATHLETE)) {
+            filter.athleteRelatedUserId = currentUser.id;
+        } else {
+            filter.relatedRoleId = data.games.roleId;
+        }
+
+        let gamesPromise = gamesFactory.query(filter);
+        let gamesCount = gamesFactory.totalCount(filter, config.api.uri + 'games');
+        $q.all([gamesPromise, gamesCount]).then(paginatedGamesData => {
+            $scope.games = paginatedGamesData[0];
+            $scope.gamesTotalCount = paginatedGamesData[1];
+            $scope.filtering = false;
+        });
+    }
 
     $scope.bypassClickEvents = function($event) {
         $event.preventDefault();

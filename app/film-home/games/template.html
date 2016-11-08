@@ -2,7 +2,7 @@
     <div class="film-home-actions-container" ng-show="!NoData">
         <form class="film-search">
             <i class="icon icon-search"></i>
-            <input type="text" id="film-search-cta" class="form-control" ng-model="query" placeholder="Search by school or team" ng-change="search()"/>
+            <input type="text" id="film-search-cta" class="form-control" ng-model="query" placeholder="Search by school or team" ng-keyup="search()"/>
         </form>
         <game-filter filters="filters" data-game-length="games.length"></game-filter>
         <button class="add-game-btn" ng-if="currentUser.is(ROLES.COACH)" ui-sref="add-film"><i class="icon icon-plus"></i> Add Game</button>
@@ -16,139 +16,141 @@
         <p ng-show="currentUser.is(ROLES.ATHLETE)">Tell your coach to add games so you can start watching film and making reels!</p>
         <button class="btn-outline" ui-sref="add-film" ng-show="currentUser.is(ROLES.COACH)"><i class="icon icon-plus"></i> Add your first game</button>
     </div>
-    <div class="flex-table" ng-show="!NoData">
-            <div class="flex-header-container">
-                <div class="flex-header">
-                    <div class="header-cell status-container"></div>
-                    <div class="header-cell thumbnail-container"></div>
-                    <div class="header-cell team">Away</div>
-                    <div class="header-cell team">Home</div>
-                    <div class="header-cell score">Score</div>
-                    <div class="header-cell game-date">Game Date</div>
-                    <div class="header-cell actions"></div>
-                    <div class="header-cell share-container"></div>
-                </div>
+    <div class="flex-table" ng-show="!NoData" ng-class="{'has-pagination': gamesTotalCount > itemsPerPage}">
+        <div class="flex-header-container">
+            <div class="flex-header">
+                <div class="header-cell status-container"></div>
+                <div class="header-cell thumbnail-container"></div>
+                <div class="header-cell team">Away</div>
+                <div class="header-cell team">Home</div>
+                <div class="header-cell score">Score</div>
+                <div class="header-cell game-date">Game Date</div>
+                <div class="header-cell actions"></div>
+                <div class="header-cell share-container"></div>
             </div>
+        </div>
 
-            <div class="flex-data-container force-scrollbar">
-                <div class="flex-data-none text-center" ng-show="isNoResult()">
-                    <p>No results found.</p>
-                    <h4>Try adjusting your search or filter to find what you're looking for</h4>
-                </div>
-                <i class="icon icon-spinner spinner" style="font-size: 80px" ng-show="filtering"></i>
+        <div id="film-home-games-data" class="flex-data-container force-scrollbar">
+            <div class="flex-data-none text-center" ng-show="isNoResult()">
+                <p>No results found.</p>
+                <h4>Try adjusting your search or filter to find what you're looking for</h4>
+            </div>
+            <krossover-spinner size="80px" ng-show="filtering"></krossover-spinner>
 
-                <div class="flex-data">
-
-                    <div class="repeated-game-row" ng-repeat="game in games | orderBy: '-datePlayed'" ng-hide="game.hide">
-                        <div class="body-row" ng-click="goGamePage($event, 'Games', game)">
-                            <div class="body-cell status-container">
-                                <i class="icon icon-processing" ng-if="game.video.isIncomplete()" tooltip="Film Uploading" tooltip-placement="right"></i>
-                                <i class="icon icon-processing" ng-if="game.video.isUploaded()" tooltip="Film Processing" tooltip-placement="right"></i>
-                                <i class="icon icon-error" ng-if="game.video.isFailed()" tooltip="Error while processing. Contact support@krossover.com" tooltip-placement="right"></i>
-                                <span class="icon-placeholder" ng-if="!game.video.isFailed()&& !game.video.isIncomplete() && !game.video.isUploaded()"></span>
+            <div class="flex-data" ng-hide="filtering">
+                <div class="repeated-game-row" ng-repeat="game in games | orderBy: '-datePlayed'" ng-hide="game.hide">
+                    <div class="body-row" ng-click="goGamePage($event, 'Games', game)">
+                        <div class="body-cell status-container">
+                            <i class="icon icon-processing" ng-if="game.video.isIncomplete()" tooltip="Film Uploading" tooltip-placement="right"></i>
+                            <i class="icon icon-processing" ng-if="game.video.isUploaded()" tooltip="Film Processing" tooltip-placement="right"></i>
+                            <i class="icon icon-error" ng-if="game.video.isFailed()" tooltip="Error while processing. Contact support@krossover.com" tooltip-placement="right"></i>
+                            <span class="icon-placeholder" ng-if="!game.video.isFailed()&& !game.video.isIncomplete() && !game.video.isUploaded()"></span>
+                        </div>
+                        <div class="body-cell thumbnail-container">
+                            <a ui-sref="Games({id:game.id})">
+                                <img class="thumbnail-img" ng-if="game.video.isComplete()" ng-src="{{game.video.thumbnail}}" alt="Game"/>
+                                <img class="thumbnail-img" ng-if="!game.video.isComplete() && sportName" ng-src="assets/{{sportName}}-stock.png" alt="Game"/>
+                                <img class="thumbnail-img" ng-if="!game.video.isComplete() && game.sportName" ng-src="assets/{{game.sportName}}-stock.png" alt="Game"/>
+                            </a>
+                        </div>
+                        <div class="body-cell team">
+                            {{game.getAwayTeamName()}}
+                        </div>
+                        <div class="body-cell team">
+                            {{game.getHomeTeamName()}}
+                        </div>
+                        <div class="body-cell score">
+                            {{game.score}}
+                        </div>
+                        <div class="body-cell game-date">
+                            {{game.datePlayed|date:'MMM dd, yyyy'}}
+                            <span class="subtext" ng-if="isShared(game)">shared by {{getSharedByUserName(game)}}</span>
+                            <span class="subtext" ng-if="game.sportsAssociationConferenceFilmExchange && !isShared(game)">Copied from {{game.sportsAssociationConferenceFilmExchange.name}}</span>
+                            <span class="subtext" ng-if="game.copiedFromTeamId && !isShared(game)">Copied from {{getCopiedFromTeamName(game)}} account</span>
+                        </div>
+                        <div class="body-cell actions" ng-class="{'game-states-container': game.isDelivered()}">
+                            <div ng-if="!(game.video.isIncomplete() ||  game.video.isUploaded())">
+                                <button class="btn-outline" ng-if="showBreakdown(game)" ng-click="goGamePage($event, 'Games.Info', game)">Submit for Breakdown</button>
+                                <span ng-if="game.isBeingBrokenDown() && currentUser.is(ROLES.COACH)" class="breakdown-status">Breakdown In Progress...</span>
                             </div>
-                            <div class="body-cell thumbnail-container">
-                                <a ui-sref="Games({id:game.id})">
-                                    <img class="thumbnail-img" ng-if="game.video.isComplete()" ng-src="{{game.video.thumbnail}}" alt="Game"/>
-                                    <img class="thumbnail-img" ng-if="!game.video.isComplete() && sportName" ng-src="assets/{{sportName}}-stock.png" alt="Game"/>
-                                    <img class="thumbnail-img" ng-if="!game.video.isComplete() && game.sportName" ng-src="assets/{{game.sportName}}-stock.png" alt="Game"/>
-                                </a>
-                            </div>
-                            <div class="body-cell team">
-                                {{game.getAwayTeamName()}}
-                            </div>
-                            <div class="body-cell team">
-                                {{game.getHomeTeamName()}}
-                            </div>
-                            <div class="body-cell score">
-                                {{game.score}}
-                            </div>
-                            <div class="body-cell game-date">
-                                {{game.datePlayed|date:'MMM dd, yyyy'}}
-                                <span class="subtext" ng-if="isShared(game)">shared by {{getSharedByUserName(game)}}</span>
-                                <span class="subtext" ng-if="game.sportsAssociationConferenceFilmExchange && !isShared(game)">Copied from {{game.sportsAssociationConferenceFilmExchange.name}}</span>
-                                <span class="subtext" ng-if="game.copiedFromTeamId && !isShared(game)">Copied from {{getCopiedFromTeamName(game)}} account</span>
-                            </div>
-                            <div class="body-cell actions" ng-class="{'game-states-container': game.isDelivered()}">
-                                <div ng-if="!(game.video.isIncomplete() ||  game.video.isUploaded())">
-                                    <button class="btn-outline" ng-if="showBreakdown(game)" ng-click="goGamePage($event, 'Games.Info', game)">Submit for Breakdown</button>
-                                    <span ng-if="game.isBeingBrokenDown() && currentUser.is(ROLES.COACH)" class="breakdown-status">Breakdown In Progress...</span>
-                                </div>
-                                <div ng-if="game.video.isIncomplete() || game.video.isUploaded()">
-                                    <span ng-if="game.video.isIncomplete()" class="breakdown-status">Video is Uploading...</span>
-                                    <span ng-if="game.video.isUploaded()" class="breakdown-status">Video is Processing...</span>
-                                </div>
-                                <div
-                                    ng-if="game.isDelivered() && gameHasState(game, 'Games.Stats')"
-                                    ng-click="selectState(game, 'Games.Stats', $event)"
-                                    class="state-container">
-                                    <i class="icon icon-stats-2"></i>
-                                    <span class="action-label">Stats</span>
-                                </div>
-                                <div
-                                    ng-if="game.isDelivered() && gameHasState(game, 'Games.ArenaChart')"
-                                    ng-click="selectState(game, 'Games.ArenaChart', $event)"
-                                    class="state-container">
-                                    <i class="icon icon-shot-chart"></i>
-                                    <span class="action-label">Shot Chart</span>
-                                </div>
-
-                                <div
-                                    ng-if="game.isDelivered() && gameHasState(game, 'Games.Formations')"
-                                    ng-click="selectState(game, 'Games.Formations', $event)"
-                                    class="state-container">
-                                    <i class="icon icon-formation_report"></i>
-                                    <span class="action-label">Formations</span>
-                                </div>
-                                <div
-                                    class="state-container dropdown"
-                                    dropdown
-                                    dropdown-toggle
-                                    is-open="status.isopen"
-                                    ng-click="bypassClickEvents($event)"
-                                    ng-if="game.isDelivered()">
-                                    <span class="dropdown-toggle">
-                                        <i class="icon icon-overflow"></i>
-                                        <span class="action-label">More</span>
-                                    </span>
-                                    <ul class="dropdown-menu">
-                                        <li ng-repeat="state in game.states" ng-hide="hideStateForDropdown(state)">
-                                            <a ng-click="selectState(game, state.name)">
-                                                <i class="icon" ng-class="{
-                                                        'icon-raw-film': state.name === 'Games.RawFilm',
-                                                        'icon-game-info': state.name === 'Games.Info',
-                                                        'icon-breakdown': state.name === 'Games.SelfEditor',
-                                                        'icon-dd-report-2': state.name === 'Games.DownAndDistance'}"></i>
-                                                <span>{{STATE_NAMES[state.name].display}}</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div ng-if="game.video.isIncomplete() || game.video.isUploaded()">
+                                <span ng-if="game.video.isIncomplete()" class="breakdown-status">Video is Uploading...</span>
+                                <span ng-if="game.video.isUploaded()" class="breakdown-status">Video is Processing...</span>
                             </div>
                             <div
-                                class="body-cell share-container"
-                                ng-click="openShareModal($event, game)"
-                                ng-hide="isShared(game) || game.video.isFailed()
-                                || (currentUser.is(ROLES.ATHLETE) && game.isCopiedFromBreakdownLibrary())">
-                                <i class="icon icon-share-thin"></i>
-                                <span class="action-label">Share</span>
+                                ng-if="game.isDelivered() && gameHasState(game, 'Games.Stats')"
+                                ng-click="selectState(game, 'Games.Stats', $event)"
+                                class="state-container">
+                                <i class="icon icon-stats-2"></i>
+                                <span class="action-label">Stats</span>
                             </div>
-                            <div class="body-cell share-container" ng-show="isShared(game) || game.video.isFailed()"></div>
+                            <div
+                                ng-if="game.isDelivered() && gameHasState(game, 'Games.ArenaChart')"
+                                ng-click="selectState(game, 'Games.ArenaChart', $event)"
+                                class="state-container">
+                                <i class="icon icon-shot-chart"></i>
+                                <span class="action-label">Shot Chart</span>
+                            </div>
+                            <div
+                                ng-if="game.isDelivered() && gameHasState(game, 'Games.Formations')"
+                                ng-click="selectState(game, 'Games.Formations', $event)"
+                                class="state-container">
+                                <i class="icon icon-formation_report"></i>
+                                <span class="action-label">Formations</span>
+                            </div>
+                            <div
+                                class="state-container dropdown"
+                                dropdown
+                                dropdown-toggle
+                                is-open="status.isopen"
+                                ng-click="bypassClickEvents($event)"
+                                ng-if="game.isDelivered()">
+                                <span class="dropdown-toggle">
+                                    <i class="icon icon-overflow"></i>
+                                    <span class="action-label">More</span>
+                                </span>
+                                <ul class="dropdown-menu">
+                                    <li ng-repeat="state in game.states" ng-hide="hideStateForDropdown(state)">
+                                        <a ng-click="selectState(game, state.name)">
+                                            <i class="icon" ng-class="{
+                                                    'icon-raw-film': state.name === 'Games.RawFilm',
+                                                    'icon-game-info': state.name === 'Games.Info',
+                                                    'icon-breakdown': state.name === 'Games.SelfEditor',
+                                                    'icon-dd-report-2': state.name === 'Games.DownAndDistance'}"></i>
+                                            <span>{{STATE_NAMES[state.name].display}}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <wsc-link
-                            league-id="leagueId"
-                            season-id="seasonId"
-                            teams="teams"
-                            feature="WSCLink"
-                            ng-if="filters['all'] === true
-                                    && !query.length
-                                    && seasonId
-                                    && currentTeamIsBasketball
-                                    && (($index+1 === 5) || (games.length < 5 && $index+1 === games.length))">
-                            </wsc-link>
+                        <div
+                            class="body-cell share-container"
+                            ng-click="openShareModal($event, game)"
+                            ng-hide="isShared(game) || game.video.isFailed()
+                                || (currentUser.is(ROLES.ATHLETE) && game.isCopiedFromBreakdownLibrary())">
+                            <i class="icon icon-share-thin"></i>
+                            <span class="action-label">Share</span>
+                        </div>
+                        <div class="body-cell share-container" ng-show="isShared(game) || game.video.isFailed()"></div>
                     </div>
+                    <wsc-link
+                        league-id="leagueId"
+                        season-id="seasonId"
+                        teams="teams"
+                        feature="WSCLink"
+                        ng-if="!isFiltered
+                                && !query.length
+                                && seasonId
+                                && currentTeamIsBasketball
+                                && (($index+1 === 5) || (games.length < 5 && $index+1 === games.length))">
+                        </wsc-link>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="pagination-footer" ng-show="gamesTotalCount > itemsPerPage">
+        <pagination total-items="gamesTotalCount" ng-model="page.currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemsPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
     </div>
 
 </div>

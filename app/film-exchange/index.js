@@ -1,6 +1,6 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
-const ITEMSPERPAGE = 10; //25
+const ITEMSPERPAGE = 25; //25
 const FilmExchangeTemplateUrl = 'app/film-exchange/film-exchange.html';
 
 /**

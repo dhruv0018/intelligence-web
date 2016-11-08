@@ -52,7 +52,7 @@ FilmHome.config([
         $stateProvider
 
             .state('FilmHome', {
-                url: '/film-home',
+                url: '/film-home?page',
                 parent: 'base',
                 abstract: true,
                 views: {

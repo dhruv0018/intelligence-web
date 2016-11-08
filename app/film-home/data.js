@@ -1,7 +1,10 @@
 const angular = window.angular;
+const ITEMSPERPAGE = 25;
 
 FilmHomeGames.$inject = [
     '$q',
+    '$stateParams',
+    'config',
     'UsersFactory',
     'GamesFactory',
     'TeamsFactory',
@@ -15,6 +18,8 @@ FilmHomeGames.$inject = [
 
 export function FilmHomeGames (
     $q,
+    $stateParams,
+    config,
     usersFactory,
     gamesFactory,
     teamsFactory,
@@ -36,6 +41,9 @@ export function FilmHomeGames (
         get games(){
             let currentUser = session.getCurrentUser();
             let deferred = $q.defer();
+            let start = ITEMSPERPAGE*($stateParams.page-1) || 0;
+            let count = ITEMSPERPAGE;
+            let gamesUrl = config.api.uri + 'games';
             usersFactory.load(currentUser.id).then(userResponse => {
                 /* TODO: this is a temporary measure to ensure we get the games for the right role
                  * Update this when we can trust the roleId to be consistent
@@ -48,14 +56,45 @@ export function FilmHomeGames (
                     }
                 })[0];
 
-                leaguesFactory.load().then(response =>{
-                    if(currentRole.type.id === ROLES.ATHLETE.type.id){
-                        return gamesFactory.load({ relatedUserId: currentUser.id, exclude: 'allTelestrations' }).then(response =>{
-                            deferred.resolve(response);
+                leaguesFactory.load().then(leagues => {
+                    if(currentRole.type.id === ROLES.ATHLETE.type.id) {
+                        let filter = {
+                            athleteRelatedUserId: currentUser.id,
+                            start,
+                            count,
+                            exclude: 'allTelestrations',
+                            isDeleted: false,
+                            sortBy: 'datePlayed',
+                            sortOrder: 'desc'
+                        };
+                        let gamesPromise = gamesFactory.query(filter);
+                        let gamesCount = gamesFactory.totalCount(filter, gamesUrl);
+                        return $q.all([gamesPromise, gamesCount]).then(data => {
+                            let gameData = {
+                                data: data[0],
+                                count: data[1]
+                            };
+                            deferred.resolve(gameData);
                         });
-                    }else{
-                        return gamesFactory.load({ relatedRoleId: currentRole.id, exclude: 'allTelestrations' }).then(response =>{
-                            deferred.resolve(response);
+                    } else {
+                        let filter = {
+                            relatedRoleId: currentRole.id,
+                            start,
+                            count,
+                            exclude: 'allTelestrations',
+                            isDeleted: false,
+                            sortBy: 'datePlayed',
+                            sortOrder: 'desc'
+                        };
+                        let gamesPromise = gamesFactory.query(filter);
+                        let gamesCount = gamesFactory.totalCount(filter, gamesUrl);
+                        return $q.all([gamesPromise, gamesCount]).then(data => {
+                            let gameData = {
+                                data: data[0],
+                                count: data[1],
+                                roleId: currentRole.id
+                            };
+                            deferred.resolve(gameData);
                         });
                     }
                 });

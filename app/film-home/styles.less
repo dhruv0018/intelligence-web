@@ -148,6 +148,10 @@
 
         .film-home-games, .film-home-reels {
             height: 100%;
+
+            .flex-table.has-pagination {
+                height: calc(~"100% - 122px");
+            }
         }
 
         .film-home-actions-container {
@@ -212,7 +216,15 @@
             margin-top: 20px;
             height: calc(~"100% - 56px");
 
-            .tooltip-inner{
+            krossover-spinner {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-top: 50px;
+                color: @brand-secondary;
+            }
+
+            .tooltip-inner {
                 width: 180px;
                 max-width: 180px;
             }
@@ -466,6 +478,11 @@
             border: thin solid @gray-border;
             border-top: none;
             background-color: white;
+        }
+
+        .pagination-footer {
+            display: flex;
+            justify-content: center;
         }
     }
 }
