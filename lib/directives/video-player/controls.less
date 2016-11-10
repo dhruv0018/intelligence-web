@@ -218,6 +218,7 @@ videogular vg-volume-bar {
         background-color: rgb(201, 201, 201);
         position: absolute;
         border-radius: 5px;
+        box-shadow: 0 0 0 0.5px @gray;
     }
 
     .volumeValue {
@@ -229,6 +230,16 @@ videogular vg-volume-bar {
         border-bottom-right-radius: 5px;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            right: -3px;
+            top: -10px;
+            border: solid 8px rgb(201, 201, 201);
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px @gray;
+        }
     }
 
     .volumeClickArea {
