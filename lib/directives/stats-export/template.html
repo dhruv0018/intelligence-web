@@ -10,7 +10,7 @@
                 <i class="icon icon-file-text"></i>
                 <a ng-href="{{game.getCSVDownloadLink()}}" download>Excel - All Game Stats (.csv)</a>
             </div>
-            <span ng-repeat="team in teams">
+            <span ng-if="allowMaxPrepExport" ng-repeat="team in teams">
                 <div class="dropdown-option">
                     <i class="icon icon-file-text"></i>
                     <a ng-href="{{game.getMaxprepsDownloadLinkByTeam(team)}}" download>MaxPreps - All Stats {{team.name}}</a>
