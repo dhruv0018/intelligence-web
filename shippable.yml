@@ -15,7 +15,7 @@ build:
 
     pre_ci_boot:
         image_name: 116065022286.dkr.ecr.us-east-1.amazonaws.com/shippable-web
-        image_tag: feature-web-clean
+        image_tag: latest
         pull: true
         options: "-e HOME=/root"
     #commands in this section run inside your CI container. In addition, any commands such as ls, in this section can be used to skip default processing for CI.
