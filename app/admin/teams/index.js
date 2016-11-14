@@ -701,6 +701,38 @@ function TeamsController (
         $scope.filter.region = item.address.regionCode;
     };
 
+    function setSearchResults(teams, count) {
+        let deferred = $q.defer();
+        $scope.query = deferred.promise;
+
+        let schoolIds = [];
+        teams.forEach(function (team) {
+            if (team.schoolId) {
+                schoolIds.push(team.schoolId);
+            }
+        });
+
+        function setResults() {
+            if (count) {
+                $scope.totalCount = count;
+            }
+
+            $scope.teams = teams;
+            $scope.searching = false;
+        }
+
+        if (schoolIds.length) {
+            schools.load(schoolIds).then(function() {
+                setResults();
+                deferred.resolve();
+            });
+        }
+        else {
+            setResults();
+            deferred.resolve();
+        }
+    }
+
     $scope.search = function(query) {
 
         let params = angular.copy(query);
@@ -733,16 +765,8 @@ function TeamsController (
             query.count = TEAMSPERPAGE;
             $scope.page.currentPage = 1;
 
-            $scope.query = teams.getTeamsList(query).then(function(teams) {
-                if(teams.count) {
-                    $scope.totalCount = teams.count;
-                }
-
-                $scope.teams = teams.data;
-
-            }).finally(function() {
-
-                $scope.searching = false;
+            $scope.query = teams.getTeamsList(query).then(function(teamData) {
+                setSearchResults(teamData.data, teamData.count);
             });
         }
 
@@ -770,12 +794,7 @@ function TeamsController (
         $scope.teams.length = 0;
 
         $scope.query = teams.getTeamsList(filter, false).then(function(teams) {
-
-            $scope.teams = teams.data;
-
-        }).finally(function() {
-
-            $scope.searching = false;
+            setSearchResults(teams.data, teams.count);
         });
     };
 
