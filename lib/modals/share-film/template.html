@@ -86,7 +86,7 @@
             </div>
 
             <div class="team-share-table">
-                <div class="team-share-player" ng-repeat="player in playersWithAccounts" ng-click="shareReelWithPlayerToggle(player)" ng-class="{'player-selected': film.isSharedWithUser(usersMap[player.userId])}">
+                <div class="team-share-player" ng-repeat="player in playersWithAccounts" ng-click="shareReelWithPlayerToggle(player)" ng-class="{'player-selected': film.isSharedWithUser(usersMap[player.userId]), 'disabled': !usersMap[player.userId]}">
                     <check-box id="share-film-team-player-{{$index}}-cta" checked="film.isSharedWithUser(usersMap[player.userId])"></check-box>
                     <span ng-show="team.roster.playerInfo[player.id].jerseyNumber">#{{team.roster.playerInfo[player.id].jerseyNumber}}&nbsp;</span> {{player.firstName}} {{player.lastName}}
                 </div>
