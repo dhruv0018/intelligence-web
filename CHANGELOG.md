@@ -1,3 +1,12 @@
+# v104.0#
+## Features##
+- Breakdown Libraries
+- Updates to filter logic on film home
+
+## Fixes##
+- +/- 3 buttons on film editor fixed
+- URLs with trailing slash causing infinite spinner
+
 # v103.0#
 ## Features##
 - Web cleanup for node upgrade
