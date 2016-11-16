@@ -15,7 +15,7 @@
                      href
                      id="account-contact-info-cta"
                      ui-sref="Account.ContactInfo"
-                    ><i class="icon icon-info-circle"></i> Contact Info</a>
+                    >Contact Info</a>
 
                 </li>
                 <li ui-sref-active="active">
@@ -24,7 +24,16 @@
                      href
                      id="account-terms-and-conditions-cta"
                      ui-sref="Account.TermsAndConditions"
-                    ><i class="icon icon-book"></i> Terms &amp; Conditions</a>
+                    >Terms &amp; Conditions</a>
+
+                </li>
+                <li ui-sref-active="active" ng-show="currentUser.is(ROLES.COACH)">
+
+                    <a
+                     href
+                     id="account-plans-and-packages-cta"
+                     ui-sref="Account.PlansAndPackages"
+                    >Plans &amp; Packages</a>
 
                 </li>
 

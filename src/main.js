@@ -213,9 +213,13 @@ require('./values');
 
 require('./entities');
 
+// v3 resource models
 require('./v3/models/v3Resource');
 require('./v3/models/v3BreakdownRating');
 require('./v3/models/v3Example');
+require('./v3/models/v3Orders');
+
+// v3 factories
 require('./v3/factories/v3Base');
 require('./v3/factories/v3BreakdownRatings');
 require('./v3/factories/v3Example');
@@ -223,6 +227,8 @@ require('./v3/factories/v3Conferences');
 require('./v3/factories/v3DataParser');
 require('./v3/factories/v3IndexerGroups');
 require('./v3/factories/v3IndexerGroupAllocationPermissions');
+require('./v3/factories/v3Products');
+require('./v3/factories/v3Orders');
 
 import CustomTagsEvent from './events/customtags';
 

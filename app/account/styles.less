@@ -21,4 +21,46 @@
     .btn.btn-link{
         font-weight: 200;
     }
+
+    .account-plans-packages-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .no-plans-or-packages {
+            margin-top: 50px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .plans-container,
+        .packages-container {
+            width: 100%;
+
+            .table {
+                tbody {
+                    background-color: white;
+
+                    td {
+                        height: initial;
+                        line-height: normal;
+                    }
+                }
+            }
+        }
+
+        .packages-container {
+            margin-top: 20px;
+
+            .packages-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    }
 }

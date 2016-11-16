@@ -1,70 +1,71 @@
 <x-tabset class="coach-game">
     <x-tab
         id="coach-game-instructions-cta"
-        data-active="gameTabs.confirm.active"
-        data-disabled="gameTabs.confirm.disabled"
+        active="gameTabs.confirm.active"
+        disabled="gameTabs.confirm.disabled"
         id="instructions-cta"
-        data-heading="4. Film Settings">
+        heading="4. Film Settings">
 
-        <krossover-coach-game-instructions data-ng-if="game.rosters[game.teamId]"
-                                           data-tabs="gameTabs"
-                                           data-positionset="positionset"
-                                           data-remaining-breakdowns="remainingBreakdowns"
-                                           data-game="game"></krossover-coach-game-instructions>
+        <krossover-coach-game-instructions ng-if="game.rosters[game.teamId]"
+                                           tabs="gameTabs"
+                                           positionset="positionset"
+                                           products="products"
+                                           remaining-breakdowns="remainingBreakdowns"
+                                           game="game"></krossover-coach-game-instructions>
 
     </x-tab>
 
     <x-tab
         id="coach-game-opposing-info-cta"
-        data-active="gameTabs.opposing.active"
-        data-disabled="gameTabs.opposing.disabled"
+        active="gameTabs.opposing.active"
+        disabled="gameTabs.opposing.disabled"
         id="opposing-team-info-cta"
-        data-heading="3. {{ teams[game.opposingTeamId].name || 'Opposing Team' }}">
+        heading="3. {{ teams[game.opposingTeamId].name || 'Opposing Team' }}">
 
-        <game-tab data-ng-if="game.rosters[game.opposingTeamId]"
-                  data-next-tab="gameTabs.confirm"
-                  data-tabs="gameTabs"
-                  data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"
-                  data-roster-id="game.rosters[game.opposingTeamId].id"
-                  data-team="teams[game.opposingTeamId]"
-                  data-game="game"
-                  data-team="teams[game.teamId]"
-                  data-editable="true"
-                  data-filtering="opposingTeamFiltering.type"
-                  data-roster="gamePlayerLists[game.opposingTeamId]"
-                  data-positionset="positionset"></game-tab>
+        <game-tab ng-if="game.rosters[game.opposingTeamId]"
+                  next-tab="gameTabs.confirm"
+                  tabs="gameTabs"
+                  roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"
+                  roster-id="game.rosters[game.opposingTeamId].id"
+                  team="teams[game.opposingTeamId]"
+                  game="game"
+                  team="teams[game.teamId]"
+                  editable="true"
+                  filtering="opposingTeamFiltering.type"
+                  roster="gamePlayerLists[game.opposingTeamId]"
+                  positionset="positionset"></game-tab>
     </x-tab>
 
     <x-tab
            id="coach-game-team-cta"
-           data-active="gameTabs.team.active"
-           data-disabled="gameTabs.team.disabled"
+           active="gameTabs.team.active"
+           disabled="gameTabs.team.disabled"
            id="team-info-cta"
-           data-heading="2. {{ teams[game.teamId].name || 'Team' }}">
+           heading="2. {{ teams[game.teamId].name || 'Team' }}">
 
-        <game-tab data-ng-if="game.rosters[game.teamId]" data-next-tab="gameTabs.opposing"
-                  data-tabs="gameTabs"
-                  data-roster-id="game.rosters[game.teamId].id"
-                  data-game="game"
-                  data-team="teams[game.teamId]"
-                  data-roster="gamePlayerLists[game.teamId]"
-                  data-editable="true"
-                  data-filtering="teamFiltering.type"
-                  data-positions="positions"
-                  data-positionset="positionset"
-                  data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"></game-tab>
+        <game-tab ng-if="game.rosters[game.teamId]" next-tab="gameTabs.opposing"
+                  tabs="gameTabs"
+                  roster-id="game.rosters[game.teamId].id"
+                  game="game"
+                  team="teams[game.teamId]"
+                  roster="gamePlayerLists[game.teamId]"
+                  editable="true"
+                  filtering="teamFiltering.type"
+                  positions="positions"
+                  positionset="positionset"
+                  roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"></game-tab>
     </x-tab>
 
     <x-tab
         id="coach-game-basic-info-cta"
-        data-active="gameTabs.info.active"
+        active="gameTabs.info.active"
         id="basic-game-info-cta"
-        data-heading="1. Basic Game Info">
+        heading="1. Basic Game Info">
 
-        <krossover-coach-game-info data-tabs="gameTabs"
-                                   data-league="league"
-                                   data-game="game"
-                                   data-headings="headings"></krossover-coach-game-info>
+        <krossover-coach-game-info tabs="gameTabs"
+                                   league="league"
+                                   game="game"
+                                   headings="headings"></krossover-coach-game-info>
 
     </x-tab>
 

@@ -19,8 +19,26 @@ GamesInfo.config([
             },
             resolve: {
                 'Games.Info.Data': [
-                    '$q', '$stateParams', 'GamesFactory', 'TeamsFactory', 'UsersFactory', 'SessionService', 'PlayersFactory', 'PositionsetsFactory',
-                    function($q, $stateParams, games, teams, users, session, players, positionsets) {
+                    '$q',
+                    '$stateParams',
+                    'GamesFactory',
+                    'TeamsFactory',
+                    'UsersFactory',
+                    'v3ProductsFactory',
+                    'SessionService',
+                    'PlayersFactory',
+                    'PositionsetsFactory',
+                    function(
+                        $q,
+                        $stateParams,
+                        games,
+                        teams,
+                        users,
+                        v3ProductsFactory,
+                        session,
+                        players,
+                        positionsets
+                    ) {
                         var gameId = Number($stateParams.id);
                         return games.load(gameId).then(function() {
 
@@ -33,10 +51,19 @@ GamesInfo.config([
                                 game: game
                             };
 
-                            var teamIds = [];
+                            var teamIds = [teamId];
                             if (game.teamId) teamIds.push(game.teamId);
                             if (game.opposingTeamId) teamIds.push(game.opposingTeamId);
-                            if (teamIds.length) Data.teams = teams.load(teamIds);
+                            if (teamIds.length) {
+                                Data.teams = teams.load(teamIds);
+                                Data.products = Data.teams.then(teamsResponse => {
+                                    let currentUserTeam = teams.get(teamId);
+                                    let productsFilter = {teamId: currentUserTeam.id};
+                                    productsFilter['filter[sportId]'] = currentUserTeam.getSport().id;
+                                    productsFilter['filter[productFamily]'] = 'breakdown package';
+                                    return v3ProductsFactory.load(productsFilter);
+                                });
+                            }
 
                             Data.gamePlayerLists = {};
                             //Player lists
@@ -107,7 +134,15 @@ function GamesInfoController (
 
     $scope.game = games.get($stateParams.id);
 
-    $scope.league = leagues.get(teams.get(session.currentUser.currentRole.teamId).leagueId);
+    let currentUserTeam = teams.get(session.currentUser.currentRole.teamId);
+
+    $scope.league = leagues.get(currentUserTeam.leagueId);
+
+    /*let productsFilter = {teamId: currentUserTeam.id};
+    productsFilter['filter[sportId]'] = currentUserTeam.getSport().id;
+    productsFilter['filter[productFamily]'] = 'breakdown package';
+    $scope.products = v3ProductsFactory.load(productsFilter).then(response => response.data);*/
+    $scope.products = Data.products;
 
     //TODO special case to remove
     $scope.remainingBreakdowns = Data.remainingBreakdowns;

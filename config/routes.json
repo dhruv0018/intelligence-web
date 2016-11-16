@@ -120,6 +120,11 @@
         "Film Exchange Admin": true
     },
 
+    "Account.PlansAndPackages": {
+        "Head Coach": true,
+        "Assistant Coach": true
+    },
+
     "Account.RolesList": {
 
         "!": true,

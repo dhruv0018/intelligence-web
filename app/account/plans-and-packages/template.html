@@ -1,0 +1,69 @@
+<div class="account-plans-packages-container">
+    <div class="no-plans-or-packages" ng-hide="plan || package">
+        <h3>You currently do not have any active breakdown plans or packages.</h3>
+        <button class="btn-outline" ng-click="openBreakdownPurchaseModal()">
+            Order Breakdowns
+        </button>
+        <p>If you'd like to set up a season long plan, <a href="mailto:sales@krossover.com">contact us</a>.</p>
+    </div>
+    <div class="plans-container box-body" ng-show="plan || package">
+        <h3>Plan</h3>
+        <p ng-hide="plan">
+            You have no active plan. If you would like to purchase a plan, <a href="mailto:sales@krossover.com">contact us</a>.
+        </p>
+        <div class="table-responsive" ng-show="plan">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Breakdowns Per Season</th>
+                        <th>Breakdowns Per Week</th>
+                        <th>Turnaround Time</th>
+                        <th>Expires</th>
+                        <!--TODO: add when data is available <th>Purchased By</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{plan.name}}</td>
+                        <td>{{plan.maxGamesPerPlan}}</td>
+                        <td>{{plan.maxAnyGames}}, {{planGamesRemaining}} left</td>
+                        <td>{{minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{plan.maxTurnaroundTime}}</td>
+                        <td>{{plan.endDate | date: 'MM/dd/yy'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="packages-container box-body" ng-show="plan || package">
+        <div class="packages-header">
+            <h3>Extra Game Package</h3>
+            <button class="btn-outline" ng-click="openBreakdownPurchaseModal()">
+                Add Extra Breakdowns
+            </button>
+        </div>
+        <p ng-hide="package">You have no active breakdown package.</p>
+        <div class="table-responsive" ng-if="package">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Total Breakdowns</th>
+                        <th>Breakdowns Used</th>
+                        <th>Turnaround Time</th>
+                        <th>Expires</th>
+                        <!--TODO: add when data is available <th>Purchased By</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{package.maxGamesPerPackage}}</td>
+                        <td>{{getUsedPackageGames()}}, {{packageGamesRemaining}} left</td>
+                        <td>{{minTurnaroundTimeLookup[package.maxTurnaroundTime]}}-{{package.maxTurnaroundTime}} hours</td>
+                        <td>{{package.endDate | date: 'MM/dd/yy'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

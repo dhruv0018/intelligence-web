@@ -1,0 +1,127 @@
+<div class="breakdown-purchase-modal">
+
+    <header class="modal-header">
+
+        <h3 class="modal-title">Order Breakdowns</h3>
+        <i class="icon icon-remove" ng-click="$dismiss()"></i>
+
+    </header>
+
+    <div class="modal-body">
+        <div class="select-package-container" ng-hide="showCreditCardView || showPaypalView || showConfirmationView">
+            <p>Select a package so you can start breaking down film:</p>
+
+            <div class="package-options">
+                <div class="package-options-info">
+                    <p># of Breakdowns</p>
+                    <p>Turnaround Time</p>
+                    <p>Price</p>
+                </div>
+
+                <div class="package-option" ng-repeat="package in packages">
+                    <p><button class="btn-radio" ng-model="$parent.selectedPackage" btn-radio="package" ng-change="selectPackage()">{{package.unitQuantity}}</button></p>
+                    <p>{{package.minTurnaroundTime}}-{{package.maxTurnaroundTime}} hrs</p>
+                    <p>${{package.price}}</p>
+                </div>
+            </div>
+
+            <p>* All packages expire on {{packageExpirationDate() | date:'MM/dd/yy'}}</p>
+            <p>Not finding what you need here? <a href="mailto:sales@krossover.com">Contact Us</a></p>
+        </div>
+
+        <div class="credit-card-form-container" ng-show="showCreditCardView">
+            <p>Billing Information <span class="required-field pull-right">* is required</span></p>
+                <form id="checkout-form" class="panel-body" action="/transaction-endpoint" method="post">
+                    <div id="error-message"></div>
+                    <div class="form-row names-row">
+                        <div class="form-group large-group">
+                            <label class="control-label" for="first-name">First Name</label>
+                            <input class="form-control" id="first-name"/>
+                        </div>
+                        <div class="form-group large-group">
+                            <label class="control-label" for="last-name">Last Name</label>
+                            <input class="form-control" id="last-name"/>
+                        </div>
+                    </div>
+                    <div class="form-row address-row">
+                        <div class="form-group large-group">
+                            <label class="control-label" for="address">Address</label>
+                            <input class="form-control" id="address"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="city">City</label>
+                            <input class="form-control" id="city"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="state">State</label>
+                            <input class="form-control" id="state"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="postal-code">Zip Code <span class="required-field">*</span></label>
+                            <div class="hosted-field form-control" id="postal-code"></div>
+                        </div>
+                    </div>
+                    <div class="form-row credit-card-row">
+                        <div class="form-group large-group">
+                            <label class="control-label" for="card-number">Card Number <span class="required-field">*</span></label>
+                            <div class="hosted-field form-control" id="card-number"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="expiration-month">Exp Month <span class="required-field">*</span></label>
+                            <div class="hosted-field form-control" id="expiration-month"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="expiration-year">Exp Year <span class="required-field">*</span></label>
+                            <div class="hosted-field form-control" id="expiration-year"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="cvv">CVV <span class="required-field">*</span></label>
+                            <div class="hosted-field form-control" id="cvv"></div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="payment-method-nonce">
+                </form>
+        </div>
+
+        <div class="selected-package-summary-container" ng-hide="showConfirmationView">
+            <p>Summary <span class="edit-package-link" ng-show="showCreditCardView" ng-click="showCreditCardView = false">edit</span></p>
+
+            <div class="selected-package-info-container" ng-if="!selectedPackage">Select a breakdown package</div>
+
+            <div class="selected-package-info-container" ng-if="selectedPackage">
+                <span class="selected-package-info">{{selectedPackage.unitQuantity}} breakdown<span ng-if="selectedPackage.unitQuantity > 1">s</span></span>
+                <span class="selected-package-info">{{selectedPackage.minTurnaroundTime}}-{{selectedPackage.maxTurnaroundTime}} hr turnaround</span>
+                <span class="selected-package-info">${{selectedPackage.price}}</span>
+            </div>
+
+            <div class="payment-actions-container">
+                <p ng-hide="showCreditCardView">Pay with:</p>
+                <span class="transation-error" ng-show="showCreditCardView && showTransactionError">We're sorry. There was a transaction error.</span>
+                <p ng-show="showCreditCardView"><i class="icon icon-lock"></i> Security guaranteed</p>
+                <!--
+                <button class="btn btn-sm btn-info" ng-hide="showCreditCardView" ng-disabled="!selectedPackage">
+                    Paypal
+                </button>-->
+                <button
+                    class="btn btn-sm btn-primary"
+                    ng-hide="showCreditCardView"
+                    ng-click="createOrder()"
+                    ng-disabled="!selectedPackage">
+                        <krossover-spinner ng-show="creatingOrder" size="14px"></krossover-spinner>
+                        <span ng-hide="creatingOrder">Credit Card</span>
+                </button>
+                <button class="btn btn-sm btn-primary" ng-show="showCreditCardView" type="submit" form="checkout-form" ng-disabled="disableCCForm || submittingOrder">
+                    <span ng-hide="submittingOrder">Purchase</span>
+                    <krossover-spinner ng-show="submittingOrder" size="14px"></krossover-spinner>
+                </button>
+            </div>
+        </div>
+
+        <div class="success-confirmation-container" ng-show="showConfirmationView">
+            <i class="icon icon-ok"></i>
+            <h4>{{selectedPackage.unitQuantity}} Breakdown<span ng-show="selectedPackage.unitQuantity>1">s</span> <br/> <span ng-show="selectedPackage.unitQuantity>1">were</span> <span ng-show="selectedPackage.unitQuantity===1">was</span> added to your extra game packages</h4>
+        </div>
+    </div>
+
+</div>

@@ -1,88 +1,161 @@
 <div class="box-body plans-content">
+    <div class="current-history-select">
+        <h3 ng-click="showCurrent = true" ng-class="{'active': showCurrent}">Current</h3>
+        <h3 ng-click="showCurrent = false" ng-class="{'active': !showCurrent}">Purchase History</h3>
+    </div>
 
-    <div class="plan-first">
-        <div data-ng-hide="filteredPlans.length" class="plan-button add-plan-button"><x-button-add-new data-ng-click="addNewPlan()">Add new plan</x-button-add-new></div>
-        <table class="table table-bordered">
+    <div ng-show="showCurrent" class="plan-first">
+        <div class="table-title">
+            <h3>Plans</h3>
+            <span ng-show="filteredPlans.length">
+                <a href class="edit-plan" ng-click="editTeamPlan(filteredPlans[0].unfilteredId)"><i class="icon icon-edit"></i> Edit</a>
+                <a href class="remove-plan" ng-click="removeActivePlan(filteredPlans[0].unfilteredId)"><i class="icon icon-remove"></i> Remove</a>
+            </span>
+            <button class="btn btn-default" ng-hide="filteredPlans.length" ng-click="addNewPlan()">
+                <i class="icon icon-plus"></i> Add Plan
+            </button>
+        </div>
+        <table class="table">
             <thead>
                 <tr>
-                    <th colspan="3">Plan</th>
+                    <th>Starts</th>
+                    <th>Expires</th>
+                    <th>Type</th>
+                    <th>Breakdowns Per Season</th>
+                    <th>Breakdowns Per Week</th>
+                    <th>Turnaround Time</th>
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-hide="filteredPlans.length">
-                    <td colspan="3" class="plan-container">
+                <tr ng-hide="filteredPlans.length || isSavingPlan">
+                    <td colspan="6">
                         No plans have been added to this team.
                     </td>
                 </tr>
-                <tr ng-if="!isSavingPlan" data-ng-repeat-start="plan in filteredPlans">
-                    <td>
-                        <p>{{ plan.name }}</p>
-                        <p>Starts: {{ plan.startDate | date : 'MMM d/yy' }}</p>
-                        <p>Ends: {{ plan.endDate | date : 'MMM d/yy' }}</p>
-                    </td>
-                    <td>
-                        <p>{{ plan.maxAnyGames }} Breakdowns per week</p>
-                        <p>{{ plan.maxGamesPerPlan }} Max Breakdowns per Season</p>
-                        <p>{{ plan.maxAnyGames - breakdownStats.planGamesRemaining}} used, {{breakdownStats.planGamesRemaining}} left this week</p>
-                    </td>
-                    <td>{{ minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{ plan.maxTurnaroundTime }} hour Turnaround Time</td>
+                <tr ng-if="!isSavingPlan" ng-repeat="plan in filteredPlans">
+                    <td>{{ plan.startDate | date : 'MMM d/yy' }}</td>
+                    <td>{{ plan.endDate | date : 'MMM d/yy' }}</td>
+                    <td>{{plan.name}}</td>
+                    <td>{{plan.maxGamesPerPlan}}</td>
+                    <td>{{plan.maxAnyGames}}, {{breakdownStats.planGamesRemaining}} left</td>
+                    <td>{{minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{plan.maxTurnaroundTime}} hours</td>
                 </tr>
                 <tr ng-if="isSavingPlan">
-                    <td>
+                    <td colspan="6">
                         <krossover-spinner></krossover-spinner>
-                    </td>
-                </tr>
-                <tr data-ng-repeat-end>
-                    <td colspan="3" class="plan-options">
-                        <a href><i class="icon icon-calendar"></i> View Archive</a>
-                        <span data-ng-show="filteredPlans.length" class="pull-right">
-                            <a href class="edit-plan" data-ng-click="editTeamPlan(plan.unfilteredId)"><i class="icon icon-edit"></i> Edit</a>
-                            <a href class="remove-plan" data-ng-click="removeActivePlan(plan.unfilteredId)"><i class="icon icon-remove"></i> Remove</a>
-                        </span>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div>
-        <div data-ng-hide="filteredPackages.length" class="plan-button add-package-button"><x-button-add-new data-ng-click="addNewPackage()">Add new package</x-button-add-new></div>
-        <table class="table table-bordered">
+    <div ng-show="showCurrent">
+        <div class="table-title">
+            <h3>Packages</h3>
+            <span ng-show="filteredPackages.length">
+                <a ng-click="editActivePackage(filteredPackages[0].unfilteredId)" href class="edit-package"><i class="icon icon-edit"></i> Edit</a>
+                <a href class="remove-package" ng-click="removeActivePackage(filteredPackages[0].unfilteredId)"><i class="icon icon-remove"></i> Remove</a>
+            </span>
+            <button class="btn btn-default" ng-hide="filteredPackages.length" ng-click="addNewPackage()">
+                <i class="icon icon-plus"></i> Add Package
+            </button>
+        </div>
+        <table class="table">
             <thead>
                 <tr>
-                    <th colspan="3">Package</th>
+                    <th>Starts</th>
+                    <th>Expires</th>
+                    <th>Total Breakdowns</th>
+                    <th>Breakdowns Used</th>
+                    <th>Turnaround Time</th>
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-hide="filteredPackages.length">
-                    <td colspan="3" class="package-container">
+                <tr ng-hide="filteredPackages.length || isSavingPackage">
+                    <td colspan="5" class="package-container">
                         No packages have been added to this team.
                     </td>
                 </tr>
-                <tr ng-if="!isSavingPackage" data-ng-repeat-start="activePackage in filteredPackages">
-                    <td>
-                        <p>Starts: {{activePackage.startDate | date : 'MMM d/yy' }}</p>
-                        <p>Ends: {{activePackage.endDate | date : 'MMM d/yy' }}</p>
-                    </td>
-                    <td>
-                        <p>{{activePackage.maxGamesPerPackage}} games allotted</p>
-                        <p>{{activePackage.maxGamesPerPackage - breakdownStats.packageGamesRemaining}} used, {{breakdownStats.packageGamesRemaining}} left </p>
-                    </td>
-                    <td>
-                        <p>{{minTurnaroundTimeLookup[activePackage.maxTurnaroundTime]}}-{{activePackage.maxTurnaroundTime}} Hour Turnaround Time</p>
-                    </td>
+                <tr ng-if="!isSavingPackage" ng-repeat="activePackage in filteredPackages">
+                    <td>{{activePackage.startDate | date : 'MMM d/yy' }}</td>
+                    <td>{{activePackage.endDate | date : 'MMM d/yy' }}</td>
+                    <td>{{activePackage.maxGamesPerPackage}}</td>
+                    <td>{{activePackage.maxGamesPerPackage - breakdownStats.packageGamesRemaining}}, {{breakdownStats.packageGamesRemaining}} left</td>
+                    <td>{{minTurnaroundTimeLookup[activePackage.maxTurnaroundTime]}}-{{activePackage.maxTurnaroundTime}} hours</td>
                 </tr>
                 <tr ng-if="isSavingPackage">
-                    <td>
+                    <td colspan="5">
                         <krossover-spinner></krossover-spinner>
                     </td>
                 </tr>
-                <tr data-ng-repeat-end>
-                    <td colspan="3" class="plan-options">
-                        <a href><i class="icon icon-calendar"></i> View Archive</a>
-                        <span data-ng-show="filteredPackages.length" class="pull-right">
-                            <a data-ng-click="editActivePackage(activePackage.unfilteredId)" href class="edit-package"><i class="icon icon-edit"></i> Edit</a>
-                            <a href class="remove-package" data-ng-click="removeActivePackage(activePackage.unfilteredId)"><i class="icon icon-remove"></i> Remove</a>
-                        </span>
+            </tbody>
+        </table>
+    </div>
+    <div ng-hide="showCurrent">
+        <h3>Plans</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Starts</th>
+                    <th>Expires</th>
+                    <th>Type</th>
+                    <th>Turnaround Time</th>
+                    <!--Hide until backend is ready <th>Price</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-hide="team.teamPlans.length || isSavingPlan">
+                    <td colspan="6">
+                        No plans have been added to this team.
+                    </td>
+                </tr>
+                <tr ng-if="!isSavingPlan" ng-repeat="plan in team.teamPlans">
+                    <td>{{ plan.startDate | date : 'MMM d/yy' }}</td>
+                    <td>{{ plan.endDate | date : 'MMM d/yy' }}</td>
+                    <td>{{plan.name}}</td>
+                    <td>{{minTurnaroundTimeLookup[plan.maxTurnaroundTime]}}-{{plan.maxTurnaroundTime}} hours</td>
+                    <!--Hide until backend is ready <td>${{plan.price}}</td> -->
+                </tr>
+                <tr ng-if="isSavingPlan">
+                    <td colspan="6">
+                        <krossover-spinner></krossover-spinner>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-hide="showCurrent">
+        <h3>Packages</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Starts</th>
+                    <th>Expires</th>
+                    <th>Breakdowns</th>
+                    <th>Purchased Through</th>
+                    <th>Turnaround Time</th>
+                    <!--Hide until backend is ready <th>Price</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-hide="team.teamPackages.length || isSavingPackage">
+                    <td colspan="5" class="package-container">
+                        No packages have been added to this team.
+                    </td>
+                </tr>
+                <tr ng-if="!isSavingPackage" ng-repeat="activePackage in team.teamPackages">
+                    <td>{{activePackage.startDate | date : 'MMM d/yy' }}</td>
+                    <td>{{activePackage.endDate | date : 'MMM d/yy' }}</td>
+                    <td>{{activePackage.maxGamesPerPackage}}</td>
+                    <td>
+                        <span ng-show="activePackage.orderId">Online</span>
+                        <span ng-hide="activePackage.orderId">KO Employee</span>
+                    </td>
+                    <td>{{minTurnaroundTimeLookup[activePackage.maxTurnaroundTime]}}-{{activePackage.maxTurnaroundTime}} hours</td>
+                    <!--Hide until backend is ready <td></td> -->
+                </tr>
+                <tr ng-if="isSavingPackage">
+                    <td colspan="5">
+                        <krossover-spinner></krossover-spinner>
                     </td>
                 </tr>
             </tbody>

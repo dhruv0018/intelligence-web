@@ -38,6 +38,7 @@
         border-left: 1px solid @gray-lighter;
         border-right: 1px solid @gray-lighter;
         border-bottom: 1px solid @gray-lighter;
+        position: relative;
 
         h1 {
 
@@ -46,7 +47,7 @@
             margin-top: 0;
         }
 
-        &:hover > button:enabled {
+        &:hover > .breakdown-choice:enabled {
 
             background-color: rgb(246, 249, 253);
 
@@ -58,37 +59,7 @@
             }
         }
 
-        button.breakdown-choice {
-            &:before {
-                display:none;
-            }
-        }
-
-        button.breakdown-game {
-
-            h1 {
-                margin-top: 35px;
-            }
-
-            &:disabled {
-                h1 {
-                    color: @text-muted;
-                    text-decoration: line-through;
-                }
-
-                .icon-check-empty {
-                    display: none;
-                }
-            }
-
-            &:no-roster {
-                h1 {
-                    margin-top: 0;
-                }
-            }
-        }
-
-        button {
+        .breakdown-choice {
 
             .btn-blank;
             width: 100%;
@@ -119,6 +90,41 @@
                 left: 2px;
                 line-height: 100px;
             }
+
+            &.breakdown-game {
+
+                &:disabled {
+                    h1 {
+                        color: @text-muted;
+                        text-decoration: line-through;
+                    }
+
+                    p {
+                        color: @text-muted;
+                    }
+
+                    .icon-check-empty {
+                        display: none;
+                    }
+                }
+
+                &:no-roster {
+                    h1 {
+                        margin-top: 0;
+                    }
+                }
+            }
+
+            &:before {
+                display:none;
+            }
+        }
+
+        .breakdown-purchase-button {
+            position: absolute;
+            top: 40%;
+            left: 70%;
+            font-size: 14px;
         }
     }
 

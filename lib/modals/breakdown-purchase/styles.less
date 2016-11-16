@@ -1,0 +1,149 @@
+.breakdown-purchase-modal {
+
+    .modal-body {
+        display: flex;
+        justify-content: space-between;
+
+        .select-package-container {
+
+            .package-options {
+                display: flex;
+                align-items: center;
+
+                .package-options-info {
+                    margin-right: 20px;
+                }
+
+                .package-option {
+                    padding: 10px 20px;
+                    border: thin solid black;
+                    border-right: none;
+
+                    &:last-child {
+                        border-right: thin solid black;
+                    }
+
+                    .btn-radio {
+                        padding-left: 0px;
+                    }
+                }
+            }
+        }
+
+        .selected-package-summary-container {
+            border-left: thin solid @gray-border;
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 177px;
+
+            .edit-package-link {
+                float: right;
+                color: @brand-primary;
+                cursor: pointer;
+
+                &:hover {
+                    color: @brand-secondary;
+                }
+            }
+
+            .selected-package-info-container {
+                display: flex;
+                flex-direction: column;
+
+                .selected-package-info {
+                    padding: 5px 0px;
+                    border-bottom: thin solid @gray-border;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                }
+            }
+
+            .payment-actions-container {
+                display: flex;
+                flex-direction: column;
+                margin-top: auto;
+
+                p {
+                    margin: 0;
+                }
+
+                button {
+                    width: 100%;
+
+                    &.btn-primary {
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+
+        .credit-card-form-container {
+            flex: 1;
+            padding-right: 20px;
+
+            .form-row {
+                display: flex;
+
+                .form-group {
+                    width: 20%;
+                    margin-left: 10px;
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+
+                    &.large-group {
+                        width: 40%;
+                    }
+
+                    #expiration-month,
+                    #expiration-year {
+                        width: ;
+                    }
+                }
+
+                &.credit-card-row {
+                    .form-group {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            .required-field {
+                color: @brand-danger;
+            }
+
+            input.btn-primary {
+                position: absolute;
+                right: 20px;
+                bottom: 20px;
+                width: 155px;
+            }
+        }
+
+        .success-confirmation-container {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: @brand-success;
+            padding: 20px 0;
+            text-align: center;
+
+            .icon-ok {
+                font-size: 35px;
+                border: 3px solid @brand-success;
+                border-radius: 50%;
+                padding: 5px;
+            }
+        }
+
+        .transation-error {
+            color: @brand-danger;
+        }
+    }
+}

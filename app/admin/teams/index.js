@@ -280,6 +280,7 @@ function TeamPlansController (
 ) {
 
     //todo do we need to add a factory for remaining breakdowns so we dont need to inject data?
+    $scope.showCurrent = true;
     $scope.breakdownStats = data.breakdownStats ? data.breakdownStats : {};
     $scope.isSavingPlan = false;
     $scope.isSavingPackage = false;
@@ -369,8 +370,8 @@ function TeamPlansController (
 
         modalInstance.result.then(function confirm() {
             //delete the package
-            $scope.team.teamPackages.splice(packageIdToRemove, 1);
             $scope.isSavingPackage = true;
+            $scope.team.teamPackages.splice(packageIdToRemove, 1);
             $scope.save($scope.team);
         });
     };
@@ -386,8 +387,8 @@ function TeamPlansController (
 
         modalInstance.result.then(function confirm() {
             //delete the plan
-            $scope.team.teamPlans.splice(planIdToRemove, 1);
             $scope.isSavingPlan = true;
+            $scope.team.teamPlans.splice(planIdToRemove, 1);
             $scope.save($scope.team);
         });
     };

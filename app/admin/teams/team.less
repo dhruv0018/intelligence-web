@@ -44,33 +44,49 @@
         border: thin solid @gray-border;
         padding: 20px;
 
+        .current-history-select {
+            display: flex;
+            justify-content: center;
+            align-self: center;
+
+            h3 {
+                margin-right: 10px;
+                margin-left: 10px;
+
+                &.active {
+                    color: @brand-secondary;
+                    padding-bottom: 2px;
+                    border-bottom: 2px solid @brand-secondary;
+                }
+            }
+        }
+
         .plan-first {
             margin-bottom: 20px;
         }
 
-        table {
-            width: 72%;
-            min-width: 565px;
+        .table-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-            thead > tr > th {
-                text-align: left;
+            .edit-plan, .edit-package {
+                margin-right: 10px;
+                margin-left: 10px;
             }
+        }
 
-            td.plan-container {
-                height: 125px;
-                vertical-align: middle;
+        table {
+
+            tbody > tr>  td {
+                height: initial;
+                line-height: normal;
             }
 
             td.plan-options {
                 text-align: left;
                 height: 21px;
                 line-height: 21px;
-            }
-
-            .edit-plan, .edit-package {
-                padding-right: 10px;
-                border-right: thin solid @gray-border;
-                margin-right: 5px;
             }
         }
 
