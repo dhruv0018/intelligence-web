@@ -11,8 +11,24 @@ module.exports = function() {
     });
 
     this.Then(/^I should see the "([^"]*)" page$/, function(pageName, done) {
-
         expect(this.urlContains(pageName)).to.eventually.be.true.and.notify(done);
     });
-};
 
+    this.When(/^I click on "([^"]*)"$/, function(text, done){
+        element(by.xpath('.//*[normalize-space(text())="' + text + '"]')).click().then(
+            function(){
+                // console.log('done click');
+                done();
+            }
+        );
+    });
+
+    this.When(/^I pause$/, function(done) {
+        browser.pause();
+        // browser.debugger();
+        // browser.wait(function(){
+        //     console.log('finished pausing');
+        //     done();
+        // }, 10);
+    });
+};

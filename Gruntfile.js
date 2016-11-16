@@ -429,6 +429,43 @@ module.exports = function(grunt) {
             }
         },
 
+        protractor_webdriver: {
+            options: {
+                keepAlive: true
+            }
+        },
+
+        protractor: {
+            options: {
+                configFile: 'protractor.conf.js'
+            },
+            regression:{
+                options:{
+                    args:{
+                        specs: ['features/regression/**/*.feature']
+                    }
+                }
+            },
+            manual:{
+                options:{
+                    args:{
+                        specs: ['features/**/*.feature'],
+                        cucumberOpts:{
+                            tags: ['@manual']
+                        }
+                    }
+                }
+            },
+            features:{
+                options:{
+                    args:{
+                        specs: ['features/features/**/*.feature']
+                    }
+                }
+            }
+        },
+
+
         /* Documentation and reporting */
 
 
@@ -537,6 +574,10 @@ module.exports = function(grunt) {
             unit: {
                 files: ['test/unit/**/*.js', '!test/unit/helpers/**/*.js'],
                 tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'karma']
+            },
+            integration: {
+                files: ['test/integration/**/*.js'],
+                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'protractor']
             }
         },
 
@@ -564,6 +605,30 @@ module.exports = function(grunt) {
 
     var server;
 
+    grunt.registerTask('integration', 'Run integration tests', function() {
+
+        var testSuites = grunt.option('suites');
+        var express = require('express');
+        var app = express();
+
+        app.use(express.static('public'));
+
+        app.use(function(req, res){
+
+            res.sendFile('index.html', { root: __dirname + '/public/intelligence' });
+        });
+
+        server = app.listen(9999);
+
+        if(testSuites){
+            grunt.task.run('protractor:'+testSuites, 'close-server');
+        }else{
+            grunt.task.run('protractor:regression', 'protractor:features', 'close-server');
+        }
+
+
+    });
+
     grunt.registerTask('close-server', 'Closes the background server process', function() {
 
         server.close();
@@ -571,6 +636,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['install-dependencies']);
     grunt.registerTask('test', ['build', 'karma']);
+    grunt.registerTask('e2eUat', ['env:uat', 'protractor:features', 'protractor:regression']);
+    grunt.registerTask('e2eLocal', ['uat', 'env:test', 'integration']);
     grunt.registerTask('lint', ['trimtrailingspaces', 'lintspaces', 'htmlhint', 'eslint']);
     grunt.registerTask('min', ['htmlmin', 'cssmin', 'uglify']);
     grunt.registerTask('doc', ['dox']);

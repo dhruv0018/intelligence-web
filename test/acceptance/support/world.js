@@ -36,12 +36,10 @@ module.exports = function() {
             return browser.getCurrentUrl()
 
             .then(function afterCurrentUrl(url) {
-
                 return urlFragmentRegEx.test(url);
             });
         };
 
-        callback();
+        // callback();
     };
 }
-

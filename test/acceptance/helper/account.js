@@ -16,8 +16,8 @@ module.exports = function Account() {
             password: "superadmin",
         },
         'COACH': {
-            email: "superadmin@krossover.com",
-            password: "superadmin",
+            email: "andrew@krossover.com",
+            password: "Popcorn23",
         },
         'HEAD_COACH': {
             email: "superadmin@krossover.com",
@@ -44,7 +44,7 @@ module.exports = function Account() {
     // Assumes that the user is currently logged in
     this.signout = function() {
         // browser.ignoreSynchronization = false;
-        element(by.css(".role-dropdown button")).click();
+        element(by.css(".role-dropdown .dropdown-toggle")).click();
         return element.all(by.css(".role-dropdown .dropdown-menu footer button")).get(1).click();
     };
 
@@ -93,7 +93,7 @@ module.exports = function Account() {
     };
 
     this.getPassword = function(userType) {
-        return users[userType].password;  
+        return users[userType].password;
     };
 
     this.getUserTypes = function() {

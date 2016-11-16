@@ -23,6 +23,8 @@ build:
       - npm install
       - node_modules/.bin/napa
       - npm install worker-farm --save-dev
+      - npm install protractor --save-dev
+      - node_modules/protractor/bin/webdriver-manager update
     #   - npm install component --save-dev
     #   - node_modules/component/bin/component install -t 500000
       - Xvfb :99 -ac -nolisten tcp&

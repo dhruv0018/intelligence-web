@@ -23,7 +23,7 @@ module.exports = function() {
 
     this.Given(/^There is a "([^"]*)"$/, function(userType, done) {
 
-        var User = sequelize.define('User', {
+        var User = sequelize.define('user', {
             email: Sequelize.STRING,
             password: Sequelize.STRING
         }, {
@@ -31,7 +31,7 @@ module.exports = function() {
             updatedAt: false
         });
 
-        sequelize.sync().success(function() {
+        sequelize.sync().then(function() {
 
             var user = account.getUser(userType);
 
@@ -39,7 +39,7 @@ module.exports = function() {
                 email: user.email,
                 password: bcrypt.hash_password(user.password)
             })
-            .success(function() {
+            .then(function() {
                 done();
             });
         })
@@ -89,4 +89,3 @@ module.exports = function() {
     });
 
 };
-
