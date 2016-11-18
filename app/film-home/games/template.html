@@ -42,7 +42,8 @@
                     <div class="repeated-game-row" ng-repeat="game in games | orderBy: '-datePlayed'" ng-hide="game.hide">
                         <div class="body-row" ng-click="goGamePage($event, 'Games', game)">
                             <div class="body-cell status-container">
-                                <i class="icon icon-processing" ng-if="game.video.isIncomplete() || game.video.isUploaded()" tooltip="Film Processing" tooltip-placement="right"></i>
+                                <i class="icon icon-processing" ng-if="game.video.isIncomplete()" tooltip="Film Uploading" tooltip-placement="right"></i>
+                                <i class="icon icon-processing" ng-if="game.video.isUploaded()" tooltip="Film Processing" tooltip-placement="right"></i>
                                 <i class="icon icon-error" ng-if="game.video.isFailed()" tooltip="Error while processing. Contact support@krossover.com" tooltip-placement="right"></i>
                                 <span class="icon-placeholder" ng-if="!game.video.isFailed()&& !game.video.isIncomplete() && !game.video.isUploaded()"></span>
                             </div>
@@ -69,8 +70,14 @@
                                 <span class="subtext" ng-if="game.copiedFromTeamId && !isShared(game)">Copied from {{getCopiedFromTeamName(game)}} account</span>
                             </div>
                             <div class="body-cell actions" ng-class="{'game-states-container': game.isDelivered()}">
-                                <button class="btn-outline" ng-if="showBreakdown(game)" ng-click="goGamePage($event, 'Games.Info', game)">Submit for Breakdown</button>
-                                <span ng-if="game.isBeingBrokenDown() && currentUser.is(ROLES.COACH)" class="breakdown-status">Breakdown In Progress...</span>
+                                <div ng-if="!(game.video.isIncomplete() ||  game.video.isUploaded())">
+                                    <button class="btn-outline" ng-if="showBreakdown(game)" ng-click="goGamePage($event, 'Games.Info', game)">Submit for Breakdown</button>
+                                    <span ng-if="game.isBeingBrokenDown() && currentUser.is(ROLES.COACH)" class="breakdown-status">Breakdown In Progress...</span>
+                                </div>
+                                <div ng-if="game.video.isIncomplete() || game.video.isUploaded()">
+                                    <span ng-if="game.video.isIncomplete()" class="breakdown-status">Video is Uploading...</span>
+                                    <span ng-if="game.video.isUploaded()" class="breakdown-status">Video is Processing...</span>
+                                </div>
                                 <div
                                     ng-if="game.isDelivered() && gameHasState(game, 'Games.Stats')"
                                     ng-click="selectState(game, 'Games.Stats', $event)"
