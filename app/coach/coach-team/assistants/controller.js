@@ -40,6 +40,17 @@ function CoachTeamAssistantsController($rootScope, $scope, $state, $stateParams,
     $scope.assistantCoaches = users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, ACTIVE);
     $scope.assistantCoaches = $scope.assistantCoaches.concat(users.findByRole(ROLES.ASSISTANT_COACH, $scope.team, !ACTIVE));
 
+    //take out duplicate cases
+    let tmp = {};
+    let tmpArr = [];
+    $scope.assistantCoaches.forEach(coach =>{
+        tmp[coach.id] = coach;
+    });
+    angular.forEach(tmp, coach =>{
+        tmpArr.push(coach);
+    });
+    $scope.assistantCoaches = tmpArr;
+
     //toggles between assistant views
     $scope.filtering = [
         {type: 'active'},
