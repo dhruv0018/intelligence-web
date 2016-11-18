@@ -69,7 +69,6 @@
     "chai-as-promised": "4.3.0",
     "clarify": "^1.0.5",
     "connect-modrewrite": "0.7.11",
-    "cucumber": "0.4.8",
     "cz-conventional-changelog": "1.1.0",
     "envify": "1.2.1",
     "es6ify": "1.6.0",
@@ -104,8 +103,6 @@
     "grunt-ng-annotate": "0.10.0",
     "grunt-notify": "0.4.1",
     "grunt-plato": "1.2.1",
-    "grunt-protractor-runner": "1.2.1",
-    "grunt-protractor-webdriver": "0.2.0",
     "grunt-svgmin": "2.0.1",
     "grunt-trimtrailingspaces": "1.1.0",
     "grunt-ver": "0.5.1",
@@ -125,8 +122,6 @@
     "moment-timezone": "0.3.0",
     "napa": "1.2.0",
     "object.observe": "^0.2.3",
-    "protractor": "1.8.0",
-    "sequelize": "^2.0.0-rc8",
     "svg.js": "2.2.5",
     "time-grunt": "1.1.0",
     "traceur": "0.0.86",
@@ -140,7 +135,6 @@
   "main": "./src/main.js",
   "scripts": {
     "install": "node_modules/.bin/napa;",
-    "postinstall": "node_modules/protractor/bin/webdriver-manager update",
     "serve": "node server.js",
     "start": ":",
     "test": "grunt test"

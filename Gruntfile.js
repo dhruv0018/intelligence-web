@@ -429,20 +429,6 @@ module.exports = function(grunt) {
             }
         },
 
-        protractor_webdriver: {
-            options: {
-                keepAlive: true
-            }
-        },
-
-        protractor: {
-            options: {
-                configFile: 'protractor.conf.js'
-            },
-            all: {}
-        },
-
-
         /* Documentation and reporting */
 
 
@@ -551,10 +537,6 @@ module.exports = function(grunt) {
             unit: {
                 files: ['test/unit/**/*.js', '!test/unit/helpers/**/*.js'],
                 tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'karma']
-            },
-            integration: {
-                files: ['test/integration/**/*.js'],
-                tasks: ['newer:trimtrailingspaces', 'newer:lintspaces', 'newer:eslint', 'protractor']
             }
         },
 
@@ -581,23 +563,6 @@ module.exports = function(grunt) {
     });
 
     var server;
-
-    grunt.registerTask('integration', 'Run integration tests', function() {
-
-        var express = require('express');
-        var app = express();
-
-        app.use(express.static('public'));
-
-        app.use(function(req, res){
-
-            res.sendFile('index.html', { root: __dirname + '/public/intelligence' });
-        });
-
-        server = app.listen(9999);
-
-        grunt.task.run('protractor', 'close-server');
-    });
 
     grunt.registerTask('close-server', 'Closes the background server process', function() {
 
