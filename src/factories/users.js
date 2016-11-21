@@ -198,16 +198,23 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
 
             addRole: function(ROLE, team) {
-
+                /*jshint -W087 */ /*eslint no-debugger: 0 */ debugger;
+                const ACTIVE_OR_INACTIVE = null;
+                let existingRoles;
                 let existingRole;
 
                 // Check if user has the ROLE already
                 if (team) {
                     // If a team is specified, they should only have one role of type ROLE per team
-                    const ACTIVE_OR_INACTIVE = null;
                     existingRole = this.getRoleForTeam(ROLE.type.id, team, ACTIVE_OR_INACTIVE);
                 } else {
-                    existingRole = this.getRoles(ROLE.type.id)[0];
+                    existingRoles = this.getRoles(ROLE.type.id, team, ACTIVE_OR_INACTIVE);
+
+                    if (ROLE.type.id === ROLE_TYPE.INDEXER) {
+                        existingRoles = existingRoles.filter(role => ROLE.indexerGroupId === role.indexerGroupId);
+                    }
+
+                    existingRole = existingRoles[0];
                 }
 
                 // NOTE: This role has been found. Make sure it is active, but don't add it again
