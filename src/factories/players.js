@@ -141,6 +141,14 @@ IntelligenceWebClient.factory('PlayersFactory', [
                 const model = $injector.get(self.model);
 
                 return model.generateStats(query).$promise;
+            },
+
+            /**
+             * @param {team} team
+             * @returns {Promise}
+             */
+            loadPlayersFromTeam(team) {
+                return this.load({ rosterId: team.roster.id });
             }
         };
 

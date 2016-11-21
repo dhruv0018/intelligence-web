@@ -130,10 +130,8 @@ export function FilmHomeReels (
             this.users = users.load({ relatedUserId: currentUser.id });
             this.reels = reels.load({ relatedUserId: currentUser.id });
 
-            this.players = teams.load(currentUser.getCurrentRole().teamId).then(teams=>{
-                return players.load({ rosterId: teams[0].roster.id });
-            });
-
+            this.players = teams.load(currentUser.getCurrentRole().teamId)
+                .then(teams => players.loadPlayersFromTeam(teams[0]));
         }
     }
 
