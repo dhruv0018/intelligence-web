@@ -1,3 +1,15 @@
+# v106.0#
+## Features##
+- Search by school or team when assigning a role to a user
+- Visual improvements to shot chart and volume control
+- Improvements to team page for admins and sharing modal
+- Base factory files for V3 endpoints
+
+## Fixes##
+- Show difference between videos that are uploading and processing on film home
+- Fix assistant coach duplicates
+- Populate canonical team rosters
+
 # v104.0#
 ## Features##
 - Breakdown Libraries
