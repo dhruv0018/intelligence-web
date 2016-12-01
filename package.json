@@ -39,7 +39,7 @@
     "webcomponents.js": "0.5.5-1"
   },
   "devDependencies": {
-    "angular-ui-bootstrap": "0.13.3",
+    "@krossover/angular-bootstrap": "0.13.2",
     "@krossover/fit-element": "0.2.0",
     "@krossover/krossover-blur-on-select": "0.1.0",
     "@krossover/krossover-checkbox": "^0.2.0",
