@@ -1,0 +1,42 @@
+<div ng-hide="popup.isDismissed"  class="breakdown-rating-popup" ng-class="{'popup-collapsed': !popup.isOpen, 'popup-open': popup.isOpen}">
+    <accordion>
+        <accordion-group is-open="$parent.popup.isOpen">
+            <accordion-heading>
+                <div ng-class="{'field-header-collapsed': !popup.isOpen}" class="field-header">
+                    <span class="field-info-title">Rate your breakdown</span>
+                    <i class="icon icon-x" ng-click="popup.isDismissed = true"></i>
+                    <i class="icon" ng-class="{'icon-chevron-down': popup.isOpen, 'icon-chevron-up': !popup.isOpen}"></i>
+                </div>
+            </accordion-heading>
+            <div ng-if="previousRating" class="field rating-form">
+                <span class="popup-message">Thanks for rating this breakdown {{previousRating}} out of 5.</span>
+                <i class="icon icon-check-circle"></i>
+            </div>
+            <div ng-if="!previousRating" class="field rating-form">
+                <form ng-submit="submitRating($event)">
+                    <span class="popup-message">How would you rate the quality of this breakdown?</span>
+                    <div class="radio">
+                        <div class="rating-radios">
+                            <span>Poor</span>
+                            <label><span>1</span><input type="radio" name="ratingValue" value="1" ng-model="data.rating"></label>
+                            <label><span>2</span><input type="radio" name="ratingValue" value="2" ng-model="data.rating"></label>
+                            <label><span>3</span><input type="radio" name="ratingValue" value="3" ng-model="data.rating"></label>
+                            <label><span>4</span><input type="radio" name="ratingValue" value="4" ng-model="data.rating"></label>
+                            <label><span>5</span><input type="radio" name="ratingValue" value="5" ng-model="data.rating"></label>
+                            <span>Great</span>
+                        </div>
+                    </div>
+                    <div class="form-group notes">
+                        <label>
+                            Anything we should know about?
+                            <textarea class="form-control" ng-model="data.notes"></textarea>
+                        </label>
+                    </div>
+
+                    <button type="button" class="btn btn-default">Cancel</button>
+                    <button type="submit" class="btn btn-default" ng-class="{'disabled': !data.rating}">Submit</button>
+                </form>
+            </div>
+        </accordion-group>
+    </accordion>
+</div>

@@ -72,6 +72,7 @@ IntelligenceWebClient.factory('v3BaseFactory', [
 
                 delete copy.PAGE_SIZE;
                 delete copy.description;
+                delete copy.model;
 
                 Object.keys(copy).forEach(function(key){
                     if(typeof copy[key] === 'function'){
@@ -274,7 +275,13 @@ IntelligenceWebClient.factory('v3BaseFactory', [
                     });
                     resource.relationships = relationships;
                 }
-                let copy = {data: self.unextend(resource)};
+                let copy = {
+                    data: {
+                        type: resource.type,
+                        attributes: self.unextend(resource)
+                    }
+                };
+                delete copy.data.attributes.type;
 
                 let parameters = {};
 

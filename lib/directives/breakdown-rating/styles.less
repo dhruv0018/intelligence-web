@@ -1,0 +1,94 @@
+.breakdown-rating-popup {
+    position: absolute;
+    bottom: 0;
+    right: 30px;
+    width: 260px;
+    border: 1px solid #333;
+    background-color: #ebebeb;
+    z-index: 10;
+
+    &.popup-collapsed {
+        width: 190px;
+    }
+
+    .panel {
+        background-color: transparent;
+    }
+
+    .field-header {
+        background-color: #d8d8d8;
+        height: 20px;
+        font-size: 14px;
+        line-height: 24px;
+
+        .icon {
+            float: right;
+            margin-right: 5px;
+            margin-top: 3px;
+        }
+    }
+
+    .field-info-title {
+        margin-left: 5px;
+    }
+
+    .icon-check-circle {
+        display: block;
+        text-align: center;
+        margin-top: 50px;
+        font-size: 90px;
+    }
+
+    .rating-form {
+        font-size: 13px;
+        height: 295px;
+    }
+
+    .popup-message {
+        display: block;
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .rating-radios {
+        text-align: center;
+
+        label {
+            padding: 0;
+            margin: 0 9px;
+
+            span {
+                display: block;
+                text-align: center;
+            }
+            input {
+                margin-left: -6px;
+            }
+        }
+
+        & > span {
+
+            position: relative;
+            font-size: 11px;
+            top: 20px;
+        }
+    }
+
+    .notes {
+        margin-top: 40px;
+        text-align: center;
+
+        label {
+            font-size: 11px;
+            font-weight: normal;
+            text-align: left
+        }
+
+        textarea {
+            resize: none;
+            height: 90px;
+            width: 170px;
+            font-size: 13px;
+        }
+    }
+}
