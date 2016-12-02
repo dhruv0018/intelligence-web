@@ -1,3 +1,6 @@
+# v106.1#
+- Revert INTWEB-803
+
 # v106.0#
 ## Features##
 - Search by school or team when assigning a role to a user
