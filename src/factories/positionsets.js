@@ -78,7 +78,9 @@ IntelligenceWebClient.factory('PositionsetsFactory', [
              */
             getPositionNames: function(positionIds) {
 
-                let positionNames = this.getPositions(positionIds).map(position => position.name);
+                let positionNames = this.getPositions(positionIds)
+                    .map(position => position && position.name)
+                    .filter(Boolean);
 
                 return positionNames.length ? '(' + positionNames.join(', ') + ')' : '';
             },
