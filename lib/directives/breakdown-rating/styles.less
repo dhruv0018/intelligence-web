@@ -1,35 +1,150 @@
 .breakdown-rating-popup {
     position: absolute;
-    bottom: 0;
-    right: 30px;
-    width: 260px;
-    border: 1px solid #333;
-    background-color: #ebebeb;
+    bottom: 10px;
+    right: 10px;
     z-index: 10;
 
-    &.popup-collapsed {
+    &.popup-open {
+        background-color: #FFF;
+        color: black;
+        box-shadow: 2px 0 8px @gray-light;
+        width: 360px;
+        height: 340px;
+    }
+
+    .popup-header {
         width: 190px;
-    }
-
-    .panel {
-        background-color: transparent;
-    }
-
-    .field-header {
-        background-color: #d8d8d8;
-        height: 20px;
-        font-size: 14px;
-        line-height: 24px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        font-size: 18px;
+        cursor: pointer;
+        color: @gray-lightest;
+        background-color: #000;
+        border-radius: 26px;
+        box-shadow: 2px 0 8px @gray-light;
 
         .icon {
             float: right;
-            margin-right: 5px;
-            margin-top: 3px;
+            margin-right: 10px;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        &.popup-open {
+            width: auto;
+            height: 50px;
+            line-height: 50px;
+            text-align: left;
+            text-indent: 25px;
+            background-color: transparent;
+            color: inherit;
+            border-bottom: 1px solid @gray-light;
+            border-radius: initial;
+            box-shadow: none;
+
+            .icon {
+                margin-top: 16px;
+                margin-right: 20px;
+                color: @brand-primary;
+            }
         }
     }
 
-    .field-info-title {
-        margin-left: 5px;
+    .popup-body {
+        font-size: 16px;
+        text-align: left;
+
+        form {
+            > * {
+                margin: 10px 25px;
+            }
+
+            .popup-form-footer {
+                border-top: 1px solid @gray-light;
+                margin: 0;
+            }
+        }
+
+        .popup-message {
+            display: block;
+            margin-top: 25px;
+            text-align: left;
+
+            .spinner {
+                font-size: 50px;
+            }
+        }
+
+        .icon-star_filled, .icon-star_empty {
+            display: inline-block;
+            width: 24px;
+            height: 32px;
+            font-size: 24px;
+            line-height: 32px;
+            margin: 0 10px;
+
+            &.first-child {
+                margin-left: 0;
+            }
+        }
+
+        .icon.icon-star_filled {
+            color: @brand-warning;
+        }
+
+        .icon-star_empty {
+            color: @gray-light;
+        }
+
+        .rating-radios {
+            span {
+                position: relative;
+                top: -6px;
+            }
+        }
+
+        .rating-form {
+            button {
+                margin: 10px 25px 0;
+            }
+
+            button[type="submit"] {
+                min-width: 58px;
+                float: right;
+            }
+
+            &.complete {
+                text-align: center;
+
+                .rating-radios {
+                    margin-top: 80px;
+                }
+
+                .popup-message {
+                    margin: 0 25px;
+                    font-size: 22px;
+                    text-align: center;
+                }
+            }
+        }
+
+        .notes {
+            span {
+                margin: 5px 0;
+                display: inline-block;
+            }
+
+            label {
+                font-weight: normal;
+                width: 100%;
+            }
+
+            textarea {
+                resize: none;
+                height: 90px;
+            }
+        }
     }
 
     .icon-check-circle {
@@ -37,58 +152,16 @@
         text-align: center;
         margin-top: 50px;
         font-size: 90px;
-    }
-
-    .rating-form {
-        font-size: 13px;
-        height: 295px;
+        color: @brand-blue;
     }
 
     .popup-message {
         display: block;
         text-align: center;
         margin-top: 25px;
-    }
 
-    .rating-radios {
-        text-align: center;
-
-        label {
-            padding: 0;
-            margin: 0 9px;
-
-            span {
-                display: block;
-                text-align: center;
-            }
-            input {
-                margin-left: -6px;
-            }
-        }
-
-        & > span {
-
-            position: relative;
-            font-size: 11px;
-            top: 20px;
-        }
-    }
-
-    .notes {
-        margin-top: 40px;
-        text-align: center;
-
-        label {
-            font-size: 11px;
-            font-weight: normal;
-            text-align: left
-        }
-
-        textarea {
-            resize: none;
-            height: 90px;
-            width: 170px;
-            font-size: 13px;
+        .spinner {
+            font-size: 50px;
         }
     }
 }

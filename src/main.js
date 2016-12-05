@@ -214,8 +214,10 @@ require('./values');
 require('./entities');
 
 require('./v3/models/v3Resource');
+require('./v3/models/v3BreakdownRating');
 require('./v3/models/v3Example');
 require('./v3/factories/v3Base');
+require('./v3/factories/v3BreakdownRatings');
 require('./v3/factories/v3Example');
 require('./v3/factories/v3Conferences');
 require('./v3/factories/v3DataParser');
