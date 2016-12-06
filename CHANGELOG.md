@@ -1,3 +1,10 @@
+# v107.0#
+## Features##
+- Adds pagination to new film-home
+
+## Fixes##
+- LAX shot charts missing player data
+
 # v106.1#
 - Revert INTWEB-803
 
