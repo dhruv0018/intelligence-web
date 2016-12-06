@@ -765,7 +765,7 @@ function TeamsController (
             query.count = TEAMSPERPAGE;
             $scope.page.currentPage = 1;
 
-            $scope.query = teams.getTeamsList(query).then(function(teamData) {
+            $scope.query = teams.getTeamsList(params).then(function(teamData) {
                 setSearchResults(teamData.data, teamData.count);
             });
         }
@@ -789,6 +789,13 @@ function TeamsController (
 
         let filter = angular.copy($scope.filter);
         filter.page = $scope.page.currentPage;
+
+        if(filter.isCanonical) {
+            filter.isCanonical = 1;
+        }
+        else {
+            delete filter.isCanonical;
+        }
 
         $scope.searching = true;
         $scope.teams.length = 0;
