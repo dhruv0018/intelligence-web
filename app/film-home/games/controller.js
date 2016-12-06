@@ -62,9 +62,16 @@ function FilmHomeGamesController(
     $scope.isFiltered = false;
     let timeout = null;
 
+    $scope.NoData = ($scope.games.length === 0) ? true : false;
+    if (!$scope.NoData) {
+        let currentPage = $stateParams.page||1;
+        $scope.page = {
+            currentPage
+        };
+    }
+
     if (currentUser.is(ROLES.COACH)) {
         gamesCopy = angular.copy($scope.games);
-        $scope.NoData = (gamesCopy.length == 0) ? true : false;
         let team = teamsFactory.get(session.getCurrentTeamId());
         let league = leaguesFactory.get(team.leagueId)||{};
         let season = league.getSeasonForWSC();
@@ -81,15 +88,8 @@ function FilmHomeGamesController(
         $scope.leagueId = league.id;
         $scope.currentTeamIsBasketball = sport.id === SPORTS.BASKETBALL.id;
 
-        if (!$scope.NoData) {
-            let currentPage = $stateParams.page||1;
-            $scope.page = {
-                currentPage
-            };
-        }
+
     } else if (currentUser.is(ROLES.ATHLETE)) {
-        /* Athlete gets all games relevent to team with completed video */
-        $scope.NoData = (data.games.length == 0) ? true : false;
         gamesCopy = [];
         //For athlete the type of sport might be different
         $scope.games.forEach(game =>{
