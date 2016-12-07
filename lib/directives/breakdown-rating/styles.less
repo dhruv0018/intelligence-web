@@ -13,22 +13,24 @@
     }
 
     .popup-header {
-        width: 190px;
+        width: 160px;
         height: 32px;
         line-height: 32px;
         text-align: center;
-        font-size: 18px;
+        font-size: 14px;
+        font-weight: 500;
         cursor: pointer;
         color: @gray-lightest;
         background-color: #000;
+        opacity: 0.8;
         border-radius: 26px;
         box-shadow: 2px 0 8px @gray-light;
 
         .icon {
             float: right;
             margin-right: 10px;
-            margin-top: 8px;
-            font-size: 14px;
+            margin-top: 11px;
+            font-size: 10px;
         }
 
         &.popup-open {
@@ -38,13 +40,14 @@
             text-align: left;
             text-indent: 25px;
             background-color: transparent;
+            opacity: 1;
             color: inherit;
-            border-bottom: 1px solid @gray-light;
+            border-bottom: thin solid @table-border-color;
             border-radius: initial;
             box-shadow: none;
 
             .icon {
-                margin-top: 16px;
+                margin-top: 20px;
                 margin-right: 20px;
                 color: @brand-primary;
             }
@@ -52,7 +55,8 @@
     }
 
     .popup-body {
-        font-size: 16px;
+        font-size: 14px;
+        font-weight: 200;
         text-align: left;
 
         form {
@@ -61,7 +65,7 @@
             }
 
             .popup-form-footer {
-                border-top: 1px solid @gray-light;
+                border-top: thin solid @table-border-color;
                 margin: 0;
             }
         }
@@ -74,6 +78,12 @@
             .spinner {
                 font-size: 50px;
             }
+
+            &.popup-loading {
+                text-align: center;
+                margin-top: 90px;
+                color: @brand-primary;
+            }
         }
 
         .icon-star_filled, .icon-star_empty {
@@ -82,7 +92,7 @@
             height: 32px;
             font-size: 24px;
             line-height: 32px;
-            margin: 0 10px;
+            margin: 0 7px;
 
             &.first-child {
                 margin-left: 0;
@@ -106,7 +116,7 @@
 
         .rating-form {
             button {
-                margin: 10px 25px 0;
+                margin: 9px 25px 0;
             }
 
             button[type="submit"] {
@@ -118,12 +128,12 @@
                 text-align: center;
 
                 .rating-radios {
-                    margin-top: 80px;
+                    margin-top: 90px;
                 }
 
                 .popup-message {
                     margin: 0 25px;
-                    font-size: 22px;
+                    font-size: 18px;
                     text-align: center;
                 }
             }
@@ -142,17 +152,10 @@
 
             textarea {
                 resize: none;
+                font-size: 14px;
                 height: 90px;
             }
         }
-    }
-
-    .icon-check-circle {
-        display: block;
-        text-align: center;
-        margin-top: 50px;
-        font-size: 90px;
-        color: @brand-blue;
     }
 
     .popup-message {

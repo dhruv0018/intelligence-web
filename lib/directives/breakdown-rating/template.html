@@ -1,12 +1,12 @@
 <div ng-hide="popup.isDismissed" ng-class="{'popup-open': popup.isOpen}" class="breakdown-rating-popup">
     <div ng-class="{'popup-open': popup.isOpen}" ng-click="popup.isOpen = !popup.isOpen" class="popup-header">
-        <span class="-title">Rate your breakdown</span>
-        <i class="icon icon-x" ng-click="popup.isDismissed = true"></i>
+        <span>Rate your breakdown</span>
+        <i class="icon icon-x" ng-click="!popup.isOpen && (popup.isDismissed = true)"></i>
     </div>
 
     <div class="popup-body" ng-show="popup.isOpen">
         <div ng-if="!init" class="rating-form">
-            <span class="popup-message"><krossover-spinner></krossover-spinner></span>
+            <span class="popup-message popup-loading"><krossover-spinner></krossover-spinner></span>
         </div>
         <div ng-if="init && previousRating" class="rating-form complete">
             <div class="rating-radios">
@@ -44,9 +44,9 @@
                     </label>
                 </div>
                 <div class="popup-form-footer">
-                    <button type="button" class="btn" ng-class="{'disabled': submittingRating}" ng-click="clearForm()">Cancel</button>
-                    <button type="submit" class="btn" ng-class="{'disabled': !data.rating || submittingRating, 'btn-success': data.rating}">
-                        <span ng-show="!submittingRating">Apply</span>
+                    <button type="button" class="btn btn-default" ng-class="{'disabled': submittingRating}" ng-click="clearForm()">Cancel</button>
+                    <button type="submit" class="btn" ng-class="{'btn-default disabled': !data.rating || submittingRating, 'btn-success': data.rating}">
+                        <span ng-show="!submittingRating">Submit</span>
                         <krossover-spinner ng-show="submittingRating"></krossover-spinner>
                     </button>
                 </div>
