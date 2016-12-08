@@ -1,3 +1,8 @@
+# v108.0#
+## Fixes##
+- Saves canonical team information across game info tabs
+- Fixes for team admin search
+
 # v107.0#
 ## Features##
 - Adds pagination to new film-home
