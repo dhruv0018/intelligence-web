@@ -10,6 +10,9 @@ require('./vendor');
 /* Fetch angular from the browser scope */
 var angular = window.angular;
 
+/* Polyfill Angular 1.5 Components */
+require('angular-component');
+
 /* Extend Angular core */
 require('./extensions');
 
