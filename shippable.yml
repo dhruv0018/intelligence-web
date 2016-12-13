@@ -29,6 +29,7 @@ build:
     #   - node_modules/component/bin/component install -t 500000
       - Xvfb :99 -ac -nolisten tcp&
       - grunt test
+      - export DISPLAY=:99; grunt e2eLocal
       - rm -rf deploy
       - mkdir deploy
       - cd deploy
