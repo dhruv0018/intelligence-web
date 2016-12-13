@@ -30,7 +30,7 @@ var SPORTS = {
         name: 'Lacrosse',
         hasAnalytics: true,
         hasStatistics: true,
-        hasInsights: false,
+        hasInsights: true,
         scoreBySets: false
     },
 
