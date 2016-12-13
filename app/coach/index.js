@@ -1,6 +1,5 @@
 /* Component dependencies */
 import CoachAddFilm from './add-film/index.js';
-import CoachFilmHome from './film-home/index.js';
 import CoachTeam from './coach-team/index.js';
 
 /* Fetch angular from the browser scope */
@@ -12,7 +11,6 @@ var angular = window.angular;
  */
 
 var Coach = angular.module('Coach', [
-    'Coach.FilmHome',
     'Coach.Team',
     'add-film'
 ]);

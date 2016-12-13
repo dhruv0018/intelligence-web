@@ -364,12 +364,6 @@
         "Assistant Coach": true
     },
 
-    "Coach.FilmHome": {
-
-        "Head Coach": true,
-        "Assistant Coach": true
-    },
-
     "Coach.GameArea": {
 
         "Head Coach": true,
@@ -478,11 +472,6 @@
     },
 
     "Athlete": {
-
-        "Athlete": true
-    },
-
-    "Athlete.FilmHome": {
 
         "Athlete": true
     },

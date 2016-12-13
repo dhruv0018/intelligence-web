@@ -94,24 +94,8 @@ function HeaderController(
         });
     }
 
-    //TODO: Create a getRolesOneAthlete that gets one athlete role
-    let userRoles = currentUser.getRoles();
-    let athleteIncluded = false;
-
-    // NOTE: Only get one athlete role for display in the dropdown, since all athlete roles are treated as one
-    // Get all other roles as normal
-    $scope.dropdownUserRoles = userRoles.filter(function(role) {
-        if (role.type.id === ROLE_TYPE.ATHLETE) {
-            if (!athleteIncluded) {
-                athleteIncluded = true;
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return true;
-        }
-    });
+    //getRolesOneAthlete that gets one athlete role
+    $scope.dropdownUserRoles = currentUser.getRolesOneAthlete();
 
     if (auth.isLoggedIn) {
         if (currentUser.is(ROLES.COACH)) {
@@ -119,15 +103,14 @@ function HeaderController(
             $scope.league = leagues.get(team.leagueId);
             $scope.SPORTS = SPORTS;
             $scope.SPORT_IDS = SPORT_IDS;
-            $scope.showOldFilmHome = team.sportId === SPORTS.FOOTBALL.id || team.sportId === SPORTS.VOLLEYBALL.id;
-            if(SPORT_IDS[$scope.league.sportId] && SPORTS[SPORT_IDS[$scope.league.sportId]].hasInsights && $scope.showOldFilmHome && SPORTS[SPORT_IDS[$scope.league.sportId]].hasAnalytics){
+
+            if(SPORT_IDS[$scope.league.sportId] && SPORTS[SPORT_IDS[$scope.league.sportId]].hasInsights && SPORTS[SPORT_IDS[$scope.league.sportId]].hasAnalytics){
                 $scope.isMaxMenu = true;
             }else{
                 $scope.isMaxMenu = false;
             }
         } else if (currentUser.is(ROLES.ATHLETE)) {
             let team = teams.get(currentUser.currentRole.teamId);
-            $scope.showOldFilmHome = team.sportId === SPORTS.FOOTBALL.id || team.sportId === SPORTS.VOLLEYBALL.id;
         }
     }
 

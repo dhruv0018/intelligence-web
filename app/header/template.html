@@ -45,8 +45,7 @@
 
         <!-- Coach Menu -->
         <menu class="dropdown-menu" ng-if="currentUser.is(COACH)">
-            <li ui-sref-active="active" ng-hide="showOldFilmHome"><a id="mobile-menu-coach-new-film-home-cta" ui-sref="FilmHomeGames">Film Home</a></li>
-            <li ui-sref-active="active" ng-show="showOldFilmHome"><a id="mobile-menu-coach-film-home-cta" ui-sref="Coach.FilmHome">Film Home</a></li>
+            <li ui-sref-active="active"><a id="mobile-menu-coach-new-film-home-cta" ui-sref="FilmHomeGames">Film Home</a></li>
             <li
                 ng-if="currentUser.is(COACH) && SPORTS[SPORT_IDS[league.sportId]].hasAnalytics"
                 id="mobile-menu-coach-analytics-cta"
@@ -108,11 +107,8 @@
 
         <!-- Athlete Menu -->
         <menu class="dropdown-menu" ng-if="currentUser.is(ATHLETE)">
-            <li id="mobile-menu-athlete-new-film-home-cta" ui-sref-active="active" ng-hide="showOldFilmHome">
+            <li id="mobile-menu-athlete-new-film-home-cta" ui-sref-active="active">
                 <a ui-sref="FilmHomeGames">Film Home</a>
-            </li>
-            <li id="mobile-menu-athlete-film-home-cta" ui-sref-active="active" ng-show="showOldFilmHome">
-                <a ui-sref="Athlete.FilmHome">Film Home</a>
             </li>
             <li id="mobile-menu-athlete-analytics-cta" ui-sref-active="active"><a ui-sref="PlayerAnalytics">Analytics</a></li>
             <li
@@ -227,8 +223,7 @@
 
         <!-- Coach menu -->
         <li ui-sref-active="active" ng-if="currentUser.is(COACH)">
-            <a id="menu-coach-new-film-home-cta" ui-sref="FilmHomeGames" ng-hide="showOldFilmHome">Film Home</a>
-            <a id="menu-coach-film-home-cta" ui-sref="Coach.FilmHome" ng-show="showOldFilmHome">Film Home</a>
+            <a id="menu-coach-new-film-home-cta" ui-sref="FilmHomeGames">Film Home</a>
         </li>
         <li
             ng-if="currentUser.is(COACH) && SPORTS[SPORT_IDS[league.sportId]].hasAnalytics"
@@ -285,21 +280,10 @@
         <li ng-if="currentUser.is(COACH)">
             <a id="menu-coach-support-cta" ng-href="{{config.links.support.uri}}" target="_blank">Support</a>
         </li>
-        <li ui-sref-active="active" ng-if="currentUser.is(COACH) && showOldFilmHome" class="header-button">
-            <button
-                id="menu-coach-add-film-cta"
-                class="btn-outline-white"
-                ng-click="tabs.reset()"
-                ui-sref="add-film"
-                ui-sref-opts="{reload: true}">
-                Add Film
-            </button>
-        </li>
 
         <!-- Athlete menu -->
         <li ui-sref-active="active" ng-if="currentUser.is(ATHLETE)">
-            <a id="menu-athlete-new-film-home-cta" ui-sref="FilmHomeGames" ng-hide="showOldFilmHome">Film Home</a>
-            <a id="menu-athlete-film-home-cta" ui-sref="Athlete.FilmHome" ng-show="showOldFilmHome">Film Home</a>
+            <a id="menu-athlete-new-film-home-cta" ui-sref="FilmHomeGames">Film Home</a>
         </li>
         <li id="menu-athlete-analytics-cta" ng-if="currentUser.is(ATHLETE)" ui-sref-active="active">
             <a ui-sref="PlayerAnalytics">Analytics</a>

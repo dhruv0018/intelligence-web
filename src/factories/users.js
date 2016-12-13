@@ -546,7 +546,44 @@ IntelligenceWebClient.factory('UsersFactory', [
                 // Return only roles by ROLE_TYPE if defined
                 return roles.filter(role => role.type.id === ROLE_TYPE);
             },
+            /**
+             * @class User
+             * @method getRolesOneAthlete
+             * @returns {Array} Array of active user roles with one athlete only
+            **/
+            getRolesOneAthlete: function() {
 
+                if(!this.roles || !this.roles.length) return [];
+
+                // Get active roles
+                let roles = this.roles.filter(role => {
+                    return this.isActive(role);
+                });
+
+                let athleteIncluded = false;
+                let activeAthlete = roles.find(role =>{
+                    return role.isDefault && role.type.id === ROLE_TYPE.ATHLETE;
+                });
+
+                let oneAthleteRoles = roles.filter(function(role) {
+                    if (role.type.id === ROLE_TYPE.ATHLETE) {
+                        if(activeAthlete){
+                            return role.id === activeAthlete.id;
+                        }else{
+                            if (!athleteIncluded) {
+                                athleteIncluded = true;
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    } else {
+                        return true;
+                    }
+                });
+
+                return oneAthleteRoles;
+            },
 
             /**
              * @class User
