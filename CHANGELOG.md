@@ -1,3 +1,10 @@
+# v109.0#
+## Features##
+- Breakdown ratings
+
+## Fixes##
+- Fix layout bug when exiting film editor
+
 # v108.0#
 ## Fixes##
 - Saves canonical team information across game info tabs
