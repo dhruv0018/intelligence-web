@@ -125,11 +125,12 @@ function IndexingHeaderController(
         let isLacrosseGame = $scope.league.sportId === SPORTS.LACROSSE.id;
         let isFootballGame = $scope.league.sportId === SPORTS.FOOTBALL.id;
         let isVolleyballGame = $scope.league.sportId === SPORTS.VOLLEYBALL.id;
+        let isSoccerGame = $scope.league.sportId === SPORTS.SOCCER.id;
         let locals = {
             'sendToQa': $scope.sendToQa,
             'flagsUrl': $scope.game.getFlagsUrl(),
             //show the flags only for supported sports
-            'showFlags': isBasketballGame || isLacrosseGame || isFootballGame || isVolleyballGame
+            'showFlags': isBasketballGame || isLacrosseGame || isFootballGame || isVolleyballGame || isSoccerGame
         };
         let modal = SendToQaDialogService.show(locals);
     };
