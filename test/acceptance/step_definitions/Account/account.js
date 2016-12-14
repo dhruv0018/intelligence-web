@@ -10,17 +10,6 @@ var sequelize = new Sequelize('intelligence', 'krossover', 'intelligence');
 module.exports = function() {
     var account = new Account();
 
-    // this.Given(/^I am logged in as an Admin$/, function (callback) {
-    //     account.signin("ADMIN").then(function() {
-    //         console.log("signing in");
-    //     });
-    //     expect(browser.getLocationAbsUrl()).to.eventually.equal(browser.baseUrl + "users").and.notify(function() {
-    //         console.log("On the USERS page");
-    //         callback();
-    //     });
-    //     // callback();
-    // });
-
     this.Given(/^There is a "([^"]*)"$/, function(userType, done) {
 
         var User = sequelize.define('user', {
@@ -63,14 +52,35 @@ module.exports = function() {
         done();
     });
 
+    this.When(/^I login as "([^"]*)"$/, function(userType, done) {
+
+        var self = this;
+        var email = account.getEmail(userType);
+        var password = account.getPassword(userType);
+
+        self.waitForClickable(account.emailAddressField, 3000).then(
+            ()=>{
+                account.enterEmail(email);
+            }
+        );
+
+        self.waitForClickable(account.emailPassField, 3000).then(
+            ()=>{
+                account.enterPassword(password);
+                account.clickSignin().then(done);
+            }
+        );
+
+    });
+
     this.When(/^I authenticate with valid credentials$/, function (done) {
 
         var password = account.getPassword(this.userType)
 
         account.enterPassword(password);
-        account.clickSignin();
+        account.clickSignin().then(done);
 
-        done();
+        // done();
     });
 
     this.When(/^I authenticate with an invalid password$/, function (callback) {

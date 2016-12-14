@@ -27,13 +27,13 @@ exports.config = {
     // specs: [
     //     'features/Coach/*.feature'
     // ],
-
+    getPageTimeout: 100000,
     allScriptsTimeout: 100000,
 
     cucumberOpts: {
         format: 'pretty',
         require: 'test/acceptance/**/*.js',
-        tags: ['~@manual', '~ignore']
+        tags: ['~@manual', '~@ignore']
     },
 
     baseUrl: baseUrl,

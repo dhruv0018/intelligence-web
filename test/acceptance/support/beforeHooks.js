@@ -23,7 +23,9 @@ var myBeforeHooks = function() {
     self.BeforeFeature(function(event, callback){
         // var feature = event.getPayloadItem('feature');
         // console.log('print out feature name:', feature.getName());
-        callback();
+        browser.driver.manage().window().maximize();
+        browser.get("login").then(callback);
+        // callback();
     });
 
 

@@ -17,6 +17,10 @@ module.exports = function Account() {
         },
         'COACH': {
             email: "andrew@krossover.com",
+            password: "Krossover1",
+        },
+        'BASKETBALL_COACH': {
+            email: "sales@krossover.com",
             password: "Popcorn23",
         },
         'HEAD_COACH': {
@@ -35,11 +39,19 @@ module.exports = function Account() {
             email: "superadmin@krossover.com",
             password: "superadmin",
         },
+        'FILM_EXCHANGE_ADMIN': {
+            email: "jared@krossover.com",
+            password: "Popcorn23",
+        },
         'ATHLETE': {
-            email: "superadmin@krossover.com",
-            password: "superadmin",
+            email: "jared@krossover.com",
+            password: "Popcorn23",
         }
     };
+
+    this.emailAddressField = element(by.model("$parent.login.email"));
+    this.emailPassField = element(by.model("$parent.login.password"));
+    this.signUpBtn = element(by.css(".button-signin"));
 
     // Assumes that the user is currently logged in
     this.signout = function() {
@@ -48,39 +60,18 @@ module.exports = function Account() {
         return element.all(by.css(".role-dropdown .dropdown-menu footer button")).get(1).click();
     };
 
-    this.signin = function(userType) {
-
-        browser.get(browser.baseUrl + "login");
-
-        var email = this.getEmail(userType);
-        this.enterEmail(email);
-
-        var password = this.getPassword(userType)
-        this.enterPassword(password);
-        this.clickSignin();
-
-        // Confirm signin by waiting for rolebar to be present.
-        return browser.driver.wait(
-            function() { return browser.isElementPresent(by.css(".rolebar")); }
-        , 10000);
-
-    };
-
     this.enterEmail = function(email) {
-        var emailAddressField = element(by.model("$parent.login.email"));
-        emailAddressField.sendKeys(email);
+        this.emailAddressField.sendKeys(email);
     };
 
     // Assumes you are on the login page
     this.enterPassword = function(password) {
-        var emailPassField = element(by.model("$parent.login.password"));
-        emailPassField.sendKeys(password);
+        this.emailPassField.sendKeys(password);
     };
 
     this.clickSignin = function() {
-        var signUpBtn = element(by.css(".button-signin"));
-        view.scrollIntoView(signUpBtn);
-        return signUpBtn.click();
+        view.scrollIntoView(this.signUpBtn);
+        return this.signUpBtn.click();
     };
 
     this.getUser = function(userType) {
@@ -88,7 +79,6 @@ module.exports = function Account() {
     };
 
     this.getEmail = function(userType) {
-        // if (users[userType].email
         return users[userType].email;
     };
 

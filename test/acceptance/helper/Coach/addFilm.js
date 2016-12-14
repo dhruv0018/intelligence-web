@@ -20,9 +20,15 @@ module.exports = function AddFilm(){
     }
 
     this.clickAddFilm = function(){
-        var btnAddFilm = element(by.id("menu-coach-add-film-cta"));
-        view.scrollIntoView(btnAddFilm);
-        return btnAddFilm.click();
+        browser.getCurrentUrl().then(function(url){
+            if(url.indexOf('coach')>-1){
+                var btnAddFilm = element(by.id("menu-coach-add-film-cta"));
+            }else{
+                var btnAddFilm = $('.add-game-btn');
+            }
+            view.scrollIntoView(btnAddFilm);
+            return btnAddFilm.click();
+        })
     }
 
 }

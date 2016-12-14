@@ -33,6 +33,9 @@ var myAfterHooks = function () {
         if(tags.length > 0 && tags[0].getName() == '@feature1'){
             console.log('@feature1 tag');
         }
+        //this starts a new session
+        browser.executeScript('window.sessionStorage.clear();');
+        browser.executeScript('window.localStorage.clear();');
         callback();
     });
 
@@ -44,6 +47,11 @@ var myAfterHooks = function () {
         callback();
     });
 
+    //this execute after scenrio with certain tag
+    self.After('@waitForProcess', function after(event, callback){
+        browser.manage().timeouts().implicitlyWait(30000);
+        callback();
+    });
 };
 
 module.exports = myAfterHooks;

@@ -1,4 +1,4 @@
-Feature: AddFilm
+Feature: Coach-AddFilm
 
     As a coach
     I should be able to upload game
@@ -11,10 +11,8 @@ Feature: AddFilm
 
     Scenario: Coach once login should see the film home page
 
-        #Given There is a "COACH"
-        Given I navigate to the "login" page
-        Given I am a "COACH"
-        When I authenticate with valid credentials
+        Given I login as "COACH"
+        When I switch to role "Crimson Tide"
         Then I should see the "film-home" page
 
     Scenario: Coach can upload regular game
@@ -25,7 +23,14 @@ Feature: AddFilm
         Then I upload a game
         Then I should see the "information" page
 
-    @tag1
     Scenario: Coach can save game and create game roster
         When I add opposingTeam "test"
         Then I should see rosters on homeTeam
+
+    Scenario: Coach should be able to break down game
+        When I click Film Settings
+        Then I select breakdown and submit
+        Then I should see text "This game will be broken down" at "breakdown-information"
+        Then I click film cancel button
+        And I sign out
+        Then I should see the "login" page

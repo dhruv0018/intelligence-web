@@ -1,4 +1,3 @@
-@manual
 Feature: Authentication with inadequate credentials
 
     As a user, I should be able to sign-in and be redirected accordingly.
@@ -10,7 +9,6 @@ Feature: Authentication with inadequate credentials
         Only test the admin since all users should see the same result.
         If the Admin doesn't get the correct result, no user will.
 
-        Given I navigate to the "login" page
         Given I am a "ADMIN"
         When I authenticate with an invalid password
         Then I should see the "login" page

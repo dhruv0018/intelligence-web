@@ -6,24 +6,45 @@ var view = require('../view');
 var path = require('path');
 
 module.exports = function Games(){
-
+    var opposingTeamField = element(by.model("gameTeams.opposingTeam.name"));
+    var nextBtn = element.all(by.css(".btn-submit-continue")).first();
+    var homeRosters = element.all(by.repeater("rosterEntry in playerRosterEntries"));
+    var breakdownBtn = element(by.id("non-regular-breakdown-cta"));
+    var submitBtn = element.all(by.css(".btn-submit-continue")).first();
+    var filmSettingsBtn = element(by.id("coach-game-instructions-cta"));
+    var btnCancel = element(by.id('cancel-uploading-cta'));
 
     this.enterOpposingTeam = function(opposingTeam){
-        var opposingTeamField = element(by.model("gameTeams.opposingTeam.name"));
         opposingTeamField.sendKeys(opposingTeam);
     }
 
     this.clickNext = function(){
-        var nextBtn = element(by.css(".btn-submit-continue"));
         view.scrollIntoView(nextBtn);
         return nextBtn.click();
     }
 
+    this.clickSettings = function(){
+        return filmSettingsBtn.click();
+    }
+
+    this.breakAndSubmit = function(){
+        return breakdownBtn.click().then(()=>{
+            return submitBtn.click();
+        })
+    }
+
     this.homeRosterCount = function(){
-        var homeRosters = element.all(by.repeater("rosterEntry in playerRosterEntries"));
         return homeRosters.count();
-        // homeRosters.count().then(function(count){
-        //     console.log(count);
-        // })
+    }
+
+    this.clickCancel = function(){
+        //for local instance the upload process may not work, if cancel button shows cancel process
+        btnCancel.isDisplayed().then((isPresent)=>{
+            if(isPresent){
+                return btnCancel.click();
+            }else{
+                return true;
+            }
+        })
     }
 }

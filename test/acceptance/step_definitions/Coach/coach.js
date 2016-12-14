@@ -19,6 +19,14 @@ module.exports = function Coach(){
         done();
     });
 
+    this.Then(/^I click Film Settings$/, function (done) {
+        games.clickSettings().then(done);
+    });
+
+    this.When(/^I select breakdown and submit$/, function (done) {
+        games.breakAndSubmit().then(done);
+    });
+
     this.When(/^I add opposingTeam "([^"]*)"$/, function (opposingTeam, done) {
         games.enterOpposingTeam(opposingTeam);
         games.clickNext();
@@ -27,6 +35,11 @@ module.exports = function Coach(){
 
     this.Then(/^I should see rosters on homeTeam$/, function (done) {
         expect(games.homeRosterCount()).to.eventually.above(0);
+        done();
+    });
+
+    this.Then(/^I click film cancel button$/, function (done) {
+        games.clickCancel();
         done();
     });
 }

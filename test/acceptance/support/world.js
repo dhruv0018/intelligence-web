@@ -40,6 +40,31 @@ module.exports = function() {
             });
         };
 
+        this.waitForClickable = function(element, timeToWaitInMilliseconds){
+            var self = this;
+            var EC = protractor.ExpectedConditions;
+            var isClickable = EC.elementToBeClickable(element);
+            timeToWaitInMilliseconds = timeToWaitInMilliseconds || 30000;
+            browser.wait(isClickable, timeToWaitInMilliseconds);
+            return element.click();
+        };
+
+        this.waitForVisible = function(element, timeToWaitInMilliseconds){
+            var self = this;
+            var EC = protractor.ExpectedConditions;
+            var isVisible = EC.visibilityOf(element);
+            timeToWaitInMilliseconds = timeToWaitInMilliseconds || 30000;
+            browser.wait(isVisible, timeToWaitInMilliseconds);
+        };
+
+        this.waitForInvisible = function(element, timeToWaitInMilliseconds){
+            var self = this;
+            var EC = protractor.ExpectedConditions;
+            var isInvisible = EC.invisibilityOf(element);
+            timeToWaitInMilliseconds = timeToWaitInMilliseconds || 30000;
+            browser.wait(isInvisible, timeToWaitInMilliseconds);
+        };
+
         // callback();
     };
 }
