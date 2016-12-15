@@ -5,6 +5,7 @@ arena-chart-filters {
 .arena-chart-filters {
     height: 90px;
     justify-content: space-between;
+    flex-wrap: nowrap;
 
     @team-name-width: 150px;
 
@@ -50,8 +51,8 @@ arena-chart-filters {
         }
     }
 
-    // lacrosse-specific overrides
-    &.lacrosse {
+    // lacrosse and soccer overrides
+    &.lacrosse, &.soccer {
 
         .shots-filter .filter-group__item-actions {
             width: 162px
