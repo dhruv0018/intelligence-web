@@ -53,7 +53,8 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
     function controller($scope, $stateParams, games, ROLES, session, users, TELESTRATION_PERMISSIONS, TelestrationsVideoPlayerBroker) {
 
         /* Scope */
-
+        let gameId = $stateParams.id;
+        $scope.game = games.get(gameId);
         const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
 
         // telestrations
