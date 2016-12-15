@@ -107,7 +107,17 @@
         "insights": {
             "uri": "http://insights.krossover.com"
         },
-        "finalCutPro": " http://vimeo.com/41165826"
+        "finalCutPro": " http://vimeo.com/41165826",
+        "filmLibrarySupport" : {
+            "us-iwlca+iwlca+female+3" : {
+                "messagingForum": {
+                    "uri" : "https://krossover.wufoo.com/forms/zzupv8n0qktc9f/"
+                },
+                "submitVideoComplaint": {
+                    "uri" : "https://krossover.wufoo.com/forms/zc60e0e0kw6dc1/"
+                }
+            }
+        }
     },
     "indexing": {
         "video": {

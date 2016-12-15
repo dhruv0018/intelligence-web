@@ -31,6 +31,10 @@
             <div class="title-header">
                 <h3>{{filmExchangeName}}</h3>
                 <button class="btn btn-default" ng-click="openFilmExchangeModal()" ng-if="!currentUser.is(COACH)">Manage Team Access</button>
+                <div ng-if="currentUser.is(COACH) && supportLinks" class="support-links">
+                    <a ng-href="{{supportLinks.messagingForum.uri}}" target="_blank">Messaging forum</a>
+                    <a ng-href="{{supportLinks.submitVideoComplaint.uri}}" target="_blank">Submit video complaint</a>
+                </div>
             </div>
         </div>
 

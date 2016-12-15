@@ -87,6 +87,7 @@ FilmExchange.controller('FilmExchangeController', [
     'SportsFactory',
     'ROLES',
     'EXCHANGE_TYPES',
+    'config',
     function controller(
         $rootScope,
         $scope,
@@ -105,7 +106,8 @@ FilmExchange.controller('FilmExchangeController', [
         filmExchangeFactory,
         sports,
         ROLES,
-        EXCHANGE_TYPES
+        EXCHANGE_TYPES,
+        config
     ) {
         $scope.currentUser = session.getCurrentUser();
         $scope.noData = false;
@@ -138,6 +140,8 @@ FilmExchange.controller('FilmExchangeController', [
             });
             $scope.filter= {};
             $scope.itemPerPage = ITEMSPERPAGE;
+            let supportLinkKey = $stateParams.id.toLowerCase();
+            $scope.supportLinks = (config.links.filmLibrarySupport[supportLinkKey]) ? config.links.filmLibrarySupport[supportLinkKey] : null;
 
             $scope.teamCompetitionLevels = CompetitionLevels.filter(item => item.code != null);
             angular.forEach($scope.teamCompetitionLevels, function(itm){
