@@ -4,6 +4,7 @@
 
 ## Fixes##
 - Fix layout bug when exiting film editor
+- Fixes bug on raw-film telestrations
 
 # v108.0#
 ## Fixes##
