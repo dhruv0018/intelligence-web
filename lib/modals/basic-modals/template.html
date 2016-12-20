@@ -5,7 +5,7 @@
 	</header>
 	<div class="modal-body">
 		<h3 class="body-header" ng-if="bodyHeader.length">{{bodyHeader}}</h3>
-		<p>{{bodyText}}</p>
+		<p class="body-text" ng-bind-html="bodyText"></p>
 		<span class="body-subtext" ng-if="bodySubtext.length">{{bodySubtext}}</span>
 		<textarea class="text-modal-input" ng-show="type === 'text'" ng-model="textValue"></textarea>
 		<div class="button-row">

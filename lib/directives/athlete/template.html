@@ -13,12 +13,11 @@
     </div>
 
     <form name="athleteForm" ng-if="(editable && !athlete.isUnknown)" ng-submit="updateAthleteInformation()" ng-hide="!isHomeTeam && !rosterEntry.playerInfo.isActive">
-        <table ng-class="{'deselected': !rosterEntry.playerInfo.isActive,
-                               'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}"
+        <table ng-class="{'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}"
                class="table">
             <tr>
 
-                <td class="athlete-column">
+                <td class="athlete-column" ng-class="{'deselected': !rosterEntry.playerInfo.isActive}">
 
                     <input
                         id="{{idHook}}-jersey-cta"
@@ -36,7 +35,7 @@
 
                 </td>
 
-                <td class="athlete-column">
+                <td class="athlete-column" ng-class="{'deselected': !rosterEntry.playerInfo.isActive}">
                     <input
                      id="{{idHook}}-first-name-cta"
                      ng-change="updateAthleteInformation()"
@@ -50,7 +49,7 @@
 
                 </td>
 
-                <td class="athlete-column">
+                <td class="athlete-column" ng-class="{'deselected': !rosterEntry.playerInfo.isActive}">
 
                     <input
                      id="{{idHook}}-last-name-cta"
@@ -66,7 +65,7 @@
 
                 </td>
 
-                <td class="athlete-column">
+                <td class="athlete-column" ng-class="{'deselected': !rosterEntry.playerInfo.isActive}">
 
                     <data-positions-dropdown
                      id="{{idHook}}-positions-cta"
@@ -90,7 +89,9 @@
                 </td>
 
                 <td class="athlete-column" ng-if="isUserTeam" ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
-                    <i id="{{idHook}}-toggle-activation-off-cta" class="icon icon-check-square-o" ng-show="!rosterEntry.playerInfo.isActive"></i>
+                    <i id="{{idHook}}-toggle-activation-off-cta" class="icon"
+                    ng-class="{true: 'icon-check-square-o deselected', false: 'icon-check-square amendable'}[(game.isDelivered() || game.isBeingBrokenDown())]"
+                    ng-show="!rosterEntry.playerInfo.isActive"></i>
                     <i id="{{idHook}}-toggle-activation-on-cta" class="icon icon-check-empty" ng-show="rosterEntry.playerInfo.isActive"></i>
                 </td>
             </tr>
