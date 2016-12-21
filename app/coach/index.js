@@ -87,7 +87,7 @@ Coach.service('Coach.Data.Dependencies', [
                     teams.load({ relatedRoleId: role.id }).then(function(){
                         let team = teams.get(role.teamId);
 
-                        players.load({ rosterId: team.roster.id }).then(function(){deferred.resolve();});
+                        players.load({ rosterId: team.roster.id, isActive: 1 }).then(function(){deferred.resolve();});
                     });
                 });
 

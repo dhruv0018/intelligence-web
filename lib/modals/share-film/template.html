@@ -76,7 +76,7 @@
         <div class="sharing-with-team-container" ng-show="withTeam">
             <div class="info-box">
                 <span ng-show="currentUser.is(ROLES.COACH)">Reels are <span class="emphasis">automatically</span> shared amongst team coaches.<br/></span>
-                Players <span class="emphasis">must</span> have an email address associated with their profile in order to be selected.
+                Players <span class="emphasis">must</span> have active accounts to be selected. Invite players via email from your team roster.
             </div>
 
             <div class="team-share-options">
@@ -86,7 +86,7 @@
             </div>
 
             <div class="team-share-table">
-                <div class="team-share-player" ng-repeat="player in playersWithAccounts" ng-click="shareReelWithPlayerToggle(player)" ng-class="{'player-selected': film.isSharedWithUser(usersMap[player.userId]), 'disabled': !usersMap[player.userId]}">
+                <div class="team-share-player" ng-repeat="player in playersList" ng-click="shareReelWithPlayerToggle(player)" ng-class="{'player-selected': film.isSharedWithUser(usersMap[player.userId]), 'disabled': !usersMap[player.userId] || usersMap[player.userId].lastAccessed === null}">
                     <check-box id="share-film-team-player-{{$index}}-cta" checked="film.isSharedWithUser(usersMap[player.userId])"></check-box>
                     <span ng-show="team.roster.playerInfo[player.id].jerseyNumber">#{{team.roster.playerInfo[player.id].jerseyNumber}}&nbsp;</span> {{player.firstName}} {{player.lastName}}
                 </div>

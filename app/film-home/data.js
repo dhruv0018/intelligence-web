@@ -131,6 +131,13 @@ export function FilmHomeGames (
             }
         },
 
+        // Active Team Roster used for the Share modal
+        get activePlayers() {
+            let currentUser = session.getCurrentUser();
+            return teamsFactory.load(currentUser.getCurrentRole().teamId)
+            .then(teams => playersFactory.load({rosterId: teams[0].roster.id, isActive: 1}));
+        },
+
         get filmExchanges(){
             let currentUser = session.getCurrentUser();
             return teamsFactory.getFilmExchanges(currentUser.getCurrentRole().teamId);
@@ -169,8 +176,9 @@ export function FilmHomeReels (
             this.users = users.load({ relatedUserId: currentUser.id });
             this.reels = reels.load({ relatedUserId: currentUser.id });
 
+            // Active Team Roster used for the Reel Share modal
             this.players = teams.load(currentUser.getCurrentRole().teamId)
-                .then(teams => players.loadPlayersFromTeam(teams[0]));
+                .then(teams => players.load({rosterId: teams[0].roster.id, isActive: 1}));
         }
     }
 
