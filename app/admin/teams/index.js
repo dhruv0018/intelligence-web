@@ -428,6 +428,7 @@ TeamController.$inject = [
     'SchoolsFactory',
     'TeamsFactory',
     'PRIORITIES',
+    'PRIORITIES_IDS',
     'UsersFactory',
     'EMAILS',
     'TEAM_GENDERS',
@@ -453,6 +454,7 @@ function TeamController (
     schoolsFactory,
     teams,
     PRIORITIES,
+    PRIORITIES_IDS,
     users,
     EMAILS,
     TEAM_GENDERS,
@@ -465,6 +467,7 @@ function TeamController (
 ) {
 
     $scope.PRIORITIES = PRIORITIES;
+    $scope.PRIORITIES_IDS = PRIORITIES_IDS;
     $scope.ROLES = ROLES;
     $scope.HEAD_COACH = ROLES.HEAD_COACH;
 
@@ -492,6 +495,22 @@ function TeamController (
             $scope.form.$setDirty();
         }
     });
+
+    $scope.getLabel = function(id){
+        if(!id){
+            return 'Select label';
+        }
+        let selectedLabel = $scope.labelOptions.find(
+            label =>{
+                return label.id === id;
+            }
+        );
+        return selectedLabel ? selectedLabel.abbreviation + ' '+ selectedLabel.name : 'Select label';
+    };
+
+    $scope.changeMenu = function(){
+        $scope.form.$setDirty();
+    };
 
     $scope.$watch('team.leagueId', function(nVal, oVal){
         if(nVal && typeof nVal =='number'){

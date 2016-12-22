@@ -10,11 +10,11 @@
 
         <div class="modal-body">
 
-            <div layout="row">
-                <div flex="50">
+            <div class="layout-row">
+                <div class="layout-50">
                     Game ID: {{ game.id }}
                 </div>
-                <div flex="50" class="qa-time-remaining">
+                <div class="qa-time-remaining layout-50">
                     <div ng-if="game.timeRemaining > 0">{{ game.timeRemaining | millisecondsAsDaysHoursMinutes }} Left to QA</div>
                     <div ng-if="game.timeRemaining <= 0">{{assignmentHours}}H 00M Left to QA</div>
                 </div>

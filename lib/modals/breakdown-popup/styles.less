@@ -1,11 +1,16 @@
-.breakdown-dialog {
+.breakdown-drop{
+    z-index: 2147483647 !important;
+}
+.breakdown-dialog{
 
     display: flex;
     flex-basis: 100%;
     height: 100%;
+    z-index: 2147483647 !important;
 
     .modal-lg {
         width: 80%;
+        max-height: 80%;
     }
 
     .modal-content {
@@ -14,7 +19,10 @@
 
     .modal-body {
         height: calc(~'100% - @{modal-header-height}');
+        display: flex;
         padding: 0px;
+        overflow: hidden;
+        flex: 1;
     }
 
     // Ensures that the playlist can scroll and maxes out it's height
@@ -22,12 +30,14 @@
     .krossover-sidebar,
     .krossover-playlist {
         height: 100%;
+        flex: 0 0 420px;
     }
 
-    .modal-body {
+    .breakdown-video{
         display: flex;
-        flex: 1;
+        width: calc(~'100% - 420px');
     }
+
 
     .modal-header {
 

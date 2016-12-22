@@ -7,4 +7,23 @@ admin-queue-games {
     overflow: hidden;
     overflow-y: auto;
 
+    krossover-team-label-icon{
+        a{
+            color: #000;
+            &:hover{
+                color: #000;
+            }
+        }
+        .tooltip{
+            transition: opacity @swift-ease-out-duration @swift-ease-out-timing-function;
+        }
+        .tooltip > .tooltip-inner{
+            background-color: rgba(0,0,0,.8);
+            padding: 7px;
+        }
+        .tooltip.bottom > .tooltip-arrow {
+            border-bottom: transparent;
+        }
+    }
+
 }

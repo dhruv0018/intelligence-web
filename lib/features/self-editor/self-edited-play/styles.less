@@ -15,9 +15,32 @@ self-edited-play {
         cursor: pointer;
     }
 
-    :first-child, :last-child {
-        display: inline-flex;
-        align-items: center;
+    .state-actions{
+        width: 60px;
+        justify-content: flex-end;
+        span.edit, span.delete{
+            flex-basis: 50%;
+            text-align: right;
+            i{
+                margin: 0px;
+            }
+        }
+        span.edit + div.tooltip{
+            left: 320px !important;
+        }
+        span.delete + div.tooltip{
+            white-space: nowrap;
+            left: 348px !important;
+            .tooltip-arrow{
+                left: 50px !important;
+            }
+        }
+        span.placeholder{
+            flex-basis: 0%;
+        }
+    }
+    &>div {
+        display: flex;
     }
 
     .state-actions,
