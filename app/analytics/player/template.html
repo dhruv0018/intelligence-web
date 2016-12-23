@@ -28,13 +28,15 @@
 
         <div class="analytics-option" ng-hide="currentUserIsAthlete">
             <span>Player:&nbsp;</span>
-            <search-dropdown
-                options="players"
-                option-label="player"
+            <search-player-dropdown
+                players="players"
+                label="player"
                 filter-criteria="extendedName"
                 on-select="generateStats"
                 ng-model="player"
-            ></search-dropdown>
+                team="team"
+                include-active-inactive-filters="true"
+            ></search-player-dropdown>
         </div>
         <div class="analytics-option" ng-if="currentUserIsAthlete && teams.length > 1">
             <span>Team:&nbsp;</span>

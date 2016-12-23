@@ -1,0 +1,39 @@
+<div class="search-player-dropdown dropdown" dropdown is-open="status.isopen">
+    <button
+        class="btn dropdown-toggle"
+        dropdown-toggle
+    >
+        <span ng-hide="selectedPlayer">Select {{label}}</span>
+        <span ng-show="selectedPlayer">{{selectedPlayer[filterCriteria]}}</span>
+        <i class="icon icon-chevron-down"></i>
+    </button>
+    <div class="search-dropdown-menu dropdown-menu" ng-click="$event.stopPropagation()">
+        <div class="search-input-container">
+            <i class="icon icon-search"></i>
+            <input
+                ng-model="filters[filterCriteria]"
+                ng-keydown="keyPressTracker($event, filters.name)"
+                placeholder="Search {{label}}s"
+                maxlength="50">
+            <div class="active-inactive-filters-container" ng-if="includeActiveInactiveFilters">
+                <div class="active-inactive-filters" ng-click="playerFilter.active = !playerFilter.active; filterPlayers()">
+                    <span><check-box checked="playerFilter.active" /></span>
+                    <span>&nbsp;Active</span>
+                </div>
+                <div class="active-inactive-filters" ng-click="playerFilter.inactive = !playerFilter.inactive; filterPlayers()">
+                    <span><check-box checked="playerFilter.inactive" /></span>
+                    <span>&nbsp;Inactive</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="options-list">
+            <ul>
+                <li ng-repeat="player in matchingPlayers = (players | filter: filters)" ng-click="selectPlayer(player)">
+                    {{player[filterCriteria]}}
+                </li>
+            </ul>
+            <p ng-hide="matchingPlayers.length">No {{label}}s match your search</p>
+        </div>
+    </div>
+</div>
