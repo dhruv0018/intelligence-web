@@ -1,3 +1,19 @@
+# v110.0#
+## Features##
+- CHP: see pricing info 
+- New film home for all teams/sports
+- Support links for IWLCA film exchange
+- Show confirmation when selecting players that did not play
+- Ability to filter active/inactive players from player analytics
+- Filter out inactive players from Reel share modal
+- Show Insights link for mens/womens lacrosse
+
+## Fixes##
+- Fixes unable to delete failed uploads
+- Fixes going to wrong film home after deleting a game
+- Fixes cutoff options when clicking "more" on a breakdown
+- Fixes shot chart layout issue with player filter
+
 # v109.0#
 ## Features##
 - Breakdown ratings
