@@ -10,7 +10,7 @@ describe('TeamsFactory', function() {
         expect(TeamsFactory).to.exist;
     }));
 
-    describe('getActivePackage', ()=> {
+    xdescribe('getActivePackage', ()=> {
 
         let TeamsFactory;
 

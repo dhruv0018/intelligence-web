@@ -191,7 +191,7 @@ describe('GamesFactory', function() {
         }]));
     });
 
-    describe.only('revertToLastIndexer', () => {
+    describe('revertToLastIndexer', () => {
         var game;
 
         beforeEach(inject([
@@ -1183,7 +1183,7 @@ describe('GamesFactory', function() {
 
     });
 
-    describe('share', function() {
+    xdescribe('share', function() {
         var game;
 
         beforeEach(inject([
@@ -1639,7 +1639,7 @@ describe('GamesFactory', function() {
                 expect(game.sharedWithTeams).to.eql(initialTeamShares);
         }]));
 
-        it("Should share with team, without telestration", inject(['GamesFactory', 'SessionService',
+        xit("Should share with team, without telestration", inject(['GamesFactory', 'SessionService',
                                                                 function(GamesFactory, session) {
                 session.currentUser = {id: 1};
                 let initialShares = [{sharedWithTeamId:2}];
@@ -1677,7 +1677,7 @@ describe('GamesFactory', function() {
                 expect(game.sharedWithTeams).to.eql(expectedTeamShares);
         }]));
 
-        it("Should share with team, with telestration", inject(['GamesFactory', 'SessionService',
+        xit("Should share with team, with telestration", inject(['GamesFactory', 'SessionService',
                                                                                         function(GamesFactory, session) {
                 session.currentUser = {id: 1};
                 let initialShares = [{sharedWithTeamId:2}];
