@@ -452,7 +452,7 @@ module.exports = function(grunt) {
                     args:{
                         specs: ['features/**/*.feature'],
                         cucumberOpts:{
-                            tags: ['@manual']
+                            tags: ['@manual', '~@ignore']
                         }
                     }
                 }

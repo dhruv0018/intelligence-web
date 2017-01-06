@@ -8,7 +8,7 @@ Feature: FilmExchange
     - FilmExchange Admin once login should only see film exchange
     - Can turn on/off access for teams
 
-    Scenario: FilmExchange Admin once login should see filmexchange only
+    Scenario: FilmExchange Admin should see filmexchange only after logging in
 
         Given I login as "FILM_EXCHANGE_ADMIN"
         When I switch to role "Film Exchange Admin"

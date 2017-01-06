@@ -18,7 +18,7 @@ module.exports = function() {
     this.Then(/^I should see the "([^"]*)" page$/, function(pageName, done) {
         var self = this;
         if(pageName == 'film-home'){
-            browser.sleep(3000);
+            browser.sleep(6000);
         }
 
         expect(self.urlContains(pageName)).to.eventually.be.true.and.notify(done);
@@ -126,6 +126,19 @@ module.exports = function() {
 
     });
 
+    this.Then(/^I should see "([^"]*)" page in new tab$/, function (pageName, done) {
+        var self = this;
+        browser.getAllWindowHandles().then(function (handles) {
+            browser.driver.switchTo().window(handles[1]);
+            browser.ignoreSynchronization = true;
+            expect(self.urlContains(pageName)).to.eventually.be.true.and.notify(function(){
+                browser.driver.close();
+                browser.ignoreSynchronization = false;
+                browser.driver.switchTo().window(handles[0]).then(done);
+            })
+
+        });
+    });
 
     this.When(/^I pause$/, function(done) {
         browser.pause();

@@ -46,7 +46,12 @@ module.exports = function Account() {
         'ATHLETE': {
             email: "jared@krossover.com",
             password: "Popcorn23",
+        },
+        'NORTHWESTERNWTEST_COACH' : {
+            email: "jared@krossover.com",
+            password: "Popcorn23",
         }
+
     };
 
     this.emailAddressField = element(by.model("$parent.login.email"));

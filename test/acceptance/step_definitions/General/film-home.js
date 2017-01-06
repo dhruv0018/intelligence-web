@@ -13,6 +13,7 @@ module.exports = function() {
     this.When(/^I go to film home$/ , function(done){
         header.clickCoachFilmHome().then(done);
     });
+
     this.When(/^I click "([^"]*)" tab on film home$/, function(tabName, done) {
 
         filmHome.clickTab(tabName).then(done);
@@ -20,15 +21,14 @@ module.exports = function() {
 
     this.When(/^I search for game "([^"]*)"$/, function (text, done){
         var self = this;
-        var searchBox =$('#film-search-cta');
+        var conferenceCodeSearchBox =$('#film-search-cta');
 
-        self.waitForClickable(searchBox).sendKeys(text).then(
+        self.waitForClickable(conferenceCodeSearchBox).sendKeys(text).then(
             function(){
                 browser.sleep(1000).then(
-                //self.waitForVisible($('.loading')).then( 
-                    function(){   
+                    function(){
                         self.waitForInvisible($('.loading'));
-                        done();            
+                        done();
                     }
                 )
             }
@@ -79,6 +79,15 @@ module.exports = function() {
                 done();
             }
         )
+    });
+
+    this.When(/^I click Order Now button$/, function (done) {
+        var self = this;
+        var wscButton = $('#wsc-highlight-cta');
+
+        self.waitForClickable(wscButton).then(function(){
+            browser.sleep(10000).then(done);
+        });
     });
 
     this.Then(/^I should only see "([^"]*)" on film home$/, function (type, done) {
