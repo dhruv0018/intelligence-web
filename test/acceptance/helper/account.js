@@ -17,7 +17,7 @@ module.exports = function Account() {
         },
         'COACH': {
             email: "andrew@krossover.com",
-            password: "Krossover1",
+            password: "Popcorn23",
         },
         'BASKETBALL_COACH': {
             email: "sales@krossover.com",
