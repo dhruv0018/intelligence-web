@@ -17,8 +17,8 @@ const NewPlan = angular.module('new-plan', [
  * @type {Controller}
  */
 NewPlan.controller('NewPlanController', [
-    '$scope', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'EditPlanObj', 'PlanService', 'PlatformData', 'SportsFactory', 'LeaguesFactory',
-    function controller($scope, $modalInstance, turnaroundTimeRanges, editPlanObj, planService, data, sports, leagues) {
+    '$scope', '$uibModalInstance', 'TURNAROUND_TIME_RANGES', 'EditPlanObj', 'PlanService', 'PlatformData', 'SportsFactory', 'LeaguesFactory',
+    function controller($scope, $uibModalInstance, turnaroundTimeRanges, editPlanObj, planService, data, sports, leagues) {
 
         $scope.defaultPlan = {};
         $scope.defaultPlan.leagueIds = [];
@@ -79,7 +79,7 @@ NewPlan.controller('NewPlanController', [
                 returnObj = editPlanObj;
             }
 
-            $modalInstance.close(returnObj);
+            $uibModalInstance.close(returnObj);
 
         };
     }

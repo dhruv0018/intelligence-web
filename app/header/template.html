@@ -1,8 +1,8 @@
 <nav class="header-default" role="navigation" role-class ng-class="{'menuS': isMinMenu}">
     <!-- Mobile Menu Begin -->
-    <div ng-if="auth.isLoggedIn" class="mobile-nav dropdown" dropdown>
+    <div ng-if="auth.isLoggedIn" class="mobile-nav dropdown" uib-dropdown>
 
-        <button id="mobile-menu-dropdown-toggle" class="dropdown-toggle" dropdown-toggle><i class="icon icon-bars">&nbsp;</i>Menu</button>
+        <button id="mobile-menu-dropdown-toggle" class="dropdown-toggle" uib-dropdown-toggle><i class="icon icon-bars">&nbsp;</i>Menu</button>
 
         <!-- Admin Menu -->
         <menu class="dropdown-menu" ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
@@ -91,7 +91,7 @@
                 <a>Film Exchange <i class="icon icon-caret-down"></i></a>
                 <ul class="mobile-submenu" ng-show="subMenu[2]">
                     <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'true' }"
-                        tooltip="Your team is temporarily suspended from this film exchange. Please contact the administrator about your access."
+                        uib-tooltip="Your team is temporarily suspended from this film exchange. Please contact the administrator about your access."
                         tooltip-placement="bottom">
                         <a class="mobile-suspended film-exchange">{{exchange.name}}</a>
                     </li>
@@ -181,7 +181,7 @@
             ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)"
             ng-show="currentUser.is(SUPER_ADMIN)"
             class="header-dropdown">
-            <a class="dropdown-toggle" dropdown-toggle>Platform <i class="icon icon-caret-down"></i></a>
+            <a class="dropdown-toggle" uib-dropdown-toggle>Platform <i class="icon icon-caret-down"></i></a>
             <ul class="dropdown-menu">
                 <li><a ui-sref="plan-defaults">Plan Defaults</a></li>
                 <li><a ui-sref="leagues">Leagues</a></li>
@@ -200,7 +200,7 @@
             class="header-dropdown"
             ng-if="currentUser.is(FILM_EXCHANGE_ADMIN)"
             ng-class="{active: $state.includes('film-exchange')}">
-            <a class="dropdown-toggle" dropdown-toggle>Film Exchange <i class="icon icon-caret-down"></i></a>
+            <a class="dropdown-toggle" uib-dropdown-toggle>Film Exchange <i class="icon icon-caret-down"></i></a>
             <ul class="dropdown-menu film-exchange-menu" ng-if="filmExchanges && filmExchanges.length>0">
                 <li ng-repeat="exchange in filmExchanges">
                     <a class="film-exchange" ui-sref="film-exchange({id: exchange.id})">
@@ -230,7 +230,7 @@
             id="menu-coach-analytics-cta"
             class="header-dropdown"
             ng-class="{active: $state.includes('Analytics')}">
-            <a class="dropdown-toggle" dropdown-toggle>Analytics <i class="icon icon-caret-down"></i></a>
+            <a class="dropdown-toggle" uib-dropdown-toggle>Analytics <i class="icon icon-caret-down"></i></a>
             <ul class="dropdown-menu">
                 <li feature="TeamAnalytics">
                     <a
@@ -254,7 +254,7 @@
             class="header-dropdown"
             ng-if="currentUser.is(COACH)"
             ng-class="{active: $state.includes('Coach.Team')}">
-            <a class="dropdown-toggle" dropdown-toggle>Team <i class="icon icon-caret-down"></i></a>
+            <a class="dropdown-toggle" uib-dropdown-toggle>Team <i class="icon icon-caret-down"></i></a>
             <ul class="dropdown-menu">
                 <li><a id="menu-coach-roster-cta" ui-sref="Coach.Team.Roster">Roster</a></li>
                 <li ng-if="currentUser.is(HEAD_COACH)"><a id="menu-coach-coaches-cta" ui-sref="Coach.Team.Assistants">Coaches</a></li>
@@ -265,10 +265,10 @@
             id="menu-coach-film-exchange-cta"
             class="header-dropdown"
             ng-class="{active: $state.includes('film-exchange')}">
-            <a class="dropdown-toggle" dropdown-toggle>Film Exchange <i class="icon icon-caret-down"></i></a>
+            <a class="dropdown-toggle" uib-dropdown-toggle>Film Exchange <i class="icon icon-caret-down"></i></a>
             <ul class="dropdown-menu film-exchange-menu">
                 <li ng-repeat="exchange in filmExchanges | filter: { isSuspended: 'true' }"
-                    tooltip="Your team is temporarily suspended from this film exchange. Please contact the administrator about your access."
+                    uib-tooltip="Your team is temporarily suspended from this film exchange. Please contact the administrator about your access."
                     tooltip-placement="right"
                     class="suspended">
                     {{exchange.name}}
@@ -298,9 +298,9 @@
     </menu>
 
     <!-- Role Dropdown -->
-    <div ng-if="auth.isLoggedIn" class="role-dropdown" dropdown is-open="status.isopen">
+    <div ng-if="auth.isLoggedIn" class="role-dropdown" uib-dropdown is-open="status.isopen">
 
-        <div id="menu-dropdown-toggle" class="dropdown-toggle" dropdown-toggle>
+        <div id="menu-dropdown-toggle" class="dropdown-toggle" uib-dropdown-toggle>
             <x-krossover-role user="currentUser" role="currentUser.currentRole" class="current-role-container"></x-krossover-role>
             <i class="icon" ng-class="{'icon-chevron-up': status.isopen, 'icon-chevron-down': !status.isopen}"></i>
         </div>

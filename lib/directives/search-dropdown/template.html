@@ -1,7 +1,7 @@
-<div class="search-dropdown dropdown" dropdown is-open="status.isopen">
+<div class="search-dropdown dropdown" uib-dropdown is-open="status.isopen">
     <button
         class="btn dropdown-toggle"
-        dropdown-toggle
+        uib-dropdown-toggle
     >
         <span ng-hide="selectedOption">Select {{optionLabel}}</span>
         <span ng-show="selectedOption">{{selectedOption[filterCriteria]}}</span>

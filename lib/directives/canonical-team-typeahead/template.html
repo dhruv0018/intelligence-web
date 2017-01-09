@@ -13,19 +13,16 @@
            typeahead-wait-ms="200"
            typeahead-loading="loading"
            typeahead-min-length="3"
-           typeahead-template-url="lib/directives/canonical-team-typeahead/dropdown.html"
+           typeahead-popup-template-url="lib/directives/canonical-team-typeahead/dropdown.html"
            typeahead-on-select="getId($item)"
-           typeahead="cTeam as cTeam.name for cTeam in findTeams() | filter: {result: $viewValue}">
+           uib-typeahead="cTeam as cTeam.name for cTeam in findTeams() | filter: {result: $viewValue}">
     <krossover-spinner ng-if="loading" size="25px"></krossover-spinner>
-    <div ng-show="showSticky" class="sticky-bottom" ng-click="addTeam()" ng-if="team&&!team.id">
-        <a href="javascript:;"><i class="icon icon-plus"></i> Add <span class="newName">{{team}}</span> as a new team</a>
-    </div>
     <div ng-show="searchFocus" class="instructions">
         <span>
             Enter School or Team (please add 3 characters minimum)
         </span>
     </div>
-    <div ng-show="noResults" class="instructions noResults">
+    <div ng-show="noTeams" class="instructions noResults">
         <span>
             Can’t find what you’re looking for? Add a team to this game below.
         </span>

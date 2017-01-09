@@ -45,7 +45,7 @@
                        data-typeahead-focus-first="false"
                        data-typeahead-loading="loading"
                        data-typeahead-template-url="app/admin/teams/school-dropdown-input.html"
-                       data-typeahead="school.name for school in findSchoolsByName() | filter: {name: $viewValue}"
+                       data-uib-typeahead="school.name for school in findSchoolsByName() | filter: {name: $viewValue}"
                        data-typeahead-on-select="schoolSelected($item)">
                 <krossover-spinner ng-if="loading" size="25px"></krossover-spinner>
             </div>
@@ -149,7 +149,7 @@
 
         </div>
         <div class="text-center footer" ng-show="totalCount > itemPerPage">
-            <pagination total-items="totalCount" ng-model="page.currentPage" boundary-links="true" class="pagination pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
+            <uib-pagination total-items="totalCount" ng-model="page.currentPage" boundary-links="true" class="pagination pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></uib-pagination>
         </div>
     </div>
 

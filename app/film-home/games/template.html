@@ -41,9 +41,9 @@
                 <div class="repeated-game-row" ng-repeat="game in games | orderBy: '-datePlayed'" ng-hide="game.hide">
                     <div class="body-row" ng-click="goGamePage($event, 'Games', game)">
                         <div class="body-cell status-container">
-                            <i class="icon icon-processing" ng-if="game.video.isIncomplete()" tooltip="Film Uploading" tooltip-placement="right"></i>
-                            <i class="icon icon-processing" ng-if="game.video.isUploaded()" tooltip="Film Processing" tooltip-placement="right"></i>
-                            <i class="icon icon-error" ng-if="game.video.isFailed()" tooltip="Error while processing. Contact support@krossover.com" tooltip-placement="right"></i>
+                            <i class="icon icon-processing" ng-if="game.video.isIncomplete()" uib-tooltip="Film Uploading" tooltip-placement="right"></i>
+                            <i class="icon icon-processing" ng-if="game.video.isUploaded()" uib-tooltip="Film Processing" tooltip-placement="right"></i>
+                            <i class="icon icon-error" ng-if="game.video.isFailed()" uib-tooltip="Error while processing. Contact support@krossover.com" tooltip-placement="right"></i>
                             <span class="icon-placeholder" ng-if="!game.video.isFailed()&& !game.video.isIncomplete() && !game.video.isUploaded()"></span>
                         </div>
                         <div class="body-cell thumbnail-container">
@@ -100,8 +100,8 @@
                             </div>
                             <div
                                 class="state-container dropdown"
-                                dropdown
-                                dropdown-toggle
+                                uib-dropdown
+                                uib-dropdown-toggle
                                 is-open="status.isopen"
                                 ng-click="bypassClickEvents($event)"
                                 ng-if="game.isDelivered()">
@@ -150,7 +150,7 @@
     </div>
 
     <div class="pagination-footer" ng-show="gamesTotalCount > itemsPerPage">
-        <pagination total-items="gamesTotalCount" ng-model="page.currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemsPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
+        <uib-pagination total-items="gamesTotalCount" ng-model="page.currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemsPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></uib-pagination>
     </div>
 
 </div>

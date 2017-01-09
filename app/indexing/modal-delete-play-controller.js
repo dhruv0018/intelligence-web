@@ -3,8 +3,7 @@ var angular = window.angular;
 
 IndexingModalDeletePlayController.$inject = [
     '$scope',
-    '$modal',
-    '$modalInstance'
+    '$uibModalInstance'
 ];
 
 /**
@@ -13,16 +12,16 @@ IndexingModalDeletePlayController.$inject = [
  * @name Modal.DeletePlay.Controller
  * @type {Controller}
  */
-function IndexingModalDeletePlayController($scope, $modal, $modalInstance) {
+function IndexingModalDeletePlayController($scope, $uibModalInstance) {
 
     $scope.ok = function() {
 
-        $modalInstance.close();
+        $uibModalInstance.close();
     };
 
     $scope.cancel = function() {
 
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 }
 

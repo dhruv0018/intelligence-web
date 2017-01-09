@@ -41760,7 +41760,7 @@
 	        parent: 'base',
 	        views: {
 	            'main@root': {
-	                templateUrl: 'film-exchange.html',
+	                templateUrl: 'template.html',
 	                controller: 'FilmExchangeController'
 	            }
 	        },

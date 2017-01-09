@@ -152,15 +152,15 @@
 
             <p class="share-option-title">How would you like to share?</p>
             <div class="public-share-types">
-                <button id="share-film-make-public-cta" type="button" class="btn-radio" ng-model="linkActive" btn-radio="true" ng-change="togglePublicLink()" required ng-disabled="film.isSaving">Make video public</button>
-                <button id="share-film-make-private-cta" type="button" class="btn-radio" ng-model="linkActive" btn-radio="false" ng-change="togglePublicLink()" required ng-disabled="film.isSaving">Keep video private</button>
+                <button id="share-film-make-public-cta" type="button" class="btn-radio" ng-model="linkActive" uib-btn-radio="true" ng-change="togglePublicLink()" required ng-disabled="film.isSaving">Make video public</button>
+                <button id="share-film-make-private-cta" type="button" class="btn-radio" ng-model="linkActive" uib-btn-radio="false" ng-change="togglePublicLink()" required ng-disabled="film.isSaving">Keep video private</button>
             </div>
 
             <div class="options-for-publicly-shared-films" ng-class="{'expanded': linkActive}">
                 <p class="share-option-title" ng-show="isGame && film.isDelivered()">What would you like to share?</p>
                 <div class="public-share-types" ng-show="isGame && film.isDelivered()">
-                    <button id="share-film-public-raw-film-only-cta" type="button" class="btn-radio" ng-model="film.publicShare.isBreakdownShared" btn-radio="false" ng-change="film.save()" required ng-disabled="film.isSaving">Share Raw Film Only</button>
-                    <button id="share-film-public-raw-film-and-breakdown-cta" type="button" class="btn-radio" ng-model="film.publicShare.isBreakdownShared" btn-radio="true" ng-change="film.save()" required ng-disabled="film.isSaving">Share Breakdown and Raw Film</button>
+                    <button id="share-film-public-raw-film-only-cta" type="button" class="btn-radio" ng-model="film.publicShare.isBreakdownShared" uib-btn-radio="false" ng-change="film.save()" required ng-disabled="film.isSaving">Share Raw Film Only</button>
+                    <button id="share-film-public-raw-film-and-breakdown-cta" type="button" class="btn-radio" ng-model="film.publicShare.isBreakdownShared" uib-btn-radio="true" ng-change="film.save()" required ng-disabled="film.isSaving">Share Breakdown and Raw Film</button>
                 </div>
 
                 <div class="public-share-methods">

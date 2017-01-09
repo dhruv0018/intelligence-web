@@ -261,7 +261,7 @@ TeamPlansController.$inject = [
     'Teams.Data',
     '$scope',
     '$filter',
-    '$modal',
+    '$uibModal',
     'TeamsFactory',
     'TURNAROUND_TIME_MIN_TIME_LOOKUP',
     'BasicModals',
@@ -272,7 +272,7 @@ function TeamPlansController (
     data,
     $scope,
     $filter,
-    $modal,
+    $uibModal,
     teams,
     minTurnaroundTimeLookup,
     basicModals,
@@ -310,7 +310,7 @@ function TeamPlansController (
     $scope.$watch(function() { return $scope.team.teamPackages; }, $scope.applyFilter, true);
 
     var openPackageModal = function(editTeamPackageObjIndex) {
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
             scope: $scope,
             size: 'sm',
             templateUrl: 'app/admin/teams/team-package/template.html',
@@ -328,7 +328,7 @@ function TeamPlansController (
     };
 
     var openTeamPlanModal = function(teamPlanIndex) {
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
             templateUrl: 'app/admin/teams/team-plan/template.html',
             controller: 'TeamPlanController',
             resolve: {
@@ -420,7 +420,7 @@ TeamController.$inject = [
     '$state',
     '$stateParams',
     '$filter',
-    '$modal',
+    '$uibModal',
     'ROLES',
     'Teams.Data',
     'SportsFactory',
@@ -446,7 +446,7 @@ function TeamController (
     $state,
     $stateParams,
     $filter,
-    $modal,
+    $uibModal,
     ROLES,
     data,
     sports,

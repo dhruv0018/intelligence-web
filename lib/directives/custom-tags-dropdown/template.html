@@ -1,9 +1,9 @@
-<div class="custom-tags-dropdown dropdown" dropdown is-open="status.isopen">
+<div class="custom-tags-dropdown dropdown" uib-dropdown is-open="status.isopen">
     <button
         class="btn btn-sm dropdown-toggle"
         ng-class="{'btn-default': !status.isopen, 'btn-primary': status.isopen}"
         ng-click="focusSearchBar(status.isopen)"
-        dropdown-toggle ng-disabled="disabled">
+        uib-dropdown-toggle ng-disabled="disabled">
             Add Tag
         </button>
     <div class="tags-dropdown-menu dropdown-menu" ng-click="$event.stopPropagation()" ng-class="{'tags-are-selected': selectedTags.length}">

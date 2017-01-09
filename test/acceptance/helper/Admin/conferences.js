@@ -36,7 +36,7 @@ module.exports = function Conferences(){
     this.filmExchangesTab = element(by.xpath('//a[@ui-sref="film-exchanges"]'));
     this.sportAddedSuccess = element(by.repeater('conferenceSport in conferenceSports'));
     this.associationSuccess = element(by.xpath('//span[contains(text(), "Changes Saved")]'));
-    this.isPagerPresent = element(by.css('[ng-click="selectPage(page + 1)"]'));
+    this.isPagerPresent = element(by.css('[ng-click="selectPage(page + 1, $event)"]'));
     this.conferenceSuccess = element(by.repeater('conference in conferences'));
     this.conferencesTab = element(by.xpath('//a[@ui-sref="association-conferences"]'));
     this.competitionLevelSuccess = element(by.repeater('competitionLevel in competitionLevels'));

@@ -4,7 +4,6 @@ var PORT = 8000;
 
 var port = process.env.PORT || PORT;
 
-var fs = require('fs');
 var path = require('path');
 var express = require('express');
 

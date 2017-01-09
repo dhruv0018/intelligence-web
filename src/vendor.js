@@ -4,7 +4,7 @@ require('angular-resource/angular-resource');
 require('angular-aria/angular-aria');
 require('angular-animate/angular-animate');
 require('angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module');
-require('@krossover/angular-bootstrap/dist/ui-bootstrap-tpls');
+require('angular-ui-bootstrap/ui-bootstrap-tpls');
 require('angular-ui-unique/unique');
 require('angular-ui-showhide/showhide');
 require('angular-ui-validate/validate');

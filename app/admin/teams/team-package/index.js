@@ -16,8 +16,8 @@ const TeamPackage = angular.module('team-package', [
  * @type {Controller}
  */
 TeamPackage.controller('TeamPackageController', [
-    '$scope', '$state', '$modalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'NewDate', 'BasicModals',
-    function controller($scope, $state, $modalInstance, session, team, packageIndex, TURNAROUND_TIME_RANGES, dateZeroTime, basicModals) {
+    '$scope', '$state', '$uibModalInstance', 'SessionService', 'Team', 'PackageIndex', 'TURNAROUND_TIME_RANGES', 'NewDate', 'BasicModals',
+    function controller($scope, $state, $uibModalInstance, session, team, packageIndex, TURNAROUND_TIME_RANGES, dateZeroTime, basicModals) {
 
         $scope.edit = false;
 
@@ -52,7 +52,7 @@ TeamPackage.controller('TeamPackageController', [
                     team.teamPackages[packageIndex] = $scope.teamPackageObj;
                 }
 
-                $modalInstance.close(team);
+                $uibModalInstance.close(team);
             }
         };
     }

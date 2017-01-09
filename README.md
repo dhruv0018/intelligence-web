@@ -1,6 +1,5 @@
 
-Krossover Intelligence Web Client
-=================================
+# Krossover Intelligence Web Client
 
 This is the Krossover Intelligence web client. It is the front end for the
 Krossover Intelligence product.
@@ -48,19 +47,13 @@ _NVM should be sourced in every environment you want to run node and grunt in_
 This will install Node.js and NPM (the Node.js package manager, lock down to version 4.1.1)
 
 ```
-nvm install v4.1.1
+nvm install v4.4.3
 ```
 
 ## Set default node version
 
 ```
-nvm alias default v4.1.1
-```
-
-## Install NPM
-
-```
-npm install -g npm@3
+nvm alias default v4.4.3
 ```
 
 ## Login to NPM

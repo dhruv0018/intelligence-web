@@ -1,7 +1,7 @@
-<div class="search-player-dropdown dropdown" dropdown is-open="status.isopen">
+<div class="search-player-dropdown dropdown" uib-dropdown is-open="status.isopen">
     <button
         class="btn dropdown-toggle"
-        dropdown-toggle
+        uib-dropdown-toggle
     >
         <span ng-hide="selectedPlayer">Select {{label}}</span>
         <span ng-show="selectedPlayer">{{selectedPlayer[filterCriteria]}}</span>

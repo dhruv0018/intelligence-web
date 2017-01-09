@@ -3,7 +3,7 @@ var angular = window.angular;
 
 IndexingModalSendToTeamController.$inject = [
     '$scope',
-    '$modalInstance'
+    '$uibModalInstance'
 ];
 
 /**
@@ -12,16 +12,16 @@ IndexingModalSendToTeamController.$inject = [
  * @name IndexingModalSendToTeamController
  * @type {Controller}
  */
-function IndexingModalSendToTeamController($scope, $modalInstance) {
+function IndexingModalSendToTeamController($scope, $uibModalInstance) {
 
     $scope.yes = function() {
 
-        $modalInstance.close();
+        $uibModalInstance.close();
     };
 
     $scope.no = function() {
 
-        $modalInstance.dismiss('no');
+        $uibModalInstance.dismiss('no');
     };
 }
 

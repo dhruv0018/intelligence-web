@@ -19,7 +19,7 @@
 
     <custom-tags-dropdown feature="CustomTags" disabled="isTagDisabled()" plays="selectedPlays" ng-if="!isReel&&isTeamMember"></custom-tags-dropdown>
 
-    <button id="playlist-continuous-play-on-off-cta" class="play-all-plays" ng-click="playManager.playAllPlays = !playManager.playAllPlays" ng-class="{on: playManager.playAllPlays, right: !isTeamMember}" tooltip="Continuous Play {{playManager.playAllPlays ? 'On': 'Off'}}" tooltip-placement="top">
+    <button id="playlist-continuous-play-on-off-cta" class="play-all-plays" ng-click="playManager.playAllPlays = !playManager.playAllPlays" ng-class="{on: playManager.playAllPlays, right: !isTeamMember}" uib-tooltip="Continuous Play {{playManager.playAllPlays ? 'On': 'Off'}}" tooltip-placement="top">
         <i class="icon icon-loop-play"></i>
     </button>
 

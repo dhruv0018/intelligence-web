@@ -16,8 +16,8 @@ const TeamPlan = angular.module('team-plan', [
  * @type {Controller}
  */
 TeamPlan.controller('TeamPlanController', [
-    '$scope', '$state', '$modalInstance', 'TURNAROUND_TIME_RANGES', 'SessionService', 'PlansFactory', 'TeamsFactory', 'Team', 'TeamPlanIndex', 'BasicModals', 'PlanService',
-    function controller($scope, $state, $modalInstance, TURNAROUND_TIME_RANGES, session, plans, teams, team, teamPlanIndex, basicModals, planService) {
+    '$scope', '$state', '$uibModalInstance', 'TURNAROUND_TIME_RANGES', 'SessionService', 'PlansFactory', 'TeamsFactory', 'Team', 'TeamPlanIndex', 'BasicModals', 'PlanService',
+    function controller($scope, $state, $uibModalInstance, TURNAROUND_TIME_RANGES, session, plans, teams, team, teamPlanIndex, basicModals, planService) {
 
         $scope.team = team;
         $scope.team.teamPlans = $scope.team.teamPlans || [];
@@ -74,7 +74,7 @@ TeamPlan.controller('TeamPlanController', [
                     team.teamPlans.push($scope.teamPlan);
                 }
 
-                $modalInstance.close(team);
+                $uibModalInstance.close(team);
             }
 
         };

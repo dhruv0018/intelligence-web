@@ -12,7 +12,7 @@ IndexingHeaderController.$inject = [
     '$scope',
     '$state',
     '$stateParams',
-    '$modal',
+    '$uibModal',
     'GAME_STATUSES',
     'SPORTS',
     'SessionService',
@@ -40,7 +40,7 @@ function IndexingHeaderController(
     $scope,
     $state,
     $stateParams,
-    $modal,
+    $uibModal,
     GAME_STATUSES,
     SPORTS,
     session,
@@ -146,7 +146,7 @@ function IndexingHeaderController(
 
     $scope.sendToTeam = function() {
         indexing.isIndexing = false;
-        $modal.open({
+        $uibModal.open({
 
             controller: IndexingModalSendToTeamController,
             templateUrl: IndexingModalSendTeamTemplateUrl
@@ -156,7 +156,7 @@ function IndexingHeaderController(
             $scope.game.finishAssignment(userId);
 
             $scope.game.save().then(function() {
-                $modal.open({
+                $uibModal.open({
 
                     controller: IndexingModalAddIndexerNoteController,
                     templateUrl: IndexingModalAddIndexerNoteTemplateUrl,

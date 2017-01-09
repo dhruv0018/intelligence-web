@@ -3,7 +3,7 @@ var angular = window.angular;
 
 IndexingModalAddIndexerNoteController.$inject = [
     '$scope',
-    '$modalInstance',
+    '$uibModalInstance',
     'GAME_NOTE_TYPES',
     'UsersFactory'
 ];
@@ -13,7 +13,7 @@ IndexingModalAddIndexerNoteController.$inject = [
  * @name IndexingModalAddIndexerNoteController
  * @type {Controller}
  */
-function IndexingModalAddIndexerNoteController($scope, $modalInstance, GAME_NOTE_TYPES, users) {
+function IndexingModalAddIndexerNoteController($scope, $uibModalInstance, GAME_NOTE_TYPES, users) {
     $scope.GAME_NOTE_TYPES = GAME_NOTE_TYPES;
 
     var qaNote = {
@@ -33,7 +33,7 @@ function IndexingModalAddIndexerNoteController($scope, $modalInstance, GAME_NOTE
 
     $scope.submit = function() {
         $scope.game.save().then(function() {
-            $modalInstance.close();
+            $uibModalInstance.close();
         });
     };
 }

@@ -62,7 +62,7 @@
                data-typeahead-min-length="3"
                data-typeahead-loading="loading"
                data-typeahead-template-url="app/admin/teams/school-dropdown-input.html"
-               data-typeahead="school.name for school in findSchoolsByName() | filter: {name: $viewValue}">
+               data-uib-typeahead="school.name for school in findSchoolsByName() | filter: {name: $viewValue}">
 
         <a class="btn btn-link" data-ui-sref="school-info">add a new school</a>
 
@@ -108,15 +108,15 @@
 
     <div class="form-group">
         <h3>Priority</h3>
-        <div class="btn-group md-dropdown" dropdown is-open="pstatus.isopen" ng-init="team.priority = team.priority || PRIORITIES.NORMAL.id">
-          <button type="button" class="btn btn-primary single-button" dropdown-toggle>
+        <div class="btn-group md-dropdown" uib-dropdown is-open="pstatus.isopen" ng-init="team.priority = team.priority || PRIORITIES.NORMAL.id">
+          <button type="button" class="btn btn-primary single-button" uib-dropdown-toggle>
             {{PRIORITIES[PRIORITIES_IDS[team.priority]].name}}
             <span ng-if="team.priority === PRIORITIES.NORMAL.id">
                 &nbsp;(Default)
             </span>
             <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+          <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
             <li role="menuitem" ng-click="changeMenu()" ng-repeat="priority in priorityOptions  | orderBy : 'value'" ng-class="{
                 'highest-priority': priority.id === PRIORITIES.HIGHEST.id,
                 'high-priority': priority.id === PRIORITIES.HIGH.id,
@@ -144,12 +144,12 @@
         >
             <option value="">Select label</option>
         </select-->
-        <div class="btn-group md-dropdown" dropdown is-open="lstatus.isopen">
-          <button type="button" class="btn btn-primary single-button" dropdown-toggle>
+        <div class="btn-group md-dropdown" uib-dropdown is-open="lstatus.isopen">
+          <button type="button" class="btn btn-primary single-button" uib-dropdown-toggle>
               {{getLabel(team.label)}}
             <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+          <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
             <li role="menuitem" ng-repeat="label in labelOptions  | orderBy : 'index'" ng-click="changeMenu()">
                 <a href="#" ng-click="team.label=label.id" ng-class="{selected: label.id === team.label}">
                     <krossover-team-label-icon

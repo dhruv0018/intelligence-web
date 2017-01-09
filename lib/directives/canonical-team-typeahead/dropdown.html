@@ -1,12 +1,31 @@
-<a ng-if="!match.model.text">
-    <div>
-        <b ng-if="match.model.displaySchool">{{match.model.displaySchool.name}}</b>
-        <b ng-if="!match.model.displaySchool">{{match.model.name}}</b>
+<div class="custom-popup-wrapper"
+    ng-style="{top: position().top+'px', left: position().left+'px'}"
+    style="display: block;"
+    ng-show="isOpen() && !moveInProgress"
+    aria-hidden="{{!isOpen()}}">
+    <ul class="dropdown-menu" role="listbox" ng-class="{hoverSticky: hoverSticky}" ng-init="hoverSticky=false">
+        <li ng-repeat="match in matches track by $index"
+            ng-class="{active: isActive($index) }"
+            ng-mouseenter="selectActive($index)"
+            ng-click="selectMatch($index)"
+            role="option"
+            id="{{::match.id}}"
+        >
+            <a ng-if="!match.model.text">
+                <div>
+                    <b ng-if="match.model.displaySchool" ng-bind-html= "match.model.displaySchool.name | uibTypeaheadHighlight:query"></b>
+                    <b ng-if="!match.model.displaySchool" ng-bind-html="match.model.name | uibTypeaheadHighlight:query"></b>
+                </div>
+                <div ng-if="match.model.displaySchool">
+                    <span ng-if="match.model.name">{{match.model.name}} </span>
+                    <span ng-if="match.model.displaySchool.address.city || match.model.displaySchool.address.regionCode">- </span>
+                    <span ng-if="match.model.displaySchool.address.city">{{match.model.displaySchool.address.city}}, </span>
+                    <span ng-if="match.model.displaySchool.address.regionCode">{{match.model.displaySchool.address.regionCode}}</span>
+                </div>
+            </a>
+        </li>
+    </ul>
+    <div class="sticky-bottom" ng-click="$parent.$parent.addTeam()" ng-if="query" ng-mouseenter="$parent.hoverSticky=true" ng-mouseleave="$parent.hoverSticky=false">
+        <a href="javascript:;"><i class="icon icon-plus"></i> Add <span class="newName">{{query}}</span> as a new team</a>
     </div>
-    <div ng-if="match.model.displaySchool">
-        <span ng-if="match.model.name">{{match.model.name}} </span>
-        <span ng-if="match.model.displaySchool.address.city || match.model.displaySchool.address.regionCode">- </span>
-        <span ng-if="match.model.displaySchool.address.city">{{match.model.displaySchool.address.city}}, </span>
-        <span ng-if="match.model.displaySchool.address.regionCode">{{match.model.displaySchool.address.regionCode}}</span>
-    </div>
-</a>
+</div>

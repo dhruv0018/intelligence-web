@@ -96,8 +96,8 @@ Platform.filter('filterDefaultPlans', function() {
 });
 
 Platform.controller('PlatformController', [
-    '$scope', '$modal', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'Platform.Data', 'SportsFactory', 'LeaguesFactory', 'PlansFactory',
-    function controller($scope, $modal, turnaroundTimeMinTimeLookup, data, sports, leagues, plans) {
+    '$scope', '$uibModal', 'TURNAROUND_TIME_MIN_TIME_LOOKUP', 'Platform.Data', 'SportsFactory', 'LeaguesFactory', 'PlansFactory',
+    function controller($scope, $uibModal, turnaroundTimeMinTimeLookup, data, sports, leagues, plans) {
 
         $scope.leagues = leagues.getList();
         $scope.indexedLeagues = leagues.getCollection();
@@ -112,7 +112,7 @@ Platform.controller('PlatformController', [
         $scope.turnaroundTimeMinTimeLookup = turnaroundTimeMinTimeLookup;
 
         var openPlanModal = function(planToEdit) {
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
                 scope: $scope,
                 templateUrl: 'app/admin/platform/new-plan/new-plan.html',
                 controller: 'NewPlanController',

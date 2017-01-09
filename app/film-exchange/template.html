@@ -70,8 +70,8 @@
                     ng-click="openRawFilmModal(film)">
                     <div class="body-row">
                         <div class="body-cell film-status">
-                            <i class="icon icon-processing" ng-if="film.video.status === 1 || film.video.status === 2" tooltip="Film Processing" tooltip-placement="right"></i>
-                            <i class="icon icon-error" ng-if="film.video.status === 8" tooltip="Error While Processing" tooltip-placement="right"></i>
+                            <i class="icon icon-processing" ng-if="film.video.status === 1 || film.video.status === 2" uib-tooltip="Film Processing" tooltip-placement="right"></i>
+                            <i class="icon icon-error" ng-if="film.video.status === 8" uib-tooltip="Error While Processing" tooltip-placement="right"></i>
                         </div>
                         <div class="body-cell team">
                             <span class="team-name"><span>{{film.awayTeam.name}}</span></span>
@@ -136,7 +136,7 @@
             </div>
         </div>
         <div class="text-center footer" ng-show="totalCount > itemPerPage">
-            <pagination total-items="totalCount" ng-model="page.currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
+            <uib-pagination total-items="totalCount" ng-model="page.currentPage" boundary-links="true" class="pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></uib-pagination>
         </div>
     </div>
     <div ng-if="noData" class="noData text-center">

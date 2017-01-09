@@ -13,7 +13,7 @@
         data-ng-hide="state.name === 'Games.Formations' || state.name === 'Games.DownAndDistance'">{{STATE_NAMES[state.name].display}}</li>
 
     <li data-ng-show="showDropdown" class="state-tab dropdown" data-ng-class="{'active-state': stateSelected.name === 'Games.Formations' || stateSelected.name === 'Games.DownAndDistance'}">
-        <a class="dropdown-toggle" dropdown-toggle>Reports <i class="icon icon-chevron-down"></i></a>
+        <a class="dropdown-toggle" uib-dropdown-toggle>Reports <i class="icon icon-chevron-down"></i></a>
         <ul class="dropdown-menu">
             <li data-ng-repeat="state in stateOptions | onlyAuthorizedStates"
                 data-ng-show="state.name === 'Games.Formations' || state.name === 'Games.DownAndDistance'"

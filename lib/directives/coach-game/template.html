@@ -1,5 +1,5 @@
-<x-tabset class="coach-game">
-    <x-tab
+<uib-tabset class="coach-game">
+    <uib-tab
         id="coach-game-instructions-cta"
         active="gameTabs.confirm.active"
         disabled="gameTabs.confirm.disabled"
@@ -13,50 +13,50 @@
                                            remaining-breakdowns="remainingBreakdowns"
                                            game="game"></krossover-coach-game-instructions>
 
-    </x-tab>
+    </uib-tab>
 
-    <x-tab
+    <uib-tab
         id="coach-game-opposing-info-cta"
         active="gameTabs.opposing.active"
         disabled="gameTabs.opposing.disabled"
         id="opposing-team-info-cta"
         heading="3. {{ teams[game.opposingTeamId].name || 'Opposing Team' }}">
 
-        <game-tab ng-if="game.rosters[game.opposingTeamId]"
-                  next-tab="gameTabs.confirm"
-                  tabs="gameTabs"
-                  roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"
-                  roster-id="game.rosters[game.opposingTeamId].id"
-                  team="teams[game.opposingTeamId]"
-                  game="game"
-                  team="teams[game.teamId]"
-                  editable="true"
-                  filtering="opposingTeamFiltering.type"
-                  roster="gamePlayerLists[game.opposingTeamId]"
-                  positionset="positionset"></game-tab>
-    </x-tab>
+        <game-tab data-ng-if="game.rosters[game.opposingTeamId]"
+                  data-next-tab="gameTabs.confirm"
+                  data-tabs="gameTabs"
+                  data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"
+                  data-roster-id="game.rosters[game.opposingTeamId].id"
+                  data-team="teams[game.opposingTeamId]"
+                  data-game="game"
+                  data-team="teams[game.teamId]"
+                  data-editable="true"
+                  data-filtering="opposingTeamFiltering.type"
+                  data-roster="gamePlayerLists[game.opposingTeamId]"
+                  data-positionset="positionset"></game-tab>
+    </uib-tab>
 
-    <x-tab
+    <uib-tab
            id="coach-game-team-cta"
            active="gameTabs.team.active"
            disabled="gameTabs.team.disabled"
            id="team-info-cta"
            heading="2. {{ teams[game.teamId].name || 'Team' }}">
 
-        <game-tab ng-if="game.rosters[game.teamId]" next-tab="gameTabs.opposing"
-                  tabs="gameTabs"
-                  roster-id="game.rosters[game.teamId].id"
-                  game="game"
-                  team="teams[game.teamId]"
-                  roster="gamePlayerLists[game.teamId]"
-                  editable="true"
-                  filtering="teamFiltering.type"
-                  positions="positions"
-                  positionset="positionset"
-                  roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"></game-tab>
-    </x-tab>
+        <game-tab data-ng-if="game.rosters[game.teamId]" data-next-tab="gameTabs.opposing"
+                  data-tabs="gameTabs"
+                  data-roster-id="game.rosters[game.teamId].id"
+                  data-game="game"
+                  data-team="teams[game.teamId]"
+                  data-roster="gamePlayerLists[game.teamId]"
+                  data-editable="true"
+                  data-filtering="teamFiltering.type"
+                  data-positions="positions"
+                  data-positionset="positionset"
+                  data-roster-links="config.links.rosterTemplates.opposingTeamRoster.uri"></game-tab>
+    </uib-tab>
 
-    <x-tab
+    <uib-tab
         id="coach-game-basic-info-cta"
         active="gameTabs.info.active"
         id="basic-game-info-cta"
@@ -67,6 +67,6 @@
                                    game="game"
                                    headings="headings"></krossover-coach-game-info>
 
-    </x-tab>
+    </uib-tab>
 
-</x-tabset>
+</uib-tabset>

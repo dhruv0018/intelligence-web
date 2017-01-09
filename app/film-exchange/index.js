@@ -2,7 +2,7 @@
 var angular = window.angular;
 const moment = require('moment');
 const ITEMSPERPAGE = 25; //25
-const FilmExchangeTemplateUrl = 'app/film-exchange/film-exchange.html';
+const FilmExchangeTemplateUrl = 'app/film-exchange/template.html';
 
 /**
  * Film Exchange page module.
