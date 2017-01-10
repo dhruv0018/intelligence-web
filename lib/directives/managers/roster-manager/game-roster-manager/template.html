@@ -15,7 +15,8 @@
                 </thead>
             </table>
 
-            <krossover-athlete  ng-repeat="rosterEntry in playerRosterEntries | filter: isUnknown"
+            <krossover-athlete  ng-repeat="rosterEntry in playerRosterEntries | filter: isUnknown | orderBy: getPlayerJerseysAsNumbers"
+                                ng-hide="!isUserTeam && !rosterEntry.playerInfo.isActive"
                                 athlete="rosterEntry.player"
                                 roster-state="rosterState"
                                 roster="game.rosters[team.id]"

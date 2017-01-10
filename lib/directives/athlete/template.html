@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <form name="athleteForm" ng-if="(editable && !athlete.isUnknown)" ng-submit="updateAthleteInformation()" ng-hide="!isHomeTeam && !rosterEntry.playerInfo.isActive">
+    <form name="athleteForm" ng-if="(editable && !athlete.isUnknown)" ng-submit="updateAthleteInformation()">
         <table ng-class="{'disabled-input': (game.isDelivered() || game.isBeingBrokenDown())}"
                class="table">
             <tr>
@@ -89,10 +89,7 @@
                 </td>
 
                 <td class="athlete-column" ng-if="isUserTeam" ng-click="rosterEntry.playerInfo.isActive = !rosterEntry.playerInfo.isActive">
-                    <i id="{{idHook}}-toggle-activation-off-cta" class="icon"
-                    ng-class="{true: 'icon-check-square-o deselected', false: 'icon-check-square amendable'}[(game.isDelivered() || game.isBeingBrokenDown())]"
-                    ng-show="!rosterEntry.playerInfo.isActive"></i>
-                    <i id="{{idHook}}-toggle-activation-on-cta" class="icon icon-check-empty" ng-show="rosterEntry.playerInfo.isActive"></i>
+                    <check-box checked="!rosterEntry.playerInfo.isActive"></check-box>
                 </td>
             </tr>
         </table>
