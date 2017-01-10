@@ -80,9 +80,11 @@ module.exports = function() {
 
         self.waitForClickable(userEmail).sendKeys(text).then(
             function(){
-                searchButton.click();
-                goToAs.click();
-                done();
+                searchButton.click().then(
+                    function(){
+                        goToAs.click().then(done);
+                    }
+                )
             }
         );
     });

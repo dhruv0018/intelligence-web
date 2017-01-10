@@ -20,7 +20,12 @@ module.exports = function Coach(){
     });
 
     this.Then(/^I click Film Settings$/, function (done) {
-        games.clickSettings().then(done);
+        var self = this;
+        self.waitForClickable(games.filmSettingsBtn, 1000).then(
+            function(){
+                games.clickSettings().then(done);
+            }
+        );
     });
 
     this.When(/^I select breakdown and submit$/, function (done) {

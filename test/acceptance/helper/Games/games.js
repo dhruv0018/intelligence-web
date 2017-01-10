@@ -14,6 +14,8 @@ module.exports = function Games(){
     var filmSettingsBtn = element(by.id("coach-game-instructions-cta"));
     var btnCancel = element(by.id('cancel-uploading-cta'));
 
+    this.filmSettingsBtn = filmSettingsBtn;
+
     this.enterOpposingTeam = function(opposingTeam){
         opposingTeamField.sendKeys(opposingTeam);
     }
