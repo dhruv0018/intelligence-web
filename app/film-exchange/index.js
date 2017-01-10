@@ -1,5 +1,6 @@
 /* Fetch angular from the browser scope */
 var angular = window.angular;
+const moment = require('moment');
 const ITEMSPERPAGE = 25; //25
 const FilmExchangeTemplateUrl = 'app/film-exchange/film-exchange.html';
 
@@ -41,6 +42,7 @@ FilmExchange.config([
                         let count = ITEMSPERPAGE;
                         if (exchangeId) {
                             let teamId = session.getCurrentTeamId();
+                            let conferenceFilmExchnageId = $stateParams.id.toLowerCase();
                             return filmExchange.getFilms({id: exchangeId, teamId, start, count});
                         } else {
                             let currentUser = session.getCurrentUser();
@@ -140,8 +142,8 @@ FilmExchange.controller('FilmExchangeController', [
             });
             $scope.filter= {};
             $scope.itemPerPage = ITEMSPERPAGE;
-            let supportLinkKey = $stateParams.id.toLowerCase();
-            $scope.supportLinks = (config.links.filmLibrarySupport[supportLinkKey]) ? config.links.filmLibrarySupport[supportLinkKey] : null;
+            let conferenceFilmExchnageId = $stateParams.id.toLowerCase();
+            $scope.supportLinks = (config.links.filmLibrarySupport[conferenceFilmExchnageId]) ? config.links.filmLibrarySupport[conferenceFilmExchnageId] : null;
 
             $scope.teamCompetitionLevels = CompetitionLevels.filter(item => item.code != null);
             angular.forEach($scope.teamCompetitionLevels, function(itm){
@@ -178,6 +180,9 @@ FilmExchange.controller('FilmExchangeController', [
                 if(month.length == 1) {month = "0"+month; }
                 let day = filter.datePlayed.toString().substr(8, 2);
                 filter.datePlayed = year+'-'+month+'-'+day;
+            }
+            if ($scope.filter.currentYearOnly) {
+                filter.datePlayedInYear = moment().year();
             }
             filter.page = $scope.page.currentPage;
             if ($scope.currentUser.is(ROLES.COACH)) filter.teamId = session.getCurrentTeamId();
@@ -221,6 +226,10 @@ FilmExchange.controller('FilmExchangeController', [
 
             if(query.competitionLevel && query.competitionLevel.length>0){
                 filter.competitionLevel = query.competitionLevel;
+            }
+
+            if (query.currentYearOnly) {
+                filter.datePlayedInYear = moment().year();
             }
 
             filter.page = 0;
