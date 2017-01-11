@@ -34,8 +34,18 @@ function FilmHomeReelsController(
         if (reel.uploaderUserId === currentUser.id) {
             return 'Created by you';
         } else {
-            let uploaderUser = users.get(reel.getShareByUser(currentUser).userId);
-            return 'Shared by ' + uploaderUser.firstName + ' ' + uploaderUser.lastName;
+            let uploaderUser;
+            if (reel.isSharedWithUser(currentUser)) {
+                uploaderUser = users.get(reel.getShareByUser(currentUser).userId);
+                return 'Shared by ' + uploaderUser.firstName + ' ' + uploaderUser.lastName;
+            } else if (reel.isSharedWithTeamId(currentUser.currentRole.teamId)) {
+                uploaderUser = users.get(reel.getShareByTeamId(currentUser.currentRole.teamId).userId);
+                return 'Shared by ' + uploaderUser.firstName + ' ' + uploaderUser.lastName;
+            } else {
+                uploaderUser = users.get(reel.uploaderUserId);
+                return 'Created by ' + uploaderUser.firstName + ' ' + uploaderUser.lastName;
+            }
+
         }
     };
 
