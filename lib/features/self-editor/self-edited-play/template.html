@@ -12,15 +12,17 @@
 
     <div class="state-actions" ng-show="showStateActions && !showDeleteConfirmationActions && inEditPlayMode">
 
-        <span ng-click="onEditButtonClick()">
+        <span ng-hide="playSelectedForEditing" ng-click="onEditButtonClick()">
             <md-tooltip md-direction="top">Edit Clip Time</md-tooltip>
             <i class="icon icon-pencil"></i>
         </span>
 
-        <span ng-click="showDeleteConfirmationActions = true">
+        <span ng-hide="playSelectedForEditing" ng-click="showDeleteConfirmationActions = true">
             <md-tooltip md-direction="top">Delete Clip</md-tooltip>
             <i class="icon icon-trash-o"></i>
         </span>
+
+        <span class="cancel-editing" ng-show="playSelectedForEditing" ng-click="onCancelEditingClick()">Cancel</span>
 
     </div>
 

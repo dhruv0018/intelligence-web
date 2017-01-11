@@ -104,7 +104,7 @@
                         <p>saved</p>
                     </div>
 
-                    <self-edited-play play="play" video="game.video" show-state-actions="currentSelfEditorState === EDITOR_STATE"></self-edited-play>
+                    <self-edited-play play="play" play-selected-for-editing="isPlaySelectedForEditing(play)" video="game.video" show-state-actions="currentSelfEditorState === EDITOR_STATE"></self-edited-play>
                     <i ng-show="currentSelfEditorState === BREAKDOWN_STATE" class="self-edit-telestration-icon" ng-class="{'icon icon-telestration pull-right' : isPlayContainingTelestration(play)}"></i>
                 </div>
 
