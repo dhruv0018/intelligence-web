@@ -32,10 +32,22 @@ module.exports = function Coach(){
         games.breakAndSubmit().then(done);
     });
 
-    this.When(/^I add opposingTeam "([^"]*)"$/, function (opposingTeam, done) {
+    this.When(/^I add opposing team "([^"]*)"$/, function (opposingTeam, done) {
         games.enterOpposingTeam(opposingTeam);
         games.clickNext();
         done();
+    });
+
+    this.When(/^I add canonical team "([^"]*)"$/, function (opposingTeam, done) {
+        games.enterCanonicalTeam(opposingTeam).then(
+            function(){
+                //games.canonicalTeam.click().then(
+                    //function(){
+                        games.clickNext().then(done);
+                    //}
+                //)
+            }
+        );
     });
 
     this.Then(/^I should see rosters on homeTeam$/, function (done) {

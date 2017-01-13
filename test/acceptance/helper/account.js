@@ -50,6 +50,10 @@ module.exports = function Account() {
         'NORTHWESTERNWTEST_COACH' : {
             email: "jared@krossover.com",
             password: "Popcorn23",
+        },
+        'INDIABASKETBALL_COACH' : {
+            email: "jared@krossover.com",
+            password: "Popcorn23",
         }
 
     };

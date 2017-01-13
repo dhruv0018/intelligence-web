@@ -24,7 +24,7 @@ Feature: Coach-AddFilm
         Then I should see the "information" page
 
     Scenario: Coach can save game and create game roster
-        When I add opposingTeam "test"
+        When I add opposing team "test"
         Then I should see rosters on homeTeam
 
     Scenario: Coach should be able to break down game

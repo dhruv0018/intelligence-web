@@ -13,10 +13,16 @@ module.exports = function FilmHome(){
     var firstGame = element(by.repeater('game in games').row(0));
     var firstReel = element(by.repeater('reel in reels').row(0));
     var wscBtn = element(by.id('wsc-highlight-cta'));
+    var gameSearchBox = element(by.id('film-search-cta'));
+    var reelSearchBox =$('#reel-search-cta');
+    var player = $('.video-player');
 
     this.numClipsDiv = numClipsDiv;
     this.thumbnailDiv = thumbnailDiv;
     this.wscBtn = wscBtn;
+    this.player = player;
+    this.reelSearchBox = reelSearchBox;
+    this.gameSearchBox = gameSearchBox;
 
     this.clickTab = function(tabName){
         console.log(tabName);
@@ -34,4 +40,5 @@ module.exports = function FilmHome(){
     this.selectFirstReel = function(){
         return firstReel.click();
     }
+
 }

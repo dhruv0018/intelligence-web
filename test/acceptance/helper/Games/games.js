@@ -13,11 +13,21 @@ module.exports = function Games(){
     var submitBtn = element.all(by.css(".btn-submit-continue")).first();
     var filmSettingsBtn = element(by.id("coach-game-instructions-cta"));
     var btnCancel = element(by.id('cancel-uploading-cta'));
+    var canonicalTeamField = element(by.model("team"));
+    var canonicalTeam = element(by.xpath('//span[@ng-if="match.model.name"]'));
 
     this.filmSettingsBtn = filmSettingsBtn;
 
     this.enterOpposingTeam = function(opposingTeam){
         opposingTeamField.sendKeys(opposingTeam);
+    }
+
+    this.enterCanonicalTeam = function(opposingTeam){
+        return canonicalTeamField.sendKeys(opposingTeam).then(()=>{
+            browser.sleep(2000).then(()=>{
+                return canonicalTeam.click();
+            })
+        })
     }
 
     this.clickNext = function(){

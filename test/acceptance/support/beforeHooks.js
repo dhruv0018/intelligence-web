@@ -24,8 +24,14 @@ var myBeforeHooks = function() {
         // var feature = event.getPayloadItem('feature');
         // console.log('print out feature name:', feature.getName());
         browser.driver.manage().window().maximize();
-        browser.get("login").then(callback);
-        // callback();
+        browser.get("login")
+                .catch(function(){ //function inside catch is to dismiss any alert box
+                    return browser.switchTo().alert().then(function(alert){
+                        alert.accept();
+                        return browser.get("login");
+                    })
+                })
+                .then(callback);
     });
 
 

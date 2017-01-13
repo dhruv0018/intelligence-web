@@ -15,13 +15,22 @@ module.exports = function() {
         browser.get(relativeUrl).then(done);
     });
 
+    this.Given(/^I go to the "([^"]*)" page$/, function(pageName, done) {
+
+        browser.setLocation(pageName).then(done);
+    });
+
     this.Then(/^I should see the "([^"]*)" page$/, function(pageName, done) {
         var self = this;
         if(pageName == 'film-home'){
             browser.sleep(6000);
         }
 
-        expect(self.urlContains(pageName)).to.eventually.be.true.and.notify(done);
+        self.waitForUrlChange(pageName).then(
+            function(){
+                expect(self.urlContains(pageName)).to.eventually.be.true.and.notify(done);
+            }
+        );
     });
 
     //Click on text block
@@ -33,13 +42,18 @@ module.exports = function() {
         );
     });
 
-    this.When(/^Admin click "([^"]*)" on Admin menu$/, function(menuItem, done) {
+    this.When(/^I click "([^"]*)" on Admin menu$/, function(menuItem, done) {
         header.clickAdminMenu(menuItem).then(done);
     });
 
-    //For select option in dropdown
+    //For select option by label in dropdown
     this.When(/^I pick option "([^"]*)" from dropdown "([^"]*)"$/, function (option, name, done) {
-        element(by.name(name)).$('[label="'+option+'"]').click().then(done);
+        element(by.model(name)).$('[label="'+option+'"]').click().then(done);
+    });
+
+    //For selecting option by value in dropdown
+    this.When(/^I pick option value "([^"]*)" from dropdown "([^"]*)"$/, function (option, name, done) {
+        element(by.model(name)).$('[value="'+option+'"]').click().then(done);
     });
 
     //For enter text in input box
@@ -62,11 +76,10 @@ module.exports = function() {
             function(){
                 selectRole.isDisplayed().then(function(isVisible){
                     if(isVisible){
-                        selectRole.click();
+                        selectRole.click().then(done);
                     }else{
-                        dropdownMenu.click();
+                        dropdownMenu.click().then(done);
                     }
-                    done();
                 })
             }
         );
@@ -143,5 +156,12 @@ module.exports = function() {
     this.When(/^I pause$/, function(done) {
         browser.pause();
         // browser.debugger();
+    });
+
+    this.When(/^I save$/, function(done) {
+        var self = this;
+        var saveButton = element(by.buttonText('Save'));
+
+        self.waitForClickable(saveButton).then(done);
     });
 };

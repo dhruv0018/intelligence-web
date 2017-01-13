@@ -21,9 +21,8 @@ module.exports = function() {
 
     this.When(/^I search for game "([^"]*)"$/, function (text, done){
         var self = this;
-        var conferenceCodeSearchBox =$('#film-search-cta');
 
-        self.waitForClickable(conferenceCodeSearchBox).sendKeys(text).then(
+        self.waitForClickable(filmHome.gameSearchBox).sendKeys(text).then(
             function(){
                 browser.sleep(1000).then(
                     function(){
@@ -37,9 +36,8 @@ module.exports = function() {
 
     this.When(/^I search for reel "([^"]*)"$/, function (text, done){
         var self = this;
-        var searchBox =$('#reel-search-cta');
 
-        self.waitForClickable(searchBox).sendKeys(text).then(
+        self.waitForClickable(filmHome.reelSearchBox()).sendKeys(text).then(
             function(){
                 done();
             }
@@ -59,10 +57,9 @@ module.exports = function() {
 
     this.When(/^I select first game$/, function (done) {
         var self = this;
-        var player = $('.video-player');
 
         filmHome.selectFirstGame();
-        self.waitForClickable(player).then(
+        self.waitForClickable(filmHome.player).then(
             function(){
                 done();
             }
@@ -71,10 +68,9 @@ module.exports = function() {
 
     this.When(/^I select first reel$/, function (done) {
         var self = this;
-        var player = $('.video-player');
 
         filmHome.selectFirstReel();
-        self.waitForClickable(player).then(
+        self.waitForClickable(filmHome.player).then(
             function(){
                 done();
             }
@@ -83,9 +79,8 @@ module.exports = function() {
 
     this.When(/^I click Order Now button$/, function (done) {
         var self = this;
-        var wscButton = $('#wsc-highlight-cta');
 
-        self.waitForClickable(wscButton).then(function(){
+        self.waitForClickable(filmHome.wscBtn).then(function(){
             browser.sleep(10000).then(done);
         });
     });

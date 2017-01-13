@@ -9,9 +9,9 @@ Feature: Admin
 
     Scenario: Admin can not add team without valid postal code
 
-        Given Admin click "schools" on Admin menu
-        When Admin click add a new school
-        When I pick option "High School" from dropdown "type"
+        Given I click "schools" on Admin menu
+        When I click add a new school
+        When I pick option "High School" from dropdown "school.type"
         When I enter "Test" for Input name "name"
         When I enter "New York" for Input name "city"
         When I enter "US" for Input name "country"

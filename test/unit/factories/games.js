@@ -1436,7 +1436,7 @@ describe('GamesFactory', function() {
                 };
 
                 expect(GamesFactory.getDeadlineToReturnGame(uploaderTeam)).to.be.a('string');
-                expect(GamesFactory.getDeadlineToReturnGame(uploaderTeam)).to.equal('2015-09-06T16:02:59+00:00');
+                expect(GamesFactory.getDeadlineToReturnGame(uploaderTeam).substring(0,19)).to.equal('2015-09-06T16:02:59');
         });
 
         it('should return zero if no submitted at timestamp', ()=> {
