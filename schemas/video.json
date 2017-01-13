@@ -25,6 +25,10 @@
         "uploadFinishedAt": {
           "type": ["null", "string"],
           "format": "date-time"
+        },
+        "processedAt": {
+            "type": ["null", "string"],
+            "format": "date-time"
         }
     },
     "additionalProperties": false
