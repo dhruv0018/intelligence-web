@@ -108,7 +108,7 @@ function $KrossoverPlay (
                 }
             })
             .filter(Boolean)
-            .sort((a, b) => b.summaryPriority - a.summaryPriority)
+            .sort((a, b) => a.summaryPriority - b.summaryPriority)
             .slice(0, 2)
             .map(event => event.summaryHTML + '</br>')
             .join('');
