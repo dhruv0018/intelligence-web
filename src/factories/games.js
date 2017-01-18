@@ -273,6 +273,67 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
             },
 
+            doGameScoresExist() {
+                return !this.areInputtedGameScoresUnavailable || this.areIndexedGameScoresAvailable;
+            },
+
+            getHomeTeamScore() {
+                let score = this.finalScore;
+
+                if (this.areInputtedGameScoresUnavailable() && this.areIndexedGameScoresAvailable()) {
+                    score = this.indexedScore;
+                }
+
+                return score;
+            },
+
+            getOpposingTeamScore() {
+                let score = this.opposingFinalScore;
+
+                if (this.areInputtedGameScoresUnavailable() && this.areIndexedGameScoresAvailable()) {
+                    score = this.opposingIndexedScore;
+                }
+
+                return score;
+            },
+
+            didHomeWin() {
+                let homeWon = this.getHomeTeamScore() > this.getOpposingTeamScore();
+
+                if (!this.hasWinner()) {
+                    homeWon = false;
+                }
+
+                return homeWon;
+            },
+
+            didOpponentWin() {
+                let opponentWon = !this.didHomeWin();
+
+                if (!this.hasWinner()) {
+                    opponentWon = false;
+                }
+
+                return opponentWon;
+            },
+
+            hasWinner() {
+                return this.doGameScoresExist()
+                    && !this.isTie();
+            },
+
+            isTie() {
+                return this.getHomeTeamScore() === this.getOpposingTeamScore();
+            },
+
+            areInputtedGameScoresUnavailable() {
+                return this.finalScore === 0 && this.opposingFinalScore === 0;
+            },
+
+            areIndexedGameScoresAvailable() {
+                return angular.isDefined(this.indexedScore) && angular.isDefined(this.opposingIndexedScore);
+            },
+
             getByUploaderUserId: function(userId) {
 
                 userId = userId || session.getCurrentUserId();

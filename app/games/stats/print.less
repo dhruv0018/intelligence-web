@@ -1,0 +1,86 @@
+@media print {
+    header,
+    film-header,
+    .stats-select-container,
+    state-selector,
+    .stats-print-export-options,
+    .table-responsive > table {
+        display: none !important;
+    }
+
+    .game-info,
+    .dynamic-tables .stats-select select,
+    .table-bordered th,
+    .table-bordered td,
+    .dynamic-tables .table-responsive table {
+        border: none !important;
+    }
+
+    .statsPage {
+        padding-top: 0;
+        overflow-y: visible;
+    }
+
+    .games-content .dynamic-tables {
+        height: initial;
+        display: block;
+
+        .dynamic-table-container {
+            display: block !important;
+            page-break-after: always;
+        }
+
+        .print-table-title {
+            font-size: 14px;
+            display: block;
+            margin: 0.25cm 0;
+        }
+
+        .table-responsive {
+            thead {
+                display:table-header-group
+            }
+
+            th {
+                font-size: 12px;
+                font-weight: 500;
+                background-color: @gray-lighter !important;
+                -webkit-print-color-adjust: exact;
+                word-wrap: normal;
+            }
+
+            td {
+                font-size: 10px;
+                border-bottom: 1px solid @gray-lighter !important;
+            }
+
+            tr {
+                break-inside: avoid;
+                border-bottom: 1px solid @gray-lighter;
+            }
+
+            .table-body-container {
+                overflow: visible;
+                display: block;
+
+                .hidden-header th {
+                    visibility: visible;
+                    height: auto;
+                    line-height: normal;
+                    padding: 0.2cm 0;
+                }
+
+            }
+        }
+    }
+}
+
+@media screen {
+    .game-info-print {
+        display: none;
+    }
+
+    .print-table-title {
+        display: none;
+    }
+}

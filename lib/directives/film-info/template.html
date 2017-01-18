@@ -5,14 +5,14 @@
 			<h5 class="film-title">{{filmTitle}}</h5>
 		</div>
 		<div class="team">
-			<h3 class="team-name" data-ng-class="{winner: opponentWon}">{{teams[film.opposingTeamId].name || 'Away'}}</h3>
+			<h3 class="team-name" data-ng-class="{winner: opponentWon}">{{opposingTeamName}}</h3>
 			<span data-ng-if="gameScoresExist">
 				<h3 data-ng-class="{winner: opponentWon}">{{opposingTeamScore}}</h3>
 				<i class="icon icon-play" data-ng-class="{invisible: homeWon || (!homeWon && !opponentWon)}"></i>
 			</span>
 		</div>
 		<div class="team">
-			<h3 class="team-name" data-ng-class="{winner: homeWon}">{{teams[film.teamId].name || 'Home'}}</h3>
+			<h3 class="team-name" data-ng-class="{winner: homeWon}">{{homeTeamName}}</h3>
 			<span data-ng-if="gameScoresExist">
 				<h3 data-ng-class="{winner: homeWon}">{{homeTeamScore}}</h3>
 				<i class="icon icon-play" data-ng-class="{invisible: opponentWon || (!homeWon && !opponentWon)}"></i>

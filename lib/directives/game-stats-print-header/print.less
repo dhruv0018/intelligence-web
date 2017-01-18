@@ -1,0 +1,44 @@
+@media print {
+    game-stats-print-header {
+        display: block;
+        height: 100%;
+        margin-bottom: 1cm;
+
+        .game-stats-print-info {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .print-logo {
+                font-size: 1.5cm;
+            }
+
+            .print-meta {
+                text-align: right;
+            }
+        }
+
+        .print-teams {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            max-width: 7cm;
+
+            .print-team {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .is-winner {
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+@media screen {
+    game-stats-print-header {
+        display: none;
+    }
+}

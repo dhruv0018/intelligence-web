@@ -1,0 +1,21 @@
+<div class="game-stats-print-wrapper">
+    <div class="game-stats-print-info">
+        <div class="print-logo">
+            <i class="icon icon-logo-circle"></i>
+        </div>
+        <div class="print-meta">
+            <span>{{$ctrl.game.datePlayed | dateTitle}}</span><br/>
+            <span>@{{$ctrl.game.getHomeTeamName()}}</span>
+        </div>
+    </div>
+    <div class="print-teams">
+        <div class="print-team" ng-class="{ 'print-team': true, 'is-winner': $ctrl.game.didOpponentWin() }">
+            <span>{{$ctrl.game.getAwayTeamName()}}</span>
+            <span class="print-score" ng-if="$ctrl.game.doGameScoresExist()">{{$ctrl.game.getOpposingTeamScore()}}</span>
+        </div>
+        <div ng-class="{ 'print-team': true, 'is-winner': $ctrl.game.didHomeWin() }">
+            <span>{{$ctrl.game.getHomeTeamName()}}</span>
+            <span class="print-score" ng-if="$ctrl.game.doGameScoresExist()">{{$ctrl.game.getHomeTeamScore()}}</span>
+        </div>
+    </div>
+</div>
