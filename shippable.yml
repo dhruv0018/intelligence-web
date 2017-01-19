@@ -5,7 +5,7 @@ language: node_js
 services:
 
 env:
-  - NPM_TOKEN=82a7e16c-72b1-4cfe-bd45-a41e4b53a0d7 GITHUB_USERNAME=krossoverbuild GITHUB_PASSWORD=Popcorn23 NODE_ENV="" DISPLAY=:99
+  - NPM_TOKEN=4611ff61-d0da-4ca8-80c9-83238493c4e6 GITHUB_USERNAME=krossoverbuild GITHUB_PASSWORD=Popcorn23 NODE_ENV="" DISPLAY=:99
 
 matrix:
 
@@ -20,6 +20,7 @@ build:
         options: "-e HOME=/root"
     #commands in this section run inside your CI container. In addition, any commands such as ls, in this section can be used to skip default processing for CI.
     ci:
+      - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > ~/.npmrc
       - npm install
       - node_modules/.bin/napa
       - npm install worker-farm --save-dev
