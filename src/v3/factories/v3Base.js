@@ -34,9 +34,6 @@ IntelligenceWebClient.factory('v3BaseFactory', [
         v3DataParser,
         root)
     {
-        var queryData = [];
-        var queryIncluded = [];
-
         var v3BaseFactory = {
 
             PAGE_SIZE,
@@ -114,7 +111,6 @@ IntelligenceWebClient.factory('v3BaseFactory', [
                     success = filter;
                     filter = null;
                 }
-
                 /* Making a copy of the filter here so that the start and count
                  * properties don't get added to the filter if not passed in as a literal.  */
                 filter = angular.copy(filter) || {};
@@ -127,9 +123,9 @@ IntelligenceWebClient.factory('v3BaseFactory', [
                     filter['id[]'] = util.unique(filter['id[]']);
                 }
 
-                if (filter['page[size]'] || filter['page[number]']) {
-                    filter['page[size]'] = filter['page[size]'] || self.PAGE_SIZE || PAGE_SIZE;
-                    filter['page[number]'] = filter['page[number]'] || 1;
+                if (filter["page[size]"] || filter["page[number]"]) {
+                    filter["page[size]"] = filter["page[size]"] || self.PAGE_SIZE || PAGE_SIZE;
+                    filter["page[number]"] = filter["page[number]"] || 1;
                     isPaginated = true;
                 }
 
@@ -164,74 +160,83 @@ IntelligenceWebClient.factory('v3BaseFactory', [
              * @param {Object} [filter] - an object hash of filter parameters.
              * @param {Function} success - called upon success.
              * @param {Function} error - called on error.
+             * @param {Array} queryData - data parameter of resources
+             * @param {Array} queryIncluded - included parameter of resources
              * @return {Promise.<Map.<Number,Resource>>} - a promise of a map of resources.
              */
-            retrieve: function(filter, saveToStorage = false, isPaginated = false) {
+            retrieve(filter, saveToStorage = false, isPaginated = false, queryData = [], queryIncluded = []) {
                 /* Make a GET request to the server for an array of resources. */
-                let self = this;
-                let model = self.model ? $injector.get(self.model) : v3Resource.createResource(self.description);
+                let model = this.model ? $injector.get(this.model) : v3Resource.createResource(this.description);
                 let query = model.get(filter);
-
                 if(saveToStorage){
-                    root[self.description] = root[self.description] || {};
+                    root[this.description] = root[this.description] || {};
                 }
 
-                let request = query.$promise.then(function(resources) {
-                    queryData = queryData.concat(resources.data);
-                    queryIncluded = queryIncluded.concat(resources.included);
-                    if(!isPaginated && filter['page[number]']>10){
-                        //if need to keep pulling data more than 10 times break the loop
-                        isPaginated = true;
-                    }
-                    if(!isPaginated && (resources.links && resources.links.next!==null)){
+                let request = query.$promise.then((resources) => {
+                    const isPageRetryLimit = (resources.meta && resources.meta['total-pages'] && resources.meta['total-pages'] > 1) ? (filter["page[number]"] >= resources.meta['total-pages']) : true;
+
+                    if (!isPaginated && !isPageRetryLimit) {
+                        queryData = queryData.concat(resources.data);
+                        queryIncluded = queryIncluded.concat(resources.included);
+
                         //need to pull more data
-                        if(filter['page[size]'] && filter['page[number]']){
-                            filter['page[number]'] = filter['page[number]']+1;
+                        if(filter["page[size]"] && filter["page[number]"]){
+                            filter["page[number]"] = filter["page[number]"]+1;
                         }else{
                             //no paginated filter set
-                            filter['page[size]'] = resources.data.length;
-                            filter['page[number]'] = 2;
+                            filter["page[size]"] = resources.data.length;
+                            filter["page[number]"] = 2;
                         }
-                        self.retrieve(filter, saveToStorage);
+                        return this.retrieve(filter, saveToStorage, isPaginated, queryData, queryIncluded);
                     }else{
-                        //parseData
-                        let resourceData = v3DataParser.parseData({'data': queryData, 'included': queryIncluded});
-                        queryData = [];
-                        resourceData.forEach(resource =>{
-                            resource = self.extend(resource);
-                            if(resource.includes){
-                                angular.forEach(resource.includes, (data, key) =>{
-                                    if(Array.isArray(data)){
-                                        //check if that type links to a factory for extend
-                                        angular.forEach(data, (value, key)=>{
-                                            if(value.type){
-                                                let factoryName = v3DataParser.constructFactoryFromString(value.type);
-                                                if($injector.has(factoryName)){
-                                                    //extend the object
-                                                    value = $injector.get(factoryName).extend(value);
-                                                }
-                                            }
-                                        });
+                        resources.data = queryData.concat(resources.data);
+                        resources.included = resources.included ? queryIncluded.concat(resources.included): queryIncluded;
+                        let parsedResources = Object.assign({}, resources);
+                        parsedResources.transformed = v3DataParser.parseData(resources);
 
-                                    }else{
-                                        //check if that type links to a factory for extend
-                                        let factoryName = v3DataParser.constructFactoryFromString(data.type);
-                                        if($injector.has(factoryName)){
-                                            data = $injector.get(factoryName).extend(data);
-                                        }
-                                    }
-                                });
-                            }
-                            //save data to memory if specified
-                            if(saveToStorage){
-                                root[self.description][resource.id] = resource;
-                            }
-                        });
-                        return resourceData;
+                        const parsedResourcesData = parsedResources.transformed;
+
+                        if (Array.isArray(parsedResourcesData)) {
+                            parsedResourcesData.forEach(resourceData => this.extendTransformedData(resourceData, saveToStorage));
+                        } else {
+                            this.extendTransformedData(parsedResourcesData, saveToStorage);
+                        }
+
+                        return parsedResources;
                     }
                 });
 
                 return request;
+            },
+            extendTransformedData(resourceData, saveToStorage) {
+                resourceData = this.extend(resourceData);
+                if(resourceData.includes){
+                    angular.forEach(resourceData.includes, (data, key) =>{
+                        if(Array.isArray(data)){
+                            //check if that type links to a factory for extend
+                            angular.forEach(data, (value, key)=>{
+                                if(value.type){
+                                    let factoryName = v3DataParser.constructFactoryFromString(value.type);
+                                    if($injector.has(factoryName)){
+                                        //extend the object
+                                        value = $injector.get(factoryName).extend(value);
+                                    }
+                                }
+                            });
+
+                        }else{
+                            //check if that type links to a factory for extend
+                            let factoryName = v3DataParser.constructFactoryFromString(data.type);
+                            if($injector.has(factoryName)){
+                                data = $injector.get(factoryName).extend(data);
+                            }
+                        }
+                    });
+                }
+                //save data to memory if specified
+                if(saveToStorage){
+                    root[this.description][resource.id] = resourceData;
+                }
             },
             /**
              * @class BaseFactory
@@ -264,10 +269,10 @@ IntelligenceWebClient.factory('v3BaseFactory', [
                 let self = this;
                 resource = resource || self;
 
-                //make sure relationships block is updated with includes block
-                if(resource.includes && resource.relationships){
+                //make sure relationships block is updated with transformed block
+                if(resource.transformed && resource.relationships){
                     let relationships = {};
-                    angular.forEach(resource.includes, (value, key)=>{
+                    angular.forEach(resource.transformed, (value, key)=>{
                         relationships[key] = [];
                         angular.forEach(value, data=>{
                             relationships[key].push({id: data.id, type: data.type});
@@ -338,8 +343,8 @@ IntelligenceWebClient.factory('v3BaseFactory', [
                 }
 
                 //update included objects based on their type, TODO need to test
-                if(resource.includes && resource.relationships){
-                    angular.forEach(resource.includes, (value, key)=>{
+                if(resource.transformed && resource.relationships){
+                    angular.forEach(resource.transformed, (value, key)=>{
                         angular.forEach(value, data=>{
                             let factoryName = v3DataParser.constructFactoryFromString(data.type);
                             if($injector.has(factoryName)){

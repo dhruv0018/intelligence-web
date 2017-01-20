@@ -38,7 +38,7 @@ IntelligenceWebClient.factory('v3DataParser', [
             let linkageProperty;
             let includedDataArray = [];
             let includedDataObj = {};
-            let includes = {};
+            let includedExtend = {};
 
             for(let rel in relationships){
                 if(relationships.hasOwnProperty(rel)){
@@ -48,19 +48,19 @@ IntelligenceWebClient.factory('v3DataParser', [
                     if(Array.isArray(linkageProperty)){
                         includedDataArray = constructArrayFromIncluded(linkageProperty, findInIncludes);
                         if(includedDataArray.length){
-                            includes[rel] = includedDataArray;
+                            includedExtend[rel] = includedDataArray;
                         }
                     }else{
                         //single object
                         includedDataObj = constructObjFromIncluded(linkageProperty, findInIncludes);
                         if(includedDataObj){
-                            includes[rel] = includedDataObj;
+                            includedExtend[rel] = includedDataObj;
                         }
                     }
                 }
             }
 
-            data.includes = includes;
+            data.includedExtend = includedExtend;
 
             return data;
         }

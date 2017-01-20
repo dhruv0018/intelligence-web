@@ -33,8 +33,8 @@ IntelligenceWebClient.factory('v3TeamsFactory', [
                  * @returns {object|null}
                  */
                 team.getLeague = function () {
-                    if (this.includes) {
-                        return this.includes.league || null;
+                    if (this.includedExtend) {
+                        return this.includedExtend.league || null;
                     }
 
                     return null;
@@ -46,8 +46,8 @@ IntelligenceWebClient.factory('v3TeamsFactory', [
                  * @returns {object|null}
                  */
                 team.getSchool = function () {
-                    if (this.includes) {
-                        return this.includes.school || null;
+                    if (this.includedExtend) {
+                        return this.includedExtend.school || null;
                     }
 
                     return null;
