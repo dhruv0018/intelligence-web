@@ -73,11 +73,16 @@
         display: flex;
         flex-direction: column;
         height: 100%;
+        .responsive-header-wrapper{
+            display: block;
+            height: 39px;
+            overflow-y: hidden;
+        }
     }
 
     .scroll-remaining-height {
-        height: 100%;
-        overflow-y: auto;
+        height: calc(~"100% - 120px");
+        overflow-y: scroll;
     }
 
     .fixed-header {

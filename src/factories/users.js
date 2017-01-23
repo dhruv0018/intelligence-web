@@ -10,9 +10,28 @@ var IntelligenceWebClient = angular.module(pkg.name);
 const PAGE_SIZE = 1000;
 
 IntelligenceWebClient.factory('UsersFactory', [
-    '$injector', '$rootScope', '$http', 'config', 'BaseFactory', 'ROLE_ID', 'ROLE_TYPE', 'ROLES', 'SUBSCRIPTIONS',
-
-    function($injector, $rootScope, $http, config, BaseFactory, ROLE_ID, ROLE_TYPE, ROLES, SUBSCRIPTIONS) {
+    '$injector',
+    '$rootScope',
+    '$http',
+    'config',
+    'BaseFactory',
+    'ROLE_ID',
+    'ROLE_TYPE',
+    'ROLES',
+    'SUBSCRIPTIONS',
+    '$q',
+    function(
+        $injector,
+        $rootScope,
+        $http,
+        config,
+        BaseFactory,
+        ROLE_ID,
+        ROLE_TYPE,
+        ROLES,
+        SUBSCRIPTIONS,
+        $q
+    ) {
 
         var UsersFactory = {
 
@@ -162,7 +181,59 @@ IntelligenceWebClient.factory('UsersFactory', [
                     else return users;
                 });
             },
+            /**
+            * @class User
+            * @method getUsersList
+            * This is the hack we use to make pagination work, will be replaced
+            *
+            * @param {Object} filter - Filter to query
+            * @param {bool} getHead - switch to show total count in header response
+            * @returns {Object} - paginated user data with optional count attribute
+            */
+            getUsersList(filter, getHead = true){
+                let query = filter || {};
+                query.count = (filter && filter.count) ? filter.count : 30;
+                query.start = (filter && filter.page) ? (filter.page-1)*query.count : 0;
+                delete query.page;
+                let usersPromises = this.query(query).then(users=>{
+                    let teamIds = [];
+                    angular.forEach(users, user =>{
+                        angular.forEach(user.roles, role=>{
+                            if(role.teamId){
+                                teamIds.push(role.teamId);
+                            }
+                        });
+                    });
 
+                    if(teamIds.length){
+                        var teams = $injector.get('TeamsFactory');
+                        return teams.retrieve({ 'id[]': teamIds }).then(()=>{
+                            return users;
+                        });
+                    }else{
+                        return users;
+                    }
+                });
+
+                let promises = [usersPromises];
+
+                if(getHead){
+                    let url = `${config.api.uri}users`;
+                    let countPromises = this.totalCount(query, url);
+                    promises.push(countPromises);
+                }
+
+                return $q.all(promises).then(
+                    data =>{
+                        let users = {};
+                        users.data = data[0];
+                        if(getHead){
+                            users.count = data[1];
+                        }
+                        return users;
+                    }
+                );
+            },
             /**
             * @class User
             * @method

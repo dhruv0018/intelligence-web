@@ -42,10 +42,15 @@ function UsersController(
     data
 ) {
 
+    const ITEMSPERPAGE = 30; // max number of users per page
+
     $scope.ROLES = ROLES;
     $scope.HEAD_COACH = ROLES.HEAD_COACH;
     $scope.ASSISTANT_COACH = ROLES.ASSISTANT_COACH;
     $scope.ATHLETE = ROLES.ATHLETE;
+    $scope.itemPerPage = ITEMSPERPAGE;
+    $scope.page = {};
+    $scope.page.currentPage = $stateParams.page || 1;
 
     $scope.account = account;
 
@@ -82,15 +87,30 @@ function UsersController(
             });
         }
         else {
-            $scope.query = users.search(filter).then(function(users) {
-
-                $scope.users = users;
-
-            }).finally(function() {
-
+            $scope.page.currentPage = 1;
+            $scope.query = users.getUsersList(filter).then(response =>{
+                $scope.users = response.data;
+                $scope.totalCount = response.count;
+            }).finally(()=>{
                 $scope.searching = false;
             });
         }
+    };
+
+    $scope.pageChanged = function(){
+        delete $scope.filter.start;
+        document.getElementById('user-data').scrollTop = 0;
+        let filter = angular.copy($scope.filter);
+        filter.page = $scope.page.currentPage;
+
+        $scope.searching = true;
+        $scope.users.length = 0;
+
+        $scope.query = users.getUsersList(filter, false).then(response =>{
+            $scope.users = response.data;
+        }).finally(()=>{
+            $scope.searching = false;
+        });
     };
 
     $scope.clearSearchFilter = function() {
