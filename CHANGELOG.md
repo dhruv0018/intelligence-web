@@ -1,3 +1,17 @@
+# v111.0#
+## Features##
+- Ability to purchase extra breakdown packages from the app
+- Ability to search film exchange for games played this year
+- Adds second cancel button when editing a play with film editor
+- Removes old "Copy Raw Film" flow
+
+## Fixes##
+- Bug with displaying the name of the owner of a reel shared with you
+- Space missing in video player quality selector
+- Flips order of summaries on plays
+- Coach gets redirected to film home when deleting game
+- Game roster bug fixes
+
 # v110.0#
 ## Features##
 - CHP: see pricing info 
