@@ -2,3 +2,13 @@ a:hover {
 
     text-decoration: none;
 }
+
+.blue-link {
+    color: @brand-light-blue;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: darken(@brand-light-blue, 10%);
+    }
+}

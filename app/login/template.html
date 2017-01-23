@@ -2,10 +2,23 @@
 <section class="login">
 
     <header ui-view="header"></header>
+    <div ng-show="hideSidebar" class="corner-logo icon-krossover-symbol-circle"></div>
+    <i ng-hide="hideSidebar || !onLoginState" class="corner-logo icon icon-logo-circle"></i>
 
-    <div class="login-container" ng-class="{'center-page': hideBanner}">
+    <div class="login-sidebar" ng-hide="hideSidebar || isMobile || !onLoginState" ng-class="{
+                        'background-basketball': randomHighlightsBackgroundNumber === 0,
+                        'background-football': randomHighlightsBackgroundNumber === 1,
+                        'background-lax': randomHighlightsBackgroundNumber >= 2
+                        }">
+        <i class="icon icon-close" ng-click="hideSidebar = true"></i>
+        <h4>Krossover custom highlights</h4>
+        <h2>Get quality highlights straight from your game film</h2>
+        <p>Intro graphics. Choose some tunes.</p>
+        <p>Save some dough.</p>
+        <a href="{{config.links.customHighlights.uri}}" target="_blank"><button class="btn btn-important-action">Learn More</button></a>
+    </div>
 
-        <div class="icon icon-krossover-logo" ng-hide="hideBanner"></div>
+    <div class="login-container">
 
         <!-- Mobile App Download Messaging -->
         <section ng-if="isMobile" class="login__app-downloads">
@@ -15,9 +28,7 @@
             <app-downloads></app-downloads>
         </section>
 
-        <div class="v2-login">
-            <main ui-view="main"></main>
-        </div>
+        <main ui-view="main"></main>
 
     </div>
 </section>

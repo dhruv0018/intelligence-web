@@ -26,7 +26,11 @@ module.exports = {
         'public/intelligence/index.html',
         'public/intelligence/styles.css',
         'public/intelligence/scripts.js',
-        'public/intelligence/assets/**/*.png'
+        'public/intelligence/assets/**/*.png',
+        'public/intelligence/assets/**/*.ttf',
+        'public/intelligence/assets/**/*.woff',
+        'public/intelligence/assets/**/*.woff2',
+        'public/intelligence/assets/**/*.eot'
     ],
 
     /*

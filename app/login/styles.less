@@ -1,4 +1,28 @@
 .login {
+    display: flex;
+    position: relative;
+    color: @brand-blue;
+    letter-spacing: normal;
+    overflow-y: auto;
+    height: 100%;
+
+    * {
+        font-family: "FFDINWebPro", "Helvetica Neue";
+    }
+
+    .corner-logo {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        width: 50px;
+        height: 50px;
+        z-index: 1;
+
+        &.icon {
+            color: white;
+            font-size: 50px;
+        }
+    }
 
     .error {
         color: @brand-danger;
@@ -16,17 +40,11 @@
         });
     }
 
-    position: relative;
-    color: @brand-blue;
-    letter-spacing: normal;
-    display: block;
-    overflow-y: auto;
-    height: 100%;
-
     .form-field-login {
 
         .form-control;
         width: 93%;
+        height: initial;
         margin: auto;
         box-sizing: content-box;
         border-width: 2px;
@@ -55,20 +73,59 @@
         height: auto;
     });
 
-    .icon-krossover-logo {
+    .login-sidebar {
+        width: 30%;
+        min-width: 300px;
+        max-width: 400px;
+        padding: 0px 20px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
 
-        .full-page-icon-krossover-logo;
+        .icon-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            opacity: .5;
+        }
+
+        h4 {
+            text-transform: uppercase;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin: 0 0 10px 0;
+        }
+
+        h2 {
+            text-transform: uppercase;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin: 5px 0px;
+            line-height: 1.4;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        button {
+            margin-top: 20px;
+        }
     }
 
     .login-container {
         margin: auto;
-        display: table;
-
-        &.center-page {
-            display: flex;
-            align-items: center;
-            height: 100%;
-        }
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
 
         .optimal-experience {
             font-family: "Franklin Gothic","Helvetica Neue","Helvetica,Arial","sans-serif";
@@ -85,16 +142,6 @@
         font-weight: 500;
         font-size: 28px;
         text-transform: uppercase;
-    }
-
-    .v2-login {
-        width: 100%;
-    }
-
-    .v1-login {
-        text-align: center;
-        margin-top: 75px;
-        font-weight: 400;
     }
 
     .temp-warning {
@@ -159,14 +206,5 @@ and (max-width: @screen-xs) {
         h1 {
             font-size: 20px;
         }
-    }
-}
-
-/* Screens over 480px */
-@media only screen
-and (min-width: @screen-xs) {
-
-    .login {
-        padding-top: 100px;
     }
 }

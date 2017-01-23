@@ -2,8 +2,6 @@
 
     .form-forgot {
 
-        text-align: center;
-
         .form-horizontal;
 
         .form-group {
@@ -21,7 +19,7 @@
         h2,
         p {
 
-            color: black;
+            color: @brand-blue;
         }
 
         h2 {
@@ -34,24 +32,22 @@
             letter-spacing: 0.01em;
             margin-bottom: 0;
         }
-    }
 
-    .goBack {
-        .pull-left;
-        font-size: 18px;
-        line-height: 62px;
-    }
+        .forgot-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-    .button-forgot {
+            button {
 
-        .btn;
-        .btn-lg;
-        height: 62px;
-        .uppercase;
+                .btn;
+                margin-left: auto;
 
-        &:enabled {
+                &:enabled {
 
-            .btn-primary;
+                    .btn-important-action;
+                }
+            }
         }
     }
 }

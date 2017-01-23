@@ -1,7 +1,15 @@
-.login-login {
+.login-view {
 
-    margin-top: 15px;
-    letter-spacing: normal;
+    width: 400px;
+
+    .login-header {
+        margin-bottom: 20px;
+
+        h2, h4 {
+            margin: 0;
+            font-weight: normal;
+        }
+    }
 
     .form-login {
 
@@ -20,6 +28,10 @@
                 left: 0px !important;
             }
         }
+    }
+
+    label {
+        font-weight: normal;
     }
 }
 
@@ -45,13 +57,22 @@
 
     &:enabled {
 
-        .btn-primary;
+        .btn-important-action;
     }
 }
 
 .remember-me {
 
     .pull-left;
+
+    .check-box {
+        font-size: 18px;
+        margin-right: 5px;
+
+        &.icon-check-square {
+            color: @brand-light-blue;
+        }
+    }
 }
 
 /**
@@ -63,7 +84,7 @@
 @media only screen
 and (max-width: 479px) {
 
-    .login-login {
+    .login-view {
 
         display: none;
 

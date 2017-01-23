@@ -55,6 +55,9 @@
                 "uri": "https://www.facebook.com/KrossoverIntelligence"
             }
         },
+        "customHighlights": {
+            "uri": "https://krossover.com/products/krossover-custom-highlights/"
+        },
         "rosterTemplates": {
             "opposingTeamRoster": {
                 "uri": "https://drive.google.com/file/d/0Bwb8n8gzhXzLbXJMcWFhNGlmZUk/edit?usp=sharing"

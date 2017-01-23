@@ -1,16 +1,23 @@
-<div class="login-login">
+<div class="login-view">
 
-    <form class="form-login" name="form" role="form" data-ng-submit="submitLogin()" novalidate>
+    <div class="login-header">
+        <h2>Sign into Krossover</h2>
+        <h4>Enter your details below</h4>
+    </div>
+
+    <form class="form-login" name="form" role="form" ng-submit="submitLogin()" novalidate>
 
         <div class="form-group">
 
-            <input class="form-field-login" name="email" type="email" placeholder="Your email" data-ng-model="$parent.login.email" data-ng-change="form.email.$setValidity('notfound', true);" data-errors="{ required: 'Required!', email: 'This is not a valid email.', notfound: 'No account found for that email.' }" autofocus required>
+            <label>User Name</label>
+            <input class="form-field-login" name="email" type="email" placeholder="example@gmail.com" ng-model="$parent.login.email" ng-change="form.email.$setValidity('notfound', true);" errors="{ required: 'Required!', email: 'This is not a valid email.', notfound: 'No account found for that email.' }" autofocus required>
 
         </div>
 
         <div class="form-group">
 
-            <input class="form-field-login" name="password" type="password" placeholder="Password" data-ng-model="$parent.login.password" data-ng-change="form.password.$setValidity('password', true);" data-errors="{ required: 'Required!', password: 'Wrong password, try again.' }" oncopy="return false;" required>
+            <label>Password</label>
+            <input class="form-field-login" name="password" type="password" ng-model="$parent.login.password" ng-change="form.password.$setValidity('password', true);" errors="{ required: 'Required!', password: 'Wrong password, try again.' }" oncopy="return false;" required>
 
         </div>
 
@@ -19,16 +26,12 @@
             <form-toggle
              class="remember-me"
              name="remember"
-             data-id="remember"
+             id="remember"
              model="$parent.login.remember">Remember Me</form-toggle>
 
             <div class="password-reset">
 
-                <a
-                 id="forgot-password-cta"
-                 href
-                 data-ui-sref="forgot"
-                >Forgot your password?</a>
+                <a class="blue-link" id="forgot-password-cta" href ui-sref="forgot">Forgot your password?</a>
 
             </div>
 
@@ -43,8 +46,8 @@
              ng-disabled="form.$invalid || $parent.login.submitted"
             >
 
-                <span data-ng-hide="$parent.login.submitted">Sign In</span>
-                <span data-ng-show="$parent.login.submitted">Signing In...</span>
+                <span ng-hide="$parent.login.submitted">Sign In</span>
+                <span ng-show="$parent.login.submitted">Signing In...</span>
 
             </button>
 
