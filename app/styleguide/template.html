@@ -1,29 +1,49 @@
 <section class="styleguide">
 
-    <aside class="sidebar">
+    <div class="mobile-nav-toggle-btn" ng-click="slideMenuActive = !slideMenuActive">
+        <i ng-hide="slideMenuActive" class="icon icon-hamburger-menu"></i>
+    </div>
 
-        <nav role="navigation">
+    <aside class="styleguide-sidebar" ng-class="{'active': slideMenuActive}">
 
-            <ul class="nav nav-pills nav-stacked">
+        <div class="logo-container">
+            <i class="icon icon-logo-circle"></i>
+            <span class="styleguide-title">Style Guide</span>
+        </div>
 
-                <li ui-sref-active="active"><a href ui-sref="Styleguide.Colors">Colors</a></li>
-                <li ui-sref-active="active"><a href ui-sref="Styleguide.Typography">Typography</a></li>
-                <li ui-sref-active="active"><a href ui-sref="Styleguide.Buttons">Buttons</a></li>
-                <li ui-sref-active="active"><a href ui-sref="Styleguide.Forms">Forms</a></li>
-                <li ui-sref-active="active"><a href ui-sref="Styleguide.Dialogs">Dialogs</a></li>
-                <li ui-sref-active="active"><a href ui-sref="Styleguide.Custom">Custom Components</a></li>
-            </ul>
+        <ul class="styleguide-nav">
+            <li class="main-nav-item" ui-sref-active="active"><a href ui-sref="Styleguide.Introduction">Introduction</a></li>
+            <li class="main-nav-item">Style</li>
+            <li class="main-nav-item">Layout</li>
+            <li class="main-nav-item nav-dropdown-toggle" ng-click="toggleDropdown($event)">
+                Components
+                <ul class="styleguide-subnav">
+                    <li class="sub-nav-item" ui-sref-active="active"><a href ui-sref="Styleguide.Buttons">Buttons &amp; Links</a></li>
+                    <li class="sub-nav-item" ui-sref-active="active"><a href ui-sref="Styleguide.Dropdowns">Dropdown Buttons</a></li>
+                    <li class="sub-nav-item" ui-sref-active="active"><a href >Icons</a></li>
+                    <li class="sub-nav-item" ui-sref-active="active"><a href >Form Components</a></li>
+                    <li class="sub-nav-item" ui-sref-active="active"><a href >Tables</a></li>
+                    <li class="sub-nav-item" ui-sref-active="active"><a href >Typography</a></li>
+                    <li class="sub-nav-item" ui-sref-active="active"><a href >Text Links</a></li>
+                    <li class="sub-nav-item" ui-sref-active="active"><a href >Tool Tips</a></li>
+                    <li class="sub-nav-item" ui-sref-active="active"><a href >Modal &amp; Overlay</a></li>
+                </ul>
+            </li>
+        </ul>
 
-        </nav>
+        <div class="styleguide-sidebar-footer">
+            <span>© Krossover 2010 - 2017</span>
+            <div class="footer-links">
+                <a class="blue-link" href="{{config.links.support.uri}}">Privacy</a>
+                <a class="blue-link" href="{{config.links.termsAndConditions.uri}}">Terms</a>
+                <a class="blue-link" href="{{config.links.privacyPolicy.uri}}">Support</a>
+            </div>
+        </div>
 
     </aside>
 
-    <main class="content" ui-view="content">
+    <div class="slide-menu-overlay" ng-if="slideMenuActive" ng-click="$parent.slideMenuActive = false"></div>
 
-        <h1>Krossover Intelligence Styleguide</h1>
-
-        <p>Marty there's a problem in the past! You have to go back! It's Tory, he's written a styleguide in the year 2014, but it was never published. If we don't go back in time and publish that styleguide... you will never exist!</p>
-
-    </main>
+    <main class="content" ui-view="content"></main>
 
 </section>

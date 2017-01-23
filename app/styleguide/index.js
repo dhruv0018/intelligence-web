@@ -1,10 +1,7 @@
 import StyleguideState from './state.js';
-import StyleguideDialogs from './dialogs';
-import StyleguideColors from './colors';
-import StyleguideTypography from './typography';
+import StyleguideIntroduction from './introduction';
 import StyleguideButtons from './buttons';
-import StyleguideForms from './forms';
-import StyleguideCustom from './custom';
+import StyleguideDropdowns from './dropdowns';
 
 /* Fetch angular from the browser scope */
 const angular = window.angular;
@@ -16,12 +13,9 @@ const angular = window.angular;
 const Styleguide = angular.module('Styleguide', [
     'ui.router',
     'ui.bootstrap',
-    'Styleguide.Dialogs',
-    'Styleguide.Colors',
-    'Styleguide.Typography',
+    'Styleguide.Introduction',
     'Styleguide.Buttons',
-    'Styleguide.Forms',
-    'Styleguide.Custom'
+    'Styleguide.Dropdowns'
 ]);
 
 Styleguide.config(StyleguideState);

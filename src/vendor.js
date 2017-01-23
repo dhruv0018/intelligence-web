@@ -31,3 +31,4 @@ require('spark-md5');
 require('evaporate');
 require('ng-file-upload');
 require('ng-sortable');
+require('ngclipboard');

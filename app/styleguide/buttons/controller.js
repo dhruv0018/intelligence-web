@@ -1,14 +1,11 @@
-function StyleguideButtonsController (
-    $scope,
-    PRIORITIES
-) {
-
-    $scope.PRIORITIES = PRIORITIES;
-}
-
 StyleguideButtonsController.$inject = [
-    '$scope',
-    'PRIORITIES'
+    '$scope'
 ];
+
+function StyleguideButtonsController (
+    $scope
+) {
+    $scope.showButtonType = 'medium';
+}
 
 export default StyleguideButtonsController;

@@ -1,0 +1,66 @@
+.ko-btn {
+    .btn;
+    .btn-default;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: .9;
+    padding: 10px 20px 8px 20px;
+    border-radius: 3px;
+    letter-spacing: -0.3px;
+
+    .icon {
+        margin-right: 10px;
+    }
+
+    a,
+    a:active,
+    a:hover,
+    a:focus {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+.ko-btn-sm {
+    .ko-btn;
+    padding: 5px 10px 3px 10px;
+    font-size: 12px;
+}
+
+.ko-btn-lg {
+    .ko-btn;
+    padding: 15px 30px 13px 30px;
+    font-size: 20px;
+}
+
+.transaction-btn {
+    .button-variant(@brand-primary; transparent; @brand-primary);
+    border-width: 2px;
+
+    &:active,
+    &:hover,
+    &:focus {
+        color: darken(@brand-primary, 10%);
+    }
+}
+
+.important-action-btn {
+    .button-variant(white; @brand-light-blue; @brand-light-blue);
+}
+
+.primary-action-btn {
+    .button-variant(white; @brand-success; @brand-success);
+}
+
+.destructive-action-btn {
+    .button-variant(white; @brand-primary; @brand-primary);
+}
+
+.help-rate-btn {
+    .button-variant(white; black; black);
+    border-radius: 25px;
+
+    &:hover {
+        background-color: lighten(black, 25%);
+    }
+}

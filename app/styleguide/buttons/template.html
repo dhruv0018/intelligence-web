@@ -1,30 +1,292 @@
-<div class="buttons">
+<div class="styleguide-buttons-and-links">
+    <div class="styleguide-header">
+        <h1>Buttons &amp; Links</h1>
+    </div>
 
-    <!-- Boilerplate
-    <h2>Buttons</h2>
+    <div class="styleguide-content">
+        <div class="button-types-header">
+            <h3>Button Types</h3>
+            <p>Select Size:
+                <span class="blue-link" ng-click="showButtonType = 'small'" ng-class="{'active': showButtonType === 'small'}">Small</span> |
+                <span class="blue-link" ng-click="showButtonType = 'medium'" ng-class="{'active': showButtonType === 'medium'}">Medium</span> |
+                <span class="blue-link" ng-click="showButtonType = 'large'" ng-class="{'active': showButtonType === 'large'}">Large</span>
+            </p>
+        </div>
 
-    <button class="btn btn-primary">Primary Button</button>
-    <button class="btn-lg">Large Button</button>
-    <button class="btn-sm">Small Button</button>
-    <button class="btn-xs">Extra Small Button</button>
-    <br/>
-    <button class="btn-success">Success Button</button>
-    <button class="btn-info">Info Button</button>
-    <button class="btn-warning">Warning Button</button>
-    <button class="btn-danger">Danger Button</button>
-    <br/>
-    <button class="btn-default">Default Button</button>
-    <button class="btn-link">Link Button</button>
-    <button class="btn-toolbar">Toolbar Button</button>
-    <button class="navbar-btn">Nav Button</button>
-    <br/>
-    <button class="btn-block">Block Button</button>
-    -->
+        <div class="button-types-container">
+            <div class="button-type-container">
+                <div class="button-example-container">
+                    <button ng-if="showButtonType === 'medium'" class="ko-btn"><span>Button</span></button>
+                    <button ng-if="showButtonType === 'large'" class="ko-btn-lg"><span>Button</span></button>
+                    <button ng-if="showButtonType === 'small'" class="ko-btn-sm"><span>Button</span></button>
+                </div>
+                <a class="blue-link" href="#default-button-style">Default Button</a>
+            </div>
+            <div class="button-type-container">
+                <div class="button-example-container">
+                    <button ng-if="showButtonType === 'medium'" class="ko-btn transaction-btn"><span>Button</span></button>
+                    <button ng-if="showButtonType === 'large'" class="ko-btn-lg transaction-btn"><span>Button</span></button>
+                    <button ng-if="showButtonType === 'small'" class="ko-btn-sm transaction-btn"><span>Button</span></button>
+                </div>
+                <a class="blue-link" href="#transaction-button-style">Transaction Button</a>
+            </div>
+            <div class="button-type-container">
+                <div class="button-example-container">
+                    <button ng-if="showButtonType === 'medium'" class="ko-btn important-action-btn"><span>Button</span></button>
+                    <button ng-if="showButtonType === 'large'" class="ko-btn-lg important-action-btn"><span>Button</span></button>
+                    <button ng-if="showButtonType === 'small'" class="ko-btn-sm important-action-btn"><span>Button</span></button>
+                </div>
+                <a class="blue-link" href="#important-action-button-style">Important Action Button</a>
+            </div>
+            <div class="button-type-container">
+                <div class="button-example-container">
+                    <button ng-if="showButtonType === 'medium'" class="ko-btn primary-action-btn"><span>Button</span></button>
+                    <button ng-if="showButtonType === 'large'" class="ko-btn-lg primary-action-btn"><span>Button</span></button>
+                    <button ng-if="showButtonType === 'small'" class="ko-btn-sm primary-action-btn"><span>Button</span></button>
+                </div>
+                <a class="blue-link" href="#primary-action-button-style">Primary Action Button</a>
+            </div>
+            <div class="button-type-container">
+                <div class="button-example-container">
+                    <button ng-if="showButtonType === 'medium'" class="ko-btn destructive-action-btn"><span>Button</span></button>
+                    <button ng-if="showButtonType === 'large'" class="ko-btn-lg destructive-action-btn"><span>Button</span></button>
+                    <button ng-if="showButtonType === 'small'" class="ko-btn-sm destructive-action-btn"><span>Button</span></button>
+                </div>
+                <a class="blue-link" href="#destructiove-action-button-style">Destructive Action Button</a>
+            </div>
+            <div class="button-type-container extra-links">
+                <a class="blue-link" href="#additional-buttons-style">Additional Buttons</a>
+                <a class="blue-link" href="#text-link-style">Text Links</a>
+                <a class="blue-link" href="#icon-shortcut-style">Icon Shortcuts</a>
+            </div>
+        </div>
 
-    <h3>Priority Label Icons</h3>
-    <krossover-priority-label-icon
-        ng-repeat="priority in PRIORITIES"
-        priority="priority"
-    ></krossover-priority-label-icon>
+        <div class="button-styles-container">
+            <h3>Styles</h3>
 
+            <div class="button-style-container">
+                <div>
+                    <h4>Corner Radius</h4>
+                    <p>The corder radius on all buttons should be kept to a consistent 3px.</p>
+                </div>
+                <img src="./assets/styleguide/buttons/corner_radius.jpg" alt=""/>
+            </div>
+            <div class="button-style-container">
+                <div>
+                    <h4>Sizing and Padding</h4>
+                    <p>Buttons can be one of three sizes: small, medium, and large. Medium is the standard size with 16px font-size.
+                        <ul>
+                            <li>Small - 12px</li>
+                            <li>Medium - 16px</li>
+                            <li>Large - 20px</li>
+                        </ul>
+                    </p>
+                </div>
+                <img src="./assets/styleguide/buttons/sizing-and-padding.jpg" alt=""/>
+            </div>
+            <div class="button-style-container">
+                <div>
+                    <h4>Buttons with Icons</h4>
+                    <p>Buttons can be accompanied by icons to better describe the action being taken.</p>
+                </div>
+                <img src="./assets/styleguide/buttons/buttons-with-icons.jpg" alt=""/>
+            </div>
+            <div class="button-style-container">
+                <div>
+                    <h4>Placement</h4>
+                    <p>Buttons placed together should have padding between them and the area around them.</p>
+                </div>
+                <img src="./assets/styleguide/buttons/placement.jpg" alt=""/>
+            </div>
+            <div class="button-style-container">
+                <div>
+                    <h4>Text Links</h4>
+                    <p>Text links should have padding consistent with buttons.</p>
+                </div>
+                <img src="./assets/styleguide/buttons/text_links.jpg" alt=""/>
+            </div>
+            <div class="button-style-container">
+                <div>
+                    <h4>Icon Shortcuts</h4>
+                    <p>Icon shortcuts should keep even padding between them.</p>
+                </div>
+                <img src="./assets/styleguide/buttons/icons_links.jpg" alt=""/>
+            </div>
+            <div class="button-style-container">
+                <div>
+                    <h4>Text Links with Icons</h4>
+                </div>
+                <img src="./assets/styleguide/buttons/text_links_with_icons.jpg" alt=""/>
+            </div>
+        </div>
+        <div id="default-button-style" class="button-usage-container">
+            <div class="button-usage-info">
+                <h3>Default Buttons</h3>
+                <p>Every button is default unless it falls into one of the categories below.</p>
+            </div>
+            <div class="video-example-container">
+                <img class="video-placeholder" src="./assets/styleguide/buttons/video-placeholder.png" alt=""/>
+                <p>Default Button Example<br/>
+                Button with action areas 1 and 2, optional header, supporting text and supplemental actions.</p>
+                <button class="ko-btn-sm" ng-click="copyCodeConfirm($event)" ngclipboard data-clipboard-text="<button class=&quot;ko-btn&quot;><span>Button</span></button>">Copy Code</button>
+            </div>
+            <img src="./assets/styleguide/buttons/default_buttons.jpg" alt=""/>
+        </div>
+        <div id="transaction-button-style" class="button-usage-container">
+            <div class="button-usage-info">
+                <h3>Transaction Buttons</h3>
+                <p>Button that indicates a purchase or order flow. This style allows us to consistently alert the user that the selected action will lead to a purchase or ordering process.
+                    <ul>
+                        <li>Order Now</li>
+                        <li>Submit for Breakdown</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="video-example-container">
+                <img class="video-placeholder" src="./assets/styleguide/buttons/video-placeholder.png" alt=""/>
+                <p>Default Button Example<br/>
+                Button with action areas 1 and 2, optional header, supporting text and supplemental actions.</p>
+                <button class="ko-btn-sm" ng-click="copyCodeConfirm($event)" ngclipboard data-clipboard-text="<button class=&quot;ko-btn transaction-btn&quot;><span>Button</span></button>">Copy Code</button>
+            </div>
+            <img src="./assets/styleguide/buttons/transaction_buttons.jpg" alt=""/>
+        </div>
+        <div id="important-action-button-style" class="button-usage-container">
+            <div class="button-usage-info">
+                <h3>Important Action Buttons</h3>
+                <p>Button used to initiate processes that are integral for Krossover users, including adding content to the platform. This style allows us to clearly show the user how to initiate these processes. There should only be one of these buttons on any given page and these buttons should not be used in conjunction with a primary action button.
+                    <ul>
+                        <li>Add game</li>
+                        <li>Add player</li>
+                        <li>Add new user</li>
+                        <li>Add new team</li>
+                        <li>Add new school</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="video-example-container">
+                <img class="video-placeholder" src="./assets/styleguide/buttons/video-placeholder.png" alt=""/>
+                <p>Default Button Example<br/>
+                Button with action areas 1 and 2, optional header, supporting text and supplemental actions.</p>
+                <button class="ko-btn-sm" ng-click="copyCodeConfirm($event)" ngclipboard data-clipboard-text="<button class=&quot;ko-btn important-action-btn&quot;><span>Button</span></button>">Copy Code</button>
+            </div>
+            <img src="./assets/styleguide/buttons/important_action_buttons.jpg" alt=""/>
+        </div>
+        <div id="primary-action-button-style" class="button-usage-container">
+            <div class="button-usage-info">
+                <h3>Primary Action Buttons</h3>
+                <p>Button that represents a positive action that completes a process or flow. This style allows us to both distinguish these options from destructive actions and alert the user that there are no more steps to complete. Most commonly used in confirmation modals, but also for completing inline actions.
+                    <ul>
+                        <li>Save</li>
+                        <li>Submit</li>
+                        <li>Add</li>
+                        <li>Copy</li>
+                        <li>Confirm</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="video-example-container">
+                <img class="video-placeholder" src="./assets/styleguide/buttons/video-placeholder.png" alt=""/>
+                <p>Default Button Example<br/>
+                Button with action areas 1 and 2, optional header, supporting text and supplemental actions.</p>
+                <button class="ko-btn-sm" ng-click="copyCodeConfirm($event)" ngclipboard data-clipboard-text="<button class=&quot;ko-btn primary-action-btn&quot;><span>Button</span></button>">Copy Code</button>
+            </div>
+            <img src="./assets/styleguide/buttons/primary_action_buttons.jpg" alt=""/>
+        </div>
+        <div id="destructiove-action-button-style" class="button-usage-container">
+            <div class="button-usage-info">
+                <h3>Destructive Action Buttons</h3>
+                <p>Limited to those potentially destructive actions which involve removing or deleting. If the action that completes a process falls into this definition, a destructive action should be used instead of a primary action button. This style allows us to draw the user's attention to what could happen when they confirm.
+                    <ul>
+                        <li>Delete</li>
+                        <li>Remove</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="video-example-container">
+                <img class="video-placeholder" src="./assets/styleguide/buttons/video-placeholder.png" alt=""/>
+                <p>Default Button Example<br/>
+                Button with action areas 1 and 2, optional header, supporting text and supplemental actions.</p>
+                <button class="ko-btn-sm" ng-click="copyCodeConfirm($event)" ngclipboard data-clipboard-text="<button class=&quot;ko-btn destructive-action-btn&quot;><span>Button</span></button>">Copy Code</button>
+            </div>
+            <img src="./assets/styleguide/buttons/destructive_action_buttons.jpg" alt=""/>
+        </div>
+        <div id="additional-buttons-style" class="button-styles-container">
+            <h3>Additional Buttons</h3>
+            <p>At times, certain buttons will not fit in directly with the above styles. You can find these styles and buttons here.</p>
+            <div class="button-style-container">
+                <div>
+                    <h4>Sign In Button</h4>
+                    <p>Similar to the important action style, this button type is only used on the login page as a way for users to enter the platform.</p>
+                </div>
+                <img src="./assets/styleguide/buttons/sign_in_buttons.jpg" alt=""/>
+            </div>
+            <div class="button-usage-container borderless">
+                <div>
+                    <h4>Help/Rate Button</h4>
+                    <p>Button that leads users through a flow in which they can provide feedback or get assistance.</p>
+                </div>
+                <div class="video-example-container">
+                    <img class="video-placeholder" src="./assets/styleguide/buttons/video-placeholder.png" alt=""/>
+                    <p>Default Button Example<br/>
+                    Button with action areas 1 and 2, optional header, supporting text and supplemental actions.</p>
+                    <button class="ko-btn-sm" ng-click="copyCodeConfirm($event)" ngclipboard data-clipboard-text="<button class=&quot;ko-btn help-rate-btn&quot;><span>Button</span></button>">Copy Code</button>
+                </div>
+                <img src="./assets/styleguide/buttons/rate_button.jpg" alt=""/>
+            </div>
+        </div>
+        <div id="text-link-style" class="button-styles-container">
+            <h3>Text Links</h3>
+            <p>Items on the page that we don't want to draw exclusive attention to, but that lead to other flows. In most cases, these links will have the appropriate icons to the left.</p>
+            <div class="button-usage-container">
+                <div class="button-usage-info">
+                    <h4>Destructive Text Link</h4>
+                    <ul>
+                        <li>Remove</li>
+                        <li>Delete</li>
+                    </ul>
+                </div>
+                <div class="video-example-container">
+                    <img class="video-placeholder" src="./assets/styleguide/buttons/video-placeholder.png" alt=""/>
+                    <p>Default Button Example<br/>
+                    Button with action areas 1 and 2, optional header, supporting text and supplemental actions.</p>
+                    <button class="ko-btn-sm" ng-click="copyCodeConfirm($event)" ngclipboard data-clipboard-text="<a>Link</a>">Copy Code</button>
+                </div>
+                <img src="./assets/styleguide/buttons/destructive_action_text_link.jpg" alt=""/>
+            </div>
+            <div class="button-usage-container borderless">
+                <div class="button-usage-info">
+                    <h4>Standard Text Link</h4>
+                    <p>Used for all other text links.</p>
+                </div>
+                <div class="video-example-container">
+                    <img class="video-placeholder" src="./assets/styleguide/buttons/video-placeholder.png" alt=""/>
+                    <p>Default Button Example<br/>
+                    Button with action areas 1 and 2, optional header, supporting text and supplemental actions.</p>
+                    <button class="ko-btn-sm" ng-click="copyCodeConfirm($event)" ngclipboard data-clipboard-text="<a class=&quot;blue-link&quot;>Link</a>">Copy Code</button>
+                </div>
+                <img src="./assets/styleguide/buttons/text_link.jpg" alt=""/>
+            </div>
+        </div>
+        <div id="icon-shortcut-style" class="button-usage-container borderless">
+            <div class="button-usage-info">
+                <h3>Icon Shortcut</h3>
+                <p>Icons used to indicate a link into a specific area of a breakdown.
+                    <ul>
+                        <li>Shot Chart</li>
+                        <li>Stats</li>
+                        <li>More</li>
+                        <li>Breakdown</li>
+                        <li>Etc.</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="video-example-container">
+                <img class="video-placeholder" src="./assets/styleguide/buttons/video-placeholder.png" alt=""/>
+                <p>Default Button Example<br/>
+                Button with action areas 1 and 2, optional header, supporting text and supplemental actions.</p>
+                <button class="ko-btn-sm" ng-click="copyCodeConfirm($event)" ngclipboard data-clipboard-text="<a class=&quot;blue-link&quot;><i class=&quot;icon icon-stats&quot;</i></a>">Copy Code</button>
+            </div>
+            <img src="./assets/styleguide/buttons/icon_link.jpg" alt=""/>
+        </div>
+    </div>
 </div>

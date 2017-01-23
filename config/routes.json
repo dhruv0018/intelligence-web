@@ -658,15 +658,7 @@
         "*": true
     },
 
-    "Styleguide.Dialogs": {
-        "*": true
-    },
-
-    "Styleguide.Colors": {
-        "*": true
-    },
-
-    "Styleguide.Typography": {
+    "Styleguide.Introduction": {
         "*": true
     },
 
@@ -674,11 +666,7 @@
         "*": true
     },
 
-    "Styleguide.Forms": {
-        "*": true
-    },
-
-    "Styleguide.Custom": {
+    "Styleguide.Dropdowns": {
         "*": true
     },
 

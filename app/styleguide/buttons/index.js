@@ -9,7 +9,8 @@ const angular = window.angular;
  */
 const StyleguideButtons = angular.module('Styleguide.Buttons', [
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ngclipboard'
 ]);
 
 StyleguideButtons.config(StyleguideButtonsState);

@@ -1,0 +1,117 @@
+.styleguide .content .styleguide-dropdown-buttons {
+    .dropdown-styles-container,
+    .dropdown-usage-container,
+    .dropdown-preface-container {
+        width: 100%;
+        max-width: 1190px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .dropdown-styles-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 0px;
+        border-top: thin solid @gray-border;
+        border-bottom: thin solid @gray-border;
+
+        img {
+            margin-left: 40px;
+            align-self: center;
+        }
+    }
+
+    .dropdown-usage-container {
+        padding: 20px 0px;
+        border-bottom: thin solid @gray-border;
+        display: flex;
+        justify-content: space-between;
+
+        &.with-guide {
+            flex-direction: column;
+        }
+
+        .dropdown-usage-info {
+            margin-right: 40px;
+        }
+
+        .video-example-container {
+            width: 295px;
+            margin-left: auto;
+            font-size: 13px;
+
+            img {
+                margin: 0;
+                margin-bottom: 10px;
+            }
+        }
+
+        img {
+            margin-left: 20px;
+        }
+
+        .dropdown-usage-first-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .guide-img {
+            align-self: flex-end;
+            margin: 0;
+        }
+    }
+}
+
+
+@media only screen
+and (max-width: @screen-lg) {
+    .styleguide .content .styleguide-dropdown-buttons {
+        .dropdown-styles-container {
+            flex-direction: column;
+
+            img {
+                margin-left: 0;
+            }
+        }
+
+        .dropdown-usage-container {
+            flex-wrap: wrap;
+
+            .dropdown-usage-first-row {
+                flex-wrap: wrap;
+            }
+
+            .video-example-container {
+                margin-left: 0px;
+            }
+
+            .guide-img {
+                align-self: center;
+            }
+        }
+    }
+}
+
+
+@media only screen
+and (max-width: @screen-xs) {
+    .styleguide .content .styleguide-dropdown-buttons {
+        .dropdown-usage-container {
+            flex-direction: column;
+            align-items: center;
+
+            .video-example-container {
+                margin-bottom: 10px;
+            }
+
+            .dropdown-usage-first-row {
+                flex-direction: column;
+            }
+
+            img {
+                margin: 0;
+            }
+        }
+    }
+}

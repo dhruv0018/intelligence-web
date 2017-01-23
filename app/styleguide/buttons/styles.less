@@ -1,3 +1,202 @@
-.styleguide .buttons {
+.styleguide .content .styleguide-buttons-and-links {
+    .button-types-container,
+    .button-styles-container,
+    .button-usage-container,
+    .button-types-header {
+        width: 100%;
+        max-width: 1190px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
+    .button-types-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+            margin: 0px;
+
+            span.active {
+                font-weight: 600;
+                color: initial;
+                cursor: default;
+            }
+        }
+    }
+
+    .button-types-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        border-bottom: thin solid @gray-border;
+
+        .button-type-container {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            margin-bottom: 10px;
+
+            .button-example-container {
+                height: 100px;
+                background-color: #f5f5f5;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+                position: relative;
+                overflow: hidden;
+
+                button {
+                    position: absolute;
+                    &.ng-enter {
+                        transition: 0.5s ease-in opacity, 0.5s linear margin-left;
+                        opacity: 0;
+                        margin-left: -200px;
+
+                    }
+
+                    &.ng-enter.ng-enter-active {
+                        opacity: 1;
+                        margin-left: 0px;
+                    }
+
+                    &.ng-leave {
+                        transition: 0.25s linear all;
+                        opacity: 1;
+                    }
+
+                    &.ng-leave.ng-leave-active {
+                        opacity: 0;
+
+                    }
+                }
+            }
+
+            &.extra-links {
+                justify-content: center;
+
+                a {
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+
+    .button-styles-container {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0px;
+        border-bottom: thin solid @gray-border;
+
+        .button-style-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+
+            img {
+                margin-left: 40px;
+                align-self: flex-start;
+            }
+        }
+    }
+
+    .button-usage-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0px;
+        border-bottom: thin solid @gray-border;
+
+        .button-usage-info {
+            margin-right: 40px;
+        }
+
+        .video-example-container {
+            width: 295px;
+            margin-left: auto;
+            font-size: 13px;
+
+            img {
+                margin: 0;
+                margin-bottom: 10px;
+            }
+
+            button {
+                width: 75px;
+            }
+        }
+
+        img {
+            margin-left: 20px;
+        }
+    }
+
+    .borderless {
+        border: none;
+    }
+}
+
+@media only screen
+and (max-width: @screen-lg) {
+    .styleguide .content .styleguide-buttons-and-links {
+        .button-types-container {
+            .button-type-container {
+                width: 45%;
+            }
+        }
+
+        .button-styles-container {
+            .button-style-container {
+                flex-direction: column;
+
+                img {
+                    margin: 0px;
+                }
+            }
+        }
+
+        .button-usage-container {
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .video-example-container {
+                margin-left: 0px;
+            }
+        }
+    }
+}
+
+@media only screen
+and (max-width: @screen-xs) {
+    .styleguide .content .styleguide-buttons-and-links {
+        .button-types-container {
+            .button-type-container {
+                width: 100%;
+                flex-direction: column;
+                align-self: center;
+            }
+        }
+
+        .button-styles-container {
+            .button-style-container {
+                img {
+                    align-self: center;
+                }
+            }
+        }
+
+        .button-usage-container {
+            flex-direction: column;
+
+            .video-example-container {
+                margin-bottom: 10px;
+            }
+
+            img {
+                margin: 0px;
+            }
+        }
+    }
 }
