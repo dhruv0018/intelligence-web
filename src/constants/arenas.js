@@ -153,25 +153,25 @@ var ARENA_REGIONS = {
 
         'HOLE': {
             id: 5,
-            name: 'Hole',
+            name: 'Crease',
             description: 'from the hole'
         },
 
         'SLOT': {
             id: 6,
-            name: 'Slot',
+            name: 'Wing',
             description: 'from the slot'
         },
 
         'PORCH': {
             id: 7,
-            name: 'Porch',
+            name: 'Top of the Box',
             description: 'from the porch'
         },
 
         'FLANKS': {
             id: 8,
-            name: 'Flanks',
+            name: 'X',
             description: 'from the flanks'
         },
 
