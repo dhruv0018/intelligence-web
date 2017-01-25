@@ -8,8 +8,18 @@ var angular = window.angular;
 var IntelligenceWebClient = angular.module(pkg.name);
 
 IntelligenceWebClient.factory('SchoolsFactory', [
-    '$injector', 'BaseFactory', 'SCHOOL_TYPES',
-    function($injector, BaseFactory, SCHOOL_TYPES) {
+    '$injector',
+    'BaseFactory',
+    'SCHOOL_TYPES',
+    'config',
+    '$q',
+    function(
+        $injector,
+        BaseFactory,
+        SCHOOL_TYPES,
+        config,
+        $q
+    ) {
 
         var SchoolsFactory = {
 
@@ -38,7 +48,41 @@ IntelligenceWebClient.factory('SchoolsFactory', [
 
                 return school;
             },
+            /**
+            * @class Schools
+            * @method getSchoolsList
+            * This is the hack we use to make pagination work, will be replaced
+            *
+            * @param {Object} filter - Filter to query
+            * @param {bool} getHead - switch to show total count in header response
+            * @returns {Object} - paginated user data with optional count attribute
+            */
+            getSchoolsList: function(filter, getHead = true){
+                let query = filter || {};
+                query.count = (filter && filter.count) ? filter.count : 30;
+                query.start = (filter && filter.page) ? (filter.page-1)*query.count : 0;
+                delete query.page;
+                let schoolsPromises = this.query(query);
+                let promises = [schoolsPromises];
 
+                if(getHead){
+                    let url = `${config.api.uri}schools`;
+                    let countPromises = this.totalCount(query, url);
+                    promises.push(countPromises);
+                }
+
+                return $q.all(promises).then(
+                    data =>{
+                        let schools = {};
+                        schools.data = data[0];
+                        if(getHead){
+                            schools.count = data[1];
+                        }
+                        return schools;
+                    }
+                );
+
+            },
             unextend: function(school) {
 
                 var self = this;

@@ -114,11 +114,29 @@ Schools.controller('SchoolController', [
  * @type {Controller}
  */
 Schools.controller('SchoolsController', [
-    '$rootScope', '$scope', '$state', '$q', 'SchoolsFactory', 'AdminSearchService',
-    function controller($rootScope, $scope, $state, $q, schools, searchService) {
+    '$rootScope',
+    '$scope',
+    '$state',
+    '$q',
+    'SchoolsFactory',
+    'AdminSearchService',
+    '$stateParams',
+    function controller(
+        $rootScope,
+        $scope,
+        $state,
+        $q,
+        schools,
+        searchService,
+        $stateParams
+    ) {
 
+        const ITEMSPERPAGE = 30;
         $scope.schools = [];
         $scope.filter = searchService.schools.filter;
+        $scope.itemPerPage = ITEMSPERPAGE;
+        $scope.page = {};
+        $scope.page.currentPage = $stateParams.page || 1;
 
         $scope.add = function() {
             $state.go('school-info');
@@ -144,12 +162,13 @@ Schools.controller('SchoolsController', [
                 });
             }
             else {
-                $scope.query = schools.query(filter).then(function(schools) {
+                $scope.page.currentPage = 1;
 
-                    $scope.schools = schools;
+                $scope.query = schools.getSchoolsList(filter).then(response => {
+                    $scope.schools = response.data;
+                    $scope.totalCount = response.count;
 
-                }).finally(function() {
-
+                }).finally(() =>{
                     $scope.searching = false;
                 });
             }
@@ -159,6 +178,23 @@ Schools.controller('SchoolsController', [
             searchService.schools.clear();
             $scope.filter = {};
             $scope.schools = [];
+        };
+
+        $scope.pageChanged = function(){
+            delete $scope.filter.start;
+            document.getElementById('school-data').scrollTop = 0;
+
+            let filter = angular.copy($scope.filter);
+            filter.page = $scope.page.currentPage;
+
+            $scope.searching = true;
+            $scope.schools.length = 0;
+
+            $scope.query = schools.getSchoolsList(filter, false).then(response =>{
+                $scope.schools = response.data;
+            }).finally(()=>{
+                $scope.searching = false;
+            });
         };
 
         // Restore the state of the previous search from the service

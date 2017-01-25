@@ -74,7 +74,7 @@
                 </table>
             </div>
 
-            <div class="scroll-remaining-height">
+            <div class="scroll-remaining-height" id="school-data">
                 <table class="table table-striped table-hover">
                     <tbody>
                         <tr class="hidden-cell">
@@ -98,6 +98,10 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="text-center footer" ng-show="totalCount > itemPerPage">
+                <pagination total-items="totalCount" ng-model="page.currentPage" boundary-links="true" class="pagination pagination-sm" previous-text="&lsaquo;" items-per-page="itemPerPage" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="5" ng-change="pageChanged()"></pagination>
+            </div>
         </div>
 
     </div>
@@ -105,4 +109,3 @@
     <data-results data-ng-hide="schools.length" data-query="query"></data-results>
 
 </section>
-
