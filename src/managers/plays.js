@@ -166,7 +166,6 @@ IntelligenceWebClient.service('PlaysManager', [
             runningScore = 0;
             opposingIndexedScore = 0;
             opposingRunningScore = 0;
-
             this.plays.sort(utilities.compareStartTimes);
             this.plays.forEach(calculatePlay);
 
@@ -206,7 +205,8 @@ IntelligenceWebClient.service('PlaysManager', [
             let game = games.get(play.gameId);
             let team = teams.get(game.teamId);
             let sport = team.getSport();
-            let scoreBySets = SPORTS[sport.name.toUpperCase()].scoreBySets;
+
+            let scoreBySets = SPORTS[sport.name.toUpperCase().replace(" ", "_")].scoreBySets;
 
             /* Set the period of the play. */
             play.period = period;

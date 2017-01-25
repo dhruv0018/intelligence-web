@@ -53,7 +53,11 @@ var SPORTS = {
 
     ICE_HOCKEY: {
         id: 6,
-        name: 'Ice Hockey'
+        name: 'Ice Hockey',
+        hasAnalytics: false,
+        hasStatistics: false,
+        hasInsights: false,
+        scoreBySets: false
     },
 
     BASEBALL: {

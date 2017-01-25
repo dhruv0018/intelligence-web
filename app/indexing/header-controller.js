@@ -57,6 +57,13 @@ function IndexingHeaderController(
     alerts
 ) {
 
+    const supportedGameTypes = [
+        SPORTS.BASKETBALL.id,
+        SPORTS.LACROSSE.id,
+        SPORTS.FOOTBALL.id,
+        SPORTS.VOLLEYBALL.id
+    ];
+
     $scope.GAME_STATUSES = GAME_STATUSES;
 
     var gameId = $stateParams.id;
@@ -127,7 +134,7 @@ function IndexingHeaderController(
         let locals = {
             'flagsUrl': $scope.game.getFlagsUrl(),
             //show the flags only for supported sports
-            'showFlags': isBasketballGame || isLacrosseGame || isFootballGame || isVolleyballGame || isSoccerGame
+            'showFlags': supportedGameTypes.indexOf($scope.league.sportId) > -1
         };
 
         SendToQaModal.open(locals).result.then(function(result){

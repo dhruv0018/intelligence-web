@@ -405,7 +405,15 @@ IntelligenceWebClient.factory('GamesFactory', [
                 }
 
                 let headCoachRole = team.getHeadCoachRole();
-                let user = headCoachRole && headCoachRole.userId ? users.get(headCoachRole.userId) : null;
+
+                let user = null;
+                if(headCoachRole && headCoachRole.userId){
+                    try{
+                        user = users.get(headCoachRole.userId);
+                    }catch(err){
+                        user = users.load(headCoachRole.userId);
+                    }
+                }
                 if (!user){
                     console.error('User does not exist');
                     return userName;
