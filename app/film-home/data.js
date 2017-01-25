@@ -155,7 +155,8 @@ FilmHomeReels.$inject = [
     'ReelsFactory',
     'TeamsFactory',
     'PlayersFactory',
-    'SessionService'
+    'SessionService',
+    'ROLES'
 ];
 
 export function FilmHomeReels (
@@ -164,7 +165,8 @@ export function FilmHomeReels (
     reels,
     teams,
     players,
-    session
+    session,
+    ROLES
 ) {
 
     class FilmHomeReelsData {
@@ -177,8 +179,17 @@ export function FilmHomeReels (
             this.reels = reels.load({ relatedUserId: currentUser.id });
 
             // Active Team Roster used for the Reel Share modal
-            this.players = teams.load(currentUser.getCurrentRole().teamId)
-                .then(teams => players.load({rosterId: teams[0].roster.id, isActive: 1}));
+            if(currentUser.is(ROLES.ATHLETE)){
+                currentUser.roles.forEach(role=>{
+                    if(role.teamId){
+                        this['players_'+role.teamId] = teams.load(role.teamId)
+                            .then(teams => players.load({rosterId: teams[0].roster.id, isActive: 1}));
+                    }
+                });
+            }else{
+                this.players = teams.load(currentUser.getCurrentRole().teamId)
+                                    .then(teams => players.load({rosterId: teams[0].roster.id, isActive: 1}));
+            }
         }
     }
 
