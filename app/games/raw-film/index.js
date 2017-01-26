@@ -61,9 +61,6 @@ GamesRawFilm.controller('Games.Rawfilm.controller', [
 
         $scope.telestrations = $scope.game.rawTelestrations;
 
-
-        $scope.disableDownload = ($scope.game.isCopiedFromBreakdownLibrary() && !session.currentUser.is(ROLES.COACH));
-
         // video player
 
         $scope.cuePoints = [];

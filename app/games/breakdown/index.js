@@ -186,7 +186,6 @@ function GamesBreakdownController (
         let uploader = users.get($scope.game.uploaderUserId);
         let gameId = $stateParams.id;
         $scope.game = games.get(gameId);
-        $scope.disableDownload = ($scope.game.isCopiedFromBreakdownLibrary() && !session.currentUser.is(ROLES.COACH));
         $scope.showBreakdownRating = session.currentUser.is(ROLES.COACH) ||
             session.currentUser.is(ROLES.ADMIN) ||
             session.currentUser.is(ROLES.SUPER_ADMIN);
