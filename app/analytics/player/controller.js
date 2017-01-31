@@ -102,6 +102,11 @@ function PlayerAnalyticsController(
         // Get list of players for new team
         $scope.sport = newTeam.getSport();
         $scope.players = players.getList({rosterId: newTeam.roster.id});
+
+        let league = leagues.get(newTeam.leagueId);
+        $scope.filterQuery.seasonId = league.seasons[0].id;
+        $scope.seasons = league.seasons.sort((a, b) => moment(b.startDate).diff(a.startDate));
+
         generateStatsForAthlete();
     };
 
