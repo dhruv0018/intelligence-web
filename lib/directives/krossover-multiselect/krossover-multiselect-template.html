@@ -22,7 +22,7 @@
 
         <div class="dropdown-menu-options">
 
-            <li class="dropdown-menu-option" ng-repeat="item in items | filter:searchText" ng-click="select(item); focus()">
+            <li class="dropdown-menu-option" ng-repeat="item in items | filter:searchText | orderBy:'label'" ng-click="select(item); focus()">
                 <a href>
                     <i class="icon" ng-class="{'icon-ok': item.checked, 'empty': !item.checked}"></i>
                     <span class="item-label">{{ item.label }}</span>

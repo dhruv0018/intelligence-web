@@ -155,7 +155,7 @@ Games.config([
                                 isTeamUploadersTeam = athleteRoles.some(role => game.isTeamUploadersTeam(role.teamId));
                             }
 
-                            if (auth.isLoggedIn && isTeamUploadersTeam) {
+                            if (auth.isLoggedIn && isTeamUploadersTeam && window.location.pathname.indexOf('arena-chart')== -1) {
                                 Data.customtags = customtags.load({ teamId: game.uploaderTeamId });
                             }
 
