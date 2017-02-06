@@ -1,3 +1,8 @@
+# v112.0#
+## Features##
+- Updates for Soccer QA flags
+- Removes material design
+
 # v111.0#
 ## Features##
 - Ability to purchase extra breakdown packages from the app
