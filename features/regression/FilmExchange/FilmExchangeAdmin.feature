@@ -1,3 +1,4 @@
+@ignore
 Feature: FilmExchangeAdmin
 
     As a Film Exchange Admin

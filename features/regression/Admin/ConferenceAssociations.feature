@@ -1,9 +1,10 @@
+@ignore
 Feature: ConferenceAssociations
 
     As a Super Admin
     I should be able to create an association, competition level, conference, sport and film exchange
     and add a conference to a team
-    and verify that the team can access the film exchange 
+    and verify that the team can access the film exchange
 
     Rules:
     -Association name + code must be unique
@@ -34,7 +35,7 @@ Feature: ConferenceAssociations
         Then The competition level should be created
 
     Scenario: Create a conference
-    
+
         When I click Conferences tab
         When I enter conference code "IGT"
         When I enter conference name "IGT Conference"
