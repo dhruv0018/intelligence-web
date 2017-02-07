@@ -310,7 +310,7 @@ function FilmHomeGamesController(
 
     function queryGames(filter = {}) {
         filter.count = ITEMSPERPAGE;
-        filter.exclude = 'allTelestrations';
+        filter.exclude = 'allTelestrations,allIndexerAssignments';
         filter.isDeleted = false;
         filter.sortBy = 'datePlayed';
         filter.sortOrder = 'desc';

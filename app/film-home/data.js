@@ -62,7 +62,7 @@ export function FilmHomeGames (
                             athleteRelatedUserId: currentUser.id,
                             start,
                             count,
-                            exclude: 'allTelestrations',
+                            exclude: 'allTelestrations,allIndexerAssignments',
                             isDeleted: false,
                             sortBy: 'datePlayed',
                             sortOrder: 'desc'
@@ -81,7 +81,7 @@ export function FilmHomeGames (
                             relatedRoleId: currentRole.id,
                             start,
                             count,
-                            exclude: 'allTelestrations',
+                            exclude: 'allTelestrations,allIndexerAssignments',
                             isDeleted: false,
                             sortBy: 'datePlayed',
                             sortOrder: 'desc'
