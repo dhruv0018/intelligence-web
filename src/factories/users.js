@@ -198,7 +198,7 @@ IntelligenceWebClient.factory('UsersFactory', [
              */
 
             addRole: function(ROLE, team) {
-                /*jshint -W087 */ /*eslint no-debugger: 0 */ debugger;
+                /*jshint -W087 */ /*eslint no-debugger: 0 */ //debugger;
                 const ACTIVE_OR_INACTIVE = null;
                 let existingRoles;
                 let existingRole;
