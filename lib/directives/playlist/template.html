@@ -30,7 +30,7 @@
                 expand-all="expandAll"
                 edit-flag="editFlag"
                 is-reels-play="isReelsPlay"
-                draggable-ordered-list="{{editFlag}}"
+                draggable-ordered-list="{{editFlag || ''}}"
                 ng-class="{'edit-mode': editFlag}"
                 ng-repeat="play in plays">
             </krossover-play>

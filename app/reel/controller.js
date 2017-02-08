@@ -218,9 +218,10 @@ function ReelController(
     };
 
     /* TODO: What is this doing? */
-    $scope.$on('delete-reel-play', function postReelPlayDeleteSetup($event, index) {
+    $scope.$on('delete-reel-play', function postReelPlayDeleteSetup($event, playToDelete) {
         if ($scope.editFlag && $scope.plays && angular.isArray($scope.plays)) {
-            $scope.plays.splice(index, 1);
+            // $scope.plays.splice(index, 1);
+            $scope.plays = $scope.plays.filter(play => play.id !== playToDelete.id);
         }
     });
 
