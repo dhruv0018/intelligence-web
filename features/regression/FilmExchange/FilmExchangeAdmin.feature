@@ -18,18 +18,19 @@ Feature: FilmExchangeAdmin
         When I upload a game
         When I add canonical team "Girls Lax Andrew"
         When I go to film home
-        When I share the first game with "Big1G" film exchange
+        When I share the first game with "Test" film exchange
 
     Scenario: Search for a game by away team and date played within the film exchange
 
         When I switch to role "Film Exchange Admin"
         Then I should see the "film-exchange" page
-        When I go to the "Big1G" film exchange
+        When I go to the "Test" film exchange
         When I search for games with team name "Girls Lax Andrew"
         Then I should see all games that involved team "Girls Lax Andrew"
         When I click to reset search results
         When I search for games that were played today
         Then I should see the game that I uploaded today
+        Then I should only see games that were played today
 
     Scenario: Click on a game in a film exchange view the raw film
 
@@ -46,14 +47,14 @@ Feature: FilmExchangeAdmin
         When I suspend the team "Northwestern W Test"
         When I close the modal
         When I switch to role "Northwestern W Test"
-        Then the team's coach should not be able to access the "Big1G" film exchange
+        Then the team's coach should not be able to access the "Test" film exchange
 
     Scenario: Enable team from film exchange and verify team's coach can access it
 
         When I switch to role "Film Exchange Admin"
-        When I go to the "Big1G" film exchange
+        When I go to the "Test" film exchange
         When I click to manage team access
         When I enable the team "Northwestern W Test"
         When I close the modal
         When I switch to role "Northwestern W Test"
-        Then the team's coach should be able to access the "Big1G" film exchange
+        Then the team's coach should be able to access the "Test" film exchange

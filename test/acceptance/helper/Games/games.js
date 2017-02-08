@@ -13,8 +13,21 @@ module.exports = function Games(){
     var submitBtn = element.all(by.css(".btn-submit-continue")).first();
     var filmSettingsBtn = element(by.id("coach-game-instructions-cta"));
     var btnCancel = element(by.id('cancel-uploading-cta'));
-    var canonicalTeamField = element(by.model("team"));
+    this.canonicalTeamField = element(by.model("team"));
     var canonicalTeam = element(by.xpath('//span[@ng-if="match.model.name"]'));
+    this.addNewTeam = element(by.css('div.sticky-bottom'));
+    this.homeGame =$('#select-home-cta');
+    this.gameInfoTab =$('#game-info-cta');
+    this.deleteGameLink =$('#delete-game-cta');
+    this.btnConfirm = element(by.partialButtonText('Yes, I understand'));
+    //this.checkBox = element(by.xpath('//check-box[@feature="SelectPlays"]')).$('i.check-box.icon.icon-check-empty');
+    this.checkBox = element.all(by.css('i.check-box.icon.icon-check-empty')).get(1);
+    this.btnAddToReel = element(by.buttonText('Add to Reel'));
+    this.createNewReel = element(by.xpath('//a[@ng-click="startCreatingNewReel()"]'));
+    this.newReelName = element(by.model('newReelName'));
+    this.createReelAddClip = element(by.xpath('//a[@ng-click="createReel(newReelName)"]'));
+    this.deleteReelLink =$('#reels-delete-cta');
+    this.btnDeleteReelConfirm = element.all(by.xpath('//button[@ng-click="ok(true)"]')).first();
 
     this.filmSettingsBtn = filmSettingsBtn;
 

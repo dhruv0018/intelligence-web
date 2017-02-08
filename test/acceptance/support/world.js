@@ -54,7 +54,7 @@ module.exports = function() {
             var EC = protractor.ExpectedConditions;
             var isVisible = EC.visibilityOf(element);
             timeToWaitInMilliseconds = timeToWaitInMilliseconds || 30000;
-            browser.wait(isVisible, timeToWaitInMilliseconds);
+            return browser.wait(isVisible, timeToWaitInMilliseconds);
         };
 
         this.waitForInvisible = function(element, timeToWaitInMilliseconds){

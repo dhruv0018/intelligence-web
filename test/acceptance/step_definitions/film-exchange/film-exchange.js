@@ -132,20 +132,20 @@ module.exports = function() {
             function(){
                 browser.sleep(5000).then(
                     function(){
-                        filmExchanges.accessSwitch.getAttribute('aria-checked').then(function(selectedArr){
+                        filmExchanges.accessSwitch.getAttribute('checked').then(function(selectedArr){
                             for (var i=0; i<selectedArr.length; i++){
                                 (function(i){
-                                    if (selectedArr[i] == 'false'){
+                                    if (selectedArr[i] == null){
                                         filmExchanges.accessSwitch.get(i).click().then(
                                             function(){
                                                 if (i == selectedArr.length-1){
-                                                    done();
+                                                    setTimeout(function(){ done(); }, 500*selectedArr.length);
                                                 }
                                             }
                                         );
                                     }
                                     else{
-                                        done();
+                                        setTimeout(function(){ done(); }, 500*selectedArr.length);
                                     }
                                 })(i);
                             }
@@ -163,20 +163,20 @@ module.exports = function() {
             function(){
                 browser.sleep(5000).then(
                     function(){
-                        filmExchanges.accessSwitch.getAttribute('aria-checked').then(function(selectedArr){
+                        filmExchanges.accessSwitch.getAttribute('checked').then(function(selectedArr){
                             for (var i=0; i<selectedArr.length; i++){
                                 (function(i){
                                     if (selectedArr[i] == 'true'){
                                         filmExchanges.accessSwitch.get(i).click().then(
                                             function(){
                                                 if (i == selectedArr.length-1){
-                                                    done();
+                                                    setTimeout(function(){ done(); }, 500*selectedArr.length);
                                                 }
                                             }
                                         );
                                     }
                                     else{
-                                        done();
+                                        setTimeout(function(){ done(); }, 500*selectedArr.length);
                                     }
                                 })(i);
                             }
@@ -245,5 +245,21 @@ module.exports = function() {
                 expect(filmExchanges.teamAccessModal.isPresent()).to.eventually.be.true.and.notify(done);
             }
         )
+    });
+
+    this.Then(/^I should only see games that were played today$/, function(done) {
+        var self = this;
+        var games = element.all(by.css('div.body-cell.datePlayed > span'));
+
+        games.getText().then(function(selectedArr){
+            for (var i=0; i<selectedArr.length; i++){
+                (function(i){
+                    expect(selectedArr[i]).to.equal(filmExchanges.resultsDate);
+                    if (i == selectedArr.length-1){
+                        done();
+                    }
+                })(i);
+            }
+        })
     });
 }

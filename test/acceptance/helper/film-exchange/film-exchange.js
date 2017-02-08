@@ -23,7 +23,8 @@ module.exports = function FilmExchange(){
     this.btnPlay = element(by.xpath('//button[@ng-click="onClickPlayPause()"]'));
     this.btnPause = element(by.css('i.icon.icon-pause'));
     this.btnTeamAccess = element(by.xpath('//button[@ng-click="openFilmExchangeModal()"]'));
-    this.accessSwitch = element.all(by.model('team.isSuspended'));
+    // this.accessSwitch = element.all(by.model('team.isSuspended'));
+    this.accessSwitch = element.all(by.css('.fancy-toggle input[type="checkbox"]'));
     this.modalSearchBox = $('#film-exchange-teams-search');
     this.filmExchangeMenu =$('#menu-coach-film-exchange-cta');
     this.btnClose = element(by.css('i.icon.icon-remove'));

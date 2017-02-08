@@ -67,27 +67,24 @@ module.exports = function Coach(){
 
     this.When(/^I enter association code "([^"]*)"$/, function (code, done){
         var self = this;
-
-        self.waitForClickable(conferences.conferenceCode).sendKeys(code + moment().format()).then(done);
-    });     
+        self.waitForClickable(conferences.conferenceCode).sendKeys(code + conferences.uniqueID).then(done);
+    });
 
     this.When(/^I enter association name "([^"]*)"$/, function (name, done){
         var self = this;
-
-        self.waitForClickable(conferences.conferenceName).sendKeys(name + moment().format()).then(done);
-    });  
+        self.waitForClickable(conferences.conferenceName).sendKeys(name + conferences.uniqueID).then(done);
+    });
 
     this.When(/^I enter association acronym "([^"]*)"$/, function (acronym, done){
         var self = this;
-
-        self.waitForClickable(conferences.conferenceAcronym).sendKeys(acronym + moment().format()).then(done);
-    });  
+        self.waitForClickable(conferences.conferenceAcronym).sendKeys(acronym + conferences.uniqueID).then(done);
+    });
 
     this.When(/^I save the association$/, function (done){
         var self = this;
 
         self.waitForClickable(conferences.btnSaveAssociation).then(done);
-    }); 
+    });
 
     this.When(/^I click Competition Levels tab$/, function (done){
         var self = this;
@@ -97,15 +94,13 @@ module.exports = function Coach(){
 
     this.When(/^I enter competition code "([^"]*)"$/, function (code, done){
         var self = this;
-
-        self.waitForClickable(conferences.newCompetitionCode).sendKeys(code + moment().format()).then(done);
-    });  
+        self.waitForClickable(conferences.newCompetitionCode).sendKeys(code + conferences.uniqueID).then(done);
+    });
 
     this.When(/^I enter competition name "([^"]*)"$/, function (name, done){
         var self = this;
-
-        self.waitForClickable(conferences.newCompetitionName).sendKeys(name + moment().format()).then(done);
-    });  
+        self.waitForClickable(conferences.newCompetitionName).sendKeys(name + conferences.uniqueID).then(done);
+    });
 
     this.When(/^I click Add Competition Level$/, function (done){
         var self = this;
@@ -115,7 +110,7 @@ module.exports = function Coach(){
 
     this.Then(/^The competition level should be created$/, function (done) {
         var self = this;
-        
+
         browser.sleep(1000).then(
             function(){
                 expect(conferences.competitionLevelSuccess.isDisplayed()).to.eventually.be.true.and.notify(done);
@@ -125,31 +120,27 @@ module.exports = function Coach(){
 
     this.When(/^I click Conferences tab$/, function (done){
         var self = this;
-
         self.waitForClickable(conferences.conferencesTab).then(done);
-    });     
+    });
 
     this.When(/^I enter conference code "([^"]*)"$/, function (code, done){
         var self = this;
-
-        self.waitForClickable(conferences.newConferenceCode).sendKeys(code + moment().format()).then(done);
-    });  
+        self.waitForClickable(conferences.newConferenceCode).sendKeys(code + conferences.uniqueID).then(done);
+    });
 
     this.When(/^I enter conference name "([^"]*)"$/, function (name, done){
         var self = this;
-
-        self.waitForClickable(conferences.newConferenceName).sendKeys(name + moment().format()).then(done);
-    });  
+        self.waitForClickable(conferences.newConferenceName).sendKeys(name + conferences.uniqueID).then(done);
+    });
 
     this.When(/^I click Add Conference$/, function (done){
         var self = this;
-
         self.waitForClickable(conferences.btnNewConference).then(done);
     });
 
     this.Then(/^The conference should be created$/, function (done) {
         var self = this;
-        
+
         browser.sleep(1000).then(
             function(){
                 expect(conferences.conferenceSuccess.isDisplayed()).to.eventually.be.true.and.notify(done);
@@ -170,13 +161,13 @@ module.exports = function Coach(){
 
     this.Then(/^I should be able to go to the second page of results$/, function (done) {
     	var self = this;
-        
+
         expect(conferences.isPagerPresent.isDisplayed()).to.eventually.be.true.and.notify(done);
     });
 
     this.Then(/^The association should be created$/, function (done) {
         var self = this;
-        
+
         browser.sleep(1000).then(
             function(){
                 expect(conferences.associationSuccess.isDisplayed()).to.eventually.be.true.and.notify(done);
@@ -202,7 +193,7 @@ module.exports = function Coach(){
 
     this.Then(/^The sport should be added$/, function (done){
         var self = this;
-        
+
         browser.sleep(1000).then(
             function(){
                 expect(conferences.sportAddedSuccess.isDisplayed()).to.eventually.be.true.and.notify(done);
@@ -218,20 +209,20 @@ module.exports = function Coach(){
 
     this.When(/^I select a conference gender sport$/, function (done){
         var self = this;
-        
+
         self.waitForClickable(conferences.filmExchangeDropdown).then(
             function(){
                 self.waitForClickable(conferences.conferenceGenderSport).then(done);
             }
         )
-    });  
+    });
 
     this.When(/^I make it visible to teams$/, function (done){
         var self = this;
 
         self.waitForClickable(conferences.checkboxVisibleToTeams).then(done);
     });
-    
+
     this.When(/^I click Add Film Exchange$/, function (done){
         var self = this;
 
@@ -240,7 +231,7 @@ module.exports = function Coach(){
 
     this.Then(/^The film exchange should be added$/, function (done){
         var self = this;
-        
+
         browser.sleep(1000).then(
             function(){
                 expect(conferences.filmExchangeSuccess.isDisplayed()).to.eventually.be.true.and.notify(done);
@@ -256,51 +247,50 @@ module.exports = function Coach(){
                 teams.btnSearch.click().then(done);
             }
         );
-    });  
+    });
 
     this.When(/^I click on the team "([^"]*)"$/, function (team, done){
         var self = this;
         var teamSearchResult = element(by.linkText(team));
 
         self.waitForClickable(teamSearchResult).then(done);
-    });  
+    });
 
     this.When(/^I go to the Conferences tab$/, function (done){
         var self = this;
 
         self.waitForClickable(teams.conferencesTab).then(done);
-    });      
+    });
 
     this.When(/^I search for the conference "([^"]*)"$/, function (conference, done){
         var self = this;
 
         self.waitForClickable(teams.teamConferenceDropDown).then(
             function(){
-                self.waitForClickable(teams.teamConferenceSearchBox).sendKeys(conference).then(
+                self.waitForClickable(teams.teamConferenceSearchBox).sendKeys(conference+conferences.uniqueID).then(
                     function(){
                         self.waitForClickable(teams.teamConferenceSearchResult).then(done);
                     }
                 );
             }
         );
-    });  
+    });
 
     this.When(/^I add the conference$/, function (done){
         var self = this;
 
         self.waitForClickable(teams.btnAddConference).then(done);
-    });      
+    });
 
     this.When(/^I save the conference$/, function (done){
         var self = this;
 
         self.waitForClickable(teams.btnSaveTeamConference).then(done);
-    });      
+    });
 
     this.Then(/^I should have access to the "([^"]*)" film exchange$/, function (filmExchange, done){
         var self = this;
-        var filmExchangeOption = element.all(by.xpath('//a[contains(text(),"' + filmExchange + '")]')).last();
-
+        var filmExchangeOption = element.all(by.xpath('//a[contains(text(),"' + filmExchange + conferences.uniqueID + '")]')).last();
         self.waitForClickable(filmExchanges.filmExchangeMenu).then(
             function(){
                 expect(filmExchangeOption.isDisplayed()).to.eventually.be.true.and.notify(done);
@@ -310,10 +300,11 @@ module.exports = function Coach(){
 
     this.When(/^I click on association with name "([^"]*)"$/, function (association, done){
         var self = this;
+        association = association+conferences.uniqueID;
         var associationLink = element(by.partialLinkText(association));
 
         self.waitForClickable(associationLink).then(done);
-    }); 
+    });
 
     this.When(/^I edit the film exchange$/, function (done){
         var self = this;
@@ -324,10 +315,11 @@ module.exports = function Coach(){
 
     this.When(/^I make the film exchange invisible to teams$/, function (done){
         var self = this;
-        var editCheckbox = element.all(by.xpath('//i[@ng-show="checked"]')).last();
+        var editCheckbox = element.all(by.xpath("//i[(contains(@class, 'icon-check-square'))]")).last();
 
-        editCheckbox.getAttribute('aria-hidden').then(function(notVisible){
-            if (notVisible == 'false'){
+        editCheckbox.getAttribute('class').then(function(classNames){
+
+            if (classNames.indexOf('ng-hide') == -1){
                 conferences.editCheckboxVisibleToTeams.click().then(done);
             }
             else{
@@ -338,6 +330,7 @@ module.exports = function Coach(){
 
     this.Then(/^I should NOT have access to the "([^"]*)" film exchange$/, function (filmExchange, done){
         var self = this;
+        filmExchange = filmExchange + conferences.uniqueID;
         var filmExchangeOption = element(by.xpath('//a[contains(text(),"' + filmExchange + '")]'));
 
         self.waitForClickable(filmExchanges.filmExchangeMenu).then(
@@ -352,7 +345,7 @@ module.exports = function Coach(){
 
         self.waitForClickable(teams.removeConferenceTeam).then(done);
     });
-    
+
     this.When(/^I delete the "([^"]*)"$/, function (item, done){
         var self = this;
 
@@ -376,12 +369,12 @@ module.exports = function Coach(){
             function(){
                 self.waitForClickable(conferences.confirmDeletion).then(done);
             }
-        );  
+        );
     });
 
     this.Then(/^The association should be deleted$/, function (done) {
         var self = this;
-        
+
         browser.sleep(1000).then(
             function(){
                 expect(conferences.associationDeletedSuccess.isDisplayed()).to.eventually.be.true.and.notify(done);

@@ -23,13 +23,21 @@ module.exports = function FilmHome(){
     this.player = player;
     this.reelSearchBox = reelSearchBox;
     this.gameSearchBox = gameSearchBox;
+    this.filmHomeFilter =$('#single-button');
+    this.filterBreakdowns = element(by.xpath('//span[contains(text(), "Breakdowns")]'));
+    this.btnApply = element(by.buttonText('Apply'));
+    this.game = element.all(by.css('img.thumbnail-img')).first();
+    //this.firstAwayTeam =$('div.body-row').$('div.body-cell.team');
+    this.firstAwayTeam =$$('div.body-cell.team').first();
+    this.gameDeletedSuccess = element(by.xpath('//span[contains(text(), "Your game has been successfully deleted")]'));
+    this.firstReelName =$$('div.body-cell.name').first();
+    this.activeReelsTab = element(by.css('div.allocation-nav-btn.state-tab.active-state'));
 
     this.clickTab = function(tabName){
-        console.log(tabName);
         if(tabName === 'Reels'){
-            return reelsBtn.click();
+            return reelsBtn;
         }else{
-            return gamesBtn.click();
+            return gamesBtn;
         }
     }
 

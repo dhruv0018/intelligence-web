@@ -4,6 +4,7 @@ chai.use(chaiAsPromised);
 var expect = chai.expect;
 var Header = require("../../helper/header");
 var Account = require("../../helper/account");
+var view = require("../../helper/view");
 
 module.exports = function() {
 
@@ -72,7 +73,7 @@ module.exports = function() {
         var dropdownMenu =$('#menu-dropdown-toggle');
         var selectRole = element.all(by.xpath('//div[contains(@class, "role-name") and normalize-space(.)="' + text + '"]')).first();
 
-        self.waitForClickable(dropdownMenu, 9000).then(
+        self.waitForClickable(dropdownMenu).then(
             function(){
                 selectRole.isDisplayed().then(function(isVisible){
                     if(isVisible){
@@ -164,4 +165,31 @@ module.exports = function() {
 
         self.waitForClickable(saveButton).then(done);
     });
+
+    this.When(/^I wait for "([^"]*)" seconds$/, function(seconds, done){
+        browser.sleep(seconds * 1000).then(done);
+    });
+
+    this.When(/^I refresh the page$/, function(done) {
+        var self = this;
+        var player = $('.video-player');
+
+        browser.driver.navigate().refresh().then(
+            function(){
+                browser.getAllWindowHandles().then(function (handles) {
+                    browser.ignoreSynchronization = true;
+                    browser.driver.switchTo().window(handles[0]);
+                    done();
+                })
+            }
+        );
+    });
+
+    this.When(/^I click button "([^"]*)"$/, function(buttonText, done){
+        var self = this;
+        var button = element(by.buttonText('buttonText'));
+
+        self.waitForClickable(button).then(done);
+    });
+    
 };

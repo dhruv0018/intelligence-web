@@ -1,4 +1,3 @@
-@ignore
 Feature: ConferenceAssociations
 
     As a Super Admin
@@ -13,18 +12,18 @@ Feature: ConferenceAssociations
 
     Scenario: Create an association
 
-    	Given I login as "SUPER_ADMIN"
-    	When I go to the "associations" page
-    	When I click add a new association
-    	When I enter association code "IGT"
-    	When I enter association name "IntegrationTest"
-    	When I enter association acronym "IGT"
-    	When I pick option "United States" from dropdown "association.country"
-    	When I pick option "Other" from dropdown "association.type"
-    	When I pick option "Primary" from dropdown "association.ageLevel"
-    	When I pick option "Both" from dropdown "association.amateurPro"
-    	When I save the association
-    	Then The association should be created
+        Given I login as "SUPER_ADMIN"
+        When I go to the "associations" page
+        When I click add a new association
+        When I enter association code "IGT"
+        When I enter association name "IntegrationTest"
+        When I enter association acronym "IGT"
+        When I pick option "United States" from dropdown "association.country"
+        When I pick option "Other" from dropdown "association.type"
+        When I pick option "Primary" from dropdown "association.ageLevel"
+        When I pick option "Both" from dropdown "association.amateurPro"
+        When I save the association
+        Then The association should be created
 
     Scenario: Create a competition level
 
