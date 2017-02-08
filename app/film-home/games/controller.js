@@ -150,7 +150,7 @@ function FilmHomeGamesController(
         } else {
             if ($scope.filters['my']) {
                 if (currentUser.is(ROLES.ATHLETE)) {
-                    filter.uploaderTeamId = teamIds;
+                    filter['uploaderTeamId[]'] = teamIds;
                 } else {
                     filter.uploaderTeamId = team.id;
                 }
@@ -179,7 +179,7 @@ function FilmHomeGamesController(
             }
             if ($scope.filters['selfEditor']) {
                 if (currentUser.is(ROLES.ATHLETE)) {
-                    filter.uploaderTeamId = teamIds;
+                    filter['uploaderTeamId[]'] = teamIds;
                     filter.selfEdited = true;
                 } else {
                     filter.uploaderTeamId = team.id;
