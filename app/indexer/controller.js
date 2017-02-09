@@ -6,6 +6,7 @@ IndexerGamesController.$inject = [
     'PRIORITIES',
     '$scope',
     '$interval',
+    '$filter',
     'config',
     'TeamsFactory',
     'LeaguesFactory',
@@ -23,6 +24,7 @@ function IndexerGamesController(
     PRIORITIES,
     $scope,
     $interval,
+    $filter,
     config,
     teams,
     leagues,
@@ -70,13 +72,17 @@ function IndexerGamesController(
             break;
     }
 
-    $scope.games = games.getList({ assignedUserId: $scope.userId });
+    $scope.games = games.getList();
     $scope.currentUser = session.getCurrentUser();
 
     /*Checks if the indexer has qa privileges*/
     const currentRole = session.getCurrentRole();
     $scope.indexerQuality = currentRole.indexerQuality;
 
+    $scope.games = $filter('gameIsDeleted')($scope.games, false);
+    $scope.games = $filter('gameIsIndexingOrQaing')($scope.games);
+    $scope.games = $filter('gameHasCurrentUserAssignment')($scope.games);
+    $scope.games = $filter('gameCurrentUserAssignmentIsActive')($scope.games, true);
     $scope.games.forEach(game => game.assignmentTimeRemaining = game.assignmentTimeRemaining());
 
     $scope.getSportName = function(teamId) {

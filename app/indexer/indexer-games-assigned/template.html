@@ -32,7 +32,7 @@
                 </div>
             </a>
         </div>
-        <div ng-show="filteredGames.length > 0">
+        <div ng-show="games.length > 0">
             <h3>Your Game Queue</h3>
             <table class="queue-list">
                 <thead>
@@ -47,13 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="game in games
-                        | gameIsDeleted: false
-                        | gameIsIndexingOrQaing
-                        | gameHasCurrentUserAssignment
-                        | gameCurrentUserAssignmentIsActive: true
-                        | orderBy: ['-priority', 'assignmentTimeRemaining']
-                        as filteredGames"
+                    <tr ng-repeat="game in games | orderBy: ['-priority', 'assignmentTimeRemaining']"
                         ng-class="{
                             'queue-list__highest-priority': game.priority === PRIORITIES.HIGHEST.id,
                             'queue-list__high-priority': game.priority === PRIORITIES.HIGH.id,
@@ -98,7 +92,7 @@
                 </tbody>
             </table>
         </div>
-        <div ng-hide="filteredGames.length > 0">
+        <div ng-hide="games.length > 0">
             <h3>You aren't currently working on any games.</h3>
         </div>
     </div>

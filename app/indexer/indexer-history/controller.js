@@ -22,7 +22,7 @@ function IndexerGamesHistoryController(
 
     let userId = session.getCurrentUserId();
 
-    games.getList({ assignedUserId: userId })
+    games.getList()
         .filter(game => game.isDeleted === false)
         .filter(game => game.status !== GAME_STATUSES.SET_ASIDE.id)
         .forEach(game => {
