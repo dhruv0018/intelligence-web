@@ -134,8 +134,23 @@ export function FilmHomeGames (
         // Active Team Roster used for the Share modal
         get activePlayers() {
             let currentUser = session.getCurrentUser();
-            return teamsFactory.load(currentUser.getCurrentRole().teamId)
-            .then(teams => playersFactory.load({rosterId: teams[0].roster.id, isActive: 1}));
+            let playersData = [];
+            if(currentUser.is(ROLES.ATHLETE)){
+                currentUser.roles.forEach(role=>{
+                    if(role.teamId){
+                        playersData.push(
+                            teamsFactory.load(role.teamId)
+                            .then(teams => playersFactory.load({rosterId: teams[0].roster.id, isActive: 1}))
+                        );
+                    }
+                });
+            }else{
+                playersData.push(
+                    teamsFactory.load(currentUser.getCurrentRole().teamId)
+                        .then(teams => playersFactory.load({rosterId: teams[0].roster.id, isActive: 1}))
+                );
+            }
+            return playersData;
         },
 
         get filmExchanges(){
