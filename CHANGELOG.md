@@ -1,3 +1,14 @@
+# v113.0#
+## Features##
+- Printing game stats
+- Pagination for users and schools admin pages
+
+## Fixes##
+- Fix for sharing as athlete on multiple teams
+- Allow loading of indexing page for hockey
+- Fix film home filters for athletes
+- Fix long loading time for indexer login
+
 # v112.0#
 ## Features##
 - Updates for Soccer QA flags
