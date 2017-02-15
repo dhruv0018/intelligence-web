@@ -16,8 +16,11 @@
 
         .header-desktop-menu {
 
-            li:hover {
-                background-color: darken(@brand-secondary, 10%);
+            li {
+                &:hover,
+                &.active {
+                    background-color: darken(@brand-secondary, 10%);
+                }
             }
 
             li, .logo-container {
@@ -83,8 +86,11 @@
 
         .header-desktop-menu {
 
-            li:hover {
-                background-color: darken(@brand-primary, 10%);
+            li {
+                &:hover,
+                &.active {
+                    background-color: darken(@brand-primary, 10%);
+                }
             }
 
             li, .logo-container {
@@ -149,8 +155,11 @@
 
         .header-desktop-menu {
 
-            li:hover {
-                background-color: darken(@brand-blue, 10%);
+            li {
+                &:hover,
+                &.active {
+                    background-color: darken(@brand-blue, 10%);
+                }
             }
 
             li, .logo-container {
@@ -255,7 +264,8 @@
                         overflow: hidden;
                         border-right: none;
 
-                        &:hover {
+                        &:hover,
+                        &.active {
                             background-color: @navbar-default-link-hover-bg;
                         }
 

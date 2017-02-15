@@ -145,23 +145,30 @@
         <div class="icon icon-krossover-symbol" ng-show="!currentUser.roles.length"></div>
 
         <!-- Admin Menu -->
-        <li ui-sref-active="active" ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
+        <li
+            ng-class="{active: $state.includes('users') || $state.current.parent === 'user'}"
+            ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
             <a id="menu-admin-users-cta" ui-sref="users">Users</a>
         </li>
-        <li ui-sref-active="active" ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
+
+        <li
+            ng-class="{active: $state.includes('teams') || $state.current.parent === 'team'}"
+            ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
             <a id="menu-admin-teams-cta" ui-sref="teams">Teams</a>
         </li>
-        <li ui-sref-active="active" ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
+        <li
+            ng-class="{active: $state.includes('schools') || $state.current.parent === 'school'}"
+            ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)">
             <a id="menu-admin-schools-cta" ui-sref="schools">Schools</a>
         </li>
         <li
-            ui-sref-active="active"
+            ng-class="{active: $state.includes('queue') || $state.includes('game')}"
             ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)"
             ng-hide="hasAllocationSettingsPermissions || hasDailyLogsPermissions">
             <a id="menu-admin-queue-cta" ui-sref="queue">Queue</a>
         </li>
         <li
-            ui-sref-active="active"
+            ng-class="{active: $state.includes('queue') || $state.includes('game')}"
             ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)"
             ng-show="hasAllocationSettingsPermissions || hasDailyLogsPermissions"
             class="header-dropdown">
@@ -176,10 +183,15 @@
                 </li>
             </ul>
         </li>
+        <!--  TODO: wire up way to have ui-sref-active support multiple non-hierarchical states-->
         <li
-            ui-sref-active="active"
             ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)"
             ng-show="currentUser.is(SUPER_ADMIN)"
+            ng-class="{active: $state.includes('platform')
+                || $state.includes('leagues')
+                || $state.current.parent === 'league'
+                || $state.includes('associations')
+                || $state.current.parent === 'association'}"
             class="header-dropdown">
             <a class="dropdown-toggle" uib-dropdown-toggle>Platform <i class="icon icon-caret-down"></i></a>
             <ul class="dropdown-menu">
@@ -189,7 +201,7 @@
             </ul>
         </li>
         <li
-            ui-sref-active="active"
+            ng-class="{active: $state.includes('conference') || $state.includes('conferences-list')}"
             ng-if="currentUser.is(SUPER_ADMIN) || currentUser.is(ADMIN)"
             feature="AdminConferenceSearch">
             <a id="menu-admin-conferences-cta" ui-sref="conferences-list">Conferences</a>
