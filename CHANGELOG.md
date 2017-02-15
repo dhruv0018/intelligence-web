@@ -1,3 +1,7 @@
+# v113.1#
+## Fixes ##
+- Fix for breakdown purchase modal not working
+
 # v113.0#
 ## Features##
 - Printing game stats
@@ -30,7 +34,7 @@
 
 # v110.0#
 ## Features##
-- CHP: see pricing info 
+- CHP: see pricing info
 - New film home for all teams/sports
 - Support links for IWLCA film exchange
 - Show confirmation when selecting players that did not play
