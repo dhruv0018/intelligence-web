@@ -1,0 +1,55 @@
+.admin-game-info-content {
+
+    .tab-content {
+        padding: 20px 50px;
+    }
+
+    .nav-tabs{
+
+        padding: 10px 0 0 0;
+        background-color: white;
+
+        li {
+            float:none;
+            display:inline-block;
+            margin: 0 10px;
+            font-weight: 500;
+
+            &.active,
+            &:active,
+            &:focus {
+                a,
+                a:hover,
+                a:focus {
+                    border: none;
+                    background-color: white;
+                }
+            }
+
+            &.active {
+                border-bottom: 3px solid #ef4924;
+                a,
+                a:hover,
+                a:focus {
+                    color: #ef4924;
+                }
+            }
+
+            a {
+                color: @gray-darker;
+                cursor: pointer;
+                letter-spacing: 0.01em;
+                margin-right: 0;
+                border: none;
+                padding: 10px 0px;
+
+                &:hover {
+                    color: #ef4924;
+                    border: none;
+                    background-color: white;
+                }
+            }
+        }
+    }
+
+}

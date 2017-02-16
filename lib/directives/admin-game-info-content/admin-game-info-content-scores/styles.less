@@ -1,0 +1,129 @@
+.admin-game-info-scores {
+    h2 {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .scores, .notes {
+        background-color: white;
+    }
+
+    .notes {
+        padding: 10px 5px 5px 5px;
+        margin-top: 10px;
+        border: 1px solid #dddddd;
+
+        h2 {
+            height: 1px;
+            border-top: 1px solid #ebebeb;
+            position: relative;
+            margin-bottom: 25px;
+
+            span {
+                position: relative;
+                top: -.6em;
+                background-color: #fff;
+                padding: 0 10px;
+            }
+        }
+
+        .notes-content {
+            margin-left: 20px;
+
+            p {
+                line-height: 1.2;
+            }
+        }
+    }
+
+    thead {
+        background-color: @brand-blue;
+        border: 1px solid rgb(0, 40, 57);
+
+        th {
+            color: white;
+            margin: 0;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: 200;
+            border-right: 1px solid rgb(0, 40, 57);
+
+            &:last-child {
+                border-right: none;
+            }
+        }
+    }
+
+    table {
+        margin-bottom : 0;
+    }
+
+    tbody {
+        td {
+            padding : 10px;
+        }
+
+        .name {
+            .text-overflow;
+        }
+
+        .colors,
+        .score {
+            text-align: center;
+        }
+
+        h5 {
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .colors {
+            h6 {
+                .pull-left;
+                color: @gray-darker;
+                margin-bottom: 5px;
+                position: relative;
+                top: -3px;
+                left: 10px;
+                margin: 8px 0;
+                font-size: 14px;
+            }
+
+            input[type="color"] {
+                .pull-left;
+                height: 25px;
+                width: 25px;
+            }
+
+            .row {
+                clear:both;
+                margin: 0;
+            }
+
+        }
+
+        .score {
+            vertical-align: middle;
+
+            .correct {
+                color: green;
+            }
+
+            .incorrect {
+                color: red;
+            }
+
+            h2 {
+                position: relative;
+                margin: 0;
+                color: @gray-darker;
+                font-weight: 600;
+
+                i {
+                    position: absolute;
+                    right: 10px;
+                }
+            }
+        }
+    }
+}

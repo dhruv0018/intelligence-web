@@ -1,0 +1,48 @@
+<div class="admin-game-info-team-sidebar">
+    <header>
+        <h1>Team Info</h1>
+        <hr />
+    </header>
+
+    <div class="team-info-item">
+        <h2>School:</h2>
+        <div ng-if="!school">--</div>
+        <div ng-if="school"><a data-ui-sref="school-info({ id: school.id })">{{ school.name }}</a></div>
+    </div>
+
+    <div class="team-info-item">
+        <h2>Team:</h2>
+        <div><a data-ui-sref="team-info({ id: uploaderTeam.id })">{{ uploaderTeam.name }}</a></div>
+    </div>
+
+    <div class="team-info-item">
+        <h2>Coach:</h2>
+        <div ng-if="!headCoach">--</div>
+        <div ng-if="headCoach"><a data-ui-sref="user-info({ id: headCoach.id })">{{ headCoach.firstName }} {{ headCoach.lastName }}</a></div>
+    </div>
+
+    <div class="team-info-item">
+        <h2>Uploaded by:</h2>
+        <div ng-if="!uploaderUser">--</div>
+        <div ng-if="uploaderUser"><a data-ui-sref="user-info({ id: uploaderUser.id })">{{ uploaderUser.firstName }} {{ uploaderUser.lastName }}</a></div>
+    </div>
+
+    <div class="team-info-item">
+        <h2>League:</h2>
+        <div>{{ league.name }}</div>
+    </div>
+
+    <div class="team-info-item">
+        <h2>Period is in:</h2>
+        <div>{{ league.periodLabel }}</div>
+    </div>
+
+    <div class="team-info-item">
+        <h2>Plan:</h2>
+        <div ng-if="!activePlan">--</div>
+        <div ng-if="activePlan">
+            {{ activePlan.name }}, {{ minTurnaroundTimeLookup[activePlan.maxTurnaroundTime]}}-{{ activePlan.maxTurnaroundTime }} hours
+        </div>
+    </div>
+
+</div>

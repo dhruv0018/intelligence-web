@@ -762,6 +762,50 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             /**
+             * determines if the game can reassigned for indexing
+             */
+            canBeReassignedToIndexer: function() {
+                return (this.status === GAME_STATUSES.INDEXING.id);
+            },
+
+            /**
+             * determines if the game can reassigned for QA
+             */
+            canBeReassignedToQa: function() {
+                return (this.status === GAME_STATUSES.QAING.id);
+            },
+
+            /**
+             * determines if the game can be deleted
+             */
+            canBeDeleted: function() {
+                return (this.status != GAME_STATUSES.INDEXED.id && this.isDeleted === false);
+            },
+
+            /**
+             * determines if the game can be set aside
+             */
+            canBeSetAside: function() {
+                return (this.status === GAME_STATUSES.INDEXING.id ||
+                    this.status === GAME_STATUSES.QAING.id ||
+                    this.status === GAME_STATUSES.READY_FOR_QA.id);
+            },
+
+            /**
+             * determines if the game can be reverted to indexer
+             */
+            canBeRevertedToIndexing: function() {
+                return (this.status === GAME_STATUSES.FINALIZED.id);
+            },
+
+            /**
+             * determines if the game can be reverted to indexer
+             */
+            canBeRevertedToIndexer: function() {
+                return (this.status === GAME_STATUSES.QAING.id || this.status === GAME_STATUSES.READY_FOR_QA.id);
+            },
+
+            /**
              * Assigns the game to an indexer.
              * The game must first be assignable to an indexer. The assignment
              * is appended to the list of assignments on the game.

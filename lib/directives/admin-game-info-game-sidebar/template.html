@@ -1,0 +1,152 @@
+<div class="admin-game-info-game-sidebar">
+
+    <header>
+        <div class="pull-left">
+            <h1>Game Info</h1>
+        </div>
+        <div class="pull-right">
+            <div class="dropdown" dropdown is-open="status.isopen">
+                <a class="dropdown-toggle" dropdown-toggle>
+                    <i class="icon icon-gear"></i>
+                    <i class="icon" ng-class="{'icon-chevron-up': status.isopen, 'icon-chevron-down': !status.isopen}"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <div>
+                        <div class="dropdown-option">
+                            <a target="_blank" ng-href="{{game.getFlagsUrl()}}">
+                                <div class="title">View Flags</div>
+                            </a>
+                        </div>
+                        <div class="dropdown-option" ng-if="game.video.isComplete()">
+                            <a ng-click="RawFilmModal.open(game)">
+                                <div class="title">View Raw Film</div>
+                            </a>
+                        </div>
+                        <div class="dropdown-option" ng-if="game.canBeAssignedToIndexer()">
+                            <a ng-click="assignIndexer()">
+                                <div class="title">Assign Indexer</div>
+                            </a>
+                        </div>
+                        <div class="dropdown-option" ng-if="game.canBeAssignedToQa()">
+                            <a ng-click="assignIndexer()">
+                                <div class="title">Assign QA</div>
+                            </a>
+                        </div>
+                        <div class="dropdown-option" ng-if="game.canBeReassignedToIndexer()">
+                            <a ng-click="assignIndexer()">
+                                <div class="title">Reassign Indexer</div>
+                            </a>
+                        </div>
+                        <div class="dropdown-option" ng-if="game.canBeReassignedToQa()">
+                            <a ng-click="assignIndexer()">
+                                <div class="title">Reassign QA</div>
+                            </a>
+                        </div>
+                        <div class="dropdown-option" ng-if="game.canBeRevertedToIndexer()">
+                            <a ng-click="revertToIndexer()">
+                                <div class="title">Revert to Indexer</div>
+                            </a>
+                        </div>
+                        <div class="dropdown-option" ng-if="game.canBeRevertedToIndexing()">
+                            <a ng-click="revertToIndexing()">
+                                <div class="title">Revert to Indexing</div>
+                            </a>
+                        </div>
+                        <div class="dropdown-option" ng-if="game.canBeSetAside()">
+                            <a ng-click="setAside()">
+                                <div class="title">Set Aside</div>
+                            </a>
+                        </div>
+                        <div class="dropdown-option" ng-if="game.canBeDeleted()">
+                            <a ng-click="DeleteGameModal.open(game)">
+                                <div class="title">Delete game</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <hr />
+    </header>
+
+    <div class="game-info-item">
+        <h2>Game ID:</h2>
+        <div>{{ game.id }}</div>
+    </div>
+
+    <div class="game-info-item">
+        <h2>Game Title:</h2>
+        <div>
+            <span ng-if="team">{{ team.name }}</span>
+            <span ng-if="!team">--</span> <span> vs </span>
+            <span ng-if="opposingTeam">{{ opposingTeam.name }}</span>
+            <span ng-if="!opposingTeam">--</span>
+        </div>
+    </div>
+
+    <div class="game-info-item">
+        <h2>Game Type:</h2>
+        <div>
+            {{ GAME_TYPES[GAME_TYPES_IDS[game.gameType]].name }}
+        </div>
+    </div>
+
+    <div class="game-info-item">
+        <h2>Game Status:</h2>
+        <div>
+            <span>{{ game.getStatus().name }}</span>
+        </div>
+    </div>
+
+    <div class="game-info-item" ng-if="game.video.isComplete()">
+        <h2>Game length:</h2>
+        <time>{{gameLength | secondsAsHoursMinutesSeconds}}</time>
+    </div>
+
+    <div class="game-info-item" ng-if="displayDeliverTime()">
+        <h2>Time remaining to deliver:</h2>
+        <time ng-if="!deliverTime">--</time>
+        <time ng-if="deliverTime">{{ deliverTime | millisecondsAsDaysHoursMinutes }}</time>
+    </div>
+
+    <div class="game-info-item">
+        <h2>Priority and Label:</h2>
+        <div ng-if="!uploaderTeam.label && !game.priority">--</div>
+        <div ng-if="uploaderTeam.label || game.priority">
+            <krossover-priority-label-icon
+                priority="PRIORITIES[PRIORITIES_IDS[game.priority]]"
+            ></krossover-priority-label-icon>
+
+            <krossover-team-label-icon
+                ng-if="uploaderTeam.label"
+                label="LABELS[LABELS_IDS[uploaderTeam.label]]"
+            ></krossover-team-label-icon>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="game-info-item" ng-if="displayCurrentAssignment()">
+        <h2>Current Indexer:</h2>
+        <div ng-if="!currentAssignment">--</div>
+        <div ng-if="currentAssignment">
+            {{ users[currentAssignment.userId].firstName }} {{ users[currentAssignment.userId].lastName }}
+        </div>
+    </div>
+
+    <div class="game-info-item" ng-if="displayCurrentAssignment()">
+        <h2>Time remaining to Index:</h2>
+        <div ng-if="!indexTime">--</div>
+        <time ng-if="indexTime">{{ indexTime | millisecondsAsDaysHoursMinutes }}</time>
+    </div>
+
+    <div class="game-info-item" ng-if="game.status == GAME_STATUSES.SET_ASIDE.id">
+        <h2>Most Recent Indexer:</h2>
+        <div ng-if="!latestAssignment">--</div>
+        <div ng-if="latestAssignment">
+            {{ users[latestAssignment.userId].firstName }} {{ users[latestAssignment.userId].lastName }}
+        </div>
+    </div>
+
+</div>

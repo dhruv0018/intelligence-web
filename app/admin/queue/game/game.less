@@ -3,219 +3,44 @@
     .content-wrapper {
         background-color: @content-bg;
         overflow-y: auto;
-    }
 
-    header {
-
-        padding-top: 20px;
-        padding-left: 30px;
-        padding-bottom: 20px;
-        background-color: white;
-        border-bottom: 1px solid rgb(216, 216, 216);
-
-        h1,
-        h2,
-        h3 {
-
-            margin: 0;
-        }
-
-        h1 {
-
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        h1,
-        h2,
-        h3 {
-
-            color: @brand-blue;
-            letter-spacing: -0.01em;
-        }
-
-        h1 {
-
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        h2 {
-
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-
-            em {
-
-                color: @gray-darker;
-                font-weight: 200;
-            }
-        }
-
-        h3 {
-
-            font-weight: 200;
-        }
-
-        .period {
-            text-transform: uppercase;
+        .content {
+            padding: 0px;
         }
     }
 
     .sidebar {
+        flex: 0 0 300px;
+        overflow-y: auto;
 
-        ul {
-
-            margin: 0;
-            padding: 0;
-            list-style: none;
+        h1 {
+            font-size: 20px;
+            font-weight: 600;
+            width: auto;
         }
 
-        li {
-
-            margin: 0;
-        }
-
-        h4 {
-
-            color: @gray-dark;
-            font-size: 16px;
-            margin-bottom: 0;
-        }
-
-        button {
-
-            border-left: 0;
-            padding-left: 0;
+        h2 {
+            font-size: 18px;
+            font-weight: 500;
         }
     }
 
-    .game-info {
-
+    header {
+        padding: 3px 0;
         background-color: white;
 
-        thead {
-
-            background-color: @brand-blue;
-            border: 1px solid rgb(0, 40, 57);
-
-            th {
-
-                color: white;
-                margin: 0;
-                padding: 10px;
-                font-size: 18px;
-                font-weight: 200;
-                border-right: 1px solid rgb(0, 40, 57);
-
-                &:last-child {
-
-                    border-right: none;
-                }
-            }
+        h1 {
+            font-size: 20px;
+            font-weight: 600;
+            width: auto;
         }
 
-        tbody {
-
-            .name {
-
-                .text-overflow;
-                padding: 20px;
-            }
-
-            .colors,
-            .score {
-
-                text-align: center;
-            }
-
-            h1,
-            h5,
-            h6 {
-
-                margin: 0;
-            }
-
-            h1,
-            h5 {
-
-                color: @brand-blue;
-            }
-
-            h1 {
-
-                font-size: 24px;
-            }
-
-            h3 {
-
-                color: @brand-blue;
-                font-size: 16px;
-                font-weight: 600;
-
-                i {
-
-                    font-size: 14px;
-                }
-            }
-
-            h5 {
-
-                font-style: italic;
-                font-weight: 400;
-            }
-
-            .colors {
-
-                padding: 15px;
-
-                h6 {
-
-                    color: @gray-darker;
-                    margin-bottom: 5px;
-                }
-
-                input[type="color"] {
-
-                    height: 32px;
-                }
-
-                .col-xs-6 {
-
-                    padding: 0;
-                }
-            }
-
-            .score {
-
-                vertical-align: middle;
-
-                .correct {
-
-                    color: green;
-                }
-
-                .incorrect {
-
-                    color: red;
-                }
-
-                h2 {
-
-                    position: relative;
-                    margin: 0;
-                    color: @gray-darker;
-                    font-weight: 600;
-
-                    i {
-
-                        position: absolute;
-                        right: 10px;
-                    }
-                }
-
-            }
+        hr {
+            border-top: 1px solid #dddddd;
         }
+    }
+
+    hr {
+        margin: 10px 0;
     }
 }

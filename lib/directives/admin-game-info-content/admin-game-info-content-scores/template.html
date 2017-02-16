@@ -1,0 +1,97 @@
+<div class="admin-game-info-scores">
+    <div class="scores">
+        <table class="table table-bordered">
+        <colgroup>
+            <col class="col-md-4">
+            <col class="col-md-3">
+            <col class="col-md-2">
+            <col class="col-md-2">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Teams</th>
+                <th>Colors</th>
+                <th>Reported Scores</th>
+                <th>Indexed Scores</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="name">
+                    <h2>
+                        <span ng-if="team">{{ team.name }}</span>
+                        <span ng-if="!team">--</span>
+                    </h2>
+                </td>
+                <td class="colors">
+                    <div class="row">
+                        <input class="form-control" style="background: {{game.primaryJerseyColor}}" name="yourprimarycolor" type="color" data-ng-model="game.primaryJerseyColor" ng-change="game.save()">
+                        <h6>Primary</h6>
+                    </div>
+                    <div class="row">
+                        <input class="form-control" style="background: {{game.secondaryJerseyColor}}" name="yourprimarycolor" type="color" data-ng-model="game.secondaryJerseyColor" ng-change="game.save()">
+                        <h6>Secondary</h6>
+                    </div>
+                </td>
+                <td class="score">
+                    <h2>{{ game.finalScore }}</h2>
+                </td>
+                <td class="score">
+                    <h2 data-ng-class="{ correct: game.finalScore === game.indexedScore, incorrect: game.indexedScore && game.finalScore !== game.indexedScore }">{{ game.indexedScore || '--' }}<span data-ng-if="game.indexedScore"><i class="icon icon-ok" data-ng-show="game.finalScore === game.indexedScore"></i><i class="icon icon-remove" data-ng-hide="game.finalScore === game.indexedScore"></i></span></h2>
+                </td>
+            </tr>
+            <tr>
+                <td class="name">
+                    <h2>
+                        <span ng-if="opposingTeam">{{ opposingTeam.name }}</span>
+                        <span ng-if="!opposingTeam">--</span>
+                    </h2>
+                </td>
+                <td class="colors">
+                    <div class="row">
+                        <input class="form-control" style="background: {{game.opposingPrimaryJerseyColor}}" name="theirprimarycolor" type="color" data-ng-model="game.opposingPrimaryJerseyColor" ng-change="game.save()">
+                        <h6>Primary</h6>
+                    </div>
+                    <div class="row">
+                        <input class="form-control" style="background: {{game.opposingSecondaryJerseyColor}}" name="theirprimarycolor" type="color" data-ng-model="game.opposingSecondaryJerseyColor" ng-change="game.save()">
+                        <h6>Secondary</h6>
+                    </div>
+                </td>
+                <td class="score">
+                    <h2>{{ game.opposingFinalScore }}</h2>
+                </td>
+                <td class="score">
+                    <h2 data-ng-class="{ correct: game.opposingFinalScore === game.opposingIndexedScore, incorrect: game.opposingIndexedScore && game.opposingFinalScore !== game.opposingIndexedScore }">{{ game.opposingIndexedScore || '--' }}<span data-ng-if="game.opposingIndexedScore"><i class="icon icon-ok" data-ng-show="game.opposingFinalScore === game.opposingIndexedScore"></i><i class="icon icon-remove" data-ng-hide="game.opposingFinalScore === game.opposingIndexedScore"></i></span></h2>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="notes">
+        <h2><span> Coaches Notes</span></h2>
+        <div ng-if="!game.notes[GAME_NOTE_TYPES.COACH_NOTE].length" class="notes-content"> <p> -- </p> </div>
+        <div data-ng-repeat="note in game.notes[GAME_NOTE_TYPES.COACH_NOTE]" class="notes-content">
+            <p>{{ note.content }}</p>
+        </div>
+    </div>
+
+    <div class="notes">
+        <h2><span> Indexing Notes</span></h2>
+        <div ng-if="!game.notes[GAME_NOTE_TYPES.INDEXER_NOTE].length" class="notes-content"> <p> -- </p> </div>
+        <div data-ng-repeat="note in game.notes[GAME_NOTE_TYPES.INDEXER_NOTE] | orderBy:'gameTime'" class="notes-content">
+            <p><sub>({{note.gameTime | secondsToTime}})</sub><br/>{{ note.content }}</p>
+        </div>
+    </div>
+
+    <div class="notes">
+        <h2><span> QA Notes</span></h2>
+        <div ng-if="!game.notes[GAME_NOTE_TYPES.QA_NOTE].length" class="notes-content"> <p> -- </p> </div>
+        <div data-ng-repeat="note in game.notes[GAME_NOTE_TYPES.QA_NOTE]" class="notes-content">
+            <p>
+                <span ng-if="note.gameTime"><sub>({{note.gameTime | secondsToTime}})</sub><br/></span>
+                <span>{{ note.content }}</span></p>
+        </div>
+    </div>
+
+</div>
