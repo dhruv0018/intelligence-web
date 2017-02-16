@@ -1907,6 +1907,23 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             /**
+             * Remove a telestration from a game
+             *
+             * @param {integer} gameId
+             * @param {float} time
+             * @param {integer} playId
+             * @returns {Promise}
+             */
+            removeTelestration: function(gameId, time, playId) {
+                const model = $injector.get(this.model);
+                return model.removeTelestration({
+                    id: gameId,
+                    time: time,
+                    playId: playId
+                }).$promise;
+            },
+
+            /**
              * Determine if the game is copied from a break down library
              * @returns {boolean}
              */

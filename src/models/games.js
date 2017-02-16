@@ -74,6 +74,12 @@ IntelligenceWebClient.factory('GamesResource', [
                 isArray: true
             },
 
+            removeTelestration: {
+                method: 'DELETE',
+                url: config.api.uri + base + '/:id/telestrations/delete',
+                params: {time: '@time', playId: '@playId'}
+            },
+
             copyFromFilmExchange: {
                 method: 'POST',
                 url: config.apiV2.uri + base + '/:id/copy-to-team/:teamId',

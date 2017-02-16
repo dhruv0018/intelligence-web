@@ -672,6 +672,23 @@ IntelligenceWebClient.factory('ReelsFactory', [
                 }
 
                 return userReels;
+            },
+
+            /**
+             * Remove a telestration from a reel
+             *
+             * @param {integer} reelId
+             * @param {float} time
+             * @param {integer} playId
+             * @returns {Promise}
+             */
+            removeTelestration: function(reelId, time, playId) {
+                const model = $injector.get(this.model);
+                return model.removeTelestration({
+                    id: reelId,
+                    time: time,
+                    playId: playId
+                }).$promise;
             }
         };
 

@@ -35,7 +35,12 @@ IntelligenceWebClient.factory('ReelsResource', [
                 method: 'POST',
                 url: config.api.uri + base + '/batch',
                 isArray: true
-            }
+            },
+            removeTelestration: {
+                method: 'DELETE',
+                url: config.api.uri + base + '/:id/telestrations/delete',
+                params: {time: '@time', playId: '@playId'}
+            },
         };
 
         return $resource(url, paramDefaults, actions);
