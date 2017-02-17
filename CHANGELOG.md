@@ -1,3 +1,7 @@
+# v113.2#
+## Fixes##
+- Fix flipped team and opposing team scores on game info page
+
 # v113.1#
 ## Fixes ##
 - Fix for breakdown purchase modal not working
