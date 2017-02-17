@@ -284,7 +284,7 @@ IntelligenceWebClient.factory('GamesFactory', [
              * @return {Integer}
              */
             getHomeTeamScore() {
-                if (this.isHomeGame) {
+                if (this.isHomeGame || this.isNonRegular()) {
                     return this.getTeamScore();
                 }
 
@@ -298,7 +298,7 @@ IntelligenceWebClient.factory('GamesFactory', [
              * @return {Integer}
              */
             getAwayTeamScore() {
-                if (this.isHomeGame) {
+                if (this.isHomeGame || this.isNonRegular()) {
                     return this.getOpposingTeamScore();
                 }
 
