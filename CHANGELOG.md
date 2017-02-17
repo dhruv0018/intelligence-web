@@ -1,3 +1,8 @@
+# v114.0#
+## Fixes##
+- Performance fix for indexer assigned games page
+- Fix for canceling ediding a play during film editing
+
 # v113.2#
 ## Fixes##
 - Fix flipped team and opposing team scores on game info page
