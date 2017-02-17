@@ -277,16 +277,39 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return !this.areInputtedGameScoresUnavailable || this.areIndexedGameScoresAvailable;
             },
 
+            /**
+             * Gets the Home Team's score.  Takes isHomeGame into account to return teamScore for a home
+             * game, or opposingTeamScore for an away game.
+             *
+             * @return {Integer}
+             */
             getHomeTeamScore() {
-                let score = this.finalScore;
-
-                if (this.areInputtedGameScoresUnavailable() && this.areIndexedGameScoresAvailable()) {
-                    score = this.indexedScore;
+                if (this.isHomeGame) {
+                    return this.getTeamScore();
                 }
 
-                return score;
+                return this.getOpposingTeamScore();
             },
 
+            /**
+             * Gets the Away Team's score.  Takes isHomeGame into account to return opposingTeamScore for a home
+             * game, or teamScore for an away game.
+             *
+             * @return {Integer}
+             */
+            getAwayTeamScore() {
+                if (this.isHomeGame) {
+                    return this.getOpposingTeamScore();
+                }
+
+                return this.getTeamScore();
+            },
+
+            /**
+             * Gets opposingTeamScore on the game model, or the indexed opposing team score if available
+             *
+             * @return {Integer}
+             */
             getOpposingTeamScore() {
                 let score = this.opposingFinalScore;
 
@@ -297,8 +320,23 @@ IntelligenceWebClient.factory('GamesFactory', [
                 return score;
             },
 
+            /**
+             * Gets teamScore on the game model, or the indexed team score if available
+             *
+             * @return {Integer}
+             */
+            getTeamScore() {
+                let score = this.finalScore;
+
+                if (this.areInputtedGameScoresUnavailable() && this.areIndexedGameScoresAvailable()) {
+                    score = this.indexedScore;
+                }
+
+                return score;
+            },
+
             didHomeWin() {
-                let homeWon = this.getHomeTeamScore() > this.getOpposingTeamScore();
+                let homeWon = this.getHomeTeamScore() > this.getAwayTeamScore();
 
                 if (!this.hasWinner()) {
                     homeWon = false;
@@ -323,7 +361,7 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             isTie() {
-                return this.getHomeTeamScore() === this.getOpposingTeamScore();
+                return this.getHomeTeamScore() === this.getAwayTeamScore();
             },
 
             areInputtedGameScoresUnavailable() {

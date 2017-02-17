@@ -11,7 +11,7 @@
     <div class="print-teams">
         <div class="print-team" ng-class="{ 'print-team': true, 'is-winner': $ctrl.game.didOpponentWin() }">
             <span>{{$ctrl.game.getAwayTeamName()}}</span>
-            <span class="print-score" ng-if="$ctrl.game.doGameScoresExist()">{{$ctrl.game.getOpposingTeamScore()}}</span>
+            <span class="print-score" ng-if="$ctrl.game.doGameScoresExist()">{{$ctrl.game.getAwayTeamScore()}}</span>
         </div>
         <div ng-class="{ 'print-team': true, 'is-winner': $ctrl.game.didHomeWin() }">
             <span>{{$ctrl.game.getHomeTeamName()}}</span>
