@@ -74,7 +74,8 @@ module.exports = function(grunt) {
 
         htmlhint: {
             options: {
-                htmlhintrc: '.htmlhintrc'
+                htmlhintrc: '.htmlhintrc',
+                'tagname-lowercase': false
             },
             files: '<%= files.html %>'
         },

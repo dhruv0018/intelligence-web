@@ -7,8 +7,9 @@
 
     .indexable-region {
 
-        fill: @ice-hockey-background-color;
-        stroke: @ice-hockey-background-color;
+        fill: darken(@ice-hockey-background-color, 10%);
+        stroke: darken(@ice-hockey-background-color, 10%);
+        opacity: 0;
     }
 }
 
@@ -21,8 +22,8 @@
             &:hover,
             &:active,
             &:focus {
-                fill: darken(@ice-hockey-background-color, 10%);
-                transition: fill 0.3s;
+                opacity: .6;
+                transition: opacity 0.3s;
             }
         }
     }
