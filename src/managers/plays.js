@@ -265,18 +265,20 @@ IntelligenceWebClient.service('PlaysManager', [
                 }
 
                 /* Consider the first team to take possession in a play to have
-                 * possession for the remainder of the play except for four soccer events. */
-                if (!play.possessionTeamId) {
+                 * possession for the remainder of the play except for four soccer events and one ice hockey event.
+                 * Ice hockey faceoffs set the possessionTeamId on the Faceoff Won tag
+                 * Avoid setting possessionTeamId on first Faceoff tag
+                 */
+                if (!play.possessionTeamId && event.tagId !== 213) {
                     let tag = event.tagId;
 
                     // TODO: This is a temporary workaround solution to non posession sports displaying
                     // the correct team in the play header. Handles Throw-In, Goal Kick, Kickoff, and Restart
-                    // events for soccer.
+                    // events for soccer, as well as Faceoff Won for Ice Hockey.
 
-                    if(tag == 268 || tag == 269 || tag == 270 || tag == 271) {
+                    if (tag === 268 || tag === 269 || tag === 270 || tag === 271 || tag === 231) {
                         play.possessionTeamId = event.fields[2]._value.teamId;
-                    }
-                    else {
+                    } else {
                         play.possessionTeamId = teamId;
                     }
                 }
