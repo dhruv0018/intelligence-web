@@ -61,7 +61,8 @@ function IndexingHeaderController(
         SPORTS.BASKETBALL.id,
         SPORTS.LACROSSE.id,
         SPORTS.FOOTBALL.id,
-        SPORTS.VOLLEYBALL.id
+        SPORTS.VOLLEYBALL.id,
+        SPORTS.SOCCER.id
     ];
 
     $scope.GAME_STATUSES = GAME_STATUSES;
@@ -136,7 +137,6 @@ function IndexingHeaderController(
             //show the flags only for supported sports
             'showFlags': supportedGameTypes.indexOf($scope.league.sportId) > -1
         };
-
         SendToQaModal.open(locals).result.then(function(result){
             if(result) {
                 $scope.sendToQa();
