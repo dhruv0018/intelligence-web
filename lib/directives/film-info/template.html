@@ -19,17 +19,17 @@
 			</span>
 		</div>
 	</div>
-	<div data-ng-if="isReel" class="reel-info">
+	<div ng-if="isReel" class="reel-info">
 		<div class="meta-data">
 			<h5>{{film.updatedAt | dateTitle}}</h5>
 			<h5 class="film-title">{{filmTitle}}</h5>
 		</div>
 		<div class="reel-title">
-			<h3 data-ng-show="!editingReelTitle">{{film.name}} <span id="reel-title-edit-cta" class="edit-title" data-ng-show="isEditable" data-ng-click="editingReelTitle = true"><i class="icon icon-pencil"></i></span></h3>
-			<form class="edit-reel-title-form" data-ng-show="editingReelTitle">
-				<input class="form-control" type="text" name="newReelName" data-ng-model="newReelName">
-				<a class="btn-simple-save" data-ng-click="changeReelName(newReelName); editingReelTitle = false" href>Save</a>
-				<a class="btn-simple-cancel" data-ng-click="editingReelTitle = false" href>Cancel</a>
+			<h3 ng-show="!editingReelTitle">{{film.name}} <span id="reel-title-edit-cta" class="edit-title" ng-show="isEditable" ng-click="toggleEditingReelTitle()"><i class="icon icon-pencil"></i></span></h3>
+			<form class="edit-reel-title-form" ng-show="editingReelTitle">
+				<input class="form-control" type="text" name="newReelName" ng-model="newReelName">
+				<a class="btn-simple-save" ng-click="saveReelName(newReelName)" href>Save</a>
+				<a class="btn-simple-cancel" ng-click="cancelEditReelName()" href>Cancel</a>
 			</form>
 		</div>
 		<div class="reel-plays">
