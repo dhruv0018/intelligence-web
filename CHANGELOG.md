@@ -1,3 +1,8 @@
+# v114.1##
+## Fixes##
+- Fixes ability to rename reel
+- Fixes QA flags link not appearing
+
 # v114.0#
 ## Fixes##
 - Performance fix for indexer assigned games page
