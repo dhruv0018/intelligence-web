@@ -43,17 +43,19 @@ module.exports = function Coach(){
         done();
     });
 
-    this.When(/^I add canonical team "([^"]*)"$/, function (opposingTeam, done) {
-        games.enterCanonicalTeam(opposingTeam).then(
+    this.When(/^I add canonical team "([^"]*)"$/, function (canonicalTeam, done) {
+        var self = this;
+
+        self.waitForVisible(games.canonicalTeamField).then(
             function(){
-                //games.canonicalTeam.click().then(
-                    //function(){
+                games.enterCanonicalTeam(canonicalTeam).then(
+                    function(){
                         games.clickNext().then(done);
-                    //}
-                //)
+                    }
+                );
             }
         );
-    });    
+    });
 
     this.When(/^I add a home game$/, function (done) {
         var self = this;
@@ -75,14 +77,36 @@ module.exports = function Coach(){
         );
     });
 
-    this.Then(/^I should see rosters on homeTeam$/, function (done) {
-        expect(games.homeRosterCount()).to.eventually.above(0);
-        done();
+    this.Then(/^I should see a roster for the "([^"]*)" team$/, function (teamType, done) {
+        var self = this;
+
+        self.waitForVisible(games.roster.first()).then(
+            function(){
+                expect(games.rosterCount()).to.eventually.above(0).and.notify(done);
+            }
+        );
+    });
+
+    this.Then(/^I should NOT see a roster for the new non-canonical team$/, function (done) {
+        browser.sleep(1000).then(
+            function(){
+                expect(games.rosterCount()).to.eventually.equal(0).and.notify(done);
+                //element.all(by.css('.tab-pane.active .roster-manager .krossover-athlete')).count().then(function(data){
+                    //console.log(data);
+                //})
+            }
+        )
     });
 
     this.Then(/^I click film cancel button$/, function (done) {
         games.clickCancel();
         done();
+    });
+
+    this.When(/^I click Game Info tab$/, function (done) {
+        var self = this;
+
+        self.waitForClickable(games.gameInfoTab).then(done);
     });
 
     this.When(/^I click Film Editor tab$/, function (done) {
@@ -111,7 +135,7 @@ module.exports = function Coach(){
         var self = this;
 
         self.waitForClickable(filmEditor.endClip).then(done);
-    });    
+    });
 
     this.Then(/^I should see a play created$/, function (done) {
         expect(filmEditor.clip.first().isPresent()).to.eventually.be.true.and.notify(done);
@@ -136,9 +160,9 @@ module.exports = function Coach(){
                                                 done();
                                             }
                                         }
-                                    );    
+                                    );
                                 }
-                            );          
+                            );
                         })(i);
                     }
                 });;
@@ -182,7 +206,7 @@ module.exports = function Coach(){
     });
 
     this.Then(/^I should see an Update Start Time button$/, function (done) {
-    
+
         expect(filmEditor.btnUpdateStartTime.isPresent()).to.eventually.be.true.and.notify(done);
     });
 
@@ -193,7 +217,7 @@ module.exports = function Coach(){
     });
 
     this.Then(/^I should see an Update End Time button$/, function (done) {
-    
+
         expect(filmEditor.btnUpdateEndTime.isPresent()).to.eventually.be.true.and.notify(done);
     });
 
@@ -204,7 +228,7 @@ module.exports = function Coach(){
     });
 
     this.Then(/^I should see a Create Clip button$/, function (done) {
-    
+
         expect(filmEditor.createClip.isPresent()).to.eventually.be.true.and.notify(done);
     });
 
@@ -215,7 +239,6 @@ module.exports = function Coach(){
     });
 
     this.Then(/^I should not be able to edit any other play$/, function (done) {
-    
         expect(filmEditor.disabledPlay.isPresent()).to.eventually.be.true.and.notify(done);
     });
 
@@ -285,6 +308,79 @@ module.exports = function Coach(){
         var self = this;
 
         self.waitForClickable(games.deleteReelLink).then(done);
+    });
+
+    this.When(/^I click on the Opposing Team tab$/, function (done) {
+        var self = this;
+
+        self.waitForClickable(games.opposingTeamTab).then(done);
+    });
+
+    this.When(/^I click Add New Player$/, function (done) {
+        var self = this;
+
+        self.waitForClickable(games.btnAddNewPlayer).then(done);
+    });
+
+    this.When(/^I enter jersey number "([^"]*)"$/, function (jerseyNumber, done) {
+        var self = this;
+
+        self.waitForClickable(games.jerseyNumber).sendKeys(jerseyNumber).then(done);
+    });
+
+    this.When(/^I enter first name "([^"]*)"$/, function (firstName, done) {
+        games.firstName.click().sendKeys(firstName).then(done);
+    });
+
+    this.When(/^I enter last name "([^"]*)"$/, function (lastName, done) {
+        var self = this;
+
+        self.waitForClickable(games.lastName).sendKeys(lastName).then(done);
+    });
+
+    this.When(/^I edit the name of the team to "([^"]*)"$/, function (modifiedOpposingTeam, done) {
+        var self = this;
+
+        self.waitForClickable(games.canonicalTeamName).then(
+            function(){
+                self.waitForClickable(games.canonicalTeamField).sendKeys(modifiedOpposingTeam).then(
+                    function(){
+                        self.waitForClickable(games.addNewTeam).then(
+                            function(){
+                                games.clickNext().then(done);
+                            }
+                        );
+                    }
+                );
+            }
+        );
+    });
+
+    this.Then(/^I should still see the player I added with jersey number "([^"]*)" first name "([^"]*)" and last name "([^"]*)"$/, function (jerseyNumber, firstName, lastName, done) {
+        var verifyPlayer = Promise.all([
+            expect(games.jerseyNumber.getAttribute('value')).to.eventually.equal(jerseyNumber).and.notify(done),
+            expect(games.firstName.getAttribute('value')).to.eventually.equal(firstName).and.notify(done),
+            expect(games.lastName.getAttribute('value')).to.eventually.equal(lastName).and.notify(done)
+        ]);
+        expect(verifyPlayer).to.become([jerseyNumber, firstName, lastName]).and.notify(done);
+    });
+
+    this.When(/^I add home scouting canonical team "([^"]*)" and opposing scouting canonical team "([^"]*)"$/, function (homeCanonicalScoutingTeam, opposingCanonicalScoutingTeam, done) {
+        var self = this;
+
+        self.waitForVisible(games.canonicalTeamField).then(
+            function(){
+                games.enterCanonicalScoutingTeams(homeCanonicalScoutingTeam, opposingCanonicalScoutingTeam).then(
+                    function(){
+                        games.clickNext().then(done);
+                    }
+                );
+            }
+        );
+    });
+
+    this.When(/^I click Next$/, function (done) {
+        games.clickNext().then(done);
     });
 
 }

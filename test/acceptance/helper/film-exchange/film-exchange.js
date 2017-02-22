@@ -16,7 +16,7 @@ module.exports = function FilmExchange(){
     this.teamSearchBox = element(by.name('teamName'));
     this.dateSearchBox = $('#date-played');
     this.btnSearch =$('#search-film-cta');
-    this.date = moment().format('LL');
+    this.date = moment().format('MMMM DD, YYYY');
     this.resultsDate = moment().format('MMM DD, YYYY');
     this.btnReset = element(by.xpath('//a[@ng-click="clearSearchFilter()"]'));
     this.teamName = element.all(by.css('div.flex-data')).last();

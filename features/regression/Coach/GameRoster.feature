@@ -1,106 +1,89 @@
-@ignore
 Feature: Game Roster
 
-    As a Coach(INTWEB-413)
-    I should be able to copy a regular or scouting game from a film exchange that I was involved in
+    As a Coach
+    I should be able to create a new non-canonical teams
+    add existing canonical teams
+    create new canonical teams 
+    when uploading a regular or scouting game
     and view my game roster
-    amd view the opposing team roster
+    and view the opposing team roster
 
     Rules:
-    - Both teams involved in the game must be canonical teams
+    - Uploading team must have a roster
+    - Opposing canonical team must have a roster
 
-    Scenario: Upload a regular game as a canonical team and share it to a film exchange
-        Given I login as "Coach"
-        When I switch to role "Girls lax Andrew"
+    Scenario: Create a non-canonical team when uploading a regular game
+        
+        Given I login as "NORTHWESTERNWTEST_COACH"
+        When I switch to role "Northwestern W Test"
         When I click add film
         Then I should see the "coach/add-film" page
         When I click on "Regular Game"
         When I upload a game
-        When I add opposing team "Northwestern W Test"
-        Then I should see rosters on homeTeam
-        Then I should see rosters on awayTeam
+        When I add new canonical team "IGTest"
+        Then I should see a roster for the "home" team
+        When I click on the Opposing Team tab
+        Then I should NOT see a roster for the new non-canonical team
+        When I click Game Info tab
+        When I delete the game
+        When I confirm the deletion
+        Then I should see the "film-home" page
+        Then I should see a confirmation that the game was deleted
+ 
+    Scenario: Enter an existing canonical team as the away team when uploading a regular game
+
         When I go to film home
-        When I click "share" on the first game
-        When I click "your league or conference film exchange"
-        When I select film exchange "Big1G"
-        Then I should see a "film shared" confirmation
-
-    Scenario: Copy a regular game from a film exchange that my team was involved in and view my game roster
-
-        Given I login as "NORTHWESTERNWTEST_COACH"
-        When I switch to role "Northwestern W Test"
-        When I go to film exchange "Big1G"
-        When I copy the first game
-        When I go to film home
-        Then I should see the copied game from the film exchange
-        When I click on the copied game
-        When I click Game Info
-        When I click on my team name
-        Then I should see the same roster for my team from when the game was uploaded
-        When I click on opposing team name
-        Then I should see the same roster for opposing team from when the game was uploaded
-
-    Scenario: Upload a scouting game as a canonical team and share it to a film exchange
-        Given I login as "Coach"
-        When I switch to role "Girls lax Andrew"
         When I click add film
         Then I should see the "coach/add-film" page
-        When I click on "Scouting Game"
+        When I click on "Regular Game"
         When I upload a game
-        When I add team "Girls lax Andrew"
-        When I add opposing team "Northwestern W Test"
-        Then I should see rosters on homeTeam
-        Then I should see rosters on awayTeam
+        When I add canonical team "Girls Lax Andrew"
+        Then I should see a roster for the "home" team
+        When I click on the Opposing Team tab
+        Then I should see a roster for the "existing canonical" team
+        When I click Game Info tab
+        When I delete the game
+        When I confirm the deletion
+        Then I should see the "film-home" page
+        Then I should see a confirmation that the game was deleted
+
+    Scenario: Create a scouting game with the same canonical team for both home and away
+        
         When I go to film home
-        When I click "share" on the first game
-        When I click "your league or conference film exchange"
-        When I select film exchange "Big1G"
-        Then I should see a "film shared" confirmation
+        When I click add film
+        When I click on "Scouting/Scrimmage"
+        When I upload a game
+        When I add home scouting canonical team "Northwestern W Test" and opposing scouting canonical team "Northwestern W Test"
+        Then I should see a roster for the "home" team
+        When I click on the Opposing Team tab
+        Then I should see a roster for the "existing canonical" team
+        When I click Game Info tab
+        When I delete the game
+        When I confirm the deletion
+        Then I should see the "film-home" page
+        Then I should see a confirmation that the game was deleted
 
-    Scenario: Copy a scouting game from a film exchange that my team was involved in and view my game roster
+    Scenario: Create a canonical team, add players, edit the team name
 
-        Given I login as "NORTHWESTERNWTEST_COACH"
-        When I switch to role "Northwestern W Test"
-        When I go to film exchange "Big1G"
-        When I copy the first game
         When I go to film home
-        Then I should see the copied game from the film exchange
-        When I click on the copied game
-        When I click Game Info
-        When I click on my team name
-        Then I should see the same roster for my team from when the game was uploaded
-        When I click on opposing team name
-        Then I should see the same roster for opposing team from when the game was uploaded
-
-Scenario: Upload a scouting game that involves two canonical teams, but does not involve my team and share it to a film exchange
-
-        Given I login as "Coach"
-        When I switch to role "Girls lax Andrew"
         When I click add film
         Then I should see the "coach/add-film" page
-        When I click on "Scouting Game"
+        When I click on "Regular Game"
         When I upload a game
-        When I add team "Nittany Lions"
-        When I add opposing team "Northwestern W Test"
-        Then I should see rosters on homeTeam
-        Then I should see rosters on awayTeam
-        When I go to film home
-        When I click "share" on the first game
-        When I click "your league or conference film exchange"
-        When I select film exchange "Big1G"
-        Then I should see a "film shared" confirmation
-
-    Scenario: Copy a scouting game from a film exchange that my team was involved in and view my game roster
-
-        Given I login as "NORTHWESTERNWTEST_COACH"
-        When I switch to role "Northwestern W Test"
-        When I go to film exchange "Big1G"
-        When I copy the first game
-        When I go to film home
-        Then I should see the copied game from the film exchange
-        When I click on the copied game
-        When I click Game Info
-        When I click on my team name
-        Then I should see the same roster for my team from when the game was uploaded
-        When I click on opposing team name
-        Then I should see the same roster for opposing team from when the game was uploaded
+        When I add new canonical team "IGTest"
+        Then I should see a roster for the "home" team
+        When I click on the Opposing Team tab
+        Then I should NOT see a roster for the new non-canonical team
+        When I click Add New Player
+        When I enter jersey number "15"
+        When I enter first name "IG"
+        When I enter last name "test"
+        When I click Game Info tab
+        When I edit the name of the team to "UPDATED"
+        When I click on the Opposing Team tab
+        Then I should still see the player I added with jersey number "15" first name "IG" and last name "test"
+        When I click Game Info tab
+        When I delete the game
+        When I confirm the deletion
+        Then I should see the "film-home" page
+        Then I should see a confirmation that the game was deleted

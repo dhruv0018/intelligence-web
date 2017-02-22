@@ -130,6 +130,7 @@ module.exports = function Coach(){
 
     this.When(/^I enter conference name "([^"]*)"$/, function (name, done){
         var self = this;
+        console.log('creating conference in admin step definitions class' + conferences.uniqueID); 
         self.waitForClickable(conferences.newConferenceName).sendKeys(name + conferences.uniqueID).then(done);
     });
 
@@ -161,7 +162,7 @@ module.exports = function Coach(){
 
     this.Then(/^I should be able to go to the second page of results$/, function (done) {
     	var self = this;
-
+        
         expect(conferences.isPagerPresent.isDisplayed()).to.eventually.be.true.and.notify(done);
     });
 
@@ -290,6 +291,7 @@ module.exports = function Coach(){
 
     this.Then(/^I should have access to the "([^"]*)" film exchange$/, function (filmExchange, done){
         var self = this;
+        console.log('verifying film exchange access from admin step definition class' + conferences.uniqueID); 
         var filmExchangeOption = element.all(by.xpath('//a[contains(text(),"' + filmExchange + conferences.uniqueID + '")]')).last();
         self.waitForClickable(filmExchanges.filmExchangeMenu).then(
             function(){
@@ -375,11 +377,11 @@ module.exports = function Coach(){
     this.Then(/^The association should be deleted$/, function (done) {
         var self = this;
 
-        browser.sleep(1000).then(
+        self.waitForVisible(conferences.associationDeletedSuccess).then(
             function(){
                 expect(conferences.associationDeletedSuccess.isDisplayed()).to.eventually.be.true.and.notify(done);
             }
-        )
+        );
     });
 
 };

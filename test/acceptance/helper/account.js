@@ -48,12 +48,16 @@ module.exports = function Account() {
             password: "Popcorn23",
         },
         'NORTHWESTERNWTEST_COACH' : {
-            email: "jared@krossover.com",
-            password: "Popcorn23",
+            email: "test+IGTestUser@krossover.com",
+            password: "Krossoverpopcorn23",
         },
         'INDIABASKETBALL_COACH' : {
             email: "jared@krossover.com",
             password: "Popcorn23",
+        },
+        'LACROSSE_COACH' : {
+            email: "test+IGTestUser@krossover.com",
+            password: "Krossoverpopcorn23",
         }
 
     };

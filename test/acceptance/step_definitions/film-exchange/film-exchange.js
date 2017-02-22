@@ -254,10 +254,16 @@ module.exports = function() {
         games.getText().then(function(selectedArr){
             for (var i=0; i<selectedArr.length; i++){
                 (function(i){
-                    expect(selectedArr[i]).to.equal(filmExchanges.resultsDate);
-                    if (i == selectedArr.length-1){
-                        done();
-                    }
+                    console.log(selectedArr[i]);
+                    browser.sleep(1000).then(
+                        function()
+                        {
+                            expect(selectedArr[i]).to.equal(filmExchanges.resultsDate);
+                            if (i == selectedArr.length-1){
+                                done();
+                            }
+                        }
+                    )
                 })(i);
             }
         })

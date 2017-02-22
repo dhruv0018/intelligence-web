@@ -1,4 +1,3 @@
-@ignore
 Feature: FilmExchangeAdmin
 
     As a Film Exchange Admin
@@ -11,8 +10,8 @@ Feature: FilmExchangeAdmin
 
     Scenario: Upload a game and share it to a film exchange
 
-        Given I login as "NORTHWESTERNWTEST_COACH"
-        When I switch to role "Northwestern W Test"
+        Given I login as "LACROSSE_COACH"
+        When I switch to role "Lacrosse Test"
         When I click add film
         When I click on "Regular Game"
         When I upload a game
@@ -44,9 +43,9 @@ Feature: FilmExchangeAdmin
 
         When I click to manage team access
         Then I should see a modal to manage access for teams in the film exchange
-        When I suspend the team "Northwestern W Test"
+        When I suspend the team "Lacrosse Test"
         When I close the modal
-        When I switch to role "Northwestern W Test"
+        When I switch to role "Lacrosse Test"
         Then the team's coach should not be able to access the "Test" film exchange
 
     Scenario: Enable team from film exchange and verify team's coach can access it
@@ -54,7 +53,7 @@ Feature: FilmExchangeAdmin
         When I switch to role "Film Exchange Admin"
         When I go to the "Test" film exchange
         When I click to manage team access
-        When I enable the team "Northwestern W Test"
+        When I enable the team "Lacrosse Test"
         When I close the modal
-        When I switch to role "Northwestern W Test"
+        When I switch to role "Lacrosse Test"
         Then the team's coach should be able to access the "Test" film exchange

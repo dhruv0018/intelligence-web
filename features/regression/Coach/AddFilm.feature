@@ -25,7 +25,7 @@ Feature: Coach-AddFilm
 
     Scenario: Coach can save game and create game roster
         When I add opposing team "test"
-        Then I should see rosters on homeTeam
+        Then I should see a roster for the "home" team
 
     Scenario: Coach should be able to break down game
         When I click Film Settings
