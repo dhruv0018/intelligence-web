@@ -1,3 +1,7 @@
+# v115.0##
+## Features##
+- Angular-bootstrap library upgrade
+
 # v114.1##
 ## Fixes##
 - Fixes ability to rename reel
