@@ -5,15 +5,15 @@
     align-items: flex-start;
 
     .wsc-highlight-title {
-        font-weight: @headings-font-weight;
-        font-size: @font-size-small;
+        font-weight: 400;
+        font-size: 18px;
         margin: 5px 5px 0 0;
-        text-transform: uppercase;
+        text-transform: capitalize;
         color: @brand-blue;
     }
 
     .wsc-highlight-info {
-        font-size: @font-size-small;
+        font-size: 15px;
         margin-top: 3px;
         margin-right: 5px;
     }
@@ -24,9 +24,16 @@
 
         .season-highlight-info {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            justify-content: space-between;
             align-items: flex-start;
             margin-right: 20px;
+
+            .icon {
+                font-size: 68px;
+                color: @brand-blue;
+                margin-right: 12px;
+            }
         }
 
         .form-control {
