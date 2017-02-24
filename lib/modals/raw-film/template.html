@@ -18,7 +18,7 @@
         </div>
 
         <div class="film-exchange-actions" ng-if="isFilmExchangeVideo && currentUser.is(ROLES.COACH)">
-
+            <span class="side-buffer"></span>
             <span class="copy-buttons" ng-if="currentUser.getCurrentRole().teamId !== game.addedByTeam.id">
                 <button class="btn btn-primary" ng-if="!game.isPerformingAction && !game.copiedGame && !game.copyConfirm" ng-click="copyGameFromFilmExchange()">
                     Copy to your film home
@@ -38,6 +38,8 @@
             <button class="btn btn-default" ng-if="currentUser.getCurrentRole().teamId === game.addedByTeam.id" ng-click="removeGameFromFilmExchange()">
                 Remove from film exchange
             </button>
+            <span class="blue-link side-buffer" ng-show="$parent.getGameNotes().length" ng-click="$parent.showGameNotes = true">View Game Notes</span>
+            <span class="side-buffer" ng-hide="$parent.getGameNotes().length">No Game Notes</span>
         </div>
 
         <div class="film-exchange-actions" ng-if="isFilmExchangeVideo && (currentUser.is(ROLES.FILM_EXCHANGE_ADMIN) || currentUser.is(ROLES.ADMIN) || currentUser.is(ROLES.SUPER_ADMIN))">
@@ -45,6 +47,15 @@
             <span ng-show="game.addedByUser.id === currentUser.id">This film was added by you</span>
         </div>
 
+        <div class="game-notes-container" ng-if="showGameNotes">
+            <div class="game-notes-header">
+                <span>Game Notes</span>
+                <span class="blue-link" ng-click="$parent.showGameNotes = false">Close</span>
+            </div>
+            <div class="game-notes-body force-scrollbar">
+                <p>{{$parent.getGameNotes()}}</p>
+            </div>
+        </div>
     </div>
 
 </div>

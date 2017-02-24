@@ -18,6 +18,7 @@
         flex-direction: column;
         flex: 1;
         align-items: center;
+        position: relative;
 
         .raw-film-info {
             display: flex;
@@ -60,6 +61,19 @@
 
         .film-exchange-actions {
             margin-top: 20px;
+            padding: 0px 60px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .blue-link {
+                cursor: pointer;
+            }
+
+            .side-buffer {
+                width: 95px;
+            }
 
             .copy-buttons {
                 button {
@@ -69,6 +83,58 @@
                 .btn-copy-confirm {
                     background-color: @brand-success;
                     border-color: @brand-success;
+                }
+            }
+        }
+
+        .game-notes-container {
+            position: absolute;
+            height: 65%;
+            width: 100%;
+            bottom: 0px;
+            z-index: 11;
+            background-color: white;
+            border-top: thin solid @gray-border;
+            overflow: hidden;
+
+            &.ng-enter {
+                transition: 0.3s ease-in-out all;
+                height: 0px;
+            }
+
+            &.ng-enter.ng-enter-active {
+                height: 65%;
+            }
+
+            &.ng-leave {
+                transition: 0.3s ease-in-out all;
+                height: 65%;
+            }
+
+            &.ng-leave.ng-leave-active {
+                height: 0px;
+            }
+
+            .game-notes-header {
+                height: 40px;
+                padding: 0px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: thin solid @gray-border;
+
+                .blue-link {
+                    cursor: pointer;
+                }
+            }
+
+            .game-notes-body {
+                height: calc(~'100% - 40px');
+                overflow: auto;
+                padding: 20px;
+
+                ::-webkit-scrollbar {
+                    z-index: 12;
                 }
             }
         }
