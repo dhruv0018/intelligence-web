@@ -92,10 +92,6 @@
                 </div>
             </div>
 
-            <div class="button-row">
-                <button id="share-film-team-back-cta" class="btn btn-default" ng-click="withTeam = false"><i class="icon icon-chevron-left"></i> Back</button>
-                <button id="share-film-team-done-cta" class="btn btn-primary pull-right" ng-click="$close()">Done</button>
-            </div>
         </div>
 
         <!-- View for sharing with other Krossover users -->
@@ -140,10 +136,6 @@
                     	<i class="icon icon-remove" ng-click="shareRevoke(share)"></i>
                     </span>
         		</div>
-        	</div>
-        	<div class="button-row">
-        		<button id="share-film-others-back-cta" class="btn btn-default" ng-click="withOtherUsers = false"><i class="icon icon-chevron-left"></i> Back</button>
-        		<button id="share-film-others-done-cta" class="btn btn-primary" ng-click="$close()">Done</button>
         	</div>
         </div>
 
@@ -191,10 +183,6 @@
                 </div>
             </div>
 
-            <div class="button-row">
-                <button id="share-film-public-back-cta" class="btn btn-default" ng-click="withPublic = false"><i class="icon icon-chevron-left"></i> Back</button>
-                <button id="share-film-public-done-cta" class="btn btn-primary" ng-click="$close()" ng-disabled="film.isSaving">Done</button>
-            </div>
         </div>
 
         <!-- View for sharing with a film exchange -->
@@ -229,6 +217,27 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="modal-footer" ng-show="withTeam">
+        <div class="button-row">
+            <button id="share-film-team-back-cta" class="btn btn-default" ng-click="withTeam = false"><i class="icon icon-chevron-left"></i> Back</button>
+            <button id="share-film-team-done-cta" class="btn btn-primary pull-right" ng-click="$close()">Done</button>
+        </div>
+    </div>
+
+    <div class="modal-footer" ng-show="withOtherUsers">
+        <div class="button-row">
+            <button id="share-film-others-back-cta" class="btn btn-default" ng-click="withOtherUsers = false"><i class="icon icon-chevron-left"></i> Back</button>
+            <button id="share-film-others-done-cta" class="btn btn-primary" ng-click="$close()">Done</button>
+        </div>
+    </div>
+
+    <div class="modal-footer" ng-show="withPublic">
+        <div class="button-row">
+            <button id="share-film-public-back-cta" class="btn btn-default" ng-click="withPublic = false"><i class="icon icon-chevron-left"></i> Back</button>
+            <button id="share-film-public-done-cta" class="btn btn-primary" ng-click="$close()" ng-disabled="film.isSaving">Done</button>
+        </div>
     </div>
 
 </div>
