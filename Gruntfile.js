@@ -290,7 +290,7 @@ module.exports = function(grunt) {
                 options: {
                     browserifyOptions: {
                         debug: true,
-                        paths: ['./node_modules', './components'],
+                        paths: ['./node_modules', './components', './src'],
                         transform: [es6ify],
                         noParse: ['./build/templates.js']
                     }
@@ -303,7 +303,8 @@ module.exports = function(grunt) {
                 options: {
                     transform: [es6ify],
                     browserifyOptions: {
-                        noParse: ['./build/build.js']
+                        noParse: ['./build/build.js'],
+                        paths: ['./node_modules', './src']
                     }
                 },
                 files: {
