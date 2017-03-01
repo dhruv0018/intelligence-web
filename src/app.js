@@ -4,6 +4,7 @@ var templates = require('../build/templates.js');
 
 import App from '../app';
 import Lib from '../lib';
+import ngRedux from 'ng-redux';
 
 let host = window.location.host;
 
@@ -33,7 +34,8 @@ var IntelligenceWebClient = angular.module(pkg.name, [
     'Pills',
     'KrossoverTags',
     'ngFileUpload',
-    'as.sortable'
+    'as.sortable',
+    'ngRedux'
 ]);
 
 IntelligenceWebClient.run(templates.templateCache);
