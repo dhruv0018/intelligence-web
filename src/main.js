@@ -33,6 +33,7 @@ require('./viewports');
 require('./device');
 require('./mediator');
 require('./feature-flag');
+require('./store');
 
 require('./http/interceptors/503');
 require('./http/interceptors/error');
