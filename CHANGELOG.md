@@ -1,8 +1,20 @@
-# v115.0##
+# v116.0#
+## Features##
+- Updates style guide
+- Renames LAX shooting regions
+- Updates CHP copy
+
+## Fixes##
+- Fixes QA games available
+- Fixes film editor bug when leaving state in middle of editing play
+- Fixes error when assigning indexer/QA
+- Fixes missing score on game info
+
+# v115.0#
 ## Features##
 - Angular-bootstrap library upgrade
 
-# v114.1##
+# v114.1#
 ## Fixes##
 - Fixes ability to rename reel
 - Fixes QA flags link not appearing
