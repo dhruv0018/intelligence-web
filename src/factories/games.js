@@ -274,7 +274,7 @@ IntelligenceWebClient.factory('GamesFactory', [
             },
 
             doGameScoresExist() {
-                return !this.areInputtedGameScoresUnavailable || this.areIndexedGameScoresAvailable;
+                return !this.areInputtedGameScoresUnavailable() || this.areIndexedGameScoresAvailable();
             },
 
             /**
