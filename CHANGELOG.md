@@ -1,3 +1,9 @@
+# v117.0#
+## Features##
+- Game Info page improvements
+- Updates ice hockey arena
+- Adds scroll bar to share reel modal
+
 # v116.0#
 ## Features##
 - Updates style guide
