@@ -2,10 +2,6 @@
     .modal-content{
         overflow: hidden;
     }
-    .modal-body{
-        max-height: 440px;
-        overflow-y: scroll;
-    }
     .modal-footer{
         border-top: 1px solid #ebebeb;
         padding-top: 0px;
@@ -132,7 +128,10 @@
         }
 
         .sharing-with-team-container {
-
+            max-height: 400px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            margin-right: -10px;
             .team-share-options {
 
                 a {
@@ -204,7 +203,11 @@
                 .role-typeahead {
                     display: inline-block;
                     width: 460px;
-
+                    ul.dropdown-menu{
+                        width: 560px;
+                        max-height: 190px;
+                        overflow-x: hidden;
+                    }
                     input {
                         width: 100%;
                     }
