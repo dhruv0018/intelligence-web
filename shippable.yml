@@ -36,7 +36,6 @@ build:
       - cd deploy
       - ssh-agent bash -c 'ssh-add /home/git.key; git clone git@bitbucket.org:krossoverintelligence/deployer-builder.git'
       - cd deployer-builder/intelligence-web-client
-      - git checkout no-component
       - if [[ $IS_PULL_REQUEST == "true" ]]; then export GIT_BRANCH=$HEAD_BRANCH export BUILDER_METHOD="-p $PULL_REQUEST -b $HEAD_BRANCH"; elif [[ $IS_GIT_TAG == "true" ]]; then export GIT_BRANCH="TAG-COMMIT" export BUILDER_METHOD="-c $COMMIT -b master"; else export GIT_BRANCH=$BRANCH export BUILDER_METHOD="-c $COMMIT -b $BRANCH"; fi; echo "GIT_BRANCH=$GIT_BRANCH BUILDER_METHOD=$BUILDER_METHOD";
       - if [[ $GIT_BRANCH == build-* ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g "buildserver --buildserver $GIT_BRANCH"'; else echo "Not Building"; fi;
       - if [[ $GIT_BRANCH == fix-* ]]; then ssh-agent bash -c 'ssh-add /home/git.key; python builder.py $BUILDER_METHOD -w test-envs -g uat'; else echo "Not Building"; fi;
