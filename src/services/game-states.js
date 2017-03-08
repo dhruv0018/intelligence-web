@@ -80,7 +80,7 @@ function GameStatesService (
                                     states.push({name: 'Games.ArenaChart'});
                                 }
                                 break;
-                            case SPORTS.LACROSSE.id: case SPORTS.SOCCER.id:
+                            case SPORTS.LACROSSE.id: case SPORTS.SOCCER.id: case SPORTS.ICE_HOCKEY.id:
                                 if (features.isEnabled('ArenaChart')) {
                                     states.push({name: 'Games.ArenaChart'});
                                 }

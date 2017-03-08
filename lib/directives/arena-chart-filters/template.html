@@ -46,18 +46,20 @@
                 <krossover-checkbox ng-model="filterModel.shots.made" filled="true">
                     <i class="arena-event-icon arena-event-icon-smallest icon-circle"></i>
                     <span ng-if="SPORT_IDS[league.sportId] === 'BASKETBALL'">Made</span>
-                    <span ng-if="SPORT_IDS[league.sportId] === 'LACROSSE' || SPORT_IDS[league.sportId] === 'SOCCER'">Scored</span>
+                    <span ng-if="SPORT_IDS[league.sportId] === 'LACROSSE' || SPORT_IDS[league.sportId] === 'SOCCER' || SPORT_IDS[league.sportId] === 'ICE_HOCKEY'">
+                        Scored
+                    </span>
                 </krossover-checkbox>
 
                 <krossover-checkbox ng-model="filterModel.shots.missed" filled="true">
                     <i class="arena-event-icon arena-event-icon-smallest icon-x"></i>Missed
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE' || SPORT_IDS[league.sportId] === 'SOCCER'" ng-model="filterModel.shots.blocked" filled="true">
+                <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE' || SPORT_IDS[league.sportId] === 'SOCCER' || SPORT_IDS[league.sportId] === 'ICE_HOCKEY'" ng-model="filterModel.shots.blocked" filled="true">
                     <i class="arena-event-icon arena-event-icon-smallest icon-diamond-line-thick"></i>Blocked
                 </krossover-checkbox>
 
-                <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE' || SPORT_IDS[league.sportId] === 'SOCCER'" ng-model="filterModel.shots.saved" filled="true">
+                <krossover-checkbox ng-if="SPORT_IDS[league.sportId] === 'LACROSSE' || SPORT_IDS[league.sportId] === 'SOCCER' || SPORT_IDS[league.sportId] === 'ICE_HOCKEY'" ng-model="filterModel.shots.saved" filled="true">
                     <i class="arena-event-icon arena-event-icon-smallest icon-open_circle"></i>Saved
                 </krossover-checkbox>
 
