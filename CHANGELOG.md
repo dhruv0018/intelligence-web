@@ -1,3 +1,11 @@
+# v121.0#
+## Features##
+- Adds game notes to film exchange raw film modal
+- Swaps team in summary for ice hockey faceoff win
+
+## Fixes##
+- Shows active header menu highlighted
+
 # v117.0#
 ## Features##
 - Game Info page improvements
