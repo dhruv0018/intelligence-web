@@ -54,7 +54,7 @@ var SPORTS = {
     ICE_HOCKEY: {
         id: 6,
         name: 'Ice Hockey',
-        hasAnalytics: false,
+        hasAnalytics: true,
         hasStatistics: true,
         hasInsights: false,
         scoreBySets: false
