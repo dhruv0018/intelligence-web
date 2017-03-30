@@ -1,3 +1,7 @@
+# v122.0#
+## Features##
+- Adds necessary schema for new remodeled DB columns
+
 # v121.0#
 ## Features##
 - Adds game notes to film exchange raw film modal
