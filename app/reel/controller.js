@@ -27,7 +27,9 @@ ReelController.$inject = [
     'TelestrationsVideoPlayerBroker',
     'PlaylistEventEmitter',
     'EVENT',
-    'ROLE_TYPE'
+    'ROLE_TYPE',
+    'SPORTS',
+    'Reel.Data'
 ];
 
 /**
@@ -62,7 +64,9 @@ function ReelController(
     TelestrationsVideoPlayerBroker,
     playlistEventEmitter,
     EVENT,
-    ROLE_TYPE
+    ROLE_TYPE,
+    SPORTS,
+    reelData
 ) {
 
     const telestrationsVideoPlayerBroker = new TelestrationsVideoPlayerBroker();
@@ -104,6 +108,11 @@ function ReelController(
     $scope.isCurrentPlaySelfEdited = plays[0].isSelfEdited;
     $scope.game = game;
     $scope.league = league;
+
+    // Temporary solution to show download button based on sports involved in reel
+    $scope.reelHasNoBasketballPlays = reelData.teams.every(reelTeam => {
+        return reelTeam.sportId !== SPORTS.BASKETBALL.id;
+    });
 
     playManager.current = play;
 

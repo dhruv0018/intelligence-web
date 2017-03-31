@@ -84,7 +84,7 @@
                     <a
                         class="download control-button"
                         ng-href="{{videoPlayer.sources[0].src}}"
-                        ng-hide="videoPlayer.selfEditingMode || userIsAthlete"
+                        ng-show="(userIsCoach && !videoPlayer.selfEditingMode) || (userIsAthlete && videoPlayer.reelHasNoBasketballPlays)"
                         tooltip="Download"
                         download
                         krossover-blur-on-select
