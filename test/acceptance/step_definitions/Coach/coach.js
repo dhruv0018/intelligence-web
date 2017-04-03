@@ -80,7 +80,7 @@ module.exports = function Coach(){
     this.Then(/^I should see a roster for the "([^"]*)" team$/, function (teamType, done) {
         var self = this;
 
-        self.waitForVisible(games.roster.first()).then(
+        self.waitForVisible(games.roster.first(), 60000).then(
             function(){
                 expect(games.rosterCount()).to.eventually.above(0).and.notify(done);
             }

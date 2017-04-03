@@ -44,7 +44,7 @@ module.exports = function() {
             var self = this;
             var EC = protractor.ExpectedConditions;
             var isClickable = EC.elementToBeClickable(element);
-            timeToWaitInMilliseconds = timeToWaitInMilliseconds || 30000;
+            timeToWaitInMilliseconds = timeToWaitInMilliseconds || 45000;
             browser.wait(isClickable, timeToWaitInMilliseconds);
             return element.click();
         };
@@ -53,7 +53,7 @@ module.exports = function() {
             var self = this;
             var EC = protractor.ExpectedConditions;
             var isVisible = EC.visibilityOf(element);
-            timeToWaitInMilliseconds = timeToWaitInMilliseconds || 30000;
+            timeToWaitInMilliseconds = timeToWaitInMilliseconds || 45000;
             return browser.wait(isVisible, timeToWaitInMilliseconds);
         };
 
@@ -61,7 +61,7 @@ module.exports = function() {
             var self = this;
             var EC = protractor.ExpectedConditions;
             var isInvisible = EC.invisibilityOf(element);
-            timeToWaitInMilliseconds = timeToWaitInMilliseconds || 30000;
+            timeToWaitInMilliseconds = timeToWaitInMilliseconds || 45000;
             browser.wait(isInvisible, timeToWaitInMilliseconds);
         };
 
