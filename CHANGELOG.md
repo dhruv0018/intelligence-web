@@ -1,3 +1,7 @@
+# v122.1#
+## Features##
+- Allow athletes to download non-basketball reels
+
 # v122.0#
 ## Features##
 - Adds necessary schema for new remodeled DB columns
