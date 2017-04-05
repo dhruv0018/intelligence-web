@@ -261,6 +261,7 @@ function GamesController(
     $scope.team = $scope.teams[game.teamId];
     $scope.opposingTeam = $scope.teams[game.opposingTeamId];
     $scope.league = league;
+    $scope.gameIsSharedPublicly = game.isSharedWithPublic();
 
     // Watch for header display
     $scope.hideHeader = false;

@@ -16,6 +16,7 @@ ReelController.$inject = [
     'PlayManager',
     'GamesFactory',
     'PlaysFactory',
+    'UsersFactory',
     'SelfEditedPlaysFactory',
     'TeamsFactory',
     'LeaguesFactory',
@@ -53,6 +54,7 @@ function ReelController(
     playManager,
     gamesFactory,
     playsFactory,
+    usersFactory,
     selfEditedPlaysFactory,
     teamsFactory,
     leaguesFactory,
@@ -73,6 +75,7 @@ function ReelController(
 
     let reelId = Number($stateParams.id);
     let reel = reelsFactory.get(reelId);
+    let reelUploaderUser = usersFactory.get(reel.uploaderUserId);
     let currentUser = session.getCurrentUser();
     let isUploader = reel.isUploader(currentUser.id);
     let isTeamUploadersTeam = reel.isTeamUploadersTeam(currentUser.currentRole.teamId);
@@ -113,6 +116,9 @@ function ReelController(
     $scope.reelHasNoBasketballPlays = reelData.teams.every(reelTeam => {
         return reelTeam.sportId !== SPORTS.BASKETBALL.id;
     });
+
+    $scope.reelIsSharedPublicly = reel.isSharedWithPublic();
+    $scope.reelCreatedByAthlete = reelUploaderUser.is(ROLES.ATHLETE);
 
     playManager.current = play;
 

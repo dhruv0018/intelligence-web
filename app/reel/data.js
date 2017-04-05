@@ -11,7 +11,8 @@ ReelDataDependencies.$inject = [
     'LeaguesFactory',
     'TagsetsFactory',
     'SessionService',
-    'UsersFactory'
+    'UsersFactory',
+    '$q'
 ];
 
 function ReelDataDependencies (
@@ -24,7 +25,8 @@ function ReelDataDependencies (
     leagues,
     tagsets,
     session,
-    users
+    users,
+    $q
 ) {
 
     class ReelData {
@@ -50,10 +52,17 @@ function ReelDataDependencies (
 
             /* load reels by relatedUserId for logged in users,
             else when user refresh's the related reels is lost */
+
             if (userId) {
                 this.reels = reels.load({ relatedUserId: userId });
             } else {
-                this.reel = reels.load(reelId);
+                let deferred = $q.defer();
+                this.reelCreatedByUser = deferred.promise;
+                this.reel = reels.load(reelId).then((reels) => {
+                    let reel = reels[0];
+                    users.load(reel.uploaderUserId).then(() => { deferred.resolve(); });
+                    return reel;
+                });
             }
         }
     }
