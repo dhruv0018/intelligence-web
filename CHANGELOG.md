@@ -1,3 +1,7 @@
+# v122.2#
+## Fixes##
+- Fix download button visibility for public games
+
 # v122.1#
 ## Features##
 - Allow athletes to download non-basketball reels
