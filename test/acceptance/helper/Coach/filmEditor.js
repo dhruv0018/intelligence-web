@@ -22,5 +22,6 @@ module.exports = function FilmEditor(){
     this.btnUpdateEndTime = element(by.css('button.btn.btn-rounded.end-clip-button'));
     this.emptyClipsState =$('.editor-empty-state');
     this.disabledPlay = element(by.css('div.playlist-item-container.play-is-newly-made.play-is-newly-made-finished.play-disabled'));
+    this.savedPlayIcon =$('.play-saved-tag'); 
 
 }

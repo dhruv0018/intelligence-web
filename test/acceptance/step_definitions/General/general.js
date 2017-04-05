@@ -191,5 +191,10 @@ module.exports = function() {
 
         self.waitForClickable(button).then(done);
     });
+
+    this.Then(/^Then I should see the text "([^"]*)"$/, function (text, done) {
+        
+        expect(filmHome.shareFilmOptions.isPresent()).to.eventually.be.true.and.notify(done);
+    });
     
 };

@@ -31,6 +31,9 @@ npm-debug.log
 # Any intelliJ editor files
 .idea
 
+# log files
+.log
+
 # Vagrant machines
 .vagrant
 

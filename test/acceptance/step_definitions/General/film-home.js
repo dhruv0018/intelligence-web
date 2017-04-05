@@ -138,8 +138,7 @@ module.exports = function() {
         var self = this;
         var EC = protractor.ExpectedConditions;
 
-        //browser.wait(EC.visibilityOf(filmHome.firstReelName), 30000).then(
-        this.waitForVisible(filmHome.firstReelName, 30000).then(
+        self.waitForVisible(filmHome.firstReelName, 30000).then(
             function(){
                 expect(filmHome.firstReelName.getText()).to.eventually.equal(reel + conferences.uniqueID).and.notify(done);
             }
@@ -154,4 +153,103 @@ module.exports = function() {
         expect(filmHome.firstReelName.getText()).to.eventually.not.equal(reel + conferences.uniqueID).and.notify(done);
     });
 
+    this.When(/^I filter for breakdowns$/, function (done) {
+        var self = this;
+
+        self.waitForClickable(filmHome.filmHomeFilter).then(
+            function(){
+                self.waitForClickable(filmHome.filterBreakdowns).then(
+                    function(){
+                        self.waitForClickable(filmHome.btnApply).then(done);
+                    }
+                );
+            }
+        );
+    });
+
+    this.When(/^I click to share the "([^"]*)" with Other Krossover Users$/, function(filmType, done) {
+        var self = this;
+
+        self.waitForClickable(filmHome.btnFirstShare).then(
+            function(){
+                filmHome.shareOtherUsersOption.click().then(done);
+            }
+        );    
+    });
+
+    this.When(/^I select user with name "([^"]*)" who is a coach of team "([^"]*)"$/, function(userName, teamName, done) {
+        var self = this;
+
+        self.waitForClickable(filmHome.userSearchBox).sendKeys(userName).then(
+            function(){
+                self.waitForClickable(filmHome.userSearchResult).then(
+                    function(){
+                        self.waitForClickable(filmHome.btnAdd).then(done);
+                    }
+                );
+            }
+        );
+    });
+
+    this.When(/^I click Add$/, function(done) {
+        var self = this;
+
+        self.waitForClickable(filmHome.btnAdd).then(done);
+    });
+
+    this.When(/^I click Done$/, function(done) {
+        var self = this;
+
+        self.waitForClickable(filmHome.btnDone).then(done);
+    });
+
+    this.Then(/^I should see a drop-down to share raw film or raw film and breakdown$/, function (done) {
+        browser.sleep(2000).then(
+            function(){
+                expect(filmHome.shareFilmOptions.isPresent()).to.eventually.be.true.and.notify(done);    
+            }
+        );
+    });
+
+    this.Then(/^I should see the game I shared with away team name "([^"]*)"$/, function (teamName, done) {
+        expect(filmHome.firstAwayTeam.getText()).to.eventually.equal(teamName).and.notify(done);
+    });
+
+    this.Then(/^I should see the game I shared with home team name "([^"]*)"$/, function (teamName, done) {
+        expect(filmHome.firstHomeTeam.getText()).to.eventually.equal(teamName + conferences.uniqueID).and.notify(done);
+    });
+
+    this.When(/^I click to revoke sharing of the "([^"]*)"$/, function(filmType, done) {
+        var self = this;
+
+        self.waitForClickable(filmHome.revokeShare).then(done);
+    });
+
+    this.Then(/^I should NOT see the "([^"]*)" I shared with name "([^"]*)"$/, function (filmType, teamName, done) {
+        expect(filmHome.firstAwayTeam.isPresent()).to.eventually.be.false.and.notify(done);
+    });
+
+    this.Then(/^I should see text "([^"]*)" in the "([^"]*)" column$/, function (txt, columnName, done) {
+        var className = 'subtext';
+        var element = $('.'+className);
+
+        element.getText().then(function(strTxt){
+            expect(strTxt.indexOf(txt)).to.above(-1);
+            done();
+        })
+    });
+
+    this.When(/^I filter for games that were shared with me$/, function (done) {
+        var self = this;
+
+        self.waitForClickable(filmHome.filmHomeFilter).then(
+            function(){
+                self.waitForClickable(filmHome.filterSharedWithMe).then(
+                    function(){
+                        self.waitForClickable(filmHome.btnApply).then(done);
+                    }
+                );
+            }
+        );
+    });
 };

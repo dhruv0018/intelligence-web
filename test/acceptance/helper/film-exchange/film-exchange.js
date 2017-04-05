@@ -9,7 +9,6 @@ const moment = require('moment');
 module.exports = function FilmExchange(){
 
     this.dropdown = $('.header-dropdown');
-    this.btnFirstShare = element.all(by.xpath('//div[@ng-click="openShareModal($event, game)"]')).first();
     this.filmExchangeOption = $('#share-film-exchange-cta');
     this.shareButtonModal = $('#share-film-exchange-done-cta');
     this.btnCloseShare = $('#share-film-dismiss-cta');

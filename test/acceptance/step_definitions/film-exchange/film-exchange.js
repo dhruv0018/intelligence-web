@@ -3,10 +3,12 @@ var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 var expect = chai.expect;
 var FilmExchange = require("../../helper/film-exchange/film-exchange");
+var FilmHome = require("../../helper/film-home/film-home");
 
 module.exports = function() {
 
     var filmExchanges = new FilmExchange();
+    var filmHome = new FilmHome();
 
     this.When(/^I go to the "([^"]*)" film exchange$/, function(text, done) {
         var self = this;
@@ -22,7 +24,7 @@ module.exports = function() {
     this.When(/^I share the first game with "([^"]*)" film exchange$/, function(filmExchange, done) {
         var self = this;
 
-        self.waitForClickable(filmExchanges.btnFirstShare).then(
+        self.waitForClickable(filmHome.btnFirstShare).then(
             function(){
                 filmExchanges.filmExchangeOption.click().then(
                     function(){

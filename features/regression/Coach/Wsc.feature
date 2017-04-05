@@ -16,6 +16,7 @@ Feature: Coach-WSC
         Then I should see the "film-home" page
 
     Scenario: Basketball Coach can order WSC highlight for breakdowns
+    
         Given I click "Games" tab on film home
         When I search for game "marlboro"
         When I select first game

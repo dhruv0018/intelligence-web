@@ -245,7 +245,11 @@ module.exports = function Coach(){
     this.When(/^I click Delete Clip$/, function (done) {
         var self = this;
 
-        self.waitForClickable(filmEditor.trashIcon).then(done);
+        self.waitForInvisible(filmEditor.savedPlayIcon).then(
+            function(){
+                self.waitForClickable(filmEditor.trashIcon).then(done);
+            }
+        );
     });
 
     this.When(/^I click to cancel the deletion$/, function (done) {

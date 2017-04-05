@@ -25,13 +25,23 @@ module.exports = function FilmHome(){
     this.gameSearchBox = gameSearchBox;
     this.filmHomeFilter =$('#single-button');
     this.filterBreakdowns = element(by.xpath('//span[contains(text(), "Breakdowns")]'));
+    this.filterSharedWithMe = element(by.xpath('//span[contains(text(), "Shared with me")]'));
     this.btnApply = element(by.buttonText('Apply'));
     this.game = element.all(by.css('img.thumbnail-img')).first();
     //this.firstAwayTeam =$('div.body-row').$('div.body-cell.team');
+    this.firstHomeTeam =$$('div.body-cell.team').get(1);
     this.firstAwayTeam =$$('div.body-cell.team').first();
     this.gameDeletedSuccess = element(by.xpath('//span[contains(text(), "Your game has been successfully deleted")]'));
     this.firstReelName =$$('div.body-cell.name').first();
     this.activeReelsTab = element(by.css('div.allocation-nav-btn.state-tab.active-state'));
+    this.btnFirstShare = element.all(by.xpath('//div[@ng-click="openShareModal($event, game)"]')).first();
+    this.shareOtherUsersOption =$('#share-other-users-cta');
+    this.userSearchBox = element(by.model('filter.fullName'));
+    this.userSearchResult = element(by.repeater('match in matches'));
+    this.shareFilmOptions =$('#share-film-others-options-cta');
+    this.btnAdd = element(by.xpath('//button[@ng-click="shareWithKrossoverUser(user); user = null"]'));
+    this.btnDone =$('#share-film-others-done-cta');
+    this.revokeShare = element(by.xpath('//i[@ng-click="shareRevoke(share)"]'));
 
     this.clickTab = function(tabName){
         if(tabName === 'Reels'){
