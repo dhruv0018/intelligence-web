@@ -292,6 +292,9 @@
         <li ng-if="currentUser.is(COACH)">
             <a id="menu-coach-support-cta" ng-href="{{config.links.support.uri}}" target="_blank">Support</a>
         </li>
+        <li ng-if="currentUser.is(COACH)">
+            <a id="menu-coach-offers-cta" ng-href="{{config.links.store.coach.uri}}" target="_blank">Store</a>
+        </li>
 
         <!-- Athlete menu -->
         <li ui-sref-active="active" ng-if="currentUser.is(ATHLETE)">
@@ -306,6 +309,9 @@
             class="ng-hide"
             ui-sref-active="active">
             <a id="menu-athlete-profile-cta" ui-sref="Athlete.Profile({id: session.currentUser.id})">Profile</a>
+        </li>
+        <li ng-if="currentUser.is(ATHLETE)">
+            <a id="menu-athlete-offers-cta" ng-href="{{config.links.store.athlete.uri}}" target="_blank">Store</a>
         </li>
     </menu>
 

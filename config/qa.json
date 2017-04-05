@@ -120,6 +120,14 @@
                     "uri" : "https://krossover.wufoo.com/forms/zc60e0e0kw6dc1/"
                 }
             }
+        },
+        "store": {
+            "coach": {
+                "uri": "http://krossover.com/coachoffers"
+            },
+            "athlete": {
+                "uri": "http://krossover.com/athleteoffers"
+            }
         }
     },
     "defaultVideoId": 2,
