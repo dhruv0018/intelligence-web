@@ -30,6 +30,7 @@ Feature: Game Roster
         Then I should see the "film-home" page
         Then I should see a confirmation that the game was deleted
  
+ @ignore
     Scenario: Enter an existing canonical team as the away team when uploading a regular game
 
         When I go to film home

@@ -80,11 +80,21 @@ module.exports = function Coach(){
     this.Then(/^I should see a roster for the "([^"]*)" team$/, function (teamType, done) {
         var self = this;
 
-        self.waitForVisible(games.roster.first(), 60000).then(
-            function(){
-                expect(games.rosterCount()).to.eventually.above(0).and.notify(done);
-            }
-        );
+        if (teamType=='home'){
+            self.waitForVisible(games.activeHomeTeamTab).then(
+                function(){
+                    expect(games.rosterCount()).to.eventually.above(0).and.notify(done);
+                }
+            );
+        }
+        else{
+            self.waitForVisible(games.activeOpposingTeamTab).then(
+                function(){
+                    expect(games.rosterCount()).to.eventually.above(0).and.notify(done);
+                }
+            );
+        }
+
     });
 
     this.Then(/^I should NOT see a roster for the new non-canonical team$/, function (done) {
