@@ -112,7 +112,7 @@ module.exports = function() {
 
     this.Then(/^I should only see "([^"]*)" on film home$/, function (type, done) {
         if(type === 'Reels'){
-            expect(filmHome.numClipsDiv.isPresent()).to.eventually.be.true.and.notify(done);
+            expect(filmHome.reels.isPresent()).to.eventually.be.true.and.notify(done);
         }else{
             expect(filmHome.thumbnailDiv.isPresent()).to.eventually.be.true.and.notify(done);
         }

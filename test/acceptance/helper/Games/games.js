@@ -42,6 +42,7 @@ module.exports = function Games(){
     this.canonicalTeamName =$('.enteredName');
     this.activeHomeTeamTab = element(by.xpath('//li[@id="coach-game-team-cta" and @class="ng-isolate-scope active"]'));
     this.activeOpposingTeamTab = element(by.xpath('//li[@id="coach-game-opposing-info-cta" and @class="ng-isolate-scope active"]'));
+    this.topLevelGameInfoTab =$('#game-info-cta');
 
     this.enterOpposingTeam = function(opposingTeam){
         opposingTeamField.sendKeys(opposingTeam);

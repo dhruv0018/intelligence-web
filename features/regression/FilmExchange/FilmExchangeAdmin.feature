@@ -57,3 +57,11 @@ Feature: FilmExchangeAdmin
         When I close the modal
         When I switch to role "Lacrosse Test"
         Then the team's coach should be able to access the "Test" film exchange
+
+    Scenario: Clean up data
+
+        When I select "Girls Lax Andrew" game
+        When I click on the top level Game Info tab
+        When I delete the game
+        When I confirm the deletion
+        Then I should see the "film-home" page

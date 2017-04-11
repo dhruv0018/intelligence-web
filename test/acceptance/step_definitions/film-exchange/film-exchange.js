@@ -4,6 +4,7 @@ chai.use(chaiAsPromised);
 var expect = chai.expect;
 var FilmExchange = require("../../helper/film-exchange/film-exchange");
 var FilmHome = require("../../helper/film-home/film-home");
+var view = require("../../helper/view");
 
 module.exports = function() {
 
@@ -251,21 +252,19 @@ module.exports = function() {
 
     this.Then(/^I should only see games that were played today$/, function(done) {
         var self = this;
-        var games = element.all(by.css('div.body-cell.datePlayed > span'));
 
-        games.getText().then(function(selectedArr){
+        filmExchanges.filmExchangeGames.getText().then(function(selectedArr){
             for (var i=0; i<selectedArr.length; i++){
                 (function(i){
-                    console.log(selectedArr[i]);
+                    //console.log(selectedArr[i]);
                     browser.sleep(1000).then(
-                        function()
-                        {
-                            expect(selectedArr[i]).to.equal(filmExchanges.resultsDate);
-                            if (i == selectedArr.length-1){
-                                done();
-                            }
+                        function(){
+                                expect(selectedArr[i]).to.equal(filmExchanges.resultsDate);
+                                if (i == selectedArr.length-1){
+                                    done();
+                                }
                         }
-                    )
+                    );
                 })(i);
             }
         })

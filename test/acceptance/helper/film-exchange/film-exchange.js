@@ -28,6 +28,7 @@ module.exports = function FilmExchange(){
     this.filmExchangeMenu =$('#menu-coach-film-exchange-cta');
     this.btnClose = element(by.css('i.icon.icon-remove'));
     this.teamAccessModal = $('#film-exchange-teams');
+    this.filmExchangeGames = element.all(by.css('div.body-cell.datePlayed > span'));
 
     this.clickSearchButton = function(){
         return this.btnSearch.click();

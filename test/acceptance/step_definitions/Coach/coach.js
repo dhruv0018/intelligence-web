@@ -397,4 +397,10 @@ module.exports = function Coach(){
         games.clickNext().then(done);
     });
 
+    this.When(/^I click on the top level Game Info tab$/, function (done) {
+        var self = this;
+
+        self.waitForClickable(games.topLevelGameInfoTab).then(done);
+    });
+
 }

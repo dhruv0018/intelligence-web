@@ -42,6 +42,7 @@ module.exports = function FilmHome(){
     this.btnAdd = element(by.xpath('//button[@ng-click="shareWithKrossoverUser(user); user = null"]'));
     this.btnDone =$('#share-film-others-done-cta');
     this.revokeShare = element(by.xpath('//i[@ng-click="shareRevoke(share)"]'));
+    this.reels = element(by.repeater('reel in reels'));
 
     this.clickTab = function(tabName){
         if(tabName === 'Reels'){
