@@ -1,3 +1,9 @@
+# v123.0#
+## Features##
+- Adds Stats, Analytics and Shot Chart for Ice Hockey users
+- Adds Export options to Soccer Stats
+- Adds exclusive offers via the Store tab in the navigation
+
 # v122.2#
 ## Fixes##
 - Fix download button visibility for public games
