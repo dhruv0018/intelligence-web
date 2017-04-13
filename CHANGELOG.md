@@ -1,3 +1,7 @@
+# v123.1#
+## Features##
+- Adds order now button for Lacrosse reel highlights
+
 # v123.0#
 ## Features##
 - Adds Stats, Analytics and Shot Chart for Ice Hockey users
