@@ -256,8 +256,7 @@ module.exports = function() {
         filmExchanges.filmExchangeGames.getText().then(function(selectedArr){
             for (var i=0; i<selectedArr.length; i++){
                 (function(i){
-                    //console.log(selectedArr[i]);
-                    browser.sleep(1000).then(
+                    browser.actions().mouseMove(filmExchanges.filmExchangeGames.get(i)).perform().then(
                         function(){
                                 expect(selectedArr[i]).to.equal(filmExchanges.resultsDate);
                                 if (i == selectedArr.length-1){

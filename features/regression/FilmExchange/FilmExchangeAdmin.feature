@@ -61,7 +61,6 @@ Feature: FilmExchangeAdmin
     Scenario: Clean up data
 
         When I select "Girls Lax Andrew" game
-        When I click on the top level Game Info tab
         When I delete the game
         When I confirm the deletion
         Then I should see the "film-home" page
