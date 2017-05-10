@@ -28,8 +28,8 @@ module.exports = function Account() {
             password: "superadmin",
         },
         'ASSISTANT_COACH': {
-            email: "superadmin@krossover.com",
-            password: "superadmin",
+            email: "dhruv@krossover.com",
+            password: "Krossoverpopcorn23",
         },
         'INDEXER': {
             email: "superadmin@krossover.com",

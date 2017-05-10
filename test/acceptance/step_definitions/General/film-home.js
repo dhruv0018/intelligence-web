@@ -5,12 +5,14 @@ var expect = chai.expect;
 var Header = require("../../helper/header");
 var FilmHome = require("../../helper/film-home/film-home");
 var ConferencesPage = require("../../helper/Admin/conferences");
+var ReelsPage = require("../../helper/reel/reel");
 const moment = require('moment');
 
 module.exports = function() {
     var header = new Header();
     var filmHome = new FilmHome();
     var conferences = new ConferencesPage();
+    var reels = new ReelsPage();
 
     this.When(/^I go to film home$/ , function(done){
         header.clickCoachFilmHome().then(done);
@@ -25,26 +27,40 @@ module.exports = function() {
     this.When(/^I search for game "([^"]*)"$/, function (text, done){
         var self = this;
 
-        self.waitForClickable(filmHome.gameSearchBox).sendKeys(text).then(
-            function(){
-                browser.sleep(1000).then(
+        filmHome.gameSearchBox.isDisplayed().then(function(isVisible){
+            if(isVisible){
+                self.waitForClickable(filmHome.gameSearchBox).sendKeys(text).then(
                     function(){
-                        self.waitForInvisible($('.loading'));
-                        done();
+                        browser.sleep(1000).then(
+                            function(){
+                                self.waitForInvisible($('.loading'));
+                                done();
+                            }
+                        )
                     }
-                )
+                );
             }
-        );
+            else{
+                done();
+            }
+        });
     });
 
     this.When(/^I search for reel "([^"]*)"$/, function (text, done){
         var self = this;
 
-        self.waitForClickable(filmHome.reelSearchBox()).sendKeys(text).then(
-            function(){
+        filmHome.reelSearchBox.isDisplayed().then(function(isVisible){
+            if(isVisible){
+                self.waitForClickable(filmHome.reelSearchBox).sendKeys(text).then(
+                    function(){ 
+                        done();
+                    }
+                );
+            }
+            else{
                 done();
             }
-        );
+        });
     });
 
     this.When(/^I select "([^"]*)" game$/, function (text, done) {
@@ -140,7 +156,7 @@ module.exports = function() {
 
         self.waitForVisible(filmHome.firstReelName, 30000).then(
             function(){
-                expect(filmHome.firstReelName.getText()).to.eventually.equal(reel + conferences.uniqueID).and.notify(done);
+                expect(filmHome.firstReelName.getText()).to.eventually.equal(reel).and.notify(done);
             }
         )
     });
@@ -170,25 +186,53 @@ module.exports = function() {
     this.When(/^I click to share the "([^"]*)" with Other Krossover Users$/, function(filmType, done) {
         var self = this;
 
-        self.waitForClickable(filmHome.btnFirstShare).then(
-            function(){
-                filmHome.shareOtherUsersOption.click().then(done);
-            }
-        );    
+        if (filmType=="reel"){
+            self.waitForClickable(filmHome.btnReelShare).then(
+                function(){
+                    filmHome.shareOtherUsersOption.click().then(done);
+                }
+            );   
+        }
+        else{
+            self.waitForClickable(filmHome.btnFirstShare).then(
+                function(){
+                    filmHome.shareOtherUsersOption.click().then(done);
+                }
+            );   
+        }
     });
 
     this.When(/^I select user with name "([^"]*)" who is a coach of team "([^"]*)"$/, function(userName, teamName, done) {
         var self = this;
 
-        self.waitForClickable(filmHome.userSearchBox).sendKeys(userName).then(
-            function(){
-                self.waitForClickable(filmHome.userSearchResult).then(
+        filmHome.sharedTeam.isPresent().then(function(isVisible){
+            if(isVisible){
+                self.waitForClickable(filmHome.revokeShare).then(
                     function(){
-                        self.waitForClickable(filmHome.btnAdd).then(done);
+                        self.waitForClickable(filmHome.userSearchBox).sendKeys(userName).then(
+                            function(){
+                                self.waitForClickable(filmHome.userSearchResult).then(
+                                    function(){
+                                        self.waitForClickable(filmHome.btnAdd).then(done);
+                                    }
+                                );
+                            }
+                        );
                     }
                 );
             }
-        );
+            else{
+                self.waitForClickable(filmHome.userSearchBox).sendKeys(userName).then(
+                    function(){
+                        self.waitForClickable(filmHome.userSearchResult).then(
+                            function(){
+                                self.waitForClickable(filmHome.btnAdd).then(done);
+                            }
+                        );
+                    }
+                );
+            }
+        })
     });
 
     this.When(/^I click Add$/, function(done) {
@@ -216,7 +260,13 @@ module.exports = function() {
     });
 
     this.Then(/^I should see the game I shared with home team name "([^"]*)"$/, function (teamName, done) {
-        expect(filmHome.firstHomeTeam.getText()).to.eventually.equal(teamName + conferences.uniqueID).and.notify(done);
+        var self = this;
+
+        self.waitForVisible(filmHome.firstHomeTeam).then(
+            function(){
+                expect(filmHome.firstHomeTeam.getText()).to.eventually.equal(teamName + conferences.uniqueID).and.notify(done);
+            }
+        );
     });
 
     this.When(/^I click to revoke sharing of the "([^"]*)"$/, function(filmType, done) {
@@ -229,7 +279,7 @@ module.exports = function() {
         expect(filmHome.firstAwayTeam.isPresent()).to.eventually.be.false.and.notify(done);
     });
 
-    this.Then(/^I should see text "([^"]*)" in the "([^"]*)" column$/, function (txt, columnName, done) {
+    this.Then(/^I should see text "([^"]*)" on the "([^"]*)"$/, function (txt, filmType, done) {
         var className = 'subtext';
         var element = $('.'+className);
 
@@ -251,5 +301,26 @@ module.exports = function() {
                 );
             }
         );
+    });
+
+    this.Then(/^I should see the reel I shared with name "([^"]*)"$/, function (teamName, done) {
+        expect(filmHome.firstReelName.getText()).to.eventually.equal(teamName).and.notify(done);
+    });
+
+    this.Then(/^I should NOT see the share button next to the reel$/, function (done) {
+        
+        expect(filmHome.btnReelShare.isPresent()).to.eventually.be.true.and.notify(done);    
+    });
+
+    this.When(/^I click on the reel with name "([^"]*)"$/, function (reelName, done) {
+        var self = this;
+        var reel = element.all(by.xpath('//div[contains(text(),"' + reelName + '")]')).first();
+
+        self.waitForClickable(reel).then(done);
+    });
+
+    this.Then(/^I should NOT be able to edit the reel$/, function (done) {
+        
+        expect(reels.editPlays.isPresent()).to.eventually.be.false.and.notify(done);    
     });
 };

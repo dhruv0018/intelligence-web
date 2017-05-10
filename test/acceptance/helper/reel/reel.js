@@ -7,6 +7,7 @@ var path = require('path');
 
 module.exports = function Reel(){
     var btnAddReel = $('.add-reels-dropdown');
+    this.editPlays =$('#reels-edit-clips-cta');
 
 
 }

@@ -106,6 +106,7 @@ module.exports = function() {
     //see text at div by class name
     this.Then(/^I should see text "([^"]*)" at "([^"]*)"$/, function (txt, className, done) {
         var element = $('.'+className);
+    
         element.getText().then(function(strTxt){
             expect(strTxt.indexOf(txt)).to.above(-1);
             done();
@@ -172,17 +173,21 @@ module.exports = function() {
 
     this.When(/^I refresh the page$/, function(done) {
         var self = this;
-        var player = $('.video-player');
+        var logo =$('.logo-container');
 
-        browser.driver.navigate().refresh().then(
+        self.waitForVisible(logo).then(
             function(){
-                browser.getAllWindowHandles().then(function (handles) {
-                    browser.ignoreSynchronization = true;
-                    browser.driver.switchTo().window(handles[0]);
-                    done();
-                })
+                browser.driver.navigate().refresh().then(
+                    function(){
+                        browser.getAllWindowHandles().then(function (handles) {
+                            browser.ignoreSynchronization = true;
+                            browser.driver.switchTo().window(handles[0]);
+                            done();
+                        })
+                    }
+                );
             }
-        );
+        )
     });
 
     this.When(/^I click button "([^"]*)"$/, function(buttonText, done){
